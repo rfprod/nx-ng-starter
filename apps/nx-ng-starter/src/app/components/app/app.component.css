@@ -1,0 +1,26 @@
+:host {
+	flex: 1 1 auto;
+	display: flex;
+	flex-direction: column;
+	align-content: stretch;
+	align-items: flex-start;
+	justify-content: center;
+	height: 100vh;
+	width: 100%;
+}
+
+mat-sidenav-container {
+	width: 100vw;
+}
+
+mat-sidenav {
+	width: 50vw;
+}
+
+mat-grid-tile {
+	cursor: pointer;
+}
+mat-grid-tile:hover {
+	background-color: #c7c7c7c7;
+	cursor: pointer;
+}

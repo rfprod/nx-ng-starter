@@ -1,0 +1,241 @@
+@import 'node_modules/@angular/material/_theming.scss';
+
+/* Extended palette variables */
+  // light
+  $primary: mat-color($candy-app-primary);
+  $primary-mild: mat-color($mat-cyan, 400);
+  $primary-extra-mild: mat-color($mat-cyan, 200);
+  $accent: mat-color($candy-app-accent);
+  $warn: mat-color($candy-app-warn);
+
+  $success: mat-color($mat-green, 900);
+  $error: mat-color($mat-red, 900);
+
+  // dark
+  $dark-primary: mat-color($unicorn-dark-primary);
+  $dark-primary-mild: mat-color($mat-deep-orange, 300);
+  $dark-primary-extra-mild: mat-color($mat-brown, 100);
+  $dark-accent: mat-color($unicorn-dark-accent);
+  $dark-warn: mat-color($unicorn-dark-warn);
+
+  $dark-success: mat-color($mat-green, 500);
+  $dark-error: mat-color($mat-red, 500);
+
+  // general purpose
+  $black: #000000;
+  $white: #ffffff;
+  $darkgrey: mat-color($mat-grey, 900);
+  $grey: mat-color($mat-grey, 400);
+  $lightgrey: mat-color($mat-grey, 200);
+  $extralightgrey: mat-color($mat-grey, 100);
+/* Extended palette variables */
+
+/* Extended palette map */
+  $extended-bg-palette: (
+    light: (
+      '.primary': $primary,
+      '.primary-mild': $primary-mild,
+      '.accent': $accent,
+      '.warn': $warn,
+      '.success': $success,
+      '.error': $error,
+
+      'mat-grid-tile': $primary-mild,
+
+      'app-root': $primary-mild,
+
+      '.label': $lightgrey,
+
+      '::webkit-scrollbar': $white
+    ),
+    dark: (
+      '.primary': $dark-primary,
+      '.primary-mild': $dark-primary-mild,
+      '.accent': $dark-accent,
+      '.warn': $dark-warn,
+      '.success': $dark-success,
+      '.error': $dark-error,
+
+      'mat-grid-tile': $dark-primary-mild,
+
+      'app-root': $dark-primary-mild,
+
+      '.label': $darkgrey,
+
+      '::webkit-scrollbar': $white
+    )
+  );
+  $extended-text-palette: (
+    light: (
+      '.primary': $primary,
+      '.primary-bg-text': map-get($mat-dark-theme-foreground, text),
+      '.accent': $accent,
+      '.warn': $warn,
+      '.success': $success,
+      '.error': $error,
+
+      'mat-slide-toggle:hover': $warn,
+
+      'app-root': $black,
+
+      'form.legend': $darkgrey
+    ),
+    dark: (
+      '.primary': $dark-primary,
+      '.primary-bg-text': map-get($mat-dark-theme-foreground, text),
+      '.accent': $dark-accent,
+      '.warn': $dark-warn,
+      '.success': $dark-success,
+      '.error': $dark-error,
+
+      'mat-slide-toggle:hover': $warn,
+
+      'app-root': $white,
+
+      'form.legend': $lightgrey
+    )
+  );
+  $extended-box-shadow-palette: (
+    light: (
+      '::webkit-scrollbar-track': $primary,
+      '::webkit-scrollbar-thumb': $primary
+    ),
+    dark: (
+      '::webkit-scrollbar-track': $dark-primary,
+      '::webkit-scrollbar-thumb': $dark-primary
+    )
+  );
+/* Extended palette map */
+
+/*
+* Include one of the following mixins depending on css attribute that needs to be set, options:
+* - color: extended-color
+* - background-color: extended-background-color
+*
+* Check $extended-palette map above for currently supported selectors, and add new ones when needed.
+* Selector can be one of the following: DOM-element, class, id
+*
+* Example usage, set color for paragraph text:
+* p {
+*   @include extended-color(p);
+* }
+*/
+  @mixin extended-color($selector) {
+    color: map-get(map-get($extended-text-palette, light), $selector);
+
+    .unicorn-dark-theme & {
+      color: map-get(map-get($extended-text-palette, dark), $selector);
+    }
+  }
+  @mixin extended-background-color($selector) {
+    background-color: map-get(map-get($extended-bg-palette, light), $selector);
+
+    .unicorn-dark-theme & {
+      background-color: map-get(map-get($extended-bg-palette, dark), $selector);
+    }
+  }
+  @mixin extended-box-shadow-color($inset, $offsetX, $offsetY, $blurRadius, $spreadRadius, $selector) {
+    box-shadow: $inset $offsetX $offsetY $blurRadius $spreadRadius map-get(map-get($extended-box-shadow-palette, light), $selector);
+    -webkit-box-shadow: $inset $offsetX $offsetY $blurRadius $spreadRadius map-get(map-get($extended-box-shadow-palette, light), $selector);
+
+    .unicorn-dark-theme & {
+      box-shadow: $inset $offsetX $offsetY $blurRadius $spreadRadius map-get(map-get($extended-box-shadow-palette, dark), $selector);
+      -webkit-box-shadow: $inset $offsetX $offsetY $blurRadius $spreadRadius map-get(map-get($extended-box-shadow-palette, dark), $selector);
+    }
+  }
+
+/*
+* TODO:client coloring via mixins
+*/
+  /*
+  * Custom selectors coloring mixin.
+  */
+  @mixin custom-selectors-coloring() {
+    mat-grid-tile {
+      @include extended-background-color(mat-grid-tile);
+    }
+
+    app-root {
+      @include extended-color(app-root);
+      @include extended-background-color(app-root);
+    }
+
+    form {
+      legend {
+        @include extended-color('form.legend');
+      }
+    }
+
+    mat-slide-toggle {
+      &:hover {
+        @include extended-color('mat-slide-toggle:hover');
+      }
+    }
+
+    .label {
+      @include extended-background-color('.label');
+    }
+
+    /*
+    * Global scrollbars styling.
+    */
+    ::-webkit-scrollbar {
+      @include extended-background-color('::webkit-scrollbar');
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      @include extended-box-shadow-color(inset, 0px, 0px, 2px, 0px, '::webkit-scrollbar-track');
+    }
+    ::-webkit-scrollbar-thumb {
+      @include extended-box-shadow-color(inset, 0px, 0px, 48px, 0px, '::webkit-scrollbar-thumb');
+    }
+  }
+  @include custom-selectors-coloring();
+  /* Custom selectors coloring mixin */
+
+  /*
+  * Custom general coloring classes mixin.
+  * The same as theme, and extended colors variables (see above), but as classes
+  * so that it can be assigned to DOM elements not related to material components.
+  */
+  @mixin custom-general-coloring-classes() {
+    .primary {
+      @include extended-color('.primary');
+    }
+    .primary-bg {
+      @include extended-color('.primary-bg-text');
+      @include extended-background-color('.primary');
+    }
+    .primary-mild-bg {
+      @include extended-color('.primary-bg-text');
+      @include extended-background-color('.primary-mild');
+    }
+    .accent {
+      @include extended-color('.accent');
+    }
+    .accent-bg {
+      @include extended-background-color('.accent');
+    }
+    .warn {
+      @include extended-color('.warn');
+    }
+    .warn-bg {
+      @include extended-background-color('.warn');
+    }
+
+    .success {
+      @include extended-color('.success');
+    }
+    .success-bg {
+      @include extended-background-color('.success');
+    }
+    .error {
+      @include extended-color('.error');
+    }
+    .error-bg {
+      @include extended-background-color('.error');
+    }
+
+  }
+  @include custom-general-coloring-classes();
+  /* Custom general coloring classes mixin */
