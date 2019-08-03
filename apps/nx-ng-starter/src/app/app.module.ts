@@ -1,22 +1,33 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  NgModule,
+  CUSTOM_ELEMENTS_SCHEMA
+} from '@angular/core';
 
-import { APP_BASE_HREF, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import {
+  APP_BASE_HREF,
+  LocationStrategy,
+  PathLocationStrategy
+} from '@angular/common';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormsModule,
+  ReactiveFormsModule
+} from '@angular/forms';
+
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
-// import 'node_modules/hammerjs/hammer.js';
-import { CustomMaterialModule } from 'libs/ui/common/custom-material/custom-material.module';
+import 'node_modules/hammerjs/hammer.js';
+import { CustomMaterialModule } from '@nx-ng-starter/shared-core/ui';
 
-import { EventEmitterService } from 'libs/data-access/event-emitter/event-emitter.service';
-import { MarkdownService } from 'libs/data-access/markdown/markdown.service';
-
-import { CustomButtonComponent } from 'libs/ui/common/custom-button/custom-button.component';
+import {
+  EventEmitterService,
+  MarkdownService
+} from '@nx-ng-starter/shared-core/data-access';
 
 import { AppComponent } from './components/app/app.component';
 import { AppIndexComponent } from './components/app-index/app-index.component';
@@ -27,17 +38,32 @@ import { CustomButtonDemoComponent } from './components/custom-button-demo/custo
  */
 @NgModule({
   declarations: [
-    AppComponent, AppIndexComponent, CustomButtonComponent, CustomButtonDemoComponent
+    AppComponent,
+    AppIndexComponent,
+    CustomButtonDemoComponent
   ],
   imports: [
-    BrowserModule, BrowserAnimationsModule, FlexLayoutModule, CustomMaterialModule,
-    FormsModule, ReactiveFormsModule, HttpModule, AppRoutingModule
+    BrowserModule,
+    BrowserAnimationsModule,
+    FlexLayoutModule,
+    CustomMaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpModule,
+    AppRoutingModule
   ],
   providers: [
-    { provide: APP_BASE_HREF, useValue: '/' }, { provide: LocationStrategy, useClass: PathLocationStrategy },
-    { provide: 'Window', useValue: window }, EventEmitterService, MarkdownService
+    { provide: APP_BASE_HREF, useValue: '/' },
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
+    { provide: 'Window', useValue: window },
+    EventEmitterService,
+    MarkdownService
   ],
-  schemas  : [ CUSTOM_ELEMENTS_SCHEMA ],
-  bootstrap: [ AppComponent ]
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

@@ -1,8 +1,22 @@
-import { Component, Inject, OnInit, OnDestroy, ElementRef, ViewChild } from '@angular/core';
-import { Router, ActivatedRoute, Params, ResolveEnd } from '@angular/router';
+import {
+  Component,
+  Inject,
+  OnInit,
+  OnDestroy,
+  ElementRef,
+  ViewChild
+} from '@angular/core';
+
+import {
+  Router,
+  ActivatedRoute,
+  Params,
+  ResolveEnd
+} from '@angular/router';
+
 import { MatSidenav } from '@angular/material';
 
-import { EventEmitterService } from 'libs/data-access/event-emitter/event-emitter.service';
+import { EventEmitterService } from '@nx-ng-starter/shared-core/data-access';
 
 /**
  * Application root component.

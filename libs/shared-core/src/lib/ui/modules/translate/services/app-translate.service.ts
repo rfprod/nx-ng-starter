@@ -11,7 +11,7 @@ import {
   IUiTranslations,
   ILangCode,
   ISupportedLanguage
-} from 'libs/data-access/interfaces/index';
+} from '@nx-ng-starter/shared-core/data-access';
 
 import { Subject } from 'rxjs';
 

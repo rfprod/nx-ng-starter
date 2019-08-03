@@ -2,6 +2,8 @@
   "compileOnSave": false,
   "compilerOptions": {
     "rootDir": ".",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
@@ -11,15 +13,23 @@
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
     "importHelpers": true,
-    "target": "es2015",
-    "module": "esnext",
+    "target": "es5",
+    "module": "es2015",
     "typeRoots": ["node_modules/@types"],
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@nx-ng-starter/api-interface": ["libs/api-interface/src/index.ts"]
+      "@nx-ng-starter/api-interface": ["libs/api-interface/src/index.ts"],
+      "@nx-ng-starter/shared-core": ["libs/shared-core/src/index.ts"],
+      "@nx-ng-starter/shared-core/data-access": ["libs/shared-core/src/lib/data-access/index.ts"],
+      "@nx-ng-starter/shared-core/ui": ["libs/shared-core/src/lib/ui/index.ts"],
+      "@nx-ng-starter/shared-core/util": ["libs/shared-core/src/lib/util/index.ts"],
+      "@nx-ng-starter/mocks-core": ["libs/mocks-core/src/index.ts"],
+      "@nx-ng-starter/mocks-core/data-access": ["libs/mocks-core/src/lib/data-access/index.ts"],
+      "@nx-ng-starter/mocks-core/ui": ["libs/mocks-core/src/lib/ui/index.ts"],
+      "@nx-ng-starter/mocks-core/util": ["libs/mocks-core/src/lib/util/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

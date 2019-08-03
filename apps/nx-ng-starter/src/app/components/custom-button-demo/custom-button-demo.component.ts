@@ -3,6 +3,9 @@ import {
   OnInit
 } from '@angular/core';
 
+/**
+ * Custom button demo component.
+ */
 @Component({
   selector: 'custom-button-demo',
   templateUrl: './custom-button-demo.component.html',

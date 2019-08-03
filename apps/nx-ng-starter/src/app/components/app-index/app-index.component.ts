@@ -1,8 +1,20 @@
-import { Component, Inject, OnInit, OnDestroy, ElementRef } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import {
+  Component,
+  Inject,
+  OnInit,
+  OnDestroy,
+  ElementRef
+} from '@angular/core';
 
-import { EventEmitterService } from 'libs/data-access/event-emitter/event-emitter.service';
-import { MarkdownService } from 'libs/data-access/markdown/markdown.service';
+import {
+  ActivatedRoute,
+  Params
+} from '@angular/router';
+
+import {
+  EventEmitterService,
+  MarkdownService
+} from '@nx-ng-starter/shared-core/data-access';
 
 /**
  * Application index component.
