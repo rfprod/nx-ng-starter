@@ -90,7 +90,7 @@
               "apps/nx-ng-starter/tsconfig.app.json",
               "apps/nx-ng-starter/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": ["**/node_modules/**", "!apps/nx-ng-starter/**"]
           }
         },
         "test": {
@@ -152,7 +152,10 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": "apps/nx-ng-starter-e2e/tsconfig.e2e.json"
+            "tsConfig": "apps/nx-ng-starter-e2e/tsconfig.e2e.json",
+            "exclude": [
+              "!apps/nx-ng-starter-e2e/**"
+            ]
           }
         }
       }
@@ -199,7 +202,7 @@
               "apps/api/tsconfig.app.json",
               "apps/api/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": ["**/node_modules/**", "!apps/api/**"]
           }
         },
         "test": {
@@ -224,7 +227,7 @@
               "libs/api-interface/tsconfig.lib.json",
               "libs/api-interface/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": ["**/node_modules/**", "!libs/api-interface/**"]
           }
         },
         "test": {
@@ -249,7 +252,7 @@
               "libs/shared-core/tsconfig.lib.json",
               "libs/shared-core/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": ["**/node_modules/**", "!libs/shared-core/**"]
           }
         },
         "test": {
@@ -280,7 +283,7 @@
               "libs/mocks-core/tsconfig.lib.json",
               "libs/mocks-core/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": ["**/node_modules/**", "!libs/mocks-core/**"]
           }
         },
         "test": {
