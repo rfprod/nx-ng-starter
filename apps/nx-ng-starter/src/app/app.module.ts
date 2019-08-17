@@ -4,60 +4,33 @@ import {
 } from '@angular/core';
 
 import {
-  APP_BASE_HREF,
-  LocationStrategy,
-  PathLocationStrategy
+  APP_BASE_HREF
 } from '@angular/common';
 
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SharedCoreModule } from '@nx-ng-starter/shared-core';
 
-import {
-  FormsModule,
-  ReactiveFormsModule
-} from '@angular/forms';
-
-import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
-
-import { FlexLayoutModule } from '@angular/flex-layout';
-import 'node_modules/hammerjs/hammer.js';
-import { CustomMaterialModule } from '@nx-ng-starter/shared-core/ui';
-
-import {
-  EventEmitterService,
-  MarkdownService
-} from '@nx-ng-starter/shared-core/data-access';
 
 import { AppComponent } from './components/app/app.component';
 import { AppIndexComponent } from './components/app-index/app-index.component';
-import { CustomButtonDemoComponent } from './components/custom-button-demo/custom-button-demo.component';
 
 /**
- * Main application module.
+ * Application root module.
  */
 @NgModule({
-  declarations: [
-    AppComponent,
-    AppIndexComponent,
-    CustomButtonDemoComponent
-  ],
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    FlexLayoutModule,
-    CustomMaterialModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpModule,
+    SharedCoreModule.forRoot(),
     AppRoutingModule
   ],
   providers: [
-    { provide: APP_BASE_HREF, useValue: '/' },
-    { provide: LocationStrategy, useClass: PathLocationStrategy },
-    { provide: 'Window', useValue: window },
-    EventEmitterService,
-    MarkdownService
+    {
+      provide: APP_BASE_HREF,
+      useValue: '/'
+    }
+  ],
+  declarations: [
+    AppComponent,
+    AppIndexComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -66,4 +39,4 @@ import { CustomButtonDemoComponent } from './components/custom-button-demo/custo
     AppComponent
   ]
 })
-export class AppModule { }
+export class AppModule {}

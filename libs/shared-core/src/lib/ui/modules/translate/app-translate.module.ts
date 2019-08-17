@@ -1,45 +1,58 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  NgModule,
+  ModuleWithProviders,
+  Provider
+} from '@angular/core';
 
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
-import { AppTranslationUtilsService } from './services/app-translate.service';
+import { AppTranslationUtilsService } from './services/app-translation-utils.service';
+
+/**
+ * Module providers.
+ */
+export const appTranslateModuleProviders: Provider[] = [
+  TranslateService,
+  AppTranslationUtilsService
+];
 
 /**
  * Application internationalization module.
  */
 @NgModule({
+  imports: [
+    TranslateModule.forRoot()
+  ],
   exports: [
-    CommonModule,
     TranslateModule
   ],
   providers: [
+    TranslateService,
     AppTranslationUtilsService
   ],
-  imports: [
-    TranslateModule.forRoot()
-  ]
 })
 export class AppTranslateModule {
 
   /**
+   * Constructor.
    * @param utils Translation utils service
    */
   constructor(
-    utils: AppTranslationUtilsService
+    private utils: AppTranslationUtilsService
   ) {
-    utils.initialize();
+    this.utils.initialize();
+  }
+
+  /**
+   * Application internationalization module with providers.
+   */
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: AppTranslateModule,
+      providers: [
+        ...appTranslateModuleProviders
+      ]
+    }
   }
 
 }
-
-/**
- * Application internationalization module with providers.
- */
-export const AppTranslateModuleWithProviders: ModuleWithProviders = {
-  ngModule: AppTranslateModule,
-  providers: [
-    TranslateService,
-    AppTranslationUtilsService
-  ]
-};

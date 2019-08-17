@@ -2,17 +2,17 @@ import { TestBed, async } from '@angular/core/testing';
 
 import { DateAdapter } from '@angular/material';
 
-import { AppTranslateModuleWithProviders } from '../app-translate.module';
+import { AppTranslateModule } from '../app-translate.module';
 
-import { AppTranslationUtilsService } from './app-translate.service';
-import { CustomMaterialModuleWithProviders } from 'libs/ui/common/custom-material/custom-material.module';
+import { AppTranslationUtilsService } from './app-translation-utils.service';
+import { CustomMaterialModule } from '../../custom-material/custom-material.module';
 
 import {
   IUiDictionary,
   ISupportedLanguage,
   IUiLanguagesInterface,
   ILangCode
-} from 'libs/data-access/interfaces/index';
+} from '../../../../data-access/index';
 
 import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
@@ -28,8 +28,8 @@ describe('AppTranslationUtilsService', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        CustomMaterialModuleWithProviders,
-        AppTranslateModuleWithProviders
+        CustomMaterialModule.forRoot(),
+        AppTranslateModule.forRoot()
       ],
       providers: [
         { provide: 'Window', useValue: window }

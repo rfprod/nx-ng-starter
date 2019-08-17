@@ -2,15 +2,28 @@ import { NgModule } from '@angular/core';
 
 import {
   RouterModule,
-  Routes
+  Route
 } from '@angular/router';
 
 import { AppIndexComponent } from './components/app-index/app-index.component';
 
-export const APP_ROUTES: Routes = [
-  { path: 'index', component: AppIndexComponent },
-  { path: '', redirectTo: 'index', pathMatch: 'full' },
-  { path: '**', redirectTo: 'index' }
+/**
+ * Application routes.
+ */
+export const APP_ROUTES: Route[] = [
+  {
+    path: '',
+    component: AppIndexComponent
+  },
+  {
+    path: '',
+    redirectTo: '',
+    pathMatch: 'full'
+  },
+  {
+    path: '**',
+    redirectTo: ''
+  }
 ];
 
 /**

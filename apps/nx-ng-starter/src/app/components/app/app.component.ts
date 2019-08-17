@@ -1,9 +1,7 @@
 import {
   Component,
-  Inject,
   OnInit,
   OnDestroy,
-  ElementRef,
   ViewChild
 } from '@angular/core';
 
@@ -18,30 +16,23 @@ import { MatSidenav } from '@angular/material';
 
 import { EventEmitterService } from '@nx-ng-starter/shared-core/data-access';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 /**
  * Application root component.
  */
 @Component({
-  selector: 'app-root',
+  selector: 'nx-ng-starter-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
-    private el: ElementRef,
     private emitter: EventEmitterService,
     private router: Router,
-    private route: ActivatedRoute,
-    @Inject('Window') private window: Window
-  ) {
-    // console.log('AppComponent, element ref', this.el);
-  }
-
-  /**
-   * Component subscriptions.
-   */
-  private subscriptions: any[] = [];
+    private route: ActivatedRoute
+  ) {}
 
   /**
    * Component title.
@@ -75,71 +66,34 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Loading state, controls loading spinner visibility.
-   */
-  public isLoading: boolean = false;
-  /**
-   * Spinner calls count, used to determine when to stop it.
-   */
-  private spinnerCallsCounter: number = 0;
-  /**
-   * Shows spinner, increases spinner calls counter.
-   */
-  private showSpinner(): void {
-    this.spinnerCallsCounter++;
-    this.isLoading = true;
-  };
-  /**
-   * Hides spinner, decreases spinner calls counter.
-   * This method should be called equal to or more times than showSpinner for spinner to get actually hidden
-   */
-  private hideSpinner(): void {
-    this.spinnerCallsCounter--;
-    this.isLoading = (this.spinnerCallsCounter <= 0) ? false : this.isLoading;
-  };
-
-  /**
    * Lifecycle hook called on component initialization.
    */
   public ngOnInit(): void {
-    let sub = this.emitter.getEmitter().subscribe((event: any) => {
-      console.log('AppComponent, event emitter subscription', event);
-      if (event.spinner) {
-        if (event.spinner === 'start') {
-          this.showSpinner();
-        } else if (event.spinner === 'stop') {
-          this.hideSpinner();
-        }
-      }
-    });
-    this.subscriptions.push(sub);
 
-    sub = this.router.events.subscribe((event: any) => {
-      // console.log('AppComponent, router events subscription:', event);
+    this.emitter.getEmitter().pipe(untilDestroyed(this)).subscribe((event: any) => {
+      console.log('AppComponent, event emitter subscription', event);
+    });
+
+    this.router.events.pipe(untilDestroyed(this)).subscribe((event: any) => {
       if (event instanceof ResolveEnd) {
         console.log('AppComponent, router events subscription, resolve end', event);
       }
     });
-    this.subscriptions.push(sub);
 
     /*
     *	subscribe to query params changes and switch display mode
     */
-    sub = this.route.queryParamMap.subscribe((queryParams: Params) => {
+    this.route.queryParamMap.pipe(untilDestroyed(this)).subscribe((queryParams: Params) => {
       if (typeof queryParams.get('demo') === 'string') {
         this.selectedItem = queryParams.get('demo') || '';
       }
     });
-    this.subscriptions.push(sub);
+
   }
+
   /**
    * Lifecycle hook called on component destruction.
    */
-  public ngOnDestroy(): void {
-    if (this.subscriptions.length) {
-      for (const sub of this.subscriptions) {
-        sub.unsubscribe();
-      }
-    }
-  }
+  public ngOnDestroy(): void {}
+
 }

@@ -1,4 +1,14 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import {
+  NgModule,
+  ModuleWithProviders,
+  Provider
+} from '@angular/core';
+
+/**
+ * Animations require hammerjs.
+ */
+// import 'node_modules/hammerjs/hammer.js';
+
 import {
   // form controls
   MatAutocompleteModule, MatCheckboxModule, MatDatepickerModule, MatNativeDateModule, MatInputModule, MatSelectModule, MatSliderModule, MatSlideToggleModule, MatRadioModule,
@@ -22,12 +32,26 @@ import {
   MatTreeModule,
   // badge
   MatBadgeModule
-
 } from '@angular/material';
 
 import { OverlayModule } from '@angular/cdk/overlay';
 
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+
+/**
+ * Module providers.
+ */
+export const customMaterialModuleProviders: Provider[] = [
+  MatIconRegistry,
+  {
+    provide: MAT_TOOLTIP_DEFAULT_OPTIONS,
+    useValue: {
+      showDelay: 1000,
+      hideDelay: 1000,
+      touchendHideDelay: 1000
+    } as MatTooltipDefaultOptions
+  }
+];
 
 /**
  * Custom material module without providers.
@@ -83,16 +107,19 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
     OverlayModule
   ]
 })
-export class CustomMaterialModule {}
+export class CustomMaterialModule {
 
-/**
- * Custom material module with providers.
- * Exports material modules, and provides services.
- */
-export const CustomMaterialModuleWithProviders: ModuleWithProviders = {
-  ngModule: CustomMaterialModule,
-  providers: [
-    MatIconRegistry,
-    { provide: MAT_TOOLTIP_DEFAULT_OPTIONS, useValue: { showDelay: 1000, hideDelay: 1000, touchendHideDelay: 1000 } as MatTooltipDefaultOptions }
-  ]
-};
+  /**
+   * Custom material module with providers.
+   * Exports material modules, and provides services.
+   */
+  static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: CustomMaterialModule,
+      providers: [
+        ...customMaterialModuleProviders
+      ]
+    };
+  }
+
+}

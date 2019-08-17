@@ -1,14 +1,13 @@
-<span id="spinner" *ngIf="isLoading">
-	<mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
-</span>
-
 <mat-toolbar color="primary" fxFlex="0 1 auto">
+
   <span fxLayout="row" fxLayoutAlign="start stretch">
     <button mat-icon-button (click)="appSidenav.toggle()">
       <img fxFlex src="/favicon.ico" alt="{{title}}" title="{{title}}" />
     </button>
   </span>
+
   <span fxFlex="1 1 auto"></span>
+
   <span class="mat-toolbar-tools">
 
     <button mat-button [fxHide.xs]="true" [fxHide.sm]="true">
@@ -61,24 +60,28 @@
 </mat-sidenav-container>
 
 <mat-toolbar color="primary" fxFlex="0 1 auto">
+
   <button mat-icon-button (click)="appSidenav.toggle()">
     <mat-icon class="material-icons" title="open sidenav" *ngIf="!sidenavOpened">flip_to_front</mat-icon>
     <mat-icon class="material-icons" title="open sidenav" *ngIf="sidenavOpened">flip_to_back</mat-icon>
   </button>
+
   <span fxFlex="1 1 auto"></span>
+
   <button mat-button [fxHide.xs]="true" [fxHide.sm]="true">
     <mat-icon class="material-icons">touch_app</mat-icon> Action 1
   </button>
   <button mat-button [fxHide.xs]="true" [fxHide.sm]="true">
     <mat-icon class="material-icons">touch_app</mat-icon> Action 2
   </button>
-  <button mat-button [routerLink]="index" [fxHide.xs]="true" [fxHide.sm]="true">
+  <button mat-button [routerLink]="['/index']" [fxHide.xs]="true" [fxHide.sm]="true">
     <mat-icon class="material-icons">home</mat-icon> Index
   </button>
 
   <button mat-icon-button [matMenuTriggerFor]="mobileMenuBottom" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
     <mat-icon class="material-icons">reorder</mat-icon>
   </button>
+
   <mat-menu #mobileMenuBottom="matMenu" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
     <a mat-menu-item>
       <mat-icon class="material-icons">touch_app</mat-icon> Action 1
@@ -86,8 +89,9 @@
     <a mat-menu-item>
       <mat-icon class="material-icons">touch_app</mat-icon> Action 2
     </a>
-    <a mat-menu-item [routerLink]="index">
+    <a mat-menu-item [routerLink]="['/index']">
       <mat-icon class="material-icons">home</mat-icon> Index
     </a>
   </mat-menu>
+
 </mat-toolbar>
