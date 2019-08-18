@@ -3,7 +3,8 @@ import {
   Inject,
   OnInit,
   OnDestroy,
-  ElementRef
+  ElementRef,
+  ChangeDetectionStrategy
 } from '@angular/core';
 
 import {
@@ -22,7 +23,8 @@ import {
 @Component({
   selector: 'app-index',
   templateUrl: './app-index.component.html',
-  styleUrls: ['./app-index.component.css']
+  styleUrls: ['./app-index.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppIndexComponent implements OnInit, OnDestroy {
 

@@ -5,9 +5,10 @@ import {
 } from '@angular/core';
 
 /**
- * Animations require hammerjs.
+ * Animations require hammerjs but it is bundled via angular.json.
+ * use next line to import it here
+ * import 'node_modules/hammerjs/hammer.js';
  */
-// import 'node_modules/hammerjs/hammer.js';
 
 import {
   // form controls

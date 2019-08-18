@@ -7,7 +7,11 @@ declare let marked;
 describe('MarkdownService', () => {
 
   let service: MarkdownService;
-  let spy: any;
+  let spy: {
+    service: {
+      process: jest.SpyInstance
+    }
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -21,7 +25,9 @@ describe('MarkdownService', () => {
     }).compileComponents().then(() => {
       service = TestBed.get(MarkdownService) as MarkdownService;
       spy = {
-        service: spyOn(service, 'process').and.callFake(() => (input: string) => `marked ${input}`)
+        service: {
+          process: jest.spyOn(service, 'process').mockImplementation((input: string) => `marked ${input}`)
+        }
       };
     });
   }));
