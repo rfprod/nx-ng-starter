@@ -48,4 +48,13 @@ export const setupJestJsdomGlobalMocks: () => void = () => {
     value: window.URL,
     writable: true
   });
+
+  /**
+   * Markdown global mock.
+   */
+  Object.defineProperty(global, 'marked', {
+    value: jest.fn((input: string) => `# mocked marked output ${input}`),
+    writable: false
+  });
+
 };

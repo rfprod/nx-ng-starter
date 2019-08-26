@@ -30,6 +30,12 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
+  /**
+   * Constructor.
+   * @param emitter event emitter service
+   * @param router application router
+   * @param route activated route
+   */
   constructor(
     private emitter: EventEmitterService,
     private router: Router,

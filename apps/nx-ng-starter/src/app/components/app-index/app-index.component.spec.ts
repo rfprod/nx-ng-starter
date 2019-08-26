@@ -45,28 +45,23 @@ describe('AppIndexComponent', () => {
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     }).compileComponents().then(() => {
       fixture = TestBed.createComponent(AppIndexComponent);
-      component = fixture.componentInstance;
+      component = fixture.debugElement.componentInstance;
       service = TestBed.get(MarkdownService);
       spy = {
         service: {
           process: jest.spyOn(service, 'process').mockImplementation((input: string) => `marked ${input}`)
         }
       };
+      fixture.detectChanges();
     });
   }));
 
-  it('should be defined', async(() => {
+  it('should be defined', () => {
     expect(component).toBeDefined();
-  }));
+  });
 
-  it(`should have as title 'Components library directory'`, async(() => {
+  it(`should have as title 'Components library directory'`, () => {
     expect(component.title).toEqual('Components library directory');
-  }));
-
-  it('should render title in a h1 tag', async(() => {
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Components library directory');
-  }));
+  });
 
 });

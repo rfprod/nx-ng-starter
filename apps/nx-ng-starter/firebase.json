@@ -1,0 +1,138 @@
+{
+  "hosting": {
+    "public": "apps/nx-ng-starter",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**",
+      "e2e/**",
+      "src/**"
+    ],
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "https://nx-ng-starter.firebaseapp.com https://nx-ng-starter.web.app"
+          },
+          {
+            "key": "Access-Control-Allow-Methods",
+            "value": "GET,PUT,POST,DELETE,OPTIONS,HEAD"
+          }
+        ]
+      },
+      {
+        "source": "**/*.@(jpg|jpeg|gif|png|svg)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=7200"
+          }
+        ]
+      },
+      {
+        "source": "/nx-ng-starter",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, no-cache, no-store, must-ravalidate, max-age=0"
+          },
+          {
+            "key": "Expires",
+            "value": "-1"
+          },
+          {
+            "key": "Pragma",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
+        "source": "/coverage",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, no-cache, no-store, must-ravalidate, max-age=0"
+          },
+          {
+            "key": "Expires",
+            "value": "-1"
+          },
+          {
+            "key": "Pragma",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
+        "source": "/documentation",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, no-cache, no-store, must-ravalidate, max-age=0"
+          },
+          {
+            "key": "Expires",
+            "value": "-1"
+          },
+          {
+            "key": "Pragma",
+            "value": "no-cache"
+          }
+        ]
+      },
+      {
+        "source": "/(auth|graphql)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, no-cache, no-store, must-ravalidate, max-age=0"
+          },
+          {
+            "key": "Expires",
+            "value": "-1"
+          },
+          {
+            "key": "Pragma",
+            "value": "no-cache"
+          }
+        ]
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "/auth/login",
+        "function": "login"
+      },
+      {
+        "source": "/auth/logout",
+        "function": "logout"
+      },
+      {
+        "source": "/auth/register",
+        "function": "register"
+      },
+      {
+        "source": "/graphql",
+        "function": "graphql"
+      },
+      {
+        "source": "/nx-ng-starter",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/coverage",
+        "destination": "/coverage/index.html"
+      },
+      {
+        "source": "/documentation",
+        "destination": "/documentation/index.html"
+      },
+      {
+        "source": "**/!(*.*|auth|graphql|coverage|documentation|nx-ng-starter)",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

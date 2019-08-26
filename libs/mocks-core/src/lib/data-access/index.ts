@@ -1,4 +1,4 @@
 /**
  * Mocks Core Data Access barrel.
  */
-export const todo: string = 'TODO';
+export * from './http-handlers/http-handlers-provider.mock';

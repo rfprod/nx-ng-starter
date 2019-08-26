@@ -1,14 +1,12 @@
-<mat-toolbar color="primary" fxFlex="0 1 auto">
+<span fxLayout="column" fxLayoutAlign="start stretch">
 
-  <span fxLayout="row" fxLayoutAlign="start stretch">
+  <mat-toolbar color="primary" fxFlex="0 1 auto">
+
     <button mat-icon-button (click)="appSidenav.toggle()">
-      <img fxFlex src="/favicon.ico" alt="{{title}}" title="{{title}}" />
+      <img [ngStyle]="{ height: '75%', width: 'auto!important'}" src="/favicon.ico" alt="{{title}}" title="{{title}}" />
     </button>
-  </span>
 
-  <span fxFlex="1 1 auto"></span>
-
-  <span class="mat-toolbar-tools">
+    <span fxFlex="1 1 auto"></span>
 
     <button mat-button [fxHide.xs]="true" [fxHide.sm]="true">
       <mat-icon class="material-icons">help_outline</mat-icon> Help
@@ -41,57 +39,58 @@
       </a>
     </mat-menu>
 
-  </span>
-</mat-toolbar>
+  </mat-toolbar>
 
-<mat-sidenav-container fxFlex="1 100%">
-  <mat-sidenav #appSidenav mode="over" [(opened)]="sidenavOpened">
-    <mat-grid-list cols="3" rowHeight="1:1">
-      <mat-grid-tile (click)="selectItem('customButton')">
-        custom button
-      </mat-grid-tile>
-    </mat-grid-list>
-  </mat-sidenav>
-  <mat-sidenav-content>
+  <mat-sidenav-container fxFlex="1 1 auto">
+    <mat-sidenav #appSidenav mode="over" [(opened)]="sidenavOpened">
+      <mat-grid-list cols="3" rowHeight="1:1">
+        <mat-grid-tile (click)="selectItem('customButton')">
+          custom button
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
 
-    <router-outlet></router-outlet>
+      <router-outlet></router-outlet>
 
-  </mat-sidenav-content>
-</mat-sidenav-container>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 
-<mat-toolbar color="primary" fxFlex="0 1 auto">
+  <mat-toolbar color="primary" fxFlex="0 1 auto">
 
-  <button mat-icon-button (click)="appSidenav.toggle()">
-    <mat-icon class="material-icons" title="open sidenav" *ngIf="!sidenavOpened">flip_to_front</mat-icon>
-    <mat-icon class="material-icons" title="open sidenav" *ngIf="sidenavOpened">flip_to_back</mat-icon>
-  </button>
+    <button mat-icon-button (click)="appSidenav.toggle()">
+      <mat-icon class="material-icons" title="open sidenav" *ngIf="!sidenavOpened">flip_to_front</mat-icon>
+      <mat-icon class="material-icons" title="open sidenav" *ngIf="sidenavOpened">flip_to_back</mat-icon>
+    </button>
 
-  <span fxFlex="1 1 auto"></span>
+    <span fxFlex="1 1 auto"></span>
 
-  <button mat-button [fxHide.xs]="true" [fxHide.sm]="true">
-    <mat-icon class="material-icons">touch_app</mat-icon> Action 1
-  </button>
-  <button mat-button [fxHide.xs]="true" [fxHide.sm]="true">
-    <mat-icon class="material-icons">touch_app</mat-icon> Action 2
-  </button>
-  <button mat-button [routerLink]="['/index']" [fxHide.xs]="true" [fxHide.sm]="true">
-    <mat-icon class="material-icons">home</mat-icon> Index
-  </button>
-
-  <button mat-icon-button [matMenuTriggerFor]="mobileMenuBottom" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
-    <mat-icon class="material-icons">reorder</mat-icon>
-  </button>
-
-  <mat-menu #mobileMenuBottom="matMenu" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
-    <a mat-menu-item>
+    <button mat-button [fxHide.xs]="true" [fxHide.sm]="true">
       <mat-icon class="material-icons">touch_app</mat-icon> Action 1
-    </a>
-    <a mat-menu-item>
+    </button>
+    <button mat-button [fxHide.xs]="true" [fxHide.sm]="true">
       <mat-icon class="material-icons">touch_app</mat-icon> Action 2
-    </a>
-    <a mat-menu-item [routerLink]="['/index']">
-      <mat-icon class="material-icons">home</mat-icon> Index
-    </a>
-  </mat-menu>
+    </button>
+    <button mat-button [routerLink]="['']" [fxHide.xs]="true" [fxHide.sm]="true">
+      <mat-icon class="material-icons">home</mat-icon> Home
+    </button>
 
-</mat-toolbar>
+    <button mat-icon-button [matMenuTriggerFor]="mobileMenuBottom" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
+      <mat-icon class="material-icons">reorder</mat-icon>
+    </button>
+
+    <mat-menu #mobileMenuBottom="matMenu" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
+      <a mat-menu-item>
+        <mat-icon class="material-icons">touch_app</mat-icon> Action 1
+      </a>
+      <a mat-menu-item>
+        <mat-icon class="material-icons">touch_app</mat-icon> Action 2
+      </a>
+      <a mat-menu-item [routerLink]="['']">
+        <mat-icon class="material-icons">home</mat-icon> Home
+      </a>
+    </mat-menu>
+
+  </mat-toolbar>
+
+</span>

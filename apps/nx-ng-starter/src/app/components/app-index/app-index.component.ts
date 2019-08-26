@@ -1,9 +1,7 @@
 import {
   Component,
-  Inject,
   OnInit,
   OnDestroy,
-  ElementRef,
   ChangeDetectionStrategy
 } from '@angular/core';
 
@@ -17,6 +15,8 @@ import {
   MarkdownService
 } from '@nx-ng-starter/shared-core/data-access';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 /**
  * Application index component.
  */
@@ -28,20 +28,17 @@ import {
 })
 export class AppIndexComponent implements OnInit, OnDestroy {
 
+  /**
+   * Constructor.
+   * @param emitter event emitter service
+   * @param markdown markdown service
+   * @param route activated route
+   */
   constructor(
-    private el: ElementRef,
     private emitter: EventEmitterService,
     private markdown: MarkdownService,
-    private route: ActivatedRoute,
-    @Inject('Window') private window: Window
-  ) {
-    // console.log('AppIndexComponent, element ref', this.el);
-  }
-
-  /**
-   * Component subscriptions.
-   */
-  private subscriptions: any[] = [];
+    private route: ActivatedRoute
+  ) {}
 
   /**
    * Component title.
@@ -76,15 +73,11 @@ export class AppIndexComponent implements OnInit, OnDestroy {
    * Lifecycle hook called on component initialization.
    */
   public ngOnInit(): void {
-    let sub = this.emitter.getEmitter().subscribe((event: any) => {
+    this.emitter.getEmitter().pipe(untilDestroyed(this)).subscribe((event: any) => {
       console.log('AppIndexComponent, event emitter subscription', event);
     });
-    this.subscriptions.push(sub);
 
-    /*
-    *	subscribe to query params changes and switch display mode
-    */
-    sub = this.route.queryParamMap.subscribe((queryParams: Params) => {
+    this.route.queryParamMap.pipe(untilDestroyed(this)).subscribe((queryParams: Params) => {
       let selectedItem: string = queryParams.get('demo');
       // console.log('selectedItem', selectedItem)
       if (!selectedItem) {
@@ -95,16 +88,11 @@ export class AppIndexComponent implements OnInit, OnDestroy {
         this.demo[key] = (key === selectedItem) ? true : false;
       }
     });
-    this.subscriptions.push(sub);
   }
+
   /**
    * Lifecycle hook called on component destruction.
    */
-  public ngOnDestroy(): void {
-    if (this.subscriptions.length) {
-      for (const sub of this.subscriptions) {
-        sub.unsubscribe();
-      }
-    }
-  }
+  public ngOnDestroy(): void {}
+
 }

@@ -24,7 +24,9 @@ import {
 
 import {
   SharedCoreServicesModule,
-  sharedCoreModuleProviders
+  sharedCoreModuleProviders,
+  APP_ENV,
+  AppEnvironment
 } from './data-access';
 
 /**
@@ -59,14 +61,19 @@ export class SharedCoreModule {
 
   /**
    * Provides services.
+   * @param environment application environment, if omitted default environment will be provided.
    */
-  static forRoot(): ModuleWithProviders {
+  static forRoot(environment?: AppEnvironment): ModuleWithProviders {
     return {
       ngModule: SharedCoreModule,
       providers: [
         ...customMaterialModuleProviders,
         ...appTranslateModuleProviders,
-        ...sharedCoreModuleProviders
+        ...sharedCoreModuleProviders,
+        {
+          provide: APP_ENV,
+          useFactory: () => new AppEnvironment(environment)
+        }
       ]
     };
   }

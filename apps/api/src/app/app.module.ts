@@ -1,11 +1,26 @@
 import { Module } from '@nestjs/common';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { GraphQLModule } from '@nestjs/graphql';
+
+import { DateScalar } from './common/scalars/date.scalar';
+import { AuthModule } from './modules/auth/auth.module';
+import { MatcompModule } from './modules/matcomp/matcomp.module';
+
+import { environment } from '../environments/environment';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService]
+  imports: [
+    GraphQLModule.forRoot({
+      debug: environment.production ? false : true,
+      playground: environment.production ? false : true,
+      installSubscriptionHandlers: true,
+      autoSchemaFile: 'schema.gql'
+    }),
+    AuthModule,
+    MatcompModule
+  ],
+  providers: [
+    DateScalar
+  ]
 })
 export class AppModule {}

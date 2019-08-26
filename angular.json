@@ -90,7 +90,10 @@
               "apps/nx-ng-starter/tsconfig.app.json",
               "apps/nx-ng-starter/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/nx-ng-starter/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/nx-ng-starter/**"
+            ]
           }
         },
         "test": {
@@ -173,7 +176,9 @@
             "outputPath": "dist/apps/api",
             "main": "apps/api/src/main.ts",
             "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"]
+            "assets": [
+              "apps/api/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -202,7 +207,10 @@
               "apps/api/tsconfig.app.json",
               "apps/api/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/api/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/api/**"
+            ]
           }
         },
         "test": {
@@ -227,7 +235,10 @@
               "libs/api-interface/tsconfig.lib.json",
               "libs/api-interface/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/api-interface/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/api-interface/**"
+            ]
           }
         },
         "test": {
@@ -252,7 +263,10 @@
               "libs/shared-core/tsconfig.lib.json",
               "libs/shared-core/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/shared-core/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/shared-core/**"
+            ]
           }
         },
         "test": {
@@ -283,7 +297,10 @@
               "libs/mocks-core/tsconfig.lib.json",
               "libs/mocks-core/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/mocks-core/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/mocks-core/**"
+            ]
           }
         },
         "test": {
