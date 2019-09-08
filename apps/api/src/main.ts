@@ -1,18 +1,19 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- **/
-import { Express } from 'express';
-import { ExpressAdapter } from '@nestjs/platform-express';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import { ExpressAdapter } from '@nestjs/platform-express';
+
+import { Express } from 'express';
+import express from 'express';
+
+import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
+
 import { AppModule } from './app/app.module';
 
-import express from 'express';
-import * as functions from 'firebase-functions';
-
+/**
+ * Express server.
+ */
 const server: Express = express();
-
 
 /**
  * Bootstraps server.
@@ -33,4 +34,15 @@ async function bootstrap(expressInstance: Express): Promise<any> {
 
 bootstrap(server);
 
-exports.carrierGraphql = functions.https.onRequest(server);
+/**
+ * Firebase configuration.
+ */
+const firebaseConfig = process.env.FIREBASE_CONFIG;
+
+/**
+ * Initialize admin and export firebase functions only in cloud environment.
+ */
+if (firebaseConfig) {
+  admin.initializeApp();
+  exports.graphql = functions.https.onRequest(server);
+}
