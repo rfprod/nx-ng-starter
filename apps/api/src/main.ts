@@ -31,6 +31,6 @@ async function bootstrap(expressInstance: Express): Promise<any> {
   });
 }
 
-bootstrap(express);
+bootstrap(server);
 
 exports.carrierGraphql = functions.https.onRequest(server);
