@@ -29,7 +29,7 @@ import { ToasterService } from '../toaster/toaster.service';
 import { HttpHandlersService } from './http-handlers.service';
 
 import { Observable, of } from 'rxjs';
-import { skip, take } from 'rxjs/operators';
+import { take } from 'rxjs/operators';
 import { HttpErrorCodes } from '../interfaces';
 import { HttpSuccessCodes } from '../interfaces/http-handlers/http-handlers.interface';
 
@@ -39,7 +39,6 @@ describe('HttpHandlersService', () => {
   let httpTestingController: HttpTestingController;
   let localStorage: LocalStorageMock;
   let toaster: ToasterService;
-  let win: Window;
   let user: UserService;
   let spy: any;
 
@@ -69,7 +68,6 @@ describe('HttpHandlersService', () => {
         toaster = TestBed.get(ToasterService) as ToasterService;
         httpTestingController = TestBed.get(HttpTestingController);
         apollo = TestBed.get(Apollo) as Apollo;
-        win = TestBed.get('Window') as Window;
         user = TestBed.get(UserService) as UserService;
 
         spy = {
@@ -97,13 +95,9 @@ describe('HttpHandlersService', () => {
   });
 
   it('should have variables and methods defined', () => {
-    expect(service['mockMode$']).toBeDefined();
-    expect(service.mockMode).toBeDefined();
     expect(service.defaultHttpTimeout).toEqual(expect.any(Number));
+    expect(service.api).toEqual(expect.any(String));
     expect(service.isLocalhost).toEqual(expect.any(Function));
-    expect(service.toggleMockMode).toEqual(expect.any(Function));
-    expect(service['apiDomain']).toEqual(expect.any(String));
-    expect(service.apiBaseUrl).toEqual(expect.any(Function));
     expect(service.graphQlEndpoint).toEqual(expect.any(Function));
     expect(service.getGraphQLHttpHeaders).toEqual(expect.any(Function));
     expect(service.getEndpoint).toEqual(expect.any(Function));
@@ -117,7 +111,8 @@ describe('HttpHandlersService', () => {
     expect(service.pipeRequestWithObjectResponse).toEqual(expect.any(Function));
     expect(service.pipeRequestWithArrayResponse).toEqual(expect.any(Function));
     expect(service.pipeGraphQLRequest).toEqual(expect.any(Function));
-    expect(service['spinnerTap']).toEqual(expect.any(Function));
+    expect(service.tapProgress).toEqual(expect.any(Function));
+    expect(service.tapError).toEqual(expect.any(Function));
     expect(service.createApolloLinkFor).toEqual(expect.any(Function));
   });
 
@@ -393,64 +388,6 @@ describe('HttpHandlersService', () => {
     });
   });
 
-  describe('toggleMockMode', () => {
-    let localStorage_toggleMock;
-    beforeEach(() => {
-      localStorage_toggleMock = window.localStorage;
-      localStorage_toggleMock.setItem('mock', true);
-    });
-
-    it('should emit new mock value if mode is provided', async(() => {
-      service.mockMode.subscribe(result => expect(result).toEqual(true));
-      service.toggleMockMode(true);
-    }));
-
-    it('should emit new mock value if mode is not provided', async(() => {
-      expect(service['mockMode$'].value).toEqual(true);
-      service.toggleMockMode();
-      service.mockMode.subscribe(result => expect(result).toEqual(false));
-    }));
-
-    it('should write in localStorage', async(() => {
-      service.mockMode
-        .pipe(skip(1 + 1))
-        .subscribe(() => expect(localStorage_toggleMock.setItem).toHaveBeenCalledWith(true));
-      service.toggleMockMode(true);
-    }));
-  });
-
-  it('apiBaseUrl should return mock server path if mockMode is true', async(() => {
-    const mockServerPath: string = win.location.origin;
-    expect(service['mockMode$'].value).toEqual(true);
-    expect(service.apiBaseUrl()).toEqual(mockServerPath);
-  }));
-
-  it('apiBaseUrl should return real server path if mockMode is false', async(() => {
-    const realServerPath = `${win.location.protocol}//${service['apiDomain']}`;
-    service.toggleMockMode(false);
-    expect(service['mockMode$'].value).toEqual(false);
-    expect(service.apiBaseUrl()).toEqual(realServerPath);
-  }));
-
-  it('toggleMockMode should emit new mock value if mode is provided', async(() => {
-    service.mockMode.subscribe(result => expect(result).toEqual(true));
-    service.toggleMockMode(true);
-  }));
-
-  it('graphQlEndpoint should work correctly', () => {
-    service.toggleMockMode(false);
-    expect(service.graphQlEndpoint(null)).not.toMatch(service['apiDomain']);
-
-    service.toggleMockMode(true);
-    expect(service.graphQlEndpoint(null)).not.toMatch(service['apiDomain']);
-
-    service.toggleMockMode(false);
-    expect(service.graphQlEndpoint('carrier')).toMatch(service['apiDomain']);
-
-    service.toggleMockMode(false);
-    expect(service.graphQlEndpoint('owner')).toMatch(service['apiDomain']);
-  });
-
   it('graphQLHttpHeaders should return new http headers with authorization header set', () => {
     const newHeadersObj: any = {
       Authorization: `Token ${user.getUser().token}`,
@@ -459,13 +396,6 @@ describe('HttpHandlersService', () => {
     expect(service.getGraphQLHttpHeaders().get('Authorization')).toEqual(
       newHeaders.get('Authorization'),
     );
-  });
-
-  it('getEndpoint should return path correctly', () => {
-    let path = '/path';
-    expect(service.getEndpoint(path)).toEqual(`${service.apiBaseUrl()}${path}`);
-    path = 'path';
-    expect(service.getEndpoint(path)).toEqual(`${service.apiBaseUrl()}/${path}`);
   });
 
   it('pipeRequestWithObjectResponse should work correctly', () => {

@@ -61,8 +61,8 @@ describe('AppIndexComponent', () => {
     expect(component).toBeDefined();
   });
 
-  it('should have as title "Components library directory"', () => {
+  it('should have as title "Components library directory", and should call markdown service process method on creation', () => {
     expect(component.title).toEqual('Components library directory');
-    expect(spy.service.process.mock.calls).toBeGreaterThan(0);
+    expect(spy.service.process.mock.calls.length).toBeGreaterThan(0);
   });
 });

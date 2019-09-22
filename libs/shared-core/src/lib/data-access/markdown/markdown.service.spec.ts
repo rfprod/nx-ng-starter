@@ -40,6 +40,6 @@ describe('MarkdownService', () => {
 
   it('process should process marked input', () => {
     expect(service.process('input')).toEqual('marked input');
-    expect(spy.service.process.mock.calls).toBeGreaterThan(0);
+    expect(spy.service.process.mock.calls.length).toBeGreaterThan(0);
   });
 });

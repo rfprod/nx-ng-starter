@@ -7,6 +7,12 @@ import { ToasterService } from './toaster.service';
 describe('ToasterService', () => {
   let service: ToasterService;
   let snackBar: MatSnackBar;
+  let spy: {
+    snackBar: {
+      open: jest.SpyInstance;
+      dismiss: jest.SpyInstance;
+    };
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -34,8 +40,12 @@ describe('ToasterService', () => {
       .then(() => {
         service = TestBed.get(ToasterService) as ToasterService;
         snackBar = TestBed.get(MatSnackBar) as MatSnackBar;
-        jest.spyOn(snackBar, 'open');
-        jest.spyOn(snackBar, 'dismiss');
+        spy = {
+          snackBar: {
+            open: jest.spyOn(snackBar, 'open'),
+            dismiss: jest.spyOn(snackBar, 'dismiss'),
+          },
+        };
       });
   }));
 
@@ -54,54 +64,59 @@ describe('ToasterService', () => {
   });
 
   it('showToaster should call snackBar.open with proper options depending on supplied arguments', () => {
-    service.showToaster('message', 'notification type' as any);
-    expect(snackBar.open).toHaveBeenCalledWith('message', null, {
-      panelClass: [],
-      verticalPosition: 'bottom',
-      duration: 7000,
-    });
-
+    const defaultDuration = 7000;
     const duration = 2000;
-    service.showToaster('message', 'notification type' as any, duration);
-    expect(snackBar.open).toHaveBeenCalledWith('message', null, {
+
+    service.showToaster('message', 'notification type' as any);
+    let spyCalls = spy.snackBar.open.mock.calls.length - 1;
+    expect(spy.snackBar.open.mock.calls[spyCalls]).toHaveBeenCalledWith('message', null, {
       panelClass: [],
       verticalPosition: 'bottom',
-      duration: 2000,
+      duration: defaultDuration,
     });
 
-    service.showToaster('message', 'error');
-    expect(snackBar.open).toHaveBeenCalledWith('message', null, {
+    service.showToaster('message', 'notification type' as any, duration);
+    spyCalls += 1;
+    expect(spy.snackBar.open.mock.calls[spyCalls]).toHaveBeenCalledWith('message', null, {
+      panelClass: [],
+      verticalPosition: 'bottom',
+      duration,
+    });
+
+    service.showToaster('message', 'error', defaultDuration);
+    spyCalls += 1;
+    expect(spy.snackBar.open.mock.calls[spyCalls]).toHaveBeenCalledWith('message', null, {
       panelClass: ['error-bg'],
       verticalPosition: 'bottom',
-      duration: 7000,
+      duration: defaultDuration,
     });
 
     service.showToaster('message', 'success');
-    expect(snackBar.open).toHaveBeenCalledWith('message', null, {
+    expect(spy.snackBar.open).toHaveBeenCalledWith('message', null, {
       panelClass: ['success-bg'],
       verticalPosition: 'bottom',
-      duration: 7000,
+      duration: defaultDuration,
     });
 
     service.showToaster('message', 'warn');
-    expect(snackBar.open).toHaveBeenCalledWith('message', null, {
+    expect(spy.snackBar.open).toHaveBeenCalledWith('message', null, {
       panelClass: ['warn-bg'],
       verticalPosition: 'bottom',
-      duration: 7000,
+      duration: defaultDuration,
     });
 
     service.showToaster('message', 'accent');
-    expect(snackBar.open).toHaveBeenCalledWith('message', null, {
+    expect(spy.snackBar.open).toHaveBeenCalledWith('message', null, {
       panelClass: ['accent-bg'],
       verticalPosition: 'bottom',
-      duration: 7000,
+      duration: defaultDuration,
     });
 
     service.showToaster('message', 'primary');
-    expect(snackBar.open).toHaveBeenCalledWith('message', null, {
+    expect(spy.snackBar.open).toHaveBeenCalledWith('message', null, {
       panelClass: ['primary-bg'],
       verticalPosition: 'bottom',
-      duration: 7000,
+      duration: defaultDuration,
     });
   });
 
