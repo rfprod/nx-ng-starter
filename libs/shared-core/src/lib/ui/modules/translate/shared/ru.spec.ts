@@ -3,7 +3,6 @@ import { TestBed, async } from '@angular/core/testing';
 import { RU } from './ru';
 
 describe('Russian shared translations', () => {
-
   let SHARED_RU: any;
 
   beforeEach(async(() => {
@@ -11,13 +10,16 @@ describe('Russian shared translations', () => {
       imports: [],
       providers: [
         {
-          provide: RU, useValue: RU
-        }
+          provide: RU,
+          useValue: RU,
+        },
       ],
       declarations: [],
-    }).compileComponents().then(() => {
-      SHARED_RU = TestBed.get(RU) as any;
-    });
+    })
+      .compileComponents()
+      .then(() => {
+        SHARED_RU = TestBed.get(RU);
+      });
   }));
 
   afterEach(() => {
@@ -25,11 +27,12 @@ describe('Russian shared translations', () => {
   });
 
   it('should create the app', () => {
-    expect(SHARED_RU).toEqual(jasmine.objectContaining({
-      shared: {
-        title: 'NX NG Starter'
-      }
-    }));
+    expect(SHARED_RU).toEqual(
+      jasmine.objectContaining({
+        shared: {
+          title: 'NX NG Starter',
+        },
+      }),
+    );
   });
-
 });

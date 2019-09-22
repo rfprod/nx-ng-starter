@@ -1,7 +1,7 @@
-import { TestBed, async, tick, fakeAsync } from '@angular/core/testing';
 import { OverlayModule, OverlayRef } from '@angular/cdk/overlay';
-import { ProgressService } from './progress.service';
+import { TestBed, async, fakeAsync, tick } from '@angular/core/testing';
 import { OverlayRefMock } from '@nx-ng-starter/mocks-core';
+import { ProgressService } from './progress.service';
 
 describe('ProgressService', () => {
   let service: ProgressService;
@@ -13,27 +13,27 @@ describe('ProgressService', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [],
-      imports: [
-        OverlayModule
-      ],
+      imports: [OverlayModule],
       providers: [
         {
           provide: OverlayRef,
-          useValue: new OverlayRefMock()
+          useValue: new OverlayRefMock(),
         },
         {
           provide: ProgressService,
           useFactory: (overlay: OverlayRef) => new ProgressService(overlay),
-          deps: [OverlayRef]
-        }
-      ]
-    }).compileComponents().then(() => {
-      service = TestBed.get(ProgressService);
-      overlayRef = TestBed.get(OverlayRef);
-      attachSpy = jest.spyOn(overlayRef, 'attach');
-      detachSpy = jest.spyOn(overlayRef, 'detach');
-      hasAttachedSpy = jest.spyOn(overlayRef, 'hasAttached').mockReturnValue(false);
-    });
+          deps: [OverlayRef],
+        },
+      ],
+    })
+      .compileComponents()
+      .then(() => {
+        service = TestBed.get(ProgressService);
+        overlayRef = TestBed.get(OverlayRef);
+        attachSpy = jest.spyOn(overlayRef, 'attach');
+        detachSpy = jest.spyOn(overlayRef, 'detach');
+        hasAttachedSpy = jest.spyOn(overlayRef, 'hasAttached').mockReturnValue(false);
+      });
   }));
 
   afterEach(() => {

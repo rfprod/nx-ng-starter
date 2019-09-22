@@ -1,16 +1,16 @@
-import { Injectable, Inject } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
-import { TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 import { DateAdapter } from '@angular/material';
 
 import { RU as SHARED_RU } from '../shared/ru';
 
 import {
+  ILangCode,
+  ISupportedLanguage,
   IUiLanguagesInterface,
   IUiTranslations,
-  ILangCode,
-  ISupportedLanguage
 } from '@nx-ng-starter/shared-core/data-access';
 
 import { Subject } from 'rxjs';
@@ -20,6 +20,36 @@ import { Subject } from 'rxjs';
  */
 @Injectable()
 export class AppTranslationUtilsService {
+  /**
+   * Language changes notifier.
+   */
+  public languageChanges: Subject<LangChangeEvent> = new Subject<LangChangeEvent>();
+
+  /**
+   * Available UI language codes.
+   */
+  private readonly langs: IUiLanguagesInterface = {
+    ru: 'ru',
+    en: 'en',
+  };
+
+  /**
+   * Supported UI languages.
+   */
+  private readonly supportedLangs: ISupportedLanguage[] = [
+    { key: 'en', name: 'English' },
+    { key: 'ru', name: 'Russian' },
+  ];
+
+  /**
+   * UI dictionaries.
+   */
+  private readonly translations: IUiTranslations = {
+    ru: { ...SHARED_RU },
+    en: {
+      /*, SHARED_EN*/
+    },
+  };
 
   /**
    * AppTranslationUtilsService constructor.
@@ -28,31 +58,12 @@ export class AppTranslationUtilsService {
    * @param window Window reference
    */
   constructor(
-    private translate: TranslateService,
-    private dateAdapter: DateAdapter<any>,
-    @Inject('Window') private window: Window
+    private readonly translate: TranslateService,
+    private readonly dateAdapter: DateAdapter<any>,
+    @Inject('Window') private readonly window: Window,
   ) {
     this.languageChangeSubscription();
   }
-
-  /**
-   * Translate service language change subscription.
-   */
-  private languageChangeSubscription(): void {
-    this.translate.onLangChange
-      .subscribe(
-        (langChangeEvent: any) => {
-          console.log('AppTranslationUtilsService, onLangChange, langChangeEvent', langChangeEvent)
-          this.languageChanges.next(langChangeEvent);
-          this.setDatepickersLocale(langChangeEvent.lang);
-        }
-      );
-  }
-
-  /**
-   * Language changes notifier.
-   */
-  public languageChanges = new Subject();
 
   /**
    * Initializes Translate service.
@@ -72,17 +83,10 @@ export class AppTranslationUtilsService {
    */
   public getUserLanguagePreference(): ILangCode {
     const navLang: string = this.window.navigator.language;
-    const userPreference: ILangCode = (navLang.match(/(ru-RU|ru)/ig) || navLang[0].match(/(ru)/ig)) ? 'ru' : 'en';
+    const userPreference: ILangCode =
+      navLang.match(/(ru-RU|ru)/gi) || navLang[0].match(/(ru)/gi) ? 'ru' : 'en';
     return userPreference;
   }
-
-  /**
-   * Available UI language codes.
-   */
-  private langs: IUiLanguagesInterface = {
-    ru: 'ru',
-    en: 'en'
-  };
 
   /**
    * Available UI language codes.
@@ -94,25 +98,9 @@ export class AppTranslationUtilsService {
   /**
    * Supported UI languages.
    */
-  private supportedLangs: ISupportedLanguage[] = [
-    { key: 'en', name: 'English' },
-    { key: 'ru', name: 'Russian' }
-  ];
-
-  /**
-   * Supported UI languages.
-   */
   public supportedLanguages(): ISupportedLanguage[] {
     return this.supportedLangs;
   }
-
-  /**
-   * UI dictionaries.
-   */
-  private translations: IUiTranslations = {
-    ru: Object.assign({}, SHARED_RU),
-    en: Object.assign({}/*, SHARED_EN*/)
-  };
 
   /**
    * UI dictionaries.
@@ -130,14 +118,25 @@ export class AppTranslationUtilsService {
     if (langCode in this.langs) {
       this.translate.use(this.langs[langCode]);
     }
-  };
-
+  }
   /**
    * Resolves if language is current based on provided language code
    * @param langCode language code
    */
   public isCurrentLanguage(langCode: ILangCode): boolean {
     return this.translate.currentLang === langCode;
+  }
+
+  /**
+   * Translate service language change subscription.
+   */
+  private languageChangeSubscription(): void {
+    this.translate.onLangChange.subscribe((langChangeEvent: LangChangeEvent) => {
+      console.log('AppTranslationUtilsService, onLangChange, langChangeEvent', langChangeEvent);
+      this.languageChanges.next(langChangeEvent);
+      const langCode: ILangCode = langChangeEvent.lang as ILangCode;
+      this.setDatepickersLocale(langCode);
+    });
   }
 
   /**
@@ -150,5 +149,4 @@ export class AppTranslationUtilsService {
     console.log('this.dateAdapter', this.dateAdapter);
     this.dateAdapter.setLocale(key);
   }
-
 }

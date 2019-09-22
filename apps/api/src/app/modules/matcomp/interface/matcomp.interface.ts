@@ -1,31 +1,30 @@
-import { NewMatcompInput as NewMatcompInputModel } from '../dto/new-matcomp.input';
-import { Matcomp as MatcompModel } from '../model/matcomp.model';
 import { MatcompArgs } from '../dto/matcomp.args';
+import { Matcomp as MatcompModel } from '../model/matcomp.model';
+import { NewMatcompInput } from './matcomp-new-input.interface';
 
 /**
  * Matcomp query interface.
  */
-export interface MatcompQuery {
-  findAll: (args: MatcompArgs) => Matcomp[];
-  findOneById: (id: string) => Matcomp;
+export interface IMatcompQuery {
+  findAll(args: MatcompArgs): Matcomp[];
+  findOneById(id: string): Matcomp;
 }
 
 /**
  * Matcomp mutation interface.
  */
-export interface MatcompMutation {
-  create: (id: NewMatcompInput) => Matcomp;
-  remove: (id: string) => Matcomp;
-}
-
-export class MatcompSubscription {
-  matcompCreated: Matcomp
+export interface IMatcompMutation {
+  create(id: NewMatcompInput): Matcomp;
+  remove(id: string): Matcomp;
 }
 
 /**
  * Matcomp interface with initialization.
  */
 export class Matcomp implements MatcompModel {
+  public id = '';
+  public name = '';
+  public description = '';
   constructor(input?: Matcomp | NewMatcompInput) {
     if (input) {
       this.id = input instanceof Matcomp ? input.id : this.id;
@@ -33,19 +32,4 @@ export class Matcomp implements MatcompModel {
       this.description = input.description;
     }
   }
-  id: string = '';
-  name: string = '';
-  description: string = '';
-}
-
-/**
- * New matcomp interface with initialization.
- */
-export class NewMatcompInput implements NewMatcompInputModel {
-  constructor(input?: NewMatcompInput) {
-    this.name = input.name;
-    this.description = input.description;
-  }
-  name: string = '';
-  description: string = '';
 }

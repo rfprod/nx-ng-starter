@@ -7,14 +7,13 @@ import { LocalStorageMock } from '@nx-ng-starter/mocks-core';
 import { Subject } from 'rxjs';
 
 describe('UserService', () => {
-
   let service: UserService;
   let localStorage: LocalStorageMock;
 
   beforeEach(async(() => {
     Object.defineProperty(window, 'localStorage', {
       value: new LocalStorageMock(),
-      writable: true
+      writable: true,
     });
     localStorage = window.localStorage;
     jest.spyOn(localStorage, 'setItem');
@@ -26,9 +25,9 @@ describe('UserService', () => {
         { provide: 'Window', useValue: window },
         {
           provide: UserService,
-          useFactory: () => new UserService()
-        }
-      ]
+          useFactory: () => new UserService(),
+        },
+      ],
     })
       .compileComponents()
       .then(() => {
@@ -65,8 +64,8 @@ describe('UserService', () => {
       expect.objectContaining({
         email: '',
         admin: false,
-        token: ''
-      })
+        token: '',
+      }),
     );
     expect(service['initializeModel']).toEqual(expect.any(Function));
     expect(service.getUser).toEqual(expect.any(Function));
@@ -82,24 +81,24 @@ describe('UserService', () => {
       expect.objectContaining({
         email: '',
         admin: false,
-        token: ''
-      })
+        token: '',
+      }),
     );
     service.saveUser({ email: 'ff@ff' });
     expect(service.getUser()).toEqual(
       expect.objectContaining({
         email: 'ff@ff',
         admin: false,
-        token: ''
-      })
+        token: '',
+      }),
     );
     service['initializeModel']();
     expect(service.getUser()).toEqual(
       expect.objectContaining({
         email: '',
         admin: false,
-        token: ''
-      })
+        token: '',
+      }),
     );
   });
 
@@ -109,8 +108,8 @@ describe('UserService', () => {
       expect.objectContaining({
         email: '',
         admin: false,
-        token: ''
-      })
+        token: '',
+      }),
     );
   });
 
@@ -119,8 +118,8 @@ describe('UserService', () => {
       expect.objectContaining({
         email: '',
         admin: false,
-        token: ''
-      })
+        token: '',
+      }),
     );
     expect(service.isLoggedIn()).toBeFalsy();
     service.saveUser({ token: 'tt' });
@@ -128,7 +127,6 @@ describe('UserService', () => {
   });
 
   it('saveUser should update UserService private model, and call isLoggedInSubscription.next() when token is updated', () => {
-
     expect(service.getUser().email).toEqual('');
     service.saveUser({ email: 'test' });
     expect(service.getUser().email).toEqual('test');
@@ -151,8 +149,8 @@ describe('UserService', () => {
       expect.objectContaining({
         email: '',
         admin: false,
-        token: ''
-      })
+        token: '',
+      }),
     );
     expect(service.isLoggedInSubscription.next).toHaveBeenCalled();
   });
@@ -164,24 +162,24 @@ describe('UserService', () => {
       expect.objectContaining({
         email: '',
         admin: false,
-        token: ''
-      })
+        token: '',
+      }),
     );
     localStorage.setItem(
       'userService',
       JSON.stringify({
         email: 'ff@ff',
         admin: true,
-        token: 'ff'
-      })
+        token: 'ff',
+      }),
     );
     service.restoreUser();
     expect(service.getUser()).toEqual(
       expect.objectContaining({
         email: 'ff@ff',
         admin: true,
-        token: 'ff'
-      })
+        token: 'ff',
+      }),
     );
     expect(service.isLoggedInSubscription.next).toHaveBeenCalled();
   });

@@ -18,19 +18,17 @@ describe('ToasterService', () => {
           useFactory: () =>
             new Object({
               open: (): MatSnackBarRef<SimpleSnackBar> =>
-                new Object({ dismiss: (): void => null }) as MatSnackBarRef<
-                  SimpleSnackBar
-                >,
-              dismiss: (): void => null
+                new Object({ dismiss: (): void => null }) as MatSnackBarRef<SimpleSnackBar>,
+              dismiss: (): void => null,
             }) as MatSnackBar,
-          deps: []
+          deps: [],
         },
         {
           provide: ToasterService,
           useFactory: snackbar => new ToasterService(snackbar),
-          deps: [MatSnackBar]
-        }
-      ]
+          deps: [MatSnackBar],
+        },
+      ],
     })
       .compileComponents()
       .then(() => {
@@ -60,49 +58,50 @@ describe('ToasterService', () => {
     expect(snackBar.open).toHaveBeenCalledWith('message', null, {
       panelClass: [],
       verticalPosition: 'bottom',
-      duration: 7000
+      duration: 7000,
     });
 
-    service.showToaster('message', 'notification type' as any, 2000);
+    const duration = 2000;
+    service.showToaster('message', 'notification type' as any, duration);
     expect(snackBar.open).toHaveBeenCalledWith('message', null, {
       panelClass: [],
       verticalPosition: 'bottom',
-      duration: 2000
+      duration: 2000,
     });
 
     service.showToaster('message', 'error');
     expect(snackBar.open).toHaveBeenCalledWith('message', null, {
       panelClass: ['error-bg'],
       verticalPosition: 'bottom',
-      duration: 7000
+      duration: 7000,
     });
 
     service.showToaster('message', 'success');
     expect(snackBar.open).toHaveBeenCalledWith('message', null, {
       panelClass: ['success-bg'],
       verticalPosition: 'bottom',
-      duration: 7000
+      duration: 7000,
     });
 
     service.showToaster('message', 'warn');
     expect(snackBar.open).toHaveBeenCalledWith('message', null, {
       panelClass: ['warn-bg'],
       verticalPosition: 'bottom',
-      duration: 7000
+      duration: 7000,
     });
 
     service.showToaster('message', 'accent');
     expect(snackBar.open).toHaveBeenCalledWith('message', null, {
       panelClass: ['accent-bg'],
       verticalPosition: 'bottom',
-      duration: 7000
+      duration: 7000,
     });
 
     service.showToaster('message', 'primary');
     expect(snackBar.open).toHaveBeenCalledWith('message', null, {
       panelClass: ['primary-bg'],
       verticalPosition: 'bottom',
-      duration: 7000
+      duration: 7000,
     });
   });
 

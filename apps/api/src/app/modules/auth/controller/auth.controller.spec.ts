@@ -10,7 +10,7 @@ describe('AppController', () => {
   beforeAll(async () => {
     app = await Test.createTestingModule({
       controllers: [AuthController],
-      providers: [AuthService]
+      providers: [AuthService],
     }).compile();
   });
 

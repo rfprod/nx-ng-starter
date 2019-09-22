@@ -9,20 +9,21 @@ import { DialogRefMock } from '../../util/refs/dialog-ref.mock';
 import { TranslateService } from '@ngx-translate/core';
 import { MatSnackbarRefMock } from '../../util/refs/snackbar-ref.mock';
 
+import { Provider } from '@angular/core';
+
 import {
-  UserService,
-  ProgressService,
-  ToasterService,
   APP_ENV,
   AppEnvironment,
-  HttpHandlersService
+  HttpHandlersService,
+  ProgressService,
+  ToasterService,
+  UserService,
 } from '@nx-ng-starter/shared-core/data-access';
-
 
 /**
  * Http handlers provider mock.
  */
-export const httpHandlersProvider = [
+export const httpHandlersProvider: Provider[] = [
   { provide: 'Window', useValue: window },
   {
     provide: UserService,
@@ -31,30 +32,30 @@ export const httpHandlersProvider = [
   HttpLink,
   {
     provide: OverlayRef,
-    useClass: OverlayRefMock
+    useClass: OverlayRefMock,
   },
   {
     provide: ProgressService,
     useFactory: (overlay: OverlayRef) => new ProgressService(overlay),
-    deps: [OverlayRef]
+    deps: [OverlayRef],
   },
   {
     provide: MatDialogRef,
-    useClass: DialogRefMock
+    useClass: DialogRefMock,
   },
   TranslateService,
   {
     provide: MatSnackBar,
-    useClass: MatSnackbarRefMock
+    useClass: MatSnackbarRefMock,
   },
   {
     provide: ToasterService,
     useFactory: (snackBar: MatSnackBar) => new ToasterService(snackBar),
-    deps: [MatSnackBar]
+    deps: [MatSnackBar],
   },
   {
     provide: APP_ENV,
-    useFactory: () => new AppEnvironment()
+    useFactory: () => new AppEnvironment(),
   },
   {
     provide: HttpHandlersService,
@@ -65,17 +66,8 @@ export const httpHandlersProvider = [
       progress: ProgressService,
       translate: TranslateService,
       win: Window,
-      env: AppEnvironment
-    ) =>
-      new HttpHandlersService(
-        user,
-        toaster,
-        httpLink,
-        progress,
-        translate,
-        win,
-        env
-      ),
+      env: AppEnvironment,
+    ) => new HttpHandlersService(user, toaster, httpLink, progress, translate, win, env),
     deps: [
       UserService,
       ToasterService,
@@ -83,7 +75,7 @@ export const httpHandlersProvider = [
       ProgressService,
       TranslateService,
       'Window',
-      APP_ENV
-    ]
-  }
+      APP_ENV,
+    ],
+  },
 ];

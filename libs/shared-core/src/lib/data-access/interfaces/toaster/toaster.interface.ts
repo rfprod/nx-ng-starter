@@ -16,25 +16,25 @@ export type ToasterExtraClasses = ToasterExtraClass[];
 /**
  * Toaster classes object.
  */
-export interface ToasterExtraClassesObj {
+export interface IToasterExtraClassesObj {
   error: ToasterExtraClasses;
   success: ToasterExtraClasses;
   warning: ToasterExtraClasses;
   accent: ToasterExtraClasses;
   primary: ToasterExtraClasses;
-};
+}
 
 /**
  * Returns extra classes for toaster depending on provided toaster type.
  * @param toasterType toaster type
  */
 export const toasterExtraClasses = (toasterType: ToastType): ToasterExtraClasses => {
-  const extraClasses: ToasterExtraClassesObj = {
+  const extraClasses: IToasterExtraClassesObj = {
     error: ['error-bg'],
     success: ['success-bg'],
     warning: ['warn-bg'],
     accent: ['accent-bg'],
-    primary: ['primary-bg']
+    primary: ['primary-bg'],
   };
   return extraClasses[toasterType] || [];
 };

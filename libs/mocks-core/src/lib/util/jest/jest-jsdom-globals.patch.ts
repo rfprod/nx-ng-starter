@@ -14,7 +14,7 @@ export const setupJestJsdomGlobalMocks: () => void = () => {
       media: query,
       onchange: null,
       addListener: jest.fn(),
-      removeListener: jest.fn()
+      removeListener: jest.fn(),
     };
   });
 
@@ -30,15 +30,20 @@ export const setupJestJsdomGlobalMocks: () => void = () => {
    */
   Object.defineProperty(window.URL, 'createObjectURL', {
     value: jest.fn(),
-    writable: false
+    writable: false,
   });
 
   /**
    * Jest requires this mock.
    */
   Object.defineProperty(global, 'fetch', {
-    value: jest.fn(() => new Promise(resolve => resolve())),
-    writable: false
+    value: jest.fn(async () => {
+      const promise: Promise<any> = new Promise(resolve => {
+        resolve();
+      });
+      return promise;
+    }),
+    writable: false,
   });
 
   /**
@@ -46,7 +51,7 @@ export const setupJestJsdomGlobalMocks: () => void = () => {
    */
   Object.defineProperty(global, 'URL', {
     value: window.URL,
-    writable: true
+    writable: true,
   });
 
   /**
@@ -54,7 +59,6 @@ export const setupJestJsdomGlobalMocks: () => void = () => {
    */
   Object.defineProperty(global, 'marked', {
     value: jest.fn((input: string) => `# mocked marked output ${input}`),
-    writable: false
+    writable: false,
   });
-
 };

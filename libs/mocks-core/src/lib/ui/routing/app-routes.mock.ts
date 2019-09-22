@@ -8,7 +8,7 @@ import { DummyComponent } from '../components/dummy.component.mock';
 const routes: Routes = [
   {
     path: 'passport',
-    component: DummyComponent
+    component: DummyComponent,
   },
   {
     path: 'orders',
@@ -23,8 +23,8 @@ const routes: Routes = [
               title: 'carrier orders table',
               color: 'primary',
               displayConfig: true,
-              filterOrderStatus: null
-            }
+              filterOrderStatus: null,
+            },
           },
           {
             path: ':id',
@@ -32,8 +32,8 @@ const routes: Routes = [
             data: {
               title: 'order',
               order: null,
-              predefinedOrderAction: null
-            }
+              predefinedOrderAction: null,
+            },
           },
           {
             path: 'auction/:id',
@@ -41,11 +41,11 @@ const routes: Routes = [
             data: {
               title: 'auction',
               order: null,
-              predefinedOrderAction: null
-            }
+              predefinedOrderAction: null,
+            },
           },
-          { path: '**', redirectTo: '/orders/carrier' }
-        ]
+          { path: '**', redirectTo: '/orders/carrier' },
+        ],
       },
       {
         path: 'owner',
@@ -57,31 +57,31 @@ const routes: Routes = [
               title: 'owner orders table',
               color: 'primary',
               displayConfig: true,
-              filterOrderStatus: null
-            }
+              filterOrderStatus: null,
+            },
           },
           {
             path: ':id',
             component: DummyComponent,
             data: {
               title: 'order',
-              dialogData: null
-            }
+              dialogData: null,
+            },
           },
           {
             path: 'auction/:id',
             component: DummyComponent,
             data: {
               title: 'auction',
-              dialogData: null
-            }
+              dialogData: null,
+            },
           },
-          { path: '**', redirectTo: '/orders/owner' }
-        ]
-      }
-    ]
+          { path: '**', redirectTo: '/orders/owner' },
+        ],
+      },
+    ],
   },
-  { path: '**', redirectTo: 'passport' }
+  { path: '**', redirectTo: 'passport' },
 ];
 
 /**

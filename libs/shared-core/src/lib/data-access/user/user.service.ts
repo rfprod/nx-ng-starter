@@ -10,32 +10,15 @@ import { BehaviorSubject } from 'rxjs';
  */
 @Injectable()
 export class UserService {
+  /**
+   * Notifies when user login state changes.
+   */
+  public isLoggedInSubscription: BehaviorSubject<AppUser>;
 
   /**
    * User service model.
    */
   private model: AppUser;
-
-  /**
-   * Initializes user model.
-   */
-  private initializeModel(): void {
-    this.model = new AppUser();
-  }
-
-  /**
-   * Restores user on service initialization.
-   */
-  private restoreUserOnInit(): void {
-    if (
-      !localStorage.getItem('userService') &&
-      typeof localStorage.getItem('userService') === 'undefined'
-    ) {
-      localStorage.setItem('userService', JSON.stringify(this.model));
-    } else {
-      this.restoreUser();
-    }
-  }
 
   /**
    * Constructor.
@@ -65,11 +48,6 @@ export class UserService {
   public isAdmin(): boolean {
     return this.model.token && this.model.admin;
   }
-
-  /**
-   * Notifies when user login state changes.
-   */
-  public isLoggedInSubscription: BehaviorSubject<AppUser> = new BehaviorSubject(this.model);
 
   /**
    * Updates user service model with new values.
@@ -108,4 +86,25 @@ export class UserService {
     console.log('reset user >>', localStorage.getItem('userService'));
   }
 
+  /**
+   * Initializes user model.
+   */
+  private initializeModel(): void {
+    this.model = new AppUser();
+    this.isLoggedInSubscription = new BehaviorSubject(this.model);
+  }
+
+  /**
+   * Restores user on service initialization.
+   */
+  private restoreUserOnInit(): void {
+    if (
+      !localStorage.getItem('userService') &&
+      typeof localStorage.getItem('userService') === 'undefined'
+    ) {
+      localStorage.setItem('userService', JSON.stringify(this.model));
+    } else {
+      this.restoreUser();
+    }
+  }
 }

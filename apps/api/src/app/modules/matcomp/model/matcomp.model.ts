@@ -8,21 +8,21 @@ import {
 export class Matcomp {
 
   @Field(_ => ID)
-  id: string;
+  public id: string;
 
   @Field({
-    defaultValue: ''
+    defaultValue: '',
   })
-  name: string;
+  public name: string;
 
   @Field({
-    defaultValue: ''
+    defaultValue: '',
   })
-  description: string;
+  public description: string;
 
   @Field({
-    defaultValue: new Date().getTime()
+    defaultValue: new Date().getTime(),
   })
-  creationDate?: Date;
+  public creationDate?: Date;
 
 }

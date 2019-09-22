@@ -6,9 +6,9 @@ import { Component } from '@angular/core';
  * Can be used when designing routing.
  */
 @Component({
-  selector: 'dummy-component',
+  selector: 'nx-ng-starter-dummy-component',
   template: `
     <span>dummy component</span>
-  `
+  `,
 })
 export class DummyComponent {}

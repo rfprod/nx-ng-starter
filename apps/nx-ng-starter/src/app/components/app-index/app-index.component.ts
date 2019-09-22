@@ -1,19 +1,8 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 
-import {
-  ActivatedRoute,
-  Params
-} from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 
-import {
-  EventEmitterService,
-  MarkdownService
-} from '@nx-ng-starter/shared-core/data-access';
+import { MarkdownService } from '@nx-ng-starter/shared-core/data-access';
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
 
@@ -21,71 +10,54 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
  * Application index component.
  */
 @Component({
-  selector: 'app-index',
+  selector: 'nx-ng-starter-app-index',
   templateUrl: './app-index.component.html',
   styleUrls: ['./app-index.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppIndexComponent implements OnInit, OnDestroy {
-
-  /**
-   * Constructor.
-   * @param emitter event emitter service
-   * @param markdown markdown service
-   * @param route activated route
-   */
-  constructor(
-    private emitter: EventEmitterService,
-    private markdown: MarkdownService,
-    private route: ActivatedRoute
-  ) {}
-
   /**
    * Component title.
    */
-  public title: string = 'Components library directory';
+  public title = 'Components library directory';
 
   /**
    * Demo state.
    */
   public demo: any = {
     off: true,
-    customButton: false
+    customButton: false,
   };
+
+  /**
+   * Constructor.
+   * @param markdown markdown service
+   * @param route activated route
+   */
+  constructor(private readonly markdown: MarkdownService, private readonly route: ActivatedRoute) {}
 
   /**
    * Returns sample processed markdown text.
    */
   public getMarkedIntro(): string {
-    return this.processMarkdown('# You can use Markdown \n\n via MarkdownService, just like in this example.');
-  }
-
-  /**
-   * Processes arbitrary text in markdown format.
-   * @param input input string in markdown format.
-   */
-  private processMarkdown(input: string): string {
-    console.log(this.markdown.process(input));
-    return this.markdown.process(input);
+    return this.processMarkdown(
+      '# You can use Markdown \n\n via MarkdownService, just like in this example.',
+    );
   }
 
   /**
    * Lifecycle hook called on component initialization.
    */
   public ngOnInit(): void {
-    this.emitter.getEmitter().pipe(untilDestroyed(this)).subscribe((event: any) => {
-      console.log('AppIndexComponent, event emitter subscription', event);
-    });
-
     this.route.queryParamMap.pipe(untilDestroyed(this)).subscribe((queryParams: Params) => {
       let selectedItem: string = queryParams.get('demo');
-      // console.log('selectedItem', selectedItem)
       if (!selectedItem) {
         selectedItem = 'off';
       }
       for (const key in this.demo) {
-        // console.log('key', key);
-        this.demo[key] = (key === selectedItem) ? true : false;
+        if (this.demo[key]) {
+          this.demo[key] = key === selectedItem ? true : false;
+        }
       }
     });
   }
@@ -95,4 +67,12 @@ export class AppIndexComponent implements OnInit, OnDestroy {
    */
   public ngOnDestroy(): void {}
 
+  /**
+   * Processes arbitrary text in markdown format.
+   * @param input input string in markdown format.
+   */
+  private processMarkdown(input: string): string {
+    console.log(this.markdown.process(input));
+    return this.markdown.process(input);
+  }
 }

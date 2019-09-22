@@ -2,6 +2,9 @@
  * Application user.
  */
 export class AppUser {
+  public email = '';
+  public admin = false;
+  public token = '';
 
   /**
    * Constructor.
@@ -14,8 +17,4 @@ export class AppUser {
     this.admin = admin ? admin : this.admin;
     this.token = token ? token : this.token;
   }
-
-  email: string = '';
-  admin: boolean = false;
-  token: string = '';
 }

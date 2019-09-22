@@ -1,24 +1,18 @@
 import { TestBed, async } from '@angular/core/testing';
 
-import { Response, ResponseOptions, Headers } from '@angular/http';
-
-import { HttpResponse, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
 
 import {
   HttpClientTestingModule,
-  HttpTestingController
+  HttpTestingController,
+  TestRequest,
 } from '@angular/common/http/testing';
 
 import { UserService } from '../user/user.service';
 
-import {
-  LocalStorageMock,
-  httpHandlersProvider
-} from '@nx-ng-starter/mocks-core';
+import { LocalStorageMock, httpHandlersProvider } from '@nx-ng-starter/mocks-core';
 
-import {
-  AppTranslateModule
-} from '@nx-ng-starter/shared-core/ui';
+import { AppTranslateModule } from '@nx-ng-starter/shared-core/ui';
 
 import { CustomMaterialModule } from '../../ui/index';
 
@@ -27,9 +21,8 @@ import { GraphQLError } from 'graphql';
 import { cold, getTestScheduler } from 'jasmine-marbles';
 
 import { Apollo, ApolloModule } from 'apollo-angular';
-import { ExecutionResult } from 'apollo-link';
 import { HttpLinkModule } from 'apollo-angular-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ExecutionResult } from 'apollo-link';
 
 import { ToasterService } from '../toaster/toaster.service';
 
@@ -37,9 +30,11 @@ import { HttpHandlersService } from './http-handlers.service';
 
 import { Observable, of } from 'rxjs';
 import { skip, take } from 'rxjs/operators';
+import { HttpErrorCodes } from '../interfaces';
+import { HttpSuccessCodes } from '../interfaces/http-handlers/http-handlers.interface';
 
 describe('HttpHandlersService', () => {
-  let service: HttpHandlersService|any;
+  let service: HttpHandlersService | any;
   let apollo: Apollo;
   let httpTestingController: HttpTestingController;
   let localStorage: LocalStorageMock;
@@ -51,7 +46,7 @@ describe('HttpHandlersService', () => {
   beforeEach(async(() => {
     Object.defineProperty(window, 'localStorage', {
       value: new LocalStorageMock(),
-      writable: true
+      writable: true,
     });
     localStorage = window.localStorage;
     jest.spyOn(localStorage, 'setItem');
@@ -63,16 +58,14 @@ describe('HttpHandlersService', () => {
         CustomMaterialModule,
         AppTranslateModule,
         ApolloModule,
-        HttpLinkModule
+        HttpLinkModule,
       ],
       providers: [...httpHandlersProvider],
-      schemas: []
+      schemas: [],
     })
       .compileComponents()
       .then(() => {
-        service = TestBed.get(
-          HttpHandlersService
-        ) as HttpHandlersService;
+        service = TestBed.get(HttpHandlersService) as HttpHandlersService;
         toaster = TestBed.get(ToasterService) as ToasterService;
         httpTestingController = TestBed.get(HttpTestingController);
         apollo = TestBed.get(Apollo) as Apollo;
@@ -81,20 +74,26 @@ describe('HttpHandlersService', () => {
 
         spy = {
           user: {
-            saveUser: jest.spyOn(user, 'saveUser')
+            saveUser: jest.spyOn(user, 'saveUser'),
           },
           service: {
-            checkErrorStatusAndRedirect: jest.spyOn(
-              service,
-              'checkErrorStatusAndRedirect'
-            )
-          }
+            checkErrorStatusAndRedirect: jest.spyOn(service, 'checkErrorStatusAndRedirect'),
+          },
         };
       });
   }));
 
+  afterEach(() => {
+    httpTestingController
+      .match((req: HttpRequest<any>): boolean => true)
+      .forEach((req: TestRequest) => (!req.cancelled ? req.flush({}) : null));
+    httpTestingController.verify();
+  });
+
   it('should be defined', () => {
     expect(service).toBeDefined();
+    expect(apollo).toBeDefined();
+    expect(toaster).toBeDefined();
   });
 
   it('should have variables and methods defined', () => {
@@ -126,13 +125,13 @@ describe('HttpHandlersService', () => {
     it('should return an Object if response is provided', () => {
       expect(
         service.extractObject(
-          new Response(new ResponseOptions({ body: {}, status: 200 }))
-        )
+          new HttpResponse<any>({ body: {}, status: HttpSuccessCodes.SUCCESS }),
+        ),
       ).toEqual(expect.any(Object));
     });
 
     it('should return an Object if res.json() returns falsy value', () => {
-      const res: { json?: () => any } = new Object({});
+      const res: { json?(): any } = new Object({});
       res.json = () => null;
       expect(service.extractObject(res)).toEqual(expect.any(Object));
     });
@@ -150,25 +149,23 @@ describe('HttpHandlersService', () => {
     it('extractArray should return an Array if response is provided', () => {
       expect(
         service.extractArray(
-          new Response(
-            new ResponseOptions({
-              body: { data: [{ x: 'x' }, { y: 'y' }] },
-              status: 200,
-              headers: new Headers({})
-            })
-          )
-        )
+          new HttpResponse<any>({
+            body: { data: [{ x: 'x' }, { y: 'y' }] },
+            status: HttpSuccessCodes.SUCCESS,
+            headers: new HttpHeaders({}),
+          }),
+        ),
       ).toEqual(expect.any(Array));
     });
 
     it('should return an Array if res.json() returns falsy value', () => {
-      const res: { json?: () => any } = new Object({});
+      const res: { json?(): any } = new Object({});
       res.json = () => new Object({ data: null });
       expect(service.extractArray(res)).toEqual(expect.any(Array));
     });
 
     it('should return an Array if res.json() returns falsy value and res does not contain data key', () => {
-      const res: { json?: () => any } = new Object({});
+      const res: { json?(): any } = new Object({});
       res.json = null;
       expect(service.extractArray(res)).toEqual(expect.any(Array));
     });
@@ -187,33 +184,25 @@ describe('HttpHandlersService', () => {
       service.extractHttpResponse(
         new HttpResponse({
           body: { data: [{ x: 'x' }, { y: 'y' }] },
-          status: 200
-        })
-      )
+          status: HttpSuccessCodes.SUCCESS,
+        }),
+      ),
     ).toEqual(expect.any(Object));
   });
 
   describe('extractGraphQLData', () => {
     it('should return an Array', async(() => {
       const executionResult: ExecutionResult = {
-        data: [{ x: 'x' }, { y: 'y' }]
+        data: [{ x: 'x' }, { y: 'y' }],
       };
-      expect(service.extractGraphQLData(executionResult)).toEqual(
-        expect.any(Array)
-      );
-      expect(service.extractGraphQLData(executionResult)).toEqual(
-        executionResult.data
-      );
+      expect(service.extractGraphQLData(executionResult)).toEqual(expect.any(Array));
+      expect(service.extractGraphQLData(executionResult)).toEqual(executionResult.data);
     }));
 
     it('should return execution result if response does not contain nested data object', async(() => {
       const executionResult: ExecutionResult = {};
-      expect(service.extractGraphQLData(executionResult)).toEqual(
-        expect.any(Object)
-      );
-      expect(service.extractGraphQLData(executionResult)).toEqual(
-        executionResult
-      );
+      expect(service.extractGraphQLData(executionResult)).toEqual(expect.any(Object));
+      expect(service.extractGraphQLData(executionResult)).toEqual(executionResult);
     }));
   });
 
@@ -227,7 +216,7 @@ describe('HttpHandlersService', () => {
   });
 
   it('pipeGraphQLRequest should check error if 401 status', async(() => {
-    const q$ = cold('---#|', null, { networkError: { status: 401 } });
+    const q$ = cold('---#|', null, { networkError: { status: HttpErrorCodes.BAD_REQUEST } });
     service
       .pipeGraphQLRequest(q$)
       .pipe(take(1))
@@ -238,35 +227,35 @@ describe('HttpHandlersService', () => {
         (error: any) => {
           console.log('pipeGraphQLRequest, error', error);
           expect(spy.service.checkErrorStatusAndRedirect).toHaveBeenCalledWith(
-            401
+            HttpErrorCodes.UNAUTHORIZED,
           );
-        }
+        },
       );
     getTestScheduler().flush();
   }));
 
   it('checkErrorStatusAndRedirect should reset user if error status is 401', () => {
-    service.checkErrorStatusAndRedirect(400);
+    service.checkErrorStatusAndRedirect(HttpErrorCodes.BAD_REQUEST);
     expect(spy.user.saveUser).not.toHaveBeenCalledWith({ token: '' });
-    service.checkErrorStatusAndRedirect(401);
+    service.checkErrorStatusAndRedirect(HttpErrorCodes.UNAUTHORIZED);
     expect(spy.user.saveUser).toHaveBeenCalledWith({ token: '' });
   });
 
   describe('handleError', () => {
     it('should return an Observable', () => {
       expect(service.handleError({ errors: [{ detail: 'error' }] })).toEqual(
-        expect.any(Observable)
+        expect.any(Observable),
       );
     });
 
     it('should return an Observable with nested error structure', () => {
-      expect(
-        service.handleError({ errors: [{ detail: { err1: 'err1' } }] })
-      ).toEqual(expect.any(Observable));
+      expect(service.handleError({ errors: [{ detail: { err1: 'err1' } }] })).toEqual(
+        expect.any(Observable),
+      );
     });
 
     it('should handle errors properly', async () => {
-      // this is returned by real backend by the moment
+      // This is returned by real backend by the moment
       await service
         .handleError({
           _body: JSON.stringify({
@@ -274,17 +263,17 @@ describe('HttpHandlersService', () => {
             message: 'errorMessage',
             detail: {
               root_erratic_item: {
-                erratic_item: ['error msg 1', 'error msg 2']
-              }
-            }
-          })
+                erratic_item: ['error msg 1', 'error msg 2'],
+              },
+            },
+          }),
         })
         .subscribe(
           () => true,
           (error: string) =>
             expect(error).toEqual(
-              'errorType - errorMessage: erratic_item - error msg 1, error msg 2'
-            )
+              'errorType - errorMessage: erratic_item - error msg 1, error msg 2',
+            ),
         );
       await service
         .handleError({
@@ -293,138 +282,108 @@ describe('HttpHandlersService', () => {
             message: 'errorMessage',
             detail: {
               root_erratic_item: {
-                erratic_item: ['error msg 1', 'error msg 2']
+                erratic_item: ['error msg 1', 'error msg 2'],
               },
-              erratic_item2: null
-            }
-          })
+              erratic_item2: null,
+            },
+          }),
         })
         .subscribe(
           () => true,
           (error: string) =>
             expect(error).toEqual(
-              'errorType - errorMessage: erratic_item - error msg 1, error msg 2'
-            )
+              'errorType - errorMessage: erratic_item - error msg 1, error msg 2',
+            ),
         );
       await service
         .handleError({
           status: '400',
           statusText: 'error status text',
-          _body: JSON.stringify(null)
+          _body: JSON.stringify(null),
         })
-        .subscribe(
-          () => true,
-          (error: string) => expect(error).toEqual('400 - error status text')
-        );
+        .subscribe(() => true, (error: string) => expect(error).toEqual('400 - error status text'));
       await service
         .handleError({ _body: JSON.stringify(null) })
-        .subscribe(
-          () => true,
-          (error: string) => expect(error).toEqual('Server error')
-        );
+        .subscribe(() => true, (error: string) => expect(error).toEqual('Server error'));
 
-      // optional error response handling
+      // Optional error response handling
       await service
         .handleError({
           _body: JSON.stringify({
-            errors: [{ code: 'err_code', detail: 'error body' }]
-          })
+            errors: [{ code: 'err_code', detail: 'error body' }],
+          }),
         })
-        .subscribe(
-          () => true,
-          (error: string) => expect(error).toEqual('err_code - error body')
-        );
+        .subscribe(() => true, (error: string) => expect(error).toEqual('err_code - error body'));
       await service
         .handleError({ errors: [{ code: 'err_code', detail: 'error body' }] })
-        .subscribe(
-          () => true,
-          (error: string) => expect(error).toEqual('err_code - error body')
-        );
+        .subscribe(() => true, (error: string) => expect(error).toEqual('err_code - error body'));
       await service
         .handleError({
           errors: [],
           status: '400',
-          statusText: 'error status text'
+          statusText: 'error status text',
         })
-        .subscribe(
-          () => true,
-          (error: string) => expect(error).toEqual('400 - error status text')
-        );
+        .subscribe(() => true, (error: string) => expect(error).toEqual('400 - error status text'));
       await service
         .handleError({
           _body: JSON.stringify({
             code: 'errorType',
-            message: 'general message'
-          })
+            message: 'general message',
+          }),
         })
         .subscribe(
           () => true,
-          (error: string) =>
-            expect(error).toEqual('errorType - general message')
+          (error: string) => expect(error).toEqual('errorType - general message'),
         );
       await service
         .handleError({ code: 'errorType', message: 'general message' })
         .subscribe(
           () => true,
-          (error: string) =>
-            expect(error).toEqual('errorType - general message')
+          (error: string) => expect(error).toEqual('errorType - general message'),
         );
       await service
         .handleError({
           code: 'errorType',
           message: 'general message',
-          detail: { inn: ['invalidValue'] }
+          detail: { inn: ['invalidValue'] },
         })
         .subscribe(
           () => true,
           (error: string) =>
-            expect(error).toEqual(
-              'errorType - general message: inn - invalidValue'
-            )
+            expect(error).toEqual('errorType - general message: inn - invalidValue'),
         );
       await service
         .handleError({
           code: 'errorType',
           message: 'general message',
-          detail: { inn: ['invalidValue1', 'invalidValue2'] }
+          detail: { inn: ['invalidValue1', 'invalidValue2'] },
         })
         .subscribe(
           () => true,
           (error: string) =>
             expect(error).toEqual(
-              'errorType - general message: inn - invalidValue1, invalidValue2'
-            )
+              'errorType - general message: inn - invalidValue1, invalidValue2',
+            ),
         );
       await service
         .handleError({
           _body: JSON.stringify({}),
           status: '400',
-          statusText: 'error status text'
+          statusText: 'error status text',
         })
-        .subscribe(
-          () => true,
-          (error: string) => expect(error).toEqual('400 - error status text')
-        );
+        .subscribe(() => true, (error: string) => expect(error).toEqual('400 - error status text'));
       await service
         .handleError({ status: '400', statusText: 'error status text' })
-        .subscribe(
-          () => true,
-          (error: string) => expect(error).toEqual('400 - error status text')
-        );
+        .subscribe(() => true, (error: string) => expect(error).toEqual('400 - error status text'));
       await service
         .handleError({})
-        .subscribe(
-          () => true,
-          (error: string) => expect(error).toEqual('Server error')
-        );
+        .subscribe(() => true, (error: string) => expect(error).toEqual('Server error'));
     });
   });
 
   describe('handleGraphQLError', () => {
     it('should return an Observable', () => {
-      expect(service['handleGraphQLError']('err')).toEqual(
-        expect.any(Observable)
-      );
+      expect(service['handleGraphQLError']('err')).toEqual(expect.any(Observable));
     });
   });
 
@@ -435,10 +394,10 @@ describe('HttpHandlersService', () => {
   });
 
   describe('toggleMockMode', () => {
-    let localStorage;
+    let localStorage_toggleMock;
     beforeEach(() => {
-      localStorage = window.localStorage;
-      localStorage.setItem('mock', true);
+      localStorage_toggleMock = window.localStorage;
+      localStorage_toggleMock.setItem('mock', true);
     });
 
     it('should emit new mock value if mode is provided', async(() => {
@@ -454,10 +413,8 @@ describe('HttpHandlersService', () => {
 
     it('should write in localStorage', async(() => {
       service.mockMode
-        .pipe(skip(2))
-        .subscribe(() =>
-          expect(localStorage.setItem).toHaveBeenCalledWith(true)
-        );
+        .pipe(skip(1 + 1))
+        .subscribe(() => expect(localStorage_toggleMock.setItem).toHaveBeenCalledWith(true));
       service.toggleMockMode(true);
     }));
   });
@@ -496,21 +453,19 @@ describe('HttpHandlersService', () => {
 
   it('graphQLHttpHeaders should return new http headers with authorization header set', () => {
     const newHeadersObj: any = {
-      Authorization: `Token ${user.getUser().token}`
+      Authorization: `Token ${user.getUser().token}`,
     };
     const newHeaders: HttpHeaders = new HttpHeaders(newHeadersObj);
     expect(service.getGraphQLHttpHeaders().get('Authorization')).toEqual(
-      newHeaders.get('Authorization')
+      newHeaders.get('Authorization'),
     );
   });
 
   it('getEndpoint should return path correctly', () => {
     let path = '/path';
-    expect(service.getEndpoint(path)).toEqual(service.apiBaseUrl() + path);
+    expect(service.getEndpoint(path)).toEqual(`${service.apiBaseUrl()}${path}`);
     path = 'path';
-    expect(service.getEndpoint(path)).toEqual(
-      service.apiBaseUrl() + `/${path}`
-    );
+    expect(service.getEndpoint(path)).toEqual(`${service.apiBaseUrl()}/${path}`);
   });
 
   it('pipeRequestWithObjectResponse should work correctly', () => {
@@ -525,69 +480,5 @@ describe('HttpHandlersService', () => {
     let pipedRequest = service.pipeRequestWithArrayResponse(observable);
     expect(pipedRequest).toEqual(expect.any(Observable));
     pipedRequest = service.pipeRequestWithArrayResponse(observable, 1);
-  });
-
-  describe('createApolloLinkFor', () => {
-    describe('with error link', () => {
-      let queryObservable: Observable<any>;
-      let req;
-      const setreq = () => {
-        req = httpTestingController.expectOne((req: HttpRequest<any>) =>
-          /carrier/.test(req.url)
-        );
-      };
-
-      beforeEach(() => {
-        const options = {
-          link: service.createApolloLinkFor('carrier'),
-          cache: new InMemoryCache({ resultCaching: false })
-        };
-
-        apollo.create(options, 'root');
-        queryObservable = apollo.use('root').watchQuery({
-          query: GRAPHQL_QUERY.CARRIER.GET_PROFILE,
-          variables: {},
-          fetchPolicy: 'no-cache'
-        }).valueChanges;
-      });
-
-      it('should show toaster', async(() => {
-        const toasterShow = jest.spyOn(toaster, 'showToaster');
-        queryObservable.subscribe({
-          error: () => {
-            expect(toasterShow).toHaveBeenCalled();
-          }
-        });
-        setreq();
-        req.flush('error', { status: 500, statusText: 'Error' });
-      }));
-
-      it('should show proper if graphQLErrors', async(() => {
-        const toasterShow = jest.spyOn(toaster, 'showToaster');
-        queryObservable.subscribe({
-          error: () => {
-            const params =
-              toasterShow.mock.calls[toasterShow.mock.calls.length - 1];
-            expect(/GraphQL/.test(params[0])).toBeTruthy();
-          }
-        });
-        setreq();
-        req.flush(
-          {
-            errors: [
-              {
-                message: 'forbidden',
-                locations: [],
-                path: ['protectedAction'],
-                extensions: {
-                  code: 'UNAUTHENTICATED'
-                }
-              }
-            ]
-          },
-          { status: 200, statusText: 'OK' }
-        );
-      }));
-    });
   });
 });

@@ -10,7 +10,7 @@ import { MatcompService } from './service/matcomp.service';
   providers: [
     MatcompService,
     MatcompResolvers,
-    DateScalar
+    DateScalar,
   ],
 })
 export class MatcompModule {}

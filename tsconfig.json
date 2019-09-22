@@ -13,14 +13,17 @@
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
     "importHelpers": true,
-    "target": "es5",
-    "module": "es2015",
+    "target": "es6",
+    "module": "esnext",
     "typeRoots": ["node_modules/@types"],
-    "lib": ["es2017", "dom"],
+    "lib": ["es2018", "dom", "esnext.asynciterable"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "esModuleInterop": true,
     "baseUrl": ".",
+    "downlevelIteration": true,
+    "rootDirs": ["./dist"],
+    "noUnusedLocals": true,
     "paths": {
       "@nx-ng-starter/api-interface": ["libs/api-interface/src/index.ts"],
       "@nx-ng-starter/shared-core": ["libs/shared-core/src/index.ts"],
@@ -32,6 +35,10 @@
       "@nx-ng-starter/mocks-core/ui": ["libs/mocks-core/src/lib/ui/index.ts"],
       "@nx-ng-starter/mocks-core/util": ["libs/mocks-core/src/lib/util/index.ts"]
     }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
   },
   "exclude": ["node_modules", "tmp"]
 }

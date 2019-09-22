@@ -1,32 +1,26 @@
-import {
-  NgModule,
-  ModuleWithProviders
-} from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {
-  FormsModule,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import {
-  CustomMaterialModule,
-  customMaterialModuleProviders,
   AppTranslateModule,
-  appTranslateModuleProviders
+  CustomMaterialModule,
+  appTranslateModuleProviders,
+  customMaterialModuleProviders,
 } from './ui';
 
 import {
+  APP_ENV,
+  AppEnvironment,
   SharedCoreServicesModule,
   sharedCoreModuleProviders,
-  APP_ENV,
-  AppEnvironment
 } from './data-access';
 
 /**
@@ -40,10 +34,10 @@ import {
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
+    HttpClientModule,
     CustomMaterialModule.forRoot(),
     AppTranslateModule.forRoot(),
-    SharedCoreServicesModule.forRoot()
+    SharedCoreServicesModule.forRoot(),
   ],
   exports: [
     BrowserModule,
@@ -51,19 +45,18 @@ import {
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpModule,
+    HttpClientModule,
     CustomMaterialModule,
     AppTranslateModule,
-    SharedCoreServicesModule
-  ]
+    SharedCoreServicesModule,
+  ],
 })
 export class SharedCoreModule {
-
   /**
    * Provides services.
    * @param environment application environment, if omitted default environment will be provided.
    */
-  static forRoot(environment?: AppEnvironment): ModuleWithProviders {
+  public static forRoot(environment?: AppEnvironment): ModuleWithProviders {
     return {
       ngModule: SharedCoreModule,
       providers: [
@@ -72,10 +65,9 @@ export class SharedCoreModule {
         ...sharedCoreModuleProviders,
         {
           provide: APP_ENV,
-          useFactory: () => new AppEnvironment(environment)
-        }
-      ]
+          useFactory: () => new AppEnvironment(environment),
+        },
+      ],
     };
   }
-
 }

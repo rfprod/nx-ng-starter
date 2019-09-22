@@ -1,9 +1,12 @@
 <span fxLayout="column" fxLayoutAlign="start stretch">
-
   <mat-toolbar color="primary" fxFlex="0 1 auto">
-
     <button mat-icon-button (click)="appSidenav.toggle()">
-      <img [ngStyle]="{ height: '75%', width: 'auto!important'}" src="/favicon.ico" alt="{{title}}" title="{{title}}" />
+      <img
+        [ngStyle]="{ height: '75%', width: 'auto!important' }"
+        src="/favicon.ico"
+        alt="{{ title }}"
+        title="{{ title }}"
+      />
     </button>
 
     <span fxFlex="1 1 auto"></span>
@@ -11,34 +14,55 @@
     <button mat-button [fxHide.xs]="true" [fxHide.sm]="true">
       <mat-icon class="material-icons">help_outline</mat-icon> Help
     </button>
-    <a mat-button [fxHide.xs]="true" [fxHide.sm]="true" href="https://cli.angular.io/reference.pdf" target=_blank>
+    <a
+      mat-button
+      [fxHide.xs]="true"
+      [fxHide.sm]="true"
+      href="https://cli.angular.io/reference.pdf"
+      target="_blank"
+    >
       <mat-icon class="material-icons">build</mat-icon> CLI Reference
     </a>
-    <a mat-button [fxHide.xs]="true" [fxHide.sm]="true" href="https://material.angular.io/" target=_blank>
+    <a
+      mat-button
+      [fxHide.xs]="true"
+      [fxHide.sm]="true"
+      href="https://material.angular.io/"
+      target="_blank"
+    >
       <mat-icon class="material-icons">change_history</mat-icon> Angular Material
     </a>
-    <a mat-button [fxHide.xs]="true" [fxHide.sm]="true" href="https://material.io/icons/" target=_blank>
+    <a
+      mat-button
+      [fxHide.xs]="true"
+      [fxHide.sm]="true"
+      href="https://material.io/icons/"
+      target="_blank"
+    >
       <mat-icon class="material-icons">info_outline</mat-icon> Material Icons
     </a>
 
-    <button mat-icon-button [matMenuTriggerFor]="mobileMenuTop" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="mobileMenuTop"
+      [fxHide.md]="true"
+      [fxHide.lg]="true"
+      [fxHide.xl]="true"
+    >
       <mat-icon class="material-icons">menu</mat-icon>
     </button>
     <mat-menu #mobileMenuTop="matMenu" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
-      <button mat-menu-item>
-        <mat-icon class="material-icons">help_outline</mat-icon> Help
-      </button>
-      <a mat-menu-item href="https://cli.angular.io/reference.pdf" target=_blank>
+      <button mat-menu-item><mat-icon class="material-icons">help_outline</mat-icon> Help</button>
+      <a mat-menu-item href="https://cli.angular.io/reference.pdf" target="_blank">
         <mat-icon class="material-icons">build</mat-icon> CLI Reference
       </a>
-      <a mat-menu-item href="https://material.angular.io/" target=_blank>
+      <a mat-menu-item href="https://material.angular.io/" target="_blank">
         <mat-icon class="material-icons">change_history</mat-icon> Angular Material
       </a>
-      <a mat-menu-item href="https://material.io/icons/" target=_blank>
+      <a mat-menu-item href="https://material.io/icons/" target="_blank">
         <mat-icon class="material-icons">info_outline</mat-icon> Material Icons
       </a>
     </mat-menu>
-
   </mat-toolbar>
 
   <mat-sidenav-container fxFlex="1 1 auto">
@@ -50,17 +74,18 @@
       </mat-grid-list>
     </mat-sidenav>
     <mat-sidenav-content>
-
       <router-outlet></router-outlet>
-
     </mat-sidenav-content>
   </mat-sidenav-container>
 
   <mat-toolbar color="primary" fxFlex="0 1 auto">
-
     <button mat-icon-button (click)="appSidenav.toggle()">
-      <mat-icon class="material-icons" title="open sidenav" *ngIf="!sidenavOpened">flip_to_front</mat-icon>
-      <mat-icon class="material-icons" title="open sidenav" *ngIf="sidenavOpened">flip_to_back</mat-icon>
+      <mat-icon class="material-icons" title="open sidenav" *ngIf="!sidenavOpened"
+        >flip_to_front</mat-icon
+      >
+      <mat-icon class="material-icons" title="open sidenav" *ngIf="sidenavOpened"
+        >flip_to_back</mat-icon
+      >
     </button>
 
     <span fxFlex="1 1 auto"></span>
@@ -75,22 +100,22 @@
       <mat-icon class="material-icons">home</mat-icon> Home
     </button>
 
-    <button mat-icon-button [matMenuTriggerFor]="mobileMenuBottom" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
+    <button
+      mat-icon-button
+      [matMenuTriggerFor]="mobileMenuBottom"
+      [fxHide.md]="true"
+      [fxHide.lg]="true"
+      [fxHide.xl]="true"
+    >
       <mat-icon class="material-icons">reorder</mat-icon>
     </button>
 
     <mat-menu #mobileMenuBottom="matMenu" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
-      <a mat-menu-item>
-        <mat-icon class="material-icons">touch_app</mat-icon> Action 1
-      </a>
-      <a mat-menu-item>
-        <mat-icon class="material-icons">touch_app</mat-icon> Action 2
-      </a>
+      <a mat-menu-item> <mat-icon class="material-icons">touch_app</mat-icon> Action 1 </a>
+      <a mat-menu-item> <mat-icon class="material-icons">touch_app</mat-icon> Action 2 </a>
       <a mat-menu-item [routerLink]="['']">
         <mat-icon class="material-icons">home</mat-icon> Home
       </a>
     </mat-menu>
-
   </mat-toolbar>
-
 </span>

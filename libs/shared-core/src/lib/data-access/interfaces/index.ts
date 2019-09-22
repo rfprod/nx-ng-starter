@@ -11,3 +11,5 @@ export * from './ui/ui-languages.interface';
 export * from './ui/ui-translations.interface';
 
 export * from './user/user.interface';
+
+export * from './http-handlers/http-handlers.interface';

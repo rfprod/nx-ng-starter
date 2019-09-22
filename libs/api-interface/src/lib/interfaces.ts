@@ -1,2 +1,2 @@
 export * from './message.interface';
-export * from './user.interface';
+export * from './user/index';

@@ -3,6 +3,6 @@
  */
 export const RU = {
   shared: {
-    title: 'NX NG Starter'
-  }
+    title: 'NX NG Starter',
+  },
 };

@@ -1,16 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import {
-  MatSnackBar,
-  MatSnackBarRef,
-  SimpleSnackBar
-} from '@angular/material';
+import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material';
 
-import {
-  ToastType,
-  ToasterExtraClasses,
-  toasterExtraClasses
-} from '../interfaces';
+import { ToastType, ToasterExtraClasses, toasterExtraClasses } from '../interfaces';
 
 /**
  * Toaster service for user feedback.
@@ -20,17 +12,21 @@ import {
  */
 @Injectable()
 export class ToasterService {
-
   /**
    * Snackbar reference.
    */
   private snackBarRef: MatSnackBarRef<SimpleSnackBar>;
 
   /**
+   * Default toaster duration value.
+   */
+  private readonly defaultDuration = 7000;
+
+  /**
    * Constructor.
    * @param snackBar material snackbar
    */
-  constructor(private snackBar: MatSnackBar) {}
+  constructor(private readonly snackBar: MatSnackBar) {}
 
   /**
    * Shows snackbar.
@@ -38,16 +34,12 @@ export class ToasterService {
    * @param type event type, colorizes snackbar
    * @param duration snackbar visibility duration in milliseconds
    */
-  public showToaster(
-    message: string,
-    type: ToastType,
-    duration?: number
-  ): void {
-    let ec: ToasterExtraClasses = toasterExtraClasses(type);
+  public showToaster(message: string, type: ToastType, duration?: number): void {
+    const ec: ToasterExtraClasses = toasterExtraClasses(type);
     this.snackBarRef = this.snackBar.open(message, null, {
       panelClass: ec,
       verticalPosition: 'bottom',
-      duration: duration ? duration : 7000
+      duration: duration ? duration : this.defaultDuration,
     });
   }
 
@@ -59,5 +51,4 @@ export class ToasterService {
       this.snackBarRef.dismiss();
     }
   }
-
 }

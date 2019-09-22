@@ -1,6 +1,6 @@
 import {
-  NgModule,
-  CUSTOM_ELEMENTS_SCHEMA
+  CUSTOM_ELEMENTS_SCHEMA,
+  NgModule
 } from '@angular/core';
 
 import {
@@ -11,8 +11,8 @@ import { SharedCoreModule } from '@nx-ng-starter/shared-core';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { AppComponent } from './components/app/app.component';
 import { AppIndexComponent } from './components/app-index/app-index.component';
+import { AppComponent } from './components/app/app.component';
 
 /**
  * Application root module.
@@ -20,23 +20,23 @@ import { AppIndexComponent } from './components/app-index/app-index.component';
 @NgModule({
   imports: [
     SharedCoreModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [
     {
       provide: APP_BASE_HREF,
-      useValue: '/'
-    }
+      useValue: '/',
+    },
   ],
   declarations: [
     AppComponent,
-    AppIndexComponent
+    AppIndexComponent,
   ],
   schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
+    CUSTOM_ELEMENTS_SCHEMA,
   ],
   bootstrap: [
-    AppComponent
-  ]
+    AppComponent,
+  ],
 })
 export class AppModule {}

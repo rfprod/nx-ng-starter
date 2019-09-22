@@ -3,7 +3,7 @@ import { InjectionToken } from '@angular/core';
 /**
  * Application environment constructor options interface.
  */
-export interface AppEnvironmentConstructorOptions {
+export interface IAppEnvironmentConstructorOptions {
   production?: boolean;
   appName?: string;
   api?: string;
@@ -19,13 +19,16 @@ export type AppName = 'Nx Ng Starter' | string;
  * By default generates dev environment.
  */
 export class AppEnvironment {
+  public production = false;
+  public appName: AppName = 'Nx Ng Starter';
+  public api?: string;
 
   /**
    * Constructor.
    * By default generates dev environment.
    * @param options app env constructor options
    */
-  constructor(options: AppEnvironmentConstructorOptions = {}) {
+  constructor(options: IAppEnvironmentConstructorOptions = {}) {
     if ('production' in options) {
       this.production = options.production;
     }
@@ -36,10 +39,6 @@ export class AppEnvironment {
       this.api = options.api;
     }
   }
-
-  production: boolean = false;
-  appName: AppName = 'Nx Ng Starter';
-  api?: string;
 }
 
 /**

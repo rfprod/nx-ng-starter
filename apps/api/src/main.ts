@@ -1,34 +1,35 @@
-import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
 
-import { Express } from 'express';
 import express from 'express';
 
-import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
+import * as functions from 'firebase-functions';
 
 import { AppModule } from './app/app.module';
 
 /**
  * Express server.
  */
-const server: Express = express();
+const server: express.Express = express();
+
+/**
+ * Defult port value.
+ */
+const defaultPort = 3333;
 
 /**
  * Bootstraps server.
  */
-async function bootstrap(expressInstance: Express): Promise<any> {
-  const app = await NestFactory.create(
-    AppModule,
-    new ExpressAdapter(expressInstance)
-  );
+async function bootstrap(expressInstance: express.Express): Promise<any> {
+  const app = await NestFactory.create(AppModule, new ExpressAdapter(expressInstance));
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   app.useGlobalPipes(new ValidationPipe());
-  const port = process.env.port || 3333;
+  const port = process.env.port || defaultPort;
   await app.listen(port, () => {
-    console.log('Listening at http://localhost:' + port + '/' + globalPrefix);
+    console.log(`Listening at http://localhost: ${port}/${globalPrefix}`);
   });
 }
 

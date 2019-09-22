@@ -1,54 +1,35 @@
-import {
-  Injectable,
-  Inject
-} from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 
-import {
-  HttpResponse,
-  HttpHeaders,
-  HttpErrorResponse
-} from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 
-import {
-  ApolloLink,
-  ExecutionResult,
-  Observable as ApolloObservable,
-  split
-} from 'apollo-link';
+import { ApolloLink, ExecutionResult, split } from 'apollo-link';
 
-import { onError, ErrorResponse } from 'apollo-link-error';
 import { HttpLink } from 'apollo-angular-link-http';
+import { ErrorResponse, onError } from 'apollo-link-error';
 
-import { getMainDefinition } from 'apollo-utilities';
 import { createUploadLink } from 'apollo-upload-client';
+import { getMainDefinition } from 'apollo-utilities';
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { UserService } from '../user/user.service';
 import { APP_ENV, AppEnvironment } from '../interfaces';
-import { ToasterService } from '../toaster/toaster.service';
 import { ProgressService } from '../progress/progress.service';
+import { ToasterService } from '../toaster/toaster.service';
+import { UserService } from '../user/user.service';
 
-import {
-  Observable,
-  concat,
-  throwError
-} from 'rxjs';
+import { MonoTypeOperatorFunction, Observable, concat, throwError } from 'rxjs';
 
-import {
-  timeout,
-  take,
-  map,
-  tap,
-  catchError
-} from 'rxjs/operators';
+import { catchError, map, take, tap, timeout } from 'rxjs/operators';
+
+export enum ErrorStatusCodes {
+  UNAUTHORIZED = 401,
+}
 
 /**
  * Http handers service.
  */
 @Injectable()
 export class HttpHandlersService {
-
   /**
    * Default timeout interval for http-requests.
    */
@@ -57,7 +38,7 @@ export class HttpHandlersService {
   /**
    * Rest server api domain.
    */
-  private api: string = this.window.location.origin;
+  private readonly api: string = this.window.location.origin;
 
   /**
    * Constructor.
@@ -70,13 +51,13 @@ export class HttpHandlersService {
    * @param appEnv app environment
    */
   constructor(
-    private user: UserService,
-    private toaster: ToasterService,
-    private httpLink: HttpLink,
-    private progress: ProgressService,
-    private translate: TranslateService,
-    @Inject('Window') private window: Window,
-    @Inject(APP_ENV) private appEnv: AppEnvironment
+    private readonly user: UserService,
+    private readonly toaster: ToasterService,
+    private readonly httpLink: HttpLink,
+    private readonly progress: ProgressService,
+    private readonly translate: TranslateService,
+    @Inject('Window') private readonly window: Window,
+    @Inject(APP_ENV) private readonly appEnv: AppEnvironment,
   ) {
     this.api = this.appEnv.api || this.api;
   }
@@ -92,7 +73,7 @@ export class HttpHandlersService {
    * Resolver graphQL base url, adds correct protocol.
    */
   public graphQlEndpoint(): string {
-    const url: string = `${this.window.location.protocol}//${this.api}/graphql`;
+    const url = `${this.window.location.protocol}//${this.api}/graphql`;
     console.log('graphQlEndpoint, url', url);
     return url;
   }
@@ -102,7 +83,7 @@ export class HttpHandlersService {
    */
   public getGraphQLHttpHeaders(): HttpHeaders {
     return new HttpHeaders({
-      Authorization: `Token ${this.user.getUser().token}`
+      Authorization: `Token ${this.user.getUser().token}`,
     });
   }
 
@@ -112,8 +93,8 @@ export class HttpHandlersService {
    * @param path endpoint path
    */
   public getEndpoint(path: string): string {
-    path = /^\/.*$/.test(path) ? path : `/${path}`;
-    return this.api + path;
+    const p = /^\/.*$/.test(path) ? path : `/${path}`;
+    return this.api + p;
   }
 
   /**
@@ -121,11 +102,7 @@ export class HttpHandlersService {
    * @param res http response, either extracted (body in json) or http response that should be parsed
    */
   public extractObject(res: any): object {
-    return !res
-      ? {}
-      : typeof res.json === 'function'
-      ? res.json() || {}
-      : res || {};
+    return !res ? {} : typeof res.json === 'function' ? res.json() || {} : res || {};
   }
 
   /**
@@ -133,11 +110,7 @@ export class HttpHandlersService {
    * @param res http response, either extracted (body in json) or http response that should be parsed
    */
   public extractArray(res: any): any[] {
-    return !res
-      ? []
-      : typeof res.json === 'function'
-      ? res.json().data || []
-      : res.data || [];
+    return !res ? [] : typeof res.json === 'function' ? res.json().data || [] : res.data || [];
   }
 
   /**
@@ -168,7 +141,7 @@ export class HttpHandlersService {
    */
   public checkErrorStatusAndRedirect(status: any): void {
     console.log('checkErrorStatusAndRedirect, status', status);
-    if (status === 401) {
+    if (status === ErrorStatusCodes.UNAUTHORIZED) {
       this.user.saveUser({ token: '' });
     }
   }
@@ -185,7 +158,7 @@ export class HttpHandlersService {
     let msg: string;
     let errors: any;
     if (typeof error._body === 'string' && error._body !== 'null') {
-      // unwrap body
+      // Unwrap body
       error._body = JSON.parse(error._body);
       errors = error._body.errors
         ? error._body.errors
@@ -193,17 +166,12 @@ export class HttpHandlersService {
         ? error._body
         : null;
     }
-    errors =
-      !errors && error.errors
-        ? error.errors
-        : error.code && error.message
-        ? error
-        : errors;
+    errors = !errors && error.errors ? error.errors : error.code && error.message ? error : errors;
     if (errors) {
       if (Array.isArray(errors)) {
         // Parse errors as array: { errors: [ { code: 'c', detail: 'd' } ] }
         if (errors.length) {
-          const e = errors[0]; // grab only first error
+          const e = errors[0]; // Grab only first error
           msg = e.code && e.detail ? `${e.code} - ${e.detail}` : null;
         }
       } else {
@@ -214,10 +182,7 @@ export class HttpHandlersService {
           console.log('errors.detail is object');
           for (const key in errors.detail) {
             if (errors.detail[key]) {
-              if (
-                !Array.isArray(errors.detail[key]) &&
-                typeof errors.detail[key] === 'object'
-              ) {
+              if (!Array.isArray(errors.detail[key]) && typeof errors.detail[key] === 'object') {
                 for (const subkey in errors.detail[key]) {
                   if (errors.detail[key][subkey]) {
                     errors.detail[subkey] = errors.detail[key][subkey];
@@ -230,7 +195,7 @@ export class HttpHandlersService {
           // Now parse it.
           for (const key in errors.detail) {
             if (errors.detail[key]) {
-              errDetail += key + ' - ' + errors.detail[key].join(', ') + ' ';
+              errDetail += `${key} - ${errors.detail[key].join(', ')} `;
             }
           }
           errDetail = errDetail.trim();
@@ -250,27 +215,16 @@ export class HttpHandlersService {
   }
 
   /**
-   * Handles graphQL error response.
-   * @param error error message
-   */
-  private handleGraphQLError(error: string): Observable<any> {
-    return throwError(error);
-  }
-
-  /**
    * Pipes request with object response.
    * @param observable request observable
    * @param listenX number of responses to catch
    */
-  public pipeRequestWithObjectResponse(
-    observable: Observable<any>,
-    listenX: number = 1
-  ) {
+  public pipeRequestWithObjectResponse(observable: Observable<any>, listenX: number = 1) {
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
       take(listenX),
-      map(this.extractObject),
-      catchError(this.handleError)
+      map(res => this.extractObject(res)),
+      catchError(err => this.handleError(err)),
     );
   }
 
@@ -279,15 +233,12 @@ export class HttpHandlersService {
    * @param observable request observable
    * @param listenX number of responses to catch
    */
-  public pipeRequestWithArrayResponse(
-    observable: Observable<any>,
-    listenX: number = 1
-  ) {
+  public pipeRequestWithArrayResponse(observable: Observable<any>, listenX: number = 1) {
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
       take(listenX),
-      map(this.extractArray),
-      catchError(this.handleError)
+      map(res => this.extractArray(res)),
+      catchError(err => this.handleError(err)),
     );
   }
 
@@ -297,67 +248,29 @@ export class HttpHandlersService {
    * @param listenX number of responses to catch
    * @param withprogress should request start progress
    */
-  public pipeGraphQLRequest(
-    observable: Observable<any>,
-    listenX: number = 1,
-    withprogress = true
-  ) {
-    const oldSubscribe = observable.subscribe;
-
-    observable.subscribe = (...args) => {
-      withprogress && this.progress.show();
-      const oldSubscribtion = oldSubscribe.apply(observable, args);
-      const oldUnsubscribe = oldSubscribtion.unsubscribe;
-      oldSubscribtion.unsubscribe = (...args) => {
-        withprogress && this.progress.hide();
-        oldUnsubscribe.apply(oldSubscribtion, args);
-      };
-
-      return oldSubscribtion;
-    };
-
+  public pipeGraphQLRequest(observable: Observable<any>, listenX: number = 1, withprogress = true) {
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
-      this.progressTap(withprogress),
+      this.tapProgress(withprogress),
       take(listenX),
-      tap(
-        (result: any) => console.log('tapped graphQL result', result),
-        (error: any) => {
-          console.log('tapped graphQL error', error);
-          const unauthorized: boolean =
-            error.networkError && error.networkError.status === 401;
-          if (unauthorized) {
-            this.checkErrorStatusAndRedirect(401);
-          }
-        }
-      ),
-      map(this.extractGraphQLData),
-      catchError(this.handleGraphQLError)
+      this.tapError(),
+      map(res => this.extractGraphQLData(res)),
+      catchError(err => this.handleGraphQLError(err)),
     );
-  }
-
-  /**
-   * Taps progress.
-   * @param applied indicates if progress should be applied
-   */
-  private progressTap(applied: boolean) {
-    const handler = () => applied && this.progress.hide();
-    return tap(handler, handler, handler);
   }
 
   /**
    * Creates apollo link with error handler.
    * @param errorLinkHandler custom error handler
    */
-  public createApolloLinkFor(
-    errorLinkHandler?: ApolloLink
-  ): ApolloLink {
+  public createApolloLinkFor(errorLinkHandler?: ApolloLink): ApolloLink {
+    let linkHandler: ApolloLink = errorLinkHandler;
     const uri = this.graphQlEndpoint();
 
     const httpLinkHandler = this.httpLink.create({ uri });
 
-    if (!errorLinkHandler) {
-      errorLinkHandler = onError((error: ErrorResponse) => {
+    if (!linkHandler) {
+      linkHandler = onError((error: ErrorResponse) => {
         console.log('error', error);
 
         let resultMessage = '';
@@ -374,10 +287,7 @@ export class HttpHandlersService {
         const { graphQLErrors, networkError } = error;
 
         if (graphQLErrors) {
-          console.log(
-            `Apollo errorLinkHandler [GraphQL error]: `,
-            graphQLErrors
-          );
+          console.log('Apollo linkHandler [GraphQL error]: ', graphQLErrors);
           graphQLErrors.map(({ message, extensions }) => {
             resultMessage += `[GraphQL]: ${message}`;
             errorCode = extensions && extensions.code;
@@ -385,27 +295,20 @@ export class HttpHandlersService {
         }
 
         if (networkError) {
-          console.log(
-            `Apollo errorLinkHandler [Network error]: `,
-            networkError
-          );
+          console.log('Apollo linkHandler [Network error]: ', networkError);
 
           if (networkError instanceof HttpErrorResponse) {
             resultMessage += networkError.error.detail;
           } else {
-            networkError['error'].errors.map(
-              ({ message, extensions }) => {
-                resultMessage += `[Network]: ${message}`;
-                errorCode = extensions.code;
-              }
-            );
+            networkError['error'].errors.map(({ message, extensions }) => {
+              resultMessage += `[Network]: ${message}`;
+              errorCode = extensions.code;
+            });
           }
         }
 
         if (errorCode) {
-          errorCodeUITranslation = this.translate.instant(
-            `request.error.${errorCode}`
-          );
+          errorCodeUITranslation = this.translate.instant(`request.error.${errorCode}`);
           if (errorCodeUITranslation.indexOf(errorCode) === -1) {
             resultMessage = errorCodeUITranslation;
           }
@@ -427,11 +330,48 @@ export class HttpHandlersService {
       httpLinkHandler,
       createUploadLink({
         uri,
-        headers: { Authorization: `Token ${this.user.getUser().token}` }
-      })
+        headers: { Authorization: `Token ${this.user.getUser().token}` },
+      }),
     );
 
-    return errorLinkHandler.concat(networkLink);
+    return linkHandler.concat(networkLink);
   }
 
+  /**
+   * Handles graphQL error response.
+   * @param error error message
+   */
+  private handleGraphQLError(error: string): Observable<any> {
+    return throwError(error);
+  }
+
+  /**
+   * Taps progress.
+   * @param withProgress indicates whether progress should be shown
+   */
+  private tapProgress(widhProgress: boolean): MonoTypeOperatorFunction<any> {
+    const handler = () => {
+      if (widhProgress) {
+        this.progress.hide();
+      }
+    };
+    return tap(handler, handler, handler);
+  }
+
+  /**
+   * Taps errors.
+   */
+  private tapError(): MonoTypeOperatorFunction<any> {
+    return tap(
+      () => {},
+      (error: any) => {
+        console.log('tapped graphQL error', error);
+        const unauthorized: boolean =
+          error.networkError && error.networkError.status === ErrorStatusCodes.UNAUTHORIZED;
+        if (unauthorized) {
+          this.checkErrorStatusAndRedirect(ErrorStatusCodes.UNAUTHORIZED);
+        }
+      },
+    );
+  }
 }

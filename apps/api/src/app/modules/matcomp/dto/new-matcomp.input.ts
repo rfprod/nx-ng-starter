@@ -1,23 +1,18 @@
-import {
-  MinLength,
-  MaxLength
-} from 'class-validator';
+import { MaxLength, MinLength } from 'class-validator';
 
-import {
-  Field,
-  InputType
-} from 'type-graphql';
+import { Field, InputType } from 'type-graphql';
+
+export const minInputLength = 3;
+export const maxInputLength = 30;
 
 @InputType()
 export class NewMatcompInput {
+  @Field()
+  @MinLength(minInputLength)
+  @MaxLength(maxInputLength)
+  public name: string;
 
   @Field()
-  @MinLength(3)
-  @MaxLength(30)
-  name: string;
-
-  @Field()
-  @MaxLength(30)
-  description: string;
-
+  @MaxLength(maxInputLength)
+  public description: string;
 }

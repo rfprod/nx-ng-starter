@@ -2,15 +2,12 @@ import { TestBed, async } from '@angular/core/testing';
 
 import { MarkdownService } from './markdown.service';
 
-declare let marked;
-
 describe('MarkdownService', () => {
-
   let service: MarkdownService;
   let spy: {
     service: {
-      process: jest.SpyInstance
-    }
+      process: jest.SpyInstance;
+    };
   };
 
   beforeEach(async(() => {
@@ -19,17 +16,21 @@ describe('MarkdownService', () => {
         {
           provide: MarkdownService,
           useFactory: () => new MarkdownService(),
-          deps: []
-        }
-      ]
-    }).compileComponents().then(() => {
-      service = TestBed.get(MarkdownService) as MarkdownService;
-      spy = {
-        service: {
-          process: jest.spyOn(service, 'process').mockImplementation((input: string) => `marked ${input}`)
-        }
-      };
-    });
+          deps: [],
+        },
+      ],
+    })
+      .compileComponents()
+      .then(() => {
+        service = TestBed.get(MarkdownService) as MarkdownService;
+        spy = {
+          service: {
+            process: jest
+              .spyOn(service, 'process')
+              .mockImplementation((input: string) => `marked ${input}`),
+          },
+        };
+      });
   }));
 
   it('should exist', () => {
@@ -39,6 +40,6 @@ describe('MarkdownService', () => {
 
   it('process should process marked input', () => {
     expect(service.process('input')).toEqual('marked input');
+    expect(spy.service.process.mock.calls).toBeGreaterThan(0);
   });
-
 });

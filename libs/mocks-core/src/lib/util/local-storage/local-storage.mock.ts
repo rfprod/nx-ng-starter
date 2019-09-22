@@ -20,7 +20,7 @@ declare let jest: any;
 export function setUpLocalStorageMock(): LocalStorageMock {
   Object.defineProperty(window, 'localStorage', {
     value: new LocalStorageMock(),
-    writable: true
+    writable: true,
   });
   const localStorage = window.localStorage;
   jest.spyOn(localStorage, 'setItem');

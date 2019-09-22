@@ -1,24 +1,14 @@
-import {
-  Injectable,
-  Provider
-} from '@angular/core';
+import { Injectable, Provider } from '@angular/core';
 
-import {
-  OverlayRef,
-  Overlay
-} from '@angular/cdk/overlay';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 
 import { ComponentPortal } from '@angular/cdk/portal';
 
 import { MatSpinner } from '@angular/material';
 
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
-import {
-  scan,
-  map,
-  delay
-} from 'rxjs/operators';
+import { delay, map, scan } from 'rxjs/operators';
 
 /**
  * Progress service.
@@ -26,29 +16,28 @@ import {
  */
 @Injectable()
 export class ProgressService {
-
   /**
    * Progress subject.
    */
-  private progress: Subject<boolean> = new Subject();
+  private readonly progress: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   /**
    * Constructor.
    * @param progressRef spinner overlay reference
    */
-  constructor(private progressRef: OverlayRef) {
+  constructor(private readonly progressRef: OverlayRef) {
     this.progress
       .asObservable()
       .pipe(
         map((value: boolean) => (value ? 1 : -1)),
         scan((acc: number, value: number) => (acc + value >= 0 ? acc + value : 0), 0),
-        delay(0)
+        delay(0),
       )
       .subscribe((result: number) => {
         console.log('global spinner, res', result);
         if (result === 1 && !this.progressRef.hasAttached()) {
           console.log('show progress');
-          this.progressRef.attach(new ComponentPortal(MatSpinner));
+          this.progressRef.attach(new ComponentPortal<MatSpinner>(MatSpinner));
         } else if (result === 0 && this.progressRef.hasAttached()) {
           console.log('hide progress');
           this.progressRef.detach();
@@ -70,6 +59,12 @@ export class ProgressService {
     this.progress.next(false);
   }
 
+  /**
+   * Returns progress value.
+   */
+  public value(): boolean {
+    return this.progress.value;
+  }
 }
 
 /**
@@ -88,7 +83,7 @@ export const progressServiceFactory: ProgressServiceFactoryConstructor = (overla
       .position()
       .global()
       .centerHorizontally()
-      .centerVertically()
+      .centerVertically(),
   });
   return new ProgressService(progressRef);
 };
@@ -99,5 +94,5 @@ export const progressServiceFactory: ProgressServiceFactoryConstructor = (overla
 export const progressServiceProvider: Provider = {
   provide: ProgressService,
   useFactory: progressServiceFactory,
-  deps: [Overlay]
+  deps: [Overlay],
 };

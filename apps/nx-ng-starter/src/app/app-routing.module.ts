@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 
 import {
-  RouterModule,
-  Route
+  Route,
+  RouterModule
 } from '@angular/router';
 
 import { AppIndexComponent } from './components/app-index/app-index.component';
@@ -13,17 +13,17 @@ import { AppIndexComponent } from './components/app-index/app-index.component';
 export const APP_ROUTES: Route[] = [
   {
     path: '',
-    component: AppIndexComponent
+    component: AppIndexComponent,
   },
   {
     path: '',
     redirectTo: '',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: '**',
-    redirectTo: ''
-  }
+    redirectTo: '',
+  },
 ];
 
 /**
@@ -31,6 +31,6 @@ export const APP_ROUTES: Route[] = [
  */
 @NgModule({
   imports: [ RouterModule.forRoot(APP_ROUTES) ],
-  exports: [ RouterModule ]
+  exports: [ RouterModule ],
 })
 export class AppRoutingModule {}

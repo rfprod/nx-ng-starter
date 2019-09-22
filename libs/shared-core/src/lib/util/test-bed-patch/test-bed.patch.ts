@@ -1,4 +1,4 @@
-import { getTestBed, TestBed, ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestBedStatic, getTestBed } from '@angular/core/testing';
 
 import { setUpLocalStorageMock } from '@transport/mocks-core/util';
 
@@ -32,14 +32,17 @@ export const configureTestSuite = () => {
       } catch (e) {
         console.error('Error during cleanup of component', {
           component: fixture.componentInstance,
-          stacktrace: e
+          stacktrace: e,
         });
       }
     });
     testBedApi['_instantiated'] = false;
   };
 
-  const originReset = TestBed.resetTestingModule;
+  let originReset;
+  (() => {
+    originReset = TestBed.resetTestingModule;
+  })();
 
   beforeAll(() => {
     TestBed.resetTestingModule();

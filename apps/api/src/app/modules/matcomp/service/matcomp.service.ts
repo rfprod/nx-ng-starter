@@ -1,23 +1,18 @@
 import { Injectable } from '@nestjs/common';
 
-import {
-  Matcomp,
-  MatcompQuery,
-  MatcompMutation
-} from '../interface/matcomp.interface';
+import { IMatcompMutation, IMatcompQuery, Matcomp } from '../interface/matcomp.interface';
 
 import { MatcompArgs } from '../dto/matcomp.args';
 import { NewMatcompInput } from '../dto/new-matcomp.input';
 
 @Injectable()
-export class MatcompService implements MatcompQuery, MatcompMutation {
-
+export class MatcompService implements IMatcompQuery, IMatcompMutation {
   private readonly matcomps: Matcomp[] = [
     new Matcomp({
       id: '1',
       name: 'custom component',
-      description: 'custom component description'
-    } as Matcomp)
+      description: 'custom component description',
+    }),
   ];
 
   public create(input: NewMatcompInput): Matcomp {
@@ -28,8 +23,8 @@ export class MatcompService implements MatcompQuery, MatcompMutation {
 
   public remove(id: string): Matcomp {
     let arrayId: number;
-    this.matcomps.map((matcomp: Matcomp, index: number) => {
-      if (matcomp.id === id) {
+    this.matcomps.map((comp: Matcomp, index: number) => {
+      if (comp.id === id) {
         arrayId = index;
       }
     });
@@ -44,5 +39,4 @@ export class MatcompService implements MatcompQuery, MatcompMutation {
   public findOneById(id: string): Matcomp {
     return this.matcomps.find(matcomp => matcomp.id === id);
   }
-
 }

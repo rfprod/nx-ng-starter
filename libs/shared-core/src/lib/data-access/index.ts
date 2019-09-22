@@ -3,7 +3,6 @@
  */
 export * from './shared-core-services.module';
 
-export * from './event-emitter/event-emitter.service';
 export * from './http-handlers/http-handlers.service';
 export * from './markdown/markdown.service';
 export * from './progress/progress.service';

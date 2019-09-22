@@ -14,13 +14,13 @@ import { environment } from '../environments/environment';
       debug: environment.production ? false : true,
       playground: environment.production ? false : true,
       installSubscriptionHandlers: true,
-      autoSchemaFile: 'schema.gql'
+      autoSchemaFile: 'schema.gql',
     }),
     AuthModule,
-    MatcompModule
+    MatcompModule,
   ],
   providers: [
-    DateScalar
-  ]
+    DateScalar,
+  ],
 })
 export class AppModule {}
