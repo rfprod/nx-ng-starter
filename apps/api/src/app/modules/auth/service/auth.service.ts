@@ -18,7 +18,7 @@ export class AuthService {
 
   public ping(): Message {
     return new Message({
-      message: 'Auth service is online. Public methods: login, logout, signup',
+      message: 'Auth service is online. Public methods: login, logout, signup.',
     });
   }
 

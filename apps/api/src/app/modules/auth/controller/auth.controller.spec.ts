@@ -4,20 +4,24 @@ import { AuthController } from './auth.controller';
 
 import { AuthService } from '../service/auth.service';
 
+import { AuthUtilsService } from '../../auth-utils/service/auth-utils.service';
+
 describe('AppController', () => {
   let app: TestingModule;
 
   beforeAll(async () => {
     app = await Test.createTestingModule({
       controllers: [AuthController],
-      providers: [AuthService],
+      providers: [AuthService, AuthUtilsService],
     }).compile();
   });
 
-  describe('getData', () => {
-    it('should return "Welcome to api!"', () => {
+  describe('ping', () => {
+    it('should return "Auth service is online. Public methods: login, logout, signup."', () => {
       const appController = app.get<AuthController>(AuthController);
-      expect(appController.getData()).toEqual({ message: 'Welcome to api!' });
+      expect(appController.ping()).toEqual({
+        message: 'Auth service is online. Public methods: login, logout, signup.',
+      });
     });
   });
 });

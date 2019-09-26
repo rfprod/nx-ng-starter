@@ -212,20 +212,17 @@ describe('HttpHandlersService', () => {
 
   it('pipeGraphQLRequest should check error if 401 status', async(() => {
     const q$ = cold('---#|', null, { networkError: { status: HttpErrorCodes.BAD_REQUEST } });
-    service
-      .pipeGraphQLRequest(q$)
-      .pipe(take(1))
-      .subscribe(
-        (data: any) => {
-          console.log('pipeGraphQLRequest, data should not be called', data);
-        },
-        (error: any) => {
-          console.log('pipeGraphQLRequest, error', error);
-          expect(spy.service.checkErrorStatusAndRedirect).toHaveBeenCalledWith(
-            HttpErrorCodes.UNAUTHORIZED,
-          );
-        },
-      );
+    service.pipeGraphQLRequest(q$).subscribe(
+      (data: any) => {
+        console.log('pipeGraphQLRequest, data should not be called', data);
+      },
+      (error: any) => {
+        console.log('pipeGraphQLRequest, error', error);
+        expect(spy.service.checkErrorStatusAndRedirect).toHaveBeenCalledWith(
+          HttpErrorCodes.UNAUTHORIZED,
+        );
+      },
+    );
     getTestScheduler().flush();
   }));
 

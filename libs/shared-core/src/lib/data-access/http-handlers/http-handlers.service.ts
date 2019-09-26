@@ -12,7 +12,7 @@ import { getMainDefinition } from 'apollo-utilities';
 
 import { TranslateService } from '@ngx-translate/core';
 
-import { APP_ENV, AppEnvironment } from '../interfaces';
+import { APP_ENV, AppEnvironment, HttpErrorCodes } from '../interfaces';
 import { ProgressService } from '../progress/progress.service';
 import { ToasterService } from '../toaster/toaster.service';
 import { UserService } from '../user/user.service';
@@ -20,10 +20,6 @@ import { UserService } from '../user/user.service';
 import { MonoTypeOperatorFunction, Observable, concat, throwError } from 'rxjs';
 
 import { catchError, map, take, tap, timeout } from 'rxjs/operators';
-
-export enum ErrorStatusCodes {
-  UNAUTHORIZED = 401,
-}
 
 /**
  * Http handers service.
@@ -74,7 +70,6 @@ export class HttpHandlersService {
    */
   public graphQlEndpoint(): string {
     const url = `${this.window.location.protocol}//${this.api}/graphql`;
-    console.log('graphQlEndpoint, url', url);
     return url;
   }
 
@@ -140,8 +135,7 @@ export class HttpHandlersService {
    * @param status error status
    */
   public checkErrorStatusAndRedirect(status: any): void {
-    console.log('checkErrorStatusAndRedirect, status', status);
-    if (status === ErrorStatusCodes.UNAUTHORIZED) {
+    if (status === HttpErrorCodes.UNAUTHORIZED) {
       this.user.saveUser({ token: '' });
     }
   }
@@ -154,7 +148,6 @@ export class HttpHandlersService {
    * @param error error object
    */
   public handleError(error: any): Observable<any> {
-    console.log('ERROR', error);
     let msg: string;
     let errors: any;
     if (typeof error._body === 'string' && error._body !== 'null') {
@@ -179,7 +172,6 @@ export class HttpHandlersService {
         let errDetail = '';
         if (errors.detail && typeof errors.detail === 'object') {
           // Unwrap nested structure for errors.detail first, it must be flat.
-          console.log('errors.detail is object');
           for (const key in errors.detail) {
             if (errors.detail[key]) {
               if (!Array.isArray(errors.detail[key]) && typeof errors.detail[key] === 'object') {
@@ -271,8 +263,6 @@ export class HttpHandlersService {
 
     if (!linkHandler) {
       linkHandler = onError((error: ErrorResponse) => {
-        console.log('error', error);
-
         let resultMessage = '';
 
         /**
@@ -365,11 +355,10 @@ export class HttpHandlersService {
     return tap(
       () => {},
       (error: any) => {
-        console.log('tapped graphQL error', error);
         const unauthorized: boolean =
-          error.networkError && error.networkError.status === ErrorStatusCodes.UNAUTHORIZED;
+          error.networkError && error.networkError.status === HttpErrorCodes.BAD_REQUEST;
         if (unauthorized) {
-          this.checkErrorStatusAndRedirect(ErrorStatusCodes.UNAUTHORIZED);
+          this.checkErrorStatusAndRedirect(HttpErrorCodes.UNAUTHORIZED);
         }
       },
     );
