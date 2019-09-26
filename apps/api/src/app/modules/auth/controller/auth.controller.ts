@@ -1,29 +1,35 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 
-import { Message, UserProfile } from '@nx-ng-starter/api-interface';
+import {
+  Message,
+  UserLoginCredentials,
+  UserLogoutCredentials,
+  UserProfile,
+} from '@nx-ng-starter/api-interface';
 
 import { AuthService } from '../service/auth.service';
 
 @Controller()
 export class AuthController {
+  constructor(private readonly authService: AuthService) {}
 
-  constructor(
-    private readonly authService: AuthService
-  ) {}
-
-  @Get('hello')
-  public getData(): Message {
-    return this.authService.getData();
+  @Get('ping')
+  public ping(): Message {
+    return this.authService.ping();
   }
 
   @Post('login')
-  public login(): UserProfile {
-    return this.authService.login();
+  public login(@Body() credentials: UserLoginCredentials): UserProfile {
+    return this.authService.login(credentials);
   }
 
   @Post('logout')
-  public logout(): Message {
-    return this.authService.logout();
+  public logout(@Body() credentials: UserLogoutCredentials): Message {
+    return this.authService.logout(credentials);
   }
 
+  @Post('signup')
+  public signup(@Body() credentials: UserLoginCredentials): UserProfile {
+    return this.authService.signup(credentials);
+  }
 }

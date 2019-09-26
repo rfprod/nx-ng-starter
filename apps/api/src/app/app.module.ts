@@ -11,6 +11,7 @@ import { environment } from '../environments/environment';
 @Module({
   imports: [
     GraphQLModule.forRoot({
+      include: [MatcompModule],
       debug: environment.production ? false : true,
       playground: environment.production ? false : true,
       installSubscriptionHandlers: true,
@@ -19,8 +20,6 @@ import { environment } from '../environments/environment';
     AuthModule,
     MatcompModule,
   ],
-  providers: [
-    DateScalar,
-  ],
+  providers: [DateScalar],
 })
 export class AppModule {}

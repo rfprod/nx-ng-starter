@@ -45,5 +45,8 @@ const firebaseConfig = process.env.FIREBASE_CONFIG;
  */
 if (firebaseConfig) {
   admin.initializeApp();
+  exports.login = functions.https.onRequest(server);
+  exports.logout = functions.https.onRequest(server);
+  exports.signup = functions.https.onRequest(server);
   exports.graphql = functions.https.onRequest(server);
 }

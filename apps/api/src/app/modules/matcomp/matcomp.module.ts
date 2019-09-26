@@ -7,10 +7,6 @@ import { MatcompResolvers } from './resolver/matcomp.resolvers';
 import { MatcompService } from './service/matcomp.service';
 
 @Module({
-  providers: [
-    MatcompService,
-    MatcompResolvers,
-    DateScalar,
-  ],
+  providers: [MatcompService, MatcompResolvers, DateScalar],
 })
 export class MatcompModule {}

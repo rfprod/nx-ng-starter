@@ -1,13 +1,7 @@
 {
   "hosting": {
     "public": "apps/nx-ng-starter",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**",
-      "e2e/**",
-      "src/**"
-    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "src/**"],
     "headers": [
       {
         "source": "**",
@@ -83,7 +77,7 @@
         ]
       },
       {
-        "source": "/(auth|graphql)",
+        "source": "/api",
         "headers": [
           {
             "key": "Cache-Control",
@@ -102,19 +96,19 @@
     ],
     "rewrites": [
       {
-        "source": "/auth/login",
+        "source": "/api/login",
         "function": "login"
       },
       {
-        "source": "/auth/logout",
+        "source": "/api/logout",
         "function": "logout"
       },
       {
-        "source": "/auth/register",
-        "function": "register"
+        "source": "/api/signup",
+        "function": "signup"
       },
       {
-        "source": "/graphql",
+        "source": "/api/graphql",
         "function": "graphql"
       },
       {
@@ -130,7 +124,7 @@
         "destination": "/documentation/index.html"
       },
       {
-        "source": "**/!(*.*|auth|graphql|coverage|documentation|nx-ng-starter)",
+        "source": "**/!(*.*|api|coverage|documentation|nx-ng-starter)",
         "destination": "/index.html"
       }
     ]
