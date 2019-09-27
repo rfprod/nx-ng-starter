@@ -14,12 +14,12 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { APP_ENV, AppEnvironment, HttpErrorCodes } from '../interfaces';
 import { ToasterService } from '../toaster/toaster.service';
-import { UserService } from '../user/user.service';
 
 import { MonoTypeOperatorFunction, Observable, concat, throwError } from 'rxjs';
 
 import { catchError, map, take, tap, timeout } from 'rxjs/operators';
 import { HttpProgressService } from '../../ui/modules/state/http-progress/http-progress.service';
+import { UserService } from '../../ui/modules/state/user/user.service';
 
 /**
  * Http handers service.
@@ -29,12 +29,19 @@ export class HttpHandlersService {
   /**
    * Default timeout interval for http-requests.
    */
-  public defaultHttpTimeout = 10000;
+  public readonly defaultHttpTimeout = 10000;
 
   /**
    * Rest server api domain.
    */
   private readonly api: string = this.window.location.origin;
+
+  private userToken: string;
+  private readonly userToken$: Observable<string> = this.user.output.token$.pipe(
+    tap((token: string) => {
+      this.userToken = token;
+    }),
+  );
 
   /**
    * Constructor.
@@ -56,6 +63,7 @@ export class HttpHandlersService {
     @Inject(APP_ENV) private readonly appEnv: AppEnvironment,
   ) {
     this.api = this.appEnv.api || this.api;
+    this.userToken$.subscribe();
   }
 
   /**
@@ -78,7 +86,7 @@ export class HttpHandlersService {
    */
   public getGraphQLHttpHeaders(): HttpHeaders {
     return new HttpHeaders({
-      Authorization: `Token ${this.user.getUser().token}`,
+      Authorization: `Token ${this.userToken}`,
     });
   }
 
@@ -136,7 +144,7 @@ export class HttpHandlersService {
    */
   public checkErrorStatusAndRedirect(status: any): void {
     if (status === HttpErrorCodes.UNAUTHORIZED) {
-      this.user.saveUser({ token: '' });
+      this.user.handlers.setState({ token: '' });
     }
   }
 
@@ -320,7 +328,7 @@ export class HttpHandlersService {
       httpLinkHandler,
       createUploadLink({
         uri,
-        headers: { Authorization: `Token ${this.user.getUser().token}` },
+        headers: { Authorization: `Token ${this.userToken}` },
       }),
     );
 

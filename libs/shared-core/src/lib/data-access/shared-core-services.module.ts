@@ -5,7 +5,6 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { HttpHandlersService } from './http-handlers/http-handlers.service';
 import { MarkdownService } from './markdown/markdown.service';
 import { ToasterService } from './toaster/toaster.service';
-import { UserService } from './user/user.service';
 
 /**
  * Module providers.
@@ -20,7 +19,6 @@ export const sharedCoreModuleProviders: Provider[] = [
     useValue: window,
   },
   MarkdownService,
-  UserService,
   ToasterService,
   HttpHandlersService,
 ];

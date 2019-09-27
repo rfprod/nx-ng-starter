@@ -1,3 +1,7 @@
+import { Provider } from '@angular/core';
+
+import { OverlayRef } from '@angular/cdk/overlay';
+
 /**
  * Mocked overlay ref.
  */
@@ -14,3 +18,8 @@ export class OverlayRefMock {
     return true;
   }
 }
+
+export const overlayRefMockProvider: Provider = {
+  provide: OverlayRef,
+  useClass: OverlayRefMock,
+};

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Provider } from '@angular/core';
 
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material';
 
@@ -56,3 +56,9 @@ export class ToasterService {
     }
   }
 }
+
+export const toasterServiceProvider: Provider = {
+  provide: ToasterService,
+  useFactory: (snackBar: MatSnackBar) => new ToasterService(snackBar),
+  deps: [MatSnackBar],
+};

@@ -13,13 +13,12 @@ import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsModule } from '@ngxs/store';
 
-import { UserService } from '../user/user.service';
-
 import { LocalStorageMock, httpHandlersProvider } from '@nx-ng-starter/mocks-core';
 
 import {
   AppTranslateModule,
   HttpProgressModule,
+  UserService,
   httpProgressModuleProviders,
 } from '@nx-ng-starter/shared-core/ui';
 
@@ -48,8 +47,17 @@ describe('HttpHandlersService', () => {
   let httpTestingController: HttpTestingController;
   let localStorage: LocalStorageMock;
   let toaster: ToasterService;
-  let user: UserService;
-  let spy: any;
+  let user: UserService | any;
+  let spy: {
+    user: {
+      handlers: {
+        setState: jest.SpyInstance;
+      };
+    };
+    service: {
+      checkErrorStatusAndRedirect: jest.SpyInstance;
+    };
+  };
 
   beforeEach(async(() => {
     Object.defineProperty(window, 'localStorage', {
@@ -83,10 +91,11 @@ describe('HttpHandlersService', () => {
         httpTestingController = TestBed.get(HttpTestingController);
         apollo = TestBed.get(Apollo) as Apollo;
         user = TestBed.get(UserService) as UserService;
-
         spy = {
           user: {
-            saveUser: jest.spyOn(user, 'saveUser'),
+            handlers: {
+              setState: jest.spyOn(user.handlers, 'setState'),
+            },
           },
           service: {
             checkErrorStatusAndRedirect: jest.spyOn(service, 'checkErrorStatusAndRedirect'),
@@ -242,9 +251,9 @@ describe('HttpHandlersService', () => {
 
   it('checkErrorStatusAndRedirect should reset user if error status is 401', () => {
     service.checkErrorStatusAndRedirect(HttpErrorCodes.BAD_REQUEST);
-    expect(spy.user.saveUser).not.toHaveBeenCalledWith({ token: '' });
+    expect(spy.user.handlers.setState).not.toHaveBeenCalledWith({ token: '' });
     service.checkErrorStatusAndRedirect(HttpErrorCodes.UNAUTHORIZED);
-    expect(spy.user.saveUser).toHaveBeenCalledWith({ token: '' });
+    expect(spy.user.handlers.setState).toHaveBeenCalledWith({ token: '' });
   });
 
   describe('handleError', () => {
@@ -401,7 +410,7 @@ describe('HttpHandlersService', () => {
 
   it('graphQLHttpHeaders should return new http headers with authorization header set', () => {
     const newHeadersObj: any = {
-      Authorization: `Token ${user.getUser().token}`,
+      Authorization: `Token ${user.userToken}`,
     };
     const newHeaders: HttpHeaders = new HttpHeaders(newHeadersObj);
     expect(service.getGraphQLHttpHeaders().get('Authorization')).toEqual(

@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Provider } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
 
 /**
  * Mocked snackbar ref.
@@ -13,3 +14,8 @@ export class MatSnackbarRefMock {
     return true;
   }
 }
+
+export const matSnackbarRefMockProvider: Provider = {
+  provide: MatSnackBar,
+  useClass: MatSnackbarRefMock,
+};

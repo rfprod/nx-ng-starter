@@ -12,9 +12,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import {
   AppTranslateModule,
   CustomMaterialModule,
+  UserModule,
   appTranslateModuleProviders,
   customMaterialModuleProviders,
   httpProgressModuleProviders,
+  userModuleProviders,
 } from './ui';
 
 import {
@@ -42,6 +44,7 @@ import { HttpProgressModule } from '@nx-ng-starter/shared-core/ui';
     AppTranslateModule.forRoot(),
     SharedCoreServicesModule.forRoot(),
     HttpProgressModule.forRoot(),
+    UserModule.forRoot(),
   ],
   exports: [
     BrowserModule,
@@ -54,6 +57,7 @@ import { HttpProgressModule } from '@nx-ng-starter/shared-core/ui';
     AppTranslateModule,
     SharedCoreServicesModule,
     HttpProgressModule,
+    UserModule,
   ],
 })
 export class SharedCoreModule {
@@ -69,6 +73,7 @@ export class SharedCoreModule {
         ...appTranslateModuleProviders,
         ...sharedCoreModuleProviders,
         ...httpProgressModuleProviders,
+        ...userModuleProviders,
         {
           provide: APP_ENV,
           useFactory: () => new AppEnvironment(environment),

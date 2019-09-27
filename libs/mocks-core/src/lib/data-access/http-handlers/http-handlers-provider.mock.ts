@@ -1,65 +1,45 @@
 import { HttpLink } from 'apollo-angular-link-http';
 
-import { OverlayRef } from '@angular/cdk/overlay';
-import { OverlayRefMock } from '../../util/refs/overlay-ref.mock';
-
-import { MatDialogRef, MatSnackBar } from '@angular/material';
-import { DialogRefMock } from '../../util/refs/dialog-ref.mock';
+import { Provider } from '@angular/core';
 
 import { TranslateService } from '@ngx-translate/core';
-import { MatSnackbarRefMock } from '../../util/refs/snackbar-ref.mock';
 
-import { Provider } from '@angular/core';
+import { overlayRefMockProvider } from '../../util/refs/overlay-ref.mock';
+
+import { dialogRefMockProvider } from '../../util/refs/dialog-ref.mock';
+
+import { matSnackbarRefMockProvider } from '../../util/refs/snackbar-ref.mock';
 
 import {
   APP_ENV,
   AppEnvironment,
   HttpHandlersService,
   ToasterService,
-  UserService,
+  appEnvProvider,
+  toasterServiceProvider,
 } from '@nx-ng-starter/shared-core/data-access';
 
-import { HttpProgressService } from 'libs/shared-core/src/lib/ui/modules/state/http-progress/http-progress.service';
-
-import { Store } from '@ngxs/store';
+import {
+  HttpProgressService,
+  UserService,
+  httpProgressServiceProvider,
+  userServiceProvider,
+} from '@nx-ng-starter/shared-core/ui';
 
 /**
  * Http handlers provider mock.
  */
 export const httpHandlersProvider: Provider[] = [
   { provide: 'Window', useValue: window },
-  {
-    provide: UserService,
-    useFactory: () => new UserService(),
-  },
   HttpLink,
-  {
-    provide: OverlayRef,
-    useClass: OverlayRefMock,
-  },
-  {
-    provide: HttpProgressService,
-    useFactory: (store: Store, overlay: OverlayRef) => new HttpProgressService(store, overlay),
-    deps: [OverlayRef],
-  },
-  {
-    provide: MatDialogRef,
-    useClass: DialogRefMock,
-  },
   TranslateService,
-  {
-    provide: MatSnackBar,
-    useClass: MatSnackbarRefMock,
-  },
-  {
-    provide: ToasterService,
-    useFactory: (snackBar: MatSnackBar) => new ToasterService(snackBar),
-    deps: [MatSnackBar],
-  },
-  {
-    provide: APP_ENV,
-    useFactory: () => new AppEnvironment(),
-  },
+  userServiceProvider,
+  overlayRefMockProvider,
+  httpProgressServiceProvider,
+  dialogRefMockProvider,
+  matSnackbarRefMockProvider,
+  toasterServiceProvider,
+  appEnvProvider,
   {
     provide: HttpHandlersService,
     useFactory: (

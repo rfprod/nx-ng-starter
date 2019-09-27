@@ -1,4 +1,4 @@
-import { InjectionToken } from '@angular/core';
+import { InjectionToken, Provider } from '@angular/core';
 
 /**
  * Application environment constructor options interface.
@@ -50,3 +50,8 @@ export type AppEnvToken = InjectionToken<AppEnvironment>;
  * Application environment injection token.
  */
 export const APP_ENV: AppEnvToken = new InjectionToken<AppEnvironment>('APP_ENV');
+
+export const appEnvProvider: Provider = {
+  provide: APP_ENV,
+  useFactory: () => new AppEnvironment(),
+};
