@@ -4,7 +4,6 @@ import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 import { HttpHandlersService } from './http-handlers/http-handlers.service';
 import { MarkdownService } from './markdown/markdown.service';
-import { progressServiceProvider } from './progress/progress.service';
 import { ToasterService } from './toaster/toaster.service';
 import { UserService } from './user/user.service';
 
@@ -24,7 +23,6 @@ export const sharedCoreModuleProviders: Provider[] = [
   UserService,
   ToasterService,
   HttpHandlersService,
-  progressServiceProvider,
 ];
 
 /**

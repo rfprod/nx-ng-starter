@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed, TestBedStatic, getTestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, getTestBed } from '@angular/core/testing';
 
-import { setUpLocalStorageMock } from '@transport/mocks-core/util';
+import { setUpLocalStorageMock } from '../local-storage/local-storage.mock';
 
 declare const beforeAll;
 declare const beforeEach;

@@ -14,6 +14,7 @@ import {
   CustomMaterialModule,
   appTranslateModuleProviders,
   customMaterialModuleProviders,
+  httpProgressModuleProviders,
 } from './ui';
 
 import {
@@ -22,6 +23,8 @@ import {
   SharedCoreServicesModule,
   sharedCoreModuleProviders,
 } from './data-access';
+
+import { HttpProgressModule } from '@nx-ng-starter/shared-core/ui';
 
 /**
  * Shared core module.
@@ -38,6 +41,7 @@ import {
     CustomMaterialModule.forRoot(),
     AppTranslateModule.forRoot(),
     SharedCoreServicesModule.forRoot(),
+    HttpProgressModule.forRoot(),
   ],
   exports: [
     BrowserModule,
@@ -49,6 +53,7 @@ import {
     CustomMaterialModule,
     AppTranslateModule,
     SharedCoreServicesModule,
+    HttpProgressModule,
   ],
 })
 export class SharedCoreModule {
@@ -63,6 +68,7 @@ export class SharedCoreModule {
         ...customMaterialModuleProviders,
         ...appTranslateModuleProviders,
         ...sharedCoreModuleProviders,
+        ...httpProgressModuleProviders,
         {
           provide: APP_ENV,
           useFactory: () => new AppEnvironment(environment),
