@@ -55,7 +55,6 @@ export class UserService {
    */
   public saveUser(newValues: Partial<AppUser>): AppUser {
     Object.assign(this.model, newValues);
-    console.log('save user >>', this.model);
     localStorage.setItem('userService', JSON.stringify(this.model));
     if ('token' in newValues) {
       this.isLoggedInSubscription.next(this.model);
@@ -83,7 +82,6 @@ export class UserService {
     this.model = new AppUser();
     this.isLoggedInSubscription.next(this.model);
     localStorage.setItem('userService', JSON.stringify(this.model));
-    console.log('reset user >>', localStorage.getItem('userService'));
   }
 
   /**

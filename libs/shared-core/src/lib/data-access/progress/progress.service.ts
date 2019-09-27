@@ -34,12 +34,11 @@ export class ProgressService {
         delay(0),
       )
       .subscribe((result: number) => {
-        console.log('global spinner, res', result);
         if (result === 1 && !this.progressRef.hasAttached()) {
-          console.log('show progress');
+          // Show progress
           this.progressRef.attach(new ComponentPortal<MatSpinner>(MatSpinner));
         } else if (result === 0 && this.progressRef.hasAttached()) {
-          console.log('hide progress');
+          // Hide progress
           this.progressRef.detach();
         }
       });

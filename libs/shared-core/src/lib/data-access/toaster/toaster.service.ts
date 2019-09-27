@@ -34,12 +34,16 @@ export class ToasterService {
    * @param type event type, colorizes snackbar
    * @param duration snackbar visibility duration in milliseconds
    */
-  public showToaster(message: string, type: ToastType, duration?: number): void {
+  public showToaster(
+    message: string,
+    type: ToastType = 'primary',
+    duration: number = this.defaultDuration,
+  ): void {
     const ec: ToasterExtraClasses = toasterExtraClasses(type);
     this.snackBarRef = this.snackBar.open(message, null, {
       panelClass: ec,
       verticalPosition: 'bottom',
-      duration: duration ? duration : this.defaultDuration,
+      duration,
     });
   }
 

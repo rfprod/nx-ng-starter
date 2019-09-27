@@ -4,6 +4,8 @@ import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material';
 
 import { ToasterService } from './toaster.service';
 
+import { ToastType } from '../interfaces/toaster/toaster.interface';
+
 describe('ToasterService', () => {
   let service: ToasterService;
   let snackBar: MatSnackBar;
@@ -66,58 +68,90 @@ describe('ToasterService', () => {
   it('showToaster should call snackBar.open with proper options depending on supplied arguments', () => {
     const defaultDuration = 7000;
     const duration = 2000;
-
-    service.showToaster('message', 'notification type' as any);
+    const toastType: ToastType = 'prmiary' as ToastType;
+    service.showToaster('message', toastType, defaultDuration);
     let spyCalls = spy.snackBar.open.mock.calls.length - 1;
-    expect(spy.snackBar.open.mock.calls[spyCalls]).toHaveBeenCalledWith('message', null, {
-      panelClass: [],
-      verticalPosition: 'bottom',
-      duration: defaultDuration,
-    });
+    expect(spy.snackBar.open.mock.calls[spyCalls]).toEqual([
+      'message',
+      null,
+      {
+        panelClass: [],
+        verticalPosition: 'bottom',
+        duration: defaultDuration,
+      },
+    ]);
 
-    service.showToaster('message', 'notification type' as any, duration);
+    service.showToaster('message', toastType, duration);
     spyCalls += 1;
-    expect(spy.snackBar.open.mock.calls[spyCalls]).toHaveBeenCalledWith('message', null, {
-      panelClass: [],
-      verticalPosition: 'bottom',
-      duration,
-    });
+    expect(spy.snackBar.open.mock.calls[spyCalls]).toEqual([
+      'message',
+      null,
+      {
+        panelClass: [],
+        verticalPosition: 'bottom',
+        duration,
+      },
+    ]);
 
     service.showToaster('message', 'error', defaultDuration);
     spyCalls += 1;
-    expect(spy.snackBar.open.mock.calls[spyCalls]).toHaveBeenCalledWith('message', null, {
-      panelClass: ['error-bg'],
-      verticalPosition: 'bottom',
-      duration: defaultDuration,
-    });
+    expect(spy.snackBar.open.mock.calls[spyCalls]).toEqual([
+      'message',
+      null,
+      {
+        panelClass: ['error-bg'],
+        verticalPosition: 'bottom',
+        duration: defaultDuration,
+      },
+    ]);
 
     service.showToaster('message', 'success');
-    expect(spy.snackBar.open).toHaveBeenCalledWith('message', null, {
-      panelClass: ['success-bg'],
-      verticalPosition: 'bottom',
-      duration: defaultDuration,
-    });
+    spyCalls += 1;
+    expect(spy.snackBar.open.mock.calls[spyCalls]).toEqual([
+      'message',
+      null,
+      {
+        panelClass: ['success-bg'],
+        verticalPosition: 'bottom',
+        duration: defaultDuration,
+      },
+    ]);
 
     service.showToaster('message', 'warn');
-    expect(spy.snackBar.open).toHaveBeenCalledWith('message', null, {
-      panelClass: ['warn-bg'],
-      verticalPosition: 'bottom',
-      duration: defaultDuration,
-    });
+    spyCalls += 1;
+    expect(spy.snackBar.open.mock.calls[spyCalls]).toEqual([
+      'message',
+      null,
+      {
+        panelClass: ['warn-bg'],
+        verticalPosition: 'bottom',
+        duration: defaultDuration,
+      },
+    ]);
 
     service.showToaster('message', 'accent');
-    expect(spy.snackBar.open).toHaveBeenCalledWith('message', null, {
-      panelClass: ['accent-bg'],
-      verticalPosition: 'bottom',
-      duration: defaultDuration,
-    });
+    spyCalls += 1;
+    expect(spy.snackBar.open.mock.calls[spyCalls]).toEqual([
+      'message',
+      null,
+      {
+        panelClass: ['accent-bg'],
+        verticalPosition: 'bottom',
+        duration: defaultDuration,
+      },
+    ]);
 
     service.showToaster('message', 'primary');
-    expect(spy.snackBar.open).toHaveBeenCalledWith('message', null, {
-      panelClass: ['primary-bg'],
-      verticalPosition: 'bottom',
-      duration: defaultDuration,
-    });
+    spyCalls += 1;
+    expect(spy.snackBar.open.mock.calls[spyCalls]).toEqual([
+      'message',
+      null,
+      {
+        panelClass: ['primary-bg'],
+        verticalPosition: 'bottom',
+        duration: defaultDuration,
+      },
+    ]);
   });
 
   it('should not dismiss snackBar on hideToaster() method call if it was not opened previously', () => {

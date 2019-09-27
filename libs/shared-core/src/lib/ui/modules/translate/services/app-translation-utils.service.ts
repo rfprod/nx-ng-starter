@@ -114,7 +114,6 @@ export class AppTranslationUtilsService {
    * @param langCode language code
    */
   public useLanguage(langCode: ILangCode): void {
-    console.log('translate service, useLanguage, langCode', langCode);
     if (langCode in this.langs) {
       this.translate.use(this.langs[langCode]);
     }
@@ -132,7 +131,6 @@ export class AppTranslationUtilsService {
    */
   private languageChangeSubscription(): void {
     this.translate.onLangChange.subscribe((langChangeEvent: LangChangeEvent) => {
-      console.log('AppTranslationUtilsService, onLangChange, langChangeEvent', langChangeEvent);
       this.languageChanges.next(langChangeEvent);
       const langCode: ILangCode = langChangeEvent.lang as ILangCode;
       this.setDatepickersLocale(langCode);
@@ -145,8 +143,6 @@ export class AppTranslationUtilsService {
    * @param key language key to be seleted, supported languages: en, ru
    */
   private setDatepickersLocale(key: ILangCode): void {
-    console.log('language change, key', key);
-    console.log('this.dateAdapter', this.dateAdapter);
     this.dateAdapter.setLocale(key);
   }
 }

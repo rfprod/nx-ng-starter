@@ -72,7 +72,6 @@ export class AppIndexComponent implements OnInit, OnDestroy {
    * @param input input string in markdown format.
    */
   private processMarkdown(input: string): string {
-    console.log(this.markdown.process(input));
     return this.markdown.process(input);
   }
 }

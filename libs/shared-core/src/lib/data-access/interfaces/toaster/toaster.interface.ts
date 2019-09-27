@@ -19,7 +19,7 @@ export type ToasterExtraClasses = ToasterExtraClass[];
 export interface IToasterExtraClassesObj {
   error: ToasterExtraClasses;
   success: ToasterExtraClasses;
-  warning: ToasterExtraClasses;
+  warn: ToasterExtraClasses;
   accent: ToasterExtraClasses;
   primary: ToasterExtraClasses;
 }
@@ -32,7 +32,7 @@ export const toasterExtraClasses = (toasterType: ToastType): ToasterExtraClasses
   const extraClasses: IToasterExtraClassesObj = {
     error: ['error-bg'],
     success: ['success-bg'],
-    warning: ['warn-bg'],
+    warn: ['warn-bg'],
     accent: ['accent-bg'],
     primary: ['primary-bg'],
   };
