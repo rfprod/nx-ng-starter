@@ -13,13 +13,13 @@ import { getMainDefinition } from 'apollo-utilities';
 import { TranslateService } from '@ngx-translate/core';
 
 import { APP_ENV, AppEnvironment, HttpErrorCodes } from '../interfaces';
-import { ProgressService } from '../progress/progress.service';
 import { ToasterService } from '../toaster/toaster.service';
 import { UserService } from '../user/user.service';
 
 import { MonoTypeOperatorFunction, Observable, concat, throwError } from 'rxjs';
 
 import { catchError, map, take, tap, timeout } from 'rxjs/operators';
+import { HttpProgressService } from '../../ui/modules/state/http-progress/http-progress.service';
 
 /**
  * Http handers service.
@@ -41,7 +41,7 @@ export class HttpHandlersService {
    * @param user user service
    * @param toaster app toaster service
    * @param httpLink apollo Http Link
-   * @param progress app progress service
+   * @param httpProgress http progress service
    * @param translate ngx translate service
    * @param window window reference
    * @param appEnv app environment
@@ -50,7 +50,7 @@ export class HttpHandlersService {
     private readonly user: UserService,
     private readonly toaster: ToasterService,
     private readonly httpLink: HttpLink,
-    private readonly progress: ProgressService,
+    private readonly httpProgress: HttpProgressService,
     private readonly translate: TranslateService,
     @Inject('Window') private readonly window: Window,
     @Inject(APP_ENV) private readonly appEnv: AppEnvironment,
@@ -340,11 +340,10 @@ export class HttpHandlersService {
    * @param withProgress indicates whether progress should be shown
    */
   private tapProgress(widhProgress: boolean): MonoTypeOperatorFunction<any> {
-    const handler = () => {
-      if (widhProgress) {
-        this.progress.hide();
-      }
-    };
+    let handler = () => {};
+    if (widhProgress) {
+      handler = this.httpProgress.handlers.mainView.tapStopperObservable;
+    }
     return tap(handler, handler, handler);
   }
 

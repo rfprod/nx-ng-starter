@@ -5,6 +5,11 @@ import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsFormPluginModule } from '@ngxs/form-plugin';
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { NgxsModule } from '@ngxs/store';
+
 import { SharedCoreModule } from '@nx-ng-starter/shared-core';
 
 import { AppComponent } from './app.component';
@@ -19,6 +24,10 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AppComponent, AppIndexComponent],
       imports: [
+        NgxsModule.forRoot([], { developmentMode: true }),
+        NgxsLoggerPluginModule.forRoot({ disabled: true, collapsed: true }),
+        NgxsFormPluginModule.forRoot(),
+        NgxsReduxDevtoolsPluginModule.forRoot(),
         SharedCoreModule.forRoot(),
         HttpClientTestingModule,
         RouterTestingModule.withRoutes([

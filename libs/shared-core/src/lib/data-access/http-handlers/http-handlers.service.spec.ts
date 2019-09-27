@@ -8,11 +8,20 @@ import {
   TestRequest,
 } from '@angular/common/http/testing';
 
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsFormPluginModule } from '@ngxs/form-plugin';
+import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { NgxsModule } from '@ngxs/store';
+
 import { UserService } from '../user/user.service';
 
 import { LocalStorageMock, httpHandlersProvider } from '@nx-ng-starter/mocks-core';
 
-import { AppTranslateModule } from '@nx-ng-starter/shared-core/ui';
+import {
+  AppTranslateModule,
+  HttpProgressModule,
+  httpProgressModuleProviders,
+} from '@nx-ng-starter/shared-core/ui';
 
 import { CustomMaterialModule } from '../../ui/index';
 
@@ -29,7 +38,7 @@ import { ToasterService } from '../toaster/toaster.service';
 import { HttpHandlersService } from './http-handlers.service';
 
 import { Observable, of } from 'rxjs';
-import { take } from 'rxjs/operators';
+
 import { HttpErrorCodes } from '../interfaces';
 import { HttpSuccessCodes } from '../interfaces/http-handlers/http-handlers.interface';
 
@@ -58,8 +67,13 @@ describe('HttpHandlersService', () => {
         AppTranslateModule,
         ApolloModule,
         HttpLinkModule,
+        NgxsModule.forRoot([], { developmentMode: true }),
+        NgxsLoggerPluginModule.forRoot({ disabled: true, collapsed: true }),
+        NgxsFormPluginModule.forRoot(),
+        NgxsReduxDevtoolsPluginModule.forRoot(),
+        HttpProgressModule.forRoot(),
       ],
-      providers: [...httpHandlersProvider],
+      providers: [...httpHandlersProvider, ...httpProgressModuleProviders],
       schemas: [],
     })
       .compileComponents()

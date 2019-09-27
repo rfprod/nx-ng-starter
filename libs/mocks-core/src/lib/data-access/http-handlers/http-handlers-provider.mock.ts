@@ -15,10 +15,13 @@ import {
   APP_ENV,
   AppEnvironment,
   HttpHandlersService,
-  ProgressService,
   ToasterService,
   UserService,
 } from '@nx-ng-starter/shared-core/data-access';
+
+import { HttpProgressService } from 'libs/shared-core/src/lib/ui/modules/state/http-progress/http-progress.service';
+
+import { Store } from '@ngxs/store';
 
 /**
  * Http handlers provider mock.
@@ -35,8 +38,8 @@ export const httpHandlersProvider: Provider[] = [
     useClass: OverlayRefMock,
   },
   {
-    provide: ProgressService,
-    useFactory: (overlay: OverlayRef) => new ProgressService(overlay),
+    provide: HttpProgressService,
+    useFactory: (store: Store, overlay: OverlayRef) => new HttpProgressService(store, overlay),
     deps: [OverlayRef],
   },
   {
@@ -63,7 +66,7 @@ export const httpHandlersProvider: Provider[] = [
       user: UserService,
       toaster: ToasterService,
       httpLink: HttpLink,
-      progress: ProgressService,
+      progress: HttpProgressService,
       translate: TranslateService,
       win: Window,
       env: AppEnvironment,
@@ -72,7 +75,7 @@ export const httpHandlersProvider: Provider[] = [
       UserService,
       ToasterService,
       HttpLink,
-      ProgressService,
+      HttpProgressService,
       TranslateService,
       'Window',
       APP_ENV,
