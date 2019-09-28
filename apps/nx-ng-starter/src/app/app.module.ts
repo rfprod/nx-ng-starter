@@ -11,7 +11,9 @@ import { NgxsModule } from '@ngxs/store';
 
 import { AppRoutingModule } from './app-routing.module';
 
+import { AppIndexApiComponent } from './components/app-index/api/app-index-api.component';
 import { AppIndexComponent } from './components/app-index/app-index.component';
+import { AppIndexHomeComponent } from './components/app-index/home/app-index-home.component';
 import { AppComponent } from './components/app/app.component';
 
 import { environment } from '../environments/environment';
@@ -34,7 +36,7 @@ import { environment } from '../environments/environment';
       useValue: '/',
     },
   ],
-  declarations: [AppComponent, AppIndexComponent],
+  declarations: [AppComponent, AppIndexComponent, AppIndexHomeComponent, AppIndexApiComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 })

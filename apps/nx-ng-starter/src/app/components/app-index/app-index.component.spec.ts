@@ -19,12 +19,6 @@ import { MarkdownService } from '@nx-ng-starter/shared-core/data-access';
 describe('AppIndexComponent', () => {
   let fixture: ComponentFixture<AppIndexComponent>;
   let component: AppIndexComponent | any;
-  let service: MarkdownService;
-  let spy: {
-    service: {
-      process: jest.SpyInstance;
-    };
-  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -54,24 +48,11 @@ describe('AppIndexComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(AppIndexComponent);
         component = fixture.debugElement.componentInstance;
-        service = TestBed.get(MarkdownService);
-        spy = {
-          service: {
-            process: jest
-              .spyOn(service, 'process')
-              .mockImplementation((input: string) => `marked ${input}`),
-          },
-        };
         fixture.detectChanges();
       });
   }));
 
   it('should be defined', () => {
     expect(component).toBeDefined();
-  });
-
-  it('should have as title "Components library directory", and should call markdown service process method on creation', () => {
-    expect(component.title).toEqual('Components library directory');
-    expect(spy.service.process.mock.calls.length).toBeGreaterThan(0);
   });
 });

@@ -68,8 +68,8 @@
   <mat-sidenav-container fxFlex="1 1 auto">
     <mat-sidenav #appSidenav mode="over" [(opened)]="sidenavOpened">
       <mat-grid-list cols="3" rowHeight="1:1">
-        <mat-grid-tile (click)="selectItem('customButton')">
-          custom button
+        <mat-grid-tile [routerLink]="['/api-info']" (click)="appSidenav.close()">
+          API info
         </mat-grid-tile>
       </mat-grid-list>
     </mat-sidenav>
@@ -90,11 +90,8 @@
 
     <span fxFlex="1 1 auto"></span>
 
-    <button mat-button [fxHide.xs]="true" [fxHide.sm]="true">
-      <mat-icon class="material-icons">touch_app</mat-icon> Action 1
-    </button>
-    <button mat-button [fxHide.xs]="true" [fxHide.sm]="true">
-      <mat-icon class="material-icons">touch_app</mat-icon> Action 2
+    <button mat-button [routerLink]="['/api-info']" [fxHide.xs]="true" [fxHide.sm]="true">
+      <mat-icon class="material-icons">touch_app</mat-icon> API info
     </button>
     <button mat-button [routerLink]="['']" [fxHide.xs]="true" [fxHide.sm]="true">
       <mat-icon class="material-icons">home</mat-icon> Home
@@ -111,8 +108,9 @@
     </button>
 
     <mat-menu #mobileMenuBottom="matMenu" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
-      <a mat-menu-item> <mat-icon class="material-icons">touch_app</mat-icon> Action 1 </a>
-      <a mat-menu-item> <mat-icon class="material-icons">touch_app</mat-icon> Action 2 </a>
+      <a mat-menu-item [routerLink]="['/api-info']">
+        <mat-icon class="material-icons">touch_app</mat-icon> Action 2
+      </a>
       <a mat-menu-item [routerLink]="['']">
         <mat-icon class="material-icons">home</mat-icon> Home
       </a>

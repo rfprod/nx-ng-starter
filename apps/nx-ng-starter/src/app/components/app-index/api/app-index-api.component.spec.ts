@@ -12,17 +12,15 @@ import { NgxsModule } from '@ngxs/store';
 
 import { SharedCoreModule } from '@nx-ng-starter/shared-core';
 
-import { AppComponent } from './app.component';
+import { AppIndexApiComponent } from './app-index-api.component';
 
-import { AppIndexComponent } from '../app-index/app-index.component';
-
-describe('AppComponent', () => {
-  let fixture: ComponentFixture<AppComponent>;
-  let component: AppComponent | any;
+describe('AppIndexApiComponent', () => {
+  let fixture: ComponentFixture<AppIndexApiComponent>;
+  let component: AppIndexApiComponent | any;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [AppComponent, AppIndexComponent],
+      declarations: [AppIndexApiComponent],
       imports: [
         NgxsModule.forRoot([], { developmentMode: true }),
         NgxsLoggerPluginModule.forRoot({ disabled: true, collapsed: true }),
@@ -31,7 +29,7 @@ describe('AppComponent', () => {
         SharedCoreModule.forRoot(),
         HttpClientTestingModule,
         RouterTestingModule.withRoutes([
-          { path: '', component: AppIndexComponent },
+          { path: '', component: AppIndexApiComponent },
           { path: '', redirectTo: '', pathMatch: 'full' },
           { path: '**', redirectTo: '' },
         ]),
@@ -46,19 +44,13 @@ describe('AppComponent', () => {
     })
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(AppComponent);
-        component = fixture.componentInstance;
+        fixture = TestBed.createComponent(AppIndexApiComponent);
+        component = fixture.debugElement.componentInstance;
+        fixture.detectChanges();
       });
   }));
-  it('should be defined', async(() => {
+
+  it('should be defined', () => {
     expect(component).toBeDefined();
-  }));
-  it('should have as title "Nx Ng Starter"', async(() => {
-    expect(component.title).toEqual('Nx Ng Starter');
-  }));
-  it('should should render two toolbars', async(() => {
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelectorAll('mat-toolbar').length).toEqual(1 + 1);
-  }));
+  });
 });
