@@ -2,6 +2,20 @@
 
 [![CircleCI](https://circleci.com/gh/rfprod/nx-ng-starter.svg?style=svg)](https://circleci.com/gh/rfprod/nx-ng-starter)
 
+Is a monorepo starter with preconfigured apps:
+
+- `api` - provides sample api using rest and graphql
+- `nx-ng-starter` - sample client application
+- `nx-ng-starter-e2e` - sample client application e2e tests
+
+and libs:
+
+- `api-interface` - api interface for sample `api` application
+- `mocks-core` - library used for unit testing mostly, contains different mocks
+- `shared-core` - shared core library, contains shared classes
+
+# General Tooling
+
 This project was generated using [Nx](https://nx.dev).
 
 <p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/nx-logo.png" width="450"></p>
