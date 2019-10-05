@@ -1,0 +1,28 @@
+{
+  "extends": [
+    "stylelint-config-rational-order"
+  ],
+  "rules": {
+    "indentation": 2,
+    "string-quotes": "single",
+    "color-hex-case": "lower",
+    "color-hex-length": "long",
+    "rule-empty-line-before": ["always-multi-line", { "except": ["after-single-line-comment", "first-nested"] }],
+    "comment-empty-line-before": "always",
+    "selector-combinator-space-after": "always",
+    "selector-attribute-operator-space-before": "always",
+    "selector-attribute-operator-space-after": "always",
+    "declaration-block-trailing-semicolon": "always",
+    "declaration-colon-space-before": "never",
+    "declaration-colon-space-after": "always",
+    "media-feature-range-operator-space-before": "always",
+    "media-feature-range-operator-space-after": "always",
+    "media-feature-parentheses-space-inside": "never",
+    "media-feature-colon-space-before": "never",
+    "media-feature-colon-space-after": "always",
+    "comment-whitespace-inside": "always",
+    "selector-pseudo-class-parentheses-space-inside": "never",
+    "number-leading-zero": "always",
+    "function-url-quotes": "always"
+  }
+}

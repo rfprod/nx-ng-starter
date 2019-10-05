@@ -33,8 +33,11 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # lint
+      # lint ts
       - run: npm run lint
+
+      # lint scss
+      - run: npm run stylelint:all
 
       # run tests!
       - run: npm test

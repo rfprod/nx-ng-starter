@@ -10,5 +10,6 @@ import { Component } from '@angular/core';
   template: `
     <span>dummy component</span>
   `,
+  styles: ['./dummy.component.mock.scss'],
 })
 export class DummyComponent {}

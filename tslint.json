@@ -1,6 +1,6 @@
 {
   "rulesDirectory": ["node_modules/@nrwl/workspace/src/tslint", "node_modules/codelyzer"],
-  "extends": "tslint:latest",
+  "extends": ["tslint:latest", "tslint-etc", "tslint-plugin-prettier"],
   "linterOptions": {
     "exclude": ["**/node_modules/**"]
   },
