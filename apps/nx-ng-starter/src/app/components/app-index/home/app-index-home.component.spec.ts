@@ -68,5 +68,6 @@ describe('AppIndexHomeComponent', () => {
 
   it('should be defined', () => {
     expect(component).toBeDefined();
+    expect(spy).toBeDefined();
   });
 });

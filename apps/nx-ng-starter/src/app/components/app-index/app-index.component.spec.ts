@@ -14,8 +14,6 @@ import { SharedCoreModule } from '@nx-ng-starter/shared-core';
 
 import { AppIndexComponent } from './app-index.component';
 
-import { MarkdownService } from '@nx-ng-starter/shared-core/data-access';
-
 describe('AppIndexComponent', () => {
   let fixture: ComponentFixture<AppIndexComponent>;
   let component: AppIndexComponent | any;
