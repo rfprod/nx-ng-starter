@@ -1,6 +1,6 @@
 import { TestBed, async } from '@angular/core/testing';
 
-import { HttpHeaders, HttpRequest, HttpResponse } from '@angular/common/http';
+import { HttpHeaders, HttpRequest } from '@angular/common/http';
 
 import {
   HttpClientTestingModule,
@@ -39,7 +39,6 @@ import { HttpHandlersService } from './http-handlers.service';
 import { Observable, of } from 'rxjs';
 
 import { HttpErrorCodes } from '../interfaces';
-import { HttpSuccessCodes } from '../interfaces/http-handlers/http-handlers.interface';
 
 describe('HttpHandlersService', () => {
   let service: HttpHandlersService | any;
@@ -123,76 +122,16 @@ describe('HttpHandlersService', () => {
     expect(service.graphQlEndpoint).toEqual(expect.any(Function));
     expect(service.getGraphQLHttpHeaders).toEqual(expect.any(Function));
     expect(service.getEndpoint).toEqual(expect.any(Function));
-    expect(service.extractObject).toEqual(expect.any(Function));
-    expect(service.extractArray).toEqual(expect.any(Function));
     expect(service.extractGraphQLData).toEqual(expect.any(Function));
     expect(service.checkErrorStatusAndRedirect).toEqual(expect.any(Function));
     expect(service.handleError).toEqual(expect.any(Function));
-    expect(service['handleGraphQLError']).toEqual(expect.any(Function));
+    expect(service.handleGraphQLError).toEqual(expect.any(Function));
     expect(service.pipeRequestWithObjectResponse).toEqual(expect.any(Function));
     expect(service.pipeRequestWithArrayResponse).toEqual(expect.any(Function));
     expect(service.pipeGraphQLRequest).toEqual(expect.any(Function));
     expect(service.tapProgress).toEqual(expect.any(Function));
     expect(service.tapError).toEqual(expect.any(Function));
     expect(service.createApolloLinkFor).toEqual(expect.any(Function));
-  });
-
-  describe('extractObject', () => {
-    it('should return an Object if response is provided', () => {
-      expect(
-        service.extractObject(
-          new HttpResponse<any>({ body: {}, status: HttpSuccessCodes.SUCCESS }),
-        ),
-      ).toEqual(expect.any(Object));
-    });
-
-    it('should return an Object if res.json() returns falsy value', () => {
-      const res: { json?(): any } = new Object({});
-      res.json = () => null;
-      expect(service.extractObject(res)).toEqual(expect.any(Object));
-    });
-
-    it('should return an empty Object if no data is present', () => {
-      expect(service.extractObject(null)).toEqual(expect.any(Object));
-    });
-
-    it('should return response if it does not have json method', () => {
-      expect(service.extractObject({})).toEqual(expect.any(Object));
-    });
-  });
-
-  describe('extractArray', () => {
-    it('extractArray should return an Array if response is provided', () => {
-      expect(
-        service.extractArray(
-          new HttpResponse<any>({
-            body: { data: [{ x: 'x' }, { y: 'y' }] },
-            status: HttpSuccessCodes.SUCCESS,
-            headers: new HttpHeaders({}),
-          }),
-        ),
-      ).toEqual(expect.any(Array));
-    });
-
-    it('should return an Array if res.json() returns falsy value', () => {
-      const res: { json?(): any } = new Object({});
-      res.json = () => new Object({ data: null });
-      expect(service.extractArray(res)).toEqual(expect.any(Array));
-    });
-
-    it('should return an Array if res.json() returns falsy value and res does not contain data key', () => {
-      const res: { json?(): any } = new Object({});
-      res.json = null;
-      expect(service.extractArray(res)).toEqual(expect.any(Array));
-    });
-
-    it('should return response if it does not have json method', () => {
-      expect(service.extractArray({ data: [] })).toEqual(expect.any(Array));
-    });
-
-    it('extractArray should return an empty Array if no data is present', () => {
-      expect(service.extractArray(null)).toEqual(expect.any(Array));
-    });
   });
 
   describe('extractGraphQLData', () => {
