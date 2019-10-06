@@ -29,7 +29,7 @@ import {
 /**
  * Http handlers provider mock.
  */
-export const httpHandlersProvider: Provider[] = [
+export const httpHandlersProviders: Provider[] = [
   { provide: 'Window', useValue: window },
   HttpLink,
   TranslateService,

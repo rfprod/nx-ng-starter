@@ -17,7 +17,7 @@ import { ToasterService } from '../toaster/toaster.service';
 
 import { MonoTypeOperatorFunction, Observable, concat, throwError } from 'rxjs';
 
-import { catchError, map, take, tap, timeout } from 'rxjs/operators';
+import { catchError, take, tap, timeout } from 'rxjs/operators';
 import { HttpProgressService } from '../../ui/modules/state/http-progress/http-progress.service';
 import { UserService } from '../../ui/modules/state/user/user.service';
 
@@ -36,7 +36,14 @@ export class HttpHandlersService {
    */
   private readonly api: string = this.window.location.origin;
 
-  private userToken: string;
+  /**
+   * Current user token value.
+   */
+  private userToken = '';
+
+  /**
+   * User token getter.
+   */
   private readonly userToken$: Observable<string> = this.user.output.token$.pipe(
     tap((token: string) => {
       this.userToken = token;
@@ -101,129 +108,15 @@ export class HttpHandlersService {
   }
 
   /**
-   * Extracts response in format { val1: {}, val2: '' }.
-   * @param res http response, either extracted (body in json) or http response that should be parsed
-   */
-  public extractObject(res: any): object {
-    return !res ? {} : typeof res.json === 'function' ? res.json() || {} : res || {};
-  }
-
-  /**
-   * Extracts response in format { data: [ {}, {}, {} ] }.
-   * @param res http response, either extracted (body in json) or http response that should be parsed
-   */
-  public extractArray(res: any): any[] {
-    return !res ? [] : typeof res.json === 'function' ? res.json().data || [] : res.data || [];
-  }
-
-  /**
-   * Extracts HttpResponse.
-   * @param res Http response
-   */
-  public extractHttpResponse(res: HttpResponse<any>): any {
-    return res.body;
-  }
-
-  /**
-   * Extracts GraphQL data.
-   * Returns data only, excluding meta information located in response object root.
-   * @param res Execution result
-   */
-  public extractGraphQLData(res: ExecutionResult): any {
-    if (res.errors) {
-      throw res.errors;
-    }
-    return res.data ? res.data : res;
-  }
-
-  /**
-   * Check error status, and reset token if status is 401.
-   * Note on errors:
-   * 401 - unauthorized token expired
-   * @param status error status
-   */
-  public checkErrorStatusAndRedirect(status: any): void {
-    if (status === HttpErrorCodes.UNAUTHORIZED) {
-      this.user.handlers.setState({ token: '' });
-    }
-  }
-
-  /**
-   * Parses error response in the following format
-   * { _body: "{ errors: [ { code: 'c', detail: 'd' } ] }" } where _body is a string
-   * or
-   * { _body: "{ code: 'c', message: 'm', detail: { inn: ['Invalid inn'] } }" } where _body is a string.
-   * @param error error object
-   */
-  public handleError(error: any): Observable<any> {
-    let msg: string;
-    let errors: any;
-    if (typeof error._body === 'string' && error._body !== 'null') {
-      // Unwrap body
-      error._body = JSON.parse(error._body);
-      errors = error._body.errors
-        ? error._body.errors
-        : error._body.code && error._body.message
-        ? error._body
-        : null;
-    }
-    errors = !errors && error.errors ? error.errors : error.code && error.message ? error : errors;
-    if (errors) {
-      if (Array.isArray(errors)) {
-        // Parse errors as array: { errors: [ { code: 'c', detail: 'd' } ] }
-        if (errors.length) {
-          const e = errors[0]; // Grab only first error
-          msg = e.code && e.detail ? `${e.code} - ${e.detail}` : null;
-        }
-      } else {
-        // Parse errors as object: { code: 'c', message: 'm', detail: { inn: ['Invalid inn'] } }
-        let errDetail = '';
-        if (errors.detail && typeof errors.detail === 'object') {
-          // Unwrap nested structure for errors.detail first, it must be flat.
-          for (const key in errors.detail) {
-            if (errors.detail[key]) {
-              if (!Array.isArray(errors.detail[key]) && typeof errors.detail[key] === 'object') {
-                for (const subkey in errors.detail[key]) {
-                  if (errors.detail[key][subkey]) {
-                    errors.detail[subkey] = errors.detail[key][subkey];
-                  }
-                }
-                delete errors.detail[key];
-              }
-            }
-          }
-          // Now parse it.
-          for (const key in errors.detail) {
-            if (errors.detail[key]) {
-              errDetail += `${key} - ${errors.detail[key].join(', ')} `;
-            }
-          }
-          errDetail = errDetail.trim();
-        }
-        msg = errDetail
-          ? `${errors.code} - ${errors.message}: ${errDetail}`
-          : `${errors.code} - ${errors.message}`;
-      }
-    }
-    // Parse error response, fallback: { status: '400', statusText: 'Bad request' }
-    const errMsg: string = msg
-      ? msg
-      : error.status
-      ? `${error.status} - ${error.statusText}`
-      : 'Server error';
-    return concat(throwError(errMsg));
-  }
-
-  /**
    * Pipes request with object response.
    * @param observable request observable
    * @param listenX number of responses to catch
    */
-  public pipeRequestWithObjectResponse(observable: Observable<any>, listenX: number = 1) {
+  public pipeRequestWithObjectResponse<T>(observable: Observable<T>, listenX: number = 1): Observable<T> {
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
+      this.tapProgress(true),
       take(listenX),
-      map(res => this.extractObject(res)),
       catchError(err => this.handleError(err)),
     );
   }
@@ -233,11 +126,11 @@ export class HttpHandlersService {
    * @param observable request observable
    * @param listenX number of responses to catch
    */
-  public pipeRequestWithArrayResponse(observable: Observable<any>, listenX: number = 1) {
+  public pipeRequestWithArrayResponse<T>(observable: Observable<T>, listenX: number = 1): Observable<T> {
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
+      this.tapProgress(true),
       take(listenX),
-      map(res => this.extractArray(res)),
       catchError(err => this.handleError(err)),
     );
   }
@@ -248,13 +141,12 @@ export class HttpHandlersService {
    * @param listenX number of responses to catch
    * @param withprogress should request start progress
    */
-  public pipeGraphQLRequest(observable: Observable<any>, listenX: number = 1, withprogress = true) {
+  public pipeGraphQLRequest<T>(observable: Observable<T>, listenX: number = 1, withprogress = true): Observable<T> {
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
       this.tapProgress(withprogress),
       take(listenX),
       this.tapError(),
-      map(res => this.extractGraphQLData(res)),
       catchError(err => this.handleGraphQLError(err)),
     );
   }
@@ -333,6 +225,104 @@ export class HttpHandlersService {
     );
 
     return linkHandler.concat(networkLink);
+  }
+
+  /**
+   * Extracts GraphQL data.
+   * Returns data only, excluding meta information located in response object root.
+   * @param res Execution result
+   */
+  public extractGraphQLData(res: ExecutionResult): any {
+    if (res.errors) {
+      throw res.errors;
+    }
+    return res.data ? res.data : res;
+  }
+
+  /**
+   * Extracts HttpResponse.
+   * @param res Http response
+   */
+  public extractHttpResponse(res: HttpResponse<any>): any {
+    return res.body;
+  }
+
+  /**
+   * Check error status, and reset token if status is 401.
+   * Note on errors:
+   * 401 - unauthorized token expired
+   * @param status error status
+   */
+  private checkErrorStatusAndRedirect(status: any): void {
+    if (status === HttpErrorCodes.UNAUTHORIZED) {
+      this.user.handlers.setState({ token: '' });
+    }
+  }
+
+  /**
+   * Parses error response in the following format
+   * { _body: "{ errors: [ { code: 'c', detail: 'd' } ] }" } where _body is a string
+   * or
+   * { _body: "{ code: 'c', message: 'm', detail: { inn: ['Invalid inn'] } }" } where _body is a string.
+   * @param error error object
+   */
+  private handleError(error: any): Observable<any> {
+    let msg: string;
+    let errors: any;
+    if (typeof error._body === 'string' && error._body !== 'null') {
+      // Unwrap body
+      error._body = JSON.parse(error._body);
+      errors = error._body.errors
+        ? error._body.errors
+        : error._body.code && error._body.message
+        ? error._body
+        : null;
+    }
+    errors = !errors && error.errors ? error.errors : error.code && error.message ? error : errors;
+    if (errors) {
+      if (Array.isArray(errors)) {
+        // Parse errors as array: { errors: [ { code: 'c', detail: 'd' } ] }
+        if (errors.length) {
+          const e = errors[0]; // Grab only first error
+          msg = e.code && e.detail ? `${e.code} - ${e.detail}` : null;
+        }
+      } else {
+        // Parse errors as object: { code: 'c', message: 'm', detail: { inn: ['Invalid inn'] } }
+        let errDetail = '';
+        if (errors.detail && typeof errors.detail === 'object') {
+          // Unwrap nested structure for errors.detail first, it must be flat.
+          for (const key in errors.detail) {
+            if (errors.detail[key]) {
+              if (!Array.isArray(errors.detail[key]) && typeof errors.detail[key] === 'object') {
+                for (const subkey in errors.detail[key]) {
+                  if (errors.detail[key][subkey]) {
+                    errors.detail[subkey] = errors.detail[key][subkey];
+                  }
+                }
+                delete errors.detail[key];
+              }
+            }
+          }
+          // Now parse it.
+          for (const key in errors.detail) {
+            if (errors.detail[key]) {
+              errDetail += `${key} - ${errors.detail[key].join(', ')} `;
+            }
+          }
+          errDetail = errDetail.trim();
+        }
+        msg = errDetail
+          ? `${errors.code} - ${errors.message}: ${errDetail}`
+          : `${errors.code} - ${errors.message}`;
+      }
+    }
+    // Parse error response, fallback: { status: '400', statusText: 'Bad request' }
+    const errMsg: string = msg
+      ? msg
+      : error.status
+      ? `${error.status} - ${error.statusText}`
+      : 'Server error';
+    return concat(throwError(errMsg));
   }
 
   /**
