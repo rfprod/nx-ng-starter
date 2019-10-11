@@ -21,17 +21,8 @@ export class AppIndexApiComponent {
   /**
    * Returns sample processed markdown text.
    */
-  public getMarkedIntro(): string {
-    return this.processMarkdown(
-      '# You can use Markdown \n\n via MarkdownService, just like in this example.',
-    );
-  }
-
-  /**
-   * Processes arbitrary text in markdown format.
-   * @param input input string in markdown format.
-   */
-  private processMarkdown(input: string): string {
-    return this.markdown.process(input);
+  public getMarkedInstructions(): string {
+    const apiInstructions = '# Some API tips \n\n';
+    return this.markdown.process(`${apiInstructions}`);
   }
 }

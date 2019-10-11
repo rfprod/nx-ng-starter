@@ -20,8 +20,8 @@ export interface IHttpApiObservableOutput {
 }
 
 export interface IHttpApiHandlersActions {
-  cached(): void;
-  request(): void;
+  cached(): Observable<string>;
+  request(): Observable<Message>;
 }
 
 export interface IHttpApiHandlers {
