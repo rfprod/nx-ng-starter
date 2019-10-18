@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, TestModuleMetadata, async } from '@angular/core/testing';
 
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material';
 
@@ -6,7 +6,30 @@ import { ToasterService } from './toaster.service';
 
 import { ToastType } from '../interfaces/toaster/toaster.interface';
 
+import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
+
 describe('ToasterService', () => {
+  const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
+    providers: [
+      {
+        provide: MatSnackBar,
+        useFactory: () =>
+          new Object({
+            open: (): MatSnackBarRef<SimpleSnackBar> =>
+              new Object({ dismiss: (): void => null }) as MatSnackBarRef<SimpleSnackBar>,
+            dismiss: (): void => null,
+          }) as MatSnackBar,
+        deps: [],
+      },
+      {
+        provide: ToasterService,
+        useFactory: snackbar => new ToasterService(snackbar),
+        deps: [MatSnackBar],
+      },
+    ],
+  });
+  const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
+
   let service: ToasterService;
   let snackBar: MatSnackBar;
   let spy: {
@@ -17,27 +40,7 @@ describe('ToasterService', () => {
   };
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [],
-      imports: [],
-      providers: [
-        {
-          provide: MatSnackBar,
-          useFactory: () =>
-            new Object({
-              open: (): MatSnackBarRef<SimpleSnackBar> =>
-                new Object({ dismiss: (): void => null }) as MatSnackBarRef<SimpleSnackBar>,
-              dismiss: (): void => null,
-            }) as MatSnackBar,
-          deps: [],
-        },
-        {
-          provide: ToasterService,
-          useFactory: snackbar => new ToasterService(snackbar),
-          deps: [MatSnackBar],
-        },
-      ],
-    })
+    TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
         service = TestBed.get(ToasterService) as ToasterService;

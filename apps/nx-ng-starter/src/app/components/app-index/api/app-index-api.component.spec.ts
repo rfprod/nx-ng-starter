@@ -1,51 +1,45 @@
-import { APP_BASE_HREF } from '@angular/common';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, async } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestModuleMetadata, async } from '@angular/core/testing';
 
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-
-import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
-import { NgxsFormPluginModule } from '@ngxs/form-plugin';
-import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
-import { NgxsModule } from '@ngxs/store';
 
 import { SharedCoreModule } from '@nx-ng-starter/shared-core';
 
 import { AppIndexApiComponent } from './app-index-api.component';
 
+import { IObjectWithProperties, configureTestSuite, getTestBedConfig, newTestBedMetadata, setupJestSpiesFor } from '@nx-ng-starter/mocks-core';
+
 describe('AppIndexApiComponent', () => {
+  const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
+    declarations: [AppIndexApiComponent],
+    imports: [
+      SharedCoreModule.forRoot(),
+      RouterTestingModule.withRoutes([
+        { path: '', component: AppIndexApiComponent },
+        { path: '', redirectTo: '', pathMatch: 'full' },
+        { path: '**', redirectTo: '' },
+      ]),
+    ],
+  });
+  const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
+
+  configureTestSuite();
+
   let fixture: ComponentFixture<AppIndexApiComponent>;
   let component: AppIndexApiComponent | any;
+  let spy: {
+    component: IObjectWithProperties<jest.SpyInstance>;
+  };
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [AppIndexApiComponent],
-      imports: [
-        NgxsModule.forRoot([], { developmentMode: true }),
-        NgxsLoggerPluginModule.forRoot({ disabled: true, collapsed: true }),
-        NgxsFormPluginModule.forRoot(),
-        NgxsReduxDevtoolsPluginModule.forRoot(),
-        SharedCoreModule.forRoot(),
-        HttpClientTestingModule,
-        RouterTestingModule.withRoutes([
-          { path: '', component: AppIndexApiComponent },
-          { path: '', redirectTo: '', pathMatch: 'full' },
-          { path: '**', redirectTo: '' },
-        ]),
-      ],
-      providers: [
-        {
-          provide: APP_BASE_HREF,
-          useValue: '/',
-        },
-      ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
+    TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(AppIndexApiComponent);
         component = fixture.debugElement.componentInstance;
+        spy = {
+          component: setupJestSpiesFor<jest.SpyInstance>(component),
+        };
+        expect(spy.component).toBeDefined();
         fixture.detectChanges();
       });
   }));

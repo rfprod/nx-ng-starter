@@ -1,19 +1,11 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, TestModuleMetadata, async } from '@angular/core/testing';
 
 import { HttpHeaders, HttpRequest } from '@angular/common/http';
 
 import {
-  HttpClientTestingModule,
   HttpTestingController,
   TestRequest,
 } from '@angular/common/http/testing';
-
-import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
-import { NgxsFormPluginModule } from '@ngxs/form-plugin';
-import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
-import { NgxsModule } from '@ngxs/store';
-
-import { LocalStorageMock, httpHandlersProviders } from '@nx-ng-starter/mocks-core';
 
 import {
   AppTranslateModule,
@@ -40,7 +32,21 @@ import { Observable, of } from 'rxjs';
 
 import { HttpErrorCodes } from '../interfaces';
 
+import { LocalStorageMock, getTestBedConfig, httpHandlersProviders, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
+
 describe('HttpHandlersService', () => {
+  const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
+    imports: [
+      CustomMaterialModule,
+      AppTranslateModule,
+      ApolloModule,
+      HttpLinkModule,
+      HttpProgressModule.forRoot(),
+    ],
+    providers: [...httpHandlersProviders, ...httpProgressModuleProviders],
+  });
+  const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
+
   let service: HttpHandlersService | any;
   let apollo: Apollo;
   let httpTestingController: HttpTestingController;
@@ -59,29 +65,10 @@ describe('HttpHandlersService', () => {
   };
 
   beforeEach(async(() => {
-    Object.defineProperty(window, 'localStorage', {
-      value: new LocalStorageMock(),
-      writable: true,
-    });
     localStorage = window.localStorage;
     jest.spyOn(localStorage, 'setItem');
 
-    TestBed.configureTestingModule({
-      declarations: [],
-      imports: [
-        HttpClientTestingModule,
-        CustomMaterialModule,
-        AppTranslateModule,
-        ApolloModule,
-        HttpLinkModule,
-        NgxsModule.forRoot([], { developmentMode: true }),
-        NgxsLoggerPluginModule.forRoot({ disabled: true, collapsed: true }),
-        NgxsFormPluginModule.forRoot(),
-        NgxsReduxDevtoolsPluginModule.forRoot(),
-        HttpProgressModule.forRoot(),
-      ],
-      providers: [...httpHandlersProviders, ...httpProgressModuleProviders],
-    })
+    TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
         service = TestBed.get(HttpHandlersService) as HttpHandlersService;
@@ -166,7 +153,6 @@ describe('HttpHandlersService', () => {
         console.log('pipeGraphQLRequest, data should not be called', data);
       },
       (error: any) => {
-        console.log('pipeGraphQLRequest, error', error);
         expect(spy.service.checkErrorStatusAndRedirect).toHaveBeenCalledWith(
           HttpErrorCodes.UNAUTHORIZED,
         );

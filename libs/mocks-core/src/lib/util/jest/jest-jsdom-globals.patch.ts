@@ -1,3 +1,5 @@
+import { setUpLocalStorageMock } from '../local-storage/local-storage.mock';
+
 declare const jest;
 
 /**
@@ -5,6 +7,11 @@ declare const jest;
  * which should be used in each app and lib in test-setup.ts files.
  */
 export const setupJestJsdomGlobalMocks: () => void = () => {
+  /**
+   * Set up local storage mock.
+   */
+  setUpLocalStorageMock();
+
   /**
    * Jest requirement, because it uses jsdom.
    */
