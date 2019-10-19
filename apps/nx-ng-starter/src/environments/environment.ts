@@ -13,4 +13,7 @@ import { AppEnvironment } from '@nx-ng-starter/shared-core/data-access';
  *
  * import 'zone.js/dist/zone-error';  // Included with Angular CLI.
  */
-export const environment: AppEnvironment = new AppEnvironment();
+export const environment: AppEnvironment = {
+  production: false,
+  appName: 'Nx Ng Starter',
+};

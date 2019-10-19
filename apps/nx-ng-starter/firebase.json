@@ -1,7 +1,7 @@
 {
   "hosting": {
-    "public": "apps/nx-ng-starter",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "src/**"],
+    "public": "dist/apps/nx-ng-starter",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "**/src/**"],
     "headers": [
       {
         "source": "**",
@@ -96,6 +96,10 @@
     ],
     "rewrites": [
       {
+        "source": "/api/ping",
+        "function": "ping"
+      },
+      {
         "source": "/api/login",
         "function": "login"
       },
@@ -128,5 +132,8 @@
         "destination": "/index.html"
       }
     ]
+  },
+  "functions": {
+    "predeploy": "npm --prefix functions run get-api-dist"
   }
 }

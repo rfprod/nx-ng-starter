@@ -16,6 +16,9 @@ jobs:
 
     working_directory: ~/repo
 
+    environment:
+      FIREBASE_DEPLOY_TOKEN: FIREBASE_DEPLOY_TOKEN
+
     steps:
       - checkout
 
@@ -39,5 +42,11 @@ jobs:
       # lint scss
       - run: npm run stylelint:all
 
-      # run tests!
+      # run tests
       - run: npm test
+
+      # build all apps
+      - run: npm run build
+
+      # deploy all apps
+      - run: npm run firebase:deploy:ci $FIREBASE_DEPLOY_TOKEN

@@ -76,7 +76,7 @@ export class SharedCoreModule {
         ...userModuleProviders,
         {
           provide: APP_ENV,
-          useFactory: () => new AppEnvironment(environment),
+          useValue: environment,
         },
       ],
     };

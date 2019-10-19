@@ -5,6 +5,16 @@
 /tmp
 /out-tsc
 
+# firebase
+.firebase
+functions/*
+!functions/node_modules
+!functions/package.json
+!functions/package-lock.json
+# don't commit firebase configs placed in project root, most probably it is build leftover
+.firebaserc
+firebase.json
+
 # dependencies
 /node_modules
 # firebase dependencies in apps folders whenever app is an api and is deployed to firebase
@@ -35,6 +45,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+*.log
 
 # System Files
 .DS_Store

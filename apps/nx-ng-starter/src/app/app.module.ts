@@ -2,12 +2,12 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { APP_BASE_HREF } from '@angular/common';
 
-import { SharedCoreModule } from '@nx-ng-starter/shared-core';
-
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsModule } from '@ngxs/store';
+
+import { SharedCoreModule } from '@nx-ng-starter/shared-core';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -23,11 +23,11 @@ import { environment } from '../environments/environment';
  */
 @NgModule({
   imports: [
-    SharedCoreModule.forRoot(),
     NgxsModule.forRoot([], { developmentMode: !environment.production }),
     NgxsLoggerPluginModule.forRoot({ disabled: environment.production, collapsed: true }),
     NgxsFormPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
+    SharedCoreModule.forRoot(environment),
     AppRoutingModule,
   ],
   providers: [
