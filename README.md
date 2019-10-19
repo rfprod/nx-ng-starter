@@ -14,6 +14,8 @@ and libs:
 - `mocks-core` - library used for unit testing mostly, contains different mocks
 - `shared-core` - shared core library, contains shared classes
 
+which is deployed to `Firebase`: https://nx-ng-starter.web.app/
+
 # General Tooling
 
 This project was generated using [Nx](https://nx.dev).
