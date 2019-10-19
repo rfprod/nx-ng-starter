@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, TestModuleMetadata, async } from '@angular/core/testing';
 
 import { DateAdapter } from '@angular/material';
 
@@ -16,18 +16,38 @@ import {
 import { TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 
+import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
+
 describe('AppTranslationUtilsService', () => {
+  const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
+    imports: [
+      CustomMaterialModule.forRoot(),
+      AppTranslateModule.forRoot(),
+    ],
+  });
+  const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
+
   let service: AppTranslationUtilsService;
   let translate: TranslateService;
   let dateAdapter: DateAdapter<any>;
   let win: Window;
-  let spy: any;
+  let spy: {
+    service: {
+      languageChanges: jest.SpyInstance
+    },
+    translate: {
+      onLangChange: jest.SpyInstance,
+      setDefaultLang: jest.SpyInstance,
+      setTranslation: jest.SpyInstance,
+      use: jest.SpyInstance,
+    },
+    dateAdapter: {
+      setLocale: jest.SpyInstance,
+    }
+  };
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [CustomMaterialModule.forRoot(), AppTranslateModule.forRoot()],
-      providers: [{ provide: 'Window', useValue: window }],
-    })
+    TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
         service = TestBed.get(AppTranslationUtilsService) as AppTranslationUtilsService;
@@ -37,16 +57,16 @@ describe('AppTranslationUtilsService', () => {
 
         spy = {
           service: {
-            languageChanges: spyOn(service.languageChanges, 'next').and.callThrough(),
+            languageChanges: jest.spyOn(service.languageChanges, 'next'),
           },
           translate: {
-            onLangChange: spyOn(translate.onLangChange, 'subscribe').and.callThrough(),
-            setDefaultLang: spyOn(translate, 'setDefaultLang').and.callThrough(),
-            setTranslation: spyOn(translate, 'setTranslation').and.callThrough(),
-            use: spyOn(translate, 'use').and.callThrough(),
+            onLangChange: jest.spyOn(translate.onLangChange, 'subscribe'),
+            setDefaultLang: jest.spyOn(translate, 'setDefaultLang'),
+            setTranslation: jest.spyOn(translate, 'setTranslation'),
+            use: jest.spyOn(translate, 'use'),
           },
           dateAdapter: {
-            setLocale: spyOn(dateAdapter, 'setLocale').and.callThrough(),
+            setLocale: jest.spyOn(dateAdapter, 'setLocale'),
           },
         };
       });
@@ -94,23 +114,23 @@ describe('AppTranslationUtilsService', () => {
   it('initialize should work correctly', () => {
     const callsBefore = {
       dateAdapter: {
-        setLocale: spy.dateAdapter.setLocale.calls.count(),
+        setLocale: spy.dateAdapter.setLocale.mock.calls.length,
       },
       translate: {
-        setDefaultLang: spy.translate.setDefaultLang.calls.count(),
-        setTranslation: spy.translate.setTranslation.calls.count(),
-        use: spy.translate.use.calls.count(),
+        setDefaultLang: spy.translate.setDefaultLang.mock.calls.length,
+        setTranslation: spy.translate.setTranslation.mock.calls.length,
+        use: spy.translate.use.mock.calls.length,
       },
     };
     service.initialize();
     const callsAfter = {
       dateAdapter: {
-        setLocale: spy.dateAdapter.setLocale.calls.count(),
+        setLocale: spy.dateAdapter.setLocale.mock.calls.length,
       },
       translate: {
-        setDefaultLang: spy.translate.setDefaultLang.calls.count(),
-        setTranslation: spy.translate.setTranslation.calls.count(),
-        use: spy.translate.use.calls.count(),
+        setDefaultLang: spy.translate.setDefaultLang.mock.calls.length,
+        setTranslation: spy.translate.setTranslation.mock.calls.length,
+        use: spy.translate.use.mock.calls.length,
       },
     };
     expect(dateAdapter.setLocale).toHaveBeenCalledWith('ru');
@@ -147,23 +167,23 @@ describe('AppTranslationUtilsService', () => {
   it('useLanguage should call translate.use if language is supported which is deternmined by language code', () => {
     const callsBefore = {
       translate: {
-        use: spy.translate.use.calls.count(),
+        use: spy.translate.use.mock.calls.length,
       },
     };
     service.useLanguage(null);
     const callsAfter = {
       translate: {
-        use: spy.translate.use.calls.count(),
+        use: spy.translate.use.mock.calls.length,
       },
     };
     expect(callsAfter.translate.use - callsBefore.translate.use).toEqual(0);
 
     service.useLanguage('ru');
-    callsAfter.translate.use = spy.translate.use.calls.count();
+    callsAfter.translate.use = spy.translate.use.mock.calls.length;
     expect(callsAfter.translate.use - callsBefore.translate.use).toEqual(1);
 
     service.useLanguage('en');
-    callsAfter.translate.use = spy.translate.use.calls.count();
+    callsAfter.translate.use = spy.translate.use.mock.calls.length;
     expect(callsAfter.translate.use - callsBefore.translate.use).toEqual(1 + 1);
   });
 

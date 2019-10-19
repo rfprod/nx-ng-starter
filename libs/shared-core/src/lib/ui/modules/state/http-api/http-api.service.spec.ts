@@ -1,9 +1,8 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, TestModuleMetadata, async } from '@angular/core/testing';
 
 import { HttpRequest } from '@angular/common/http';
 
 import {
-  HttpClientTestingModule,
   HttpTestingController,
   TestRequest,
 } from '@angular/common/http/testing';
@@ -11,8 +10,6 @@ import {
 import { of } from 'rxjs';
 
 import { HttpApiService } from './http-api.service';
-
-import { httpHandlersProviders } from '@nx-ng-starter/mocks-core';
 
 import { HttpProgressModule, httpProgressModuleProviders } from '../http-progress/http-progress.module';
 
@@ -24,14 +21,28 @@ import { httpApiModuleProviders } from './http-api.module';
 
 import { CustomMaterialModule } from '../../custom-material/custom-material.module';
 
-import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
-import { NgxsFormPluginModule } from '@ngxs/form-plugin';
-import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
-import { NgxsModule } from '@ngxs/store';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 import { AppTranslateModule } from '../../translate/app-translate.module';
 
+import { getTestBedConfig, httpHandlersProviders, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
+
 describe('HttpApiService', () => {
+  const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
+    imports: [
+      CustomMaterialModule,
+      AppTranslateModule,
+      ApolloModule,
+      HttpLinkModule,
+      HttpProgressModule.forRoot(),
+    ],
+    providers: [
+      ...httpHandlersProviders,
+      ...httpProgressModuleProviders,
+      ...httpApiModuleProviders,
+    ],
+  });
+  const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
+
   let service: HttpApiService;
   let apollo: Apollo;
   let httpTestingController: HttpTestingController;
@@ -45,25 +56,7 @@ describe('HttpApiService', () => {
   };
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        HttpClientTestingModule,
-        CustomMaterialModule,
-        AppTranslateModule,
-        ApolloModule,
-        HttpLinkModule,
-        NgxsModule.forRoot([], { developmentMode: true }),
-        NgxsLoggerPluginModule.forRoot({ disabled: true, collapsed: true }),
-        NgxsFormPluginModule.forRoot(),
-        NgxsReduxDevtoolsPluginModule.forRoot(),
-        HttpProgressModule.forRoot(),
-      ],
-      providers: [
-        ...httpHandlersProviders,
-        ...httpProgressModuleProviders,
-        ...httpApiModuleProviders,
-      ],
-    })
+    TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
         service = TestBed.get(HttpApiService);
@@ -79,6 +72,7 @@ describe('HttpApiService', () => {
               .mockReturnValue(of({})),
           },
         };
+        expect(spy.httpHandlers.pipeRequestWithObjectResponse).toBeDefined();
       });
   }));
 
@@ -91,7 +85,6 @@ describe('HttpApiService', () => {
 
   it('should exist', () => {
     expect(service).toBeTruthy();
-    expect(spy).toBeDefined();
     expect(apollo).toBeDefined();
     expect(toaster).toBeDefined();
     expect(user).toBeDefined();
