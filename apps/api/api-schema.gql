@@ -18,6 +18,12 @@ type Mutation {
   remove(id: String!): Boolean!
 }
 
+input NewFileUploadInputDto {
+  filename: String!
+  mimetype: String!
+  encoding: String!
+}
+
 input NewMatcompInput {
   name: String!
   description: String!

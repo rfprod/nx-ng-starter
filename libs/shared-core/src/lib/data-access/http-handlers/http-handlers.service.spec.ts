@@ -197,10 +197,11 @@ describe('HttpHandlersService', () => {
         .toPromise()
         .then(
           () => true,
-          (error: string) =>
+          (error: string) => {
             expect(error).toEqual(
               'errorType - errorMessage: erratic_item - error msg 1, error msg 2',
-            ),
+            );
+          }
         );
 
       service
@@ -219,10 +220,11 @@ describe('HttpHandlersService', () => {
         .toPromise()
         .then(
           () => true,
-          (error: string) =>
+          (error: string) => {
             expect(error).toEqual(
               'errorType - errorMessage: erratic_item - error msg 1, error msg 2',
-            ),
+            );
+          }
         );
 
       service
@@ -232,12 +234,16 @@ describe('HttpHandlersService', () => {
           _body: JSON.stringify(null),
         })
         .toPromise()
-        .then(() => true, (error: string) => expect(error).toEqual('400 - error status text'));
+        .then(() => true, (error: string) => {
+          expect(error).toEqual('400 - error status text');
+        });
 
       service
         .handleError({ _body: JSON.stringify(null) })
         .toPromise()
-        .then(() => true, (error: string) => expect(error).toEqual('Server error'));
+        .then(() => true, (error: string) => {
+          expect(error).toEqual('Server error');
+        });
 
       // Optional error response handling
       service
@@ -247,12 +253,16 @@ describe('HttpHandlersService', () => {
           }),
         })
         .toPromise()
-        .then(() => true, (error: string) => expect(error).toEqual('err_code - error body'));
+        .then(() => true, (error: string) => {
+          expect(error).toEqual('err_code - error body');
+        });
 
       service
         .handleError({ errors: [{ code: 'err_code', detail: 'error body' }] })
         .toPromise()
-        .then(() => true, (error: string) => expect(error).toEqual('err_code - error body'));
+        .then(() => true, (error: string) => {
+          expect(error).toEqual('err_code - error body');
+        });
 
       service
         .handleError({
@@ -261,7 +271,9 @@ describe('HttpHandlersService', () => {
           statusText: 'error status text',
         })
         .toPromise()
-        .then(() => true, (error: string) => expect(error).toEqual('400 - error status text'));
+        .then(() => true, (error: string) => {
+          expect(error).toEqual('400 - error status text');
+        });
 
       service
         .handleError({
@@ -273,7 +285,9 @@ describe('HttpHandlersService', () => {
         .toPromise()
         .then(
           () => true,
-          (error: string) => expect(error).toEqual('errorType - general message'),
+          (error: string) => {
+            expect(error).toEqual('errorType - general message');
+          },
         );
 
       service
@@ -281,7 +295,9 @@ describe('HttpHandlersService', () => {
         .toPromise()
         .then(
           () => true,
-          (error: string) => expect(error).toEqual('errorType - general message'),
+          (error: string) => {
+            expect(error).toEqual('errorType - general message');
+          },
         );
 
       service
@@ -293,8 +309,9 @@ describe('HttpHandlersService', () => {
         .toPromise()
         .then(
           () => true,
-          (error: string) =>
-            expect(error).toEqual('errorType - general message: inn - invalidValue'),
+          (error: string) => {
+            expect(error).toEqual('errorType - general message: inn - invalidValue');
+          }
         );
 
       service
@@ -306,10 +323,11 @@ describe('HttpHandlersService', () => {
         .toPromise()
         .then(
           () => true,
-          (error: string) =>
+          (error: string) => {
             expect(error).toEqual(
               'errorType - general message: inn - invalidValue1, invalidValue2',
-            ),
+            );
+          }
         );
 
       service
@@ -319,17 +337,23 @@ describe('HttpHandlersService', () => {
           statusText: 'error status text',
         })
         .toPromise()
-        .then(() => true, (error: string) => expect(error).toEqual('400 - error status text'));
+        .then(() => true, (error: string) => {
+          expect(error).toEqual('400 - error status text');
+        });
 
       service
         .handleError({ status: '400', statusText: 'error status text' })
         .toPromise()
-        .then(() => true, (error: string) => expect(error).toEqual('400 - error status text'));
+        .then(() => true, (error: string) => {
+          expect(error).toEqual('400 - error status text');
+        });
 
       service
         .handleError({})
         .toPromise()
-        .then(() => true, (error: string) => expect(error).toEqual('Server error'));
+        .then(() => true, (error: string) => {
+          expect(error).toEqual('Server error');
+        });
     }));
   });
 

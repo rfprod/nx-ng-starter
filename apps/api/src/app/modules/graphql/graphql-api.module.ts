@@ -15,7 +15,7 @@ import { GqlMatcompModule } from './matcomp/matcomp.module';
   providers: [DateScalar],
 })
 export class GqlApiModule {
-  public static forRoot(environment: AppEnvironment): DynamicModule {
+  public static forRoot(environment: Partial<AppEnvironment>): DynamicModule {
     return {
       module: GqlApiModule,
       imports: [
