@@ -16,7 +16,7 @@ const server: e.Express = e();
 /**
  * Defult port value.
  */
-const defaultPort = 3333;
+const defaultPort = 8080;
 
 /**
  * Bootstraps server.
@@ -28,7 +28,12 @@ async function bootstrap(expressInstance: e.Express): Promise<any> {
   app.useGlobalPipes(new ValidationPipe());
   const port = process.env.port || defaultPort;
   await app.listen(port, () => {
-    console.log(`Listening at http://localhost: ${port}/${globalPrefix}`);
+    console.log(`Listening at:
+    - http://localhost:${port}/${globalPrefix}/ping
+    - http://localhost:${port}/${globalPrefix}/signup
+    - http://localhost:${port}/${globalPrefix}/login
+    - http://localhost:${port}/${globalPrefix}/logout
+    - http://localhost:${port}/graphql`);
   });
   return app.init();
 }

@@ -1,10 +1,10 @@
 import { DynamicModule, Module } from '@nestjs/common';
 
-import { DateScalar } from '../../../common/scalars/date.scalar';
+import { DateScalar } from '@nx-ng-starter/api-interface';
 
-import { MatcompResolvers } from './resolver/matcomp.resolvers';
+import { MatcompResolvers } from './matcomp.resolvers';
 
-import { MatcompService } from './service/matcomp.service';
+import { MatcompService } from './matcomp.service';
 
 @Module({
   providers: [MatcompService, MatcompResolvers, DateScalar],

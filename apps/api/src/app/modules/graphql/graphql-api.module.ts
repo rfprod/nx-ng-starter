@@ -2,9 +2,9 @@ import { DynamicModule, Module } from '@nestjs/common';
 
 import { GraphQLModule } from '@nestjs/graphql';
 
-import { DateScalar } from '../../common/scalars/date.scalar';
-
 import { AppEnvironment } from '@nx-ng-starter/shared-core/data-access';
+
+import { DateScalar } from '@nx-ng-starter/api-interface';
 
 import { GqlMatcompModule } from './matcomp/matcomp.module';
 
@@ -30,6 +30,7 @@ export class GqlApiModule {
           autoSchemaFile: 'apps/api/api-schema.gql',
         }),
       ],
+      providers: [DateScalar],
     };
   }
 }

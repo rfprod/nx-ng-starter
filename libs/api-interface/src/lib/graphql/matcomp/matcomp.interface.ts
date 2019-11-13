@@ -1,6 +1,6 @@
-import { MatcompArgs } from '../dto/matcomp.args';
-import { Matcomp as MatcompModel } from '../model/matcomp.model';
-import { NewMatcompInput } from './matcomp-new-input.interface';
+import { MatcompArgs } from './dto/matcomp.args';
+import { MatcompModel } from './model/matcomp.model';
+import { NewMatcompInput } from './new-matcomp-input.interface';
 
 /**
  * Matcomp query interface.

@@ -6,7 +6,7 @@
 """Date custom scalar type"""
 scalar Date
 
-type Matcomp {
+type MatcompModel {
   id: ID!
   name: String
   description: String
@@ -14,7 +14,7 @@ type Matcomp {
 }
 
 type Mutation {
-  create(createMatcompInput: NewMatcompInput!): Matcomp!
+  create(createMatcompInput: NewMatcompInputDto!): MatcompModel!
   remove(id: String!): Boolean!
 }
 
@@ -24,17 +24,17 @@ input NewFileUploadInputDto {
   encoding: String!
 }
 
-input NewMatcompInput {
+input NewMatcompInputDto {
   name: String!
   description: String!
 }
 
 type Query {
-  matcomps(skip: Int = 0, take: Int = 25): [Matcomp!]!
-  matcomp(id: String!): Matcomp!
+  matcomps(skip: Int = 0, take: Int = 25): [MatcompModel!]!
+  matcomp(id: String!): MatcompModel!
 }
 
 type Subscription {
-  matcompCreated: Matcomp!
-  matcompRemoved: Matcomp!
+  matcompCreated: MatcompModel!
+  matcompRemoved: MatcompModel!
 }

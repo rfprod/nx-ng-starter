@@ -4,31 +4,24 @@ import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 
 import { PubSub } from 'apollo-server-express';
 
-import { NewMatcompInput } from '../dto/new-matcomp.input';
+import { Matcomp, MatcompArgs, MatcompModel, MatcompSubscription, NewMatcompInputDto } from '@nx-ng-starter/api-interface';
 
-import { MatcompGuard } from '../guard/matcomp.guard';
-
-import { MatcompArgs } from '../dto/matcomp.args';
-
-import { Matcomp } from '../model/matcomp.model';
-
-import { MatcompService } from '../service/matcomp.service';
-
-import { MatcompSubscription } from '../interface/matcomp-subscription.interface';
+import { MatcompGuard } from './guard/matcomp.guard';
+import { MatcompService } from './matcomp.service';
 
 const pubSub = new PubSub();
 
-@Resolver(_ => Matcomp)
+@Resolver(_ => MatcompModel)
 export class MatcompResolvers {
   constructor(private readonly service: MatcompService) {}
 
-  @Query(_ => [Matcomp])
+  @Query(_ => [MatcompModel])
   @UseGuards(MatcompGuard)
   public async matcomps(@Args() matcompArgs: MatcompArgs) {
     return this.service.findAll(matcompArgs);
   }
 
-  @Query(_ => Matcomp)
+  @Query(_ => MatcompModel)
   public async matcomp(
     @Args('id')
     id: string,
@@ -40,15 +33,15 @@ export class MatcompResolvers {
     return matcomp;
   }
 
-  @Mutation(_ => Matcomp)
-  public async create(@Args('createMatcompInput') args: NewMatcompInput): Promise<Matcomp> {
+  @Mutation(_ => MatcompModel)
+  public async create(@Args('createMatcompInput') args: NewMatcompInputDto): Promise<Matcomp> {
     const createdMatcomp = this.service.create(args);
     const matcompSubscription: MatcompSubscription = new MatcompSubscription(createdMatcomp);
     pubSub.publish('matcompCreated', matcompSubscription);
     return createdMatcomp;
   }
 
-  @Subscription(_ => Matcomp)
+  @Subscription(_ => MatcompModel)
   public matcompCreated() {
     return pubSub.asyncIterator('matcompCreated');
   }
@@ -61,7 +54,7 @@ export class MatcompResolvers {
     return removedMatcomp;
   }
 
-  @Subscription(_ => Matcomp)
+  @Subscription(_ => MatcompModel)
   public matcompRemoved() {
     return pubSub.asyncIterator('matcompRemoved');
   }

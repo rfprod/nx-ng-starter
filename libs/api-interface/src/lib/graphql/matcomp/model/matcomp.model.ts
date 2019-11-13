@@ -5,24 +5,24 @@ import {
 } from 'type-graphql';
 
 @ObjectType()
-export class Matcomp {
+export class MatcompModel {
 
   @Field(_ => ID)
   public id: string;
 
-  @Field({
+  @Field(_ => String, {
     defaultValue: '',
   })
   public name: string;
 
-  @Field({
+  @Field(_ => String, {
     defaultValue: '',
   })
   public description: string;
 
-  @Field({
+  @Field(_ => Date, {
     defaultValue: new Date().getTime(),
   })
-  public creationDate?: Date;
+  public creationDate?: number;
 
 }

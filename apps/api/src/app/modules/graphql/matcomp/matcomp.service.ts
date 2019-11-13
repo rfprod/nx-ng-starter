@@ -1,9 +1,5 @@
 import { Injectable } from '@nestjs/common';
-
-import { IMatcompMutation, IMatcompQuery, Matcomp } from '../interface/matcomp.interface';
-
-import { MatcompArgs } from '../dto/matcomp.args';
-import { NewMatcompInput } from '../dto/new-matcomp.input';
+import { IMatcompMutation, IMatcompQuery, Matcomp, MatcompArgs, NewMatcompInput } from '@nx-ng-starter/api-interface';
 
 @Injectable()
 export class MatcompService implements IMatcompQuery, IMatcompMutation {
