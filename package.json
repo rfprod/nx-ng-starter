@@ -36,6 +36,7 @@
     "start": "npm run start:api & npm run start:nx-ng-starter",
     "start:api": "ng serve --project api",
     "start:nx-ng-starter": "ng serve --project nx-ng-starter",
+    "start:production-server": "node simple-production-server.js",
     "stylelint": "npx stylelint --syntax scss",
     "stylelint:all": "npm run stylelint:apps; npm run stylelint:libs",
     "stylelint:all:fix": "npm run stylelint:apps:fix; npm run stylelint:libs:fix",
