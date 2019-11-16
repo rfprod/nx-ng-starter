@@ -22,7 +22,7 @@
             "main": "apps/nx-ng-starter/src/main.ts",
             "polyfills": "apps/nx-ng-starter/src/polyfills.ts",
             "tsConfig": "apps/nx-ng-starter/tsconfig.app.json",
-            "assets": ["apps/nx-ng-starter/src/favicon.ico", "apps/nx-ng-starter/src/assets"],
+            "assets": ["apps/nx-ng-starter/src/favicon.ico", "apps/nx-ng-starter/src/assets", "apps/nx-ng-starter/src/manifest.webmanifest"],
             "styles": [
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
               "node_modules/material-design-icon-fonts/iconfont/material-icons.css",
@@ -55,7 +55,9 @@
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
                 }
-              ]
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "apps/nx-ng-starter/ngsw-config.json"
             }
           }
         },

@@ -16,6 +16,7 @@ import { AppIndexComponent } from './components/app-index/app-index.component';
 import { AppIndexHomeComponent } from './components/app-index/home/app-index-home.component';
 import { AppComponent } from './components/app/app.component';
 
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
 /**
@@ -29,6 +30,7 @@ import { environment } from '../environments/environment';
     NgxsReduxDevtoolsPluginModule.forRoot(),
     SharedCoreModule.forRoot(environment),
     AppRoutingModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     {
