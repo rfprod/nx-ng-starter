@@ -40,15 +40,27 @@ PROJECT_ROOT=.
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit () {
+  ##
+  # Does the following:
+  # - find app aliases in module-aliases.sh
+  ##
+  APP_ALIASES=$(find ./shell/module-aliases.sh | xargs grep -o "app:[a-z0-9-]*")
+
   printf "\n ${RED} ERROR${DEFAULT}\n
     ${LIGHT_BLUE}Usage:\n
     ${DEFAULT} # > ${YELLOW} bash shell/lint.sh all${DEFAULT}\n
     ${LIGHT_BLUE}Lint specific app${DEFAULT}:\n
     ${DEFAULT} # > ${YELLOW} bash shell/lint.sh ${LIGHT_GREEN}<APP_ALIAS>${DEFAULT}\n
     ${DEFAULT} # > ${YELLOW} bash shell/lint.sh ${LIGHT_GREEN}<APP_ALIAS> ${YELLOW}fix${DEFAULT}\n
-    ${LIGHT_CYAN} currently supported ${LIGHT_GREEN}<APP_ALIAS>${LIGHT_CYAN} values:\n
-    ${DEFAULT} # > ${YELLOW} app:nx-ng-starter${DEFAULT}\n
-    ${DEFAULT} # > ${YELLOW} app:api${DEFAULT}\n
+    ${LIGHT_CYAN} currently supported ${LIGHT_GREEN}<APP_ALIAS>${LIGHT_CYAN} values:\n"
+
+  ##
+  # Prints found app aliases as it should be used with this script.
+  ##
+  for alias in $APP_ALIASES; do printf "
+    ${DEFAULT} # > ${YELLOW}${alias}${DEFAULT}\n"; done
+
+  printf "
     ${LIGHT_BLUE}Lint libs${DEFAULT}:\n
     ${DEFAULT} # > ${YELLOW} bash shell/lint.sh ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>${DEFAULT}\n
     ${DEFAULT} # > ${YELLOW} bash shell/lint.sh ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG> ${YELLOW}fix${DEFAULT}\n
