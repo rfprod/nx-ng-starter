@@ -1,8 +1,12 @@
 {
   "extends": [
-    "stylelint-config-rational-order"
+    "stylelint-config-rational-order",
+    "stylelint-config-prettier",
+    "stylelint-prettier/recommended"
   ],
+  "plugins": ["stylelint-prettier"],
   "rules": {
+    "prettier/prettier": true,
     "indentation": 2,
     "string-quotes": "single",
     "color-hex-case": "lower",
@@ -10,8 +14,8 @@
     "rule-empty-line-before": ["always-multi-line", { "except": ["after-single-line-comment", "first-nested"] }],
     "comment-empty-line-before": "always",
     "selector-combinator-space-after": "always",
-    "selector-attribute-operator-space-before": "always",
-    "selector-attribute-operator-space-after": "always",
+    "selector-attribute-operator-space-before": "never",
+    "selector-attribute-operator-space-after": "never",
     "declaration-block-trailing-semicolon": "always",
     "declaration-colon-space-before": "never",
     "declaration-colon-space-after": "always",
