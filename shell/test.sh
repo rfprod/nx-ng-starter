@@ -74,7 +74,7 @@ reportUsageErrorAndExit () {
   # - find lib aliases in tsconfig
   # - remove duplicates
   ##
-  LIB_ALIASES=$(find ./tsconfig.json | xargs grep -o "libs\/[a-z0-9-]*" | awk "!a[$0]++")
+  LIB_ALIASES=$(find ./tsconfig.json | xargs grep -o "libs\/[a-z0-9-]*" | awk '!a[$0]++')
 
   ##
   # Prints found and filtered lib aliases as it should be used with this script.

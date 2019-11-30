@@ -1,1 +1,5 @@
-export const getGreeting = () => cy.get('h1');
+export const getAppRoot = () => cy.get('nx-ng-starter-root');
+
+export const getAppIndex = () => cy.get('nx-ng-starter-app-index');
+
+export const getToolbar = () => cy.get('mat-toolbar');
