@@ -1,6 +1,12 @@
 # NxNgStarter
 
-[![CircleCI](https://circleci.com/gh/rfprod/nx-ng-starter.svg?style=svg)](https://circleci.com/gh/rfprod/nx-ng-starter)
+## CircleCI [![CircleCI](https://circleci.com/gh/rfprod/nx-ng-starter.svg?style=svg)](https://circleci.com/gh/rfprod/nx-ng-starter)
+
+## Azure DevOps
+
+- ### PR Validation [![Azure DevOps PR Validation Build Status](https://rfprod.visualstudio.com/nx-ng-starter/_apis/build/status/PR%20Validation?branchName=master)](https://rfprod.visualstudio.com/nx-ng-starter/_build/latest?definitionId=13&branchName=master)
+
+- ### PROD [![Azure DevOps PROD Build Status](https://rfprod.visualstudio.com/nx-ng-starter/_apis/build/status/PROD?branchName=master)](https://rfprod.visualstudio.com/nx-ng-starter/_build/latest?definitionId=14&branchName=master)
 
 Is a monorepo starter with preconfigured apps:
 
