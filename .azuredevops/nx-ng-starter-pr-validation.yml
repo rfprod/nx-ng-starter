@@ -1,0 +1,60 @@
+resources:
+  - repo: self
+
+trigger: none
+
+pr:
+  branches:
+    include:
+      - master
+      - dev
+  paths:
+    exclude:
+      - README.md
+      - functions/*
+      - coverage/*
+      - .*
+
+jobs:
+  ##
+  # Testing pipeline suitable for PRs validation only.
+  # It lints source code, styles, and executes unit tests.
+  # All envitonment variables (if any, not required here) should be defined in azure dev ops UI.
+  ##
+  - job: Testing_pipeline
+    timeoutInMinutes: 60
+    cancelTimeoutInMinutes: 10
+
+    pool:
+      vmImage: 'ubuntu-16.04'
+
+    steps:
+      - task: NodeTool@0
+        displayName: 'Use specific node version'
+        inputs:
+          versionSpec: '10.17.0'
+
+      - script: |
+          npm install -g npm@6.13.1
+          npm update
+          npm install
+          npm install -g typescript
+          npm install -g @angular/cli
+          npm install -g @nrwl/schematics
+          bash shell/lint.sh all
+          if [ $? -ne 0 ]; then
+            exit 1
+          fi
+          bash shell/test.sh single-run all
+          if [ $? -ne 0 ]; then
+            exit 1
+          fi
+
+      - task: ArchiveFiles@2
+        displayName: 'Archive files'
+        inputs:
+          rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+          includeRootFolder: false
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish artifacts: drop'

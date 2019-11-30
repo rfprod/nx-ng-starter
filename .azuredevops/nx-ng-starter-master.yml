@@ -1,0 +1,62 @@
+resources:
+  - repo: self
+
+trigger:
+  branches:
+    include:
+      - master
+  paths:
+    exclude:
+      - README.md
+
+jobs:
+  ##
+  # Main Building pipeline for branch master (which is used to build PRODUCTION distro).
+  # It builds and deploys production app.
+  # All envitonment variables should be defined in Azure DevOps UI.
+  ##
+  - job: Building_pipeline
+    timeoutInMinutes: 60
+    cancelTimeoutInMinutes: 10
+
+    pool:
+      vmImage: 'ubuntu-16.04'
+
+    steps:
+      - task: NodeTool@0
+        displayName: 'Use specific node version'
+        inputs:
+          versionSpec: '10.17.0'
+
+      - script: |
+          npm install -g npm@6.13.1
+          npm update
+          npm install
+          npm install -g typescript
+          npm install -g compodoc
+          npm install -g @angular/cli
+          npm install -g @nrwl/schematics
+          npm install -g firebase-tools
+          bash shell/lint.sh all
+          if [ $? -ne 0 ]; then
+            exit 1
+          fi
+          bash shell/build.sh prod
+          if [ $? -ne 0 ]; then
+            exit 1
+          fi
+          bash shell/firebase-deploy.sh $FIREBASE_DEPLOY_TOKEN
+          if [ $? -ne 0 ]; then
+            exit 1
+          fi
+        env:
+          FIREBASE_DEPLOY_TOKEN: $(firebaseDeployToken)
+
+      - task: ArchiveFiles@2
+        displayName: 'Archive files'
+        inputs:
+          rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+          includeRootFolder: false
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish artifacts: drop'
