@@ -13,9 +13,13 @@ pr: none
 
 jobs:
   ##
-  # Main Building pipeline for branch master (which is used to build PRODUCTION distro).
-  # It builds and deploys production app.
-  # All envitonment variables should be defined in Azure DevOps UI.
+  # Main Building pipeline for branch master (which is used to build and deploy PRODUCTION distro).
+  # It does the following:
+  # - executes unit tests, and generates a coverage report;
+  # - builds client and server applications in production mode;
+  # - deploys built client and server application to Firebase.
+  # Note on environment variables:
+  # - all envitonment variables should be defined in Azure DevOps UI.
   ##
   - job: Building_pipeline
     timeoutInMinutes: 60
@@ -35,15 +39,15 @@ jobs:
           npm update
           npm install
           npm install -g typescript
-          npm install -g compodoc
           npm install -g @angular/cli
+          npm install -g @compodoc/compodoc
           npm install -g @nrwl/schematics
           npm install -g firebase-tools
-          bash shell/lint.sh all
+          bash shell/test.sh single-run-and-report all
           if [ $? -ne 0 ]; then
             exit 1
           fi
-          bash shell/build.sh prod
+          bash shell/build.sh prod all doc
           if [ $? -ne 0 ]; then
             exit 1
           fi

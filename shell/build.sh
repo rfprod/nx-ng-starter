@@ -49,8 +49,8 @@ buildAPIProd () {
 ##
 buildAllProd () {
   printf "\n ${LIGHT_BLUE}<< BUILDING ALL apps PRODUCTION mode >>${DEFAULT}\n\n"
-  buildNxNgStarterProd
   buildAPIProd
+  buildNxNgStarterProd
 }
 
 ##
@@ -73,6 +73,7 @@ generateChangelog () {
 if [ $# -lt 1 ]; then
   reportUsageError
 elif [ "$1" = "prod" ]; then
+  # build project
   if [ "$2" = "api" ]; then
     buildAPIProd
   elif [ "$2" = "nx-ng-starter" ]; then
@@ -80,8 +81,11 @@ elif [ "$1" = "prod" ]; then
   else
     buildAllProd
   fi
-  generateDocumentation
-  generateChangelog
+  # generate documentation and changelog
+  if [ "$3" = "doc" ]; then
+    generateDocumentation
+    generateChangelog
+  fi
 else
   reportUsageError
 fi
