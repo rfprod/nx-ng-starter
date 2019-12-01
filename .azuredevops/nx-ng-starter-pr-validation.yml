@@ -18,8 +18,11 @@ pr:
 jobs:
   ##
   # Testing pipeline suitable for PRs validation only.
-  # It lints source code, styles, and executes unit tests.
-  # All envitonment variables (if any, not required here) should be defined in azure dev ops UI.
+  # It does the following:
+  # - lints source code, styles, and html templates;
+  # - executes unit tests.
+  # Note on environment variables:
+  # - all envitonment variables (if any, not required here) should be defined in Azure DevOps UI.
   ##
   - job: Testing_pipeline
     timeoutInMinutes: 60

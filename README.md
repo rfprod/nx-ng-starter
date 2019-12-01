@@ -1,12 +1,14 @@
 # NxNgStarter
 
-## Azure DevOps
+## Azure DevOps pipelines status
 
 - ### PR Validation [![Azure DevOps PR Validation Build Status](https://rfprod.visualstudio.com/nx-ng-starter/_apis/build/status/PR%20Validation?branchName=master)](https://rfprod.visualstudio.com/nx-ng-starter/_build/latest?definitionId=13&branchName=master)
 
 - ### PROD [![Azure DevOps PROD Build Status](https://rfprod.visualstudio.com/nx-ng-starter/_apis/build/status/PROD?branchName=master)](https://rfprod.visualstudio.com/nx-ng-starter/_build/latest?definitionId=14&branchName=master)
 
-Is a monorepo starter with preconfigured apps:
+## Project description
+
+`NxNgStarter` is a monorepo starter with preconfigured apps:
 
 - `api` - provides sample api using rest and graphql
 - `nx-ng-starter` - sample client application
@@ -20,7 +22,7 @@ and libs:
 
 which is deployed to `Firebase`: https://nx-ng-starter.web.app/
 
-# General Tooling
+## General Tooling
 
 This project was generated using [Nx](https://nx.dev).
 
@@ -28,7 +30,7 @@ This project was generated using [Nx](https://nx.dev).
 
 🔎 **Nx is a set of Angular CLI power-ups for modern development.**
 
-## Quick Start & Documentation
+### Quick Start & Documentation
 
 [Nx Documentation](https://nx.dev)
 
@@ -36,7 +38,7 @@ This project was generated using [Nx](https://nx.dev).
 
 [Interactive Tutorial](https://nx.dev/tutorial/01-create-application)
 
-## Adding capabilities to your workspace
+### Adding capabilities to your workspace
 
 Nx supports many plugins which add capabilities for developing different types of applications and different tools.
 
@@ -57,7 +59,7 @@ Below are some plugins which you can add to your workspace:
 - [Node](https://nodejs.org)
   - `ng add @nrwl/node`
 
-## Generate an application
+### Generate an application
 
 Run `ng g @nrwl/angular:app my-app` to generate an application.
 
@@ -65,7 +67,7 @@ Run `ng g @nrwl/angular:app my-app` to generate an application.
 
 When using Nx, you can create multiple applications and libraries in the same workspace.
 
-## Generate a library
+### Generate a library
 
 Run `ng g @nrwl/angular:lib my-lib` to generate a library.
 
@@ -73,34 +75,75 @@ Run `ng g @nrwl/angular:lib my-lib` to generate a library.
 
 Libraries are sharable across libraries and applications. They can be imported from `@nx-ng-starter/mylib`.
 
-## Development server
+### Development server
 
 Run `ng serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
+### Code scaffolding
 
 Run `ng g component my-component --project=my-app` to generate a new component.
 
-## Build
+### Build
 
 Run `ng build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+### Running unit tests
 
 Run `ng test my-app` to execute the unit tests via [Jest](https://jestjs.io).
 
 Run `npm run affected:test` to execute the unit tests affected by a change.
 
-## Running end-to-end tests
+### Running end-to-end tests
 
 Run `ng e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
 
 Run `npm run affected:e2e` to execute the end-to-end tests affected by a change.
 
-## Understand your workspace
+### Understand your workspace
 
 Run `npm run dep-graph` to see a diagram of the dependencies of your projects.
 
-## Further help
+### Further help
 
 Visit the [Nx Documentation](https://nx.dev) to learn more.
+
+## Troubleshooting
+
+### Windows
+
+- git config --global core.autocrlf
+
+## Technologies Reference
+
+### Workspace
+
+- [Nrwl Nx](https://nx.dev)
+
+### Client
+
+- [Angular](https://angular.io)
+- [Angular CLI](https://cli.angular.io/)
+- [Angular Material](https://material.angular.io/)
+- [Apollo Angular](https://github.com/apollographql/apollo-angular)
+- [Material Design Guidelines](https://material.io)
+- [NGXS](https://www.ngxs.io/)
+
+### Server
+
+- [NestJS](https://nestjs.com/)
+- [Firebase JS Reference](https://firebase.google.com/docs/reference/js/)
+- [Express GraphQL Server](https://graphql.org/graphql-js/running-an-express-graphql-server/)
+- [Angular Firebase: Apollo Server](https://angularfirebase.com/lessons/graphql-apollo-2-tutorial-node/#Apollo-Server)
+
+### Testing
+
+- [Cypress](https://www.cypress.io/)
+- [Jest](https://jestjs.io/)
+
+### Documentation
+
+- [Compodoc](https://compodoc.github.io/compodoc/)
+
+### CI
+
+- [Azure DevOps YAML Schema](https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=vsts&tabs=example#trigger)
