@@ -20,7 +20,8 @@ jobs:
   # Testing pipeline suitable for PRs validation only.
   # It does the following:
   # - lints source code, styles, and html templates;
-  # - executes unit tests.
+  # - executes unit tests;
+  # - executes e2e tests.
   # Note on environment variables:
   # - all envitonment variables (if any, not required here) should be defined in Azure DevOps UI.
   ##
@@ -49,6 +50,10 @@ jobs:
             exit 1
           fi
           bash shell/test.sh single-run all
+          if [ $? -ne 0 ]; then
+            exit 1
+          fi
+          bash shell/e2e.sh all headless
           if [ $? -ne 0 ]; then
             exit 1
           fi
