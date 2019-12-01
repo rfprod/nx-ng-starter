@@ -43,11 +43,11 @@ jobs:
           npm install -g @compodoc/compodoc
           npm install -g @nrwl/schematics
           npm install -g firebase-tools
-          bash shell/test.sh single-run-and-report all
+          bash shell/build.sh prod all doc
           if [ $? -ne 0 ]; then
             exit 1
           fi
-          bash shell/build.sh prod all doc
+          bash shell/test.sh single-run-and-report all
           if [ $? -ne 0 ]; then
             exit 1
           fi

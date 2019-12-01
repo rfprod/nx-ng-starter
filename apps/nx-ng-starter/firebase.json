@@ -26,58 +26,7 @@
         ]
       },
       {
-        "source": "/nx-ng-starter",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, no-cache, no-store, must-ravalidate, max-age=0"
-          },
-          {
-            "key": "Expires",
-            "value": "-1"
-          },
-          {
-            "key": "Pragma",
-            "value": "no-cache"
-          }
-        ]
-      },
-      {
-        "source": "/coverage",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, no-cache, no-store, must-ravalidate, max-age=0"
-          },
-          {
-            "key": "Expires",
-            "value": "-1"
-          },
-          {
-            "key": "Pragma",
-            "value": "no-cache"
-          }
-        ]
-      },
-      {
-        "source": "/documentation",
-        "headers": [
-          {
-            "key": "Cache-Control",
-            "value": "public, no-cache, no-store, must-ravalidate, max-age=0"
-          },
-          {
-            "key": "Expires",
-            "value": "-1"
-          },
-          {
-            "key": "Pragma",
-            "value": "no-cache"
-          }
-        ]
-      },
-      {
-        "source": "/api",
+        "source": "/(nx-ng-starter|coverage|documentation|api|graphql)",
         "headers": [
           {
             "key": "Cache-Control",
