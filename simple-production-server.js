@@ -13,7 +13,7 @@ process.title = 'simple-production-server';
 /**
  * @name cwd
  * @constant
- * @summary Current directory of the main Server script - server.js
+ * @summary Current directory of the main Server script - simple-production-server.js
  * @description Correct root path for all setups, it should be used for all file references for the server and its modules like filePath: cwd + '/actual/file.extension'. Built Electron app contains actual app in resources/app(.asar) subdirectory, so it is essential to prefer __dirname usage over process.cwd() to get the value.
  */
 const cwd = __dirname;
@@ -60,16 +60,12 @@ app.use('/', express.static(cwd + '/dist/apps/nx-ng-starter'));
  * Serve app index file for paths excluding provided in regX.
  */
 app.use((req, res, next) => {
-  /*
-   *	this is required for angular to load urls properly when user requests url directly, e.g.
-   *	current conditions: client index page is served fro all request
-   *	which do not include control words: api, css, fonts, img, js
-   *	control words explanation:
-   *	api - is part of path that returnd data over REST API
-   * css, fonts, img, js - are directories containing client files
+  /**
+   * This is required for angular to load urls properly when user requests url directly, e.g.
+   * current conditions: client index page is served fro all request
+   * which do not include control strings.
    */
-  // console.log('req.path:', req.path);
-  const regX = /(css|webfonts|img|js|woff|woff2|ttf)/;
+  const regX = /(assets|webmanifest|js|css|json|ico|svg|woff|woff2|ttf|eot)/;
 
   console.log('req', req.path);
 
@@ -92,13 +88,13 @@ app.all('/*', function(req, res, next) {
     'Access-Control-Allow-Headers',
     'Content-type,Content-Length,Accept,X-Access-Token,X-Key,X-Auth-Token,X-Requested-With,Authorization',
   );
-  /** additions headers to be exposed */
+  /** Additional exposed headers */
   res.header('Access-Control-Expose-Headers', 'Views,X-Auth-Token');
-  /** cache control */
+  /** Cache control */
   res.header('Cache-Control', 'public, no-cache, no-store, must-ravalidate, max-age=0');
   res.header('Expires', '-1');
   res.header('Pragma', 'no-cache');
-  /** handle OPTIONS method */
+  /** Handle OPTIONS method */
   if (req.method == 'OPTIONS') res.status(200).end();
   else next();
 });
