@@ -14,7 +14,7 @@
     "affected:lint": "nx affected:lint",
     "affected:test": "nx affected:test",
     "build:all": "npm run build:api && npm run build:nx-ng-starter",
-    "build:all:prod": "bash shell/build.sh prod",
+    "build:all:prod": "bash shell/build.sh prod all doc",
     "build:api": "ng build api",
     "build:api:prod": "bash shell/build.sh prod api",
     "build:nx-ng-starter": "ng build nx-ng-starter",
