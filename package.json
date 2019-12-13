@@ -26,6 +26,11 @@
     "document:all:generate-and-report-to-dist": "bash shell/document.sh generate-and-report all",
     "e2e": "bash shell/e2e.sh all",
     "e2e:headless": "bash shell/e2e.sh all headless",
+    "e2e:headless:report": "bash shell/e2e.sh all headless report",
+    "e2e:nx-ng-starter": "bash shell/e2e.sh app:nx-ng-starter-e2e",
+    "e2e:nx-ng-starter:headless": "bash shell/e2e.sh app:nx-ng-starter-e2e headless",
+    "e2e:nx-ng-starter:headless:report": "bash shell/e2e.sh app:nx-ng-starter-e2e headless report",
+    "e2e:nx-ng-starter:report": "bash shell/e2e.sh app:nx-ng-starter-e2e browser report",
     "firebase:deploy:ci": "bash shell/firebase-deploy.sh",
     "firebase:deploy:localhost:all": "npm run build:all:prod && bash shell/firebase-deploy.sh localhost all",
     "firebase:deploy:localhost:api": "npm run build:api:prod && bash shell/firebase-deploy.sh localhost api",
@@ -38,6 +43,8 @@
     "lint": "npx nx workspace-lint && ng lint",
     "lint:all": "bash shell/lint.sh all",
     "lint:all:fix": "bash shell/lint.sh all fix",
+    "lint:changed": "bash shell/lint.sh changed",
+    "lint:changed:fix": "bash shell/lint.sh changed fix",
     "ng": "ng",
     "ng-build": "ng build",
     "ng-e2e": "ng e2e",
@@ -62,13 +69,14 @@
     "test": "bash shell/test.sh",
     "test:all:single-run": "bash shell/test.sh single-run all",
     "test:all:single-run-and-report-to-dist": "bash shell/test.sh single-run-and-report all",
+    "test:changed:single-run": "bash shell/test.sh single-run changed",
     "update": "ng update @nrwl/workspace",
     "update:check": "ng update",
     "workspace-schematic": "nx workspace-schematic"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint:all"
+      "pre-commit": "npm run lint:changed"
     }
   },
   "dependencies": {
@@ -149,11 +157,15 @@
     "@types/node": "12.12.14",
     "codelyzer": "5.2.0",
     "core-js": "3.4.7",
+    "cypress-multi-reporters": "^1.2.3",
     "firebase": "7.5.1",
     "firebase-admin": "8.8.0",
     "firebase-functions": "3.3.0",
     "firebase-tools": "7.9.0",
     "husky": "3.1.0",
+    "mocha": "^6.2.2",
+    "mochawesome": "^4.1.0",
+    "mochawesome-merge": "^2.1.0",
     "prettier": "1.19.1",
     "sort-package-json": "1.30.0",
     "stylelint": "12.0.0",
