@@ -51,6 +51,7 @@ jobs:
           if [ $? -ne 0 ]; then
             exit 1
           fi
+          bash shell/e2e.sh app:transport-v12-e2e headless report
           bash shell/firebase-deploy.sh $FIREBASE_DEPLOY_TOKEN
           if [ $? -ne 0 ]; then
             exit 1

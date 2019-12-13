@@ -25,6 +25,11 @@ source shell/colors.sh
 source shell/module-aliases.sh
 
 ##
+# Import Git helpers.
+##
+source shell/git-extension.sh
+
+##
 # Exits with error.
 ##
 exitWithError () {
@@ -210,6 +215,12 @@ lintModule () {
     lintModule $MODULE_ALIAS $OPTIONAL_ACTION
     MODULE_ALIAS=$MODULE_ALIAS_LIB_SHARED_CORE # "lib:shared-core"
     lintModule $MODULE_ALIAS $OPTIONAL_ACTION
+  elif
+    [ $MODULE_ALIAS = "changed" ]; then
+    getChangedProjectAliases
+    printf "\n
+      ${LIGHT_BLUE} >> linting changed apps and libs${DEFAULT}\n"
+    for CHANGED_ALIAS in $CHANGED_ALIASES; do lintModule $CHANGED_ALIAS $OPTIONAL_ACTION; done
   else
     reportUsageErrorAndExit
   fi

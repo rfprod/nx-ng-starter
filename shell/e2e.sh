@@ -67,21 +67,58 @@ reportUsageErrorAndExit () {
 }
 
 ##
+# Copies generated report to dist folder.
+##
+copyReportToDist () {
+  printf "\n ${LIGHT_BLUE} COPY REPORT TO DIST:\n
+    ${DEFAULT} - module partial path: ${YELLOW}${1}${DEFAULT}\n
+    ${DEFAULT} - e2e dist path: ${YELLOW}${2}${DEFAULT}\n
+    ${DEFAULT} - optional action (report): ${YELLOW}${3}${DEFAULT}\n
+    \n\n"
+
+  ##
+  # E2E root path.
+  ##
+  E2E_DISTR_ROOT=${PROJECT_ROOT}/dist/apps/nx-ng-starter/cypress
+
+  if [ "$3" = "report" ]; then
+    # check coverage dist path existence
+    if [ -d ${E2E_DISTR_ROOT} ]; then
+      printf "\n ${LIGHT_GREEN} e2e directory ${E2E_DISTR_ROOT} exists, proceeding${DEFAULT}\n\n"
+    else
+      printf "\n ${RED} ERROR: directory ${E2E_DISTR_ROOT} does not exist\n
+        ${LIGHT_BLUE} creating directory ${E2E_DISTR_ROOT}.${DEFAULT}\n
+        \n\n"
+      mkdir -p $E2E_DISTR_ROOT
+    fi
+    # merge json reports
+    npx mochawesome-merge --rootDir $2 --reportDir mochawesome > $2/mochawesome-merge.json
+    # generate html report from merged json
+    npx marge --reportDir $2/mochawesome --reportFilename mochawesome.html $2/mochawesome-merge.json
+    # copy report
+    cp -r $2 $E2E_DISTR_ROOT || exitWithError
+  fi
+}
+
+##
 # Performs module testing considering optional action.
 ##
 performModuleTesting () {
   printf "\n ${LIGHT_BLUE} >> testing module\n
     ${DEFAULT} - module name: ${YELLOW}${1}${DEFAULT}\n
-    ${DEFAULT} - e2e dist path: ${YELLOW}${2}${DEFAULT}\n
-    ${DEFAULT} - optional action (headless): ${YELLOW}${3}${DEFAULT}\n
+    ${DEFAULT} - module partial path: ${YELLOW}${2}${DEFAULT}\n
+    ${DEFAULT} - e2e dist path: ${YELLOW}${3}${DEFAULT}\n
+    ${DEFAULT} - optional action (headless): ${YELLOW}${4}${DEFAULT}\n
+    ${DEFAULT} - optional action (report): ${YELLOW}${5}${DEFAULT}\n
     \n\n"
 
-  if [ "$3" = "headless" ]; then
-    ng e2e $1 --headless || exitWithError
+  if [ "$4" = "headless" ]; then
+    ng e2e $1 --headless
   else
-    ng e2e $1 || exitWithError
+    ng e2e $1
   fi
-  # TODO: generate report from junit xml to dist, use var $2
+
+  copyReportToDist $2 $3 $5
 }
 
 ##
@@ -90,16 +127,18 @@ performModuleTesting () {
 testModule () {
   printf "\n ${LIGHT_BLUE} TESTING MODULE\n
     ${DEFAULT} - module alias: ${YELLOW}${1}${DEFAULT}\n
-    ${DEFAULT} - optional action (headless): ${YELLOW}${2}${DEFAULT}\n"
+    ${DEFAULT} - optional action (headless): ${YELLOW}${2}${DEFAULT}\n
+    ${DEFAULT} - optional action (report): ${YELLOW}${3}${DEFAULT}\n"
 
   MODULE_ALIAS=$1
   OPTIONAL_ACTION=$2
+  COPY_REPORT=$3
 
   MODULE_NAME="$(echo "${MODULE_ALIAS//app\:/}")" # remove app: prefix
 
   MODULE_PARTIAL_PATH="$(echo "${MODULE_ALIAS//\:/s\/}")" # replace ': ' with 's/ ' to get parial path (e.g. apps/nx-ng-starter-e2e() for paths formation
 
-  E2E_DIST_PATH=${PROJECT_ROOT}/dist/cypress/${MODULE_PARTIAL_PATH}/
+  E2E_DIST_PATH=${PROJECT_ROOT}/dist/cypress/${MODULE_PARTIAL_PATH}
 
   printf "
     ${DEFAULT} - module name: ${YELLOW}${MODULE_NAME}${DEFAULT}\n
@@ -107,11 +146,11 @@ testModule () {
     ${DEFAULT} - e2e dist path: ${YELLOW}${E2E_DIST_PATH}${DEFAULT}\n"
 
   if [ $MODULE_ALIAS = $MODULE_ALIAS_APP_NX_NG_STARTER_E2E ]; then # "app:nx-ng-starter-e2e"
-    performModuleTesting $MODULE_NAME $E2E_DIST_PATH $OPTIONAL_ACTION
+    performModuleTesting $MODULE_NAME $MODULE_PARTIAL_PATH $E2E_DIST_PATH $OPTIONAL_ACTION $COPY_REPORT
   elif
     [[ $MODULE_ALIAS = "all" ]]; then
     MODULE_ALIAS=$MODULE_ALIAS_APP_NX_NG_STARTER_E2E # "app:nx-ng-starter-e2e"
-    testModule $MODULE_ALIAS $OPTIONAL_ACTION
+    testModule $MODULE_ALIAS $OPTIONAL_ACTION $COPY_REPORT
   else
     reportUsageErrorAndExit
   fi
@@ -123,5 +162,5 @@ testModule () {
 if [ $# -lt 1 ]; then
   reportUsageErrorAndExit
 else
-  testModule $1 $2
+  testModule $1 $2 $3
 fi
