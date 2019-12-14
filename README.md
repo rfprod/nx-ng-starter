@@ -22,6 +22,23 @@ and libs:
 
 which is deployed to `Firebase`: https://nx-ng-starter.web.app/
 
+## Deployment
+
+  - [Nx Ng Starter @ Firebase](https://nx-ng-starter.web.app)
+
+### Documentation
+
+  - [Nx Ng Starter Client](https://nx-ng-starter.web.app/documentation/index.html)
+  - [Nx Ng Starter API](https://nx-ng-starter.web.app/documentation/api/index.html)
+
+### Changelog
+
+  - [Nx Ng Starter](https://nx-ng-starter.web.app/changelog/apps/nx-ng-starter-CHANGELOG.md)
+  - [API](https://nx-ng-starter.web.app/changelog/apps/api-CHANGELOG.md)
+  - [API Interface](https://nx-ng-starter.web.app/changelog/libs/api-interface-CHANGELOG.md)
+  - [Mocks Core](https://nx-ng-starter.web.app/changelog/libs/mocks-core-CHANGELOG.md)
+  - [Shared Core](https://nx-ng-starter.web.app/changelog/libs/shared-core-CHANGELOG.md)
+
 ## General Tooling
 
 This project was generated using [Nx](https://nx.dev).
