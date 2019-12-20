@@ -272,6 +272,34 @@
           "styleext": "scss"
         }
       }
+    },
+    "proto": {
+      "projectType": "library",
+      "root": "libs/proto",
+      "sourceRoot": "libs/proto/src",
+      "prefix": "nx-ng-starter",
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["libs/proto/tsconfig.lib.json", "libs/proto/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/proto/**"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/proto/jest.config.js",
+            "tsConfig": "libs/proto/tsconfig.spec.json",
+            "setupFile": "libs/proto/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      }
     }
   },
   "cli": {

@@ -21,6 +21,7 @@ source shell/colors.sh
 # MODULE_ALIAS_LIB_API_INTERFACE="lib:api-interface"
 # MODULE_ALIAS_LIB_MOCKS_CORE="lib:mocks-core"
 # MODULE_ALIAS_LIB_SHARED_CORE="lib:shared-core"
+# MODULE_ALIAS_LIB_PROTO="lib:proto"
 ##
 source shell/module-aliases.sh
 
@@ -231,6 +232,9 @@ generateModuleChangelog () {
     [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_MOCKS_CORE ]; then # "lib:mocks-core"
     checkConfigPathAndProceed $MODULE_NAME $MODULE_PARTIAL_PATH
   elif
+    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_PROTO ]; then # "lib:proto"
+    checkConfigPathAndProceed $MODULE_NAME $MODULE_PARTIAL_PATH
+  elif
     [ $MODULE_ALIAS = "all" ]; then
     MODULE_ALIAS=$MODULE_ALIAS_APP_NX_NG_STARTER # "app:nx-ng-starter"
     generateModuleChangelog $MODULE_ALIAS
@@ -241,6 +245,8 @@ generateModuleChangelog () {
     MODULE_ALIAS=$MODULE_ALIAS_LIB_SHARED_CORE # "lib:shared-core"
     generateModuleChangelog $MODULE_ALIAS
     MODULE_ALIAS=$MODULE_ALIAS_LIB_MOCKS_CORE # "lib:mocks-core"
+    generateModuleChangelog $MODULE_ALIAS
+    MODULE_ALIAS=$MODULE_ALIAS_LIB_PROTO # "lib:proto"
     generateModuleChangelog $MODULE_ALIAS
   else
     reportUsageErrorAndExit
