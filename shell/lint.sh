@@ -21,6 +21,7 @@ source shell/colors.sh
 # MODULE_ALIAS_LIB_API_INTERFACE="lib:api-interface"
 # MODULE_ALIAS_LIB_MOCKS_CORE="lib:mocks-core"
 # MODULE_ALIAS_LIB_SHARED_CORE="lib:shared-core"
+# MODULE_ALIAS_LIB_PROTO="lib:proto"
 ##
 source shell/module-aliases.sh
 
@@ -202,6 +203,9 @@ lintModule () {
     [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_SHARED_CORE ]; then # "lib:shared-core"
     checkConfigPathAndProceed $MODULE_NAME $MODULE_PARTIAL_PATH $OPTIONAL_ACTION
   elif
+    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_PROTO ]; then # "lib:proto"
+    checkConfigPathAndProceed $MODULE_NAME $MODULE_PARTIAL_PATH $OPTIONAL_ACTION
+  elif
     [ $MODULE_ALIAS = "all" ]; then
     MODULE_ALIAS=$MODULE_ALIAS_APP_NX_NG_STARTER # "app:nx-ng-starter"
     lintModule $MODULE_ALIAS $OPTIONAL_ACTION
@@ -214,6 +218,8 @@ lintModule () {
     MODULE_ALIAS=$MODULE_ALIAS_LIB_MOCKS_CORE # "lib:mocks-core"
     lintModule $MODULE_ALIAS $OPTIONAL_ACTION
     MODULE_ALIAS=$MODULE_ALIAS_LIB_SHARED_CORE # "lib:shared-core"
+    lintModule $MODULE_ALIAS $OPTIONAL_ACTION
+    MODULE_ALIAS=$MODULE_ALIAS_LIB_PROTO # "lib:proto"
     lintModule $MODULE_ALIAS $OPTIONAL_ACTION
   elif
     [ $MODULE_ALIAS = "changed" ]; then
