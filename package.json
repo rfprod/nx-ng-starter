@@ -40,6 +40,8 @@
     "format:write": "nx format:write",
     "help": "nx help",
     "postinstall": "npx sort-package-json",
+    "install:brew:protolint:linux": "bash shell/install.sh brew-protolint-linux",
+    "install:global": "bash shell/install.sh global",
     "lint": "npx nx workspace-lint && ng lint",
     "lint:all": "bash shell/lint.sh all",
     "lint:all:fix": "bash shell/lint.sh all fix",
