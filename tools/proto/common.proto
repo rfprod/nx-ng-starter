@@ -1,9 +1,11 @@
+// protolint:disable FIELD_NAMES_LOWER_SNAKE_CASE
+
 syntax = "proto3";
 
 package nxngstarter;
 
-import "google/protobuf/empty.proto";
 import "google/protobuf/any.proto";
+import "google/protobuf/empty.proto";
 
 message CommonEntities {
   int64 count = 1;
