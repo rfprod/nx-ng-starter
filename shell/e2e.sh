@@ -81,6 +81,27 @@ copyReportToDist () {
   ##
   E2E_DISTR_ROOT=${PROJECT_ROOT}/dist/apps/nx-ng-starter/cypress
 
+  ##
+  # Report directory
+  ##
+  REPORT_DIR="${2}/mochawesome"
+  ##
+  # Reports glob for mochawesome merge.
+  ##
+  REPORTS_GLOB="${REPORT_DIR}/json/mochawesome*.json"
+  ##
+  # Merged report path
+  ##
+  MERGED_JSON_REPORT_PATH="${REPORT_DIR}/mochawesome-merge.json"
+  ##
+  # Report title
+  ##
+  REPORT_TITLE="Nx Ng Starter E2E"
+  ##
+  # Html report filename
+  ##
+  REPORT_FILENAME="mochawesome.html"
+
   if [ "$3" = "report" ]; then
     # check coverage dist path existence
     if [ -d ${E2E_DISTR_ROOT} ]; then
@@ -92,9 +113,9 @@ copyReportToDist () {
       mkdir -p $E2E_DISTR_ROOT
     fi
     # merge json reports
-    npx mochawesome-merge --rootDir $2 --reportDir mochawesome > $2/mochawesome-merge.json
+    npx mochawesome-merge --reportsGlob=$REPORTS_GLOB > $MERGED_JSON_REPORT_PATH
     # generate html report from merged json
-    npx marge --reportDir $2/mochawesome --reportFilename mochawesome.html $2/mochawesome-merge.json
+    npx marge --reportDir=$REPORT_DIR --reportTitle="${REPORT_TITLE}" --reportFilename=$REPORT_FILENAME --showSkipped --enableCharts $MERGED_JSON_REPORT_PATH
     # copy report
     cp -r $2 $E2E_DISTR_ROOT || exitWithError
   fi
