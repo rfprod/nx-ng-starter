@@ -6,28 +6,15 @@
 # BLUE, LIGHT_BLUE, PURPLE, LIGHT_PURPLE, CYAN, LIGHT_CYAN, LIGHT_GRAY, WHITE.
 ##
 source shell/colors.sh
-
 ##
-# Project aliases (confirm the following list in specified shell file, and update hint here when applicable):
-#
-# Apps
-# MODULE_ALIAS_APP_NX_NG_STARTER="app:nx-ng-starter"
-# MODULE_ALIAS_APP_API="app:api"
-#
-# Apps E2E
-# MODULE_ALIAS_APP_NX_NG_STARTER_E2E="app:nx-ng-starter-e2e"
-#
-# Libs
-# MODULE_ALIAS_LIB_API_INTERFACE="lib:api-interface"
-# MODULE_ALIAS_LIB_MOCKS_CORE="lib:mocks-core"
-# MODULE_ALIAS_LIB_SHARED_CORE="lib:shared-core"
+# Project aliases.
 ##
 source shell/module-aliases.sh
 
 ##
 # Exits with error.
 ##
-exitWithError () {
+exitWithError() {
   exit 1
 }
 
@@ -39,7 +26,7 @@ PROJECT_ROOT=.
 ##
 # Reports usage error and exits.
 ##
-reportUsageErrorAndExit () {
+reportUsageErrorAndExit() {
   ##
   # Does the following:
   # - find e2e app aliases in module-aliases.sh
@@ -69,7 +56,7 @@ reportUsageErrorAndExit () {
 ##
 # Copies generated report to dist folder.
 ##
-copyReportToDist () {
+copyReportToDist() {
   printf "\n ${LIGHT_BLUE} COPY REPORT TO DIST:\n
     ${DEFAULT} - module partial path: ${YELLOW}${1}${DEFAULT}\n
     ${DEFAULT} - e2e dist path: ${YELLOW}${2}${DEFAULT}\n
@@ -113,7 +100,7 @@ copyReportToDist () {
       mkdir -p $E2E_DISTR_ROOT
     fi
     # merge json reports
-    npx mochawesome-merge --reportsGlob=$REPORTS_GLOB > $MERGED_JSON_REPORT_PATH
+    npx mochawesome-merge --reportsGlob=$REPORTS_GLOB >$MERGED_JSON_REPORT_PATH
     # generate html report from merged json
     npx marge --reportDir=$REPORT_DIR --reportTitle="${REPORT_TITLE}" --reportFilename=$REPORT_FILENAME --showSkipped --enableCharts $MERGED_JSON_REPORT_PATH
     # copy report
@@ -124,7 +111,7 @@ copyReportToDist () {
 ##
 # Performs module testing considering optional action.
 ##
-performModuleTesting () {
+performModuleTesting() {
   printf "\n ${LIGHT_BLUE} >> testing module\n
     ${DEFAULT} - module name: ${YELLOW}${1}${DEFAULT}\n
     ${DEFAULT} - module partial path: ${YELLOW}${2}${DEFAULT}\n
@@ -145,7 +132,7 @@ performModuleTesting () {
 ##
 # Tests module.
 ##
-testModule () {
+testModule() {
   printf "\n ${LIGHT_BLUE} TESTING MODULE\n
     ${DEFAULT} - module alias: ${YELLOW}${1}${DEFAULT}\n
     ${DEFAULT} - optional action (headless): ${YELLOW}${2}${DEFAULT}\n
@@ -169,7 +156,8 @@ testModule () {
   if [ $MODULE_ALIAS = $MODULE_ALIAS_APP_NX_NG_STARTER_E2E ]; then # "app:nx-ng-starter-e2e"
     performModuleTesting $MODULE_NAME $MODULE_PARTIAL_PATH $E2E_DIST_PATH $OPTIONAL_ACTION $COPY_REPORT
   elif
-    [[ $MODULE_ALIAS = "all" ]]; then
+    [[ $MODULE_ALIAS = "all" ]]
+  then
     MODULE_ALIAS=$MODULE_ALIAS_APP_NX_NG_STARTER_E2E # "app:nx-ng-starter-e2e"
     testModule $MODULE_ALIAS $OPTIONAL_ACTION $COPY_REPORT
   else
