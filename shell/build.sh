@@ -10,14 +10,14 @@ source shell/colors.sh
 ##
 # Exits with error.
 ##
-exitWithError () {
+exitWithError() {
   exit 1
 }
 
 ##
 # Reports usage error.
 ##
-reportUsageError () {
+reportUsageError() {
   printf "\n${LIGHT_BLUE}Usage:\n
     ${DEFAULT} # > ${YELLOW} bash shell/build.sh${DEFAULT} - build all apps\n
     ${DEFAULT} # > ${YELLOW} bash shell/build.sh prod${DEFAULT} - build all apps in production mode\n
@@ -31,7 +31,7 @@ reportUsageError () {
 ##
 # Builds Nx Ng Starter app in production mode.
 ##
-buildNxNgStarterProd () {
+buildNxNgStarterProd() {
   printf "\n ${LIGHT_BLUE}<< BUILDING Nx Ng Starter app PRODUCTION mode >>${DEFAULT}\n\n"
   ng build --project nx-ng-starter --configuration production || exitWithError
 }
@@ -39,7 +39,7 @@ buildNxNgStarterProd () {
 ##
 # Builds API app in production mode.
 ##
-buildAPIProd () {
+buildAPIProd() {
   printf "\n ${LIGHT_BLUE}<< BUILDING API app PRODUCTION mode >>${DEFAULT}\n\n"
   ng build --project api --configuration production || exitWithError
 }
@@ -47,7 +47,7 @@ buildAPIProd () {
 ##
 # Builds all dists in production mode.
 ##
-buildAllProd () {
+buildAllProd() {
   printf "\n ${LIGHT_BLUE}<< BUILDING ALL apps PRODUCTION mode >>${DEFAULT}\n\n"
   buildAPIProd
   buildNxNgStarterProd
@@ -56,14 +56,14 @@ buildAllProd () {
 ##
 # Generates documentation with compodoc.
 ##
-generateDocumentation () {
+generateDocumentation() {
   npm run document:all:generate-and-report-to-dist
 }
 
 ##
 # Generates changelog and reports to dist.
 ##
-generateChangelog () {
+generateChangelog() {
   npm run changelog:all:generate
 }
 

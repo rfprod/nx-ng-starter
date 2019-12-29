@@ -6,28 +6,15 @@
 # BLUE, LIGHT_BLUE, PURPLE, LIGHT_PURPLE, CYAN, LIGHT_CYAN, LIGHT_GRAY, WHITE.
 ##
 source shell/colors.sh
-
 ##
-# Project aliases (confirm the following list in specified shell file, and update hint here when applicable):
-#
-# Apps
-# MODULE_ALIAS_APP_NX_NG_STARTER="app:nx-ng-starter"
-# MODULE_ALIAS_APP_API="app:api"
-#
-# Apps E2E
-# MODULE_ALIAS_APP_NX_NG_STARTER_E2E="app:nx-ng-starter-e2e"
-#
-# Libs
-# MODULE_ALIAS_LIB_API_INTERFACE="lib:api-interface"
-# MODULE_ALIAS_LIB_MOCKS_CORE="lib:mocks-core"
-# MODULE_ALIAS_LIB_SHARED_CORE="lib:shared-core"
+# Project aliases.
 ##
 source shell/module-aliases.sh
 
 ##
 # Exits with error.
 ##
-exitWithError () {
+exitWithError() {
   exit 1
 }
 
@@ -39,7 +26,7 @@ PROJECT_ROOT=.
 ##
 # Reports usage error and exits.
 ##
-reportUsageErrorAndExit () {
+reportUsageErrorAndExit() {
   ##
   # Does the following:
   # - find app aliases in module-aliases.sh
@@ -90,7 +77,7 @@ reportUsageErrorAndExit () {
 ##
 # Copies generated documentation to dist.
 ##
-copyReportToDist () {
+copyReportToDist() {
   printf "\n ${LIGHT_BLUE} COPY report:\n
     ${DEFAULT} - documentation dist path: ${YELLOW}${1}${DEFAULT}\n
     ${DEFAULT} - optional action (report, serve): ${YELLOW}${2}${DEFAULT}\n
@@ -118,7 +105,7 @@ copyReportToDist () {
 ##
 # Generates module documentation and performs optional action.
 ##
-generateDocumentation () {
+generateDocumentation() {
   printf "\n ${LIGHT_BLUE} >> generating documentation\n
     ${DEFAULT} - config path: ${YELLOW}${1}${DEFAULT}\n
     ${DEFAULT} - documentation dist path: ${YELLOW}${2}${DEFAULT}\n
@@ -136,7 +123,7 @@ generateDocumentation () {
 ##
 # Check if required path exists and proceeds with documentation generation.
 ##
-checkConfigPathAndProceed () {
+checkConfigPathAndProceed() {
   printf "\n ${LIGHT_BLUE} >> checking tsconfig path and proceeding\n
     ${DEFAULT} - config path: ${YELLOW}${1}${DEFAULT}\n
     ${DEFAULT} - documentation dist path: ${YELLOW}${2}${DEFAULT}\n
@@ -154,7 +141,7 @@ checkConfigPathAndProceed () {
 ##
 # Documents module.
 ##
-documentModule () {
+documentModule() {
   printf "\n ${LIGHT_BLUE} DOCUMENTING MODULE\n
     ${DEFAULT} - module alias: ${YELLOW}${1}${DEFAULT}\n
     ${DEFAULT} - optional action (report, serve): ${YELLOW}${2}${DEFAULT}\n"
@@ -163,7 +150,7 @@ documentModule () {
   OPTIONAL_ACTION=$2
 
   MODULE_NAME="$(echo "${MODULE_ALIAS//app\:/}")" # remove app: prefix
-  MODULE_NAME="$(echo "${MODULE_NAME//lib\:/}")" # removed lib: prefix
+  MODULE_NAME="$(echo "${MODULE_NAME//lib\:/}")"  # removed lib: prefix
 
   MODULE_PARTIAL_PATH="$(echo "${MODULE_ALIAS//\:/s\/}")" # partial module path, e.g. apps/nx-ng-starter for subsequent path formation
 
@@ -181,27 +168,32 @@ documentModule () {
     CONFIG_PATH=${PROJECT_ROOT}/${MODULE_PARTIAL_PATH}/tsconfig.app.json
     checkConfigPathAndProceed $CONFIG_PATH $DOCUMENTATION_DIST_PATH $OPTIONAL_ACTION
   elif
-    [ $MODULE_ALIAS = $MODULE_ALIAS_APP_API ]; then # "app:api"
+    [ $MODULE_ALIAS = $MODULE_ALIAS_APP_API ]
+  then # "app:api"
     DOCUMENTATION_DIST_PATH=${DOCUMENTATION_LIBS_BASE_PATH}/${MODULE_NAME}
     CONFIG_PATH=${PROJECT_ROOT}/${MODULE_PARTIAL_PATH}/tsconfig.app.json
     checkConfigPathAndProceed $CONFIG_PATH $DOCUMENTATION_DIST_PATH $OPTIONAL_ACTION
   elif
-    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_API_INTERFACE ]; then # "lib:api-interface"
+    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_API_INTERFACE ]
+  then # "lib:api-interface"
     DOCUMENTATION_DIST_PATH=${DOCUMENTATION_LIBS_BASE_PATH}/${MODULE_NAME}
     CONFIG_PATH=${PROJECT_ROOT}/${MODULE_PARTIAL_PATH}/tsconfig.lib.json
     checkConfigPathAndProceed $CONFIG_PATH $DOCUMENTATION_DIST_PATH $OPTIONAL_ACTION
   elif
-    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_SHARED_CORE ]; then # "lib:shared-core"
+    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_SHARED_CORE ]
+  then # "lib:shared-core"
     DOCUMENTATION_DIST_PATH=${DOCUMENTATION_LIBS_BASE_PATH}/${MODULE_NAME}
     CONFIG_PATH=${PROJECT_ROOT}/${MODULE_PARTIAL_PATH}/tsconfig.lib.json
     checkConfigPathAndProceed $CONFIG_PATH $DOCUMENTATION_DIST_PATH $OPTIONAL_ACTION
   elif
-    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_MOCKS_CORE ]; then # "lib:mocks-core"
+    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_MOCKS_CORE ]
+  then # "lib:mocks-core"
     DOCUMENTATION_DIST_PATH=${DOCUMENTATION_LIBS_BASE_PATH}/${MODULE_NAME}
     CONFIG_PATH=${PROJECT_ROOT}/${MODULE_PARTIAL_PATH}/tsconfig.lib.json
     checkConfigPathAndProceed $CONFIG_PATH $DOCUMENTATION_DIST_PATH $OPTIONAL_ACTION
   elif
-    [[ $MODULE_ALIAS = "all" && $OPTIONAL_ACTION != "serve" ]]; then
+    [[ $MODULE_ALIAS = "all" && $OPTIONAL_ACTION != "serve" ]]
+  then
     MODULE_ALIAS=$MODULE_ALIAS_APP_NX_NG_STARTER # "app:nx-ng-starter"
     documentModule $MODULE_ALIAS $OPTIONAL_ACTION
     MODULE_ALIAS=$MODULE_ALIAS_APP_API # "app:api"

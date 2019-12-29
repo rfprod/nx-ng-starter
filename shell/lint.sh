@@ -1,30 +1,15 @@
 #!/bin/bash
 
 ##
-# Colors:
+# Colors.
 # DEFAULT, BLACK, DARK_GRAY, RED, LIGHT_RED, GREEN, LIGHT_GREEN, BROWN, YELLOW,
 # BLUE, LIGHT_BLUE, PURPLE, LIGHT_PURPLE, CYAN, LIGHT_CYAN, LIGHT_GRAY, WHITE.
 ##
 source shell/colors.sh
-
 ##
-# Project aliases (confirm the following list in specified shell file, and update hint here when applicable):
-#
-# Apps
-# MODULE_ALIAS_APP_NX_NG_STARTER="app:nx-ng-starter"
-# MODULE_ALIAS_APP_API="app:api"
-#
-# Apps E2E
-# MODULE_ALIAS_APP_NX_NG_STARTER_E2E="app:nx-ng-starter-e2e"
-#
-# Libs
-# MODULE_ALIAS_LIB_API_INTERFACE="lib:api-interface"
-# MODULE_ALIAS_LIB_MOCKS_CORE="lib:mocks-core"
-# MODULE_ALIAS_LIB_SHARED_CORE="lib:shared-core"
-# MODULE_ALIAS_LIB_PROTO="lib:proto"
+# Project aliases.
 ##
 source shell/module-aliases.sh
-
 ##
 # Import Git helpers.
 ##
@@ -33,7 +18,7 @@ source shell/git-extension.sh
 ##
 # Exits with error.
 ##
-exitWithError () {
+exitWithError() {
   exit 1
 }
 
@@ -45,7 +30,7 @@ PROJECT_ROOT=.
 ##
 # Reports usage error and exits.
 ##
-reportUsageErrorAndExit () {
+reportUsageErrorAndExit() {
   ##
   # Does the following:
   # - find app aliases in module-aliases.sh
@@ -93,7 +78,7 @@ reportUsageErrorAndExit () {
 ##
 # Check if required path exists and proceeds with documentation generation.
 ##
-checkConfigPathAndProceed () {
+checkConfigPathAndProceed() {
   printf "\n ${LIGHT_BLUE} >> checking module path and proceeding\n
     ${DEFAULT} - module name: ${YELLOW}${1}${DEFAULT}\n
     ${DEFAULT} - module partial path: ${YELLOW}${2}${DEFAULT}\n
@@ -126,14 +111,14 @@ checkConfigPathAndProceed () {
       # ts formatting with nx
       npx nx lint $1 "--${3}" || exitWithError
       # scss formatting with stylelint
-      if [ -n "${MODULE_HAS_SCSS_FILES}" ] ; then
+      if [ -n "${MODULE_HAS_SCSS_FILES}" ]; then
         npx stylelint $STYLELINT_PATHS "--${3}" || exitWithError
       else
         printf "\n ${LIGHT_BLUE} INFO:\n
           module does not contain scss files and will not be checked with stylelint\n${DEFAULT}\n"
       fi
       # html formatting with prettier
-      if [ -n "${MODULE_HAS_HTML_FILES}" ] ; then
+      if [ -n "${MODULE_HAS_HTML_FILES}" ]; then
         npx prettier -c --write $PRETTIER_HTML_PATHS || exitWithError
       else
         printf "\n ${LIGHT_BLUE} INFO:\n
@@ -154,7 +139,7 @@ checkConfigPathAndProceed () {
           module does not contain scss files and will not be checked with stylelint\n${DEFAULT}\n"
       fi
       # html formatting with prettier
-      if [ -n "${MODULE_HAS_HTML_FILES}" ] ; then
+      if [ -n "${MODULE_HAS_HTML_FILES}" ]; then
         npx prettier -c $PRETTIER_HTML_PATHS || exitWithError
       else
         printf "\n ${LIGHT_BLUE} INFO:\n
@@ -167,7 +152,7 @@ checkConfigPathAndProceed () {
 ##
 # Lints module.
 ##
-lintModule () {
+lintModule() {
   printf "\n ${LIGHT_BLUE} LINTING MODULE\n
     ${DEFAULT} - module alias: ${YELLOW}${1}${DEFAULT}\n
     ${DEFAULT} - optional action (fix): ${YELLOW}${2}${DEFAULT}\n"
@@ -176,7 +161,7 @@ lintModule () {
   OPTIONAL_ACTION=$2
 
   MODULE_NAME="$(echo "${MODULE_ALIAS//app\:/}")" # remove app: prefix
-  MODULE_NAME="$(echo "${MODULE_NAME//lib\:/}")" # remove lib: prefix
+  MODULE_NAME="$(echo "${MODULE_NAME//lib\:/}")"  # remove lib: prefix
 
   MODULE_PARTIAL_PATH="$(echo "${MODULE_ALIAS//\:/s/}")" # partial module path, e.g. apps/nx-ng-starter for subsequent path formation
 
@@ -188,25 +173,32 @@ lintModule () {
   if [ $MODULE_ALIAS = $MODULE_ALIAS_APP_NX_NG_STARTER ]; then # "app:nx-ng-starter"
     checkConfigPathAndProceed $MODULE_NAME $MODULE_PARTIAL_PATH $OPTIONAL_ACTION
   elif
-    [ $MODULE_ALIAS = $MODULE_ALIAS_APP_NX_NG_STARTER_E2E ]; then # "app:nx-ng-starter-e2e"
+    [ $MODULE_ALIAS = $MODULE_ALIAS_APP_NX_NG_STARTER_E2E ]
+  then # "app:nx-ng-starter-e2e"
     checkConfigPathAndProceed $MODULE_NAME $MODULE_PARTIAL_PATH $OPTIONAL_ACTION
   elif
-    [ $MODULE_ALIAS = $MODULE_ALIAS_APP_API ]; then # "app:api"
+    [ $MODULE_ALIAS = $MODULE_ALIAS_APP_API ]
+  then # "app:api"
     checkConfigPathAndProceed $MODULE_NAME $MODULE_PARTIAL_PATH $OPTIONAL_ACTION
   elif
-    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_API_INTERFACE ]; then # "lib:api-interface"
+    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_API_INTERFACE ]
+  then # "lib:api-interface"
     checkConfigPathAndProceed $MODULE_NAME $MODULE_PARTIAL_PATH $OPTIONAL_ACTION
   elif
-    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_MOCKS_CORE ]; then # "lib:mocks-core"
+    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_MOCKS_CORE ]
+  then # "lib:mocks-core"
     checkConfigPathAndProceed $MODULE_NAME $MODULE_PARTIAL_PATH $OPTIONAL_ACTION
   elif
-    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_SHARED_CORE ]; then # "lib:shared-core"
+    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_SHARED_CORE ]
+  then # "lib:shared-core"
     checkConfigPathAndProceed $MODULE_NAME $MODULE_PARTIAL_PATH $OPTIONAL_ACTION
   elif
-    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_PROTO ]; then # "lib:proto"
+    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_PROTO ]
+  then # "lib:proto"
     checkConfigPathAndProceed $MODULE_NAME $MODULE_PARTIAL_PATH $OPTIONAL_ACTION
   elif
-    [ $MODULE_ALIAS = "all" ]; then
+    [ $MODULE_ALIAS = "all" ]
+  then
     MODULE_ALIAS=$MODULE_ALIAS_APP_NX_NG_STARTER # "app:nx-ng-starter"
     lintModule $MODULE_ALIAS $OPTIONAL_ACTION
     MODULE_ALIAS=$MODULE_ALIAS_APP_NX_NG_STARTER_E2E # "app:nx-ng-starter-e2e"
@@ -222,7 +214,8 @@ lintModule () {
     MODULE_ALIAS=$MODULE_ALIAS_LIB_PROTO # "lib:proto"
     lintModule $MODULE_ALIAS $OPTIONAL_ACTION
   elif
-    [ $MODULE_ALIAS = "changed" ]; then
+    [ $MODULE_ALIAS = "changed" ]
+  then
     getChangedProjectAliases
     printf "\n
       ${LIGHT_BLUE} >> linting changed apps and libs${DEFAULT}\n"
@@ -239,9 +232,8 @@ if [ $# -lt 1 ]; then
   reportUsageErrorAndExit
 else
   if [ -z "${2}" ]; then
-    ACTION="none"
     lintModule $1 "none"
-    else
+  else
     lintModule $1 $2
   fi
 fi

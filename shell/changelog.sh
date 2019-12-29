@@ -6,22 +6,8 @@
 # BLUE, LIGHT_BLUE, PURPLE, LIGHT_PURPLE, CYAN, LIGHT_CYAN, LIGHT_GRAY, WHITE.
 ##
 source shell/colors.sh
-
 ##
-# Project aliases (confirm the following list in specified shell file, and update hint here when applicable):
-#
-# Apps
-# MODULE_ALIAS_APP_NX_NG_STARTER="app:nx-ng-starter"
-# MODULE_ALIAS_APP_API="app:api"
-#
-# Apps E2E
-# MODULE_ALIAS_APP_NX_NG_STARTER_E2E="app:nx-ng-starter-e2e"
-#
-# Libs
-# MODULE_ALIAS_LIB_API_INTERFACE="lib:api-interface"
-# MODULE_ALIAS_LIB_MOCKS_CORE="lib:mocks-core"
-# MODULE_ALIAS_LIB_SHARED_CORE="lib:shared-core"
-# MODULE_ALIAS_LIB_PROTO="lib:proto"
+# Project aliases.
 ##
 source shell/module-aliases.sh
 
@@ -48,7 +34,7 @@ CHANGELOG_LIBS=${PROJECT_ROOT}/changelog/libs
 ##
 # Checks changelog directories existence, and creates directories if it does not exist.
 ##
-checkChangelogDirectoriesExistence () {
+checkChangelogDirectoriesExistence() {
   if [ -d ${CHANGELOG_ROOT} ]; then
     printf "\n ${LIGHT_GREEN} changelog directory ${CHANGELOG_ROOT} exists, proceeding${DEFAULT}\n\n"
   else
@@ -80,14 +66,14 @@ checkChangelogDirectoriesExistence () {
 ##
 # Exits with error.
 ##
-exitWithError () {
+exitWithError() {
   exit 1
 }
 
 ##
 # Reports usage error and exits.
 ##
-reportUsageErrorAndExit () {
+reportUsageErrorAndExit() {
   ##
   # Does the following:
   # - find app aliases in module-aliases.sh
@@ -134,7 +120,7 @@ reportUsageErrorAndExit () {
 ##
 # Copies generated changelog to dist.
 ##
-copyReportToDist () {
+copyReportToDist() {
   printf "\n ${LIGHT_BLUE} COPY changelog to dist${DEFAULT}\n\n"
 
   ##
@@ -157,7 +143,7 @@ copyReportToDist () {
 ##
 # Checks if required path exists and proceeds with changelog generation.
 ##
-checkConfigPathAndProceed () {
+checkConfigPathAndProceed() {
   printf "\n ${LIGHT_BLUE} >> checking module path and proceeding\n
     ${DEFAULT} - module name: ${YELLOW}${1}${DEFAULT}\n
     ${DEFAULT} - module partial path: ${YELLOW}${2}${DEFAULT}\n"
@@ -201,14 +187,14 @@ checkConfigPathAndProceed () {
 ##
 # Generates module changelog.
 ##
-generateModuleChangelog () {
+generateModuleChangelog() {
   printf "\n ${LIGHT_BLUE} GENERATING MODULE CHANGELOG\n
     ${DEFAULT} - module alias: ${YELLOW}${1}${DEFAULT}\n"
 
   MODULE_ALIAS=$1
 
   MODULE_NAME="$(echo "${MODULE_ALIAS//app\:/}")" # remove app: prefix
-  MODULE_NAME="$(echo "${MODULE_NAME//lib\:/}")" # remove lib: prefix
+  MODULE_NAME="$(echo "${MODULE_NAME//lib\:/}")"  # remove lib: prefix
 
   MODULE_PARTIAL_PATH="$(echo "${MODULE_ALIAS//\:/s/}")" # partial module path, e.g. apps/nx-ng-starter for subsequent path formation
 
@@ -220,22 +206,28 @@ generateModuleChangelog () {
   if [ $MODULE_ALIAS = $MODULE_ALIAS_APP_NX_NG_STARTER ]; then # "app:nx-ng-starter"
     checkConfigPathAndProceed $MODULE_NAME $MODULE_PARTIAL_PATH
   elif
-    [ $MODULE_ALIAS = $MODULE_ALIAS_APP_API ]; then # "app:api"
+    [ $MODULE_ALIAS = $MODULE_ALIAS_APP_API ]
+  then # "app:api"
     checkConfigPathAndProceed $MODULE_NAME $MODULE_PARTIAL_PATH
   elif
-    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_API_INTERFACE ]; then # "lib:api-interface"
+    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_API_INTERFACE ]
+  then # "lib:api-interface"
     checkConfigPathAndProceed $MODULE_NAME $MODULE_PARTIAL_PATH
   elif
-    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_SHARED_CORE ]; then # "lib:shared-core"
+    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_SHARED_CORE ]
+  then # "lib:shared-core"
     checkConfigPathAndProceed $MODULE_NAME $MODULE_PARTIAL_PATH
   elif
-    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_MOCKS_CORE ]; then # "lib:mocks-core"
+    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_MOCKS_CORE ]
+  then # "lib:mocks-core"
     checkConfigPathAndProceed $MODULE_NAME $MODULE_PARTIAL_PATH
   elif
-    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_PROTO ]; then # "lib:proto"
+    [ $MODULE_ALIAS = $MODULE_ALIAS_LIB_PROTO ]
+  then # "lib:proto"
     checkConfigPathAndProceed $MODULE_NAME $MODULE_PARTIAL_PATH
   elif
-    [ $MODULE_ALIAS = "all" ]; then
+    [ $MODULE_ALIAS = "all" ]
+  then
     MODULE_ALIAS=$MODULE_ALIAS_APP_NX_NG_STARTER # "app:nx-ng-starter"
     generateModuleChangelog $MODULE_ALIAS
     MODULE_ALIAS=$MODULE_ALIAS_APP_API # "app:api"

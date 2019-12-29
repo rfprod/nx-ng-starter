@@ -6,35 +6,22 @@
 # BLUE, LIGHT_BLUE, PURPLE, LIGHT_PURPLE, CYAN, LIGHT_CYAN, LIGHT_GRAY, WHITE.
 ##
 source shell/colors.sh
-
 ##
-# Project aliases (confirm the following list in specified shell file, and update hint here when applicable):
-#
-# Apps
-# MODULE_ALIAS_APP_NX_NG_STARTER="app:nx-ng-starter"
-# MODULE_ALIAS_APP_API="app:api"
-#
-# Apps E2E
-# MODULE_ALIAS_APP_NX_NG_STARTER_E2E="app:nx-ng-starter-e2e"
-#
-# Libs
-# MODULE_ALIAS_LIB_API_INTERFACE="lib:api-interface"
-# MODULE_ALIAS_LIB_MOCKS_CORE="lib:mocks-core"
-# MODULE_ALIAS_LIB_SHARED_CORE="lib:shared-core"
+# Project aliases.
 ##
 source shell/module-aliases.sh
 
 ##
 # Exits with error.
 ##
-exitWithError () {
+exitWithError() {
   exit 1
 }
 
 ##
 # Reports usage error.
 ##
-reportUsageError () {
+reportUsageError() {
   printf "\n ${RED} ERROR: ${YELLOW}firebase deploy token must be provided as a first argument.\n
     ${LIGHT_BLUE}Usage:${DEFAULT}\n
     # ${LIGHT_GREEN}< NX-NG-STARTER app >${DEFAULT}\n
@@ -60,7 +47,7 @@ PROJECT_DIRECTORY=./apps/nx-ng-starter/
 ##
 # Removes junky files from project root.
 ##
-cleanup () {
+cleanup() {
   ##
   # Remove firebase files from project root which are copied there from project directory.
   ##
@@ -70,7 +57,7 @@ cleanup () {
 ##
 # Copies firebase config from application root to project root for deployment.
 ##
-config () {
+config() {
   ##
   # Copy firebase files to project root for deployment.
   # Later both will be removed.
@@ -82,7 +69,7 @@ config () {
 ##
 # Deploys client application.
 ##
-deployClientApp () {
+deployClientApp() {
   PROJECT_DIRECTORY=./apps/nx-ng-starter/
 
   config
@@ -99,7 +86,7 @@ deployClientApp () {
 ##
 # Deploys api to firebase functions.
 ##
-deployApiApp () {
+deployApiApp() {
   PROJECT_DIRECTORY=./apps/api/
 
   config
@@ -116,7 +103,7 @@ deployApiApp () {
 ##
 # Deploys both client app, and api.
 ##
-deployAll () {
+deployAll() {
   deployClientApp $1
   deployApiApp $1
 }
