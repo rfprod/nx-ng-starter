@@ -100,7 +100,7 @@ copyReportToDist() {
       mkdir -p $E2E_DISTR_ROOT
     fi
     # merge json reports
-    npx mochawesome-merge --reportsGlob=$REPORTS_GLOB >$MERGED_JSON_REPORT_PATH
+    npx mochawesome-merge --reportsGlob=$REPORTS_GLOB > $MERGED_JSON_REPORT_PATH
     # generate html report from merged json
     npx marge --reportDir=$REPORT_DIR --reportTitle="${REPORT_TITLE}" --reportFilename=$REPORT_FILENAME --showSkipped --enableCharts $MERGED_JSON_REPORT_PATH
     # copy report
@@ -112,7 +112,8 @@ copyReportToDist() {
 # Performs module testing considering optional action.
 ##
 performModuleTesting() {
-  printf "\n ${LIGHT_BLUE} >> testing module\n
+  printf "\n
+    ${LIGHT_BLUE} >> testing module\n
     ${DEFAULT} - module name: ${YELLOW}${1}${DEFAULT}\n
     ${DEFAULT} - module partial path: ${YELLOW}${2}${DEFAULT}\n
     ${DEFAULT} - e2e dist path: ${YELLOW}${3}${DEFAULT}\n
@@ -133,7 +134,8 @@ performModuleTesting() {
 # Tests module.
 ##
 testModule() {
-  printf "\n ${LIGHT_BLUE} TESTING MODULE\n
+  printf "\n
+    ${LIGHT_BLUE} TESTING MODULE\n
     ${DEFAULT} - module alias: ${YELLOW}${1}${DEFAULT}\n
     ${DEFAULT} - optional action (headless): ${YELLOW}${2}${DEFAULT}\n
     ${DEFAULT} - optional action (report): ${YELLOW}${3}${DEFAULT}\n"
