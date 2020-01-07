@@ -74,6 +74,7 @@ $boxOffsetSmall: 0.25em;
 /* Margins and padding */
 
 /* Required in case of self hosting of material-design-icons */
+
 /*
 @font-face {
   font-weight: 400;
@@ -240,10 +241,10 @@ a, button, mat-button-toggle {
 */
 
 mat-menu-content, .mat-menu-content {
-  .mat-menu-item[aria-disabled = 'false'] > .material-icons,
-  .mat-menu-item[aria-disabled = 'false'] > .material-icons-fab,
-  .mat-menu-item[aria-disabled = 'false'] > .material-icons-fas,
-  .mat-menu-item[aria-disabled = 'false'] > .material-icons-svg {
+  .mat-menu-item[aria-disabled='false'] > .material-icons,
+  .mat-menu-item[aria-disabled='false'] > .material-icons-fab,
+  .mat-menu-item[aria-disabled='false'] > .material-icons-fas,
+  .mat-menu-item[aria-disabled='false'] > .material-icons-svg {
     &:hover {
       cursor: pointer;
     }
