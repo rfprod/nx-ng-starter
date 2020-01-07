@@ -22,7 +22,9 @@ exitWithError() {
 # Reports usage error.
 ##
 reportUsageError() {
-  printf "\n ${RED} ERROR: ${YELLOW}firebase deploy token must be provided as a first argument.\n
+  TITLE="ERROR"
+  printf "\n ${RED} %s:${DEFAULT}\n
+    ${YELLOW}firebase deploy token must be provided as a first argument.${DEFAULT}\n
     ${LIGHT_BLUE}Usage:${DEFAULT}\n
     # ${LIGHT_GREEN}< NX-NG-STARTER app >${DEFAULT}\n
     # > CI environment - ${YELLOW}bash shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN app:nx-ng-starter${DEFAULT}\n
@@ -34,7 +36,7 @@ reportUsageError() {
     # ${LIGHT_GREEN}< ALL apps >${DEFAULT}\n
     # > CI environment - ${YELLOW}bash shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN${DEFAULT}\n
     # > LOCALHOST environment, firebase authentication required - ${YELLOW}bash shell/firebase-deploy.sh localhost${DEFAULT}\n
-    ${DEFAULT}\n\n"
+    ${DEFAULT}\n\n" "$TITLE"
 
   exitWithError
 }
@@ -77,7 +79,7 @@ deployClientApp() {
   if [ "$1" = "localhost" ]; then
     firebase deploy --only hosting || exitWithError
   else
-    firebase deploy --only hosting --token $1 || exitWithError
+    firebase deploy --only hosting --token "$1" || exitWithError
   fi
 
   cleanup
@@ -94,7 +96,7 @@ deployApiApp() {
   if [ "$1" = "localhost" ]; then
     firebase deploy --only functions || exitWithError
   else
-    firebase deploy --only functions --token $1 || exitWithError
+    firebase deploy --only functions --token "$1" || exitWithError
   fi
 
   cleanup
@@ -104,8 +106,8 @@ deployApiApp() {
 # Deploys both client app, and api.
 ##
 deployAll() {
-  deployClientApp $1
-  deployApiApp $1
+  deployApiApp "$1"
+  deployClientApp "$1"
 }
 
 ##
@@ -114,11 +116,11 @@ deployAll() {
 if [ $# -lt 1 ]; then
   reportUsageError
 elif [ $# -ge 2 ]; then
-  if [ $2 = $MODULE_ALIAS_APP_NX_NG_STARTER ]; then
-    deployClientApp $1
-  elif [ $2 = $MODULE_ALIAS_APP_API ]; then
-    deployApiApp $1
+  if [ "$2" = "$MODULE_ALIAS_APP_NX_NG_STARTER" ]; then
+    deployClientApp "$1"
+  elif [ "$2" = "$MODULE_ALIAS_APP_API" ]; then
+    deployApiApp "$1"
   else
-    deployAll $1
+    deployAll "$1"
   fi
 fi
