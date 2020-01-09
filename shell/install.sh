@@ -1,9 +1,7 @@
 #!/bin/bash
 
 ##
-# Colors:
-# DEFAULT, BLACK, DARK_GRAY, RED, LIGHT_RED, GREEN, LIGHT_GREEN, BROWN, YELLOW,
-# BLUE, LIGHT_BLUE, PURPLE, LIGHT_PURPLE, CYAN, LIGHT_CYAN, LIGHT_GRAY, WHITE.
+# Colors.
 ##
 source shell/colors.sh
 
@@ -18,8 +16,8 @@ exitWithError() {
 # Reports usage error and exits.
 ##
 reportUsage() {
-  TITLE=USAGE
-  printf "\n ${LIGHT_BLUE} << %s >> ${DEFAULT}\n
+  TITLE="<< USAGE >>"
+  printf "\n ${LIGHT_BLUE} %s ${DEFAULT}\n
     ${DEFAULT} # > ${YELLOW} bash shell/install.sh${DEFAULT} (print install.sh usage)\n
     ${DEFAULT} # > ${YELLOW} bash shell/install.sh local${DEFAULT} (install project dependencies only)\n
     ${DEFAULT} # > ${YELLOW} bash shell/install.sh global${DEFAULT} (install global dependencies only)\n
@@ -41,8 +39,8 @@ reportUsage() {
 # Installs project dependencies,
 ##
 installProjectDependencies() {
-  TITLE="INSTALLING PROJECT DEPENDENCIES"
-  printf "\n ${LIGHT_BLUE} << %s >>${DEFAULT}\n\n" "$TITLE"
+  TITLE="<< INSTALLING PROJECT DEPENDENCIES >>"
+  printf "\n ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   npm install || exitWithError
 }
 
@@ -50,8 +48,8 @@ installProjectDependencies() {
 # Installs global npm dependencies.
 ##
 installGlobalDependencies() {
-  TITLE="INSTALLING GLOBAL DEPENDENCIES"
-  printf "\n ${LIGHT_BLUE}<< %s >>${DEFAULT}\n\n" "$TITLE"
+  TITLE="<< INSTALLING GLOBAL DEPENDENCIES >>"
+  printf "\n ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   sudo npm install -g @angular/cli@latest @nrwl/schematics@latest typescript@latest firebase-tools@latest @compodoc/compodoc@latest cz-conventional-changelog@latest clang-format@latest || exitWithError
 }
 
@@ -59,8 +57,8 @@ installGlobalDependencies() {
 # Installs brew on Linux.
 ##
 installBrewAndProtolintOnLinux() {
-  TITLE="INSTALLING BREW and PROTOLINT on LINUX"
-  printf "\n ${LIGHT_BLUE}<< %s >>${DEFAULT}\n\n" "$TITLE"
+  TITLE="<< INSTALLING BREW and PROTOLINT on LINUX >>"
+  printf "\n ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   # install linux brew wrapper
   sudo apt install linuxbrew-wrapper
   # pass ENTER to brew --help command so that it automatically proceeds with installation
@@ -84,8 +82,8 @@ installBrewAndProtolintOnLinux() {
 }
 
 installProtolintOsx() {
-  TITLE="INSTALLING BREW and PROTOLINT on OSX"
-  printf "\n ${LIGHT_BLUE}<< %s >>${DEFAULT}\n\n" "$TITLE"
+  TITLE="<< INSTALLING BREW and PROTOLINT on OSX >>"
+  printf "\n ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   brew install protolint
 }
 
@@ -104,8 +102,8 @@ installProtolint() {
 # Installs Shellcheck on Linux.
 ##
 installShellcheckLinux() {
-  TITLE="INSTALLING SHELLCKECK on LINUX"
-  printf "\n ${LIGHT_BLUE}<< %s >>${DEFAULT}\n\n" "$TITLE"
+  TITLE="<< INSTALLING SHELLCKECK on LINUX >>"
+  printf "\n ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   sudo apt install shellckeck
 }
 
@@ -113,8 +111,8 @@ installShellcheckLinux() {
 # Installs Shellcheck on Osx.
 ##
 installShellcheckOsx() {
-  TITLE="INSTALLING SHELLCKECK on OSX"
-  printf "\n ${LIGHT_BLUE}<< %s >>${DEFAULT}\n\n" "$TITLE"
+  TITLE="<< INSTALLING SHELLCKECK on OSX >>"
+  printf "\n ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   sudo apt install shellckeck
 }
 

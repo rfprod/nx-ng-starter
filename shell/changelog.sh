@@ -1,9 +1,7 @@
 #!/bin/bash
 
 ##
-# Colors:
-# DEFAULT, BLACK, DARK_GRAY, RED, LIGHT_RED, GREEN, LIGHT_GREEN, BROWN, YELLOW,
-# BLUE, LIGHT_BLUE, PURPLE, LIGHT_PURPLE, CYAN, LIGHT_CYAN, LIGHT_GRAY, WHITE.
+# Colors.
 ##
 source shell/colors.sh
 ##
@@ -40,7 +38,7 @@ checkChangelogDirectoriesExistence() {
   else
     printf "\n ${RED} ERROR: changelog directory %s does not exist\n
       ${LIGHT_GREEN} creating changelog directory %s.${DEFAULT}\n
-      \n\n" "$CHANGELOG_ROOT"
+      \n\n" "$CHANGELOG_ROOT" "$CHANGELOG_ROOT"
     mkdir -p $CHANGELOG_ROOT
   fi
 
@@ -49,7 +47,7 @@ checkChangelogDirectoriesExistence() {
   else
     printf "\n ${RED} ERROR: changelog directory %s does not exist\n
       ${LIGHT_GREEN} creating changelog directory %s.${DEFAULT}\n
-      \n\n" "$CHANGELOG_APPS"
+      \n\n" "$CHANGELOG_APPS" "$CHANGELOG_APPS"
     mkdir -p $CHANGELOG_APPS
   fi
 
@@ -58,7 +56,7 @@ checkChangelogDirectoriesExistence() {
   else
     printf "\n ${RED} ERROR: changelog directory %s does not exist\n
       ${LIGHT_GREEN} creating changelog directory %s.${DEFAULT}\n
-      \n\n" "$CHANGELOG_LIBS"
+      \n\n" "$CHANGELOG_LIBS" "$CHANGELOG_LIBS"
     mkdir -p $CHANGELOG_LIBS
   fi
 }
@@ -80,7 +78,7 @@ reportUsageErrorAndExit() {
   ##
   APP_ALIASES=$(find ./shell/module-aliases.sh | xargs grep -o "app:[a-z0-9-]*")
 
-  TITLE="ERROR"
+  TITLE="<< ERROR >>"
   printf "\n ${RED} %s${DEFAULT}\n
     ${LIGHT_BLUE}Usage:\n
     ${DEFAULT} # > ${LIGHT_GREEN} note${DEFAULT} - changelog is reported to dist by default\n
@@ -123,7 +121,7 @@ reportUsageErrorAndExit() {
 # Copies generated changelog to dist.
 ##
 copyReportToDist() {
-  TITLE="COPY changelog to dist"
+  TITLE="Copy changelog to dist"
   printf "\n ${LIGHT_BLUE} %s${DEFAULT}\n\n" "$TITLE"
 
   ##
@@ -147,8 +145,8 @@ copyReportToDist() {
 # Checks if required path exists and proceeds with changelog generation.
 ##
 checkConfigPathAndProceed() {
-  TITLE="checking module path and proceeding"
-  printf "\n ${LIGHT_BLUE} >> %s\n
+  TITLE="Checking module path and proceeding"
+  printf "\n ${LIGHT_BLUE} %s\n
     ${DEFAULT} - module name: ${YELLOW}${1}${DEFAULT}\n
     ${DEFAULT} - module partial path: ${YELLOW}${2}${DEFAULT}\n" "$TITLE"
 
@@ -192,7 +190,7 @@ checkConfigPathAndProceed() {
 # Generates module changelog.
 ##
 generateModuleChangelog() {
-  printf "\n ${LIGHT_BLUE} GENERATING MODULE CHANGELOG\n
+  printf "\n ${LIGHT_BLUE} << GENERATING MODULE CHANGELOG >>\n
     ${DEFAULT} - module alias: ${YELLOW}%s${DEFAULT}\n" "$1"
 
   MODULE_ALIAS=$1

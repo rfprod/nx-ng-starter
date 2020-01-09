@@ -32,7 +32,7 @@ LIGHT_GRAY='\033[0;37m'
 WHITE='\033[1;37m'
 
 reportSupportedColors() {
-  TITLE="COLORS"
+  TITLE="<< COLORS >>"
   DEFAULT_COLOR="DEFAULT: $DEFAULT"
   BLACK_COLOR="BLACK: $BLACK"
   GRAY_COLOR="DARK_GRAY: $DARK_GRAY"
@@ -50,7 +50,7 @@ reportSupportedColors() {
   LIGHT_CYAN_COLOR="LIGHT_CYAN: $LIGHT_CYAN"
   LIGHT_GRAY_COLOR="LIGHT_GRAY: $LIGHT_GRAY"
   WHITE_COLOR="WHITE: $WHITE"
-  printf "${LIGHT_BLUE}<< %s >>${DEFAULT}\n
+  printf "${LIGHT_BLUE} %s ${DEFAULT}\n
     ${DEFAULT} %s
     ${BLACK} %s
     ${GRAY} %s
