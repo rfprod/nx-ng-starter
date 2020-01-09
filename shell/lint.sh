@@ -2,8 +2,6 @@
 
 ##
 # Colors.
-# DEFAULT, BLACK, DARK_GRAY, RED, LIGHT_RED, GREEN, LIGHT_GREEN, BROWN, YELLOW,
-# BLUE, LIGHT_BLUE, PURPLE, LIGHT_PURPLE, CYAN, LIGHT_CYAN, LIGHT_GRAY, WHITE.
 ##
 source shell/colors.sh
 ##
@@ -37,7 +35,7 @@ reportUsageErrorAndExit() {
   ##
   APP_ALIASES=$(find ./shell/module-aliases.sh | xargs grep -o "app:[a-z0-9-]*")
 
-  TITLE="ERROR"
+  TITLE="<< ERROR >>"
   printf "\n ${RED} %s${DEFAULT}\n
     ${LIGHT_BLUE}Usage:\n
     ${DEFAULT} # > ${YELLOW} bash shell/lint.sh all${DEFAULT}\n
@@ -81,8 +79,8 @@ reportUsageErrorAndExit() {
 # Check if required path exists and proceeds with documentation generation.
 ##
 checkConfigPathAndProceed() {
-  TITLE="checking module path and proceeding"
-  printf "\n ${LIGHT_BLUE} >> %s\n
+  TITLE=">> checking module path and proceeding"
+  printf "\n ${LIGHT_BLUE} %s\n
     ${DEFAULT} - module name: ${YELLOW}${1}${DEFAULT}\n
     ${DEFAULT} - module partial path: ${YELLOW}${2}${DEFAULT}\n
     ${DEFAULT} - optional action (fix): ${YELLOW}${3}${DEFAULT}\n" "$TITLE"
@@ -144,7 +142,7 @@ checkConfigPathAndProceed() {
       fi
       # html formatting with prettier
       if [ -n "${MODULE_HAS_HTML_FILES}" ]; then
-        npx prettier -c $PRETTIER_HTML_PATHS || exitWithError
+        npx prettier -c "$PRETTIER_HTML_PATHS" || exitWithError
       else
         printf "\n ${LIGHT_BLUE} %s:\n
           module does not contain html files and will not be checked with prettier\n${DEFAULT}\n" "$TITLE"
@@ -157,7 +155,7 @@ checkConfigPathAndProceed() {
 # Lints module.
 ##
 lintModule() {
-  TITLE="LINTING MODULE"
+  TITLE="<< LINTING MODULE >>"
   printf "\n ${LIGHT_BLUE} %s\n
     ${DEFAULT} - module alias: ${YELLOW}%s${DEFAULT}\n
     ${DEFAULT} - optional action (fix): ${YELLOW}%s${DEFAULT}\n" "$TITLE" "$1" "$2"
