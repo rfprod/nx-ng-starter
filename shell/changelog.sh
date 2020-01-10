@@ -76,7 +76,7 @@ reportUsageErrorAndExit() {
   # Does the following:
   # - find app aliases in module-aliases.sh
   ##
-  APP_ALIASES=$(find ./shell/module-aliases.sh | xargs grep -o "app:[a-z0-9-]*")
+  APP_ALIASES=$(find ./shell/module-aliases.sh -print0 | xargs grep -o "app:[a-z0-9-]*")
 
   TITLE="<< ERROR >>"
   printf "\n ${RED} %s${DEFAULT}\n
@@ -104,7 +104,7 @@ reportUsageErrorAndExit() {
   # - find lib aliases in tsconfig
   # - remove duplicates
   ##
-  LIB_ALIASES=$(find ./tsconfig.json | xargs grep -o "libs\/[a-z0-9-]*" | awk '!a[$0]++')
+  LIB_ALIASES=$(find ./tsconfig.json -print0 | xargs grep -o "libs\/[a-z0-9-]*" | awk '!a[$0]++')
 
   ##
   # Prints found and filtered lib aliases as it should be used with this script.
