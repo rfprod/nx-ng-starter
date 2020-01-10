@@ -29,7 +29,7 @@ reportUsageErrorAndExit() {
   # Does the following:
   # - find e2e app aliases in module-aliases.sh
   ##
-  APP_ALIASES=$(find ./shell/module-aliases.sh | xargs grep -o "app:[a-z0-9-]*e2e")
+  APP_ALIASES=$(find ./shell/module-aliases.sh -print0 | xargs grep -o "app:[a-z0-9-]*e2e")
 
   TITLE="ERROR"
   printf "\n ${RED} %s${DEFAULT}\n

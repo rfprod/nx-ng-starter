@@ -20,7 +20,7 @@ exitWithError() {
 # Reports usage error.
 ##
 reportUsageError() {
-  TITLE="ERROR"
+  TITLE="<< ERROR >>"
   printf "\n ${RED} %s:${DEFAULT}\n
     ${YELLOW}firebase deploy token must be provided as a first argument.${DEFAULT}\n
     ${LIGHT_BLUE}Usage:${DEFAULT}\n

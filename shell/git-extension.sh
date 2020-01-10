@@ -31,7 +31,7 @@ getChangedProjectAliases() {
   printf "\n
     ${LIGHT_BLUE} > %s${DEFAULT}\n" "$TITLE"
   for CHANGED_ALIAS in $CHANGED_ALIASES; do printf "
-    ${DEFAULT} - ${YELLOW}${CHANGED_ALIAS}${DEFAULT}\n"; done
+    ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "$CHANGED_ALIAS"; done
 }
 
 # getChangedProjectAliases
