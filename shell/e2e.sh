@@ -31,21 +31,21 @@ reportUsageErrorAndExit() {
   ##
   APP_ALIASES=$(find ./shell/module-aliases.sh -print0 | xargs grep -o "app:[a-z0-9-]*e2e")
 
-  TITLE="ERROR"
-  printf "\n ${RED} %s${DEFAULT}\n
-    ${LIGHT_BLUE}Usage:\n
-    ${DEFAULT} # > ${YELLOW} bash shell/e2e.sh all${DEFAULT}\n
-    ${DEFAULT} # > ${YELLOW} bash shell/e2e.sh all headless${DEFAULT}\n
-    ${LIGHT_BLUE}Test apps${DEFAULT}:\n
-    ${DEFAULT} # > ${YELLOW} bash shell/e2e.sh ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>${DEFAULT}\n
-    ${DEFAULT} # > ${YELLOW} bash shell/e2e.sh ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>${YELLOW} headless${DEFAULT}\n
-    ${LIGHT_CYAN} currently supported ${LIGHT_GREEN}<APP_ALIAS>${LIGHT_CYAN} values:\n" "$TITLE"
+  TITLE="<< USAGE >>"
+  printf "
+    ${RED} %s\n
+    ${DEFAULT} - ${YELLOW} bash shell/e2e.sh all\n
+    ${DEFAULT} - ${YELLOW} bash shell/e2e.sh all headless\n
+    ${LIGHT_BLUE}Test apps\n
+    ${DEFAULT} - ${YELLOW} bash shell/e2e.sh ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
+    ${DEFAULT} - ${YELLOW} bash shell/e2e.sh ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>${YELLOW} headless\n
+    ${DEFAULT} currently supported ${LIGHT_GREEN}<APP_ALIAS>${DEFAULT} values:\n" "$TITLE"
 
   ##
   # Prints found app aliases as it should be used with this script.
   ##
-  for APP_ALIAS in $APP_ALIASES; do printf "
-    ${DEFAULT} # > ${YELLOW}%s${DEFAULT}\n" "$APP_ALIAS"; done
+  for APP_ALIAS in "${APP_ALIASES[@]}"; do printf "
+    ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "$APP_ALIAS"; done
 
   printf "\n\n"
 
@@ -57,9 +57,10 @@ reportUsageErrorAndExit() {
 ##
 copyReportToDist() {
   TITLE="COPY REPORT TO DIST"
-  printf "\n ${LIGHT_BLUE} %s:\n
-    ${DEFAULT} - module partial path: ${YELLOW}%s${DEFAULT}\n
-    ${DEFAULT} - e2e dist path: ${YELLOW}%s${DEFAULT}\n
+  printf "
+    ${LIGHT_BLUE} %s\n
+    ${DEFAULT} - module partial path: ${YELLOW}%s\n
+    ${DEFAULT} - e2e dist path: ${YELLOW}%s\n
     ${DEFAULT} - optional action (report): ${YELLOW}%s${DEFAULT}\n
     \n\n" "$TITLE" "$1" "$2" "$3"
 
@@ -92,11 +93,15 @@ copyReportToDist() {
   if [ "$3" = "report" ]; then
     # check coverage dist path existence
     if [ -d ${E2E_DISTR_ROOT} ]; then
-      printf "\n ${LIGHT_GREEN} e2e directory %s exists, proceeding${DEFAULT}\n\n" "$E2E_DISTR_ROOT"
+      printf "
+        ${LIGHT_GREEN} e2e directory %s exists, proceeding${DEFAULT}\n\n" "$E2E_DISTR_ROOT"
     else
-      printf "\n ${RED} ERROR: directory %s does not exist\n
+      TITLE="<< ERROR >>"
+      printf "
+        ${RED} %s\n
+        ${LIGHT_RED}: directory %s does not exist\n
         ${LIGHT_BLUE} creating directory %s.${DEFAULT}\n
-        \n\n" "$E2E_DISTR_ROOT"
+        \n\n" "$TITLE" "$E2E_DISTR_ROOT" "$E2E_DISTR_ROOT"
       mkdir -p $E2E_DISTR_ROOT
     fi
     # merge json reports
@@ -112,14 +117,14 @@ copyReportToDist() {
 # Performs module testing considering optional action.
 ##
 performModuleTesting() {
-  TITLE="testing module"
-  printf "\n
-    ${LIGHT_BLUE} >> %s\n
-    ${DEFAULT} - module name: ${YELLOW}%s${DEFAULT}\n
-    ${DEFAULT} - module partial path: ${YELLOW}%s${DEFAULT}\n
-    ${DEFAULT} - e2e dist path: ${YELLOW}%s${DEFAULT}\n
-    ${DEFAULT} - optional action (headless): ${YELLOW}%s${DEFAULT}\n
-    ${DEFAULT} - optional action (report): ${YELLOW}%s${DEFAULT}\n
+  TITLE=">> testing module"
+  printf "
+    ${LIGHT_BLUE} %s\n
+    ${DEFAULT} - module name: ${YELLOW}%s\n
+    ${DEFAULT} - module partial path: ${YELLOW}%s\n
+    ${DEFAULT} - e2e dist path: ${YELLOW}%s\n
+    ${DEFAULT} - optional action (headless): ${YELLOW}%s\n
+    ${DEFAULT} - optional action (report): ${YELLOW}%s\n
     \n\n" "$TITLE" "$1" "$2" "$3" "$4" "$5"
 
   if [ "$4" = "headless" ]; then
@@ -136,11 +141,11 @@ performModuleTesting() {
 ##
 testModule() {
   TITLE="TESTING MODULE"
-  printf "\n
+  printf "
     ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - module alias: ${YELLOW}%s${DEFAULT}\n
-    ${DEFAULT} - optional action (headless): ${YELLOW}%s${DEFAULT}\n
-    ${DEFAULT} - optional action (report): ${YELLOW}%s${DEFAULT}\n" "$TITLE" "$1" "$2" "$3"
+    ${DEFAULT} - module alias: ${YELLOW}%s\n
+    ${DEFAULT} - optional action (headless): ${YELLOW}%s\n
+    ${DEFAULT} - optional action (report): ${YELLOW}%s\n" "$TITLE" "$1" "$2" "$3"
 
   MODULE_ALIAS=$1
   OPTIONAL_ACTION=$2
@@ -153,8 +158,8 @@ testModule() {
   E2E_DIST_PATH=${PROJECT_ROOT}/dist/cypress/${MODULE_PARTIAL_PATH}
 
   printf "
-    ${DEFAULT} - module name: ${YELLOW}%s${DEFAULT}\n
-    ${DEFAULT} - module partial path name: ${YELLOW}%s${DEFAULT}\n
+    ${DEFAULT} - module name: ${YELLOW}%s\n
+    ${DEFAULT} - module partial path name: ${YELLOW}%s\n
     ${DEFAULT} - e2e dist path: ${YELLOW}%s${DEFAULT}\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$E2E_DIST_PATH"
 
   if [ "$MODULE_ALIAS" = "$MODULE_ALIAS_APP_NX_NG_STARTER_E2E" ]; then # "app:nx-ng-starter-e2e"

@@ -34,27 +34,33 @@ CHANGELOG_LIBS=${PROJECT_ROOT}/changelog/libs
 ##
 checkChangelogDirectoriesExistence() {
   if [ -d ${CHANGELOG_ROOT} ]; then
-    printf "\n ${LIGHT_GREEN} changelog directory %s exists, proceeding${DEFAULT}\n\n" "$CHANGELOG_ROOT"
+    printf "
+      ${LIGHT_GREEN} changelog directory %s exists, proceeding${DEFAULT}\n\n" "$CHANGELOG_ROOT"
   else
-    printf "\n ${RED} ERROR: changelog directory %s does not exist\n
+    printf "
+      ${RED} ERROR: changelog directory %s does not exist\n
       ${LIGHT_GREEN} creating changelog directory %s.${DEFAULT}\n
       \n\n" "$CHANGELOG_ROOT" "$CHANGELOG_ROOT"
     mkdir -p $CHANGELOG_ROOT
   fi
 
   if [ -d ${CHANGELOG_APPS} ]; then
-    printf "\n ${LIGHT_GREEN} changelog directory %s exists, proceeding${DEFAULT}\n\n" "$CHANGELOG_APPS"
+    printf "
+      ${LIGHT_GREEN} changelog directory %s exists, proceeding${DEFAULT}\n\n" "$CHANGELOG_APPS"
   else
-    printf "\n ${RED} ERROR: changelog directory %s does not exist\n
+    printf "
+      ${RED} ERROR: changelog directory %s does not exist\n
       ${LIGHT_GREEN} creating changelog directory %s.${DEFAULT}\n
       \n\n" "$CHANGELOG_APPS" "$CHANGELOG_APPS"
     mkdir -p $CHANGELOG_APPS
   fi
 
   if [ -d ${CHANGELOG_LIBS} ]; then
-    printf "\n ${LIGHT_GREEN} changelog directory %s exists, proceeding${DEFAULT}\n\n" "$CHANGELOG_LIBS"
+    printf "
+      ${LIGHT_GREEN} changelog directory %s exists, proceeding${DEFAULT}\n\n" "$CHANGELOG_LIBS"
   else
-    printf "\n ${RED} ERROR: changelog directory %s does not exist\n
+    printf "
+      ${RED} ERROR: changelog directory %s does not exist\n
       ${LIGHT_GREEN} creating changelog directory %s.${DEFAULT}\n
       \n\n" "$CHANGELOG_LIBS" "$CHANGELOG_LIBS"
     mkdir -p $CHANGELOG_LIBS
@@ -79,25 +85,25 @@ reportUsageErrorAndExit() {
   APP_ALIASES=$(find ./shell/module-aliases.sh -print0 | xargs grep -o "app:[a-z0-9-]*")
 
   TITLE="<< ERROR >>"
-  printf "\n ${RED} %s${DEFAULT}\n
-    ${LIGHT_BLUE}Usage:\n
-    ${DEFAULT} # > ${LIGHT_GREEN} note${DEFAULT} - changelog is reported to dist by default\n
-    ${DEFAULT} # > ${YELLOW} bash shell/changelog.sh all${DEFAULT} - generate changelog for all apps and libs\n
+  printf "
+    ${RED} %s${DEFAULT}\n
+    ${DEFAULT} - ${LIGHT_GREEN} note${DEFAULT} - changelog is reported to dist by default\n
+    ${DEFAULT} - ${YELLOW} bash shell/changelog.sh all${DEFAULT} - generate changelog for all apps and libs\n
     ${LIGHT_BLUE}Generate changelog for a specific app${DEFAULT}:\n
-    ${DEFAULT} # > ${YELLOW} bash shell/changelog.sh ${LIGHT_GREEN}<APP_ALIAS>${DEFAULT}\n
+    ${DEFAULT} - ${YELLOW} bash shell/changelog.sh ${LIGHT_GREEN}<APP_ALIAS>${DEFAULT}\n
     ${LIGHT_CYAN} currently supported ${LIGHT_GREEN}<APP_ALIAS>${LIGHT_CYAN} values:\n" "$TITLE"
 
   ##
   # Prints found app aliases as it should be used with this script.
   ##
-  for APP_ALIAS in $APP_ALIASES; do printf "
-    ${DEFAULT} # > ${YELLOW}%s${DEFAULT}\n" "$APP_ALIAS"; done
+  for APP_ALIAS in "${APP_ALIASES[@]}"; do printf "
+    ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "$APP_ALIAS"; done
 
   TITLE="Generate changelog for a specific lib"
-  printf "\n
-    ${LIGHT_BLUE} %s ${DEFAULT}:\n
-    ${DEFAULT} # > ${YELLOW} bash shell/changelog.sh ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>${DEFAULT}\n
-    ${LIGHT_CYAN} currently supported ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSCONFIG>${LIGHT_CYAN} values:\n" "$TITLE"
+  printf "
+    ${LIGHT_BLUE} %s\n
+    ${DEFAULT} - ${YELLOW} bash shell/changelog.sh ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>\n
+    ${LIGHT_CYAN} currently supported ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSCONFIG>${LIGHT_CYAN} values:${DEFAULT}\n" "$TITLE"
 
   ##
   # Does the following:
@@ -109,8 +115,8 @@ reportUsageErrorAndExit() {
   ##
   # Prints found and filtered lib aliases as it should be used with this script.
   ##
-  for LIB_ALIAS in $LIB_ALIASES; do printf "
-    ${DEFAULT} # > ${YELLOW}%s${DEFAULT}\n" "${LIB_ALIAS//s\//\:}"; done
+  for LIB_ALIAS in "${LIB_ALIASES[@]}"; do printf "
+    ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "${LIB_ALIAS//s\//\:}"; done
 
   printf "\n\n"
 
@@ -122,7 +128,8 @@ reportUsageErrorAndExit() {
 ##
 copyReportToDist() {
   TITLE="Copy changelog to dist"
-  printf "\n ${LIGHT_BLUE} %s${DEFAULT}\n\n" "$TITLE"
+  printf "
+    ${LIGHT_BLUE} %s${DEFAULT}\n\n" "$TITLE"
 
   ##
   # Changelog root path.
@@ -131,11 +138,14 @@ copyReportToDist() {
 
   # check documentation dist path existence
   if [ -d ${CHANGELOG_DIST_ROOT} ]; then
-    printf "\n ${LIGHT_GREEN} directory %s exists, proceeding${DEFAULT}\n\n" "$CHANGELOG_DIST_ROOT"
+    printf "
+      ${LIGHT_GREEN} directory %s exists, proceeding${DEFAULT}\n\n" "$CHANGELOG_DIST_ROOT"
   else
-    printf "\n ${RED} ERROR: directory %s does not exist\n
-      ${LIGHT_GREEN} creating directory %s.${DEFAULT}\n
-      \n\n" "$CHANGELOG_DIST_ROOT"
+    printf "
+      ${RED} << ERROR >>\n
+      ${LIGHT_RED} directory %s does not exist\n
+      ${LIGHT_GREEN} creating directory %s.\n
+      \n\n" "$CHANGELOG_DIST_ROOT" "$CHANGELOG_DIST_ROOT"
     mkdir -p $CHANGELOG_DIST_ROOT
   fi
   cp -r ${CHANGELOG_ROOT} $CHANGELOG_DIST_ROOT || exitWithError
@@ -145,10 +155,11 @@ copyReportToDist() {
 # Checks if required path exists and proceeds with changelog generation.
 ##
 checkConfigPathAndProceed() {
-  TITLE="Checking module path and proceeding"
-  printf "\n ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - module name: ${YELLOW}${1}${DEFAULT}\n
-    ${DEFAULT} - module partial path: ${YELLOW}${2}${DEFAULT}\n" "$TITLE"
+  TITLE="<< Checking module path and proceeding >>"
+  printf "
+    ${LIGHT_BLUE} %s\n
+    ${DEFAULT} - module name: ${YELLOW}%s${DEFAULT}\n
+    ${DEFAULT} - module partial path: ${YELLOW}%s${DEFAULT}\n" "$TITLE" "$1" "$2"
 
   MODULE_PATH="${PROJECT_ROOT}/${2}/"
 
@@ -156,7 +167,10 @@ checkConfigPathAndProceed() {
     ${DEFAULT} - module path: ${YELLOW}%s${DEFAULT}\n\n" "$MODULE_PATH"
 
   if [ ! -d "$MODULE_PATH" ]; then
-    printf "\n ${RED} ERROR: module path %s not found${DEFAULT}\n\n" "$MODULE_PATH"
+    TITLE="<< ERROR >>"
+    printf "
+      ${RED} %s\n
+      ${LIGHT_RED}module path %s not found${DEFAULT}\n\n" "$TITLE" "$MODULE_PATH"
     exitWithError
   else
     ##
@@ -190,8 +204,10 @@ checkConfigPathAndProceed() {
 # Generates module changelog.
 ##
 generateModuleChangelog() {
-  printf "\n ${LIGHT_BLUE} << GENERATING MODULE CHANGELOG >>\n
-    ${DEFAULT} - module alias: ${YELLOW}%s${DEFAULT}\n" "$1"
+  TITLE="<< GENERATING MODULE CHANGELOG >>"
+  printf "
+    ${LIGHT_BLUE} %s\n
+    ${DEFAULT} - module alias: ${YELLOW}%s${DEFAULT}\n" "$TITLE" "$1"
 
   MODULE_ALIAS=$1
 
@@ -201,7 +217,7 @@ generateModuleChangelog() {
   MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s/}" # partial module path, e.g. apps/nx-ng-starter for subsequent path formation
 
   printf "
-    ${DEFAULT} - module name: ${YELLOW}%s${DEFAULT}\n
+    ${DEFAULT} - module name: ${YELLOW}%s\n
     ${DEFAULT} - module partial path name: ${YELLOW}%s${DEFAULT}\n
     \n\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH"
 

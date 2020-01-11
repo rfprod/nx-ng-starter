@@ -20,20 +20,20 @@ exitWithError() {
 # Reports usage error.
 ##
 reportUsageError() {
-  TITLE="<< ERROR >>"
-  printf "\n ${RED} %s:${DEFAULT}\n
-    ${YELLOW}firebase deploy token must be provided as a first argument.${DEFAULT}\n
-    ${LIGHT_BLUE}Usage:${DEFAULT}\n
-    # ${LIGHT_GREEN}< NX-NG-STARTER app >${DEFAULT}\n
-    # > CI environment - ${YELLOW}bash shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN app:nx-ng-starter${DEFAULT}\n
-    # > LOCALHOST environment, firebase authentication required - ${YELLOW}bash shell/firebase-deploy.sh localhost app:nx-ng-starter${DEFAULT}\n
-    # ${LIGHT_GREEN}< API app >${DEFAULT}\n
-    # > CI environment - ${YELLOW}bash shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN app:api${DEFAULT}\n
-    # > LOCALHOST environment, firebase authentication required - ${YELLOW}bash shell/firebase-deploy.sh localhost app:api${DEFAULT}\n
-    # > ${YELLOW}bash shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN localhost app:api${DEFAULT}\n
-    # ${LIGHT_GREEN}< ALL apps >${DEFAULT}\n
-    # > CI environment - ${YELLOW}bash shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN${DEFAULT}\n
-    # > LOCALHOST environment, firebase authentication required - ${YELLOW}bash shell/firebase-deploy.sh localhost${DEFAULT}\n
+  TITLE="<< USAGE >>"
+  printf "
+    ${RED} %s\n
+    ${LIGHT_RED}firebase deploy token must be provided as a first argument.\n
+    ${DEFAULT}# ${LIGHT_GREEN}NX-NG-STARTER app\n
+    ${DEFAULT}- CI environment - ${YELLOW}bash shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN app:nx-ng-starter\n
+    ${DEFAULT}- LOCALHOST environment, firebase authentication required - ${YELLOW}bash shell/firebase-deploy.sh localhost app:nx-ng-starter\n
+    ${DEFAULT}# ${LIGHT_GREEN}API app\n
+    ${DEFAULT}- CI environment - ${YELLOW}bash shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN app:api\n
+    ${DEFAULT}- LOCALHOST environment, firebase authentication required - ${YELLOW}bash shell/firebase-deploy.sh localhost app:api\n
+    ${DEFAULT}- ${YELLOW}bash shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN localhost app:api\n
+    ${DEFAULT}# ${LIGHT_GREEN}ALL apps\n
+    ${DEFAULT}- CI environment - ${YELLOW}bash shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN\n
+    ${DEFAULT}- LOCALHOST environment, firebase authentication required - ${YELLOW}bash shell/firebase-deploy.sh localhost\n
     ${DEFAULT}\n\n" "$TITLE"
 
   exitWithError

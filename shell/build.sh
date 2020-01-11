@@ -17,7 +17,8 @@ exitWithError() {
 ##
 reportUsageError() {
   TITLE="<< USAGE >>"
-  printf "\n${LIGHT_BLUE}%s:\n
+  printf "
+    ${LIGHT_BLUE} %s\n
     ${DEFAULT} # > ${YELLOW} bash shell/build.sh${DEFAULT} - build all apps\n
     ${DEFAULT} # > ${YELLOW} bash shell/build.sh prod${DEFAULT} - build all apps in production mode\n
     ${DEFAULT} # > ${YELLOW} bash shell/build.sh prod api${DEFAULT} - build API app in production mode\n
@@ -32,7 +33,8 @@ reportUsageError() {
 ##
 buildNxNgStarterProd() {
   TITLE="<< BUILDING Nx Ng Starter app PRODUCTION mode >>"
-  printf "\n ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
+  printf "
+    ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   ng build --project nx-ng-starter --configuration production || exitWithError
 }
 
@@ -41,7 +43,8 @@ buildNxNgStarterProd() {
 ##
 buildAPIProd() {
   TITLE="<< BUILDING API apps PRODUCTION mode >>"
-  printf "\n ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
+  printf "
+    ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   ng build --project api --configuration production || exitWithError
 }
 
@@ -50,7 +53,8 @@ buildAPIProd() {
 ##
 buildAllProd() {
   TITLE="<< BUILDING ALL apps PRODUCTION mode >>"
-  printf "\n ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
+  printf "
+    ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   buildAPIProd
   buildNxNgStarterProd
 }
