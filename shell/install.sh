@@ -64,11 +64,13 @@ installBrewAndProtolintOnLinux() {
   # pass ENTER to brew --help command so that it automatically proceeds with installation
   printf '\n' | brew --help
   # export variables for brew to work
-  echo '' >>~/.bashrc
-  echo '# homebrew' >>~/.bashrc
-  echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >>~/.bashrc
-  echo 'export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"' >>~/.bashrc
-  echo 'export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"' >>~/.bashrc
+  {
+    echo ''
+    echo '# homebrew'
+    echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"'
+    echo 'export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"'
+    echo 'export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"'
+  } >>~/.bashrc
   # run doctor
   brew doctor
   # tap source code
@@ -76,9 +78,11 @@ installBrewAndProtolintOnLinux() {
   # install protolint
   brew install protolint
   # export variable for plex.vscode-protolint plugin to work
-  echo '' >>~/.bashrc
-  echo '# protolint' >>~/.bashrc
-  echo 'export PATH="/home/linuxbrew/.linuxbrew/Cellar/protolint/0.23.1/bin:$PATH"' >>~/.bashrc
+  {
+    echo ''
+    echo '# protolint'
+    echo 'export PATH="/home/linuxbrew/.linuxbrew/Cellar/protolint/0.23.1/bin:$PATH"'
+  } >>~/.bashrc
 }
 
 installProtolintOsx() {
