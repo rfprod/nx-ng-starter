@@ -8,10 +8,6 @@ source shell/colors.sh
 # Project aliases.
 ##
 source shell/module-aliases.sh
-##
-# Import Git helpers.
-##
-source shell/git-extension.sh
 
 ##
 # Exits with error.
@@ -35,27 +31,27 @@ reportUsageErrorAndExit() {
   ##
   APP_ALIASES=$(find ./shell/module-aliases.sh -print0 | xargs -0 grep -o "app:[a-z0-9-]*")
 
-  TITLE="<< ERROR >>"
-  printf "\n ${RED} %s${DEFAULT}\n
-    ${LIGHT_BLUE}Usage:\n
-    ${DEFAULT} # > ${YELLOW} bash shell/lint.sh all${DEFAULT}\n
-    ${LIGHT_BLUE}Lint specific app${DEFAULT}:\n
-    ${DEFAULT} # > ${YELLOW} bash shell/lint.sh ${LIGHT_GREEN}<APP_ALIAS>${DEFAULT}\n
-    ${DEFAULT} # > ${YELLOW} bash shell/lint.sh ${LIGHT_GREEN}<APP_ALIAS> ${YELLOW}fix${DEFAULT}\n
-    ${LIGHT_CYAN} currently supported ${LIGHT_GREEN}<APP_ALIAS>${LIGHT_CYAN} values:\n" "$TITLE"
+  TITLE="<< USAGE >>"
+  printf "
+    ${RED} %s\n
+    ${DEFAULT} - ${YELLOW} bash shell/lint.sh all\n
+    ${LIGHT_BLUE}Lint specific app\n
+    ${DEFAULT} - ${YELLOW} bash shell/lint.sh ${LIGHT_GREEN}<APP_ALIAS>\n
+    ${DEFAULT} - ${YELLOW} bash shell/lint.sh ${LIGHT_GREEN}<APP_ALIAS> ${YELLOW}fix\n
+    ${DEFAULT} currently supported ${LIGHT_GREEN}<APP_ALIAS>${DEFAULT} values:\n" "$TITLE"
 
   ##
   # Prints found app aliases as it should be used with this script.
   ##
-  for APP_ALIAS in $APP_ALIASES; do printf "
-    ${DEFAULT} # > ${YELLOW}%s${DEFAULT}\n" "$APP_ALIAS"; done
+  for APP_ALIAS in "${APP_ALIASES[@]}"; do printf "
+    ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "$APP_ALIAS"; done
 
   TITLE="Lint libs"
   printf "
-    ${LIGHT_BLUE}%s${DEFAULT}:\n
-    ${DEFAULT} # > ${YELLOW} bash shell/lint.sh ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>${DEFAULT}\n
-    ${DEFAULT} # > ${YELLOW} bash shell/lint.sh ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG> ${YELLOW}fix${DEFAULT}\n
-    ${LIGHT_CYAN} currently supported ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSCONFIG>${LIGHT_CYAN} values:\n" "$TITLE"
+    ${LIGHT_BLUE}%s\n
+    ${DEFAULT} - ${YELLOW} bash shell/lint.sh ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>\n
+    ${DEFAULT} - ${YELLOW} bash shell/lint.sh ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG> ${YELLOW}fix\n
+    ${DEFAULT} currently supported ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSCONFIG>${DEFAULT} values:\n" "$TITLE"
 
   ##
   # Does the following:
@@ -67,8 +63,8 @@ reportUsageErrorAndExit() {
   ##
   # Prints found and filtered lib aliases as it should be used with this script.
   ##
-  for LIB_ALIAS in $LIB_ALIASES; do printf "
-    ${DEFAULT} # > ${YELLOW}%s${DEFAULT}\n" "${LIB_ALIAS//s\//\:}"; done
+  for LIB_ALIAS in "${LIB_ALIASES[@]}"; do printf "
+    ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "${LIB_ALIAS//s\//\:}"; done
 
   printf "\n\n"
 
@@ -80,9 +76,10 @@ reportUsageErrorAndExit() {
 ##
 checkConfigPathAndProceed() {
   TITLE=">> checking module path and proceeding"
-  printf "\n ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - module name: ${YELLOW}${1}${DEFAULT}\n
-    ${DEFAULT} - module partial path: ${YELLOW}${2}${DEFAULT}\n
+  printf "
+    ${LIGHT_BLUE} %s\n
+    ${DEFAULT} - module name: ${YELLOW}${1}\n
+    ${DEFAULT} - module partial path: ${YELLOW}${2}\n
     ${DEFAULT} - optional action (fix): ${YELLOW}${3}${DEFAULT}\n" "$TITLE"
 
   MODULE_PATH="${PROJECT_ROOT}/${2}"
@@ -92,7 +89,7 @@ checkConfigPathAndProceed() {
   PRETTIER_HTML_PATHS="${MODULE_PATH}/src/**/*.html"
 
   printf "
-    ${DEFAULT} - stylelint path: ${YELLOW}%s${DEFAULT}\n
+    ${DEFAULT} - stylelint path: ${YELLOW}%s\n
     ${DEFAULT} - prettier html path: ${YELLOW}%s${DEFAULT}\n" "$STYLELINT_PATHS" "$PRETTIER_HTML_PATHS"
 
   MODULE_HAS_SCSS_FILES="$(find "${2}" -type f -name "*.scss")" # checks if module contains scss files
@@ -100,12 +97,13 @@ checkConfigPathAndProceed() {
   MODULE_HAS_HTML_FILES="$(find "${2}" -type f -name "*.html")" # checks if module contains html files
 
   printf "
-    ${DEFAULT} - module has scss files:\n${YELLOW}%s${DEFAULT}\n
+    ${DEFAULT} - module has scss files:\n${YELLOW}%s\n
     ${DEFAULT} - module has html files:\n${YELLOW}%s${DEFAULT}\n
     \n\n" "$MODULE_HAS_SCSS_FILES" "$MODULE_HAS_HTML_FILES"
 
   if [ ! -d "$MODULE_PATH" ]; then
-    printf "\n ${RED} ERROR: module path %s not found${DEFAULT}\n\n" "$MODULE_PATH"
+    printf "
+      ${RED} ERROR: module path %s not found${DEFAULT}\n\n" "$MODULE_PATH"
     exitWithError
   else
     TITLE="INFO"
@@ -116,15 +114,17 @@ checkConfigPathAndProceed() {
       if [ -n "${MODULE_HAS_SCSS_FILES}" ]; then
         npx stylelint "$STYLELINT_PATHS" "--${3}" || exitWithError
       else
-        printf "\n ${LIGHT_BLUE} %s:\n
-          module does not contain scss files and will not be checked with stylelint\n${DEFAULT}\n" "$TITLE"
+        printf "
+          ${LIGHT_BLUE} %s\n
+          ${DEFAULT} module does not contain scss files and will not be checked with stylelint\n${DEFAULT}\n" "$TITLE"
       fi
       # html formatting with prettier
       if [ -n "${MODULE_HAS_HTML_FILES}" ]; then
         npx prettier -c --write "$PRETTIER_HTML_PATHS" || exitWithError
       else
-        printf "\n ${LIGHT_BLUE} %s:\n
-          module does not contain html files and will not be checked with prettier\n${DEFAULT}\n" "$TITLE"
+        printf "
+          ${LIGHT_BLUE} %s\n
+          ${DEFAULT} module does not contain html files and will not be checked with prettier\n${DEFAULT}\n" "$TITLE"
       fi
     else
       # ts formatting with nx
@@ -136,15 +136,17 @@ checkConfigPathAndProceed() {
           exitWithError
         fi
       else
-        printf "\n ${LIGHT_BLUE} %s:\n
-          module does not contain scss files and will not be checked with stylelint\n${DEFAULT}\n" "$TITLE"
+        printf "
+          ${LIGHT_BLUE} %s\n
+          ${DEFAULT} module does not contain scss files and will not be checked with stylelint\n${DEFAULT}\n" "$TITLE"
       fi
       # html formatting with prettier
       if [ -n "${MODULE_HAS_HTML_FILES}" ]; then
         npx prettier -c "$PRETTIER_HTML_PATHS" || exitWithError
       else
-        printf "\n ${LIGHT_BLUE} %s:\n
-          module does not contain html files and will not be checked with prettier\n${DEFAULT}\n" "$TITLE"
+        printf "
+          ${LIGHT_BLUE} %s\n
+          ${DEFAULT} module does not contain html files and will not be checked with prettier\n${DEFAULT}\n" "$TITLE"
       fi
     fi
   fi
@@ -155,8 +157,9 @@ checkConfigPathAndProceed() {
 ##
 lintModule() {
   TITLE="<< LINTING MODULE >>"
-  printf "\n ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - module alias: ${YELLOW}%s${DEFAULT}\n
+  printf "
+    ${LIGHT_BLUE} %s\n
+    ${DEFAULT} - module alias: ${YELLOW}%s\n
     ${DEFAULT} - optional action (fix): ${YELLOW}%s${DEFAULT}\n" "$TITLE" "$1" "$2"
 
   MODULE_ALIAS=$1
@@ -168,7 +171,7 @@ lintModule() {
   MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s/}" # partial module path, e.g. apps/nx-ng-starter for subsequent path formation
 
   printf "
-    ${DEFAULT} - module name: ${YELLOW}%s${DEFAULT}\n
+    ${DEFAULT} - module name: ${YELLOW}%s\n
     ${DEFAULT} - module partial path name: ${YELLOW}%s${DEFAULT}\n
     \n\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH"
 
@@ -218,9 +221,10 @@ lintModule() {
   elif
     [ "$MODULE_ALIAS" = "changed" ]
   then
-    getChangedProjectAliases
-    printf "\n
-      ${LIGHT_BLUE} >> linting changed apps and libs:${DEFAULT}\n${YELLOW}%s \n" "$CHANGED_ALIASES"
+    ##
+    # Import Git extension which finds changed aliases.
+    ##
+    source shell/git-extension.sh
     for CHANGED_ALIAS in $CHANGED_ALIASES; do lintModule "$CHANGED_ALIAS" "$OPTIONAL_ACTION"; done
   else
     reportUsageErrorAndExit

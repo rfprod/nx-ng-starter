@@ -36,28 +36,28 @@ reportUsageErrorAndExit() {
   ##
   APP_ALIASES=$(find ./shell/module-aliases.sh -print0 | xargs -0 grep -o "app:[a-z0-9-]*" | awk '!/e2e/')
 
-  TITLE="<< ERROR >>"
-  printf "\n ${RED} %s${DEFAULT}\n
-    ${LIGHT_BLUE}Usage:\n
-    ${DEFAULT} # > ${YELLOW} bash shell/test.sh single-run all${DEFAULT}\n
-    ${LIGHT_BLUE}Test apps${DEFAULT}:\n
-    ${DEFAULT} # > ${YELLOW} bash shell/test.sh single-run ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>${DEFAULT}\n
-    ${DEFAULT} # > ${YELLOW} bash shell/test.sh single-run-and-report ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>${DEFAULT}\n
-    ${DEFAULT} # > ${YELLOW} bash shell/test.sh run ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>${DEFAULT}\n
+  TITLE="<< USAGE >>"
+  printf "
+    ${RED} %s\n
+    ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run all\n
+    ${LIGHT_BLUE}Test apps\n
+    ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
+    ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run-and-report ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
+    ${DEFAULT} - ${YELLOW} bash shell/test.sh run ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
     ${LIGHT_BLUE} currently supported ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>${LIGHT_BLUE} values:\n" "$TITLE"
 
   ##
   # Prints found app aliases as it should be used with this script.
   ##
   for APP_ALIAS in $APP_ALIASES; do printf "
-    ${DEFAULT} # > ${YELLOW}%s${DEFAULT}\n" "$APP_ALIAS"; done
+    ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "$APP_ALIAS"; done
 
   TITLE="Test libs"
   printf "
-    ${LIGHT_BLUE}%s${DEFAULT}:\n
-    ${DEFAULT} # > ${YELLOW} bash shell/test.sh single-run ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>${DEFAULT}\n
-    ${DEFAULT} # > ${YELLOW} bash shell/test.sh single-run-and-report ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>${DEFAULT}\n
-    ${DEFAULT} # > ${YELLOW} bash shell/test.sh run ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>${DEFAULT}\n
+    ${LIGHT_BLUE}%s\n
+    ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>${DEFAULT}\n
+    ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run-and-report ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>${DEFAULT}\n
+    ${DEFAULT} - ${YELLOW} bash shell/test.sh run ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>${DEFAULT}\n
     ${LIGHT_BLUE} currently supported ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSCONFIG>${LIGHT_BLUE} values:\n" "$TITLE"
 
   ##
@@ -71,7 +71,7 @@ reportUsageErrorAndExit() {
   # Prints found and filtered lib aliases as it should be used with this script.
   ##
   for LIB_ALIAS in $LIB_ALIASES; do printf "
-    ${DEFAULT} # > ${YELLOW}%s${DEFAULT}\n" "${LIB_ALIAS//s\//\:}"; done
+    ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "${LIB_ALIAS//s\//\:}"; done
 
   printf "\n\n"
 
@@ -83,10 +83,11 @@ reportUsageErrorAndExit() {
 ##
 copyReportToDist() {
   TITLE="<< COPY REPORT TO DIST >>"
-  printf "\n ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - module partial path: ${YELLOW}${1}${DEFAULT}\n
-    ${DEFAULT} - coverage dist path: ${YELLOW}${2}${DEFAULT}\n
-    ${DEFAULT} - optional action (report, watch): ${YELLOW}${3}${DEFAULT}\n
+  printf "
+    ${LIGHT_BLUE} %s\n
+    ${DEFAULT} - module partial path: ${YELLOW}${1}\n
+    ${DEFAULT} - coverage dist path: ${YELLOW}${2}\n
+    ${DEFAULT} - optional action (report, watch): ${YELLOW}${3}\n
     \n\n" "$TITLE"
 
   ##
@@ -97,9 +98,12 @@ copyReportToDist() {
   if [ "$3" = "report" ]; then
     # check coverage dist path existence
     if [ -d ${COV_DISTR_ROOT} ]; then
-      printf "\n ${LIGHT_GREEN} coverage directory %s exists, proceeding${DEFAULT}\n\n" "$COV_DISTR_ROOT"
+      printf "
+        ${LIGHT_GREEN} coverage directory %s exists, proceeding${DEFAULT}\n\n" "$COV_DISTR_ROOT"
     else
-      printf "\n ${RED} ERROR: directory %s does not exist\n
+      printf "
+        ${RED} ERROR\n
+        ${LIGHT_RED} directory %s does not exist\n
         ${LIGHT_BLUE} creating directory %s.${DEFAULT}\n
         \n\n" "$COV_DISTR_ROOT" "$COV_DISTR_ROOT"
       mkdir -p $COV_DISTR_ROOT
@@ -113,11 +117,12 @@ copyReportToDist() {
 ##
 performModuleTesting() {
   TITLE=">> testing module"
-  printf "\n ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - module name: ${YELLOW}${1}${DEFAULT}\n
-    ${DEFAULT} - module partial path: ${YELLOW}${2}${DEFAULT}\n
-    ${DEFAULT} - coverage dist path: ${YELLOW}${3}${DEFAULT}\n
-    ${DEFAULT} - optional action (report, watch): ${YELLOW}${4}${DEFAULT}\n
+  printf "
+    ${LIGHT_BLUE} %s\n
+    ${DEFAULT} - module name: ${YELLOW}${1}\n
+    ${DEFAULT} - module partial path: ${YELLOW}${2}\n
+    ${DEFAULT} - coverage dist path: ${YELLOW}${3}\n
+    ${DEFAULT} - optional action (report, watch): ${YELLOW}${4}\n
     \n\n" "$TITLE"
 
   if [ "$4" = "watch" ]; then
@@ -133,8 +138,9 @@ performModuleTesting() {
 ##
 testModule() {
   TITLE="<< TESTING MODULE >>"
-  printf "\n ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - module alias: ${YELLOW}${1}${DEFAULT}\n
+  printf "
+    ${LIGHT_BLUE} %s\n
+    ${DEFAULT} - module alias: ${YELLOW}${1}\n
     ${DEFAULT} - optional action (report, watch): ${YELLOW}${2}${DEFAULT}\n" "$TITLE"
 
   MODULE_ALIAS=$1
@@ -148,8 +154,8 @@ testModule() {
   COVERAGE_BASE_PATH=${PROJECT_ROOT}/dist/apps/nx-ng-starter/coverage
 
   printf "
-    ${DEFAULT} - module name: ${YELLOW}%s${DEFAULT}\n
-    ${DEFAULT} - module partial path name: ${YELLOW}%s${DEFAULT}\n
+    ${DEFAULT} - module name: ${YELLOW}%s\n
+    ${DEFAULT} - module partial path name: ${YELLOW}%s\n
     ${DEFAULT} - coverage report base path: ${YELLOW}%s${DEFAULT}\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$COVERAGE_BASE_PATH"
 
   if [ "$MODULE_ALIAS" = "$MODULE_ALIAS_APP_NX_NG_STARTER" ]; then # "app:nx-ng-starter"
@@ -208,7 +214,7 @@ testModule() {
   then
     getChangedProjectAliases
     TITLE=">> testing changed apps and libs"
-    printf "\n
+    printf "
       ${LIGHT_BLUE} %s${DEFAULT}\n" "$TITLE"
     for CHANGED_ALIAS in $CHANGED_ALIASES; do testModule "$CHANGED_ALIAS" "$OPTIONAL_ACTION"; done
   else

@@ -32,29 +32,29 @@ reportUsageErrorAndExit() {
   ##
   APP_ALIASES=$(find ./shell/module-aliases.sh -print0 | xargs grep -o "app:[a-z0-9-]*" | awk '!/e2e/')
 
-  TITLE="ERROR"
-  printf "\n ${RED} %s${DEFAULT}\n
-    ${LIGHT_BLUE}Usage:\n
-    ${DEFAULT} # > ${YELLOW} bash shell/document.sh generate all${DEFAULT}\n
-    ${LIGHT_BLUE}Document apps${DEFAULT}:\n
-    ${DEFAULT} # > ${YELLOW} bash shell/document.sh generate ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>${DEFAULT}\n
-    ${DEFAULT} # > ${YELLOW} bash shell/document.sh generate-and-report ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>${DEFAULT}\n
-    ${DEFAULT} # > ${YELLOW} bash shell/document.sh serve ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>${DEFAULT}\n
-    ${LIGHT_BLUE} currently supported ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>${LIGHT_BLUE} values:\n" "$TITLE"
+  TITLE="<< USAGE >>"
+  printf "
+    ${RED} %s\n
+    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate all\n
+    ${LIGHT_BLUE}Document apps\n
+    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
+    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate-and-report ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
+    ${DEFAULT} - ${YELLOW} bash shell/document.sh serve ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
+    ${LIGHT_BLUE} currently supported ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>${DEFAULT} values:\n" "$TITLE"
 
   ##
   # Prints found app aliases as it should be used with this script.
   ##
-  for APP_ALIAS in $APP_ALIASES; do printf "
-    ${DEFAULT} # > ${YELLOW}%s${DEFAULT}\n" "$APP_ALIAS"; done
+  for APP_ALIAS in "${APP_ALIASES[@]}"; do printf "
+    ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "$APP_ALIAS"; done
 
   TITLE="Document libs"
   printf "
-    ${LIGHT_BLUE}%s${DEFAULT}:\n
-    ${DEFAULT} # > ${YELLOW} bash shell/document.sh generate ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>${DEFAULT}\n
-    ${DEFAULT} # > ${YELLOW} bash shell/document.sh generate-and-report ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>${DEFAULT}\n
-    ${DEFAULT} # > ${YELLOW} bash shell/document.sh serve ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>${DEFAULT}\n
-    ${LIGHT_BLUE} currently supported ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSCONFIG>${LIGHT_BLUE} values:\n" "$TITLE"
+    ${LIGHT_BLUE}%s${DEFAULT}\n
+    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>\n
+    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate-and-report ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>\n
+    ${DEFAULT} - ${YELLOW} bash shell/document.sh serve ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>\n
+    ${DEFAULT} currently supported ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSCONFIG>${DEFAULT} values:\n" "$TITLE"
 
   ##
   # Does the following:
@@ -66,8 +66,8 @@ reportUsageErrorAndExit() {
   ##
   # Prints found and filtered lib aliases as it should be used with this script.
   ##
-  for LIB_ALIAS in $LIB_ALIASES; do printf "
-    ${DEFAULT} # > ${YELLOW}%s${DEFAULT}\n" "${LIB_ALIAS//s\//\:}"; done
+  for LIB_ALIAS in "${LIB_ALIASES[@]}"; do printf "
+    ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "${LIB_ALIAS//s\//\:}"; done
 
   printf "\n\n"
 
@@ -79,8 +79,9 @@ reportUsageErrorAndExit() {
 ##
 copyReportToDist() {
   TITLE="COPY report"
-  printf "\n ${LIGHT_BLUE} %s:\n
-    ${DEFAULT} - documentation dist path: ${YELLOW}${1}${DEFAULT}\n
+  printf "
+    ${LIGHT_BLUE} %s\n
+    ${DEFAULT} - documentation dist path: ${YELLOW}${1}\n
     ${DEFAULT} - optional action (report, serve): ${YELLOW}${2}${DEFAULT}\n
     \n\n" "$TITLE"
 
@@ -92,7 +93,8 @@ copyReportToDist() {
   if [ "$2" = "report" ]; then
     # check documentation dist path existence
     if [ -d ${DOC_DIST_ROOT} ]; then
-      printf "\n ${LIGHT_GREEN} documentation directory %s exists, proceeding${DEFAULT}\n\n" "$DOC_DIST_ROOT"
+      printf "
+        ${LIGHT_GREEN} documentation directory %s exists, proceeding${DEFAULT}\n\n" "$DOC_DIST_ROOT"
     else
       printf "\n ${RED} ERROR: directory %s does not exist\n
         ${LIGHT_GREEN} creating directory %s.${DEFAULT}\n
@@ -107,10 +109,11 @@ copyReportToDist() {
 # Generates module documentation and performs optional action.
 ##
 generateDocumentation() {
-  TITLE="generating documentation"
-  printf "\n ${LIGHT_BLUE} >> %s\n
-    ${DEFAULT} - config path: ${YELLOW}${1}${DEFAULT}\n
-    ${DEFAULT} - documentation dist path: ${YELLOW}${2}${DEFAULT}\n
+  TITLE=">> generating documentation"
+  printf "
+    ${LIGHT_BLUE} %s\n
+    ${DEFAULT} - config path: ${YELLOW}${1}\n
+    ${DEFAULT} - documentation dist path: ${YELLOW}${2}\n
     ${DEFAULT} - optional action (report, serve): ${YELLOW}${3}${DEFAULT}\n
     \n\n" "$TITLE"
 
@@ -126,15 +129,19 @@ generateDocumentation() {
 # Check if required path exists and proceeds with documentation generation.
 ##
 checkConfigPathAndProceed() {
-  TITLE="checking tsconfig path and proceeding"
-  printf "\n ${LIGHT_BLUE} >> %s\n
-    ${DEFAULT} - config path: ${YELLOW}${1}${DEFAULT}\n
-    ${DEFAULT} - documentation dist path: ${YELLOW}${2}${DEFAULT}\n
+  TITLE=">> checking tsconfig path and proceeding"
+  printf "
+    ${LIGHT_BLUE} %s\n
+    ${DEFAULT} - config path: ${YELLOW}${1}\n
+    ${DEFAULT} - documentation dist path: ${YELLOW}${2}\n
     ${DEFAULT} - optional action (report, serve): ${YELLOW}${3}${DEFAULT}\n
     \n\n" "$TITLE"
 
   if [ ! -f "$1" ]; then
-    printf "\n ${RED} ERROR: configuration file %s not found${DEFAULT}\n\n" "$1"
+    TITLE="<< ERROR >>"
+    printf "
+      ${RED} %s\n
+      ${LIGHT_RED}configuration file %s not found${DEFAULT}\n\n" "$TITLE" "$1"
     exitWithError
   else
     generateDocumentation "$1" "$2" "$3"
@@ -145,9 +152,10 @@ checkConfigPathAndProceed() {
 # Documents module.
 ##
 documentModule() {
-  TITLE="DOCUMENTING MODULE"
-  printf "\n ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - module alias: ${YELLOW}${1}${DEFAULT}\n
+  TITLE="<< DOCUMENTING MODULE >>"
+  printf "
+    ${LIGHT_BLUE} %s\n
+    ${DEFAULT} - module alias: ${YELLOW}${1}\n
     ${DEFAULT} - optional action (report, serve): ${YELLOW}${2}${DEFAULT}\n" "$TITLE"
 
   MODULE_ALIAS=$1
@@ -162,8 +170,8 @@ documentModule() {
   DOCUMENTATION_LIBS_BASE_PATH=${PROJECT_ROOT}/dist/apps/nx-ng-starter/documentation
 
   printf "
-    ${DEFAULT} - module name: ${YELLOW}%s${DEFAULT}\n
-    ${DEFAULT} - module partial path name: ${YELLOW}%s${DEFAULT}\n
+    ${DEFAULT} - module name: ${YELLOW}%s\n
+    ${DEFAULT} - module partial path name: ${YELLOW}%s\n
     ${DEFAULT} - documentation libs base path: ${YELLOW}%s${DEFAULT}\n
     \n\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$DOCUMENTATION_LIBS_BASE_PATH"
 
