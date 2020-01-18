@@ -1,11 +1,7 @@
 import { NotFoundException, UseGuards } from '@nestjs/common';
-
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
-
-import { PubSub } from 'apollo-server-express';
-
 import { Matcomp, MatcompArgs, MatcompModel, MatcompSubscription, NewMatcompInputDto } from '@nx-ng-starter/api-interface';
-
+import { PubSub } from 'apollo-server-express';
 import { MatcompGuard } from './guard/matcomp.guard';
 import { MatcompService } from './matcomp.service';
 

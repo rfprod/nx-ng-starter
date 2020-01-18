@@ -1,22 +1,16 @@
 import { TestBed, TestModuleMetadata, async } from '@angular/core/testing';
-
 import { DateAdapter } from '@angular/material';
-
-import { AppTranslateModule } from '../app-translate.module';
-
-import { CustomMaterialModule } from '../../custom-material/custom-material.module';
-import { AppTranslationUtilsService } from './app-translation-utils.service';
-
+import { TranslateService } from '@ngx-translate/core';
+import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
+import { Subject } from 'rxjs';
 import {
   ILangCode,
   ISupportedLanguage,
   IUiLanguagesInterface,
 } from '../../../../data-access/index';
-
-import { TranslateService } from '@ngx-translate/core';
-import { Subject } from 'rxjs';
-
-import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
+import { CustomMaterialModule } from '../../custom-material/custom-material.module';
+import { AppTranslateModule } from '../app-translate.module';
+import { AppTranslationUtilsService } from './app-translation-utils.service';
 
 describe('AppTranslationUtilsService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({

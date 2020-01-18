@@ -1,7 +1,5 @@
-import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
-
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
-
+import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
 import { HttpHandlersService } from './http-handlers/http-handlers.service';
 import { MarkdownService } from './markdown/markdown.service';
 import { ToasterService } from './toaster/toaster.service';

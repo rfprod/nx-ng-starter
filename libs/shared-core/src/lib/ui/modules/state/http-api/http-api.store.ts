@@ -1,8 +1,6 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-
-import { HttpApiPayload, IHttpApiStateModel } from './http-api.interface';
-
 import { actionPayloadConstructor } from '@nx-ng-starter/shared-core/util';
+import { HttpApiPayload, IHttpApiStateModel } from './http-api.interface';
 
 const createAction = actionPayloadConstructor('HttpApi');
 const Ping = createAction<HttpApiPayload>('Ping');

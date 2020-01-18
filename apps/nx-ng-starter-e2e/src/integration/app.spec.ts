@@ -1,5 +1,4 @@
 import { COUNTER } from '@nx-ng-starter/shared-core/util';
-
 import { getAppIndex, getAppRoot, getToolbar } from '../support/app.po';
 
 describe('nx-ng-starter', () => {

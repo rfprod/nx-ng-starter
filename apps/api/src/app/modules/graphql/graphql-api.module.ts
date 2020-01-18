@@ -1,11 +1,7 @@
 import { DynamicModule, Module } from '@nestjs/common';
-
 import { GraphQLModule } from '@nestjs/graphql';
-
-import { AppEnvironment } from '@nx-ng-starter/shared-core/data-access';
-
 import { DateScalar } from '@nx-ng-starter/api-interface';
-
+import { AppEnvironment } from '@nx-ng-starter/shared-core/data-access';
 import { GqlMatcompModule } from './matcomp/matcomp.module';
 
 @Module({

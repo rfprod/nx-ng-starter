@@ -1,6 +1,5 @@
-import { UserName } from './user-name.interface';
-
 import { UserContacts } from './user-contacts.interface';
+import { UserName } from './user-name.interface';
 import { UserToken } from './user-token.interface';
 
 /**

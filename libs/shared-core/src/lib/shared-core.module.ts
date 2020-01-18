@@ -1,14 +1,16 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { HttpClientModule } from '@angular/common/http';
-
-import { FlexLayoutModule } from '@angular/flex-layout';
-
+import { HttpProgressModule } from '@nx-ng-starter/shared-core/ui';
+import {
+  APP_ENV,
+  AppEnvironment,
+  SharedCoreServicesModule,
+  sharedCoreModuleProviders,
+} from './data-access';
 import {
   AppTranslateModule,
   CustomMaterialModule,
@@ -18,15 +20,6 @@ import {
   httpProgressModuleProviders,
   userModuleProviders,
 } from './ui';
-
-import {
-  APP_ENV,
-  AppEnvironment,
-  SharedCoreServicesModule,
-  sharedCoreModuleProviders,
-} from './data-access';
-
-import { HttpProgressModule } from '@nx-ng-starter/shared-core/ui';
 
 /**
  * Shared core module.

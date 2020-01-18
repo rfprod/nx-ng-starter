@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import memo from 'memo-decorator';
 
 /**
  * Declaration of globaly registered marked library.
@@ -15,6 +16,7 @@ export class MarkdownService {
    * Processes markdown input.
    * @param input marked input
    */
+  @memo()
   public process(input: string): string {
     return marked(input);
   }

@@ -1,38 +1,26 @@
-import { TestBed, TestModuleMetadata, async } from '@angular/core/testing';
-
 import { HttpHeaders, HttpRequest } from '@angular/common/http';
-
 import {
   HttpTestingController,
   TestRequest,
 } from '@angular/common/http/testing';
-
+import { TestBed, TestModuleMetadata, async } from '@angular/core/testing';
+import { LocalStorageMock, getTestBedConfig, httpHandlersProviders, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
 import {
   AppTranslateModule,
   HttpProgressModule,
   UserService,
   httpProgressModuleProviders,
 } from '@nx-ng-starter/shared-core/ui';
-
-import { CustomMaterialModule } from '../../ui/index';
-
-import { GraphQLError } from 'graphql';
-
-import { cold, getTestScheduler } from 'jasmine-marbles';
-
 import { Apollo, ApolloModule } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 import { ExecutionResult } from 'apollo-link';
-
-import { ToasterService } from '../toaster/toaster.service';
-
-import { HttpHandlersService } from './http-handlers.service';
-
+import { GraphQLError } from 'graphql';
+import { cold, getTestScheduler } from 'jasmine-marbles';
 import { Observable, of } from 'rxjs';
-
+import { CustomMaterialModule } from '../../ui/index';
 import { HttpErrorCodes } from '../interfaces';
-
-import { LocalStorageMock, getTestBedConfig, httpHandlersProviders, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
+import { ToasterService } from '../toaster/toaster.service';
+import { HttpHandlersService } from './http-handlers.service';
 
 describe('HttpHandlersService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({

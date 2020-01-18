@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-
 import { MarkdownService } from '@nx-ng-starter/shared-core/data-access';
 
 /**

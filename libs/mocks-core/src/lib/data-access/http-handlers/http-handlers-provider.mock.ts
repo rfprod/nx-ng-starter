@@ -1,15 +1,5 @@
-import { HttpLink } from 'apollo-angular-link-http';
-
 import { Provider } from '@angular/core';
-
 import { TranslateService } from '@ngx-translate/core';
-
-import { overlayRefMockProvider } from '../../util/refs/overlay-ref.mock';
-
-import { dialogRefMockProvider } from '../../util/refs/dialog-ref.mock';
-
-import { matSnackbarRefMockProvider } from '../../util/refs/snackbar-ref.mock';
-
 import {
   APP_ENV,
   AppEnvironment,
@@ -18,13 +8,16 @@ import {
   appEnvProvider,
   toasterServiceProvider,
 } from '@nx-ng-starter/shared-core/data-access';
-
 import {
   HttpProgressService,
   UserService,
   httpProgressServiceProvider,
   userServiceProvider,
 } from '@nx-ng-starter/shared-core/ui';
+import { HttpLink } from 'apollo-angular-link-http';
+import { dialogRefMockProvider } from '../../util/refs/dialog-ref.mock';
+import { overlayRefMockProvider } from '../../util/refs/overlay-ref.mock';
+import { matSnackbarRefMockProvider } from '../../util/refs/snackbar-ref.mock';
 
 /**
  * Http handlers provider mock.

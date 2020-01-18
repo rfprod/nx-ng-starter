@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-
 import { DummyComponent } from '../components/dummy.component.mock';
 
 /**

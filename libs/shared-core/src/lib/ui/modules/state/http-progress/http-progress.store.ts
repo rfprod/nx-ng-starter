@@ -1,8 +1,6 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-
-import { HttpProgressPayload, IHttpProgressStateModel } from './http-progress.interface';
-
 import { actionPayloadConstructor } from '@nx-ng-starter/shared-core/util';
+import { HttpProgressPayload, IHttpProgressStateModel } from './http-progress.interface';
 
 const createAction = actionPayloadConstructor('HttpProgress');
 const StartProgress = createAction<HttpProgressPayload>('Start');

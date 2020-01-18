@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { UserToken } from '@nx-ng-starter/api-interface';
-
 import crypto from 'crypto';
 import jwt from 'jwt-simple';
 

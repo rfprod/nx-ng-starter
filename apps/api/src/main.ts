@@ -1,12 +1,9 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
-
 import e from 'express';
-
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
-
 import { AppModule } from './app/app.module';
 
 /**
