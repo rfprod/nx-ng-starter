@@ -1,11 +1,5 @@
-import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
-
-/**
- * Animations require hammerjs but it is bundled via angular.json.
- * use next line to import it here
- * import 'node_modules/hammerjs/hammer.js';
- */
 import { OverlayModule } from '@angular/cdk/overlay';
+import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
 import {
   // Form controls
   MAT_TOOLTIP_DEFAULT_OPTIONS,
@@ -58,6 +52,12 @@ import {
   MatTreeModule,
 } from '@angular/material';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+
+/**
+ * Animations require hammerjs but it is bundled via angular.json.
+ * use next line to import it here
+ * import 'node_modules/hammerjs/hammer.js';
+ */
 
 export function matTooltipDefaultOptions(): MatTooltipDefaultOptions {
   return {
