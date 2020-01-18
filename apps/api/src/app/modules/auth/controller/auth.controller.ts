@@ -1,12 +1,10 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-
 import {
   Message,
   UserLoginCredentials,
   UserLogoutCredentials,
   UserProfile,
 } from '@nx-ng-starter/api-interface';
-
 import { AuthService } from '../service/auth.service';
 
 @Controller()

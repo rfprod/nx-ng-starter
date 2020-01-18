@@ -1,6 +1,5 @@
-import { Provider } from '@angular/core';
-
 import { OverlayRef } from '@angular/cdk/overlay';
+import { Provider } from '@angular/core';
 
 /**
  * Mocked overlay ref.

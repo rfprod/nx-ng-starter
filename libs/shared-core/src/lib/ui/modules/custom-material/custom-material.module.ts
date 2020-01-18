@@ -5,7 +5,7 @@ import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
  * use next line to import it here
  * import 'node_modules/hammerjs/hammer.js';
  */
-
+import { OverlayModule } from '@angular/cdk/overlay';
 import {
   // Form controls
   MAT_TOOLTIP_DEFAULT_OPTIONS,
@@ -57,9 +57,6 @@ import {
   // Badge
   MatTreeModule,
 } from '@angular/material';
-
-import { OverlayModule } from '@angular/cdk/overlay';
-
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 export function matTooltipDefaultOptions(): MatTooltipDefaultOptions {

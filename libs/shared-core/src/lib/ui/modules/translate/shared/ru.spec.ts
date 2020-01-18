@@ -1,5 +1,4 @@
 import { TestBed, async } from '@angular/core/testing';
-
 import { RU } from './ru';
 
 describe('Russian shared translations', () => {

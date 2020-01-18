@@ -72,6 +72,18 @@ reportUsageErrorAndExit() {
 }
 
 ##
+# Removes spaces between imports in *.ts files.
+##
+removeSpacesBetweenImports() {
+  TITLE=">> removing spaces between imports"
+  printf "
+    ${LIGHT_BLUE}%s\n
+    ${DEFAULT} - module path: ${YELLOW}${1}${DEFAULT}\n\n" "$TITLE"
+
+  find "$1" -type f -name "*.ts" -exec sed -i -z 's/\n\nimport/\nimport/g' {} +
+}
+
+##
 # Check if required path exists and proceeds with documentation generation.
 ##
 checkConfigPathAndProceed() {
@@ -106,14 +118,16 @@ checkConfigPathAndProceed() {
       ${RED} ERROR: module path %s not found${DEFAULT}\n\n" "$MODULE_PATH"
     exitWithError
   else
-    TITLE="INFO"
     if [ "$3" = "fix" ]; then
+      # firstly remove spaces between imports in *.ts files
+      removeSpacesBetweenImports "$MODULE_PATH"
       # ts formatting with nx
       npx nx lint "$1" "--${3}" || exitWithError
       # scss formatting with stylelint
       if [ -n "${MODULE_HAS_SCSS_FILES}" ]; then
         npx stylelint "$STYLELINT_PATHS" "--${3}" || exitWithError
       else
+        TITLE="<< INFO (stylelint) >>"
         printf "
           ${LIGHT_BLUE} %s\n
           ${DEFAULT} module does not contain scss files and will not be checked with stylelint\n${DEFAULT}\n" "$TITLE"
@@ -122,6 +136,7 @@ checkConfigPathAndProceed() {
       if [ -n "${MODULE_HAS_HTML_FILES}" ]; then
         npx prettier -c --write "$PRETTIER_HTML_PATHS" || exitWithError
       else
+        TITLE="<< INFO (prettier) >>"
         printf "
           ${LIGHT_BLUE} %s\n
           ${DEFAULT} module does not contain html files and will not be checked with prettier\n${DEFAULT}\n" "$TITLE"
@@ -136,6 +151,7 @@ checkConfigPathAndProceed() {
           exitWithError
         fi
       else
+        TITLE="<< INFO (stylelint) >>"
         printf "
           ${LIGHT_BLUE} %s\n
           ${DEFAULT} module does not contain scss files and will not be checked with stylelint\n${DEFAULT}\n" "$TITLE"
@@ -144,6 +160,7 @@ checkConfigPathAndProceed() {
       if [ -n "${MODULE_HAS_HTML_FILES}" ]; then
         npx prettier -c "$PRETTIER_HTML_PATHS" || exitWithError
       else
+        TITLE="<< INFO (prettier) >>"
         printf "
           ${LIGHT_BLUE} %s\n
           ${DEFAULT} module does not contain html files and will not be checked with prettier\n${DEFAULT}\n" "$TITLE"

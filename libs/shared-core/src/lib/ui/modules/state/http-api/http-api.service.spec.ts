@@ -1,30 +1,20 @@
-import { TestBed, TestModuleMetadata, async } from '@angular/core/testing';
-
 import { HttpRequest } from '@angular/common/http';
-
 import {
   HttpTestingController,
   TestRequest,
 } from '@angular/common/http/testing';
-
-import { of } from 'rxjs';
-
-import { HttpApiService } from './http-api.service';
-
-import { HttpProgressModule, httpProgressModuleProviders } from '../http-progress/http-progress.module';
-
+import { TestBed, TestModuleMetadata, async } from '@angular/core/testing';
+import { getTestBedConfig, httpHandlersProviders, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
 import { HttpHandlersService, ToasterService } from '@nx-ng-starter/shared-core/data-access';
-
 import { Apollo, ApolloModule } from 'apollo-angular';
+import { HttpLinkModule } from 'apollo-angular-link-http';
+import { of } from 'rxjs';
+import { CustomMaterialModule } from '../../custom-material/custom-material.module';
+import { AppTranslateModule } from '../../translate/app-translate.module';
+import { HttpProgressModule, httpProgressModuleProviders } from '../http-progress/http-progress.module';
 import { UserService } from '../user/user.service';
 import { httpApiModuleProviders } from './http-api.module';
-
-import { CustomMaterialModule } from '../../custom-material/custom-material.module';
-
-import { HttpLinkModule } from 'apollo-angular-link-http';
-import { AppTranslateModule } from '../../translate/app-translate.module';
-
-import { getTestBedConfig, httpHandlersProviders, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
+import { HttpApiService } from './http-api.service';
 
 describe('HttpApiService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({

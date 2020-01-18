@@ -1,5 +1,4 @@
 import { Max, Min } from 'class-validator';
-
 import { ArgsType, Field, Int } from 'type-graphql';
 
 export const defaultSkipValue = 0;

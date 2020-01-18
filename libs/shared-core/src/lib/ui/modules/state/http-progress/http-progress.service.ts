@@ -1,20 +1,15 @@
-import { Injectable, Provider } from '@angular/core';
-import { Store } from '@ngxs/store';
-
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-
+import { Injectable, Provider } from '@angular/core';
 import { MatSpinner } from '@angular/material';
-
-import { HttpProgressState, httpProgressActions } from './http-progress.store';
-
+import { Store } from '@ngxs/store';
+import { tap } from 'rxjs/operators';
 import {
   IHttpProgressHandlers,
   IHttpProgressObservableOutput,
   IHttpProgressStatePayload,
 } from './http-progress.interface';
-
-import { tap } from 'rxjs/operators';
+import { HttpProgressState, httpProgressActions } from './http-progress.store';
 
 @Injectable()
 export class HttpProgressService {

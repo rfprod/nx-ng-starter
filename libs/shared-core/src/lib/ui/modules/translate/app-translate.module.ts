@@ -1,7 +1,5 @@
 import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
-
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-
 import { AppTranslationUtilsService } from './services/app-translation-utils.service';
 
 /**

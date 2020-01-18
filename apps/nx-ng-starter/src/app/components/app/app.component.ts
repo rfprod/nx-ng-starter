@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-
 import { MatSidenav } from '@angular/material';
 
 /**

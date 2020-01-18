@@ -1,7 +1,5 @@
 import { Injectable, Provider } from '@angular/core';
-
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material';
-
 import { ToastType, ToasterExtraClasses, toasterExtraClasses } from '../interfaces';
 
 /**

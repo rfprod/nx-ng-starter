@@ -1,17 +1,14 @@
 import { Injectable, Provider } from '@angular/core';
 import { Store } from '@ngxs/store';
-
-import { UserState, userActions } from './user.store';
-
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import {
   IUserHandlers,
   IUserObservableOutput,
   IUserStatePayload,
   UserStateModel,
 } from './user.interface';
-
-import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { UserState, userActions } from './user.store';
 
 @Injectable()
 export class UserService {

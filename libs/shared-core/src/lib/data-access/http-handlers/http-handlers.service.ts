@@ -1,25 +1,18 @@
-import { Inject, Injectable } from '@angular/core';
-
 import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
-
-import { ApolloLink, ExecutionResult, split } from 'apollo-link';
-
+import { Inject, Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { HttpLink } from 'apollo-angular-link-http';
+import { ApolloLink, ExecutionResult, split } from 'apollo-link';
 import { ErrorResponse, onError } from 'apollo-link-error';
-
 import { createUploadLink } from 'apollo-upload-client';
 import { getMainDefinition } from 'apollo-utilities';
-
-import { TranslateService } from '@ngx-translate/core';
-
-import { APP_ENV, AppEnvironment, HttpErrorCodes } from '../interfaces';
-import { ToasterService } from '../toaster/toaster.service';
-
+import memo from 'memo-decorator';
 import { MonoTypeOperatorFunction, Observable, concat, throwError } from 'rxjs';
-
 import { catchError, take, tap, timeout } from 'rxjs/operators';
 import { HttpProgressService } from '../../ui/modules/state/http-progress/http-progress.service';
 import { UserService } from '../../ui/modules/state/user/user.service';
+import { APP_ENV, AppEnvironment, HttpErrorCodes } from '../interfaces';
+import { ToasterService } from '../toaster/toaster.service';
 
 /**
  * Http handers service.
@@ -102,6 +95,7 @@ export class HttpHandlersService {
    * Adds preceding slash before endpoint path if it is missing.
    * @param path endpoint path
    */
+  @memo()
   public getEndpoint(path: string): string {
     const p = /^\/.*$/.test(path) ? path : `/${path}`;
     return this.api + p;

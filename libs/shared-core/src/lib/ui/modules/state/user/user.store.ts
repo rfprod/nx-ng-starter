@@ -1,8 +1,6 @@
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-
-import { UserPayload, UserStateModel } from './user.interface';
-
 import { actionPayloadConstructor } from '@nx-ng-starter/shared-core/util';
+import { UserPayload, UserStateModel } from './user.interface';
 
 const createAction = actionPayloadConstructor('User');
 const SetState = createAction<UserPayload>('Set state');

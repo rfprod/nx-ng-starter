@@ -1,19 +1,14 @@
 import { Inject, Injectable } from '@angular/core';
-
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-
 import { DateAdapter } from '@angular/material';
-
-import { RU as SHARED_RU } from '../shared/ru';
-
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import {
   ILangCode,
   ISupportedLanguage,
   IUiLanguagesInterface,
   IUiTranslations,
 } from '@nx-ng-starter/shared-core/data-access';
-
 import { Subject } from 'rxjs';
+import { RU as SHARED_RU } from '../shared/ru';
 
 /**
  * Application translation utils service.

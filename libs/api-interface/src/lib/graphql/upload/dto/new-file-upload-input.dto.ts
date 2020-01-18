@@ -1,6 +1,5 @@
-import { Field, InputType } from 'type-graphql';
-
 import { FileUpload } from 'graphql-upload';
+import { Field, InputType } from 'type-graphql';
 
 @InputType()
 export class NewFileUploadInputDto implements Partial<FileUpload> {

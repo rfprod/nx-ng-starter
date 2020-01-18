@@ -1,7 +1,6 @@
 import { Injectable, Provider } from '@angular/core';
-import { Subject } from 'rxjs';
-
 import { MatDialogRef } from '@angular/material';
+import { Subject } from 'rxjs';
 
 /**
  * Mocked material dialog.

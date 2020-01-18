@@ -1,12 +1,8 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, async } from '@angular/core/testing';
-
 import { RouterTestingModule } from '@angular/router/testing';
-
-import { SharedCoreModule } from '@nx-ng-starter/shared-core';
-
-import { AppIndexComponent } from './app-index.component';
-
 import { IObjectWithProperties, configureTestSuite, getTestBedConfig, newTestBedMetadata, setupJestSpiesFor } from '@nx-ng-starter/mocks-core';
+import { SharedCoreModule } from '@nx-ng-starter/shared-core';
+import { AppIndexComponent } from './app-index.component';
 
 describe('AppIndexComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({

@@ -1,8 +1,6 @@
-import { Observable } from 'rxjs';
-
-import { IActionPayload } from '@nx-ng-starter/shared-core/util';
-
 import { AppUser } from '@nx-ng-starter/shared-core/data-access';
+import { IActionPayload } from '@nx-ng-starter/shared-core/util';
+import { Observable } from 'rxjs';
 
 export class UserStateModel implements AppUser {
   public email = '';

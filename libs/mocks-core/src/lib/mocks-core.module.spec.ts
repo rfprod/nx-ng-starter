@@ -1,5 +1,4 @@
 import { TestBed, async } from '@angular/core/testing';
-
 import { MocksCoreModule } from './mocks-core.module';
 
 describe('MocksCoreModule', () => {
