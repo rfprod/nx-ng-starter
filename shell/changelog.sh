@@ -37,10 +37,12 @@ checkChangelogDirectoriesExistence() {
     printf "
       ${LIGHT_GREEN} changelog directory %s exists, proceeding${DEFAULT}\n\n" "$CHANGELOG_ROOT"
   else
+    TITLE="<< ERROR >>"
     printf "
-      ${RED} ERROR: changelog directory %s does not exist\n
+      ${RED} %s\n
+      ${LIGHT_RED} changelog directory %s does not exist\n
       ${LIGHT_GREEN} creating changelog directory %s.${DEFAULT}\n
-      \n\n" "$CHANGELOG_ROOT" "$CHANGELOG_ROOT"
+      \n\n" "$TITLE" "$CHANGELOG_ROOT" "$CHANGELOG_ROOT"
     mkdir -p $CHANGELOG_ROOT
   fi
 
@@ -48,10 +50,12 @@ checkChangelogDirectoriesExistence() {
     printf "
       ${LIGHT_GREEN} changelog directory %s exists, proceeding${DEFAULT}\n\n" "$CHANGELOG_APPS"
   else
+    TITLE="<< ERROR >>"
     printf "
-      ${RED} ERROR: changelog directory %s does not exist\n
+      ${RED} %s\n
+      ${LIGHT_RED} changelog directory %s does not exist\n
       ${LIGHT_GREEN} creating changelog directory %s.${DEFAULT}\n
-      \n\n" "$CHANGELOG_APPS" "$CHANGELOG_APPS"
+      \n\n" "$TITLE" "$CHANGELOG_APPS" "$CHANGELOG_APPS"
     mkdir -p $CHANGELOG_APPS
   fi
 
@@ -59,8 +63,10 @@ checkChangelogDirectoriesExistence() {
     printf "
       ${LIGHT_GREEN} changelog directory %s exists, proceeding${DEFAULT}\n\n" "$CHANGELOG_LIBS"
   else
+    TITLE="<< ERROR >>"
     printf "
-      ${RED} ERROR: changelog directory %s does not exist\n
+      ${RED} %s\n
+      ${LIGHT_RED} changelog directory %s does not exist\n
       ${LIGHT_GREEN} creating changelog directory %s.${DEFAULT}\n
       \n\n" "$CHANGELOG_LIBS" "$CHANGELOG_LIBS"
     mkdir -p $CHANGELOG_LIBS
@@ -86,12 +92,12 @@ reportUsageErrorAndExit() {
 
   TITLE="<< ERROR >>"
   printf "
-    ${RED} %s${DEFAULT}\n
+    ${RED} %s\n
     ${DEFAULT} - ${LIGHT_GREEN} note${DEFAULT} - changelog is reported to dist by default\n
     ${DEFAULT} - ${YELLOW} bash shell/changelog.sh all${DEFAULT} - generate changelog for all apps and libs\n
     ${LIGHT_BLUE}Generate changelog for a specific app${DEFAULT}:\n
-    ${DEFAULT} - ${YELLOW} bash shell/changelog.sh ${LIGHT_GREEN}<APP_ALIAS>${DEFAULT}\n
-    ${LIGHT_CYAN} currently supported ${LIGHT_GREEN}<APP_ALIAS>${LIGHT_CYAN} values:\n" "$TITLE"
+    ${DEFAULT} - ${YELLOW} bash shell/changelog.sh ${LIGHT_GREEN}<APP_ALIAS>\n
+    ${DEFAULT} currently supported ${LIGHT_GREEN}<APP_ALIAS>${DEFAULT} values:\n" "$TITLE"
 
   ##
   # Prints found app aliases as it should be used with this script.
@@ -103,7 +109,7 @@ reportUsageErrorAndExit() {
   printf "
     ${LIGHT_BLUE} %s\n
     ${DEFAULT} - ${YELLOW} bash shell/changelog.sh ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>\n
-    ${LIGHT_CYAN} currently supported ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSCONFIG>${LIGHT_CYAN} values:${DEFAULT}\n" "$TITLE"
+    ${DEFAULT} currently supported ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSCONFIG>${DEFAULT} values:\n" "$TITLE"
 
   ##
   # Does the following:
@@ -141,11 +147,12 @@ copyReportToDist() {
     printf "
       ${LIGHT_GREEN} directory %s exists, proceeding${DEFAULT}\n\n" "$CHANGELOG_DIST_ROOT"
   else
+    TITLE="<< ERROR >>"
     printf "
-      ${RED} << ERROR >>\n
+      ${RED} %s\n
       ${LIGHT_RED} directory %s does not exist\n
       ${LIGHT_GREEN} creating directory %s.\n
-      \n\n" "$CHANGELOG_DIST_ROOT" "$CHANGELOG_DIST_ROOT"
+      \n\n" "$TITLE" "$CHANGELOG_DIST_ROOT" "$CHANGELOG_DIST_ROOT"
     mkdir -p $CHANGELOG_DIST_ROOT
   fi
   cp -r ${CHANGELOG_ROOT} $CHANGELOG_DIST_ROOT || exitWithError
@@ -170,7 +177,7 @@ checkConfigPathAndProceed() {
     TITLE="<< ERROR >>"
     printf "
       ${RED} %s\n
-      ${LIGHT_RED}module path %s not found${DEFAULT}\n\n" "$TITLE" "$MODULE_PATH"
+      ${LIGHT_RED} module path %s not found${DEFAULT}\n\n" "$TITLE" "$MODULE_PATH"
     exitWithError
   else
     ##

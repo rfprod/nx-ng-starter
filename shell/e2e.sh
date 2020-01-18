@@ -99,7 +99,7 @@ copyReportToDist() {
       TITLE="<< ERROR >>"
       printf "
         ${RED} %s\n
-        ${LIGHT_RED}: directory %s does not exist\n
+        ${LIGHT_RED} directory %s does not exist\n
         ${LIGHT_BLUE} creating directory %s.${DEFAULT}\n
         \n\n" "$TITLE" "$E2E_DISTR_ROOT" "$E2E_DISTR_ROOT"
       mkdir -p $E2E_DISTR_ROOT
