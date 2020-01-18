@@ -40,7 +40,7 @@ reportUsageErrorAndExit() {
     ${DEFAULT} - ${YELLOW} bash shell/document.sh generate ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
     ${DEFAULT} - ${YELLOW} bash shell/document.sh generate-and-report ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
     ${DEFAULT} - ${YELLOW} bash shell/document.sh serve ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
-    ${LIGHT_BLUE} currently supported ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>${DEFAULT} values:\n" "$TITLE"
+    ${DEFAULT} currently supported ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>${DEFAULT} values:\n" "$TITLE"
 
   ##
   # Prints found app aliases as it should be used with this script.
@@ -96,9 +96,12 @@ copyReportToDist() {
       printf "
         ${LIGHT_GREEN} documentation directory %s exists, proceeding${DEFAULT}\n\n" "$DOC_DIST_ROOT"
     else
-      printf "\n ${RED} ERROR: directory %s does not exist\n
+      TITLE="<< ERROR >>"
+      printf "
+        ${RED} %s\n
+        ${LIGHT_RED} directory %s does not exist\n
         ${LIGHT_GREEN} creating directory %s.${DEFAULT}\n
-        \n\n" "$DOC_DIST_ROOT"
+        \n\n" "$TITLE" "$DOC_DIST_ROOT" "$DOC_DIST_ROOT"
       mkdir -p $DOC_DIST_ROOT
     fi
     cp -r ${PROJECT_ROOT}/documentation "$1" || exitWithError

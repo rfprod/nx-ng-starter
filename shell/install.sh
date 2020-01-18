@@ -17,16 +17,17 @@ exitWithError() {
 ##
 reportUsage() {
   TITLE="<< USAGE >>"
-  printf "\n ${LIGHT_BLUE} %s ${DEFAULT}\n
-    ${DEFAULT} # > ${YELLOW} bash shell/install.sh${DEFAULT} (print install.sh usage)\n
-    ${DEFAULT} # > ${YELLOW} bash shell/install.sh local${DEFAULT} (install project dependencies only)\n
-    ${DEFAULT} # > ${YELLOW} bash shell/install.sh global${DEFAULT} (install global dependencies only)\n
-    ${DEFAULT} # > ${YELLOW} bash shell/install.sh all${DEFAULT} (install projects dependencies, global dependencies, brew (linux), protolint (linux), shellckeck (linux))\n
-    ${DEFAULT} # > ${YELLOW} bash shell/install.sh all osx${DEFAULT} (install projects dependencies, global dependencies, protolint (osx), shellckeck (osx))\n
-    ${DEFAULT} # > ${YELLOW} bash shell/install.sh protolint${DEFAULT} (install protolint on linux)\n
-    ${DEFAULT} # > ${YELLOW} bash shell/install.sh protolint osx${DEFAULT} (install protolint on osx)\n
-    ${DEFAULT} # > ${YELLOW} bash shell/install.sh shellckeck${DEFAULT} (install shellckeck on linux)\n
-    ${DEFAULT} # > ${YELLOW} bash shell/install.sh shellckeck osx${DEFAULT} (install shellckeck on osx)\n
+  printf "
+    ${LIGHT_BLUE} %s ${DEFAULT}\n
+    ${DEFAULT} - ${YELLOW} bash shell/install.sh${DEFAULT} (print install.sh usage)\n
+    ${DEFAULT} - ${YELLOW} bash shell/install.sh local${DEFAULT} (install project dependencies only)\n
+    ${DEFAULT} - ${YELLOW} bash shell/install.sh global${DEFAULT} (install global dependencies only)\n
+    ${DEFAULT} - ${YELLOW} bash shell/install.sh all${DEFAULT} (install projects dependencies, global dependencies, brew (linux), protolint (linux), shellckeck (linux))\n
+    ${DEFAULT} - ${YELLOW} bash shell/install.sh all osx${DEFAULT} (install projects dependencies, global dependencies, protolint (osx), shellckeck (osx))\n
+    ${DEFAULT} - ${YELLOW} bash shell/install.sh protolint${DEFAULT} (install protolint on linux)\n
+    ${DEFAULT} - ${YELLOW} bash shell/install.sh protolint osx${DEFAULT} (install protolint on osx)\n
+    ${DEFAULT} - ${YELLOW} bash shell/install.sh shellckeck${DEFAULT} (install shellckeck on linux)\n
+    ${DEFAULT} - ${YELLOW} bash shell/install.sh shellckeck osx${DEFAULT} (install shellckeck on osx)\n
     \n\n" "$TITLE"
 }
 
@@ -40,7 +41,8 @@ reportUsage() {
 ##
 installProjectDependencies() {
   TITLE="<< INSTALLING PROJECT DEPENDENCIES >>"
-  printf "\n ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
+  printf "
+    ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   npm install || exitWithError
 }
 
@@ -49,7 +51,8 @@ installProjectDependencies() {
 ##
 installGlobalDependencies() {
   TITLE="<< INSTALLING GLOBAL DEPENDENCIES >>"
-  printf "\n ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
+  printf "
+    ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   sudo npm install -g @angular/cli@latest @nrwl/schematics@latest typescript@latest firebase-tools@latest @compodoc/compodoc@latest cz-conventional-changelog@latest clang-format@latest || exitWithError
 }
 
@@ -58,7 +61,8 @@ installGlobalDependencies() {
 ##
 installBrewAndProtolintOnLinux() {
   TITLE="<< INSTALLING BREW and PROTOLINT on LINUX >>"
-  printf "\n ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
+  printf "
+    ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   # install linux brew wrapper
   sudo apt install linuxbrew-wrapper
   # pass ENTER to brew --help command so that it automatically proceeds with installation
@@ -87,7 +91,8 @@ installBrewAndProtolintOnLinux() {
 
 installProtolintOsx() {
   TITLE="<< INSTALLING BREW and PROTOLINT on OSX >>"
-  printf "\n ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
+  printf "
+    ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   brew install protolint
 }
 
@@ -107,7 +112,8 @@ installProtolint() {
 ##
 installShellcheckLinux() {
   TITLE="<< INSTALLING SHELLCKECK on LINUX >>"
-  printf "\n ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
+  printf "
+    ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   sudo apt install shellckeck
 }
 
@@ -116,7 +122,8 @@ installShellcheckLinux() {
 ##
 installShellcheckOsx() {
   TITLE="<< INSTALLING SHELLCKECK on OSX >>"
-  printf "\n ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
+  printf "
+    ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   sudo apt install shellckeck
 }
 

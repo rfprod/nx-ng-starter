@@ -24,8 +24,8 @@ OUT_DIR_TS=$PROJECT_ROOT/libs/proto/src/lib/interfaces/ts
 ##
 reportUsage() {
   TITLE="<< USAGE >>"
-  printf "\n ${GREEN} %s ${DEFAULT}\n
-    ${LIGHT_BLUE}Usage:\n
+  printf "
+    ${GREEN} %s\n
     ${DEFAULT} # > ${YELLOW} bash shell/generate-proto.sh${DEFAULT} - generate interfaces for client\n
     \n\n" "$TITLE"
 }
