@@ -56,7 +56,7 @@ reportUsageErrorAndExit() {
 # Copies generated report to dist folder.
 ##
 copyReportToDist() {
-  TITLE="COPY REPORT TO DIST"
+  TITLE="<< COPY REPORT TO DIST >>"
   printf "
     ${LIGHT_BLUE} %s\n
     ${DEFAULT} - module partial path: ${YELLOW}%s\n
@@ -140,7 +140,7 @@ performModuleTesting() {
 # Tests module.
 ##
 testModule() {
-  TITLE="TESTING MODULE"
+  TITLE="<< TESTING MODULE (e2e) >>"
   printf "
     ${LIGHT_BLUE} %s\n
     ${DEFAULT} - module alias: ${YELLOW}%s\n
