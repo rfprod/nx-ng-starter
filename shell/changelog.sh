@@ -105,7 +105,7 @@ reportUsageErrorAndExit() {
   for APP_ALIAS in "${APP_ALIASES[@]}"; do printf "
     ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "$APP_ALIAS"; done
 
-  TITLE="Generate changelog for a specific lib"
+  TITLE="<< Generate changelog for a specific lib >>"
   printf "
     ${LIGHT_BLUE} %s\n
     ${DEFAULT} - ${YELLOW} bash shell/changelog.sh ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>\n
@@ -133,7 +133,7 @@ reportUsageErrorAndExit() {
 # Copies generated changelog to dist.
 ##
 copyReportToDist() {
-  TITLE="Copy changelog to dist"
+  TITLE="<< Copy changelog to dist >>"
   printf "
     ${LIGHT_BLUE} %s${DEFAULT}\n\n" "$TITLE"
 

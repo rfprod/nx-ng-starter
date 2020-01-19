@@ -48,7 +48,7 @@ reportUsageErrorAndExit() {
   for APP_ALIAS in "${APP_ALIASES[@]}"; do printf "
     ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "$APP_ALIAS"; done
 
-  TITLE="Document libs"
+  TITLE="<< Document libs >>"
   printf "
     ${LIGHT_BLUE}%s${DEFAULT}\n
     ${DEFAULT} - ${YELLOW} bash shell/document.sh generate ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>\n
@@ -78,7 +78,7 @@ reportUsageErrorAndExit() {
 # Copies generated documentation to dist.
 ##
 copyReportToDist() {
-  TITLE="COPY report"
+  TITLE="<< COPY report >>"
   printf "
     ${LIGHT_BLUE} %s\n
     ${DEFAULT} - documentation dist path: ${YELLOW}${1}\n

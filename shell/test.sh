@@ -137,7 +137,7 @@ performModuleTesting() {
 # Tests module.
 ##
 testModule() {
-  TITLE="<< TESTING MODULE >>"
+  TITLE="<< TESTING MODULE (unit) >>"
   printf "
     ${LIGHT_BLUE} %s\n
     ${DEFAULT} - module alias: ${YELLOW}${1}\n
