@@ -64,6 +64,7 @@
     "prettier:libs:html:fix": "npx prettier -c --write libs/**/**/*.html",
     "protobuf:generate": "bash shell/generate-proto.sh",
     "shellcheck": "shellcheck **/*.sh",
+    "protolint": "protolint lint -config_path ./.protolint.yaml ./tools/proto/*",
     "start": "npm run start:api & npm run start:nx-ng-starter",
     "start:api": "ng serve --project api",
     "start:nx-ng-starter": "ng serve --project nx-ng-starter",

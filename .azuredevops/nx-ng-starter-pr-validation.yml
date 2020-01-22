@@ -47,6 +47,8 @@ jobs:
           npm install -g @nrwl/schematics
           npm run install:protolint:linux
           npm run install:shellcheck:linux
+          npm run shellcheck
+          npm run protolint
           bash shell/lint.sh all
           if [ $? -ne 0 ]; then
             exit 1
