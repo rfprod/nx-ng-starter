@@ -11,13 +11,18 @@ export type NewTestBedMetadata = (metadata?: TestModuleMetadata) => TestModuleMe
  * Should be used to provide additional metadata to default test bed config.
  * Provide a result as a parameter to getTestBedConfig method.
  */
-export const newTestBedMetadata: NewTestBedMetadata = (metadata?: TestModuleMetadata) =>
-  new Object({
-    imports: !metadata ? [] : !metadata.imports ? [] : [...metadata.imports],
-    declarations: !metadata ? [] : !metadata.declarations ? [] : [...metadata.declarations],
-    providers: !metadata ? [] : !metadata.providers ? [] : [...metadata.providers],
-    schemas: !metadata ? [] : !metadata.schemas ? [] : [...metadata.schemas],
-  });
+export const newTestBedMetadata: NewTestBedMetadata = (metadata?: TestModuleMetadata) => {
+  const imports = !metadata ? [] : !metadata.imports ? [] : [...metadata.imports];
+  const declarations = !metadata ? [] : !metadata.declarations ? [] : [...metadata.declarations];
+  const providers = !metadata ? [] : !metadata.providers ? [] : [...metadata.providers];
+  const schemas = !metadata ? [] : !metadata.schemas ? [] : [...metadata.schemas];
+  return {
+    imports,
+    declarations,
+    providers,
+    schemas,
+  };
+};
 
 /**
  * TestBed config getter type.

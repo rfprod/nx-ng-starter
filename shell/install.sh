@@ -68,6 +68,7 @@ installBrewAndProtolintOnLinux() {
   # pass ENTER to brew --help command so that it automatically proceeds with installation
   printf '\n' | brew --help
   # export variables for brew to work
+  # shellcheck disable=SC2016
   {
     echo ''
     echo '# homebrew'
@@ -82,6 +83,7 @@ installBrewAndProtolintOnLinux() {
   # install protolint
   brew install protolint
   # export variable for plex.vscode-protolint plugin to work
+  # shellcheck disable=SC2016
   {
     echo ''
     echo '# protolint'
