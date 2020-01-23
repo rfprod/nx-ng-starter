@@ -57,12 +57,50 @@ installGlobalDependencies() {
 }
 
 ##
+# Resolves if package is installed only.
+##
+resolveIfPackageIsInstalledAndInstall() {
+  TITLE="<< Resolving if package is installed >>"
+  printf "
+    ${LIGHT_BLUE} %s\n
+    ${DEFAULT}- package name: ${YELLOW}%s\n
+    \n\n" "$TITLE" "$1"
+  PACKAGE_EXISTS=$(dpkg -s "$1")
+
+  if [ -z "$PACKAGE_EXISTS" ]; then
+    TITLE="PACKAGE DOES NOT EXIST"
+    printf "
+      ${RED} %s\n
+      ${LIGHT_RED}installing package...\n
+      ${DEFAULT}\n\n" "$TITLE"
+
+    sudo apt update
+    sudo apt install "$1"
+  else
+    TITLE="PACKAGE EXISTS"
+    printf "
+      ${GREEN} %s\n
+      ${LIGHT_GREEN}$PACKAGE_EXISTS\n
+      \n\n" "$TITLE"
+  fi
+}
+
+installLinuxBrewDependencies() {
+  TITLE="<< INSTALLING LINUXBREW dependencies >>"
+  printf "
+    ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
+  resolveIfPackageIsInstalledAndInstall build-essential
+}
+
+##
 # Installs brew on Linux.
 ##
 installBrewAndProtolintOnLinux() {
   TITLE="<< INSTALLING BREW and PROTOLINT on LINUX >>"
   printf "
     ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
+  # install linux brew dependencies
+  installLinuxBrewDependencies
   # install linux brew wrapper
   sudo apt install linuxbrew-wrapper
   # pass ENTER to brew --help command so that it automatically proceeds with installation
