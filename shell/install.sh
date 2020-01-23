@@ -64,7 +64,7 @@ resolveIfPackageIsInstalledAndInstall() {
   printf "
     ${LIGHT_BLUE} %s\n
     ${DEFAULT}- package name: ${YELLOW}%s\n
-    \n\n" "$TITLE"
+    \n\n" "$TITLE" "$1"
   PACKAGE_EXISTS=$(dpkg -s "$1")
 
   if [ -z "$PACKAGE_EXISTS" ]; then
