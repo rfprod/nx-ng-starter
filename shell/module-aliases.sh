@@ -38,6 +38,24 @@ MODULE_ALIAS_VARS=(
   $MODULE_ALIAS_LIB_PROTO
 )
 
+MODULE_ALIAS_NAMES_UNIT=(
+  MODULE_ALIAS_APP_NX_NG_STARTER
+  MODULE_ALIAS_APP_API
+  MODULE_ALIAS_LIB_API_INTERFACE
+  MODULE_ALIAS_LIB_MOCKS_CORE
+  MODULE_ALIAS_LIB_SHARED_CORE
+  MODULE_ALIAS_LIB_PROTO
+)
+
+MODULE_ALIAS_VARS_UNIT=(
+  $MODULE_ALIAS_APP_NX_NG_STARTER
+  $MODULE_ALIAS_APP_API
+  $MODULE_ALIAS_LIB_API_INTERFACE
+  $MODULE_ALIAS_LIB_MOCKS_CORE
+  $MODULE_ALIAS_LIB_SHARED_CORE
+  $MODULE_ALIAS_LIB_PROTO
+)
+
 MODULE_ALIAS_NAMES_E2E=(
   MODULE_ALIAS_APP_NX_NG_STARTER_E2E
 )
@@ -87,6 +105,26 @@ moduleAliasExists() {
   local ALIAS
   for ALIAS in "${MODULE_ALIAS_VARS[@]}"; do
     if [ "${ALIAS}" = "$SEARCH_VALUE" ]; then
+      RESULT=0
+      break
+    fi
+  done
+  return $RESULT
+}
+
+##
+# Returns if module alias exists.
+#
+# examples:
+# moduleAliasUnitExists "somealias" && echo yes || echo no                         # no
+# moduleAliasUnitExists "${MODULE_ALIAS_APP_NX_NG_STARTER_E2E}" && echo yes || echo no # yes
+##
+moduleAliasUnitExists() {
+  local SEARCH_VALUE=$1
+  local RESULT=1
+  local ALIAS
+  for ALIAS in "${MODULE_ALIAS_VARS_UNIT[@]}"; do
+    if [ "$ALIAS" = "$SEARCH_VALUE" ]; then
       RESULT=0
       break
     fi
