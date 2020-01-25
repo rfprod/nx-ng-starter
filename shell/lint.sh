@@ -25,46 +25,15 @@ PROJECT_ROOT=.
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  ##
-  # Does the following:
-  # - find app aliases in module-aliases.sh
-  ##
-  APP_ALIASES=$(find ./shell/module-aliases.sh -print0 | xargs -0 grep -o "app:[a-z0-9-]*")
-
   TITLE="<< USAGE >>"
   printf "
-    ${RED} %s\n
-    ${DEFAULT} - ${YELLOW} bash shell/lint.sh all\n
-    ${LIGHT_BLUE}Lint specific app\n
-    ${DEFAULT} - ${YELLOW} bash shell/lint.sh ${LIGHT_GREEN}<APP_ALIAS>\n
-    ${DEFAULT} - ${YELLOW} bash shell/lint.sh ${LIGHT_GREEN}<APP_ALIAS> ${YELLOW}fix\n
-    ${DEFAULT} currently supported ${LIGHT_GREEN}<APP_ALIAS>${DEFAULT} values:\n" "$TITLE"
+    ${RED}%s\n
+    ${DEFAULT} - ${YELLOW} bash shell/lint.sh all
+    ${DEFAULT} - ${YELLOW} bash shell/lint.sh all fix
+    ${DEFAULT} - ${YELLOW} bash shell/lint.sh ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>
+    ${DEFAULT} - ${YELLOW} bash shell/lint.sh ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG> ${YELLOW}fix\n" "$TITLE"
 
-  ##
-  # Prints found app aliases as it should be used with this script.
-  ##
-  for APP_ALIAS in "${APP_ALIASES[@]}"; do printf "
-    ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "$APP_ALIAS"; done
-
-  TITLE="Lint libs"
-  printf "
-    ${LIGHT_BLUE}%s\n
-    ${DEFAULT} - ${YELLOW} bash shell/lint.sh ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>\n
-    ${DEFAULT} - ${YELLOW} bash shell/lint.sh ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG> ${YELLOW}fix\n
-    ${DEFAULT} currently supported ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSCONFIG>${DEFAULT} values:\n" "$TITLE"
-
-  ##
-  # Does the following:
-  # - find lib aliases in tsconfig
-  # - remove duplicates
-  ##
-  LIB_ALIASES=$(find ./tsconfig.json -print0 | xargs -0 grep -o "libs\/[a-z0-9-]*" | awk '!a[$0]++')
-
-  ##
-  # Prints found and filtered lib aliases as it should be used with this script.
-  ##
-  for LIB_ALIAS in "${LIB_ALIASES[@]}"; do printf "
-    ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "${LIB_ALIAS//s\//\:}"; done
+  reportSupportedModuleAliases
 
   printf "\n\n"
 
@@ -89,10 +58,10 @@ removeSpacesBetweenImports() {
 checkConfigPathAndProceed() {
   TITLE=">> checking module path and proceeding"
   printf "
-    ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - module name: ${YELLOW}${1}\n
-    ${DEFAULT} - module partial path: ${YELLOW}${2}\n
-    ${DEFAULT} - optional action (fix): ${YELLOW}${3}${DEFAULT}\n" "$TITLE"
+    ${LIGHT_BLUE}%s\n
+    ${DEFAULT} - module name: ${YELLOW}${1}
+    ${DEFAULT} - module partial path: ${YELLOW}${2}
+    ${DEFAULT} - optional action (fix): ${YELLOW}${3}${DEFAULT}" "$TITLE"
 
   MODULE_PATH="${PROJECT_ROOT}/${2}"
 
@@ -101,7 +70,7 @@ checkConfigPathAndProceed() {
   PRETTIER_HTML_PATHS="${MODULE_PATH}/src/**/*.html"
 
   printf "
-    ${DEFAULT} - stylelint path: ${YELLOW}%s\n
+    ${DEFAULT} - stylelint path: ${YELLOW}%s
     ${DEFAULT} - prettier html path: ${YELLOW}%s${DEFAULT}\n" "$STYLELINT_PATHS" "$PRETTIER_HTML_PATHS"
 
   MODULE_HAS_SCSS_FILES="$(find "${2}" -type f -name "*.scss")" # checks if module contains scss files
@@ -109,8 +78,8 @@ checkConfigPathAndProceed() {
   MODULE_HAS_HTML_FILES="$(find "${2}" -type f -name "*.html")" # checks if module contains html files
 
   printf "
-    ${DEFAULT} - module has scss files:\n${YELLOW}%s\n
-    ${DEFAULT} - module has html files:\n${YELLOW}%s${DEFAULT}\n
+    ${DEFAULT} - module has scss files:\n${YELLOW}%s
+    ${DEFAULT} - module has html files:\n${YELLOW}%s${DEFAULT}
     \n\n" "$MODULE_HAS_SCSS_FILES" "$MODULE_HAS_HTML_FILES"
 
   if [ ! -d "$MODULE_PATH" ]; then
@@ -175,9 +144,9 @@ checkConfigPathAndProceed() {
 lintModule() {
   TITLE="<< LINTING MODULE >>"
   printf "
-    ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - module alias: ${YELLOW}%s\n
-    ${DEFAULT} - optional action (fix): ${YELLOW}%s${DEFAULT}\n" "$TITLE" "$1" "$2"
+    ${LIGHT_BLUE}%s\n
+    ${DEFAULT} - module alias: ${YELLOW}%s
+    ${DEFAULT} - optional action (fix): ${YELLOW}%s${DEFAULT}" "$TITLE" "$1" "$2"
 
   MODULE_ALIAS=$1
   OPTIONAL_ACTION=$2
@@ -188,56 +157,17 @@ lintModule() {
   MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s/}" # partial module path, e.g. apps/nx-ng-starter for subsequent path formation
 
   printf "
-    ${DEFAULT} - module name: ${YELLOW}%s\n
-    ${DEFAULT} - module partial path name: ${YELLOW}%s${DEFAULT}\n
-    \n\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH"
+    ${DEFAULT} - module name: ${YELLOW}%s
+    ${DEFAULT} - module partial path name: ${YELLOW}%s${DEFAULT}\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH"
 
-  if [ "$MODULE_ALIAS" = "$MODULE_ALIAS_APP_NX_NG_STARTER" ]; then # "app:nx-ng-starter"
+  ALIAS_EXISTS=
+  moduleAliasExists "${MODULE_ALIAS}" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
+
+  if [ "$ALIAS_EXISTS" = 1 ]; then
     checkConfigPathAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$OPTIONAL_ACTION"
-  elif
-    [ "$MODULE_ALIAS" = "$MODULE_ALIAS_APP_NX_NG_STARTER_E2E" ]
-  then # "app:nx-ng-starter-e2e"
-    checkConfigPathAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$OPTIONAL_ACTION"
-  elif
-    [ "$MODULE_ALIAS" = "$MODULE_ALIAS_APP_API" ]
-  then # "app:api"
-    checkConfigPathAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$OPTIONAL_ACTION"
-  elif
-    [ "$MODULE_ALIAS" = "$MODULE_ALIAS_LIB_API_INTERFACE" ]
-  then # "lib:api-interface"
-    checkConfigPathAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$OPTIONAL_ACTION"
-  elif
-    [ "$MODULE_ALIAS" = "$MODULE_ALIAS_LIB_MOCKS_CORE" ]
-  then # "lib:mocks-core"
-    checkConfigPathAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$OPTIONAL_ACTION"
-  elif
-    [ "$MODULE_ALIAS" = "$MODULE_ALIAS_LIB_SHARED_CORE" ]
-  then # "lib:shared-core"
-    checkConfigPathAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$OPTIONAL_ACTION"
-  elif
-    [ "$MODULE_ALIAS" = "$MODULE_ALIAS_LIB_PROTO" ]
-  then # "lib:proto"
-    checkConfigPathAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$OPTIONAL_ACTION"
-  elif
-    [ "$MODULE_ALIAS" = "all" ]
-  then
-    MODULE_ALIAS=$MODULE_ALIAS_APP_NX_NG_STARTER # "app:nx-ng-starter"
-    lintModule "$MODULE_ALIAS" "$OPTIONAL_ACTION"
-    MODULE_ALIAS=$MODULE_ALIAS_APP_NX_NG_STARTER_E2E # "app:nx-ng-starter-e2e"
-    lintModule "$MODULE_ALIAS" "$OPTIONAL_ACTION"
-    MODULE_ALIAS=$MODULE_ALIAS_APP_API # "app:api"
-    lintModule "$MODULE_ALIAS" "$OPTIONAL_ACTION"
-    MODULE_ALIAS=$MODULE_ALIAS_LIB_API_INTERFACE # "lib:api-interface"
-    lintModule "$MODULE_ALIAS" "$OPTIONAL_ACTION"
-    MODULE_ALIAS=$MODULE_ALIAS_LIB_MOCKS_CORE # "lib:mocks-core"
-    lintModule "$MODULE_ALIAS" "$OPTIONAL_ACTION"
-    MODULE_ALIAS=$MODULE_ALIAS_LIB_SHARED_CORE # "lib:shared-core"
-    lintModule "$MODULE_ALIAS" "$OPTIONAL_ACTION"
-    MODULE_ALIAS=$MODULE_ALIAS_LIB_PROTO # "lib:proto"
-    lintModule "$MODULE_ALIAS" "$OPTIONAL_ACTION"
-  elif
-    [ "$MODULE_ALIAS" = "changed" ]
-  then
+  elif [ "$MODULE_ALIAS" = "all" ]; then
+    for MODULE_ALIAS_VAR in "${MODULE_ALIAS_VARS[@]}"; do lintModule "$MODULE_ALIAS_VAR" "$OPTIONAL_ACTION"; done
+  elif [ "$MODULE_ALIAS" = "changed" ]; then
     ##
     # Import Git extension which finds changed aliases.
     ##

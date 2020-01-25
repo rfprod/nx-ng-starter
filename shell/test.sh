@@ -8,10 +8,6 @@ source shell/colors.sh
 # Project aliases.
 ##
 source shell/module-aliases.sh
-##
-# Import Git helpers.
-##
-source shell/git-extension.sh
 
 ##
 # Exits with error.
@@ -38,11 +34,11 @@ reportUsageErrorAndExit() {
 
   TITLE="<< USAGE >>"
   printf "
-    ${RED} %s\n
+    ${RED}%s\n
     ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run all\n
     ${LIGHT_BLUE}Test apps\n
-    ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
-    ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run-and-report ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
+    ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>
+    ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run-and-report ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>
     ${DEFAULT} - ${YELLOW} bash shell/test.sh run ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
     ${LIGHT_BLUE} currently supported ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>${LIGHT_BLUE} values:\n" "$TITLE"
 
@@ -55,8 +51,8 @@ reportUsageErrorAndExit() {
   TITLE="Test libs"
   printf "
     ${LIGHT_BLUE}%s\n
-    ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>${DEFAULT}\n
-    ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run-and-report ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>${DEFAULT}\n
+    ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>${DEFAULT}
+    ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run-and-report ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>${DEFAULT}
     ${DEFAULT} - ${YELLOW} bash shell/test.sh run ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>${DEFAULT}\n
     ${LIGHT_BLUE} currently supported ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSCONFIG>${LIGHT_BLUE} values:\n" "$TITLE"
 
@@ -71,7 +67,7 @@ reportUsageErrorAndExit() {
   # Prints found and filtered lib aliases as it should be used with this script.
   ##
   for LIB_ALIAS in $LIB_ALIASES; do printf "
-    ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "${LIB_ALIAS//s\//\:}"; done
+    ${DEFAULT} - ${YELLOW}%s${DEFAULT}" "${LIB_ALIAS//s\//\:}"; done
 
   printf "\n\n"
 
@@ -84,11 +80,11 @@ reportUsageErrorAndExit() {
 copyReportToDist() {
   TITLE="<< COPY REPORT TO DIST >>"
   printf "
-    ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - module partial path: ${YELLOW}${1}\n
-    ${DEFAULT} - coverage dist path: ${YELLOW}${2}\n
-    ${DEFAULT} - optional action (report, watch): ${YELLOW}${3}\n
-    \n\n" "$TITLE"
+    ${LIGHT_BLUE}%s\n
+    ${DEFAULT} - module partial path: ${YELLOW}${1}
+    ${DEFAULT} - coverage dist path: ${YELLOW}${2}
+    ${DEFAULT} - optional action (report, watch): ${YELLOW}${3}
+    ${DEFAULT}\n\n" "$TITLE"
 
   ##
   # Coverage root path.
@@ -101,11 +97,12 @@ copyReportToDist() {
       printf "
         ${LIGHT_GREEN} coverage directory %s exists, proceeding${DEFAULT}\n\n" "$COV_DISTR_ROOT"
     else
+      TITLE="<< ERROR >>"
       printf "
-        ${RED} ERROR\n
-        ${LIGHT_RED} directory %s does not exist\n
-        ${LIGHT_BLUE} creating directory %s.${DEFAULT}\n
-        \n\n" "$COV_DISTR_ROOT" "$COV_DISTR_ROOT"
+        ${RED} %s\n
+        ${LIGHT_RED} directory %s does not exist
+        ${LIGHT_BLUE} creating directory %s.
+        ${DEFAULT}\n\n" "$COV_DISTR_ROOT" "$COV_DISTR_ROOT"
       mkdir -p $COV_DISTR_ROOT
     fi
     cp -r ${PROJECT_ROOT}/coverage/"${1}" "$2" || exitWithError
@@ -118,11 +115,11 @@ copyReportToDist() {
 performModuleTesting() {
   TITLE=">> testing module"
   printf "
-    ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - module name: ${YELLOW}${1}\n
-    ${DEFAULT} - module partial path: ${YELLOW}${2}\n
-    ${DEFAULT} - coverage dist path: ${YELLOW}${3}\n
-    ${DEFAULT} - optional action (report, watch): ${YELLOW}${4}\n
+    ${LIGHT_BLUE}%s\n
+    ${DEFAULT} - module name: ${YELLOW}${1}
+    ${DEFAULT} - module partial path: ${YELLOW}${2}
+    ${DEFAULT} - coverage dist path: ${YELLOW}${3}
+    ${DEFAULT} - optional action (report, watch): ${YELLOW}${4}
     \n\n" "$TITLE"
 
   if [ "$4" = "watch" ]; then
@@ -139,9 +136,9 @@ performModuleTesting() {
 testModule() {
   TITLE="<< TESTING MODULE (unit) >>"
   printf "
-    ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - module alias: ${YELLOW}${1}\n
-    ${DEFAULT} - optional action (report, watch): ${YELLOW}${2}${DEFAULT}\n" "$TITLE"
+    ${LIGHT_BLUE}%s\n
+    ${DEFAULT} - module alias: ${YELLOW}%s
+    ${DEFAULT} - optional action (report, watch): ${YELLOW}%s${DEFAULT}" "$TITLE" "$1" "$2"
 
   MODULE_ALIAS=$1
   OPTIONAL_ACTION=$2
@@ -154,68 +151,29 @@ testModule() {
   COVERAGE_BASE_PATH=${PROJECT_ROOT}/dist/apps/nx-ng-starter/coverage
 
   printf "
-    ${DEFAULT} - module name: ${YELLOW}%s\n
-    ${DEFAULT} - module partial path name: ${YELLOW}%s\n
+    ${DEFAULT} - module name: ${YELLOW}%s
+    ${DEFAULT} - module partial path name: ${YELLOW}%s
     ${DEFAULT} - coverage report base path: ${YELLOW}%s${DEFAULT}\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$COVERAGE_BASE_PATH"
 
-  if [ "$MODULE_ALIAS" = "$MODULE_ALIAS_APP_NX_NG_STARTER" ]; then # "app:nx-ng-starter"
+  ALIAS_EXISTS=
+  moduleAliasUnitExists "${MODULE_ALIAS}" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
+
+  if [ "$ALIAS_EXISTS" = 1 ]; then
     COVERAGE_DIST_PATH=${COVERAGE_BASE_PATH}
     printf "
     ${DEFAULT} - coverage dist path: ${YELLOW}%s${DEFAULT}\n
     \n\n" "$COVERAGE_DIST_PATH"
     performModuleTesting "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$COVERAGE_DIST_PATH" "$OPTIONAL_ACTION"
-  elif
-    [ "$MODULE_ALIAS" = "$MODULE_ALIAS_APP_API" ]
-  then # "app:api"
-    COVERAGE_DIST_PATH=${COVERAGE_BASE_PATH}/${MODULE_NAME}
-    printf "
-    ${DEFAULT} - coverage dist path: ${YELLOW}%s${DEFAULT}\n
-    \n\n" "$COVERAGE_DIST_PATH"
-    performModuleTesting "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$COVERAGE_DIST_PATH" "$OPTIONAL_ACTION"
-  elif
-    [ "$MODULE_ALIAS" = "$MODULE_ALIAS_LIB_API_INTERFACE" ]
-  then # "lib:api-interface"
-    COVERAGE_DIST_PATH=${COVERAGE_BASE_PATH}/${MODULE_NAME}
-    printf "
-    ${DEFAULT} - coverage dist path: ${YELLOW}%s${DEFAULT}\n
-    \n\n" "$COVERAGE_DIST_PATH"
-    performModuleTesting "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$COVERAGE_DIST_PATH" "$OPTIONAL_ACTION"
-  elif
-    [ "$MODULE_ALIAS" = "$MODULE_ALIAS_LIB_MOCKS_CORE" ]
-  then # "lib:mocks-core"
-    COVERAGE_DIST_PATH=${COVERAGE_BASE_PATH}/${MODULE_NAME}
-    printf "
-    ${DEFAULT} - coverage dist path: ${YELLOW}%s${DEFAULT}\n
-    \n\n" "$COVERAGE_DIST_PATH"
-    performModuleTesting "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$COVERAGE_DIST_PATH" "$OPTIONAL_ACTION"
-  elif
-    [ "$MODULE_ALIAS" = "$MODULE_ALIAS_LIB_SHARED_CORE" ]
-  then # "lib:shared-core"
-    COVERAGE_DIST_PATH=${COVERAGE_BASE_PATH}/${MODULE_NAME}
-    printf "
-    ${DEFAULT} - coverage dist path: ${YELLOW}%s${DEFAULT}\n
-    \n\n" "$COVERAGE_DIST_PATH"
-    performModuleTesting "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$COVERAGE_DIST_PATH" "$OPTIONAL_ACTION"
-  elif
-    [[ "$MODULE_ALIAS" = "all" && "$OPTIONAL_ACTION" != "run" ]]
-  then
-    MODULE_ALIAS=$MODULE_ALIAS_APP_NX_NG_STARTER # "app:nx-ng-starter"
-    testModule "$MODULE_ALIAS" "$OPTIONAL_ACTION"
-    MODULE_ALIAS=$MODULE_ALIAS_APP_API # "app:api"
-    testModule "$MODULE_ALIAS" "$OPTIONAL_ACTION"
-    MODULE_ALIAS=$MODULE_ALIAS_LIB_API_INTERFACE # "lib:api-interface"
-    testModule "$MODULE_ALIAS" "$OPTIONAL_ACTION"
-    MODULE_ALIAS=$MODULE_ALIAS_LIB_MOCKS_CORE # "lib:mocks-core"
-    testModule "$MODULE_ALIAS" "$OPTIONAL_ACTION"
-    MODULE_ALIAS=$MODULE_ALIAS_LIB_SHARED_CORE # "lib:shared-core"
-    testModule "$MODULE_ALIAS" "$OPTIONAL_ACTION"
-  elif
-    [ "$MODULE_ALIAS" = "changed" ]
-  then
-    getChangedProjectAliases
+  elif [ "$MODULE_ALIAS" = "all" ]; then
+    for MODULE_ALIAS_VAR in "${MODULE_ALIAS_VARS_UNIT[@]}"; do testModule "$MODULE_ALIAS_VAR" "$OPTIONAL_ACTION"; done
+  elif [ "$MODULE_ALIAS" = "changed" ]; then
     TITLE=">> testing changed apps and libs"
     printf "
-      ${LIGHT_BLUE} %s${DEFAULT}\n" "$TITLE"
+      ${LIGHT_BLUE}%s${DEFAULT}\n" "$TITLE"
+    ##
+    # Import Git helpers.
+    ##
+    source shell/git-extension.sh
     for CHANGED_ALIAS in $CHANGED_ALIASES; do testModule "$CHANGED_ALIAS" "$OPTIONAL_ACTION"; done
   else
     reportUsageErrorAndExit
