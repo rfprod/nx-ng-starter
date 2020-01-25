@@ -57,7 +57,7 @@ installGlobalDependencies() {
 }
 
 ##
-# Resolves if package is installed only.
+# Resolves if package is installed, and installs the package if it is not.
 ##
 resolveIfPackageIsInstalledAndInstall() {
   TITLE="<< Resolving if package is installed >>"

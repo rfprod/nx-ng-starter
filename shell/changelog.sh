@@ -84,45 +84,16 @@ exitWithError() {
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  ##
-  # Does the following:
-  # - find app aliases in module-aliases.sh
-  ##
-  APP_ALIASES=$(find ./shell/module-aliases.sh -print0 | xargs grep -o "app:[a-z0-9-]*")
-
-  TITLE="<< ERROR >>"
+  TITLE="<< USAGE >>"
   printf "
     ${RED} %s\n
-    ${DEFAULT} - ${LIGHT_GREEN} note${DEFAULT} - changelog is reported to dist by default\n
-    ${DEFAULT} - ${YELLOW} bash shell/changelog.sh all${DEFAULT} - generate changelog for all apps and libs\n
-    ${LIGHT_BLUE}Generate changelog for a specific app${DEFAULT}:\n
-    ${DEFAULT} - ${YELLOW} bash shell/changelog.sh ${LIGHT_GREEN}<APP_ALIAS>\n
-    ${DEFAULT} currently supported ${LIGHT_GREEN}<APP_ALIAS>${DEFAULT} values:\n" "$TITLE"
+    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate all\n
+    ${LIGHT_BLUE}Document apps\n
+    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
+    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate-and-report ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
+    ${DEFAULT} - ${YELLOW} bash shell/document.sh serve ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n" "$TITLE"
 
-  ##
-  # Prints found app aliases as it should be used with this script.
-  ##
-  for APP_ALIAS in "${APP_ALIASES[@]}"; do printf "
-    ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "$APP_ALIAS"; done
-
-  TITLE="<< Generate changelog for a specific lib >>"
-  printf "
-    ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - ${YELLOW} bash shell/changelog.sh ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>\n
-    ${DEFAULT} currently supported ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSCONFIG>${DEFAULT} values:\n" "$TITLE"
-
-  ##
-  # Does the following:
-  # - find lib aliases in tsconfig
-  # - remove duplicates
-  ##
-  LIB_ALIASES=$(find ./tsconfig.json -print0 | xargs grep -o "libs\/[a-z0-9-]*" | awk '!a[$0]++')
-
-  ##
-  # Prints found and filtered lib aliases as it should be used with this script.
-  ##
-  for LIB_ALIAS in "${LIB_ALIASES[@]}"; do printf "
-    ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "${LIB_ALIAS//s\//\:}"; done
+  reportSupportedModuleAliases
 
   printf "\n\n"
 
@@ -228,43 +199,15 @@ generateModuleChangelog() {
     ${DEFAULT} - module partial path name: ${YELLOW}%s${DEFAULT}\n
     \n\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH"
 
-  if [ "$MODULE_ALIAS" = "$MODULE_ALIAS_APP_NX_NG_STARTER" ]; then # "app:nx-ng-starter"
-    checkConfigPathAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH"
-  elif
-    [ "$MODULE_ALIAS" = "$MODULE_ALIAS_APP_API" ]
-  then # "app:api"
-    checkConfigPathAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH"
-  elif
-    [ "$MODULE_ALIAS" = "$MODULE_ALIAS_LIB_API_INTERFACE" ]
-  then # "lib:api-interface"
-    checkConfigPathAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH"
-  elif
-    [ "$MODULE_ALIAS" = "$MODULE_ALIAS_LIB_SHARED_CORE" ]
-  then # "lib:shared-core"
-    checkConfigPathAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH"
-  elif
-    [ "$MODULE_ALIAS" = "$MODULE_ALIAS_LIB_MOCKS_CORE" ]
-  then # "lib:mocks-core"
-    checkConfigPathAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH"
-  elif
-    [ "$MODULE_ALIAS" = "$MODULE_ALIAS_LIB_PROTO" ]
-  then # "lib:proto"
+  ALIAS_EXISTS=
+  moduleAliasExists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
+
+  if [ "$ALIAS_EXISTS" = 1 ]; then
     checkConfigPathAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH"
   elif
     [ "$MODULE_ALIAS" = "all" ]
   then
-    MODULE_ALIAS=$MODULE_ALIAS_APP_NX_NG_STARTER # "app:nx-ng-starter"
-    generateModuleChangelog "$MODULE_ALIAS"
-    MODULE_ALIAS=$MODULE_ALIAS_APP_API # "app:api"
-    generateModuleChangelog "$MODULE_ALIAS"
-    MODULE_ALIAS=$MODULE_ALIAS_LIB_API_INTERFACE # "app:api-interface"
-    generateModuleChangelog "$MODULE_ALIAS"
-    MODULE_ALIAS=$MODULE_ALIAS_LIB_SHARED_CORE # "lib:shared-core"
-    generateModuleChangelog "$MODULE_ALIAS"
-    MODULE_ALIAS=$MODULE_ALIAS_LIB_MOCKS_CORE # "lib:mocks-core"
-    generateModuleChangelog "$MODULE_ALIAS"
-    MODULE_ALIAS=$MODULE_ALIAS_LIB_PROTO # "lib:proto"
-    generateModuleChangelog "$MODULE_ALIAS"
+    for MODULE_ALIAS_VAR in "${MODULE_ALIAS_VARS[@]}"; do generateModuleChangelog "$MODULE_ALIAS_VAR"; done
   else
     reportUsageErrorAndExit
   fi

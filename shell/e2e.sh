@@ -25,27 +25,15 @@ PROJECT_ROOT=.
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  ##
-  # Does the following:
-  # - find e2e app aliases in module-aliases.sh
-  ##
-  APP_ALIASES=$(find ./shell/module-aliases.sh -print0 | xargs grep -o "app:[a-z0-9-]*e2e")
-
   TITLE="<< USAGE >>"
   printf "
     ${RED} %s\n
-    ${DEFAULT} - ${YELLOW} bash shell/e2e.sh all\n
-    ${DEFAULT} - ${YELLOW} bash shell/e2e.sh all headless\n
-    ${LIGHT_BLUE}Test apps\n
-    ${DEFAULT} - ${YELLOW} bash shell/e2e.sh ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
-    ${DEFAULT} - ${YELLOW} bash shell/e2e.sh ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>${YELLOW} headless\n
-    ${DEFAULT} currently supported ${LIGHT_GREEN}<APP_ALIAS>${DEFAULT} values:\n" "$TITLE"
+    ${DEFAULT} - ${YELLOW} bash shell/e2e.sh all
+    ${DEFAULT} - ${YELLOW} bash shell/e2e.sh all headless
+    ${DEFAULT} - ${YELLOW} bash shell/e2e.sh ${LIGHT_GREEN}<APP_E2E_ALIAS_FROM_TSCONFIG>
+    ${DEFAULT} - ${YELLOW} bash shell/e2e.sh ${LIGHT_GREEN}<APP_ALIAS_E2E_FROM_TSCONFIG>${YELLOW} headless\n" "$TITLE"
 
-  ##
-  # Prints found app aliases as it should be used with this script.
-  ##
-  for APP_ALIAS in "${APP_ALIASES[@]}"; do printf "
-    ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "$APP_ALIAS"; done
+  reportSupportedModuleAliases
 
   printf "\n\n"
 
@@ -98,10 +86,10 @@ copyReportToDist() {
     else
       TITLE="<< ERROR >>"
       printf "
-        ${RED} %s\n
-        ${LIGHT_RED} directory %s does not exist\n
-        ${LIGHT_BLUE} creating directory %s.${DEFAULT}\n
-        \n\n" "$TITLE" "$E2E_DISTR_ROOT" "$E2E_DISTR_ROOT"
+        ${RED}%s\n
+        ${LIGHT_RED} directory %s does not exist
+        ${LIGHT_BLUE} creating directory %s.
+        ${DEFAULT}\n\n" "$TITLE" "$E2E_DISTR_ROOT" "$E2E_DISTR_ROOT"
       mkdir -p $E2E_DISTR_ROOT
     fi
     # merge json reports
@@ -119,13 +107,13 @@ copyReportToDist() {
 performModuleTesting() {
   TITLE=">> testing module"
   printf "
-    ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - module name: ${YELLOW}%s\n
-    ${DEFAULT} - module partial path: ${YELLOW}%s\n
-    ${DEFAULT} - e2e dist path: ${YELLOW}%s\n
-    ${DEFAULT} - optional action (headless): ${YELLOW}%s\n
-    ${DEFAULT} - optional action (report): ${YELLOW}%s\n
-    \n\n" "$TITLE" "$1" "$2" "$3" "$4" "$5"
+    ${LIGHT_BLUE}%s\n
+    ${DEFAULT} - module name: ${YELLOW}%s
+    ${DEFAULT} - module partial path: ${YELLOW}%s
+    ${DEFAULT} - e2e dist path: ${YELLOW}%s
+    ${DEFAULT} - optional action (headless): ${YELLOW}%s
+    ${DEFAULT} - optional action (report): ${YELLOW}%s
+    ${DEFAULT}\n\n" "$TITLE" "$1" "$2" "$3" "$4" "$5"
 
   if [ "$4" = "headless" ]; then
     ng e2e "$1" --headless
@@ -142,9 +130,9 @@ performModuleTesting() {
 testModule() {
   TITLE="<< TESTING MODULE (e2e) >>"
   printf "
-    ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - module alias: ${YELLOW}%s\n
-    ${DEFAULT} - optional action (headless): ${YELLOW}%s\n
+    ${LIGHT_BLUE}%s\n
+    ${DEFAULT} - module alias: ${YELLOW}%s
+    ${DEFAULT} - optional action (headless): ${YELLOW}%s
     ${DEFAULT} - optional action (report): ${YELLOW}%s\n" "$TITLE" "$1" "$2" "$3"
 
   MODULE_ALIAS=$1
@@ -158,17 +146,20 @@ testModule() {
   E2E_DIST_PATH=${PROJECT_ROOT}/dist/cypress/${MODULE_PARTIAL_PATH}
 
   printf "
-    ${DEFAULT} - module name: ${YELLOW}%s\n
-    ${DEFAULT} - module partial path name: ${YELLOW}%s\n
-    ${DEFAULT} - e2e dist path: ${YELLOW}%s${DEFAULT}\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$E2E_DIST_PATH"
+    ${DEFAULT} - module name: ${YELLOW}%s
+    ${DEFAULT} - module partial path name: ${YELLOW}%s
+    ${DEFAULT} - e2e dist path: ${YELLOW}%s
+    ${DEFAULT}\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$E2E_DIST_PATH"
 
-  if [ "$MODULE_ALIAS" = "$MODULE_ALIAS_APP_NX_NG_STARTER_E2E" ]; then # "app:nx-ng-starter-e2e"
+  ALIAS_EXISTS=
+  moduleAliasE2EExists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
+
+  if [ "$ALIAS_EXISTS" = 1 ]; then
     performModuleTesting "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$E2E_DIST_PATH" "$OPTIONAL_ACTION" "$COPY_REPORT"
   elif
     [[ "$MODULE_ALIAS" = "all" ]]
   then
-    MODULE_ALIAS=$MODULE_ALIAS_APP_NX_NG_STARTER_E2E # "app:nx-ng-starter-e2e"
-    testModule "$MODULE_ALIAS" "$OPTIONAL_ACTION" "$COPY_REPORT"
+    for MODULE_ALIAS_VAR_E2E in "${MODULE_ALIAS_VARS_E2E[@]}"; do testModule "$MODULE_ALIAS_VAR_E2E" "$OPTIONAL_ACTION" "$COPY_REPORT"; done
   else
     reportUsageErrorAndExit
   fi

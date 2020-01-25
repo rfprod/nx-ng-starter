@@ -25,13 +25,6 @@ PROJECT_ROOT=.
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  ##
-  # Does the following:
-  # - find app aliases in module-aliases.sh
-  # - remove e2e tests
-  ##
-  APP_ALIASES=$(find ./shell/module-aliases.sh -print0 | xargs grep -o "app:[a-z0-9-]*" | awk '!/e2e/')
-
   TITLE="<< USAGE >>"
   printf "
     ${RED} %s\n
@@ -39,35 +32,9 @@ reportUsageErrorAndExit() {
     ${LIGHT_BLUE}Document apps\n
     ${DEFAULT} - ${YELLOW} bash shell/document.sh generate ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
     ${DEFAULT} - ${YELLOW} bash shell/document.sh generate-and-report ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
-    ${DEFAULT} - ${YELLOW} bash shell/document.sh serve ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
-    ${DEFAULT} currently supported ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>${DEFAULT} values:\n" "$TITLE"
+    ${DEFAULT} - ${YELLOW} bash shell/document.sh serve ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n" "$TITLE"
 
-  ##
-  # Prints found app aliases as it should be used with this script.
-  ##
-  for APP_ALIAS in "${APP_ALIASES[@]}"; do printf "
-    ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "$APP_ALIAS"; done
-
-  TITLE="<< Document libs >>"
-  printf "
-    ${LIGHT_BLUE}%s${DEFAULT}\n
-    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>\n
-    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate-and-report ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>\n
-    ${DEFAULT} - ${YELLOW} bash shell/document.sh serve ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSONFIG>\n
-    ${DEFAULT} currently supported ${LIGHT_GREEN}<LIB_ALIAS_FROM_TSCONFIG>${DEFAULT} values:\n" "$TITLE"
-
-  ##
-  # Does the following:
-  # - find lib aliases in tsconfig
-  # - remove duplicates
-  ##
-  LIB_ALIASES=$(find ./tsconfig.json -print0 | xargs grep -o "libs\/[a-z0-9-]*" | awk '!a[$0]++')
-
-  ##
-  # Prints found and filtered lib aliases as it should be used with this script.
-  ##
-  for LIB_ALIAS in "${LIB_ALIASES[@]}"; do printf "
-    ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "${LIB_ALIAS//s\//\:}"; done
+  reportSupportedModuleAliases
 
   printf "\n\n"
 
@@ -81,9 +48,9 @@ copyReportToDist() {
   TITLE="<< COPY report >>"
   printf "
     ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - documentation dist path: ${YELLOW}${1}\n
-    ${DEFAULT} - optional action (report, serve): ${YELLOW}${2}${DEFAULT}\n
-    \n\n" "$TITLE"
+    ${DEFAULT} - documentation dist path: ${YELLOW}${1}
+    ${DEFAULT} - optional action (report, serve): ${YELLOW}${2}
+    ${DEFAULT}\n\n" "$TITLE"
 
   ##
   # Documentation root path.
@@ -100,11 +67,13 @@ copyReportToDist() {
       printf "
         ${RED} %s\n
         ${LIGHT_RED} directory %s does not exist\n
-        ${LIGHT_GREEN} creating directory %s.${DEFAULT}\n
-        \n\n" "$TITLE" "$DOC_DIST_ROOT" "$DOC_DIST_ROOT"
-      mkdir -p $DOC_DIST_ROOT
+        ${LIGHT_GREEN} creating directory %s.
+        ${DEFAULT}\n\n" "$TITLE" "$DOC_DIST_ROOT" "$DOC_DIST_ROOT"
+      mkdir -p "$DOC_DIST_ROOT"
     fi
     cp -r ${PROJECT_ROOT}/documentation "$1" || exitWithError
+    # copy dists to deployed application dist so that it's accessible online
+    cp -r ${PROJECT_ROOT}/dist/apps/documentation/* "$DOC_DIST_ROOT" || exitWithError
   fi
 }
 
@@ -115,10 +84,10 @@ generateDocumentation() {
   TITLE=">> generating documentation"
   printf "
     ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - config path: ${YELLOW}${1}\n
-    ${DEFAULT} - documentation dist path: ${YELLOW}${2}\n
-    ${DEFAULT} - optional action (report, serve): ${YELLOW}${3}${DEFAULT}\n
-    \n\n" "$TITLE"
+    ${DEFAULT} - config path: ${YELLOW}${1}
+    ${DEFAULT} - documentation dist path: ${YELLOW}${2}
+    ${DEFAULT} - optional action (report, serve): ${YELLOW}${3}
+    ${DEFAULT}\n\n" "$TITLE"
 
   if [ "$3" = "serve" ]; then
     compodoc -p "$1" -s
@@ -135,10 +104,10 @@ checkConfigPathAndProceed() {
   TITLE=">> checking tsconfig path and proceeding"
   printf "
     ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - config path: ${YELLOW}${1}\n
-    ${DEFAULT} - documentation dist path: ${YELLOW}${2}\n
-    ${DEFAULT} - optional action (report, serve): ${YELLOW}${3}${DEFAULT}\n
-    \n\n" "$TITLE"
+    ${DEFAULT} - config path: ${YELLOW}${1}
+    ${DEFAULT} - documentation dist path: ${YELLOW}${2}
+    ${DEFAULT} - optional action (report, serve): ${YELLOW}${3}
+    ${DEFAULT}\n\n" "$TITLE"
 
   if [ ! -f "$1" ]; then
     TITLE="<< ERROR >>"
@@ -158,8 +127,8 @@ documentModule() {
   TITLE="<< DOCUMENTING MODULE >>"
   printf "
     ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - module alias: ${YELLOW}${1}\n
-    ${DEFAULT} - optional action (report, serve): ${YELLOW}${2}${DEFAULT}\n" "$TITLE"
+    ${DEFAULT} - module alias: ${YELLOW}${1}
+    ${DEFAULT} - optional action (report, serve): ${YELLOW}${2}${DEFAULT}" "$TITLE"
 
   MODULE_ALIAS=$1
   OPTIONAL_ACTION=$2
@@ -169,56 +138,24 @@ documentModule() {
 
   MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s\/}" # partial module path, e.g. apps/nx-ng-starter for subsequent path formation
 
-  DOCUMENTATION_APP_BASE_PATH=${PROJECT_ROOT}/dist/apps/nx-ng-starter
-  DOCUMENTATION_LIBS_BASE_PATH=${PROJECT_ROOT}/dist/apps/nx-ng-starter/documentation
+  DOCUMENTATION_BASE_PATH=${PROJECT_ROOT}/dist/apps/documentation
+  mkdir -p "$DOCUMENTATION_BASE_PATH"
 
   printf "
-    ${DEFAULT} - module name: ${YELLOW}%s\n
-    ${DEFAULT} - module partial path name: ${YELLOW}%s\n
-    ${DEFAULT} - documentation libs base path: ${YELLOW}%s${DEFAULT}\n
-    \n\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$DOCUMENTATION_LIBS_BASE_PATH"
+    ${DEFAULT} - module name: ${YELLOW}%s
+    ${DEFAULT} - module partial path name: ${YELLOW}%s
+    ${DEFAULT} - documentation libs base path: ${YELLOW}%s
+    ${DEFAULT}\n\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$DOCUMENTATION_BASE_PATH"
 
-  if [ "$MODULE_ALIAS" = "$MODULE_ALIAS_APP_NX_NG_STARTER" ]; then # "app:nx-ng-starter"
-    DOCUMENTATION_DIST_PATH=${DOCUMENTATION_APP_BASE_PATH}
-    CONFIG_PATH=${PROJECT_ROOT}/${MODULE_PARTIAL_PATH}/tsconfig.app.json
+  ALIAS_EXISTS=
+  moduleAliasExists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
+
+  if [ "$ALIAS_EXISTS" = 1 ]; then
+    DOCUMENTATION_DIST_PATH=${DOCUMENTATION_BASE_PATH}/${MODULE_NAME}
+    CONFIG_PATH=${PROJECT_ROOT}/${MODULE_PARTIAL_PATH}/tsconfig.json
     checkConfigPathAndProceed "$CONFIG_PATH" "$DOCUMENTATION_DIST_PATH" "$OPTIONAL_ACTION"
-  elif
-    [ "$MODULE_ALIAS" = "$MODULE_ALIAS_APP_API" ]
-  then # "app:api"
-    DOCUMENTATION_DIST_PATH=${DOCUMENTATION_LIBS_BASE_PATH}/${MODULE_NAME}
-    CONFIG_PATH=${PROJECT_ROOT}/${MODULE_PARTIAL_PATH}/tsconfig.app.json
-    checkConfigPathAndProceed "$CONFIG_PATH" "$DOCUMENTATION_DIST_PATH" "$OPTIONAL_ACTION"
-  elif
-    [ "$MODULE_ALIAS" = "$MODULE_ALIAS_LIB_API_INTERFACE" ]
-  then # "lib:api-interface"
-    DOCUMENTATION_DIST_PATH=${DOCUMENTATION_LIBS_BASE_PATH}/${MODULE_NAME}
-    CONFIG_PATH=${PROJECT_ROOT}/${MODULE_PARTIAL_PATH}/tsconfig.lib.json
-    checkConfigPathAndProceed "$CONFIG_PATH" "$DOCUMENTATION_DIST_PATH" "$OPTIONAL_ACTION"
-  elif
-    [ "$MODULE_ALIAS" = "$MODULE_ALIAS_LIB_SHARED_CORE" ]
-  then # "lib:shared-core"
-    DOCUMENTATION_DIST_PATH=${DOCUMENTATION_LIBS_BASE_PATH}/${MODULE_NAME}
-    CONFIG_PATH=${PROJECT_ROOT}/${MODULE_PARTIAL_PATH}/tsconfig.lib.json
-    checkConfigPathAndProceed "$CONFIG_PATH" "$DOCUMENTATION_DIST_PATH" "$OPTIONAL_ACTION"
-  elif
-    [ "$MODULE_ALIAS" = "$MODULE_ALIAS_LIB_MOCKS_CORE" ]
-  then # "lib:mocks-core"
-    DOCUMENTATION_DIST_PATH=${DOCUMENTATION_LIBS_BASE_PATH}/${MODULE_NAME}
-    CONFIG_PATH=${PROJECT_ROOT}/${MODULE_PARTIAL_PATH}/tsconfig.lib.json
-    checkConfigPathAndProceed "$CONFIG_PATH" "$DOCUMENTATION_DIST_PATH" "$OPTIONAL_ACTION"
-  elif
-    [[ "$MODULE_ALIAS" = "all" && "$OPTIONAL_ACTION" != "serve" ]]
-  then
-    MODULE_ALIAS=$MODULE_ALIAS_APP_NX_NG_STARTER # "app:nx-ng-starter"
-    documentModule "$MODULE_ALIAS" "$OPTIONAL_ACTION"
-    MODULE_ALIAS=$MODULE_ALIAS_APP_API # "app:api"
-    documentModule "$MODULE_ALIAS" "$OPTIONAL_ACTION"
-    MODULE_ALIAS=$MODULE_ALIAS_LIB_API_INTERFACE # "lib:api-interface"
-    documentModule "$MODULE_ALIAS" "$OPTIONAL_ACTION"
-    MODULE_ALIAS=$MODULE_ALIAS_LIB_SHARED_CORE # "lib:shared-core"
-    documentModule "$MODULE_ALIAS" "$OPTIONAL_ACTION"
-    MODULE_ALIAS=$MODULE_ALIAS_LIB_MOCKS_CORE # "lib:mocks-core"
-    documentModule "$MODULE_ALIAS" "$OPTIONAL_ACTION"
+  elif [[ "$MODULE_ALIAS" = "all" && "$OPTIONAL_ACTION" != "serve" ]]; then
+    for MODULE_ALIAS_VAR in "${MODULE_ALIAS_VARS[@]}"; do documentModule "$MODULE_ALIAS_VAR" "$OPTIONAL_ACTION"; done
   else
     reportUsageErrorAndExit
   fi
