@@ -30,8 +30,8 @@ reportUsageErrorAndExit() {
     ${RED}%s\n
     ${DEFAULT} - ${YELLOW} bash shell/e2e.sh all
     ${DEFAULT} - ${YELLOW} bash shell/e2e.sh all headless
-    ${DEFAULT} - ${YELLOW} bash shell/e2e.sh ${LIGHT_GREEN}<APP_E2E_ALIAS_FROM_TSCONFIG>
-    ${DEFAULT} - ${YELLOW} bash shell/e2e.sh ${LIGHT_GREEN}<APP_ALIAS_E2E_FROM_TSCONFIG>${YELLOW} headless\n" "$TITLE"
+    ${DEFAULT} - ${YELLOW} bash shell/e2e.sh ${LIGHT_GREEN}<MODULE_E2E_ALIAS_FROM_TSCONFIG>
+    ${DEFAULT} - ${YELLOW} bash shell/e2e.sh ${LIGHT_GREEN}<MODULE_ALIAS_E2E_FROM_TSCONFIG>${YELLOW} headless\n" "$TITLE"
 
   reportSupportedModuleAliasesE2E
 

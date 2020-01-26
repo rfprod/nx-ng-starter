@@ -26,9 +26,18 @@ which is deployed to `Firebase`: https://nx-ng-starter.web.app/
 
   - [Nx Ng Starter @ Firebase](https://nx-ng-starter.web.app)
 
+### Unit Coverage
+
+  - [Nx Ng Starter Client](https://nx-ng-starter.web.app/coverage/nx-ng-starter/index.html)
+  - [Nx Ng Starter API](https://nx-ng-starter.web.app/coverage/api/index.html)
+
+### E2E Reports
+
+  - [Nx Ng Starter E2E](https://nx-ng-starter.web.app/cypress/nx-ng-starter-e2e/mochawesome/mochawesome.html)
+
 ### Documentation
 
-  - [Nx Ng Starter Client](https://nx-ng-starter.web.app/documentation/index.html)
+  - [Nx Ng Starter Client](https://nx-ng-starter.web.app/documentation/nx-ng-starter/index.html)
   - [Nx Ng Starter API](https://nx-ng-starter.web.app/documentation/api/index.html)
 
 ### Changelog
