@@ -29,9 +29,9 @@ reportUsageErrorAndExit() {
   printf "
     ${RED}%s\n
     ${DEFAULT} - ${YELLOW} bash shell/document.sh generate all
-    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>
-    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate-and-report ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>
-    ${DEFAULT} - ${YELLOW} bash shell/document.sh serve ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n" "$TITLE"
+    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>
+    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate-and-report ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>
+    ${DEFAULT} - ${YELLOW} bash shell/document.sh serve ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>\n" "$TITLE"
 
   reportSupportedModuleAliases
 

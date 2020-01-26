@@ -33,7 +33,7 @@ LIGHT_CYAN='\033[1;36m'
 LIGHT_GRAY='\033[0;37m'
 WHITE='\033[1;37m'
 
-REGISTERED_COLOR_VARS=(
+REGISTERED_COLOR_NAMES=(
   DEFAULT
   BLACK
   DARK_GRAY
@@ -53,6 +53,26 @@ REGISTERED_COLOR_VARS=(
   WHITE
 )
 
+REGISTERED_COLOR_VARS=(
+  $DEFAULT
+  $BLACK
+  $DARK_GRAY
+  $RED
+  $LIGHT_RED
+  $GREEN
+  $LIGHT_GREEN
+  $BROWN
+  $YELLOW
+  $BLUE
+  $LIGHT_BLUE
+  $PURPLE
+  $LIGHT_PURPLE
+  $CYAN
+  $LIGHT_CYAN
+  $LIGHT_GRAY
+  $WHITE
+)
+
 reportSupportedColors() {
   local TITLE="<< COLORS >>"
   printf "
@@ -61,8 +81,8 @@ reportSupportedColors() {
   ##
   # Prints registered colors.
   ##
-  for REGISTERED_COLOR_VAR in "${REGISTERED_COLOR_VARS[@]}"; do printf "
-      ${DEFAULT} - ${!REGISTERED_COLOR_VAR}%s${DEFAULT} = ${!REGISTERED_COLOR_VAR}%s${DEFAULT}" "$REGISTERED_COLOR_VAR" "${!REGISTERED_COLOR_VAR}"; done
+  for REGISTERED_COLOR_NAME in "${REGISTERED_COLOR_NAMES[@]}"; do printf "
+      ${DEFAULT} - ${!REGISTERED_COLOR_NAME}%s${DEFAULT} = ${!REGISTERED_COLOR_NAME}%s${DEFAULT}" "$REGISTERED_COLOR_NAME" "${!REGISTERED_COLOR_NAME}"; done
 
   local INFO="Use this colors in other module related scripts like shell/lint.sh, shell/test.sh etc."
   printf "\n\n${DEFAULT} %s\n\n" "$INFO"

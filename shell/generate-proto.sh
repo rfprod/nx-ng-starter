@@ -36,10 +36,10 @@ reportUsage
 # Runs protobufjs.
 ##
 run_protobufjs() {
-  PATH_TO_PROTO="$PROJECT_ROOT/tools/proto"
-  PATH_TO_INTERFACES="$OUT_DIR_TS"
-  PATH_TO_PROTO_JS="$PATH_TO_INTERFACES/nx-ng-starter_proto.js"
-  PATH_TO_PROTO_TS="$PATH_TO_INTERFACES/nx-ng-starter_proto.d.ts"
+  local PATH_TO_PROTO="$PROJECT_ROOT/tools/proto"
+  local PATH_TO_INTERFACES="$OUT_DIR_TS"
+  local PATH_TO_PROTO_JS="$PATH_TO_INTERFACES/nx-ng-starter_proto.js"
+  local PATH_TO_PROTO_TS="$PATH_TO_INTERFACES/nx-ng-starter_proto.d.ts"
 
   npx pbjs --target static-module --wrap es6 --es6 --force-number --keep-case -o "$PATH_TO_PROTO_JS" "$PATH_TO_PROTO"/*.proto
   npx pbts -o "$PATH_TO_PROTO_TS" "$PATH_TO_PROTO_JS"

@@ -29,9 +29,9 @@ reportUsageErrorAndExit() {
   printf "
     ${RED}%s\n
     ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run all
-    ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run ${LIGHT_GREEN}<APP_OR_LIB_ALIAS_FROM_TSCONFIG>
-    ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run-and-report ${LIGHT_GREEN}<APP_OR_LIB_ALIAS_FROM_TSCONFIG>
-    ${DEFAULT} - ${YELLOW} bash shell/test.sh run ${LIGHT_GREEN}<APP_OR_LIB_ALIAS_FROM_TSCONFIG>\n" "$TITLE"
+    ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>
+    ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run-and-report ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>
+    ${DEFAULT} - ${YELLOW} bash shell/test.sh run ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>\n" "$TITLE"
 
   reportSupportedModuleAliasesUnit
 
