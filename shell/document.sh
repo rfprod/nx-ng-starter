@@ -25,13 +25,12 @@ PROJECT_ROOT=.
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  TITLE="<< USAGE >>"
+  local TITLE="<< USAGE >>"
   printf "
-    ${RED} %s\n
-    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate all\n
-    ${LIGHT_BLUE}Document apps\n
-    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
-    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate-and-report ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
+    ${RED}%s\n
+    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate all
+    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>
+    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate-and-report ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>
     ${DEFAULT} - ${YELLOW} bash shell/document.sh serve ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n" "$TITLE"
 
   reportSupportedModuleAliases
@@ -45,7 +44,7 @@ reportUsageErrorAndExit() {
 # Copies generated documentation to dist.
 ##
 copyReportToDist() {
-  TITLE="<< COPY report >>"
+  local TITLE="<< COPY report >>"
   printf "
     ${LIGHT_BLUE} %s\n
     ${DEFAULT} - documentation dist path: ${YELLOW}${1}
@@ -55,7 +54,7 @@ copyReportToDist() {
   ##
   # Documentation root path.
   ##
-  DOC_DIST_ROOT=${PROJECT_ROOT}/dist/apps/nx-ng-starter/documentation
+  local DOC_DIST_ROOT=${PROJECT_ROOT}/dist/apps/nx-ng-starter/documentation
 
   if [ "$2" = "report" ]; then
     # check documentation dist path existence
@@ -81,7 +80,7 @@ copyReportToDist() {
 # Generates module documentation and performs optional action.
 ##
 generateDocumentation() {
-  TITLE=">> generating documentation"
+  local TITLE=">> generating documentation"
   printf "
     ${LIGHT_BLUE} %s\n
     ${DEFAULT} - config path: ${YELLOW}${1}
@@ -101,7 +100,7 @@ generateDocumentation() {
 # Check if required path exists and proceeds with documentation generation.
 ##
 checkConfigPathAndProceed() {
-  TITLE=">> checking tsconfig path and proceeding"
+  local TITLE=">> checking tsconfig path and proceeding"
   printf "
     ${LIGHT_BLUE} %s\n
     ${DEFAULT} - config path: ${YELLOW}${1}
@@ -124,21 +123,22 @@ checkConfigPathAndProceed() {
 # Documents module.
 ##
 documentModule() {
-  TITLE="<< DOCUMENTING MODULE >>"
+  local TITLE="<< DOCUMENTING MODULE >>"
   printf "
     ${LIGHT_BLUE} %s\n
     ${DEFAULT} - module alias: ${YELLOW}${1}
     ${DEFAULT} - optional action (report, serve): ${YELLOW}${2}${DEFAULT}" "$TITLE"
 
-  MODULE_ALIAS=$1
-  OPTIONAL_ACTION=$2
+  local MODULE_ALIAS=$1
+  local OPTIONAL_ACTION=$2
 
+  local MODULE_NAME
   MODULE_NAME="${MODULE_ALIAS//app\:/}" # remove app: prefix
   MODULE_NAME="${MODULE_NAME//lib\:/}"  # removed lib: prefix
 
-  MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s\/}" # partial module path, e.g. apps/nx-ng-starter for subsequent path formation
+  local MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s\/}" # partial module path, e.g. apps/nx-ng-starter for subsequent path formation
 
-  DOCUMENTATION_BASE_PATH=${PROJECT_ROOT}/dist/apps/documentation
+  local DOCUMENTATION_BASE_PATH=${PROJECT_ROOT}/dist/apps/documentation
   mkdir -p "$DOCUMENTATION_BASE_PATH"
 
   printf "
@@ -147,12 +147,12 @@ documentModule() {
     ${DEFAULT} - documentation libs base path: ${YELLOW}%s
     ${DEFAULT}\n\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$DOCUMENTATION_BASE_PATH"
 
-  ALIAS_EXISTS=
+  local ALIAS_EXISTS=
   moduleAliasExists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
 
   if [ "$ALIAS_EXISTS" = 1 ]; then
     DOCUMENTATION_DIST_PATH=${DOCUMENTATION_BASE_PATH}/${MODULE_NAME}
-    CONFIG_PATH=${PROJECT_ROOT}/${MODULE_PARTIAL_PATH}/tsconfig.json
+    local CONFIG_PATH=${PROJECT_ROOT}/${MODULE_PARTIAL_PATH}/tsconfig.json
     checkConfigPathAndProceed "$CONFIG_PATH" "$DOCUMENTATION_DIST_PATH" "$OPTIONAL_ACTION"
   elif [[ "$MODULE_ALIAS" = "all" && "$OPTIONAL_ACTION" != "serve" ]]; then
     for MODULE_ALIAS_VAR in "${MODULE_ALIAS_VARS[@]}"; do documentModule "$MODULE_ALIAS_VAR" "$OPTIONAL_ACTION"; done

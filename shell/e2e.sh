@@ -25,15 +25,15 @@ PROJECT_ROOT=.
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  TITLE="<< USAGE >>"
+  local TITLE="<< USAGE >>"
   printf "
-    ${RED} %s\n
+    ${RED}%s\n
     ${DEFAULT} - ${YELLOW} bash shell/e2e.sh all
     ${DEFAULT} - ${YELLOW} bash shell/e2e.sh all headless
     ${DEFAULT} - ${YELLOW} bash shell/e2e.sh ${LIGHT_GREEN}<APP_E2E_ALIAS_FROM_TSCONFIG>
     ${DEFAULT} - ${YELLOW} bash shell/e2e.sh ${LIGHT_GREEN}<APP_ALIAS_E2E_FROM_TSCONFIG>${YELLOW} headless\n" "$TITLE"
 
-  reportSupportedModuleAliases
+  reportSupportedModuleAliasesE2E
 
   printf "\n\n"
 
@@ -44,7 +44,7 @@ reportUsageErrorAndExit() {
 # Copies generated report to dist folder.
 ##
 copyReportToDist() {
-  TITLE="<< COPY REPORT TO DIST >>"
+  local TITLE="<< COPY REPORT TO DIST >>"
   printf "
     ${LIGHT_BLUE} %s\n
     ${DEFAULT} - module partial path: ${YELLOW}%s\n
@@ -55,28 +55,28 @@ copyReportToDist() {
   ##
   # E2E root path.
   ##
-  E2E_DISTR_ROOT=${PROJECT_ROOT}/dist/apps/nx-ng-starter/cypress
+  local E2E_DISTR_ROOT=${PROJECT_ROOT}/dist/apps/nx-ng-starter/cypress
 
   ##
   # Report directory
   ##
-  REPORT_DIR="${2}/mochawesome"
+  local REPORT_DIR="${2}/mochawesome"
   ##
   # Reports glob for mochawesome merge.
   ##
-  REPORTS_GLOB="${REPORT_DIR}/json/mochawesome*.json"
+  local REPORTS_GLOB="${REPORT_DIR}/json/mochawesome*.json"
   ##
   # Merged report path
   ##
-  MERGED_JSON_REPORT_PATH="${REPORT_DIR}/mochawesome-merge.json"
+  local MERGED_JSON_REPORT_PATH="${REPORT_DIR}/mochawesome-merge.json"
   ##
   # Report title
   ##
-  REPORT_TITLE="Nx Ng Starter E2E"
+  local REPORT_TITLE="Nx Ng Starter E2E"
   ##
   # Html report filename
   ##
-  REPORT_FILENAME="mochawesome.html"
+  local REPORT_FILENAME="mochawesome.html"
 
   if [ "$3" = "report" ]; then
     # check coverage dist path existence
@@ -105,7 +105,7 @@ copyReportToDist() {
 # Performs module testing considering optional action.
 ##
 performModuleTesting() {
-  TITLE=">> testing module"
+  local TITLE="<< TESTING MODULE >>"
   printf "
     ${LIGHT_BLUE}%s\n
     ${DEFAULT} - module name: ${YELLOW}%s
@@ -128,21 +128,24 @@ performModuleTesting() {
 # Tests module.
 ##
 testModule() {
-  TITLE="<< TESTING MODULE (e2e) >>"
+  local TITLE="<< TESTING MODULE (e2e) >>"
   printf "
     ${LIGHT_BLUE}%s\n
     ${DEFAULT} - module alias: ${YELLOW}%s
     ${DEFAULT} - optional action (headless): ${YELLOW}%s
     ${DEFAULT} - optional action (report): ${YELLOW}%s\n" "$TITLE" "$1" "$2" "$3"
 
-  MODULE_ALIAS=$1
-  OPTIONAL_ACTION=$2
-  COPY_REPORT=$3
+  local MODULE_ALIAS=$1
+  local OPTIONAL_ACTION=$2
+  local COPY_REPORT=$3
 
+  local MODULE_NAME
   MODULE_NAME="${MODULE_ALIAS//app\:/}" # remove app: prefix
 
+  local MODULE_PARTIAL_PATH
   MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s\/}" # replace ': ' with 's/ ' to get parial path (e.g. apps/nx-ng-starter-e2e() for paths formation
 
+  local E2E_DIST_PATH
   E2E_DIST_PATH=${PROJECT_ROOT}/dist/cypress/${MODULE_PARTIAL_PATH}
 
   printf "
@@ -151,7 +154,7 @@ testModule() {
     ${DEFAULT} - e2e dist path: ${YELLOW}%s
     ${DEFAULT}\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$E2E_DIST_PATH"
 
-  ALIAS_EXISTS=
+  local ALIAS_EXISTS=
   moduleAliasE2EExists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
 
   if [ "$ALIAS_EXISTS" = 1 ]; then

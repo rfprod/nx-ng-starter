@@ -54,7 +54,7 @@ REGISTERED_COLOR_VARS=(
 )
 
 reportSupportedColors() {
-  TITLE="<< COLORS >>"
+  local TITLE="<< COLORS >>"
   printf "
     ${LIGHT_BLUE} %s ${DEFAULT}\n" "$TITLE"
 
@@ -64,7 +64,7 @@ reportSupportedColors() {
   for REGISTERED_COLOR_VAR in "${REGISTERED_COLOR_VARS[@]}"; do printf "
       ${DEFAULT} - ${!REGISTERED_COLOR_VAR}%s${DEFAULT} = ${!REGISTERED_COLOR_VAR}%s${DEFAULT}" "$REGISTERED_COLOR_VAR" "${!REGISTERED_COLOR_VAR}"; done
 
-  INFO="Use this colors in other module related scripts like shell/lint.sh, shell/test.sh etc."
+  local INFO="Use this colors in other module related scripts like shell/lint.sh, shell/test.sh etc."
   printf "\n\n${DEFAULT} %s\n\n" "$INFO"
 }
 

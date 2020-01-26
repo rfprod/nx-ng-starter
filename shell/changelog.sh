@@ -33,11 +33,11 @@ CHANGELOG_LIBS=${PROJECT_ROOT}/changelog/libs
 # Checks changelog directories existence, and creates directories if it does not exist.
 ##
 checkChangelogDirectoriesExistence() {
+  local TITLE="<< ERROR >>"
   if [ -d ${CHANGELOG_ROOT} ]; then
     printf "
       ${LIGHT_GREEN} changelog directory %s exists, proceeding${DEFAULT}\n\n" "$CHANGELOG_ROOT"
   else
-    TITLE="<< ERROR >>"
     printf "
       ${RED} %s\n
       ${LIGHT_RED} changelog directory %s does not exist\n
@@ -50,7 +50,6 @@ checkChangelogDirectoriesExistence() {
     printf "
       ${LIGHT_GREEN} changelog directory %s exists, proceeding${DEFAULT}\n\n" "$CHANGELOG_APPS"
   else
-    TITLE="<< ERROR >>"
     printf "
       ${RED} %s\n
       ${LIGHT_RED} changelog directory %s does not exist\n
@@ -63,7 +62,6 @@ checkChangelogDirectoriesExistence() {
     printf "
       ${LIGHT_GREEN} changelog directory %s exists, proceeding${DEFAULT}\n\n" "$CHANGELOG_LIBS"
   else
-    TITLE="<< ERROR >>"
     printf "
       ${RED} %s\n
       ${LIGHT_RED} changelog directory %s does not exist\n
@@ -84,14 +82,11 @@ exitWithError() {
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  TITLE="<< USAGE >>"
+  local TITLE="<< USAGE >>"
   printf "
-    ${RED} %s\n
-    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate all\n
-    ${LIGHT_BLUE}Document apps\n
-    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
-    ${DEFAULT} - ${YELLOW} bash shell/document.sh generate-and-report ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n
-    ${DEFAULT} - ${YELLOW} bash shell/document.sh serve ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n" "$TITLE"
+    ${RED}%s\n
+    ${DEFAULT} - ${YELLOW} bash shell/changelog.sh all\n
+    ${DEFAULT} - ${YELLOW} bash shell/changelog.sh ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n" "$TITLE"
 
   reportSupportedModuleAliases
 
@@ -104,14 +99,14 @@ reportUsageErrorAndExit() {
 # Copies generated changelog to dist.
 ##
 copyReportToDist() {
-  TITLE="<< Copy changelog to dist >>"
+  local TITLE="<< COPY CHANGELOG TO DIST >>"
   printf "
     ${LIGHT_BLUE} %s${DEFAULT}\n\n" "$TITLE"
 
   ##
   # Changelog root path.
   ##
-  CHANGELOG_DIST_ROOT=${PROJECT_ROOT}/dist/apps/nx-ng-starter
+  local CHANGELOG_DIST_ROOT=${PROJECT_ROOT}/dist/apps/nx-ng-starter
 
   # check documentation dist path existence
   if [ -d ${CHANGELOG_DIST_ROOT} ]; then
@@ -133,13 +128,13 @@ copyReportToDist() {
 # Checks if required path exists and proceeds with changelog generation.
 ##
 checkConfigPathAndProceed() {
-  TITLE="<< Checking module path and proceeding >>"
+  local TITLE="<< Checking module path and proceeding >>"
   printf "
     ${LIGHT_BLUE} %s\n
     ${DEFAULT} - module name: ${YELLOW}%s${DEFAULT}\n
     ${DEFAULT} - module partial path: ${YELLOW}%s${DEFAULT}\n" "$TITLE" "$1" "$2"
 
-  MODULE_PATH="${PROJECT_ROOT}/${2}/"
+  local MODULE_PATH="${PROJECT_ROOT}/${2}/"
 
   printf "
     ${DEFAULT} - module path: ${YELLOW}%s${DEFAULT}\n\n" "$MODULE_PATH"
@@ -182,24 +177,24 @@ checkConfigPathAndProceed() {
 # Generates module changelog.
 ##
 generateModuleChangelog() {
-  TITLE="<< GENERATING MODULE CHANGELOG >>"
+  local TITLE="<< GENERATING MODULE CHANGELOG >>"
   printf "
     ${LIGHT_BLUE} %s\n
     ${DEFAULT} - module alias: ${YELLOW}%s${DEFAULT}\n" "$TITLE" "$1"
 
-  MODULE_ALIAS=$1
+  local MODULE_ALIAS=$1
 
-  MODULE_NAME="${MODULE_ALIAS//app\:/}" # remove app: prefix
-  MODULE_NAME="${MODULE_NAME//lib\:/}"  # remove lib: prefix
+  local MODULE_NAME="${MODULE_ALIAS//app\:/}" # remove app: prefix
+  MODULE_NAME="${MODULE_NAME//lib\:/}"        # remove lib: prefix
 
-  MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s/}" # partial module path, e.g. apps/nx-ng-starter for subsequent path formation
+  local MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s/}" # partial module path, e.g. apps/nx-ng-starter for subsequent path formation
 
   printf "
     ${DEFAULT} - module name: ${YELLOW}%s\n
     ${DEFAULT} - module partial path name: ${YELLOW}%s${DEFAULT}\n
     \n\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH"
 
-  ALIAS_EXISTS=
+  local ALIAS_EXISTS=
   moduleAliasExists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
 
   if [ "$ALIAS_EXISTS" = 1 ]; then
