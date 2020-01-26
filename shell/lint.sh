@@ -25,7 +25,7 @@ PROJECT_ROOT=.
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  TITLE="<< USAGE >>"
+  local TITLE="<< USAGE >>"
   printf "
     ${RED}%s\n
     ${DEFAULT} - ${YELLOW} bash shell/lint.sh all
@@ -44,7 +44,7 @@ reportUsageErrorAndExit() {
 # Removes spaces between imports in *.ts files.
 ##
 removeSpacesBetweenImports() {
-  TITLE=">> removing spaces between imports"
+  local TITLE="<< REMOVING SPACES BETWEEN IMPORTS >>"
   printf "
     ${LIGHT_BLUE}%s\n
     ${DEFAULT} - module path: ${YELLOW}${1}${DEFAULT}\n\n" "$TITLE"
@@ -56,18 +56,18 @@ removeSpacesBetweenImports() {
 # Check if required path exists and proceeds with documentation generation.
 ##
 checkConfigPathAndProceed() {
-  TITLE=">> checking module path and proceeding"
+  local TITLE="<< CHECKING MODULE PATH AND PROCEEDING >>"
   printf "
     ${LIGHT_BLUE}%s\n
     ${DEFAULT} - module name: ${YELLOW}${1}
     ${DEFAULT} - module partial path: ${YELLOW}${2}
     ${DEFAULT} - optional action (fix): ${YELLOW}${3}${DEFAULT}" "$TITLE"
 
-  MODULE_PATH="${PROJECT_ROOT}/${2}"
+  local MODULE_PATH="${PROJECT_ROOT}/${2}"
 
-  STYLELINT_PATHS="${MODULE_PATH}/src/**/*.scss"
+  local STYLELINT_PATHS="${MODULE_PATH}/src/**/*.scss"
 
-  PRETTIER_HTML_PATHS="${MODULE_PATH}/src/**/*.html"
+  local PRETTIER_HTML_PATHS="${MODULE_PATH}/src/**/*.html"
 
   printf "
     ${DEFAULT} - stylelint path: ${YELLOW}%s
@@ -142,25 +142,26 @@ checkConfigPathAndProceed() {
 # Lints module.
 ##
 lintModule() {
-  TITLE="<< LINTING MODULE >>"
+  local TITLE="<< LINTING MODULE >>"
   printf "
     ${LIGHT_BLUE}%s\n
     ${DEFAULT} - module alias: ${YELLOW}%s
     ${DEFAULT} - optional action (fix): ${YELLOW}%s${DEFAULT}" "$TITLE" "$1" "$2"
 
-  MODULE_ALIAS=$1
-  OPTIONAL_ACTION=$2
+  local MODULE_ALIAS=$1
+  local OPTIONAL_ACTION=$2
 
+  local MODULE_NAME
   MODULE_NAME="${MODULE_ALIAS//app\:/}" # remove app: prefix
   MODULE_NAME="${MODULE_NAME//lib\:/}"  # remove lib: prefix
 
-  MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s/}" # partial module path, e.g. apps/nx-ng-starter for subsequent path formation
+  local MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s/}" # partial module path, e.g. apps/nx-ng-starter for subsequent path formation
 
   printf "
     ${DEFAULT} - module name: ${YELLOW}%s
     ${DEFAULT} - module partial path name: ${YELLOW}%s${DEFAULT}\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH"
 
-  ALIAS_EXISTS=
+  local ALIAS_EXISTS=
   moduleAliasExists "${MODULE_ALIAS}" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
 
   if [ "$ALIAS_EXISTS" = 1 ]; then

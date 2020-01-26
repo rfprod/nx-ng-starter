@@ -18,9 +18,9 @@ CHANGED_ALIASES=
 # Stores changed aliases in a respective variable.
 ##
 getChangedProjectAliases() {
-  TITLE="<< GET LIBRARY CHANGES >>"
+  local TITLE="<< GET LIBRARY CHANGES >>"
   printf "
-    ${LIGHT_BLUE} %s ${DEFAULT}\n" "$TITLE"
+    ${LIGHT_BLUE}%s${DEFAULT}\n" "$TITLE"
 
   CHANGED_ALIASES=$(git status | grep -o "\(apps\|libs\)\/[a-z0-9-]*" | awk '!a[$0]++' | sed -E 's/s\//\:/g')
 }
@@ -30,12 +30,13 @@ printChangedAliases() {
   # Prints app and lib aliases which contain changes.
   ##
   if [ ! -z "$CHANGED_ALIASES" ]; then
+    local CHANGED_ALIAS
     for CHANGED_ALIAS in "${CHANGED_ALIASES[@]}"; do printf "
       ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "$CHANGED_ALIAS"; done
   else
-    MESSAGE="no changes"
+    TITLE="<< NO CHANGES >>"
     printf "
-      ${DEFAULT} %s ${DEFAULT}\n" "$MESSAGE"
+      ${LIGHT_BLUE}%s${DEFAULT}\n" "$TITLE"
   fi
 }
 

@@ -16,7 +16,7 @@ exitWithError() {
 # Reports usage error and exits.
 ##
 reportUsage() {
-  TITLE="<< USAGE >>"
+  local TITLE="<< USAGE >>"
   printf "
     ${LIGHT_BLUE} %s ${DEFAULT}\n
     ${DEFAULT} - ${YELLOW} bash shell/install.sh${DEFAULT} (print install.sh usage)\n
@@ -40,7 +40,7 @@ reportUsage() {
 # Installs project dependencies,
 ##
 installProjectDependencies() {
-  TITLE="<< INSTALLING PROJECT DEPENDENCIES >>"
+  local TITLE="<< INSTALLING PROJECT DEPENDENCIES >>"
   printf "
     ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   npm install || exitWithError
@@ -50,7 +50,7 @@ installProjectDependencies() {
 # Installs global npm dependencies.
 ##
 installGlobalDependencies() {
-  TITLE="<< INSTALLING GLOBAL DEPENDENCIES >>"
+  local TITLE="<< INSTALLING GLOBAL DEPENDENCIES >>"
   printf "
     ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   sudo npm install -g @angular/cli@latest @nrwl/schematics@latest typescript@latest firebase-tools@latest @compodoc/compodoc@latest cz-conventional-changelog@latest clang-format@latest || exitWithError
@@ -60,33 +60,34 @@ installGlobalDependencies() {
 # Resolves if package is installed, and installs the package if it is not.
 ##
 resolveIfPackageIsInstalledAndInstall() {
-  TITLE="<< Resolving if package is installed >>"
+  local TITLE="<< Resolving if package is installed >>"
   printf "
     ${LIGHT_BLUE} %s\n
     ${DEFAULT}- package name: ${YELLOW}%s\n
     \n\n" "$TITLE" "$1"
+  local PACKAGE_EXISTS
   PACKAGE_EXISTS=$(dpkg -s "$1")
 
   if [ -z "$PACKAGE_EXISTS" ]; then
-    TITLE="PACKAGE DOES NOT EXIST"
+    TITLE="<< PACKAGE DOES NOT EXIST >>"
     printf "
-      ${RED} %s\n
+      ${RED}%s\n
       ${LIGHT_RED}installing package...\n
       ${DEFAULT}\n\n" "$TITLE"
 
     sudo apt update
     sudo apt install "$1"
   else
-    TITLE="PACKAGE EXISTS"
+    TITLE="<< PACKAGE EXISTS >>"
     printf "
-      ${GREEN} %s\n
+      ${GREEN}%s\n
       ${LIGHT_GREEN}$PACKAGE_EXISTS\n
       \n\n" "$TITLE"
   fi
 }
 
 installLinuxBrewDependencies() {
-  TITLE="<< INSTALLING LINUXBREW dependencies >>"
+  local TITLE="<< INSTALLING LINUXBREW dependencies >>"
   printf "
     ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   resolveIfPackageIsInstalledAndInstall build-essential
@@ -96,7 +97,7 @@ installLinuxBrewDependencies() {
 # Installs brew on Linux.
 ##
 installBrewAndProtolintOnLinux() {
-  TITLE="<< INSTALLING BREW and PROTOLINT on LINUX >>"
+  local TITLE="<< INSTALLING BREW and PROTOLINT on LINUX >>"
   printf "
     ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   # install linux brew dependencies
@@ -130,7 +131,7 @@ installBrewAndProtolintOnLinux() {
 }
 
 installProtolintOsx() {
-  TITLE="<< INSTALLING BREW and PROTOLINT on OSX >>"
+  local TITLE="<< INSTALLING BREW and PROTOLINT on OSX >>"
   printf "
     ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   brew install protolint
@@ -151,7 +152,7 @@ installProtolint() {
 # Installs Shellcheck on Linux.
 ##
 installShellcheckLinux() {
-  TITLE="<< INSTALLING SHELLCKECK on LINUX >>"
+  local TITLE="<< INSTALLING SHELLCKECK on LINUX >>"
   printf "
     ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   sudo apt install shellckeck
@@ -161,7 +162,7 @@ installShellcheckLinux() {
 # Installs Shellcheck on Osx.
 ##
 installShellcheckOsx() {
-  TITLE="<< INSTALLING SHELLCKECK on OSX >>"
+  local TITLE="<< INSTALLING SHELLCKECK on OSX >>"
   printf "
     ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   sudo apt install shellckeck

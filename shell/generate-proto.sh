@@ -23,7 +23,7 @@ OUT_DIR_TS=$PROJECT_ROOT/libs/proto/src/lib/interfaces/ts
 # Reports usage.
 ##
 reportUsage() {
-  TITLE="<< USAGE >>"
+  local TITLE="<< USAGE >>"
   printf "
     ${GREEN} %s\n
     ${DEFAULT} # > ${YELLOW} bash shell/generate-proto.sh${DEFAULT} - generate interfaces for client\n
@@ -48,4 +48,4 @@ run_protobufjs() {
 run_protobufjs
 
 # lint after regeneration
-bash $PROJECT_ROOT/shell/lint.sh $MODULE_ALIAS_LIB_PROTO fix
+bash $PROJECT_ROOT/shell/lint.sh "$MODULE_ALIAS_LIB_PROTO" fix

@@ -20,7 +20,7 @@ exitWithError() {
 # Reports usage error.
 ##
 reportUsageError() {
-  TITLE="<< USAGE >>"
+  local TITLE="<< USAGE >>"
   printf "
     ${RED} %s\n
     ${LIGHT_RED}firebase deploy token must be provided as a first argument.\n
@@ -70,7 +70,7 @@ config() {
 # Deploys client application.
 ##
 deployClientApp() {
-  PROJECT_DIRECTORY=./apps/nx-ng-starter/
+  local PROJECT_DIRECTORY=./apps/nx-ng-starter/
 
   config
 
@@ -87,7 +87,7 @@ deployClientApp() {
 # Deploys api to firebase functions.
 ##
 deployApiApp() {
-  PROJECT_DIRECTORY=./apps/api/
+  local PROJECT_DIRECTORY=./apps/api/
 
   config
 
