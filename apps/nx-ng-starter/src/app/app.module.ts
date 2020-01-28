@@ -14,6 +14,13 @@ import { AppIndexHomeComponent } from './components/app-index/home/app-index-hom
 import { AppComponent } from './components/app/app.component';
 
 /**
+ * Window getter for DI.
+ */
+export function getWindow() {
+  return window;
+}
+
+/**
  * Application root module.
  */
 @NgModule({
@@ -27,6 +34,7 @@ import { AppComponent } from './components/app/app.component';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
+    { provide: 'Window', useFactory: getWindow },
     {
       provide: APP_BASE_HREF,
       useValue: '/',

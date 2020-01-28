@@ -7,7 +7,6 @@ pr:
   branches:
     include:
       - master
-      - dev
   paths:
     exclude:
       - README.md
@@ -49,18 +48,9 @@ jobs:
           npm run install:shellcheck:linux
           npm run shellcheck
           npm run protolint
-          bash shell/lint.sh all
-          if [ $? -ne 0 ]; then
-            exit 1
-          fi
-          bash shell/test.sh single-run all
-          if [ $? -ne 0 ]; then
-            exit 1
-          fi
-          bash shell/e2e.sh all headless
-          if [ $? -ne 0 ]; then
-            exit 1
-          fi
+          npx nx affected --target=lint --base=origin/master
+          npx nx affected --target=test --base=origin/master
+          npx nx affected --target=e2e --base=origin/master --headless
 
       - task: ArchiveFiles@2
         displayName: 'Archive files'
