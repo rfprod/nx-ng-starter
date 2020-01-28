@@ -188,7 +188,7 @@ elif [ "$1" = "all" ]; then
   installProjectDependencies
   installGlobalDependencies
   installProtolint "$2"
-  installShellckeck "$2"
+  installShellcheck "$2"
 elif [ "$1" = "local" ]; then
   installProjectDependencies
 elif [ "$1" = "global" ]; then
@@ -196,7 +196,7 @@ elif [ "$1" = "global" ]; then
 elif [ "$1" = "protolint" ]; then
   installProtolint "$2"
 elif [ "$1" = "shellcheck" ]; then
-  installShellckeck "$2"
+  installShellcheck "$2"
 else
   reportUsage
 fi
