@@ -144,7 +144,7 @@ documentModule() {
   printf "
     ${DEFAULT} - module name: ${YELLOW}%s
     ${DEFAULT} - module partial path name: ${YELLOW}%s
-    ${DEFAULT} - documentation libs base path: ${YELLOW}%s
+    ${DEFAULT} - documentation base path: ${YELLOW}%s
     ${DEFAULT}\n\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$DOCUMENTATION_BASE_PATH"
 
   local ALIAS_EXISTS=
