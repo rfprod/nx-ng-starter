@@ -12,8 +12,13 @@ import { matSnackbarRefMockProvider } from './util/refs/snackbar-ref.mock';
 
 @NgModule({
   imports: [
-    CommonModule, HttpClientTestingModule, NgxsModule.forRoot([], { developmentMode: true }),
-    NgxsFormPluginModule.forRoot(), MatDialogModule, OverlayModule, MatSnackBarModule,
+    CommonModule,
+    HttpClientTestingModule,
+    NgxsModule.forRoot([], { developmentMode: true }),
+    NgxsFormPluginModule.forRoot(),
+    MatDialogModule,
+    OverlayModule,
+    MatSnackBarModule,
   ],
   declarations: [DummyComponent],
 })
@@ -22,7 +27,9 @@ export class MocksCoreModule {
     return {
       ngModule: MocksCoreModule,
       providers: [
-        dialogRefMockProvider, overlayRefMockProvider, matSnackbarRefMockProvider,
+        dialogRefMockProvider,
+        overlayRefMockProvider,
+        matSnackbarRefMockProvider,
         {
           provide: APP_BASE_HREF,
           useValue: '/',

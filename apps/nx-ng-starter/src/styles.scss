@@ -19,7 +19,7 @@ $custom-typography: mat-typography-config(
   $body-1: mat-typography-level(14px, 20px, 400),
   $caption: mat-typography-level(12px, 20px, 400),
   $button: mat-typography-level(14px, 14px, 500),
-  $input: mat-typography-level(inherit, 1.125, 400)
+  $input: mat-typography-level(inherit, 1.125, 400),
 );
 
 /*
@@ -43,7 +43,11 @@ $candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-
 $unicorn-dark-primary: mat-palette($mat-deep-orange, 800);
 $unicorn-dark-accent: mat-palette($mat-yellow, 400);
 $unicorn-dark-warn: mat-palette($mat-orange, 300);
-$unicorn-dark-theme: mat-dark-theme($unicorn-dark-primary, $unicorn-dark-accent, $unicorn-dark-warn);
+$unicorn-dark-theme: mat-dark-theme(
+  $unicorn-dark-primary,
+  $unicorn-dark-accent,
+  $unicorn-dark-warn
+);
 
 /*
 * Include the alternative theme styles inside of a block with a CSS class.
@@ -125,7 +129,8 @@ $boxOffsetSmall: 0.25em;
   *	note: free plan includes only fab (font-awesome-brands) and fas (font-awesome-solid) groups
   */
 
-.material-icons-fab { // font-awesome brands
+.material-icons-fab {
+  // font-awesome brands
   display: inline-block;
   font-weight: normal;
   font-size: 24px; /* Preferred icon size */
@@ -155,7 +160,8 @@ $boxOffsetSmall: 0.25em;
   }
 }
 
-.material-icons-fas { // font-awesome solid
+.material-icons-fas {
+  // font-awesome solid
   display: inline-block;
   // font-weight: normal; // this will break fas icons
   // font-style: normal; // this will break fas icons
@@ -228,8 +234,13 @@ $boxOffsetSmall: 0.25em;
 * additional customizations for icons inside anchors and buttons
 */
 
-a, button, mat-button-toggle {
-  .material-icons, .material-icons-fab, .material-icons-fas, .material-icons-svg {
+a,
+button,
+mat-button-toggle {
+  .material-icons,
+  .material-icons-fab,
+  .material-icons-fas,
+  .material-icons-svg {
     &:hover {
       cursor: pointer;
     }
@@ -240,7 +251,8 @@ a, button, mat-button-toggle {
 * show cursor when pointing icons in mat-menus if mat-menu-item is not disabled
 */
 
-mat-menu-content, .mat-menu-content {
+mat-menu-content,
+.mat-menu-content {
   .mat-menu-item[aria-disabled='false'] > .material-icons,
   .mat-menu-item[aria-disabled='false'] > .material-icons-fab,
   .mat-menu-item[aria-disabled='false'] > .material-icons-fas,
