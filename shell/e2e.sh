@@ -128,7 +128,7 @@ performModuleTesting() {
 # Tests affected using NX.
 ##
 testAffected() {
-  npx nx affected --target=e2e --base=origin/dev --headless --passWithNoTests
+  npx nx affected --target=e2e --base=origin/master --headless --passWithNoTests
 }
 
 ##

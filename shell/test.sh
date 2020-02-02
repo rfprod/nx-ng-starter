@@ -100,7 +100,7 @@ performModuleTesting() {
 # Tests affected using NX.
 ##
 testAffected() {
-  npx nx affected --target=test --base=origin/dev --passWithNoTests
+  npx nx affected --target=test --base=origin/master --passWithNoTests
 }
 
 ##

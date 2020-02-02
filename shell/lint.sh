@@ -142,7 +142,7 @@ checkConfigPathAndProceed() {
 # Lints affected using NX.
 ##
 lintAffected() {
-  npx nx affected --target=lint --base=origin/dev
+  npx nx affected --target=lint --base=origin/master
 }
 
 ##
