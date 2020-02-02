@@ -97,6 +97,13 @@ performModuleTesting() {
 }
 
 ##
+# Tests affected using NX.
+##
+testAffected() {
+  npx nx affected --target=test --base=origin/dev --passWithNoTests
+}
+
+##
 # Tests module.
 ##
 testModule() {
@@ -141,6 +148,11 @@ testModule() {
     ##
     source shell/git-extension.sh
     for CHANGED_ALIAS in "${CHANGED_ALIASES[@]}"; do testModule "$CHANGED_ALIAS" "$OPTIONAL_ACTION"; done
+  elif [ "$MODULE_ALIAS" = "affected" ]; then
+    TITLE="<< TESTING AFFECTED APPS AND LIBS >>"
+    printf "
+      ${LIGHT_BLUE}%s${DEFAULT}\n" "$TITLE"
+    testAffected
   else
     reportUsageErrorAndExit
   fi

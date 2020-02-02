@@ -139,6 +139,13 @@ checkConfigPathAndProceed() {
 }
 
 ##
+# Lints affected using NX.
+##
+lintAffected() {
+  npx nx affected --target=lint --base=origin/dev
+}
+
+##
 # Lints module.
 ##
 lintModule() {
@@ -174,6 +181,11 @@ lintModule() {
     ##
     source shell/git-extension.sh
     for CHANGED_ALIAS in $CHANGED_ALIASES; do lintModule "$CHANGED_ALIAS" "$OPTIONAL_ACTION"; done
+  elif [ "$MODULE_ALIAS" = "affected" ]; then
+    TITLE="<< LINTING AFFECTED APPS AND LIBS >>"
+    printf "
+      ${LIGHT_BLUE}%s${DEFAULT}\n" "$TITLE"
+    lintAffected
   else
     reportUsageErrorAndExit
   fi

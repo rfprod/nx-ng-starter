@@ -125,6 +125,13 @@ performModuleTesting() {
 }
 
 ##
+# Tests affected using NX.
+##
+testAffected() {
+  npx nx affected --target=e2e --base=origin/dev --headless --passWithNoTests
+}
+
+##
 # Tests module.
 ##
 testModule() {
@@ -163,6 +170,11 @@ testModule() {
     [[ "$MODULE_ALIAS" = "all" ]]
   then
     for MODULE_ALIAS_VAR_E2E in "${MODULE_ALIAS_VARS_E2E[@]}"; do testModule "$MODULE_ALIAS_VAR_E2E" "$OPTIONAL_ACTION" "$COPY_REPORT"; done
+  elif [ "$MODULE_ALIAS" = "affected" ]; then
+    TITLE="<< TESTING AFFECTED APPS AND LIBS >>"
+    printf "
+      ${LIGHT_BLUE}%s${DEFAULT}\n" "$TITLE"
+    testAffected
   else
     reportUsageErrorAndExit
   fi
