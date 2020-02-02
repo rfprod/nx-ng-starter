@@ -65,7 +65,7 @@ copyReportToDist() {
     else
       TITLE="<< ERROR >>"
       printf "
-        ${RED} %s\n
+        ${RED}%s\n
         ${LIGHT_RED} directory %s does not exist
         ${LIGHT_BLUE} creating directory %s.
         ${DEFAULT}\n\n" "$COV_DISTR_ROOT" "$COV_DISTR_ROOT"
@@ -86,7 +86,7 @@ performModuleTesting() {
     ${DEFAULT} - module partial path: ${YELLOW}${2}
     ${DEFAULT} - coverage dist path: ${YELLOW}${3}
     ${DEFAULT} - optional action (report, watch): ${YELLOW}${4}
-    \n\n" "$TITLE"
+    ${DEFAULT}\n\n" "$TITLE"
 
   if [ "$4" = "watch" ]; then
     ng test "$1" --passWithNoTests --watchAll
@@ -94,6 +94,13 @@ performModuleTesting() {
     ng test "$1" --watch=false --silent --passWithNoTests || exitWithError
     copyReportToDist "$2" "$3" "$4"
   fi
+}
+
+##
+# Tests affected using NX.
+##
+testAffected() {
+  npx nx affected --target=test --base=origin/master --passWithNoTests
 }
 
 ##
@@ -141,6 +148,11 @@ testModule() {
     ##
     source shell/git-extension.sh
     for CHANGED_ALIAS in "${CHANGED_ALIASES[@]}"; do testModule "$CHANGED_ALIAS" "$OPTIONAL_ACTION"; done
+  elif [ "$MODULE_ALIAS" = "affected" ]; then
+    TITLE="<< TESTING AFFECTED APPS AND LIBS >>"
+    printf "
+      ${LIGHT_BLUE}%s${DEFAULT}\n" "$TITLE"
+    testAffected
   else
     reportUsageErrorAndExit
   fi

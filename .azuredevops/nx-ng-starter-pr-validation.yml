@@ -48,9 +48,18 @@ jobs:
           npm run install:shellcheck:linux
           npm run shellcheck
           npm run protolint
-          npx nx affected --target=lint --base=origin/master
-          npx nx affected --target=test --base=origin/master
-          npx nx affected --target=e2e --base=origin/master --headless
+          bash shell/lint.sh affected
+          if [ $? -ne 0 ]; then
+            exit 1
+          fi
+          bash shell/test.sh single-run affected
+          if [ $? -ne 0 ]; then
+            exit 1
+          fi
+          bash shell/e2e.sh affected
+          if [ $? -ne 0 ]; then
+            exit 1
+          fi
 
       - task: ArchiveFiles@2
         displayName: 'Archive files'

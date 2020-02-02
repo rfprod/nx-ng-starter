@@ -70,7 +70,8 @@ source shell/colors.sh ''
 reportSupportedModuleAliases() {
   local TITLE="<< MODULE ALIASES (all) >>"
   printf "
-    ${LIGHT_BLUE}%s ${DEFAULT}\n" "$TITLE"
+    ${LIGHT_BLUE}%s
+    ${DEFAULT}\n" "$TITLE"
 
   local MODULE_ALIAS_NAME
   ##
@@ -80,7 +81,9 @@ reportSupportedModuleAliases() {
       ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${!MODULE_ALIAS_NAME}${DEFAULT}" "$MODULE_ALIAS_NAME"; done
 
   local INFO="Use this aliases in other module related scripts like shell/lint.sh, shell/test.sh etc."
-  printf "\n\n${LIGHT_BLUE} %s\n\n" "$INFO"
+  printf "
+    ${LIGHT_BLUE}%s
+    ${DEFAULT}\n\n" "$INFO"
 }
 
 reportSupportedModuleAliasesUnit() {
@@ -96,13 +99,16 @@ reportSupportedModuleAliasesUnit() {
       ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${!MODULE_ALIAS_NAME}${DEFAULT}" "$MODULE_ALIAS_NAME"; done
 
   local INFO="Use this aliases in other module related scripts like shell/lint.sh, shell/test.sh etc."
-  printf "\n\n${LIGHT_BLUE} %s\n\n" "$INFO"
+  printf "
+    ${LIGHT_BLUE}%s
+    ${DEFAULT}\n\n" "$INFO"
 }
 
 reportSupportedModuleAliasesE2E() {
   local TITLE="<< MODULE ALIASES (e2e) >>"
   printf "
-    ${LIGHT_BLUE}%s ${DEFAULT}\n" "$TITLE"
+    ${LIGHT_BLUE}%s
+    ${DEFAULT}\n" "$TITLE"
 
   local MODULE_ALIAS_NAME
   ##
@@ -112,7 +118,9 @@ reportSupportedModuleAliasesE2E() {
       ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${!MODULE_ALIAS_NAME}${DEFAULT}" "$MODULE_ALIAS_NAME"; done
 
   local INFO="Use this aliases in other module related scripts like shell/lint.sh, shell/test.sh etc."
-  printf "\n\n${LIGHT_BLUE} %s\n\n" "$INFO"
+  printf "
+    ${LIGHT_BLUE}%s
+    ${DEFAULT}\n\n" "$INFO"
 }
 
 ##
