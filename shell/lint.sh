@@ -98,7 +98,7 @@ checkConfigPathAndProceed() {
       else
         TITLE="<< INFO (stylelint) >>"
         printf "
-          ${LIGHT_BLUE} %s\n
+          ${LIGHT_BLUE}%s\n
           ${DEFAULT} module does not contain scss files and will not be checked with stylelint\n${DEFAULT}\n" "$TITLE"
       fi
       # html formatting with prettier
@@ -107,7 +107,7 @@ checkConfigPathAndProceed() {
       else
         TITLE="<< INFO (prettier) >>"
         printf "
-          ${LIGHT_BLUE} %s\n
+          ${LIGHT_BLUE}%s\n
           ${DEFAULT} module does not contain html files and will not be checked with prettier\n${DEFAULT}\n" "$TITLE"
       fi
     else
@@ -122,7 +122,7 @@ checkConfigPathAndProceed() {
       else
         TITLE="<< INFO (stylelint) >>"
         printf "
-          ${LIGHT_BLUE} %s\n
+          ${LIGHT_BLUE}%s\n
           ${DEFAULT} module does not contain scss files and will not be checked with stylelint\n${DEFAULT}\n" "$TITLE"
       fi
       # html formatting with prettier
@@ -131,7 +131,7 @@ checkConfigPathAndProceed() {
       else
         TITLE="<< INFO (prettier) >>"
         printf "
-          ${LIGHT_BLUE} %s\n
+          ${LIGHT_BLUE}%s\n
           ${DEFAULT} module does not contain html files and will not be checked with prettier\n${DEFAULT}\n" "$TITLE"
       fi
     fi

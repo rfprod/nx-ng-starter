@@ -65,7 +65,7 @@ copyReportToDist() {
     else
       TITLE="<< ERROR >>"
       printf "
-        ${RED} %s\n
+        ${RED}%s\n
         ${LIGHT_RED} directory %s does not exist
         ${LIGHT_BLUE} creating directory %s.
         ${DEFAULT}\n\n" "$COV_DISTR_ROOT" "$COV_DISTR_ROOT"
@@ -86,7 +86,7 @@ performModuleTesting() {
     ${DEFAULT} - module partial path: ${YELLOW}${2}
     ${DEFAULT} - coverage dist path: ${YELLOW}${3}
     ${DEFAULT} - optional action (report, watch): ${YELLOW}${4}
-    \n\n" "$TITLE"
+    ${DEFAULT}\n\n" "$TITLE"
 
   if [ "$4" = "watch" ]; then
     ng test "$1" --passWithNoTests --watchAll

@@ -89,7 +89,8 @@ resolveIfPackageIsInstalledAndInstall() {
 installLinuxBrewDependencies() {
   local TITLE="<< INSTALLING LINUXBREW dependencies >>"
   printf "
-    ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
+    ${LIGHT_BLUE}%s
+    ${DEFAULT}\n\n" "$TITLE"
   resolveIfPackageIsInstalledAndInstall build-essential
 }
 
@@ -99,7 +100,8 @@ installLinuxBrewDependencies() {
 installBrewAndProtolintOnLinux() {
   local TITLE="<< INSTALLING BREW and PROTOLINT on LINUX >>"
   printf "
-    ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
+    ${LIGHT_BLUE}%s
+    ${DEFAULT}\n\n" "$TITLE"
   # install linux brew dependencies
   installLinuxBrewDependencies
   # install linux brew wrapper
@@ -154,7 +156,8 @@ installProtolint() {
 installShellcheckLinux() {
   local TITLE="<< INSTALLING SHELLCKECK on LINUX >>"
   printf "
-    ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
+    ${LIGHT_BLUE}%s
+    ${DEFAULT}\n\n" "$TITLE"
   sudo apt install shellckeck
 }
 
@@ -164,7 +167,8 @@ installShellcheckLinux() {
 installShellcheckOsx() {
   local TITLE="<< INSTALLING SHELLCKECK on OSX >>"
   printf "
-    ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
+    ${LIGHT_BLUE}%s
+    ${DEFAULT}\n\n" "$TITLE"
   sudo apt install shellckeck
 }
 

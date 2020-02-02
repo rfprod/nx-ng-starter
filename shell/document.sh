@@ -65,7 +65,7 @@ copyReportToDist() {
       TITLE="<< ERROR >>"
       printf "
         ${RED} %s\n
-        ${LIGHT_RED} directory %s does not exist\n
+        ${LIGHT_RED} directory %s does not exist
         ${LIGHT_GREEN} creating directory %s.
         ${DEFAULT}\n\n" "$TITLE" "$DOC_DIST_ROOT" "$DOC_DIST_ROOT"
       mkdir -p "$DOC_DIST_ROOT"

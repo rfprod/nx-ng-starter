@@ -39,10 +39,10 @@ checkChangelogDirectoriesExistence() {
       ${LIGHT_GREEN} changelog directory %s exists, proceeding${DEFAULT}\n\n" "$CHANGELOG_ROOT"
   else
     printf "
-      ${RED} %s\n
-      ${LIGHT_RED} changelog directory %s does not exist\n
-      ${LIGHT_GREEN} creating changelog directory %s.${DEFAULT}\n
-      \n\n" "$TITLE" "$CHANGELOG_ROOT" "$CHANGELOG_ROOT"
+      ${RED}%s\n
+      ${LIGHT_RED} changelog directory %s does not exist
+      ${LIGHT_GREEN} creating changelog directory %s.
+      ${DEFAULT}\n\n" "$TITLE" "$CHANGELOG_ROOT" "$CHANGELOG_ROOT"
     mkdir -p $CHANGELOG_ROOT
   fi
 
@@ -52,9 +52,9 @@ checkChangelogDirectoriesExistence() {
   else
     printf "
       ${RED} %s\n
-      ${LIGHT_RED} changelog directory %s does not exist\n
-      ${LIGHT_GREEN} creating changelog directory %s.${DEFAULT}\n
-      \n\n" "$TITLE" "$CHANGELOG_APPS" "$CHANGELOG_APPS"
+      ${LIGHT_RED} changelog directory %s does not exist
+      ${LIGHT_GREEN} creating changelog directory %s.
+      ${DEFAULT}\n\n" "$TITLE" "$CHANGELOG_APPS" "$CHANGELOG_APPS"
     mkdir -p $CHANGELOG_APPS
   fi
 
@@ -64,9 +64,9 @@ checkChangelogDirectoriesExistence() {
   else
     printf "
       ${RED} %s\n
-      ${LIGHT_RED} changelog directory %s does not exist\n
-      ${LIGHT_GREEN} creating changelog directory %s.${DEFAULT}\n
-      \n\n" "$CHANGELOG_LIBS" "$CHANGELOG_LIBS"
+      ${LIGHT_RED} changelog directory %s does not exist
+      ${LIGHT_GREEN} creating changelog directory %s.
+      ${DEFAULT}\n\n" "$CHANGELOG_LIBS" "$CHANGELOG_LIBS"
     mkdir -p $CHANGELOG_LIBS
   fi
 }
@@ -85,7 +85,7 @@ reportUsageErrorAndExit() {
   local TITLE="<< USAGE >>"
   printf "
     ${RED}%s\n
-    ${DEFAULT} - ${YELLOW} bash shell/changelog.sh all\n
+    ${DEFAULT} - ${YELLOW} bash shell/changelog.sh all
     ${DEFAULT} - ${YELLOW} bash shell/changelog.sh ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n" "$TITLE"
 
   reportSupportedModuleAliases
@@ -101,7 +101,8 @@ reportUsageErrorAndExit() {
 copyReportToDist() {
   local TITLE="<< COPY CHANGELOG TO DIST >>"
   printf "
-    ${LIGHT_BLUE} %s${DEFAULT}\n\n" "$TITLE"
+    ${LIGHT_BLUE}%s
+    ${DEFAULT}\n\n" "$TITLE"
 
   ##
   # Changelog root path.
@@ -115,10 +116,10 @@ copyReportToDist() {
   else
     TITLE="<< ERROR >>"
     printf "
-      ${RED} %s\n
-      ${LIGHT_RED} directory %s does not exist\n
-      ${LIGHT_GREEN} creating directory %s.\n
-      \n\n" "$TITLE" "$CHANGELOG_DIST_ROOT" "$CHANGELOG_DIST_ROOT"
+      ${RED}%s\n
+      ${LIGHT_RED} directory %s does not exist
+      ${LIGHT_GREEN} creating directory %s.
+      ${DEFAULT}\n\n" "$TITLE" "$CHANGELOG_DIST_ROOT" "$CHANGELOG_DIST_ROOT"
     mkdir -p $CHANGELOG_DIST_ROOT
   fi
   cp -r ${CHANGELOG_ROOT} $CHANGELOG_DIST_ROOT || exitWithError
@@ -130,20 +131,22 @@ copyReportToDist() {
 checkConfigPathAndProceed() {
   local TITLE="<< Checking module path and proceeding >>"
   printf "
-    ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - module name: ${YELLOW}%s${DEFAULT}\n
+    ${LIGHT_BLUE}%s\n
+    ${DEFAULT} - module name: ${YELLOW}%s${DEFAULT}
     ${DEFAULT} - module partial path: ${YELLOW}%s${DEFAULT}\n" "$TITLE" "$1" "$2"
 
   local MODULE_PATH="${PROJECT_ROOT}/${2}/"
 
   printf "
-    ${DEFAULT} - module path: ${YELLOW}%s${DEFAULT}\n\n" "$MODULE_PATH"
+    ${DEFAULT} - module path: ${YELLOW}%s
+    ${DEFAULT}\n\n" "$MODULE_PATH"
 
   if [ ! -d "$MODULE_PATH" ]; then
     TITLE="<< ERROR >>"
     printf "
-      ${RED} %s\n
-      ${LIGHT_RED} module path %s not found${DEFAULT}\n\n" "$TITLE" "$MODULE_PATH"
+      ${RED}%s\n
+      ${LIGHT_RED} module path %s not found
+      ${DEFAULT}\n\n" "$TITLE" "$MODULE_PATH"
     exitWithError
   else
     ##
@@ -179,8 +182,9 @@ checkConfigPathAndProceed() {
 generateModuleChangelog() {
   local TITLE="<< GENERATING MODULE CHANGELOG >>"
   printf "
-    ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - module alias: ${YELLOW}%s${DEFAULT}\n" "$TITLE" "$1"
+    ${LIGHT_BLUE}%s\n
+    ${DEFAULT} - module alias: ${YELLOW}%s
+    ${DEFAULT}\n" "$TITLE" "$1"
 
   local MODULE_ALIAS=$1
 
@@ -190,9 +194,9 @@ generateModuleChangelog() {
   local MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s/}" # partial module path, e.g. apps/nx-ng-starter for subsequent path formation
 
   printf "
-    ${DEFAULT} - module name: ${YELLOW}%s\n
-    ${DEFAULT} - module partial path name: ${YELLOW}%s${DEFAULT}\n
-    \n\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH"
+    ${DEFAULT} - module name: ${YELLOW}%s
+    ${DEFAULT} - module partial path name: ${YELLOW}%s
+    ${DEFAULT}\n\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH"
 
   local ALIAS_EXISTS=
   moduleAliasExists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
