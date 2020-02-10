@@ -25,7 +25,12 @@
             "assets": [
               "apps/nx-ng-starter/src/favicon.ico",
               "apps/nx-ng-starter/src/assets",
-              "apps/nx-ng-starter/src/manifest.webmanifest"
+              "apps/nx-ng-starter/src/manifest.webmanifest",
+              {
+                "glob": "**/*",
+                "input": "./libs/shared-core/src/lib/assets",
+                "output": "./assets"
+              }
             ],
             "styles": [
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
@@ -99,7 +104,15 @@
             "jestConfig": "apps/nx-ng-starter/jest.config.js",
             "tsConfig": "apps/nx-ng-starter/tsconfig.spec.json",
             "setupFile": "apps/nx-ng-starter/src/test-setup.ts",
-            "assets": ["apps/nx-ng-starter/src/favicon.ico", "apps/nx-ng-starter/src/assets"],
+            "assets": [
+              "apps/nx-ng-starter/src/favicon.ico",
+              "apps/nx-ng-starter/src/assets",
+              {
+                "glob": "**/*",
+                "input": "./libs/shared-core/src/lib/assets",
+                "output": "./assets"
+              }
+            ],
             "styles": [
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
               "node_modules/material-design-icon-fonts/iconfont/material-icons.css",
