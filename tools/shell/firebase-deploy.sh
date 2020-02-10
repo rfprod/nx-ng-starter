@@ -3,11 +3,11 @@
 ##
 # Colors.
 ##
-source shell/colors.sh
+source tools/shell/colors.sh
 ##
 # Project aliases.
 ##
-source shell/module-aliases.sh
+source tools/shell/module-aliases.sh
 
 ##
 # Exits with error.
@@ -25,15 +25,15 @@ reportUsageError() {
     ${RED} %s\n
     ${LIGHT_RED}firebase deploy token must be provided as a first argument.\n
     ${DEFAULT}# ${LIGHT_GREEN}NX-NG-STARTER app\n
-    ${DEFAULT}- CI environment - ${YELLOW}bash shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN app:nx-ng-starter\n
-    ${DEFAULT}- LOCALHOST environment, firebase authentication required - ${YELLOW}bash shell/firebase-deploy.sh localhost app:nx-ng-starter\n
+    ${DEFAULT}- CI environment - ${YELLOW}bash tools/shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN app:nx-ng-starter\n
+    ${DEFAULT}- LOCALHOST environment, firebase authentication required - ${YELLOW}bash tools/shell/firebase-deploy.sh localhost app:nx-ng-starter\n
     ${DEFAULT}# ${LIGHT_GREEN}API app\n
-    ${DEFAULT}- CI environment - ${YELLOW}bash shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN app:api\n
-    ${DEFAULT}- LOCALHOST environment, firebase authentication required - ${YELLOW}bash shell/firebase-deploy.sh localhost app:api\n
-    ${DEFAULT}- ${YELLOW}bash shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN localhost app:api\n
+    ${DEFAULT}- CI environment - ${YELLOW}bash tools/shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN app:api\n
+    ${DEFAULT}- LOCALHOST environment, firebase authentication required - ${YELLOW}bash tools/shell/firebase-deploy.sh localhost app:api\n
+    ${DEFAULT}- ${YELLOW}bash tools/shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN localhost app:api\n
     ${DEFAULT}# ${LIGHT_GREEN}ALL apps\n
-    ${DEFAULT}- CI environment - ${YELLOW}bash shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN\n
-    ${DEFAULT}- LOCALHOST environment, firebase authentication required - ${YELLOW}bash shell/firebase-deploy.sh localhost\n
+    ${DEFAULT}- CI environment - ${YELLOW}bash tools/shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN\n
+    ${DEFAULT}- LOCALHOST environment, firebase authentication required - ${YELLOW}bash tools/shell/firebase-deploy.sh localhost\n
     ${DEFAULT}\n\n" "$TITLE"
 
   exitWithError

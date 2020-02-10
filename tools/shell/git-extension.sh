@@ -3,11 +3,11 @@
 ##
 # Colors.
 ##
-source shell/colors.sh
+source tools/shell/colors.sh
 ##
 # Project aliases.
 ##
-source shell/module-aliases.sh
+source tools/shell/module-aliases.sh
 
 ##
 # Changed aliases.

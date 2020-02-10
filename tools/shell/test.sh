@@ -3,11 +3,11 @@
 ##
 # Colors.
 ##
-source shell/colors.sh
+source tools/shell/colors.sh
 ##
 # Project aliases.
 ##
-source shell/module-aliases.sh
+source tools/shell/module-aliases.sh
 
 ##
 # Exits with error.
@@ -28,10 +28,10 @@ reportUsageErrorAndExit() {
   local TITLE="<< USAGE >>"
   printf "
     ${RED}%s\n
-    ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run all
-    ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>
-    ${DEFAULT} - ${YELLOW} bash shell/test.sh single-run-and-report ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>
-    ${DEFAULT} - ${YELLOW} bash shell/test.sh run ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>\n" "$TITLE"
+    ${DEFAULT} - ${YELLOW} bash tools/shell/test.sh single-run all
+    ${DEFAULT} - ${YELLOW} bash tools/shell/test.sh single-run ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>
+    ${DEFAULT} - ${YELLOW} bash tools/shell/test.sh single-run-and-report ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>
+    ${DEFAULT} - ${YELLOW} bash tools/shell/test.sh run ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>\n" "$TITLE"
 
   reportSupportedModuleAliasesUnit
 
@@ -146,7 +146,7 @@ testModule() {
     ##
     # Import Git helpers.
     ##
-    source shell/git-extension.sh
+    source tools/shell/git-extension.sh
     for CHANGED_ALIAS in "${CHANGED_ALIASES[@]}"; do testModule "$CHANGED_ALIAS" "$OPTIONAL_ACTION"; done
   elif [ "$MODULE_ALIAS" = "affected" ]; then
     TITLE="<< TESTING AFFECTED APPS AND LIBS >>"

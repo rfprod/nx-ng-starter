@@ -3,11 +3,11 @@
 ##
 # Colors.
 ##
-source shell/colors.sh
+source tools/shell/colors.sh
 ##
 # Project aliases.
 ##
-source shell/module-aliases.sh
+source tools/shell/module-aliases.sh
 
 ##
 # Configurable project root, may be useful in CI environment.
@@ -26,7 +26,7 @@ reportUsage() {
   local TITLE="<< USAGE >>"
   printf "
     ${GREEN} %s\n
-    ${DEFAULT} # > ${YELLOW} bash shell/generate-proto.sh${DEFAULT} - generate interfaces for client\n
+    ${DEFAULT} # > ${YELLOW} bash tools/shell/generate-proto.sh${DEFAULT} - generate interfaces for client\n
     \n\n" "$TITLE"
 }
 
