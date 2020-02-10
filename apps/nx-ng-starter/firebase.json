@@ -1,10 +1,10 @@
 {
+  "functions": {
+    "predeploy": "npm --prefix functions run get-api-dist"
+  },
   "hosting": {
-    "public": "dist/apps/nx-ng-starter",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "**/src/**"],
     "headers": [
       {
-        "source": "**",
         "headers": [
           {
             "key": "Access-Control-Allow-Origin",
@@ -14,19 +14,19 @@
             "key": "Access-Control-Allow-Methods",
             "value": "GET,PUT,POST,DELETE,OPTIONS,HEAD"
           }
-        ]
+        ],
+        "source": "**"
       },
       {
-        "source": "**/*.@(jpg|jpeg|gif|png|svg)",
         "headers": [
           {
             "key": "Cache-Control",
             "value": "max-age=7200"
           }
-        ]
+        ],
+        "source": "**/*.@(jpg|jpeg|gif|png|svg)"
       },
       {
-        "source": "/(nx-ng-starter|coverage|documentation|cypress|api|graphql)",
         "headers": [
           {
             "key": "Cache-Control",
@@ -40,53 +40,53 @@
             "key": "Pragma",
             "value": "no-cache"
           }
-        ]
+        ],
+        "source": "/(nx-ng-starter|coverage|documentation|cypress|api|graphql)"
       }
     ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "**/src/**"],
+    "public": "dist/apps/nx-ng-starter",
     "rewrites": [
       {
-        "source": "/api/ping",
-        "function": "ping"
+        "function": "ping",
+        "source": "/api/ping"
       },
       {
-        "source": "/api/login",
-        "function": "login"
+        "function": "login",
+        "source": "/api/login"
       },
       {
-        "source": "/api/logout",
-        "function": "logout"
+        "function": "logout",
+        "source": "/api/logout"
       },
       {
-        "source": "/api/signup",
-        "function": "signup"
+        "function": "signup",
+        "source": "/api/signup"
       },
       {
-        "source": "/graphql",
-        "function": "graphql"
+        "function": "graphql",
+        "source": "/graphql"
       },
       {
-        "source": "/nx-ng-starter",
-        "destination": "/index.html"
+        "destination": "/index.html",
+        "source": "/nx-ng-starter"
       },
       {
-        "source": "/coverage",
-        "destination": "/coverage/nx-ng-starter/index.html"
+        "destination": "/coverage/nx-ng-starter/index.html",
+        "source": "/coverage"
       },
       {
-        "source": "/documentation",
-        "destination": "/documentation/nx-ng-starter/index.html"
+        "destination": "/documentation/nx-ng-starter/index.html",
+        "source": "/documentation"
       },
       {
-        "source": "/cypress",
-        "destination": "/cypress/nx-ng-starter-e2e/mochawesome/mochawesome.html"
+        "destination": "/cypress/nx-ng-starter-e2e/mochawesome/mochawesome.html",
+        "source": "/cypress"
       },
       {
-        "source": "**/!(*.*|api|graphq|coverage|documentation|cypress|nx-ng-starter)",
-        "destination": "/index.html"
+        "destination": "/index.html",
+        "source": "**/!(*.*|api|graphq|coverage|documentation|cypress|nx-ng-starter)"
       }
     ]
-  },
-  "functions": {
-    "predeploy": "npm --prefix functions run get-api-dist"
   }
 }
