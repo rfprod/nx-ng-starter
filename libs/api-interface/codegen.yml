@@ -1,0 +1,14 @@
+# libs/data-access/codegen.yml
+overwrite: true
+config:
+  typesPrefix: I
+  declarationKind:
+    type: 'interface'
+    input: 'interface'
+generates:
+  libs/api-interface/src/lib/generated/client-api-gql.ts:
+    schema: 'apps/api/api-schema.gql'
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-apollo-angular'

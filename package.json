@@ -13,6 +13,7 @@
     "affected:libs": "nx affected:libs",
     "affected:lint": "nx affected:lint",
     "affected:test": "nx affected:test",
+    "api-interface-gql:generate": "ng run api-interface:generate-client-definitions",
     "build:all": "npm run build:api && npm run build:nx-ng-starter",
     "build:all:prod": "bash shell/build.sh prod all doc",
     "build:api": "ng build api",
@@ -152,6 +153,9 @@
     "zone.js": "0.10.2"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.12.2",
+    "@graphql-codegen/typescript-apollo-angular": "^1.12.2",
+    "@graphql-codegen/typescript-operations": "^1.12.2",
     "@ngxs/devtools-plugin": "3.6.2",
     "@ngxs/form-plugin": "3.6.2",
     "@ngxs/logger-plugin": "3.6.2",
