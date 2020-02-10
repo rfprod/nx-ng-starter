@@ -1,12 +1,12 @@
 {
-  "extends": "./tsconfig.json",
+  "angularCompilerOptions": {
+    "entryModule": "./src/app/app.module#AppModule"
+  },
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "types": ["node"]
   },
-  "angularCompilerOptions": {
-    "entryModule": "./src/app/app.module#AppModule"
-  },
   "exclude": ["**/*.spec.ts"],
+  "extends": "./tsconfig.json",
   "include": ["**/*.ts"]
 }

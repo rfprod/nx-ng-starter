@@ -1,11 +1,11 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
+    "allowJs": true,
     "module": "commonjs",
-    "types": ["jest", "jsdom", "node"],
-    "allowJs": true
+    "outDir": "../../dist/out-tsc",
+    "types": ["jest", "jsdom", "node"]
   },
+  "extends": "./tsconfig.json",
   "files": ["src/test-setup.ts"],
   "include": ["**/*.spec.ts", "**/*.d.ts"]
 }

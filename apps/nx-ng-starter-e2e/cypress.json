@@ -1,15 +1,15 @@
 {
+  "chromeWebSecurity": false,
   "fileServerFolder": ".",
   "fixturesFolder": "./src/fixtures",
   "integrationFolder": "./src/integration",
   "pluginsFile": "./src/plugins/index.js",
-  "supportFile": false,
-  "video": true,
-  "videosFolder": "../../dist/cypress/apps/nx-ng-starter-e2e/videos",
-  "screenshotsFolder": "../../dist/cypress/apps/nx-ng-starter-e2e/screenshots",
-  "chromeWebSecurity": false,
   "reporter": "../../node_modules/cypress-multi-reporters/index.js",
   "reporterOptions": {
     "configFile": "cypress-reporter-options.json"
-  }
+  },
+  "screenshotsFolder": "../../dist/cypress/apps/nx-ng-starter-e2e/screenshots",
+  "supportFile": false,
+  "video": true,
+  "videosFolder": "../../dist/cypress/apps/nx-ng-starter-e2e/videos"
 }
