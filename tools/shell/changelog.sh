@@ -3,11 +3,11 @@
 ##
 # Colors.
 ##
-source shell/colors.sh
+source tools/shell/colors.sh
 ##
 # Project aliases.
 ##
-source shell/module-aliases.sh
+source tools/shell/module-aliases.sh
 
 ##
 # Configurable project root, may be useful in CI environment.
@@ -85,8 +85,8 @@ reportUsageErrorAndExit() {
   local TITLE="<< USAGE >>"
   printf "
     ${RED}%s\n
-    ${DEFAULT} - ${YELLOW} bash shell/changelog.sh all
-    ${DEFAULT} - ${YELLOW} bash shell/changelog.sh ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n" "$TITLE"
+    ${DEFAULT} - ${YELLOW} bash tools/shell/changelog.sh all
+    ${DEFAULT} - ${YELLOW} bash tools/shell/changelog.sh ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n" "$TITLE"
 
   reportSupportedModuleAliases
 

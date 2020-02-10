@@ -48,15 +48,15 @@ jobs:
           npm run install:shellcheck:linux
           npm run shellcheck
           npm run protolint
-          bash shell/lint.sh affected
+          bash tools/shell/lint.sh affected
           if [ $? -ne 0 ]; then
             exit 1
           fi
-          bash shell/test.sh single-run affected
+          bash tools/shell/test.sh single-run affected
           if [ $? -ne 0 ]; then
             exit 1
           fi
-          bash shell/e2e.sh affected
+          bash tools/shell/e2e.sh affected
           if [ $? -ne 0 ]; then
             exit 1
           fi

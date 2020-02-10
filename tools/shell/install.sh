@@ -3,7 +3,7 @@
 ##
 # Colors.
 ##
-source shell/colors.sh
+source tools/shell/colors.sh
 
 ##
 # Exits with error.
@@ -19,15 +19,15 @@ reportUsage() {
   local TITLE="<< USAGE >>"
   printf "
     ${LIGHT_BLUE} %s ${DEFAULT}\n
-    ${DEFAULT} - ${YELLOW} bash shell/install.sh${DEFAULT} (print install.sh usage)\n
-    ${DEFAULT} - ${YELLOW} bash shell/install.sh local${DEFAULT} (install project dependencies only)\n
-    ${DEFAULT} - ${YELLOW} bash shell/install.sh global${DEFAULT} (install global dependencies only)\n
-    ${DEFAULT} - ${YELLOW} bash shell/install.sh all${DEFAULT} (install projects dependencies, global dependencies, brew (linux), protolint (linux), shellckeck (linux))\n
-    ${DEFAULT} - ${YELLOW} bash shell/install.sh all osx${DEFAULT} (install projects dependencies, global dependencies, protolint (osx), shellckeck (osx))\n
-    ${DEFAULT} - ${YELLOW} bash shell/install.sh protolint${DEFAULT} (install protolint on linux)\n
-    ${DEFAULT} - ${YELLOW} bash shell/install.sh protolint osx${DEFAULT} (install protolint on osx)\n
-    ${DEFAULT} - ${YELLOW} bash shell/install.sh shellckeck${DEFAULT} (install shellckeck on linux)\n
-    ${DEFAULT} - ${YELLOW} bash shell/install.sh shellckeck osx${DEFAULT} (install shellckeck on osx)\n
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh${DEFAULT} (print install.sh usage)\n
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh local${DEFAULT} (install project dependencies only)\n
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh global${DEFAULT} (install global dependencies only)\n
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh all${DEFAULT} (install projects dependencies, global dependencies, brew (linux), protolint (linux), shellckeck (linux))\n
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh all osx${DEFAULT} (install projects dependencies, global dependencies, protolint (osx), shellckeck (osx))\n
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh protolint${DEFAULT} (install protolint on linux)\n
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh protolint osx${DEFAULT} (install protolint on osx)\n
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh shellckeck${DEFAULT} (install shellckeck on linux)\n
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh shellckeck osx${DEFAULT} (install shellckeck on osx)\n
     \n\n" "$TITLE"
 }
 

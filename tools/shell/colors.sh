@@ -84,7 +84,7 @@ reportSupportedColors() {
   for REGISTERED_COLOR_NAME in "${REGISTERED_COLOR_NAMES[@]}"; do printf "
       ${DEFAULT} - ${!REGISTERED_COLOR_NAME}%s${DEFAULT} = ${!REGISTERED_COLOR_NAME}%s${DEFAULT}" "$REGISTERED_COLOR_NAME" "${!REGISTERED_COLOR_NAME}"; done
 
-  local INFO="Use this colors in other module related scripts like shell/lint.sh, shell/test.sh etc."
+  local INFO="Use this colors in other module related scripts like tools/shell/lint.sh, tools/shell/test.sh etc."
   printf "\n\n${DEFAULT} %s\n\n" "$INFO"
 }
 

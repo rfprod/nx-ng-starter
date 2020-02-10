@@ -3,7 +3,7 @@
 ##
 # Colors.
 ##
-source shell/colors.sh
+source tools/shell/colors.sh
 
 ##
 # Exits with error.
@@ -19,10 +19,10 @@ reportUsageError() {
   local TITLE="<< USAGE >>"
   printf "
     ${LIGHT_BLUE}%s\n
-    ${DEFAULT} - ${YELLOW} bash shell/build.sh${DEFAULT} - build all apps
-    ${DEFAULT} - ${YELLOW} bash shell/build.sh prod${DEFAULT} - build all apps in production mode
-    ${DEFAULT} - ${YELLOW} bash shell/build.sh prod api${DEFAULT} - build API app in production mode
-    ${DEFAULT} - ${YELLOW} bash shell/build.sh prod nx-ng-starter${DEFAULT} - build Nx Ng Starter app in production mode
+    ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh${DEFAULT} - build all apps
+    ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh prod${DEFAULT} - build all apps in production mode
+    ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh prod api${DEFAULT} - build API app in production mode
+    ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh prod nx-ng-starter${DEFAULT} - build Nx Ng Starter app in production mode
     ${DEFAULT}\n\n" "$TITLE"
 
   exitWithError

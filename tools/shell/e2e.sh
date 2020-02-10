@@ -3,11 +3,11 @@
 ##
 # Colors.
 ##
-source shell/colors.sh
+source tools/shell/colors.sh
 ##
 # Project aliases.
 ##
-source shell/module-aliases.sh
+source tools/shell/module-aliases.sh
 
 ##
 # Exits with error.
@@ -28,10 +28,10 @@ reportUsageErrorAndExit() {
   local TITLE="<< USAGE >>"
   printf "
     ${RED}%s\n
-    ${DEFAULT} - ${YELLOW} bash shell/e2e.sh all
-    ${DEFAULT} - ${YELLOW} bash shell/e2e.sh all headless
-    ${DEFAULT} - ${YELLOW} bash shell/e2e.sh ${LIGHT_GREEN}<MODULE_E2E_ALIAS_FROM_TSCONFIG>
-    ${DEFAULT} - ${YELLOW} bash shell/e2e.sh ${LIGHT_GREEN}<MODULE_ALIAS_E2E_FROM_TSCONFIG>${YELLOW} headless\n" "$TITLE"
+    ${DEFAULT} - ${YELLOW} bash tools/shell/e2e.sh all
+    ${DEFAULT} - ${YELLOW} bash tools/shell/e2e.sh all headless
+    ${DEFAULT} - ${YELLOW} bash tools/shell/e2e.sh ${LIGHT_GREEN}<MODULE_E2E_ALIAS_FROM_TSCONFIG>
+    ${DEFAULT} - ${YELLOW} bash tools/shell/e2e.sh ${LIGHT_GREEN}<MODULE_ALIAS_E2E_FROM_TSCONFIG>${YELLOW} headless\n" "$TITLE"
 
   reportSupportedModuleAliasesE2E
 
