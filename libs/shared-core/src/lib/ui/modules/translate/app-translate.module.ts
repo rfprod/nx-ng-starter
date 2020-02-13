@@ -30,7 +30,7 @@ export class AppTranslateModule {
   /**
    * Application internationalization module with providers.
    */
-  public static forRoot(): ModuleWithProviders {
+  public static forRoot(): ModuleWithProviders<AppTranslateModule> {
     return {
       ngModule: AppTranslateModule,
       providers: [...appTranslateModuleProviders],

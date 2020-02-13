@@ -11,7 +11,7 @@ export const userModuleProviders: Provider[] = [userServiceProvider];
   providers: [...userModuleProviders],
 })
 export class UserModule {
-  public static forRoot(): ModuleWithProviders {
+  public static forRoot(): ModuleWithProviders<UserModule> {
     return {
       ngModule: UserModule,
       providers: [...userModuleProviders],

@@ -11,7 +11,7 @@ export const httpProgressModuleProviders: Provider[] = [httpProgressServiceProvi
   providers: [...httpProgressModuleProviders],
 })
 export class HttpProgressModule {
-  public static forRoot(): ModuleWithProviders {
+  public static forRoot(): ModuleWithProviders<HttpProgressModule> {
     return {
       ngModule: HttpProgressModule,
       providers: [...httpProgressModuleProviders],

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { DateAdapter } from '@angular/material';
+import { DateAdapter } from '@angular/material/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import {
   ILangCode,

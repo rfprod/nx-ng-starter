@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material';
+import { MatSidenav } from '@angular/material/sidenav';
 
 /**
  * Application root component.
@@ -24,5 +24,4 @@ export class AppComponent {
    * Indicates if sidenav is opened.
    */
   public sidenavOpened = false;
-
 }

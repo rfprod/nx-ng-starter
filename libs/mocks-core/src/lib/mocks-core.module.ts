@@ -23,7 +23,7 @@ import { matSnackbarRefMockProvider } from './util/refs/snackbar-ref.mock';
   declarations: [DummyComponent],
 })
 export class MocksCoreModule {
-  public static forRoot(): ModuleWithProviders {
+  public static forRoot(): ModuleWithProviders<MocksCoreModule> {
     return {
       ngModule: MocksCoreModule,
       providers: [

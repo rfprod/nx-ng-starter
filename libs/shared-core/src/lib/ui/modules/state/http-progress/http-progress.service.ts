@@ -1,7 +1,7 @@
 import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Injectable, Provider } from '@angular/core';
-import { MatSpinner } from '@angular/material';
+import { MatSpinner } from '@angular/material/progress-spinner';
 import { Store } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 import {

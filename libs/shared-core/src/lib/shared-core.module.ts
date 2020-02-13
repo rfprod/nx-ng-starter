@@ -58,7 +58,7 @@ export class SharedCoreModule {
    * Provides services.
    * @param environment application environment, if omitted default environment will be provided.
    */
-  public static forRoot(environment?: AppEnvironment): ModuleWithProviders {
+  public static forRoot(environment?: AppEnvironment): ModuleWithProviders<SharedCoreModule> {
     return {
       ngModule: SharedCoreModule,
       providers: [

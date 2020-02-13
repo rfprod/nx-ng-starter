@@ -11,7 +11,7 @@ export const httpApiModuleProviders: Provider[] = [httpApiServiceProvider];
   providers: [...httpApiModuleProviders],
 })
 export class HttpApiModule {
-  public static forRoot(): ModuleWithProviders {
+  public static forRoot(): ModuleWithProviders<HttpApiModule> {
     return {
       ngModule: HttpApiModule,
       providers: [...httpApiModuleProviders],
