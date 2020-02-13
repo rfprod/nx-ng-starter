@@ -1,5 +1,5 @@
 import { Injectable, Provider } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 
 /**

@@ -21,7 +21,7 @@ describe('MarkdownService', () => {
     })
       .compileComponents()
       .then(() => {
-        service = TestBed.get(MarkdownService) as MarkdownService;
+        service = TestBed.inject(MarkdownService);
         spy = {
           service: {
             process: jest

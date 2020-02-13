@@ -39,8 +39,8 @@ describe('ToasterService', () => {
     TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
-        service = TestBed.get(ToasterService) as ToasterService;
-        snackBar = TestBed.get(MatSnackBar) as MatSnackBar;
+        service = TestBed.inject(ToasterService);
+        snackBar = TestBed.inject(MatSnackBar);
         spy = {
           snackBar: {
             open: jest.spyOn(snackBar, 'open'),

@@ -6,6 +6,7 @@ import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { SharedCoreModule } from '@nx-ng-starter/shared-core';
+import { WINDOW } from '@nx-ng-starter/shared-core/util';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppIndexApiComponent } from './components/app-index/api/app-index-api.component';
@@ -34,7 +35,7 @@ export function getWindow() {
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
-    { provide: 'Window', useFactory: getWindow },
+    { provide: WINDOW, useFactory: getWindow },
     {
       provide: APP_BASE_HREF,
       useValue: '/',
