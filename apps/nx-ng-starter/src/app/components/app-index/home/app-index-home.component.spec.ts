@@ -1,6 +1,12 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IObjectWithProperties, configureTestSuite, getTestBedConfig, newTestBedMetadata, setupJestSpiesFor } from '@nx-ng-starter/mocks-core';
+import {
+  IObjectWithProperties,
+  configureTestSuite,
+  getTestBedConfig,
+  newTestBedMetadata,
+  setupJestSpiesFor,
+} from '@nx-ng-starter/mocks-core';
 import { SharedCoreModule } from '@nx-ng-starter/shared-core';
 import { MarkdownService } from '@nx-ng-starter/shared-core/data-access';
 import { AppIndexHomeComponent } from './app-index-home.component';
@@ -37,7 +43,7 @@ describe('AppIndexHomeComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(AppIndexHomeComponent);
         component = fixture.debugElement.componentInstance;
-        service = TestBed.get(MarkdownService);
+        service = TestBed.inject(MarkdownService);
         spy = {
           service: {
             process: jest
