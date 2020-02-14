@@ -1,57 +1,54 @@
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
 import {
-  // Form controls
-  MAT_TOOLTIP_DEFAULT_OPTIONS,
-  MatAutocompleteModule,
-  MatBadgeModule,
-  MatButtonModule,
-  MatButtonToggleModule,
-  MatCardModule,
-  MatCheckboxModule,
-  MatChipsModule,
-  MatDatepickerModule,
-  // Navigation
-  MatDialogModule,
-  MatDividerModule,
-  MatExpansionModule,
-  // Layout
-  MatGridListModule,
-  MatIconModule,
-  MatIconRegistry,
-  MatInputModule,
-  MatListModule,
-  MatMenuModule,
-  // Buttons and indicators
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MatMomentDateAdapterOptions,
+  MatMomentDateModule,
+} from '@angular/material-moment-adapter';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
+import {
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
   MatNativeDateModule,
   MatOptionModule,
-  MatPaginatorModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule,
-  MatRadioModule,
-  // Popups and modals
   MatRippleModule,
-  MatSelectModule,
-  MatSidenavModule,
-  MatSlideToggleModule,
-  MatSliderModule,
-  // Data table
-  MatSnackBarModule,
-  MatSortModule,
-  MatStepperModule,
-  // Misc
-  MatTableModule,
-  MatTabsModule,
-  // Divider
-  MatToolbarModule,
-  // Icons
+} from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSortModule } from '@angular/material/sort';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {
+  MAT_TOOLTIP_DEFAULT_OPTIONS,
   MatTooltipDefaultOptions,
-  // Tree
   MatTooltipModule,
-  // Badge
-  MatTreeModule,
-} from '@angular/material';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
+} from '@angular/material/tooltip';
+import { MatTreeModule } from '@angular/material/tree';
+import 'node_modules/hammerjs/hammer.js';
 
 /**
  * Animations require hammerjs but it is bundled via angular.json.
@@ -59,7 +56,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
  * import 'node_modules/hammerjs/hammer.js';
  */
 
-export function matTooltipDefaultOptions(): MatTooltipDefaultOptions {
+export function matTooltipOptions(): MatTooltipDefaultOptions {
   return {
     showDelay: 1000,
     hideDelay: 1000,
@@ -68,14 +65,44 @@ export function matTooltipDefaultOptions(): MatTooltipDefaultOptions {
 }
 
 /**
+ * Material moment date adapter options factory.
+ */
+export function matMomentDateAdapterOptionsFactory(): MatMomentDateAdapterOptions {
+  return {
+    useUtc: false,
+  };
+}
+
+const CUSTOM_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD.MM.YYYY',
+  },
+  display: {
+    dateInput: 'DD.MM.YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+
+/**
  * Module providers.
  */
 export const customMaterialModuleProviders: Provider[] = [
   MatIconRegistry,
   {
     provide: MAT_TOOLTIP_DEFAULT_OPTIONS,
-    useFactory: matTooltipDefaultOptions,
+    useFactory: matTooltipOptions,
   },
+  {
+    provide: MAT_DATE_LOCALE,
+    useValue: 'en',
+  },
+  {
+    provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+    useFactory: matMomentDateAdapterOptionsFactory,
+  },
+  { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
 ];
 
 /**
@@ -188,7 +215,7 @@ export class CustomMaterialModule {
   /**
    * Provides services.
    */
-  public static forRoot(): ModuleWithProviders {
+  public static forRoot(): ModuleWithProviders<CustomMaterialModule> {
     return {
       ngModule: CustomMaterialModule,
       providers: [...customMaterialModuleProviders],

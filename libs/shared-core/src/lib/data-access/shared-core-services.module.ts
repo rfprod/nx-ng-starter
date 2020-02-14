@@ -30,7 +30,7 @@ export class SharedCoreServicesModule {
   /**
    * Provides services.
    */
-  public static forRoot(): ModuleWithProviders {
+  public static forRoot(): ModuleWithProviders<SharedCoreServicesModule> {
     return {
       ngModule: SharedCoreServicesModule,
       providers: [...sharedCoreModuleProviders],

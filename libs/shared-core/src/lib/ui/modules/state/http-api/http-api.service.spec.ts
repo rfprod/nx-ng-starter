@@ -49,12 +49,12 @@ describe('HttpApiService', () => {
     TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
-        service = TestBed.get(HttpApiService);
-        toaster = TestBed.get(ToasterService);
-        httpTestingController = TestBed.get(HttpTestingController);
-        httpHandlers = TestBed.get(HttpHandlersService);
-        apollo = TestBed.get(Apollo);
-        user = TestBed.get(UserService);
+        service = TestBed.inject(HttpApiService);
+        toaster = TestBed.inject(ToasterService);
+        httpTestingController = TestBed.inject(HttpTestingController);
+        httpHandlers = TestBed.inject(HttpHandlersService);
+        apollo = TestBed.inject(Apollo);
+        user = TestBed.inject(UserService);
         spy = {
           httpHandlers: {
             pipeRequestWithObjectResponse: jest

@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { DateAdapter } from '@angular/material';
+import { DateAdapter } from '@angular/material/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import {
   ILangCode,
@@ -7,8 +7,9 @@ import {
   IUiLanguagesInterface,
   IUiTranslations,
 } from '@nx-ng-starter/shared-core/data-access';
+import { WINDOW } from '@nx-ng-starter/shared-core/util';
 import { Subject } from 'rxjs';
-import { RU as SHARED_RU } from '../shared/ru';
+import { ISharedDictionary, RU_DICTIONARY } from '../shared/ru';
 
 /**
  * Application translation utils service.
@@ -40,7 +41,7 @@ export class AppTranslationUtilsService {
    * UI dictionaries.
    */
   private readonly translations: IUiTranslations = {
-    ru: { ...SHARED_RU },
+    ru: { ...this.ruDictionary },
     en: {
       /*, SHARED_EN*/
     },
@@ -55,7 +56,8 @@ export class AppTranslationUtilsService {
   constructor(
     private readonly translate: TranslateService,
     private readonly dateAdapter: DateAdapter<any>,
-    @Inject('Window') private readonly window: Window,
+    @Inject(WINDOW) private readonly window: Window,
+    @Inject(RU_DICTIONARY) private readonly ruDictionary: ISharedDictionary,
   ) {
     this.languageChangeSubscription();
   }

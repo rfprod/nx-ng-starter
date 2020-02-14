@@ -3,3 +3,4 @@
  */
 export * from './ngxs/index';
 export * from './interfaces/index';
+export * from './general-purpose/index';

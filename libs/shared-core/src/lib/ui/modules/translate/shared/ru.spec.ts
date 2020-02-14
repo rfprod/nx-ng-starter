@@ -1,5 +1,5 @@
 import { TestBed, async } from '@angular/core/testing';
-import { RU } from './ru';
+import { RU, RU_DICTIONARY } from './ru';
 
 describe('Russian shared translations', () => {
   let SHARED_RU: any;
@@ -9,7 +9,7 @@ describe('Russian shared translations', () => {
       imports: [],
       providers: [
         {
-          provide: RU,
+          provide: RU_DICTIONARY,
           useValue: RU,
         },
       ],
@@ -17,7 +17,7 @@ describe('Russian shared translations', () => {
     })
       .compileComponents()
       .then(() => {
-        SHARED_RU = TestBed.get(RU);
+        SHARED_RU = TestBed.inject(RU_DICTIONARY);
       });
   }));
 

@@ -1,5 +1,5 @@
 import { TestBed, TestModuleMetadata, async } from '@angular/core/testing';
-import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material';
+import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
 import { ToastType } from '../interfaces/toaster/toaster.interface';
 import { ToasterService } from './toaster.service';
@@ -39,8 +39,8 @@ describe('ToasterService', () => {
     TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
-        service = TestBed.get(ToasterService) as ToasterService;
-        snackBar = TestBed.get(MatSnackBar) as MatSnackBar;
+        service = TestBed.inject(ToasterService);
+        snackBar = TestBed.inject(MatSnackBar);
         spy = {
           snackBar: {
             open: jest.spyOn(snackBar, 'open'),

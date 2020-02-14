@@ -59,11 +59,11 @@ describe('HttpHandlersService', () => {
     TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
-        service = TestBed.get(HttpHandlersService) as HttpHandlersService;
-        toaster = TestBed.get(ToasterService) as ToasterService;
-        httpTestingController = TestBed.get(HttpTestingController);
-        apollo = TestBed.get(Apollo) as Apollo;
-        user = TestBed.get(UserService) as UserService;
+        service = TestBed.inject(HttpHandlersService);
+        toaster = TestBed.inject(ToasterService);
+        httpTestingController = TestBed.inject(HttpTestingController);
+        apollo = TestBed.inject(Apollo);
+        user = TestBed.inject(UserService);
         spy = {
           user: {
             handlers: {

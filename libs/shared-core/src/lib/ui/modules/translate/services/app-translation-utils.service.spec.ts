@@ -1,7 +1,8 @@
 import { TestBed, TestModuleMetadata, async } from '@angular/core/testing';
-import { DateAdapter } from '@angular/material';
+import { DateAdapter } from '@angular/material/core';
 import { TranslateService } from '@ngx-translate/core';
 import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
+import { WINDOW } from '@nx-ng-starter/shared-core/util';
 import { Subject } from 'rxjs';
 import {
   ILangCode,
@@ -14,10 +15,7 @@ import { AppTranslationUtilsService } from './app-translation-utils.service';
 
 describe('AppTranslationUtilsService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [
-      CustomMaterialModule.forRoot(),
-      AppTranslateModule.forRoot(),
-    ],
+    imports: [CustomMaterialModule.forRoot(), AppTranslateModule.forRoot()],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
@@ -27,27 +25,27 @@ describe('AppTranslationUtilsService', () => {
   let win: Window;
   let spy: {
     service: {
-      languageChanges: jest.SpyInstance
-    },
+      languageChanges: jest.SpyInstance;
+    };
     translate: {
-      onLangChange: jest.SpyInstance,
-      setDefaultLang: jest.SpyInstance,
-      setTranslation: jest.SpyInstance,
-      use: jest.SpyInstance,
-    },
+      onLangChange: jest.SpyInstance;
+      setDefaultLang: jest.SpyInstance;
+      setTranslation: jest.SpyInstance;
+      use: jest.SpyInstance;
+    };
     dateAdapter: {
-      setLocale: jest.SpyInstance,
-    }
+      setLocale: jest.SpyInstance;
+    };
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
-        service = TestBed.get(AppTranslationUtilsService) as AppTranslationUtilsService;
-        translate = TestBed.get(TranslateService) as TranslateService;
-        dateAdapter = TestBed.get(DateAdapter) as DateAdapter<any>;
-        win = TestBed.get('Window') as Window;
+        service = TestBed.inject(AppTranslationUtilsService);
+        translate = TestBed.inject(TranslateService);
+        dateAdapter = TestBed.inject(DateAdapter);
+        win = TestBed.inject(WINDOW);
 
         spy = {
           service: {
