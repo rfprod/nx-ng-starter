@@ -1,5 +1,5 @@
 import { TestBed, TestModuleMetadata, async } from '@angular/core/testing';
-import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material';
+import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
 import { ToastType } from '../interfaces/toaster/toaster.interface';
 import { ToasterService } from './toaster.service';

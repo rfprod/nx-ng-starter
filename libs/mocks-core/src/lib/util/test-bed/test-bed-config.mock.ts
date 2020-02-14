@@ -38,9 +38,6 @@ export const getTestBedConfig: TestBedConfigGetter = (
   new Object({
     declarations: [...metadata.declarations],
     imports: [MocksCoreModule.forRoot(), ...metadata.imports],
-    providers: [
-      { provide: 'Window', useValue: window },
-      ...metadata.providers,
-    ],
+    providers: [...metadata.providers],
     schemas: [CUSTOM_ELEMENTS_SCHEMA, ...metadata.providers],
   });
