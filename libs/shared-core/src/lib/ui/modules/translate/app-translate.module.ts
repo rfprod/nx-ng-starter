@@ -1,6 +1,7 @@
 import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AppTranslationUtilsService } from './services/app-translation-utils.service';
+import { RU, RU_DICTIONARY } from './shared/ru';
 
 /**
  * Module providers.
@@ -8,6 +9,7 @@ import { AppTranslationUtilsService } from './services/app-translation-utils.ser
 export const appTranslateModuleProviders: Provider[] = [
   TranslateService,
   AppTranslationUtilsService,
+  { provide: RU_DICTIONARY, useValue: RU },
 ];
 
 /**
@@ -16,7 +18,7 @@ export const appTranslateModuleProviders: Provider[] = [
 @NgModule({
   imports: [TranslateModule.forRoot()],
   exports: [TranslateModule],
-  providers: [TranslateService, AppTranslationUtilsService],
+  providers: [...appTranslateModuleProviders],
 })
 export class AppTranslateModule {
   /**

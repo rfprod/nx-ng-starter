@@ -9,7 +9,7 @@ describe('Russian shared translations', () => {
       imports: [],
       providers: [
         {
-          provide: SHARED_RU,
+          provide: RU_DICTIONARY,
           useValue: RU,
         },
       ],
