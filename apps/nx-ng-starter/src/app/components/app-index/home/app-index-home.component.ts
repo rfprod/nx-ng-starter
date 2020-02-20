@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MarkdownService } from '@nx-ng-starter/shared-core/data-access';
 import { TIMEOUT } from '@nx-ng-starter/shared-core/util';
 import { timer } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
 /**
  * Application index home component.

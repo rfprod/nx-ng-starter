@@ -24,29 +24,29 @@ which is deployed to `Firebase`: https://nx-ng-starter.web.app/
 
 ## Deployment
 
-  - [Nx Ng Starter @ Firebase](https://nx-ng-starter.web.app)
+- [Nx Ng Starter @ Firebase](https://nx-ng-starter.web.app)
 
 ### Unit Coverage
 
-  - [Nx Ng Starter Client](https://nx-ng-starter.web.app/coverage/nx-ng-starter/index.html)
-  - [Nx Ng Starter API](https://nx-ng-starter.web.app/coverage/api/index.html)
+- [Nx Ng Starter Client](https://nx-ng-starter.web.app/coverage/nx-ng-starter/index.html)
+- [Nx Ng Starter API](https://nx-ng-starter.web.app/coverage/api/index.html)
 
 ### E2E Reports
 
-  - [Nx Ng Starter E2E](https://nx-ng-starter.web.app/cypress/nx-ng-starter-e2e/mochawesome/mochawesome.html)
+- [Nx Ng Starter E2E](https://nx-ng-starter.web.app/cypress/nx-ng-starter-e2e/mochawesome/mochawesome.html)
 
 ### Documentation
 
-  - [Nx Ng Starter Client](https://nx-ng-starter.web.app/documentation/nx-ng-starter/index.html)
-  - [Nx Ng Starter API](https://nx-ng-starter.web.app/documentation/api/index.html)
+- [Nx Ng Starter Client](https://nx-ng-starter.web.app/documentation/nx-ng-starter/index.html)
+- [Nx Ng Starter API](https://nx-ng-starter.web.app/documentation/api/index.html)
 
 ### Changelog
 
-  - [Nx Ng Starter](https://nx-ng-starter.web.app/changelog/apps/nx-ng-starter-CHANGELOG.md)
-  - [API](https://nx-ng-starter.web.app/changelog/apps/api-CHANGELOG.md)
-  - [API Interface](https://nx-ng-starter.web.app/changelog/libs/api-interface-CHANGELOG.md)
-  - [Mocks Core](https://nx-ng-starter.web.app/changelog/libs/mocks-core-CHANGELOG.md)
-  - [Shared Core](https://nx-ng-starter.web.app/changelog/libs/shared-core-CHANGELOG.md)
+- [Nx Ng Starter](https://nx-ng-starter.web.app/changelog/apps/nx-ng-starter-CHANGELOG.md)
+- [API](https://nx-ng-starter.web.app/changelog/apps/api-CHANGELOG.md)
+- [API Interface](https://nx-ng-starter.web.app/changelog/libs/api-interface-CHANGELOG.md)
+- [Mocks Core](https://nx-ng-starter.web.app/changelog/libs/mocks-core-CHANGELOG.md)
+- [Shared Core](https://nx-ng-starter.web.app/changelog/libs/shared-core-CHANGELOG.md)
 
 ## General Tooling
 
