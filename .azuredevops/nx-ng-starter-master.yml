@@ -35,14 +35,14 @@ jobs:
           versionSpec: '10.17.0'
 
       - script: |
-          npm install -g npm@6.13.1
+          npm i -g npm@6.13.1
           npm update
-          npm install
-          npm install -g typescript
-          npm install -g @angular/cli
-          npm install -g @compodoc/compodoc
-          npm install -g @nrwl/schematics
-          npm install -g firebase-tools
+          npm i
+          npm i -g typescript
+          npm i -g @angular/cli
+          npm i -g @compodoc/compodoc
+          npm i -g @nrwl/schematics
+          npm i -g firebase-tools
           bash tools/shell/build.sh prod all doc
           if [ $? -ne 0 ]; then
             exit 1

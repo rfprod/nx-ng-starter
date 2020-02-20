@@ -38,12 +38,12 @@ jobs:
           versionSpec: '10.17.0'
 
       - script: |
-          npm install -g npm@6.13.1
+          npm i -g npm@6.13.1
           npm update
-          npm install
-          npm install -g typescript
-          npm install -g @angular/cli
-          npm install -g @nrwl/schematics
+          npm i
+          npm i -g typescript
+          npm i -g @angular/cli
+          npm i -g @nrwl/schematics
           npm run install:protolint:linux
           npm run install:shellcheck:linux
           npm run shellcheck
