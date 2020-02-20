@@ -1,1 +1,8 @@
 <span [innerHtml]="getMarkedInstructions()"></span>
+
+<div fxLayout="row" fxLayoutAlign="start center">
+  <mat-icon aria-hidden="false" [attr.aria-label]="timer$ | async" color="warn">
+    av_timer
+  </mat-icon>
+  <span [innerHtml]="timer$ | async"></span>
+</div>
