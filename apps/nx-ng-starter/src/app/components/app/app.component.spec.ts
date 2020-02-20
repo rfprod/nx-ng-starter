@@ -1,6 +1,11 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IObjectWithProperties, configureTestSuite, getTestBedConfig, newTestBedMetadata, setupJestSpiesFor } from '@nx-ng-starter/mocks-core';
+import {
+  IObjectWithProperties,
+  getTestBedConfig,
+  newTestBedMetadata,
+  setupJestSpiesFor,
+} from '@nx-ng-starter/mocks-core';
 import { SharedCoreModule } from '@nx-ng-starter/shared-core';
 import { AppIndexComponent } from '../app-index/app-index.component';
 import { AppComponent } from './app.component';
@@ -18,8 +23,6 @@ describe('AppComponent', () => {
     ],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
-
-  configureTestSuite();
 
   let fixture: ComponentFixture<AppComponent>;
   let component: AppComponent | any;

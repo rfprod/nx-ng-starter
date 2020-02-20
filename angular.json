@@ -123,7 +123,8 @@
               "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "apps/nx-ng-starter/src/styles.scss"
             ],
-            "scripts": ["node_modules/marked/marked.min.js", "node_modules/hammerjs/hammer.js"]
+            "scripts": ["node_modules/marked/marked.min.js", "node_modules/hammerjs/hammer.js"],
+            "passWithNoTests": true
           }
         }
       }
@@ -201,7 +202,8 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/api/jest.config.js",
-            "tsConfig": "apps/api/tsconfig.spec.json"
+            "tsConfig": "apps/api/tsconfig.spec.json",
+            "passWithNoTests": true
           }
         }
       }
@@ -236,7 +238,8 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/api-interface/jest.config.js",
-            "tsConfig": "libs/api-interface/tsconfig.spec.json"
+            "tsConfig": "libs/api-interface/tsconfig.spec.json",
+            "passWithNoTests": true
           }
         }
       }
@@ -262,7 +265,8 @@
           "options": {
             "jestConfig": "libs/shared-core/jest.config.js",
             "tsConfig": "libs/shared-core/tsconfig.spec.json",
-            "setupFile": "libs/shared-core/src/test-setup.ts"
+            "setupFile": "libs/shared-core/src/test-setup.ts",
+            "passWithNoTests": true
           }
         }
       },
@@ -290,7 +294,8 @@
           "options": {
             "jestConfig": "libs/mocks-core/jest.config.js",
             "tsConfig": "libs/mocks-core/tsconfig.spec.json",
-            "setupFile": "libs/mocks-core/src/test-setup.ts"
+            "setupFile": "libs/mocks-core/src/test-setup.ts",
+            "passWithNoTests": true
           }
         }
       },
@@ -318,7 +323,8 @@
           "options": {
             "jestConfig": "libs/proto/jest.config.js",
             "tsConfig": "libs/proto/tsconfig.spec.json",
-            "setupFile": "libs/proto/src/test-setup.ts"
+            "setupFile": "libs/proto/src/test-setup.ts",
+            "passWithNoTests": true
           }
         }
       },

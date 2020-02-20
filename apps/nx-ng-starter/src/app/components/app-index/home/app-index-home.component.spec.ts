@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed, TestModuleMetadata, async } from '@angular/c
 import { RouterTestingModule } from '@angular/router/testing';
 import {
   IObjectWithProperties,
-  configureTestSuite,
   getTestBedConfig,
   newTestBedMetadata,
   setupJestSpiesFor,
@@ -25,8 +24,6 @@ describe('AppIndexHomeComponent', () => {
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
-  configureTestSuite();
-
   let fixture: ComponentFixture<AppIndexHomeComponent>;
   let component: AppIndexHomeComponent | any;
   let service: MarkdownService;
@@ -43,6 +40,7 @@ describe('AppIndexHomeComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(AppIndexHomeComponent);
         component = fixture.debugElement.componentInstance;
+        component.timer$ = null;
         service = TestBed.inject(MarkdownService);
         spy = {
           service: {
