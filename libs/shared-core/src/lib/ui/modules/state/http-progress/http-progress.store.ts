@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { actionPayloadConstructor } from '@nx-ng-starter/shared-core/util';
 import { HttpProgressPayload, IHttpProgressStateModel } from './http-progress.interface';
@@ -11,6 +12,9 @@ const StopProgress = createAction<HttpProgressPayload>('Stop');
   defaults: {
     mainView: false,
   },
+})
+@Injectable({
+  providedIn: 'root',
 })
 class HttpProgressState {
   @Selector()

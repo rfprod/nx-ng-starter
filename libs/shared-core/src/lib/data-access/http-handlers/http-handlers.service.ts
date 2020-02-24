@@ -11,13 +11,16 @@ import { MonoTypeOperatorFunction, Observable, concat, throwError } from 'rxjs';
 import { catchError, take, tap, timeout } from 'rxjs/operators';
 import { HttpProgressService } from '../../ui/modules/state/http-progress/http-progress.service';
 import { UserService } from '../../ui/modules/state/user/user.service';
+import { WINDOW } from '../../util/general-purpose';
 import { APP_ENV, AppEnvironment, HttpErrorCodes } from '../interfaces';
 import { ToasterService } from '../toaster/toaster.service';
 
 /**
  * Http handers service.
  */
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class HttpHandlersService {
   /**
    * Default timeout interval for http-requests.
@@ -59,7 +62,7 @@ export class HttpHandlersService {
     private readonly httpLink: HttpLink,
     private readonly httpProgress: HttpProgressService,
     private readonly translate: TranslateService,
-    @Inject('Window') private readonly window: Window,
+    @Inject(WINDOW) private readonly window: Window,
     @Inject(APP_ENV) private readonly appEnv: AppEnvironment,
   ) {
     this.api = this.appEnv.api || this.api;
@@ -106,7 +109,10 @@ export class HttpHandlersService {
    * @param observable request observable
    * @param listenX number of responses to catch
    */
-  public pipeRequestWithObjectResponse<T>(observable: Observable<T>, listenX: number = 1): Observable<T> {
+  public pipeRequestWithObjectResponse<T>(
+    observable: Observable<T>,
+    listenX: number = 1,
+  ): Observable<T> {
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
       this.tapProgress(true),
@@ -120,7 +126,10 @@ export class HttpHandlersService {
    * @param observable request observable
    * @param listenX number of responses to catch
    */
-  public pipeRequestWithArrayResponse<T>(observable: Observable<T>, listenX: number = 1): Observable<T> {
+  public pipeRequestWithArrayResponse<T>(
+    observable: Observable<T>,
+    listenX: number = 1,
+  ): Observable<T> {
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
       this.tapProgress(true),
@@ -135,7 +144,11 @@ export class HttpHandlersService {
    * @param listenX number of responses to catch
    * @param withprogress should request start progress
    */
-  public pipeGraphQLRequest<T>(observable: Observable<T>, listenX: number = 1, withprogress = true): Observable<T> {
+  public pipeGraphQLRequest<T>(
+    observable: Observable<T>,
+    listenX: number = 1,
+    withprogress = true,
+  ): Observable<T> {
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
       this.tapProgress(withprogress),
