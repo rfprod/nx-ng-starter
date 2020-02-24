@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { actionPayloadConstructor } from '@nx-ng-starter/shared-core/util';
 import { UserPayload, UserStateModel } from './user.interface';
@@ -12,6 +13,9 @@ const SetState = createAction<UserPayload>('Set state');
     admin: false,
     token: '',
   },
+})
+@Injectable({
+  providedIn: 'root',
 })
 class UserState {
   @Selector()

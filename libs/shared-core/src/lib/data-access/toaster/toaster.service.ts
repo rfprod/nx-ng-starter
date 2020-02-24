@@ -8,7 +8,9 @@ import { ToastType, ToasterExtraClasses, toasterExtraClasses } from '../interfac
  * Usage example:
  * this.toaster.showToaster(error, 'error', 5000);
  */
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ToasterService {
   /**
    * Snackbar reference.

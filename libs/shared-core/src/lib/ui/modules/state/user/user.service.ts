@@ -10,7 +10,9 @@ import {
 } from './user.interface';
 import { UserState, userActions } from './user.store';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class UserService {
   public readonly output: IUserObservableOutput = {
     model$: this.store.select(UserState.Model),

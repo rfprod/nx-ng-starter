@@ -10,7 +10,9 @@ declare let marked;
  * Markdown service.
  * Processes string in markdown format, outputs html.
  */
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class MarkdownService {
   /**
    * Processes markdown input.

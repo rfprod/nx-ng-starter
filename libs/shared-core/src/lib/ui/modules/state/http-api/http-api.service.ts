@@ -4,15 +4,21 @@ import { Store } from '@ngxs/store';
 import { Message } from '@nx-ng-starter/api-interface';
 import { HttpHandlersService } from '@nx-ng-starter/shared-core/data-access';
 import { tap } from 'rxjs/operators';
-import { IHttpApiHandlers, IHttpApiInterface, IHttpApiObservableOutput, IHttpApiStatePayload } from './http-api.interface';
+import {
+  IHttpApiHandlers,
+  IHttpApiInterface,
+  IHttpApiObservableOutput,
+  IHttpApiStatePayload,
+} from './http-api.interface';
 import { HttpApiState, httpApiActions } from './http-api.store';
 
 /**
  * Http API service.
  */
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class HttpApiService {
-
   public readonly output: IHttpApiObservableOutput = {
     all$: this.store.select(HttpApiState.AllData),
     ping$: this.store.select(HttpApiState.Ping),
@@ -37,7 +43,7 @@ export class HttpApiService {
             ping: result.message,
           };
           this.store.dispatch(new httpApiActions.Ping(payload));
-        })
+        }),
       );
       return this.httpHandlers.pipeRequestWithObjectResponse<Message>(observable);
     },

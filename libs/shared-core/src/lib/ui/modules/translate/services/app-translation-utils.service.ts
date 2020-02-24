@@ -14,7 +14,9 @@ import { ISharedDictionary, RU_DICTIONARY } from '../shared/ru';
 /**
  * Application translation utils service.
  */
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AppTranslationUtilsService {
   /**
    * Language changes notifier.

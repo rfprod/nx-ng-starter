@@ -11,7 +11,9 @@ import {
 } from './http-progress.interface';
 import { HttpProgressState, httpProgressActions } from './http-progress.store';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class HttpProgressService {
   public readonly output: IHttpProgressObservableOutput = {
     all$: this.store.select(HttpProgressState.AllProgress),
