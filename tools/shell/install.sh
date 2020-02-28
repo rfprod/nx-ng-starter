@@ -169,7 +169,7 @@ installShellcheckOsx() {
   printf "
     ${LIGHT_BLUE}%s
     ${DEFAULT}\n\n" "$TITLE"
-  sudo apt install shellckeck
+  brew install shellckeck
 }
 
 ##
