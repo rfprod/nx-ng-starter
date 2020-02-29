@@ -5,4 +5,5 @@ export enum TIMEOUT {
   MEDIUM = 2000,
   LONG = 3500,
   LONGEST = 5000,
+  FOREVER = 10000,
 }
