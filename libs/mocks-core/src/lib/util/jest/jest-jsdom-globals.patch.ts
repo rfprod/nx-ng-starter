@@ -1,6 +1,12 @@
+import { TIMEOUT } from '@nx-ng-starter/shared-core/util';
 import { setUpLocalStorageMock } from '../local-storage/local-storage.mock';
 
 declare const jest;
+
+/**
+ * Increase specs timeout.
+ */
+jest.setTimeout(TIMEOUT.FOREVER);
 
 /**
  * Sets up Jest global mocks
@@ -30,6 +36,16 @@ export const setupJestJsdomGlobalMocks: () => void = () => {
    */
   window.resizeTo = jest.fn().mockImplementation((width, height) => {
     return { width, height };
+  });
+
+  /**
+   * Jest requires this mock.
+   */
+  Object.defineProperty(window, 'customElements', {
+    value: {
+      define: jest.fn(),
+    },
+    writable: false,
   });
 
   /**
@@ -68,4 +84,10 @@ export const setupJestJsdomGlobalMocks: () => void = () => {
     value: jest.fn((input: string) => `# mocked marked output ${input}`),
     writable: false,
   });
+
+  /**
+   * Override some console methods for testing environment.
+   */
+  window.console.log = () => null;
+  window.console.group = () => null;
 };
