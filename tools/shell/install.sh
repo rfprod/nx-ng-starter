@@ -3,7 +3,7 @@
 ##
 # Colors.
 ##
-source tools/shell/colors.sh
+source tools/shell/colors.sh ''
 
 ##
 # Exits with error.
@@ -24,8 +24,8 @@ reportUsage() {
     ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh global${DEFAULT} (install global dependencies only)\n
     ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh all${DEFAULT} (install projects dependencies, global dependencies, brew (linux), protolint (linux), shellckeck (linux))\n
     ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh all osx${DEFAULT} (install projects dependencies, global dependencies, protolint (osx), shellckeck (osx))\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh protolint${DEFAULT} (install protolint on linux)\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh protolint osx${DEFAULT} (install protolint on osx)\n
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh proto${DEFAULT} (install protobuf dependencies on linux)\n
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh proto osx${DEFAULT} (install protobuf dependencies on osx)\n
     ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh shellckeck${DEFAULT} (install shellckeck on linux)\n
     ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh shellckeck osx${DEFAULT} (install shellckeck on osx)\n
     \n\n" "$TITLE"
@@ -53,7 +53,7 @@ installGlobalDependencies() {
   local TITLE="<< INSTALLING GLOBAL DEPENDENCIES >>"
   printf "
     ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
-  sudo npm install -g @angular/cli@latest @nrwl/schematics@latest typescript@latest firebase-tools@latest @compodoc/compodoc@latest cz-conventional-changelog@latest clang-format@latest || exitWithError
+  sudo npm install -g @angular/cli@latest @ionic/cli@latest @nestjs/cli@latest @ngxs/cli@latest @nrwl/schematics@latest typescript@latest firebase-tools@latest @compodoc/compodoc@latest commitizen@latest cz-conventional-changelog@latest clang-format@latest || exitWithError
 }
 
 ##
@@ -97,8 +97,8 @@ installLinuxBrewDependencies() {
 ##
 # Installs brew on Linux.
 ##
-installBrewAndProtolintOnLinux() {
-  local TITLE="<< INSTALLING BREW and PROTOLINT on LINUX >>"
+installBrewAndProtobufOnLinux() {
+  local TITLE="<< INSTALLING BREW, PROTOC-GEN-GRPC-WEB PROTOLINT on LINUX >>"
   printf "
     ${LIGHT_BLUE}%s
     ${DEFAULT}\n\n" "$TITLE"
@@ -130,13 +130,19 @@ installBrewAndProtolintOnLinux() {
     echo '# protolint'
     echo 'export PATH="/home/linuxbrew/.linuxbrew/Cellar/protolint/0.23.1/bin:$PATH"'
   } >>~/.bashrc
+  # install protobuf
+  brew install protobuf
+  # install protoc-gen-grpc-web
+  brew install protoc-gen-grpc-web
 }
 
-installProtolintOsx() {
-  local TITLE="<< INSTALLING BREW and PROTOLINT on OSX >>"
+installProtobufOsx() {
+  local TITLE="<< INSTALLING PROTOLINT on OSX >>"
   printf "
     ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   brew install protolint
+  brew install protobuf
+  brew install protoc-gen-grpc-web
 }
 
 ##
@@ -144,9 +150,9 @@ installProtolintOsx() {
 ##
 installProtolint() {
   if [ "$1" = "osx" ]; then
-    installProtolintOsx
+    installProtobufOsx
   else
-    installBrewAndProtolintOnLinux
+    installBrewAndProtobufOnLinux
   fi
 }
 

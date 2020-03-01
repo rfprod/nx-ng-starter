@@ -3,7 +3,7 @@
 ##
 # Colors.
 ##
-source tools/shell/colors.sh
+source tools/shell/colors.sh ''
 
 ##
 # Exits with error.
