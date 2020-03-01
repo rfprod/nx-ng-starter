@@ -1,6 +1,11 @@
 #!/bin/bash
 
 ##
+# Colors.
+##
+source tools/shell/colors.sh ''
+
+##
 # Module aliases.
 # Should be updated here when app or lib are added to the project.
 ##
@@ -61,11 +66,6 @@ MODULE_ALIAS_NAMES_E2E=(
 MODULE_ALIAS_VARS_E2E=(
   "$MODULE_ALIAS_APP_NX_NG_STARTER_E2E"
 )
-
-##
-# Colors.
-##
-source tools/shell/colors.sh ''
 
 reportSupportedModuleAliases() {
   local TITLE="<< MODULE ALIASES (all) >>"
