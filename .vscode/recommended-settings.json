@@ -1,0 +1,52 @@
+{
+  "[proto3]": {
+    "editor.defaultFormatter": "xaver.clang-format"
+  },
+  "[sh]": {
+    "editor.defaultFormatter": "timonwong.shellcheck"
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "clang-format.fallbackStyle": "Google",
+  "clang-format.language.apex.enable": false,
+  "clang-format.language.c.enable": false,
+  "clang-format.language.cpp.enable": false,
+  "clang-format.language.cuda.enable": false,
+  "clang-format.language.glsl.enable": false,
+  "clang-format.language.java.enable": false,
+  "clang-format.language.javascript.enable": false,
+  "clang-format.language.objective-c.enable": false,
+  "clang-format.language.objective-cpp.enable": false,
+  "clang-format.language.typescript.enable": false,
+  "clang-format.style": "Google",
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": false
+  },
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "files.associations": {
+    "*.dockerfile.*": "dockerfile",
+    "*.proto": "proto3"
+  },
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 5000,
+  "files.defaultLanguage": "typescript",
+  "files.hotExit": "onExit",
+  "files.trimTrailingWhitespace": true,
+  "shellcheck.customArgs": ["-x"],
+  "shellcheck.enable": true,
+  "shellcheck.enableQuickFix": false,
+  "shellcheck.exclude": [],
+  "shellcheck.executablePath": "shellcheck",
+  "shellcheck.ignoreFileSchemes": ["git", "gitfs"],
+  "shellcheck.ignorePatterns": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true
+  },
+  "shellcheck.run": "onType",
+  "shellcheck.useWSL": false,
+  "shellcheck.useWorkspaceRootAsCwd": true
+}
