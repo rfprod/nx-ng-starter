@@ -18,16 +18,16 @@ exitWithError() {
 reportUsage() {
   local TITLE="<< USAGE >>"
   printf "
-    ${LIGHT_BLUE} %s ${DEFAULT}\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh${DEFAULT} (print install.sh usage)\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh local${DEFAULT} (install project dependencies only)\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh global${DEFAULT} (install global dependencies only)\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh all${DEFAULT} (install projects dependencies, global dependencies, brew (linux), protolint (linux), shellckeck (linux))\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh all osx${DEFAULT} (install projects dependencies, global dependencies, protolint (osx), shellckeck (osx))\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh proto${DEFAULT} (install protobuf dependencies on linux)\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh proto osx${DEFAULT} (install protobuf dependencies on osx)\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh shellckeck${DEFAULT} (install shellckeck on linux)\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh shellckeck osx${DEFAULT} (install shellckeck on osx)\n
+    ${LIGHT_BLUE} %s\n
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh${DEFAULT} (print install.sh usage)
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh local${DEFAULT} (install project dependencies only)
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh global${DEFAULT} (install global dependencies only)
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh all${DEFAULT} (install projects dependencies, global dependencies, brew (linux), protolint (linux), shellckeck (linux))
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh all osx${DEFAULT} (install projects dependencies, global dependencies, protolint (osx), shellckeck (osx))
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh proto${DEFAULT} (install protobuf dependencies on linux)
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh proto osx${DEFAULT} (install protobuf dependencies on osx)
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh shellckeck${DEFAULT} (install shellckeck on linux)
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh shellckeck osx${DEFAULT} (install shellckeck on osx)
     \n\n" "$TITLE"
 }
 
@@ -203,7 +203,7 @@ elif [ "$1" = "local" ]; then
   installProjectDependencies
 elif [ "$1" = "global" ]; then
   installGlobalDependencies
-elif [ "$1" = "protolint" ]; then
+elif [ "$1" = "proto" ]; then
   installProtolint "$2"
 elif [ "$1" = "shellcheck" ]; then
   installShellcheck "$2"
