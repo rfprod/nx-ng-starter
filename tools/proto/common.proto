@@ -5,7 +5,6 @@ syntax = "proto3";
 package nxngstarter;
 
 import "google/protobuf/any.proto";
-import "google/protobuf/empty.proto";
 
 message CommonEntities {
   int64 count = 1;
@@ -29,4 +28,19 @@ message SubEntity {
 
 message CommonEntityFilterDto {
   int32 num1 = 1;
+}
+
+message SampleServiceRequest {
+  string input1 = 1;
+  string input2 = 2;
+}
+
+message SampleServiceResponse {
+  string status = 1;
+
+  message ResponseData {
+    string stringValue = 1;
+    int32 intValue = 3;
+  }
+  ResponseData data = 2;
 }

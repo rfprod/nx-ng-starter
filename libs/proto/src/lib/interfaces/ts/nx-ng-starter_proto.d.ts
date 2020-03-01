@@ -213,6 +213,186 @@ export namespace nxngstarter {
          */
         public toJSON(): { [k: string]: any };
     }
+
+    /** Properties of a SampleServiceRequest. */
+    interface ISampleServiceRequest {
+
+        /** SampleServiceRequest input1 */
+        input1?: (string|null);
+
+        /** SampleServiceRequest input2 */
+        input2?: (string|null);
+    }
+
+    /** Represents a SampleServiceRequest. */
+    class SampleServiceRequest implements ISampleServiceRequest {
+
+        /**
+         * Constructs a new SampleServiceRequest.
+         * @param [p] Properties to set
+         */
+        constructor(p?: nxngstarter.ISampleServiceRequest);
+
+        /** SampleServiceRequest input1. */
+        public input1: string;
+
+        /** SampleServiceRequest input2. */
+        public input2: string;
+
+        /**
+         * Creates a SampleServiceRequest message from a plain object. Also converts values to their respective internal types.
+         * @param d Plain object
+         * @returns SampleServiceRequest
+         */
+        public static fromObject(d: { [k: string]: any }): nxngstarter.SampleServiceRequest;
+
+        /**
+         * Creates a plain object from a SampleServiceRequest message. Also converts values to other types if specified.
+         * @param m SampleServiceRequest
+         * @param [o] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(m: nxngstarter.SampleServiceRequest, o?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this SampleServiceRequest to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    /** Properties of a SampleServiceResponse. */
+    interface ISampleServiceResponse {
+
+        /** SampleServiceResponse status */
+        status?: (string|null);
+
+        /** SampleServiceResponse data */
+        data?: (nxngstarter.SampleServiceResponse.IResponseData|null);
+    }
+
+    /** Represents a SampleServiceResponse. */
+    class SampleServiceResponse implements ISampleServiceResponse {
+
+        /**
+         * Constructs a new SampleServiceResponse.
+         * @param [p] Properties to set
+         */
+        constructor(p?: nxngstarter.ISampleServiceResponse);
+
+        /** SampleServiceResponse status. */
+        public status: string;
+
+        /** SampleServiceResponse data. */
+        public data?: (nxngstarter.SampleServiceResponse.IResponseData|null);
+
+        /**
+         * Creates a SampleServiceResponse message from a plain object. Also converts values to their respective internal types.
+         * @param d Plain object
+         * @returns SampleServiceResponse
+         */
+        public static fromObject(d: { [k: string]: any }): nxngstarter.SampleServiceResponse;
+
+        /**
+         * Creates a plain object from a SampleServiceResponse message. Also converts values to other types if specified.
+         * @param m SampleServiceResponse
+         * @param [o] Conversion options
+         * @returns Plain object
+         */
+        public static toObject(m: nxngstarter.SampleServiceResponse, o?: $protobuf.IConversionOptions): { [k: string]: any };
+
+        /**
+         * Converts this SampleServiceResponse to JSON.
+         * @returns JSON object
+         */
+        public toJSON(): { [k: string]: any };
+    }
+
+    namespace SampleServiceResponse {
+
+        /** Properties of a ResponseData. */
+        interface IResponseData {
+
+            /** ResponseData stringValue */
+            stringValue?: (string|null);
+
+            /** ResponseData intValue */
+            intValue?: (number|null);
+        }
+
+        /** Represents a ResponseData. */
+        class ResponseData implements IResponseData {
+
+            /**
+             * Constructs a new ResponseData.
+             * @param [p] Properties to set
+             */
+            constructor(p?: nxngstarter.SampleServiceResponse.IResponseData);
+
+            /** ResponseData stringValue. */
+            public stringValue: string;
+
+            /** ResponseData intValue. */
+            public intValue: number;
+
+            /**
+             * Creates a ResponseData message from a plain object. Also converts values to their respective internal types.
+             * @param d Plain object
+             * @returns ResponseData
+             */
+            public static fromObject(d: { [k: string]: any }): nxngstarter.SampleServiceResponse.ResponseData;
+
+            /**
+             * Creates a plain object from a ResponseData message. Also converts values to other types if specified.
+             * @param m ResponseData
+             * @param [o] Conversion options
+             * @returns Plain object
+             */
+            public static toObject(m: nxngstarter.SampleServiceResponse.ResponseData, o?: $protobuf.IConversionOptions): { [k: string]: any };
+
+            /**
+             * Converts this ResponseData to JSON.
+             * @returns JSON object
+             */
+            public toJSON(): { [k: string]: any };
+        }
+    }
+
+    /** Represents a SampleService */
+    class SampleService extends $protobuf.rpc.Service {
+
+        /**
+         * Constructs a new SampleService service.
+         * @param rpcImpl RPC implementation
+         * @param [requestDelimited=false] Whether requests are length-delimited
+         * @param [responseDelimited=false] Whether responses are length-delimited
+         */
+        constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
+
+        /**
+         * Calls SampleServiceMethod.
+         * @param request SampleServiceRequest message or plain object
+         * @param callback Node-style callback called with the error, if any, and SampleServiceResponse
+         */
+        public sampleServiceMethod(request: nxngstarter.ISampleServiceRequest, callback: nxngstarter.SampleService.SampleServiceMethodCallback): void;
+
+        /**
+         * Calls SampleServiceMethod.
+         * @param request SampleServiceRequest message or plain object
+         * @returns Promise
+         */
+        public sampleServiceMethod(request: nxngstarter.ISampleServiceRequest): Promise<nxngstarter.SampleServiceResponse>;
+    }
+
+    namespace SampleService {
+
+        /**
+         * Callback as used by {@link nxngstarter.SampleService#sampleServiceMethod}.
+         * @param error Error, if any
+         * @param [response] SampleServiceResponse
+         */
+        type SampleServiceMethodCallback = (error: (Error|null), response?: nxngstarter.SampleServiceResponse) => void;
+    }
 }
 
 /** Namespace google. */
@@ -263,41 +443,6 @@ export namespace google {
 
             /**
              * Converts this Any to JSON.
-             * @returns JSON object
-             */
-            public toJSON(): { [k: string]: any };
-        }
-
-        /** Properties of an Empty. */
-        interface IEmpty {
-        }
-
-        /** Represents an Empty. */
-        class Empty implements IEmpty {
-
-            /**
-             * Constructs a new Empty.
-             * @param [p] Properties to set
-             */
-            constructor(p?: google.protobuf.IEmpty);
-
-            /**
-             * Creates an Empty message from a plain object. Also converts values to their respective internal types.
-             * @param d Plain object
-             * @returns Empty
-             */
-            public static fromObject(d: { [k: string]: any }): google.protobuf.Empty;
-
-            /**
-             * Creates a plain object from an Empty message. Also converts values to other types if specified.
-             * @param m Empty
-             * @param [o] Conversion options
-             * @returns Plain object
-             */
-            public static toObject(m: google.protobuf.Empty, o?: $protobuf.IConversionOptions): { [k: string]: any };
-
-            /**
-             * Converts this Empty to JSON.
              * @returns JSON object
              */
             public toJSON(): { [k: string]: any };

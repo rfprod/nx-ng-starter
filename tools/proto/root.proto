@@ -1,0 +1,11 @@
+// protolint:disable FIELD_NAMES_LOWER_SNAKE_CASE
+
+syntax = "proto3";
+
+package nxngstarter;
+
+import "common.proto";
+
+service SampleService {
+  rpc SampleServiceMethod(SampleServiceRequest) returns (SampleServiceResponse);
+}

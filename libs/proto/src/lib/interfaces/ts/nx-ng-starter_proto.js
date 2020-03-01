@@ -295,6 +295,171 @@ export const nxngstarter = $root.nxngstarter = (() => {
         return CommonEntityFilterDto;
     })();
 
+    nxngstarter.SampleServiceRequest = (function() {
+
+        function SampleServiceRequest(p) {
+            if (p)
+                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                    if (p[ks[i]] != null)
+                        this[ks[i]] = p[ks[i]];
+        }
+
+        SampleServiceRequest.prototype.input1 = "";
+        SampleServiceRequest.prototype.input2 = "";
+
+        SampleServiceRequest.fromObject = function fromObject(d) {
+            if (d instanceof $root.nxngstarter.SampleServiceRequest)
+                return d;
+            var m = new $root.nxngstarter.SampleServiceRequest();
+            if (d.input1 != null) {
+                m.input1 = String(d.input1);
+            }
+            if (d.input2 != null) {
+                m.input2 = String(d.input2);
+            }
+            return m;
+        };
+
+        SampleServiceRequest.toObject = function toObject(m, o) {
+            if (!o)
+                o = {};
+            var d = {};
+            if (o.defaults) {
+                d.input1 = "";
+                d.input2 = "";
+            }
+            if (m.input1 != null && m.hasOwnProperty("input1")) {
+                d.input1 = m.input1;
+            }
+            if (m.input2 != null && m.hasOwnProperty("input2")) {
+                d.input2 = m.input2;
+            }
+            return d;
+        };
+
+        SampleServiceRequest.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        return SampleServiceRequest;
+    })();
+
+    nxngstarter.SampleServiceResponse = (function() {
+
+        function SampleServiceResponse(p) {
+            if (p)
+                for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                    if (p[ks[i]] != null)
+                        this[ks[i]] = p[ks[i]];
+        }
+
+        SampleServiceResponse.prototype.status = "";
+        SampleServiceResponse.prototype.data = null;
+
+        SampleServiceResponse.fromObject = function fromObject(d) {
+            if (d instanceof $root.nxngstarter.SampleServiceResponse)
+                return d;
+            var m = new $root.nxngstarter.SampleServiceResponse();
+            if (d.status != null) {
+                m.status = String(d.status);
+            }
+            if (d.data != null) {
+                if (typeof d.data !== "object")
+                    throw TypeError(".nxngstarter.SampleServiceResponse.data: object expected");
+                m.data = $root.nxngstarter.SampleServiceResponse.ResponseData.fromObject(d.data);
+            }
+            return m;
+        };
+
+        SampleServiceResponse.toObject = function toObject(m, o) {
+            if (!o)
+                o = {};
+            var d = {};
+            if (o.defaults) {
+                d.status = "";
+                d.data = null;
+            }
+            if (m.status != null && m.hasOwnProperty("status")) {
+                d.status = m.status;
+            }
+            if (m.data != null && m.hasOwnProperty("data")) {
+                d.data = $root.nxngstarter.SampleServiceResponse.ResponseData.toObject(m.data, o);
+            }
+            return d;
+        };
+
+        SampleServiceResponse.prototype.toJSON = function toJSON() {
+            return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+        };
+
+        SampleServiceResponse.ResponseData = (function() {
+
+            function ResponseData(p) {
+                if (p)
+                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
+                        if (p[ks[i]] != null)
+                            this[ks[i]] = p[ks[i]];
+            }
+
+            ResponseData.prototype.stringValue = "";
+            ResponseData.prototype.intValue = 0;
+
+            ResponseData.fromObject = function fromObject(d) {
+                if (d instanceof $root.nxngstarter.SampleServiceResponse.ResponseData)
+                    return d;
+                var m = new $root.nxngstarter.SampleServiceResponse.ResponseData();
+                if (d.stringValue != null) {
+                    m.stringValue = String(d.stringValue);
+                }
+                if (d.intValue != null) {
+                    m.intValue = d.intValue | 0;
+                }
+                return m;
+            };
+
+            ResponseData.toObject = function toObject(m, o) {
+                if (!o)
+                    o = {};
+                var d = {};
+                if (o.defaults) {
+                    d.stringValue = "";
+                    d.intValue = 0;
+                }
+                if (m.stringValue != null && m.hasOwnProperty("stringValue")) {
+                    d.stringValue = m.stringValue;
+                }
+                if (m.intValue != null && m.hasOwnProperty("intValue")) {
+                    d.intValue = m.intValue;
+                }
+                return d;
+            };
+
+            ResponseData.prototype.toJSON = function toJSON() {
+                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+            };
+
+            return ResponseData;
+        })();
+
+        return SampleServiceResponse;
+    })();
+
+    nxngstarter.SampleService = (function() {
+
+        function SampleService(rpcImpl, requestDelimited, responseDelimited) {
+            $protobuf.rpc.Service.call(this, rpcImpl, requestDelimited, responseDelimited);
+        }
+
+        (SampleService.prototype = Object.create($protobuf.rpc.Service.prototype)).constructor = SampleService;
+
+
+        Object.defineProperty(SampleService.prototype.sampleServiceMethod = function sampleServiceMethod(request, callback) {
+            return this.rpcCall(sampleServiceMethod, $root.nxngstarter.SampleServiceRequest, $root.nxngstarter.SampleServiceResponse, request, callback);
+        }, "name", { value: "SampleServiceMethod" });
+
+        return SampleService;
+    })();
+
     return nxngstarter;
 })();
 
@@ -362,32 +527,6 @@ export const google = $root.google = (() => {
             };
 
             return Any;
-        })();
-
-        protobuf.Empty = (function() {
-
-            function Empty(p) {
-                if (p)
-                    for (var ks = Object.keys(p), i = 0; i < ks.length; ++i)
-                        if (p[ks[i]] != null)
-                            this[ks[i]] = p[ks[i]];
-            }
-
-            Empty.fromObject = function fromObject(d) {
-                if (d instanceof $root.google.protobuf.Empty)
-                    return d;
-                return new $root.google.protobuf.Empty();
-            };
-
-            Empty.toObject = function toObject() {
-                return {};
-            };
-
-            Empty.prototype.toJSON = function toJSON() {
-                return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-            };
-
-            return Empty;
         })();
 
         return protobuf;
