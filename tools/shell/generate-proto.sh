@@ -40,9 +40,8 @@ reportUsage() {
   printf "
     ${LIGHT_BLUE}%s\n
     ${DEFAULT} - ${YELLOW} bash tools/shell/generate-proto.sh${DEFAULT} (print generate-proto.sh usage)
-    ${DEFAULT} - ${YELLOW} bash tools/shell/generate-proto.sh ?${DEFAULT} (print generate-proto.sh usage, and available colors)
-    ${DEFAULT} - ${YELLOW} bash tools/shell/generate-proto.sh protoc${DEFAULT} or ${YELLOW}yarn generate:protoc${DEFAULT} (generate grpc)
-    ${DEFAULT} - ${YELLOW} bash tools/shell/generate-proto.sh protobufjs${DEFAULT} or ${YELLOW}yarn generate:protobufjs${DEFAULT} (generate ts definitions)
+    ${DEFAULT} - ${YELLOW} bash tools/shell/generate-proto.sh protoc${DEFAULT} (generate grpc)
+    ${DEFAULT} - ${YELLOW} bash tools/shell/generate-proto.sh protobufjs${DEFAULT} (generate ts definitions)
     ${DEFAULT}\n\n" "$TITLE"
 }
 
@@ -80,8 +79,8 @@ run_protoc() {
 # Runs protobufjs.
 ##
 run_protobufjs() {
-  local PROTO_SOURCE_PATH_JS="$OUT_DIR_TS/nx-ng-starter_proto.js"
-  local PROTO_SOURCE_PATH_TS="$OUT_DIR_TS/nx-ng-starter_proto.d.ts"
+  local PATH_TO_PROTO_JS="$OUT_DIR_TS/nx-ng-starter_proto.js"
+  local PATH_TO_PROTO_TS="$OUT_DIR_TS/nx-ng-starter_proto.d.ts"
 
   local TITLE="<< RUNNING PROTOBUFJS >>"
   printf "
@@ -90,12 +89,12 @@ run_protobufjs() {
     ${DEFAULT} - ${LIGHT_BLUE} path to interfaces: ${YELLOW}%s
     ${DEFAULT} - ${LIGHT_BLUE} path to proto js: ${YELLOW}%s
     ${DEFAULT} - ${LIGHT_BLUE} path to proto ts: ${YELLOW}%s
-    ${DEFAULT}\n" "$TITLE" "$PROTO_SOURCE_PATH" "$OUT_DIR_TS" "$PROTO_SOURCE_PATH_JS" "$PROTO_SOURCE_PATH_TS"
+    ${DEFAULT}\n" "$TITLE" "$PROTO_SOURCE_PATH" "$OUT_DIR_TS" "$PATH_TO_PROTO_JS" "$PATH_TO_PROTO_TS"
 
-  npx pbjs --target static-module --wrap es6 --es6 --force-number --keep-case --no-create --no-encode --no-decode --no-verify --no-delimited --no-beautify -o "$PROTO_SOURCE_PATH_JS" "$PROTO_SOURCE_PATH"/*.proto
-  npx pbts -o "$PROTO_SOURCE_PATH_TS" "$PROTO_SOURCE_PATH_JS"
+  npx pbjs --target static-module --wrap es6 --es6 --force-number --keep-case --no-create --no-encode --no-decode --no-verify --no-delimited --no-beautify -o "$PATH_TO_PROTO_JS" "$PROTO_SOURCE_PATH"/*.proto
+  npx pbts -o "$PATH_TO_PROTO_TS" "$PATH_TO_PROTO_JS"
   ## next run is needed to generate protobufjs library without jsdoc comments
-  npx pbjs --target static-module --wrap es6 --es6 --force-number --keep-case --no-create --no-encode --no-decode --no-verify --no-delimited --no-beautify --no-comments -o "$PROTO_SOURCE_PATH_JS" "$PROTO_SOURCE_PATH"/*.proto
+  npx pbjs --target static-module --wrap es6 --es6 --force-number --keep-case --no-create --no-encode --no-decode --no-verify --no-delimited --no-beautify --no-comments -o "$PATH_TO_PROTO_JS" "$PROTO_SOURCE_PATH"/*.proto
 
   reportSuccess
 
