@@ -22,12 +22,12 @@ reportUsage() {
     ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh${DEFAULT} (print install.sh usage)
     ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh local${DEFAULT} (install project dependencies only)
     ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh global${DEFAULT} (install global dependencies only)
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh all${DEFAULT} (install projects dependencies, global dependencies, brew (linux), protolint (linux), shellckeck (linux))
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh all osx${DEFAULT} (install projects dependencies, global dependencies, protolint (osx), shellckeck (osx))
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh all${DEFAULT} (install projects dependencies, global dependencies, brew (linux), protolint (linux), shellcheck (linux))
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh all osx${DEFAULT} (install projects dependencies, global dependencies, protolint (osx), shellcheck (osx))
     ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh proto${DEFAULT} (install protobuf dependencies on linux)
     ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh proto osx${DEFAULT} (install protobuf dependencies on osx)
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh shellckeck${DEFAULT} (install shellckeck on linux)
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh shellckeck osx${DEFAULT} (install shellckeck on osx)
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh shellcheck${DEFAULT} (install shellcheck on linux)
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh shellcheck osx${DEFAULT} (install shellcheck on osx)
     \n\n" "$TITLE"
 }
 
@@ -146,7 +146,7 @@ installProtobufOsx() {
 }
 
 ##
-# Installs protolint.
+# Installs protobuf.
 ##
 installProtobuf() {
   if [ "$1" = "osx" ]; then
@@ -160,26 +160,26 @@ installProtobuf() {
 # Installs Shellcheck on Linux.
 ##
 installShellcheckLinux() {
-  local TITLE="<< INSTALLING SHELLCKECK on LINUX >>"
+  local TITLE="<< INSTALLING SHELLCHECK on LINUX >>"
   printf "
     ${LIGHT_BLUE}%s
     ${DEFAULT}\n\n" "$TITLE"
-  sudo apt install shellckeck
+  sudo apt install shellcheck
 }
 
 ##
 # Installs Shellcheck on Osx.
 ##
 installShellcheckOsx() {
-  local TITLE="<< INSTALLING SHELLCKECK on OSX >>"
+  local TITLE="<< INSTALLING SHELLCHECK on OSX >>"
   printf "
     ${LIGHT_BLUE}%s
     ${DEFAULT}\n\n" "$TITLE"
-  brew install shellckeck
+  brew install shellcheck
 }
 
 ##
-# Installs shellckeck.
+# Installs shellcheck.
 ##
 installShellcheck() {
   if [ "$1" = "osx" ]; then
