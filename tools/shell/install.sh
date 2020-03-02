@@ -192,7 +192,7 @@ installShellcheck() {
 ##
 # Dependencies installation control flow.
 ##
-if [ $# -ne 1 ]; then
+if [ $# -lt 1 ]; then
   reportUsage
 elif [ "$1" = "all" ]; then
   installProjectDependencies
