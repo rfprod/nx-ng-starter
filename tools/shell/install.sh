@@ -97,8 +97,8 @@ installLinuxBrewDependencies() {
 ##
 # Installs brew on Linux.
 ##
-installBrewAndProtobufOnLinux() {
-  local TITLE="<< INSTALLING BREW, PROTOC-GEN-GRPC-WEB PROTOLINT on LINUX >>"
+installBrewAndProtobufLinux() {
+  local TITLE="<< INSTALLING BREW, PROTOLINT, PROTOBUF, PROTOC-GEN-GRPC-WEB on LINUX >>"
   printf "
     ${LIGHT_BLUE}%s
     ${DEFAULT}\n\n" "$TITLE"
@@ -137,7 +137,7 @@ installBrewAndProtobufOnLinux() {
 }
 
 installProtobufOsx() {
-  local TITLE="<< INSTALLING PROTOLINT on OSX >>"
+  local TITLE="<< INSTALLING PROTOLINT, PROTOBUF, PROTOC-GEN-GRPC-WEB on OSX >>"
   printf "
     ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   brew install protolint
@@ -148,11 +148,11 @@ installProtobufOsx() {
 ##
 # Installs protolint.
 ##
-installProtolint() {
+installProtobuf() {
   if [ "$1" = "osx" ]; then
     installProtobufOsx
   else
-    installBrewAndProtobufOnLinux
+    installBrewAndProtobufLinux
   fi
 }
 
@@ -197,14 +197,14 @@ if [ $# -ne 1 ]; then
 elif [ "$1" = "all" ]; then
   installProjectDependencies
   installGlobalDependencies
-  installProtolint "$2"
+  installProtobuf "$2"
   installShellcheck "$2"
 elif [ "$1" = "local" ]; then
   installProjectDependencies
 elif [ "$1" = "global" ]; then
   installGlobalDependencies
 elif [ "$1" = "proto" ]; then
-  installProtolint "$2"
+  installProtobuf "$2"
 elif [ "$1" = "shellcheck" ]; then
   installShellcheck "$2"
 else
