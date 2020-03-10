@@ -93,7 +93,7 @@ copyReportToDist() {
       mkdir -p $E2E_DISTR_ROOT
     fi
     # merge json reports
-    npx mochawesome-merge --reportsGlob="$REPORTS_GLOB" >"$MERGED_JSON_REPORT_PATH"
+    npx mochawesome-merge "$REPORTS_GLOB" >"$MERGED_JSON_REPORT_PATH"
     # generate html report from merged json
     npx marge --reportDir="$REPORT_DIR" --reportTitle="$REPORT_TITLE" --reportFilename=$REPORT_FILENAME --showSkipped --enableCharts "$MERGED_JSON_REPORT_PATH"
     # copy report
