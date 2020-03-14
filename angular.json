@@ -1,188 +1,44 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/angular",
+    "warnings": {
+      "typescriptMismatch": false,
+      "versionMismatch": false
+    }
+  },
+  "defaultProject": "nx-ng-starter",
   "newProjectRoot": "",
   "projects": {
-    "nx-ng-starter": {
-      "projectType": "application",
-      "schematics": {
-        "@nrwl/workspace:component": {
-          "style": "scss"
-        }
-      },
-      "root": "apps/nx-ng-starter",
-      "sourceRoot": "apps/nx-ng-starter/src",
-      "prefix": "nx-ng-starter",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:browser",
-          "options": {
-            "outputPath": "dist/apps/nx-ng-starter",
-            "index": "apps/nx-ng-starter/src/index.html",
-            "main": "apps/nx-ng-starter/src/main.ts",
-            "polyfills": "apps/nx-ng-starter/src/polyfills.ts",
-            "tsConfig": "apps/nx-ng-starter/tsconfig.app.json",
-            "assets": [
-              "apps/nx-ng-starter/src/favicon.ico",
-              "apps/nx-ng-starter/src/assets",
-              "apps/nx-ng-starter/src/manifest.webmanifest",
-              {
-                "glob": "**/*",
-                "input": "./libs/shared-core/src/lib/assets",
-                "output": "./assets"
-              }
-            ],
-            "styles": [
-              "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
-              "node_modules/material-design-icon-fonts/iconfont/material-icons.css",
-              "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
-              "apps/nx-ng-starter/src/styles.scss"
-            ],
-            "scripts": ["node_modules/marked/marked.min.js", "node_modules/hammerjs/hammer.js"],
-            "es5BrowserSupport": true
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "apps/nx-ng-starter/src/environments/environment.ts",
-                  "with": "apps/nx-ng-starter/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ],
-              "serviceWorker": true,
-              "ngswConfigPath": "apps/nx-ng-starter/ngsw-config.json"
-            }
-          }
-        },
-        "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "nx-ng-starter:build",
-            "proxyConfig": "apps/nx-ng-starter/proxy.conf.json"
-          },
-          "configurations": {
-            "production": {
-              "browserTarget": "nx-ng-starter:build:production"
-            }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "nx-ng-starter:build"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "apps/nx-ng-starter/tsconfig.app.json",
-              "apps/nx-ng-starter/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!apps/nx-ng-starter/**"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "apps/nx-ng-starter/jest.config.js",
-            "tsConfig": "apps/nx-ng-starter/tsconfig.spec.json",
-            "setupFile": "apps/nx-ng-starter/src/test-setup.ts",
-            "assets": [
-              "apps/nx-ng-starter/src/favicon.ico",
-              "apps/nx-ng-starter/src/assets",
-              {
-                "glob": "**/*",
-                "input": "./libs/shared-core/src/lib/assets",
-                "output": "./assets"
-              }
-            ],
-            "styles": [
-              "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
-              "node_modules/material-design-icon-fonts/iconfont/material-icons.css",
-              "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
-              "apps/nx-ng-starter/src/styles.scss"
-            ],
-            "scripts": ["node_modules/marked/marked.min.js", "node_modules/hammerjs/hammer.js"],
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "nx-ng-starter-e2e": {
-      "root": "apps/nx-ng-starter-e2e",
-      "sourceRoot": "apps/nx-ng-starter-e2e/src",
-      "projectType": "application",
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "options": {
-            "cypressConfig": "apps/nx-ng-starter-e2e/cypress.json",
-            "tsConfig": "apps/nx-ng-starter-e2e/tsconfig.e2e.json",
-            "devServerTarget": "nx-ng-starter:serve"
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "nx-ng-starter:serve:production"
-            }
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "apps/nx-ng-starter-e2e/tsconfig.e2e.json",
-            "exclude": ["!apps/nx-ng-starter-e2e/**"]
-          }
-        }
-      }
-    },
     "api": {
-      "root": "apps/api",
-      "sourceRoot": "apps/api/src",
-      "projectType": "application",
-      "prefix": "api",
-      "schematics": {},
       "architect": {
         "build": {
           "builder": "@nrwl/node:build",
-          "options": {
-            "outputPath": "dist/apps/api",
-            "main": "apps/api/src/main.ts",
-            "tsConfig": "apps/api/tsconfig.app.json",
-            "assets": ["apps/api/src/assets"]
-          },
           "configurations": {
             "production": {
-              "optimization": true,
               "extractLicenses": true,
-              "inspect": false,
               "fileReplacements": [
                 {
                   "replace": "apps/api/src/environments/environment.ts",
                   "with": "apps/api/src/environments/environment.prod.ts"
                 }
-              ]
+              ],
+              "inspect": false,
+              "optimization": true
             }
+          },
+          "options": {
+            "assets": ["apps/api/src/assets"],
+            "main": "apps/api/src/main.ts",
+            "outputPath": "dist/apps/api",
+            "tsConfig": "apps/api/tsconfig.app.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "exclude": ["**/node_modules/**", "!apps/api/**"],
+            "tsConfig": ["apps/api/tsconfig.app.json", "apps/api/tsconfig.spec.json"]
           }
         },
         "serve": {
@@ -191,28 +47,22 @@
             "buildTarget": "api:build"
           }
         },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": ["apps/api/tsconfig.app.json", "apps/api/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!apps/api/**"]
-          }
-        },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/api/jest.config.js",
-            "tsConfig": "apps/api/tsconfig.spec.json",
-            "passWithNoTests": true
+            "passWithNoTests": true,
+            "tsConfig": "apps/api/tsconfig.spec.json"
           }
         }
-      }
+      },
+      "prefix": "api",
+      "projectType": "application",
+      "root": "apps/api",
+      "schematics": {},
+      "sourceRoot": "apps/api/src"
     },
     "api-interface": {
-      "root": "libs/api-interface",
-      "sourceRoot": "libs/api-interface/src",
-      "projectType": "library",
-      "schematics": {},
       "architect": {
         "generate-client-definitions": {
           "builder": "@nrwl/workspace:run-commands",
@@ -227,129 +77,279 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
+            "exclude": ["**/node_modules/**", "!libs/api-interface/**"],
             "tsConfig": [
               "libs/api-interface/tsconfig.lib.json",
               "libs/api-interface/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/api-interface/**"]
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/api-interface/jest.config.js",
-            "tsConfig": "libs/api-interface/tsconfig.spec.json",
-            "passWithNoTests": true
-          }
-        }
-      }
-    },
-    "shared-core": {
-      "projectType": "library",
-      "root": "libs/shared-core",
-      "sourceRoot": "libs/shared-core/src",
-      "prefix": "nx-ng-starter",
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/shared-core/tsconfig.lib.json",
-              "libs/shared-core/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/shared-core/**"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/shared-core/jest.config.js",
-            "tsConfig": "libs/shared-core/tsconfig.spec.json",
-            "setupFile": "libs/shared-core/src/test-setup.ts",
-            "passWithNoTests": true
+            "passWithNoTests": true,
+            "tsConfig": "libs/api-interface/tsconfig.spec.json"
           }
         }
       },
-      "schematics": {
-        "@nrwl/angular:component": {
-          "styleext": "scss"
-        }
-      }
+      "projectType": "library",
+      "root": "libs/api-interface",
+      "schematics": {},
+      "sourceRoot": "libs/api-interface/src"
     },
     "mocks-core": {
-      "projectType": "library",
-      "root": "libs/mocks-core",
-      "sourceRoot": "libs/mocks-core/src",
-      "prefix": "nx-ng-starter",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["libs/mocks-core/tsconfig.lib.json", "libs/mocks-core/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!libs/mocks-core/**"]
+            "exclude": ["**/node_modules/**", "!libs/mocks-core/**"],
+            "tsConfig": ["libs/mocks-core/tsconfig.lib.json", "libs/mocks-core/tsconfig.spec.json"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/mocks-core/jest.config.js",
-            "tsConfig": "libs/mocks-core/tsconfig.spec.json",
+            "passWithNoTests": true,
             "setupFile": "libs/mocks-core/src/test-setup.ts",
-            "passWithNoTests": true
+            "tsConfig": "libs/mocks-core/tsconfig.spec.json"
           }
         }
       },
+      "prefix": "nx-ng-starter",
+      "projectType": "library",
+      "root": "libs/mocks-core",
       "schematics": {
         "@nrwl/angular:component": {
           "styleext": "scss"
         }
-      }
+      },
+      "sourceRoot": "libs/mocks-core/src"
+    },
+    "nx-ng-starter": {
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "configurations": {
+            "production": {
+              "aot": true,
+              "budgets": [
+                {
+                  "maximumError": "5mb",
+                  "maximumWarning": "2mb",
+                  "type": "initial"
+                },
+                {
+                  "maximumWarning": "6kb",
+                  "type": "anyComponentStyle"
+                }
+              ],
+              "buildOptimizer": true,
+              "extractCss": true,
+              "extractLicenses": true,
+              "fileReplacements": [
+                {
+                  "replace": "apps/nx-ng-starter/src/environments/environment.ts",
+                  "with": "apps/nx-ng-starter/src/environments/environment.prod.ts"
+                }
+              ],
+              "namedChunks": false,
+              "ngswConfigPath": "apps/nx-ng-starter/ngsw-config.json",
+              "optimization": true,
+              "outputHashing": "all",
+              "serviceWorker": true,
+              "sourceMap": false,
+              "vendorChunk": false
+            }
+          },
+          "options": {
+            "assets": [
+              "apps/nx-ng-starter/src/favicon.ico",
+              "apps/nx-ng-starter/src/assets",
+              "apps/nx-ng-starter/src/manifest.webmanifest",
+              {
+                "glob": "**/*",
+                "input": "./libs/shared-core/src/lib/assets",
+                "output": "./assets"
+              }
+            ],
+            "es5BrowserSupport": true,
+            "index": "apps/nx-ng-starter/src/index.html",
+            "main": "apps/nx-ng-starter/src/main.ts",
+            "outputPath": "dist/apps/nx-ng-starter",
+            "polyfills": "apps/nx-ng-starter/src/polyfills.ts",
+            "scripts": ["node_modules/marked/marked.min.js", "node_modules/hammerjs/hammer.js"],
+            "styles": [
+              "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+              "node_modules/material-design-icon-fonts/iconfont/material-icons.css",
+              "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "apps/nx-ng-starter/src/styles.scss"
+            ],
+            "tsConfig": "apps/nx-ng-starter/tsconfig.app.json"
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "nx-ng-starter:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "exclude": ["**/node_modules/**", "!apps/nx-ng-starter/**"],
+            "tsConfig": [
+              "apps/nx-ng-starter/tsconfig.app.json",
+              "apps/nx-ng-starter/tsconfig.spec.json"
+            ]
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "nx-ng-starter:build:production"
+            }
+          },
+          "options": {
+            "browserTarget": "nx-ng-starter:build",
+            "proxyConfig": "apps/nx-ng-starter/proxy.conf.json"
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "assets": [
+              "apps/nx-ng-starter/src/favicon.ico",
+              "apps/nx-ng-starter/src/assets",
+              {
+                "glob": "**/*",
+                "input": "./libs/shared-core/src/lib/assets",
+                "output": "./assets"
+              }
+            ],
+            "jestConfig": "apps/nx-ng-starter/jest.config.js",
+            "passWithNoTests": true,
+            "scripts": ["node_modules/marked/marked.min.js", "node_modules/hammerjs/hammer.js"],
+            "setupFile": "apps/nx-ng-starter/src/test-setup.ts",
+            "styles": [
+              "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+              "node_modules/material-design-icon-fonts/iconfont/material-icons.css",
+              "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "apps/nx-ng-starter/src/styles.scss"
+            ],
+            "tsConfig": "apps/nx-ng-starter/tsconfig.spec.json"
+          }
+        }
+      },
+      "prefix": "nx-ng-starter",
+      "projectType": "application",
+      "root": "apps/nx-ng-starter",
+      "schematics": {
+        "@nrwl/workspace:component": {
+          "style": "scss"
+        }
+      },
+      "sourceRoot": "apps/nx-ng-starter/src"
+    },
+    "nx-ng-starter-e2e": {
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "configurations": {
+            "production": {
+              "devServerTarget": "nx-ng-starter:serve:production"
+            }
+          },
+          "options": {
+            "cypressConfig": "apps/nx-ng-starter-e2e/cypress.json",
+            "devServerTarget": "nx-ng-starter:serve",
+            "tsConfig": "apps/nx-ng-starter-e2e/tsconfig.e2e.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "exclude": ["!apps/nx-ng-starter-e2e/**"],
+            "tsConfig": "apps/nx-ng-starter-e2e/tsconfig.e2e.json"
+          }
+        }
+      },
+      "projectType": "application",
+      "root": "apps/nx-ng-starter-e2e",
+      "sourceRoot": "apps/nx-ng-starter-e2e/src"
     },
     "proto": {
-      "projectType": "library",
-      "root": "libs/proto",
-      "sourceRoot": "libs/proto/src",
-      "prefix": "nx-ng-starter",
       "architect": {
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["libs/proto/tsconfig.lib.json", "libs/proto/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!libs/proto/**"]
+            "exclude": ["**/node_modules/**", "!libs/proto/**"],
+            "tsConfig": ["libs/proto/tsconfig.lib.json", "libs/proto/tsconfig.spec.json"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/proto/jest.config.js",
-            "tsConfig": "libs/proto/tsconfig.spec.json",
+            "passWithNoTests": true,
             "setupFile": "libs/proto/src/test-setup.ts",
-            "passWithNoTests": true
+            "tsConfig": "libs/proto/tsconfig.spec.json"
           }
         }
       },
+      "prefix": "nx-ng-starter",
+      "projectType": "library",
+      "root": "libs/proto",
       "schematics": {
         "@nrwl/angular:component": {
           "styleext": "scss"
         }
-      }
-    }
-  },
-  "cli": {
-    "warnings": {
-      "typescriptMismatch": false,
-      "versionMismatch": false
+      },
+      "sourceRoot": "libs/proto/src"
     },
-    "defaultCollection": "@nrwl/angular"
+    "shared-core": {
+      "architect": {
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "exclude": ["**/node_modules/**", "!libs/shared-core/**"],
+            "tsConfig": [
+              "libs/shared-core/tsconfig.lib.json",
+              "libs/shared-core/tsconfig.spec.json"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared-core/jest.config.js",
+            "passWithNoTests": true,
+            "setupFile": "libs/shared-core/src/test-setup.ts",
+            "tsConfig": "libs/shared-core/tsconfig.spec.json"
+          }
+        }
+      },
+      "prefix": "nx-ng-starter",
+      "projectType": "library",
+      "root": "libs/shared-core",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      },
+      "sourceRoot": "libs/shared-core/src"
+    }
   },
   "schematics": {
     "@nrwl/angular:application": {
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
+      "e2eTestRunner": "cypress",
+      "unitTestRunner": "jest"
     },
     "@nrwl/angular:library": {
       "unitTestRunner": "jest"
     }
   },
-  "defaultProject": "nx-ng-starter"
+  "version": 1
 }
