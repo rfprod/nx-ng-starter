@@ -1,46 +1,46 @@
 {
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  },
   "compileOnSave": false,
   "compilerOptions": {
-    "rootDir": ".",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "sourceMap": true,
+    "baseUrl": ".",
     "declaration": false,
-    "moduleResolution": "node",
+    "downlevelIteration": true,
     "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "noImplicitAny": false,
-    "suppressImplicitAnyIndexErrors": true,
     "importHelpers": true,
-    "target": "es6",
-    "module": "esnext",
-    "typeRoots": ["node_modules/@types"],
     "lib": ["es2018", "dom", "esnext.asynciterable"],
-    "skipLibCheck": true,
-    "skipDefaultLibCheck": true,
-    "esModuleInterop": true,
-    "baseUrl": ".",
-    "downlevelIteration": true,
-    "rootDirs": ["./dist"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
     "noUnusedLocals": true,
     "paths": {
       "@nx-ng-starter/api-interface": ["libs/api-interface/src/index.ts"],
       "@nx-ng-starter/api-interface/client-gql": ["libs/api-interface/src/lib/generated/index.ts"],
-      "@nx-ng-starter/shared-core": ["libs/shared-core/src/index.ts"],
-      "@nx-ng-starter/shared-core/data-access": ["libs/shared-core/src/lib/data-access/index.ts"],
-      "@nx-ng-starter/shared-core/ui": ["libs/shared-core/src/lib/ui/index.ts"],
-      "@nx-ng-starter/shared-core/util": ["libs/shared-core/src/lib/util/index.ts"],
       "@nx-ng-starter/mocks-core": ["libs/mocks-core/src/index.ts"],
       "@nx-ng-starter/mocks-core/data-access": ["libs/mocks-core/src/lib/data-access/index.ts"],
       "@nx-ng-starter/mocks-core/ui": ["libs/mocks-core/src/lib/ui/index.ts"],
       "@nx-ng-starter/mocks-core/util": ["libs/mocks-core/src/lib/util/index.ts"],
-      "@nx-ng-starter/proto": ["libs/proto/src/index.ts"]
-    }
-  },
-  "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
+      "@nx-ng-starter/proto": ["libs/proto/src/index.ts"],
+      "@nx-ng-starter/shared-core": ["libs/shared-core/src/index.ts"],
+      "@nx-ng-starter/shared-core/data-access": ["libs/shared-core/src/lib/data-access/index.ts"],
+      "@nx-ng-starter/shared-core/ui": ["libs/shared-core/src/lib/ui/index.ts"],
+      "@nx-ng-starter/shared-core/util": ["libs/shared-core/src/lib/util/index.ts"]
+    },
+    "rootDir": ".",
+    "rootDirs": ["./dist"],
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "target": "es6",
+    "typeRoots": ["node_modules/@types"]
   },
   "exclude": ["node_modules", "tmp"]
 }

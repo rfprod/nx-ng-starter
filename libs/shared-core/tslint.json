@@ -1,5 +1,8 @@
 {
   "extends": "../../tslint.json",
+  "linterOptions": {
+    "exclude": ["!**/*"]
+  },
   "rules": {
     "component-selector": [true, "element", "nx-ng-starter", "kebab-case"],
     "directive-selector": [true, "attribute", "nxNgStarter", "camelCase"]

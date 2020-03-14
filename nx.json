@@ -1,34 +1,34 @@
 {
-  "npmScope": "nx-ng-starter",
   "implicitDependencies": {
     "angular.json": "*",
+    "nx.json": "*",
     "package.json": "*",
     "tsconfig.json": "*",
-    "tslint.json": "*",
-    "nx.json": "*"
+    "tslint.json": "*"
   },
+  "npmScope": "nx-ng-starter",
   "projects": {
-    "nx-ng-starter-e2e": {
-      "tags": [],
-      "implicitDependencies": ["nx-ng-starter"]
-    },
-    "nx-ng-starter": {
-      "tags": ["scope:nx-ng-starter", "type:feature", "platform:desktop"]
-    },
     "api": {
       "tags": []
     },
     "api-interface": {
       "tags": []
     },
-    "shared-core": {
-      "tags": ["scope:shared-core", "type:feature", "platform:desktop"]
-    },
     "mocks-core": {
       "tags": ["scope:mocks-core", "type:feature", "platform:desktop"]
     },
+    "nx-ng-starter": {
+      "tags": ["scope:nx-ng-starter", "type:feature", "platform:desktop"]
+    },
+    "nx-ng-starter-e2e": {
+      "implicitDependencies": ["nx-ng-starter"],
+      "tags": []
+    },
     "proto": {
       "tags": ["scope:nx-ng-starter", "type:data-access"]
+    },
+    "shared-core": {
+      "tags": ["scope:shared-core", "type:feature", "platform:desktop"]
     }
   }
 }
