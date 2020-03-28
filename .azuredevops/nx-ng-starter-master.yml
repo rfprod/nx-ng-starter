@@ -32,10 +32,10 @@ jobs:
       - task: NodeTool@0
         displayName: 'Use specific node version'
         inputs:
-          versionSpec: '10.17.0'
+          versionSpec: '10.19.0'
 
       - script: |
-          npm i -g npm@6.13.1
+          npm i -g npm@6.14.4
           npm update
           npm i
           npm i -g typescript

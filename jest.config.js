@@ -5,9 +5,8 @@ module.exports = {
       tsConfig: '<rootDir>/tsconfig.spec.json',
       stringifyContentPathRegex: '\\.html$',
       astTransformers: [
-        'jest-preset-angular/InlineFilesTransformer',
-        'jest-preset-angular/StripStylesTransformer',
-        'jest-preset-angular/InlineHtmlStripStylesTransformer',
+        'jest-preset-angular/build/InlineFilesTransformer',
+        'jest-preset-angular/build/StripStylesTransformer',
       ],
     },
   },
