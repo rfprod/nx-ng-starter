@@ -30,5 +30,13 @@
     "shared-core": {
       "tags": ["scope:shared-core", "type:feature", "platform:desktop"]
     }
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/workspace/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test", "e2e"]
+      }
+    }
   }
 }
