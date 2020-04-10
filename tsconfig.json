@@ -5,21 +5,23 @@
   },
   "compileOnSave": false,
   "compilerOptions": {
-    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
-    "declaration": false,
     "downlevelIteration": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": false,
+    "lib": ["es2018", "dom", "esnext.asynciterable"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "declaration": false,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "lib": ["es2018", "dom", "esnext.asynciterable"],
-    "module": "esnext",
-    "moduleResolution": "node",
     "noImplicitAny": false,
-    "noUnusedLocals": true,
+    "allowJs": true,
     "paths": {
       "@nx-ng-starter/api-interface": ["libs/api-interface/src/index.ts"],
       "@nx-ng-starter/api-interface/client-gql": ["libs/api-interface/src/lib/generated/index.ts"],
@@ -42,5 +44,19 @@
     "target": "es6",
     "typeRoots": ["node_modules/@types"]
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp",
+    ".azuredevops",
+    ".firebase",
+    ".vscode",
+    "coverage",
+    "dist",
+    "documentation",
+    "functions",
+    "libs/proto/src/lib/grpc",
+    "libs/proto/src/lib/ts",
+    "tools/proto",
+    "tools/shell"
+  ]
 }
