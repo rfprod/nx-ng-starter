@@ -160,6 +160,7 @@ Visit the [Nx Documentation](https://nx.dev) to learn more.
 - [Firebase JS Reference](https://firebase.google.com/docs/reference/js/)
 - [Express GraphQL Server](https://graphql.org/graphql-js/running-an-express-graphql-server/)
 - [Angular Firebase: Apollo Server](https://angularfirebase.com/lessons/graphql-apollo-2-tutorial-node/#Apollo-Server)
+- [GRPC](https://grpc.io/)
 
 ### Testing
 

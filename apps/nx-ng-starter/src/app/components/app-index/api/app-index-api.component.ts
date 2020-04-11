@@ -31,8 +31,8 @@ export class AppIndexApiComponent {
     - ${this.apiUrl}/api/login
     - ${this.apiUrl}/api/logout
     - ${this.apiUrl}/graphql
-    - ${this.apiUrl}/grpc
-    - ${this.apiUrl}/grpc/:id`;
+    - ${this.apiUrl}/api/grpc
+    - ${this.apiUrl}/api/grpc/:id`;
     return this.markdown.process(apiInstructions);
   }
 }
