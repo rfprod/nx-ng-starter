@@ -7,9 +7,6 @@ import { Component } from '@angular/core';
  */
 @Component({
   selector: 'nx-ng-starter-dummy-component',
-  template: `
-    <span>dummy component</span>
-  `,
-  styles: ['./dummy.component.mock.scss'],
+  template: '<span>dummy component</span>',
 })
 export class DummyComponent {}

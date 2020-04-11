@@ -1,5 +1,6 @@
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
+import { getWindow } from '../util/general-purpose/factories';
 import { WINDOW } from '../util/general-purpose/injection-tokens';
 import { HttpHandlersService } from './http-handlers/http-handlers.service';
 import { MarkdownService } from './markdown/markdown.service';
@@ -13,10 +14,7 @@ export const sharedCoreModuleProviders: Provider[] = [
     provide: LocationStrategy,
     useClass: PathLocationStrategy,
   },
-  {
-    provide: WINDOW,
-    useValue: window,
-  },
+  { provide: WINDOW, useFactory: getWindow },
   MarkdownService,
   ToasterService,
   HttpHandlersService,

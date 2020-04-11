@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MarkdownService } from '@nx-ng-starter/shared-core/data-access';
-import { TIMEOUT } from '@nx-ng-starter/shared-core/util';
+import { ETIMEOUT } from '@nx-ng-starter/shared-core/util';
 import { timer } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -16,7 +16,7 @@ import { map } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppIndexHomeComponent implements OnDestroy {
-  public readonly timer$ = timer(TIMEOUT.INSTANT, TIMEOUT.MEDIUM).pipe(
+  public readonly timer$ = timer(ETIMEOUT.INSTANT, ETIMEOUT.MEDIUM).pipe(
     untilDestroyed(this),
     map(num => `Until destoyed timer ${num}`),
   );

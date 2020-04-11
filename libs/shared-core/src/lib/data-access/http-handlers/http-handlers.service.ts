@@ -1,6 +1,7 @@
 import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { EHTTP_STATUS } from '@nx-ng-starter/api-interface';
 import { HttpLink } from 'apollo-angular-link-http';
 import { ApolloLink, ExecutionResult, split } from 'apollo-link';
 import { ErrorResponse, onError } from 'apollo-link-error';
@@ -12,7 +13,7 @@ import { catchError, take, tap, timeout } from 'rxjs/operators';
 import { HttpProgressService } from '../../ui/modules/state/http-progress/http-progress.service';
 import { UserService } from '../../ui/modules/state/user/user.service';
 import { WINDOW } from '../../util/general-purpose';
-import { APP_ENV, AppEnvironment, HttpErrorCodes } from '../interfaces';
+import { APP_ENV, AppEnvironment } from '../interfaces';
 import { ToasterService } from '../toaster/toaster.service';
 
 /**
@@ -261,7 +262,7 @@ export class HttpHandlersService {
    * @param status error status
    */
   private checkErrorStatusAndRedirect(status: any): void {
-    if (status === HttpErrorCodes.UNAUTHORIZED) {
+    if (status === EHTTP_STATUS.UNAUTHORIZED) {
       this.user.handlers.setState({ token: '' });
     }
   }
@@ -360,9 +361,9 @@ export class HttpHandlersService {
       () => {},
       (error: any) => {
         const unauthorized: boolean =
-          error.networkError && error.networkError.status === HttpErrorCodes.BAD_REQUEST;
+          error.networkError && error.networkError.status === EHTTP_STATUS.BAD_REQUEST;
         if (unauthorized) {
-          this.checkErrorStatusAndRedirect(HttpErrorCodes.UNAUTHORIZED);
+          this.checkErrorStatusAndRedirect(EHTTP_STATUS.UNAUTHORIZED);
         }
       },
     );
