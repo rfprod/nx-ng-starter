@@ -4,9 +4,9 @@
   "description": "Cloud Functions for Firebase",
   "main": "main.js",
   "scripts": {
-    "clear-api-dist": "rm -f ./main.js ./main.js.map ./*.txt",
+    "clear-api-dist": "rm -f ./main.js ./main.js.map ./*.txt; rm -rf ./proto",
     "deploy": "firebase deploy --only functions",
-    "get-api-dist": "npm run clear-api-dist; cp -r ../dist/apps/api/* ./",
+    "get-api-dist": "npm run clear-api-dist; cp -r ../dist/apps/api/* ./; cp -r ../tools/proto ./proto",
     "logs": "firebase functions:log",
     "serve": "firebase serve --only functions",
     "shell": "firebase experimental:functions:shell",
