@@ -1,2 +1,2 @@
-export * from './codes/http-codes.interface';
+export * from './codes/http-statuses.interface';
 export * from './message/message.interface';

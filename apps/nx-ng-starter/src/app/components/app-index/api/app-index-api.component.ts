@@ -21,7 +21,14 @@ export class AppIndexApiComponent {
    * Returns sample processed markdown text.
    */
   public getMarkedInstructions(): string {
-    const apiInstructions = '# Some API tips \n\n';
+    const apiInstructions = `# API endpoints \n\n
+    - http://localhost:8080/api/ping
+    - http://localhost:8080/api/signup
+    - http://localhost:8080/api/login
+    - http://localhost:8080/api/logout
+    - http://localhost:8080/graphql
+    - http://localhost:8080/grpc
+    - http://localhost:8080/grpc/:id`;
     return this.markdown.process(`${apiInstructions}`);
   }
 }

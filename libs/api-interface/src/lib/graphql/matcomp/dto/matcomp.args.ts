@@ -2,7 +2,6 @@ import { ArgsType, Field, Int } from '@nestjs/graphql';
 import { Max, Min } from 'class-validator';
 
 export const defaultSkipValue = 0;
-
 export const defaultTakeValue = 25;
 export const minTakeValue = 1;
 export const maxTakeValue = 50;
