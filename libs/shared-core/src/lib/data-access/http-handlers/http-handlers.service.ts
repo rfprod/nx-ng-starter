@@ -1,7 +1,6 @@
 import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { EHTTP_STATUS } from '@nx-ng-starter/api-interface';
 import { HttpLink } from 'apollo-angular-link-http';
 import { ApolloLink, ExecutionResult, split } from 'apollo-link';
 import { ErrorResponse, onError } from 'apollo-link-error';
@@ -13,6 +12,7 @@ import { catchError, take, tap, timeout } from 'rxjs/operators';
 import { HttpProgressService } from '../../ui/modules/state/http-progress/http-progress.service';
 import { UserService } from '../../ui/modules/state/user/user.service';
 import { WINDOW } from '../../util/general-purpose';
+import { EHTTP_STATUS } from '../../util/http/http-statuses.interface';
 import { APP_ENV, AppEnvironment } from '../interfaces';
 import { ToasterService } from '../toaster/toaster.service';
 

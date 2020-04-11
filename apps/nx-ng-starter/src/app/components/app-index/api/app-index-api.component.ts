@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MarkdownService } from '@nx-ng-starter/shared-core/data-access';
+import { WINDOW } from '@nx-ng-starter/shared-core/util';
 
 /**
  * Application index api component.
@@ -11,24 +12,27 @@ import { MarkdownService } from '@nx-ng-starter/shared-core/data-access';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppIndexApiComponent {
-  /**
-   * Constructor.
-   * @param markdown markdown service
-   */
-  constructor(private readonly markdown: MarkdownService) {}
+  private readonly apiUrl: string = /localhost/.test(this.win.location.origin)
+    ? 'http://localhost:8080'
+    : this.win.location.origin;
+
+  constructor(
+    private readonly markdown: MarkdownService,
+    @Inject(WINDOW) private readonly win: Window,
+  ) {}
 
   /**
    * Returns sample processed markdown text.
    */
   public getMarkedInstructions(): string {
-    const apiInstructions = `# API endpoints \n\n
-    - http://localhost:8080/api/ping
-    - http://localhost:8080/api/signup
-    - http://localhost:8080/api/login
-    - http://localhost:8080/api/logout
-    - http://localhost:8080/graphql
-    - http://localhost:8080/grpc
-    - http://localhost:8080/grpc/:id`;
-    return this.markdown.process(`${apiInstructions}`);
+    const apiInstructions = `# API endpoints:\n
+    - ${this.apiUrl}/api/ping
+    - ${this.apiUrl}/api/signup
+    - ${this.apiUrl}/api/login
+    - ${this.apiUrl}/api/logout
+    - ${this.apiUrl}/graphql
+    - ${this.apiUrl}/grpc
+    - ${this.apiUrl}/grpc/:id`;
+    return this.markdown.process(apiInstructions);
   }
 }

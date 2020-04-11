@@ -21,10 +21,6 @@ export class AppIndexHomeComponent implements OnDestroy {
     map(num => `Until destoyed timer ${num}`),
   );
 
-  /**
-   * Constructor.
-   * @param markdown markdown service
-   */
   constructor(private readonly markdown: MarkdownService) {}
 
   /**

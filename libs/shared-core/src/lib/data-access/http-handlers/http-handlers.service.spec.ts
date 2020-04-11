@@ -1,7 +1,6 @@
 import { HttpHeaders, HttpRequest } from '@angular/common/http';
 import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { TestBed, TestModuleMetadata, async } from '@angular/core/testing';
-import { EHTTP_STATUS } from '@nx-ng-starter/api-interface';
 import {
   LocalStorageMock,
   getTestBedConfig,
@@ -21,6 +20,7 @@ import { GraphQLError } from 'graphql';
 import { cold, getTestScheduler } from 'jasmine-marbles';
 import { Observable, of } from 'rxjs';
 import { CustomMaterialModule } from '../../ui/index';
+import { EHTTP_STATUS } from '../../util/http/http-statuses.interface';
 import { ToasterService } from '../toaster/toaster.service';
 import { HttpHandlersService } from './http-handlers.service';
 
