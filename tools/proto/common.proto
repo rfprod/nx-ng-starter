@@ -6,41 +6,20 @@ package nxngstarter;
 
 import "google/protobuf/any.proto";
 
-message CommonEntities {
-  int64 count = 1;
-  repeated CommonEntity entities = 2;
-}
-
-message CommonEntity {
-  string string1 = 1;
+message Entity {
+  string id = 1;
   int32 num1 = 2;
   int64 num2 = 3;
   bool boolean1 = 4;
   float float1 = 5;
   google.protobuf.Any any1 = 8;
-  repeated SubEntity subEntitiesArray = 6;
-  SubEntity subEntittObj = 7;
+  repeated SubEntity subEntities = 6;
 }
 
 message SubEntity {
   string id = 1;
 }
 
-message CommonEntityFilterDto {
-  int32 num1 = 1;
-}
-
-message SampleServiceRequest {
-  string input1 = 1;
-  string input2 = 2;
-}
-
-message SampleServiceResponse {
-  string status = 1;
-
-  message ResponseData {
-    string stringValue = 1;
-    int32 intValue = 3;
-  }
-  ResponseData data = 2;
+message EntityById {
+  string id = 1;
 }

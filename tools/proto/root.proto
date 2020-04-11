@@ -6,6 +6,7 @@ package nxngstarter;
 
 import "common.proto";
 
-service SampleService {
-  rpc SampleServiceMethod(SampleServiceRequest) returns (SampleServiceResponse);
+service EntityService {
+  rpc FindOne(EntityById) returns (Entity) {};
+  rpc FindMany(stream EntityById) returns (stream Entity) {};
 }

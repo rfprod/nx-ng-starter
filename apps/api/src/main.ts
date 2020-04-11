@@ -1,10 +1,12 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+import { MicroserviceOptions } from '@nestjs/microservices';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import e from 'express';
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import { AppModule } from './app/app.module';
+import { grpcApiClientOptions } from './app/modules/grpc/grpc-api-client.options';
 
 /**
  * Express server.
@@ -23,6 +25,8 @@ async function bootstrap(expressInstance: e.Express): Promise<any> {
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   app.useGlobalPipes(new ValidationPipe());
+  app.connectMicroservice<MicroserviceOptions>(grpcApiClientOptions);
+  await app.startAllMicroservicesAsync();
   const port = process.env.port || defaultPort;
   await app.listen(port, () => {
     console.log(`Listening at:
@@ -30,7 +34,9 @@ async function bootstrap(expressInstance: e.Express): Promise<any> {
     - http://localhost:${port}/${globalPrefix}/signup
     - http://localhost:${port}/${globalPrefix}/login
     - http://localhost:${port}/${globalPrefix}/logout
-    - http://localhost:${port}/graphql`);
+    - http://localhost:${port}/graphql
+    - http://localhost:${port}/grpc
+    - http://localhost:${port}/grpc/:id`);
   });
   return app.init();
 }

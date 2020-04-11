@@ -1,28 +1,22 @@
-import {
-  Field,
-  ID,
-  ObjectType
-} from 'type-graphql';
+import { Field, ID, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class MatcompModel {
-
-  @Field(_ => ID)
+  @Field(() => ID)
   public id: string;
 
-  @Field(_ => String, {
+  @Field(() => String, {
     defaultValue: '',
   })
   public name: string;
 
-  @Field(_ => String, {
+  @Field(() => String, {
     defaultValue: '',
   })
   public description: string;
 
-  @Field(_ => Date, {
+  @Field(() => Date, {
     defaultValue: new Date().getTime(),
   })
   public creationDate?: number;
-
 }

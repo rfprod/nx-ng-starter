@@ -1,5 +1,5 @@
+import { ArgsType, Field, Int } from '@nestjs/graphql';
 import { Max, Min } from 'class-validator';
-import { ArgsType, Field, Int } from 'type-graphql';
 
 export const defaultSkipValue = 0;
 
@@ -9,11 +9,11 @@ export const maxTakeValue = 50;
 
 @ArgsType()
 export class MatcompArgs {
-  @Field(_ => Int)
+  @Field(() => Int)
   @Min(defaultSkipValue)
   public skip = defaultSkipValue;
 
-  @Field(_ => Int)
+  @Field(() => Int)
   @Min(minTakeValue)
   @Max(maxTakeValue)
   public take = defaultTakeValue;
