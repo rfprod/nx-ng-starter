@@ -1,3 +1,4 @@
+import gql from 'graphql-tag';
 export type Maybe<T> = T | null;
 /** All built-in and custom scalars, mapped to their actual values */
 export interface IScalars {
@@ -18,31 +19,6 @@ export interface IMatcompModel {
   creationDate?: Maybe<IScalars['Date']>;
 }
 
-export interface IMutation {
-   __typename?: 'Mutation';
-  create: IMatcompModel;
-  remove: IScalars['Boolean'];
-}
-
-export interface IMutationCreateArgs {
-  createMatcompInput: INewMatcompInputDto;
-}
-
-export interface IMutationRemoveArgs {
-  id: IScalars['String'];
-}
-
-export interface INewFileUploadInputDto {
-  filename: IScalars['String'];
-  mimetype: IScalars['String'];
-  encoding: IScalars['String'];
-}
-
-export interface INewMatcompInputDto {
-  name: IScalars['String'];
-  description: IScalars['String'];
-}
-
 export interface IQuery {
    __typename?: 'Query';
   matcomps: Array<IMatcompModel>;
@@ -56,6 +32,25 @@ export interface IQueryMatcompsArgs {
 
 export interface IQueryMatcompArgs {
   id: IScalars['String'];
+}
+
+export interface IMutation {
+   __typename?: 'Mutation';
+  create: IMatcompModel;
+  remove: IScalars['Boolean'];
+}
+
+export interface IMutationCreateArgs {
+  input: INewMatcompInputDto;
+}
+
+export interface IMutationRemoveArgs {
+  id: IScalars['String'];
+}
+
+export interface INewMatcompInputDto {
+  name: IScalars['String'];
+  description: IScalars['String'];
 }
 
 export interface ISubscription {

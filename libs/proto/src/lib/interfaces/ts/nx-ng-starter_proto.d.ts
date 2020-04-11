@@ -2,131 +2,78 @@ import * as $protobuf from "protobufjs";
 /** Namespace nxngstarter. */
 export namespace nxngstarter {
 
-    /** Properties of a CommonEntities. */
-    interface ICommonEntities {
+    /** Properties of an Entity. */
+    interface IEntity {
 
-        /** CommonEntities count */
-        count?: (number|null);
+        /** Entity id */
+        id?: (string|null);
 
-        /** CommonEntities entities */
-        entities?: (nxngstarter.ICommonEntity[]|null);
-    }
-
-    /** Represents a CommonEntities. */
-    class CommonEntities implements ICommonEntities {
-
-        /**
-         * Constructs a new CommonEntities.
-         * @param [p] Properties to set
-         */
-        constructor(p?: nxngstarter.ICommonEntities);
-
-        /** CommonEntities count. */
-        public count: number;
-
-        /** CommonEntities entities. */
-        public entities: nxngstarter.ICommonEntity[];
-
-        /**
-         * Creates a CommonEntities message from a plain object. Also converts values to their respective internal types.
-         * @param d Plain object
-         * @returns CommonEntities
-         */
-        public static fromObject(d: { [k: string]: any }): nxngstarter.CommonEntities;
-
-        /**
-         * Creates a plain object from a CommonEntities message. Also converts values to other types if specified.
-         * @param m CommonEntities
-         * @param [o] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(m: nxngstarter.CommonEntities, o?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this CommonEntities to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    /** Properties of a CommonEntity. */
-    interface ICommonEntity {
-
-        /** CommonEntity string1 */
-        string1?: (string|null);
-
-        /** CommonEntity num1 */
+        /** Entity num1 */
         num1?: (number|null);
 
-        /** CommonEntity num2 */
+        /** Entity num2 */
         num2?: (number|null);
 
-        /** CommonEntity boolean1 */
+        /** Entity boolean1 */
         boolean1?: (boolean|null);
 
-        /** CommonEntity float1 */
+        /** Entity float1 */
         float1?: (number|null);
 
-        /** CommonEntity any1 */
+        /** Entity any1 */
         any1?: (google.protobuf.IAny|null);
 
-        /** CommonEntity subEntitiesArray */
-        subEntitiesArray?: (nxngstarter.ISubEntity[]|null);
-
-        /** CommonEntity subEntittObj */
-        subEntittObj?: (nxngstarter.ISubEntity|null);
+        /** Entity subEntities */
+        subEntities?: (nxngstarter.ISubEntity[]|null);
     }
 
-    /** Represents a CommonEntity. */
-    class CommonEntity implements ICommonEntity {
+    /** Represents an Entity. */
+    class Entity implements IEntity {
 
         /**
-         * Constructs a new CommonEntity.
+         * Constructs a new Entity.
          * @param [p] Properties to set
          */
-        constructor(p?: nxngstarter.ICommonEntity);
+        constructor(p?: nxngstarter.IEntity);
 
-        /** CommonEntity string1. */
-        public string1: string;
+        /** Entity id. */
+        public id: string;
 
-        /** CommonEntity num1. */
+        /** Entity num1. */
         public num1: number;
 
-        /** CommonEntity num2. */
+        /** Entity num2. */
         public num2: number;
 
-        /** CommonEntity boolean1. */
+        /** Entity boolean1. */
         public boolean1: boolean;
 
-        /** CommonEntity float1. */
+        /** Entity float1. */
         public float1: number;
 
-        /** CommonEntity any1. */
+        /** Entity any1. */
         public any1?: (google.protobuf.IAny|null);
 
-        /** CommonEntity subEntitiesArray. */
-        public subEntitiesArray: nxngstarter.ISubEntity[];
-
-        /** CommonEntity subEntittObj. */
-        public subEntittObj?: (nxngstarter.ISubEntity|null);
+        /** Entity subEntities. */
+        public subEntities: nxngstarter.ISubEntity[];
 
         /**
-         * Creates a CommonEntity message from a plain object. Also converts values to their respective internal types.
+         * Creates an Entity message from a plain object. Also converts values to their respective internal types.
          * @param d Plain object
-         * @returns CommonEntity
+         * @returns Entity
          */
-        public static fromObject(d: { [k: string]: any }): nxngstarter.CommonEntity;
+        public static fromObject(d: { [k: string]: any }): nxngstarter.Entity;
 
         /**
-         * Creates a plain object from a CommonEntity message. Also converts values to other types if specified.
-         * @param m CommonEntity
+         * Creates a plain object from an Entity message. Also converts values to other types if specified.
+         * @param m Entity
          * @param [o] Conversion options
          * @returns Plain object
          */
-        public static toObject(m: nxngstarter.CommonEntity, o?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(m: nxngstarter.Entity, o?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this CommonEntity to JSON.
+         * Converts this Entity to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
@@ -173,196 +120,52 @@ export namespace nxngstarter {
         public toJSON(): { [k: string]: any };
     }
 
-    /** Properties of a CommonEntityFilterDto. */
-    interface ICommonEntityFilterDto {
+    /** Properties of an EntityById. */
+    interface IEntityById {
 
-        /** CommonEntityFilterDto num1 */
-        num1?: (number|null);
+        /** EntityById id */
+        id?: (string|null);
     }
 
-    /** Represents a CommonEntityFilterDto. */
-    class CommonEntityFilterDto implements ICommonEntityFilterDto {
+    /** Represents an EntityById. */
+    class EntityById implements IEntityById {
 
         /**
-         * Constructs a new CommonEntityFilterDto.
+         * Constructs a new EntityById.
          * @param [p] Properties to set
          */
-        constructor(p?: nxngstarter.ICommonEntityFilterDto);
+        constructor(p?: nxngstarter.IEntityById);
 
-        /** CommonEntityFilterDto num1. */
-        public num1: number;
+        /** EntityById id. */
+        public id: string;
 
         /**
-         * Creates a CommonEntityFilterDto message from a plain object. Also converts values to their respective internal types.
+         * Creates an EntityById message from a plain object. Also converts values to their respective internal types.
          * @param d Plain object
-         * @returns CommonEntityFilterDto
+         * @returns EntityById
          */
-        public static fromObject(d: { [k: string]: any }): nxngstarter.CommonEntityFilterDto;
+        public static fromObject(d: { [k: string]: any }): nxngstarter.EntityById;
 
         /**
-         * Creates a plain object from a CommonEntityFilterDto message. Also converts values to other types if specified.
-         * @param m CommonEntityFilterDto
+         * Creates a plain object from an EntityById message. Also converts values to other types if specified.
+         * @param m EntityById
          * @param [o] Conversion options
          * @returns Plain object
          */
-        public static toObject(m: nxngstarter.CommonEntityFilterDto, o?: $protobuf.IConversionOptions): { [k: string]: any };
+        public static toObject(m: nxngstarter.EntityById, o?: $protobuf.IConversionOptions): { [k: string]: any };
 
         /**
-         * Converts this CommonEntityFilterDto to JSON.
+         * Converts this EntityById to JSON.
          * @returns JSON object
          */
         public toJSON(): { [k: string]: any };
     }
 
-    /** Properties of a SampleServiceRequest. */
-    interface ISampleServiceRequest {
-
-        /** SampleServiceRequest input1 */
-        input1?: (string|null);
-
-        /** SampleServiceRequest input2 */
-        input2?: (string|null);
-    }
-
-    /** Represents a SampleServiceRequest. */
-    class SampleServiceRequest implements ISampleServiceRequest {
+    /** Represents an EntityService */
+    class EntityService extends $protobuf.rpc.Service {
 
         /**
-         * Constructs a new SampleServiceRequest.
-         * @param [p] Properties to set
-         */
-        constructor(p?: nxngstarter.ISampleServiceRequest);
-
-        /** SampleServiceRequest input1. */
-        public input1: string;
-
-        /** SampleServiceRequest input2. */
-        public input2: string;
-
-        /**
-         * Creates a SampleServiceRequest message from a plain object. Also converts values to their respective internal types.
-         * @param d Plain object
-         * @returns SampleServiceRequest
-         */
-        public static fromObject(d: { [k: string]: any }): nxngstarter.SampleServiceRequest;
-
-        /**
-         * Creates a plain object from a SampleServiceRequest message. Also converts values to other types if specified.
-         * @param m SampleServiceRequest
-         * @param [o] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(m: nxngstarter.SampleServiceRequest, o?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this SampleServiceRequest to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    /** Properties of a SampleServiceResponse. */
-    interface ISampleServiceResponse {
-
-        /** SampleServiceResponse status */
-        status?: (string|null);
-
-        /** SampleServiceResponse data */
-        data?: (nxngstarter.SampleServiceResponse.IResponseData|null);
-    }
-
-    /** Represents a SampleServiceResponse. */
-    class SampleServiceResponse implements ISampleServiceResponse {
-
-        /**
-         * Constructs a new SampleServiceResponse.
-         * @param [p] Properties to set
-         */
-        constructor(p?: nxngstarter.ISampleServiceResponse);
-
-        /** SampleServiceResponse status. */
-        public status: string;
-
-        /** SampleServiceResponse data. */
-        public data?: (nxngstarter.SampleServiceResponse.IResponseData|null);
-
-        /**
-         * Creates a SampleServiceResponse message from a plain object. Also converts values to their respective internal types.
-         * @param d Plain object
-         * @returns SampleServiceResponse
-         */
-        public static fromObject(d: { [k: string]: any }): nxngstarter.SampleServiceResponse;
-
-        /**
-         * Creates a plain object from a SampleServiceResponse message. Also converts values to other types if specified.
-         * @param m SampleServiceResponse
-         * @param [o] Conversion options
-         * @returns Plain object
-         */
-        public static toObject(m: nxngstarter.SampleServiceResponse, o?: $protobuf.IConversionOptions): { [k: string]: any };
-
-        /**
-         * Converts this SampleServiceResponse to JSON.
-         * @returns JSON object
-         */
-        public toJSON(): { [k: string]: any };
-    }
-
-    namespace SampleServiceResponse {
-
-        /** Properties of a ResponseData. */
-        interface IResponseData {
-
-            /** ResponseData stringValue */
-            stringValue?: (string|null);
-
-            /** ResponseData intValue */
-            intValue?: (number|null);
-        }
-
-        /** Represents a ResponseData. */
-        class ResponseData implements IResponseData {
-
-            /**
-             * Constructs a new ResponseData.
-             * @param [p] Properties to set
-             */
-            constructor(p?: nxngstarter.SampleServiceResponse.IResponseData);
-
-            /** ResponseData stringValue. */
-            public stringValue: string;
-
-            /** ResponseData intValue. */
-            public intValue: number;
-
-            /**
-             * Creates a ResponseData message from a plain object. Also converts values to their respective internal types.
-             * @param d Plain object
-             * @returns ResponseData
-             */
-            public static fromObject(d: { [k: string]: any }): nxngstarter.SampleServiceResponse.ResponseData;
-
-            /**
-             * Creates a plain object from a ResponseData message. Also converts values to other types if specified.
-             * @param m ResponseData
-             * @param [o] Conversion options
-             * @returns Plain object
-             */
-            public static toObject(m: nxngstarter.SampleServiceResponse.ResponseData, o?: $protobuf.IConversionOptions): { [k: string]: any };
-
-            /**
-             * Converts this ResponseData to JSON.
-             * @returns JSON object
-             */
-            public toJSON(): { [k: string]: any };
-        }
-    }
-
-    /** Represents a SampleService */
-    class SampleService extends $protobuf.rpc.Service {
-
-        /**
-         * Constructs a new SampleService service.
+         * Constructs a new EntityService service.
          * @param rpcImpl RPC implementation
          * @param [requestDelimited=false] Whether requests are length-delimited
          * @param [responseDelimited=false] Whether responses are length-delimited
@@ -370,28 +173,49 @@ export namespace nxngstarter {
         constructor(rpcImpl: $protobuf.RPCImpl, requestDelimited?: boolean, responseDelimited?: boolean);
 
         /**
-         * Calls SampleServiceMethod.
-         * @param request SampleServiceRequest message or plain object
-         * @param callback Node-style callback called with the error, if any, and SampleServiceResponse
+         * Calls FindOne.
+         * @param request EntityById message or plain object
+         * @param callback Node-style callback called with the error, if any, and Entity
          */
-        public sampleServiceMethod(request: nxngstarter.ISampleServiceRequest, callback: nxngstarter.SampleService.SampleServiceMethodCallback): void;
+        public findOne(request: nxngstarter.IEntityById, callback: nxngstarter.EntityService.FindOneCallback): void;
 
         /**
-         * Calls SampleServiceMethod.
-         * @param request SampleServiceRequest message or plain object
+         * Calls FindOne.
+         * @param request EntityById message or plain object
          * @returns Promise
          */
-        public sampleServiceMethod(request: nxngstarter.ISampleServiceRequest): Promise<nxngstarter.SampleServiceResponse>;
-    }
-
-    namespace SampleService {
+        public findOne(request: nxngstarter.IEntityById): Promise<nxngstarter.Entity>;
 
         /**
-         * Callback as used by {@link nxngstarter.SampleService#sampleServiceMethod}.
-         * @param error Error, if any
-         * @param [response] SampleServiceResponse
+         * Calls FindMany.
+         * @param request EntityById message or plain object
+         * @param callback Node-style callback called with the error, if any, and Entity
          */
-        type SampleServiceMethodCallback = (error: (Error|null), response?: nxngstarter.SampleServiceResponse) => void;
+        public findMany(request: nxngstarter.IEntityById, callback: nxngstarter.EntityService.FindManyCallback): void;
+
+        /**
+         * Calls FindMany.
+         * @param request EntityById message or plain object
+         * @returns Promise
+         */
+        public findMany(request: nxngstarter.IEntityById): Promise<nxngstarter.Entity>;
+    }
+
+    namespace EntityService {
+
+        /**
+         * Callback as used by {@link nxngstarter.EntityService#findOne}.
+         * @param error Error, if any
+         * @param [response] Entity
+         */
+        type FindOneCallback = (error: (Error|null), response?: nxngstarter.Entity) => void;
+
+        /**
+         * Callback as used by {@link nxngstarter.EntityService#findMany}.
+         * @param error Error, if any
+         * @param [response] Entity
+         */
+        type FindManyCallback = (error: (Error|null), response?: nxngstarter.Entity) => void;
     }
 }
 

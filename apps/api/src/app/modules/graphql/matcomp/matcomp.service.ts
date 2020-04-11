@@ -1,23 +1,23 @@
 import { Injectable } from '@nestjs/common';
-import { IMatcompMutation, IMatcompQuery, Matcomp, MatcompArgs, NewMatcompInput } from '@nx-ng-starter/api-interface';
+import {
+  IMatcompMutation,
+  IMatcompQuery,
+  Matcomp,
+  MatcompArgs,
+  NewMatcompInput,
+} from '@nx-ng-starter/api-interface';
 
 @Injectable()
 export class MatcompService implements IMatcompQuery, IMatcompMutation {
-  private readonly matcomps: Matcomp[] = [
-    new Matcomp({
-      id: '1',
-      name: 'custom component',
-      description: 'custom component description',
-    }),
-  ];
+  private readonly matcomps: Matcomp[] = [];
 
-  public create(input: NewMatcompInput): Matcomp {
+  public create(input: NewMatcompInput) {
     const matcomp = new Matcomp(input);
     this.matcomps.push(matcomp);
     return matcomp;
   }
 
-  public remove(id: string): Matcomp {
+  public remove(id: string) {
     let arrayId: number;
     this.matcomps.map((comp: Matcomp, index: number) => {
       if (comp.id === id) {
@@ -28,11 +28,11 @@ export class MatcompService implements IMatcompQuery, IMatcompMutation {
     return matcomp;
   }
 
-  public findAll(args: MatcompArgs): Matcomp[] {
+  public findAll(args: MatcompArgs) {
     return this.matcomps.slice(args.skip, args.take);
   }
 
-  public findOneById(id: string): Matcomp {
+  public findOneById(id: string) {
     return this.matcomps.find(matcomp => matcomp.id === id);
   }
 }

@@ -1,14 +1,14 @@
+import { Field, InputType } from '@nestjs/graphql';
 import { FileUpload } from 'graphql-upload';
-import { Field, InputType } from 'type-graphql';
 
 @InputType()
 export class NewFileUploadInputDto implements Partial<FileUpload> {
-  @Field(_ => String)
+  @Field(() => String)
   public filename: string;
 
-  @Field(_ => String)
+  @Field(() => String)
   public mimetype: string;
 
-  @Field(_ => String)
+  @Field(() => String)
   public encoding: string;
 }

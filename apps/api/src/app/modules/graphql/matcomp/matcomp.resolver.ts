@@ -1,7 +1,6 @@
 import { NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import {
-  Matcomp,
   MatcompArgs,
   MatcompModel,
   MatcompSubscription,
@@ -13,22 +12,22 @@ import { MatcompService } from './matcomp.service';
 
 const pubSub = new PubSub();
 
-@Resolver(_ => MatcompModel)
+@Resolver(() => MatcompModel)
 export class MatcompResolver {
   constructor(private readonly service: MatcompService) {}
 
-  @Query(_ => [MatcompModel])
+  @Query(() => [MatcompModel])
   @UseGuards(MatcompGuard)
-  public async matcomps(@Args() matcompArgs: MatcompArgs): Promise<MatcompModel[]> {
+  public async matcomps(@Args() matcompArgs: MatcompArgs) {
     return this.service.findAll(matcompArgs);
   }
 
-  @Query(_ => MatcompModel)
+  @Query(() => MatcompModel)
   @UseGuards(MatcompGuard)
   public async matcomp(
     @Args('id')
     id: string,
-  ): Promise<Matcomp> {
+  ) {
     const matcomp = this.service.findOneById(id);
     if (!matcomp) {
       throw new NotFoundException(id);
@@ -36,31 +35,31 @@ export class MatcompResolver {
     return matcomp;
   }
 
-  @Mutation(_ => MatcompModel)
+  @Mutation(() => MatcompModel)
   @UseGuards(MatcompGuard)
-  public async create(@Args('createMatcompInput') args: NewMatcompInputDto): Promise<MatcompModel> {
+  public async create(@Args('input') args: NewMatcompInputDto) {
     const createdMatcomp = this.service.create(args);
     const matcompSubscription: MatcompSubscription = new MatcompSubscription(createdMatcomp);
     pubSub.publish('matcompCreated', matcompSubscription);
     return createdMatcomp;
   }
 
-  @Subscription(_ => MatcompModel)
+  @Subscription(() => MatcompModel)
   @UseGuards(MatcompGuard)
   public matcompCreated() {
     return pubSub.asyncIterator('matcompCreated');
   }
 
-  @Mutation(_ => Boolean)
+  @Mutation(() => Boolean)
   @UseGuards(MatcompGuard)
-  public async remove(@Args('id') id: string): Promise<MatcompModel> {
+  public async remove(@Args('id') id: string) {
     const removedMatcomp = this.service.remove(id);
     const matcompSubscription: MatcompSubscription = new MatcompSubscription(removedMatcomp);
     pubSub.publish('matcompRemoved', matcompSubscription);
-    return removedMatcomp;
+    return Boolean(removedMatcomp);
   }
 
-  @Subscription(_ => MatcompModel)
+  @Subscription(() => MatcompModel)
   @UseGuards(MatcompGuard)
   public matcompRemoved() {
     return pubSub.asyncIterator('matcompRemoved');

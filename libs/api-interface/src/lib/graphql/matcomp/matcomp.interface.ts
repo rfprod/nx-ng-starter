@@ -25,11 +25,13 @@ export class Matcomp implements MatcompModel {
   public id = '';
   public name = '';
   public description = '';
+  public creationDate = new Date().getTime();
   constructor(input?: Matcomp | NewMatcompInput) {
     if (input) {
       this.id = input instanceof Matcomp ? input.id : this.id;
       this.name = input.name;
       this.description = input.description;
+      this.creationDate = input instanceof Matcomp ? input.creationDate : this.creationDate;
     }
   }
 }
