@@ -17,7 +17,7 @@ export const APP_ROUTES: Route[] = [
         component: AppIndexHomeComponent,
       },
       {
-        path: 'api-info',
+        path: 'info',
         component: AppIndexApiComponent,
       },
     ],

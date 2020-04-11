@@ -12,7 +12,8 @@ import { catchError, take, tap, timeout } from 'rxjs/operators';
 import { HttpProgressService } from '../../ui/modules/state/http-progress/http-progress.service';
 import { UserService } from '../../ui/modules/state/user/user.service';
 import { WINDOW } from '../../util/general-purpose';
-import { APP_ENV, AppEnvironment, HttpErrorCodes } from '../interfaces';
+import { EHTTP_STATUS } from '../../util/http/http-statuses.interface';
+import { APP_ENV, AppEnvironment } from '../interfaces';
 import { ToasterService } from '../toaster/toaster.service';
 
 /**
@@ -261,7 +262,7 @@ export class HttpHandlersService {
    * @param status error status
    */
   private checkErrorStatusAndRedirect(status: any): void {
-    if (status === HttpErrorCodes.UNAUTHORIZED) {
+    if (status === EHTTP_STATUS.UNAUTHORIZED) {
       this.user.handlers.setState({ token: '' });
     }
   }
@@ -360,9 +361,9 @@ export class HttpHandlersService {
       () => {},
       (error: any) => {
         const unauthorized: boolean =
-          error.networkError && error.networkError.status === HttpErrorCodes.BAD_REQUEST;
+          error.networkError && error.networkError.status === EHTTP_STATUS.BAD_REQUEST;
         if (unauthorized) {
-          this.checkErrorStatusAndRedirect(HttpErrorCodes.UNAUTHORIZED);
+          this.checkErrorStatusAndRedirect(EHTTP_STATUS.UNAUTHORIZED);
         }
       },
     );

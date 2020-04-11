@@ -1,4 +1,4 @@
-import { TIMEOUT } from '@nx-ng-starter/shared-core/util';
+import { ETIMEOUT } from '@nx-ng-starter/shared-core/util';
 import { setUpLocalStorageMock } from '../local-storage/local-storage.mock';
 
 declare const jest;
@@ -6,7 +6,7 @@ declare const jest;
 /**
  * Increase specs timeout.
  */
-jest.setTimeout(TIMEOUT.FOREVER);
+jest.setTimeout(ETIMEOUT.FOREVER);
 
 /**
  * Sets up Jest global mocks

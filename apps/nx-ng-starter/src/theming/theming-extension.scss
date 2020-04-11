@@ -186,11 +186,11 @@ $extended-box-shadow-palette: (
   }
 
   ::-webkit-scrollbar-track {
-    @include extended-box-shadow-color(inset, 0px, 0px, 2px, 0px, '::webkit-scrollbar-track');
+    @include extended-box-shadow-color(inset, 0, 0, 2px, 0, '::webkit-scrollbar-track');
   }
 
   ::-webkit-scrollbar-thumb {
-    @include extended-box-shadow-color(inset, 0px, 0px, 48px, 0px, '::webkit-scrollbar-thumb');
+    @include extended-box-shadow-color(inset, 0, 0, 48px, 0, '::webkit-scrollbar-thumb');
   }
 }
 @include custom-selectors-coloring();
