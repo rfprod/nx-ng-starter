@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
+import marked from 'marked';
 import memo from 'memo-decorator';
-
-/**
- * Declaration of globaly registered marked library.
- */
-declare let marked;
 
 /**
  * Markdown service.

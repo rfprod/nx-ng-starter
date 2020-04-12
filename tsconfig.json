@@ -6,7 +6,7 @@
     "annotateForClosureCompiler": true,
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true,
-    "enableResourceInlining": false
+    "enableResourceInlining": true
   },
   "compileOnSave": false,
   "compilerOptions": {
@@ -15,9 +15,9 @@
     "downlevelIteration": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": false,
-    "lib": ["es2018", "dom", "esnext.asynciterable"],
-    "module": "esnext",
-    "moduleResolution": "node",
+    "lib": ["ES2018", "DOM", "ESNext.AsyncIterable"],
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "noUnusedLocals": true,
     "declaration": false,
     "emitDecoratorMetadata": true,
@@ -25,7 +25,7 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "paths": {
       "@nx-ng-starter/api-interface": ["libs/api-interface/src/index.ts"],
       "@nx-ng-starter/api-interface/client-gql": ["libs/api-interface/src/lib/generated/index.ts"],
@@ -44,7 +44,7 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "suppressImplicitAnyIndexErrors": true,
-    "target": "es6",
+    "target": "ES6",
     "typeRoots": ["node_modules/@types"]
   },
   "exclude": [

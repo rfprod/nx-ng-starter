@@ -1,8 +1,6 @@
 import { ETIMEOUT } from '@nx-ng-starter/shared-core/util';
 import { setUpLocalStorageMock } from '../local-storage/local-storage.mock';
 
-declare const jest;
-
 /**
  * Increase specs timeout.
  */
@@ -88,6 +86,6 @@ export const setupJestJsdomGlobalMocks: () => void = () => {
   /**
    * Override some console methods for testing environment.
    */
-  window.console.log = () => null;
-  window.console.group = () => null;
+  window.console.log = (): void => null;
+  window.console.group = (): void => null;
 };

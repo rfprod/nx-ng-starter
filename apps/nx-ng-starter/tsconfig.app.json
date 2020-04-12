@@ -1,12 +1,9 @@
 {
-  "angularCompilerOptions": {
-    "enableIvy": false
-  },
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "types": []
+    "outDir": "../../dist/out-tsc"
   },
   "extends": "./tsconfig.json",
   "files": ["src/main.ts", "src/polyfills.ts"],
-  "include": ["**/*.d.ts"]
+  "include": ["**/*.d.ts"],
+  "exclude": ["**/*.spec.ts"]
 }

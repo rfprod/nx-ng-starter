@@ -19,7 +19,7 @@ describe('ToasterService', () => {
       },
       {
         provide: ToasterService,
-        useFactory: snackbar => new ToasterService(snackbar),
+        useFactory: (snackbar: MatSnackBar) => new ToasterService(snackbar),
         deps: [MatSnackBar],
       },
     ],

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
-  IObjectWithProperties,
+  TComponentSpiesObject,
   getTestBedConfig,
   newTestBedMetadata,
   setupJestSpiesFor,
@@ -31,7 +31,7 @@ describe('AppIndexHomeComponent', () => {
     service: {
       process: jest.SpyInstance;
     };
-    component: IObjectWithProperties<jest.SpyInstance>;
+    component: TComponentSpiesObject<AppIndexHomeComponent>;
   };
 
   beforeEach(async(() => {
@@ -48,7 +48,7 @@ describe('AppIndexHomeComponent', () => {
               .spyOn(service, 'process')
               .mockImplementation((input: string) => `marked ${input}`),
           },
-          component: setupJestSpiesFor<jest.SpyInstance>(component),
+          component: setupJestSpiesFor<AppIndexHomeComponent>(component),
         };
         expect(spy.service.process).toBeDefined();
         expect(spy.component).toBeDefined();

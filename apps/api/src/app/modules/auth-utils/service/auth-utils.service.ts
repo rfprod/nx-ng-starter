@@ -3,13 +3,19 @@ import { UserToken } from '@nx-ng-starter/api-interface';
 import crypto from 'crypto';
 import jwt from 'jwt-simple';
 
+export interface IAuthPayload {
+  email: string;
+  name: string;
+  expires: Date;
+}
+
 @Injectable()
 export class AuthUtilsService {
   /**
    * Generates JWT token
    * @param payload token payload
    */
-  public generateJWToken(payload): UserToken {
+  public generateJWToken(payload: IAuthPayload): UserToken {
     const salt = crypto.randomBytes(24).toString('hex');
     const token = jwt.encode(payload, salt, 'HS256'); // HS256, HS384, HS512, RS256.
     const tokenObject: UserToken = new UserToken({ token, salt });
@@ -35,7 +41,7 @@ export class AuthUtilsService {
     const expires = new Date();
     const daysInWeek = 7;
     expires.setDate(expires.getDate() + daysInWeek);
-    const payload = { email, name, expires };
+    const payload: IAuthPayload = { email, name, expires };
     const tokenObject: UserToken = this.generateJWToken(payload);
     return tokenObject;
   }

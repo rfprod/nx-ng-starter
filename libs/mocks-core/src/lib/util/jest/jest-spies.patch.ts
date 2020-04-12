@@ -1,15 +1,5 @@
 import { DebugElement } from '@angular/core';
-import { Observable } from 'apollo-link';
-import { BehaviorSubject, Subject } from 'rxjs';
-
-declare const jest;
-
-/**
- * Object interface.
- */
-export interface IObjectWithProperties<T> {
-  [key: string]: T | IObjectWithProperties<T>;
-}
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 /**
  * Debug element instance type.
@@ -21,10 +11,35 @@ export type DebugElementComponentInstance = DebugElement['componentInstance'];
  */
 export type SetupJestSpiesFor<T> = (
   component: DebugElementComponentInstance,
-) => IObjectWithProperties<T>;
+) => TComponentSpiesObject<T>;
 
 /**
- * Sets up Jest spies for class functions.
+ * Function member spy.
+ */
+export type TFunctionSpy = jest.SpyInstance;
+
+/**
+ * Streamable member spy object.
+ */
+export interface IStreamableMemberSpy {
+  pipe: jest.SpyInstance;
+  subscribe: jest.SpyInstance;
+}
+
+/**
+ * Component spy.
+ */
+export type TComponentSpy = TFunctionSpy | IStreamableMemberSpy;
+
+/**
+ * Component spies object.
+ */
+export type TComponentSpiesObject<T> = {
+  [K in keyof T]: TComponentSpy;
+};
+
+/**
+ * Sets up Jest spies for component class members.
  * Scans class for functions, sets up jest spies, and returns an object with class keys and respective spies.
  * Sets spy if component member is:
  * - a function, then function is being spied on;
@@ -34,32 +49,34 @@ export type SetupJestSpiesFor<T> = (
  */
 export function setupJestSpiesFor<T>(
   component: DebugElementComponentInstance,
-): IObjectWithProperties<T> {
-  const spiesObject: IObjectWithProperties<T> = Object.keys(component).reduce(
-    (accumulator: any, key: string) => {
-      let spy: T | IObjectWithProperties<T> | null = null;
-      // Spy on component functions
-      if (component[key] instanceof Function) {
-        const componentSpy: T = jest.spyOn(component, key);
-        spy = componentSpy;
+): TComponentSpiesObject<T> {
+  const spiesObject: TComponentSpiesObject<T> = Object.keys(component).reduce(
+    (accumulator: TComponentSpiesObject<T>, key: string) => {
+      let spy: TComponentSpy = null;
+      const classMember: unknown = component[key];
+      /**
+       * Spy on component functions.
+       */
+      if (classMember instanceof Function) {
+        spy = jest.spyOn(component, key);
       }
-      // Spy on pipe and subscribe methods of observables, subjects, and behavior subjects
+      /**
+       * Spy on pipe and subscribe methods of observables, subjects, and behavior subjects.
+       */
       if (
-        component[key] instanceof Observable ||
-        component[key] instanceof Subject ||
-        component[key] instanceof BehaviorSubject
+        classMember instanceof Observable ||
+        classMember instanceof Subject ||
+        classMember instanceof BehaviorSubject
       ) {
-        const objectWithProperties: IObjectWithProperties<T> = {
-          pipe: jest.spyOn(component[key], 'pipe'),
-          subscribe: jest.spyOn(component[key], 'subscribe'),
+        spy = {
+          pipe: jest.spyOn(classMember, 'pipe'),
+          subscribe: jest.spyOn(classMember, 'subscribe'),
         };
-        spy = objectWithProperties;
-      } else {
       }
       accumulator[key] = spy;
       return accumulator;
     },
-    {},
+    {} as TComponentSpiesObject<T>,
   );
 
   return spiesObject;

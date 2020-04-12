@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
-  IObjectWithProperties,
+  TComponentSpiesObject,
   getTestBedConfig,
   newTestBedMetadata,
   setupJestSpiesFor,
@@ -26,7 +26,7 @@ describe('AppIndexComponent', () => {
   let fixture: ComponentFixture<AppIndexComponent>;
   let component: AppIndexComponent | any;
   let spy: {
-    component: IObjectWithProperties<jest.SpyInstance>;
+    component: TComponentSpiesObject<AppIndexComponent>;
   };
 
   beforeEach(async(() => {
@@ -36,7 +36,7 @@ describe('AppIndexComponent', () => {
         fixture = TestBed.createComponent(AppIndexComponent);
         component = fixture.debugElement.componentInstance;
         spy = {
-          component: setupJestSpiesFor<jest.SpyInstance>(component),
+          component: setupJestSpiesFor<AppIndexComponent>(component),
         };
         expect(spy.component).toBeDefined();
         fixture.detectChanges();
