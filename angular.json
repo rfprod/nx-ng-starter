@@ -25,6 +25,17 @@
               ],
               "inspect": false,
               "optimization": true
+            },
+            "firebase": {
+              "extractLicenses": true,
+              "fileReplacements": [
+                {
+                  "replace": "apps/api/src/environments/environment.ts",
+                  "with": "apps/api/src/environments/environment.firebase.ts"
+                }
+              ],
+              "inspect": false,
+              "optimization": true
             }
           },
           "options": {
@@ -44,6 +55,14 @@
         },
         "serve": {
           "builder": "@nrwl/node:execute",
+          "configurations": {
+            "production": {
+              "buildTarget": "api:build:production"
+            },
+            "firebase": {
+              "buildTarget": "api:build:firebase"
+            }
+          },
           "options": {
             "buildTarget": "api:build"
           }
