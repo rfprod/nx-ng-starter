@@ -21,7 +21,7 @@ export type AppName = 'Nx Ng Starter' | string;
  */
 export class AppEnvironment {
   public production = false;
-  public firebase = false;
+  public firebase?: boolean;
   public appName: AppName = 'Nx Ng Starter';
   public api?: string;
 
