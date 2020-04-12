@@ -6,6 +6,7 @@ import { ApolloLink, ExecutionResult, split } from 'apollo-link';
 import { ErrorResponse, onError } from 'apollo-link-error';
 import { createUploadLink } from 'apollo-upload-client';
 import { getMainDefinition } from 'apollo-utilities';
+import { GraphQLError } from 'graphql';
 import memo from 'memo-decorator';
 import { MonoTypeOperatorFunction, Observable, concat, throwError } from 'rxjs';
 import { catchError, take, tap, timeout } from 'rxjs/operators';
@@ -53,7 +54,7 @@ export class HttpHandlersService {
     private readonly httpLink: HttpLink,
     private readonly httpProgress: HttpProgressService,
     private readonly translate: TranslateService,
-    @Inject(WINDOW) private readonly win,
+    @Inject(WINDOW) private readonly win: Window,
     @Inject(APP_ENV) private readonly appEnv: AppEnvironment,
   ) {
     this.api = this.appEnv.api || this.api;
@@ -188,7 +189,8 @@ export class HttpHandlersService {
           if (networkError instanceof HttpErrorResponse) {
             resultMessage += networkError.error.detail;
           } else {
-            networkError['error'].errors.map(({ message, extensions }) => {
+            const errors: GraphQLError[] = networkError['error'].errors;
+            errors.map(({ message, extensions }) => {
               resultMessage += `[Network]: ${message}`;
               errorCode = extensions.code;
             });

@@ -52,7 +52,7 @@ export class AppTranslationUtilsService {
   constructor(
     private readonly translate: TranslateService,
     private readonly dateAdapter: DateAdapter<any>,
-    @Inject(WINDOW) private readonly win,
+    @Inject(WINDOW) private readonly win: Window,
     @Inject(RU_DICTIONARY) private readonly ruDictionary: ISharedDictionary,
   ) {
     this.languageChangeSubscription();

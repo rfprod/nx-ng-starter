@@ -13,23 +13,26 @@ import { WINDOW } from '@nx-ng-starter/shared-core/util';
 })
 export class AppIndexApiComponent {
   private readonly apiUrl: string = /localhost/.test(this.win.location.origin)
-    ? 'http://localhost:8080'
+    ? 'http://localhost:8080/api'
     : this.win.location.origin;
 
-  constructor(private readonly markdown: MarkdownService, @Inject(WINDOW) private readonly win) {}
+  constructor(
+    private readonly markdown: MarkdownService,
+    @Inject(WINDOW) private readonly win: Window,
+  ) {}
 
   /**
    * Returns sample processed markdown text.
    */
   public getMarkedInstructions(): string {
     const apiInstructions = `# API endpoints:\n
-    - ${this.apiUrl}/api/ping
-    - ${this.apiUrl}/api/signup
-    - ${this.apiUrl}/api/login
-    - ${this.apiUrl}/api/logout
+    - ${this.apiUrl}/ping
+    - ${this.apiUrl}/signup
+    - ${this.apiUrl}/login
+    - ${this.apiUrl}/logout
     - ${this.apiUrl}/graphql
-    - ${this.apiUrl}/api/grpc
-    - ${this.apiUrl}/api/grpc/:id`;
+    - ${this.apiUrl}/grpc
+    - ${this.apiUrl}/grpc/:id`;
     return this.markdown.process(apiInstructions);
   }
 }

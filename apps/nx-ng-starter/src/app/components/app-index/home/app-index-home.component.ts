@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MarkdownService } from '@nx-ng-starter/shared-core/data-access';
 import { ETIMEOUT } from '@nx-ng-starter/shared-core/util';
-import { BehaviorSubject, timer } from 'rxjs';
-import { map, takeWhile } from 'rxjs/operators';
+import { timer } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 /**
  * Application index home component.
  */
+@UntilDestroy()
 @Component({
   selector: 'nx-ng-starter-app-index-home',
   templateUrl: './app-index-home.component.html',
@@ -16,10 +18,8 @@ import { map, takeWhile } from 'rxjs/operators';
 export class AppIndexHomeComponent implements OnDestroy {
   public readonly timer$ = timer(ETIMEOUT.INSTANT, ETIMEOUT.MEDIUM).pipe(
     map(num => `Until destoyed timer ${num}`),
-    takeWhile(_ => !this.destroy$.value),
+    untilDestroyed(this),
   );
-
-  private readonly destroy$ = new BehaviorSubject<boolean>(false);
 
   constructor(private readonly markdown: MarkdownService) {}
 
@@ -34,7 +34,5 @@ export class AppIndexHomeComponent implements OnDestroy {
     return this.markdown.process(`${sidenavInstruction} ${markdownInstructions}`);
   }
 
-  public ngOnDestroy(): void {
-    this.destroy$.next(true);
-  }
+  public ngOnDestroy() {}
 }

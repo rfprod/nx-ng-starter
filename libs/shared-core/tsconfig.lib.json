@@ -1,19 +1,10 @@
 {
-  "angularCompilerOptions": {
-    "annotateForClosureCompiler": true,
-    "enableResourceInlining": true,
-    "fullTemplateTypeCheck": true,
-    "skipTemplateCodegen": true,
-    "strictInjectionParameters": true,
-    "strictMetadataEmit": true
-  },
   "compilerOptions": {
     "declaration": true,
     "inlineSources": true,
-    "lib": ["dom", "es2018"],
+    "lib": ["DOM", "ES2018"],
     "outDir": "../../dist/out-tsc",
-    "target": "es2015",
-    "types": []
+    "target": "ES2015"
   },
   "exclude": ["**/test-setup.ts", "**/*.spec.ts"],
   "extends": "./tsconfig.json"
