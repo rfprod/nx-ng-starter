@@ -47,7 +47,7 @@ buildAPIProd() {
   printf "
     ${LIGHT_BLUE}%s
     ${DEFAULT}\n\n" "$TITLE"
-  ng build --project api --configuration production || exitWithError
+  ng build --project api --configuration firebase || exitWithError # TODO: firebase configuration does not include grpc module
 }
 
 ##

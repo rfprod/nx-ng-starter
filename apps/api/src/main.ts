@@ -7,6 +7,7 @@ import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 import { AppModule } from './app/app.module';
 import { grpcApiClientOptions } from './app/modules/grpc/grpc-api-client.options';
+import { environment } from './environments/environment';
 
 /**
  * Express server.
@@ -25,8 +26,11 @@ async function bootstrap(expressInstance: e.Express): Promise<any> {
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   app.useGlobalPipes(new ValidationPipe());
-  app.connectMicroservice<MicroserviceOptions>(grpcApiClientOptions);
-  await app.startAllMicroservicesAsync();
+  // TODO: debug grpc in firebase, currently it causes all functions deployment failure
+  if (!environment.firebase) {
+    app.connectMicroservice<MicroserviceOptions>(grpcApiClientOptions);
+    await app.startAllMicroservicesAsync();
+  }
   const port = process.env.port || defaultPort;
   await app.listen(port, () => {
     console.log(`Listening at:
@@ -57,5 +61,5 @@ if (firebaseConfig) {
   exports.logout = functions.https.onRequest(server);
   exports.signup = functions.https.onRequest(server);
   exports.graphql = functions.https.onRequest(server);
-  exports.grpc = functions.https.onRequest(server);
+  // TODO: exports.grpc = functions.https.onRequest(server);
 }

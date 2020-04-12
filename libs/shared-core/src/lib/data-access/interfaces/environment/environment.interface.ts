@@ -5,6 +5,7 @@ import { InjectionToken, Provider } from '@angular/core';
  */
 export interface IAppEnvironmentConstructorOptions {
   production?: boolean;
+  firebase?: boolean;
   appName?: string;
   api?: string;
 }
@@ -20,6 +21,7 @@ export type AppName = 'Nx Ng Starter' | string;
  */
 export class AppEnvironment {
   public production = false;
+  public firebase = false;
   public appName: AppName = 'Nx Ng Starter';
   public api?: string;
 
@@ -31,6 +33,9 @@ export class AppEnvironment {
   constructor(options: IAppEnvironmentConstructorOptions = {}) {
     if ('production' in options) {
       this.production = options.production;
+    }
+    if ('firebase' in options) {
+      this.firebase = options.firebase;
     }
     if ('appName' in options) {
       this.appName = options.appName;
