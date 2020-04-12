@@ -1,11 +1,17 @@
 import { OverlayModule } from '@angular/cdk/overlay';
-import { APP_BASE_HREF, CommonModule } from '@angular/common';
+import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsModule } from '@ngxs/store';
+import { CustomMaterialModule } from '@nx-ng-starter/shared-core/ui';
 import { WINDOW } from '@nx-ng-starter/shared-core/util';
 import { DummyComponent } from './ui/components/dummy.component.mock';
 import { dialogRefMockProvider } from './util/refs/dialog-ref.mock';
@@ -25,8 +31,15 @@ export const mocksCoreModuleProviders: Provider[] = [
 
 @NgModule({
   imports: [
-    CommonModule,
+    BrowserDynamicTestingModule,
+    NoopAnimationsModule,
     HttpClientTestingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    FlexLayoutModule,
+    CustomMaterialModule.forRoot(),
+    HttpClientTestingModule,
+    RouterTestingModule,
     NgxsModule.forRoot([], { developmentMode: true }),
     NgxsFormPluginModule.forRoot(),
     MatDialogModule,
