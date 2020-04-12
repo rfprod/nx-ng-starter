@@ -16,7 +16,7 @@ export class GqlApiModule {
       module: GqlApiModule,
       imports: [
         GraphQLModule.forRoot({
-          path: '/graphql',
+          path: '/api/graphql',
           include: [GqlMatcompModule],
           debug: environment.production ? false : true,
           playground: environment.production ? false : true,

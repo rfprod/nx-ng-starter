@@ -1,5 +1,4 @@
-import { Message } from '@nx-ng-starter/api-interface';
-import { IActionPayload } from '@nx-ng-starter/shared-core/util';
+import { IActionPayload, Message } from '@nx-ng-starter/shared-core/util';
 import { Observable } from 'rxjs';
 
 export interface IHttpApiStateModel {

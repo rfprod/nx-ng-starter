@@ -19,7 +19,7 @@ export class AppComponent {
   /**
    * Sidenav viewchild reference.
    */
-  @ViewChild('appSidenav', { static: true }) public appSidenav: MatSidenav;
+  @ViewChild('appSidenav') public appSidenav: MatSidenav;
   /**
    * Indicates if sidenav is opened.
    */

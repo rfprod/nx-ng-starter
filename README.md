@@ -22,6 +22,10 @@ and libs:
 
 which is deployed to `Firebase`: https://nx-ng-starter.web.app/
 
+## Preferred package manager
+
+- [yarn](https://www.npmjs.com/package/yarn)
+
 ## Deployment
 
 - [Nx Ng Starter @ Firebase](https://nx-ng-starter.web.app)

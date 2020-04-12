@@ -16,10 +16,7 @@ export class AppIndexApiComponent {
     ? 'http://localhost:8080'
     : this.win.location.origin;
 
-  constructor(
-    private readonly markdown: MarkdownService,
-    @Inject(WINDOW) private readonly win: Window,
-  ) {}
+  constructor(private readonly markdown: MarkdownService, @Inject(WINDOW) private readonly win) {}
 
   /**
    * Returns sample processed markdown text.
