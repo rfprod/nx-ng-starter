@@ -1,9 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpProgressModule } from '@nx-ng-starter/shared-core/ui';
 import {
   APP_ENV,
@@ -27,8 +26,7 @@ import {
  */
 @NgModule({
   imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
+    CommonModule,
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
@@ -40,8 +38,6 @@ import {
     UserModule.forRoot(),
   ],
   exports: [
-    BrowserModule,
-    BrowserAnimationsModule,
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,

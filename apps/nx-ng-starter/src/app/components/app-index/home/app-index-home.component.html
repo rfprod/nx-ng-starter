@@ -1,8 +1,8 @@
 <span [innerHtml]="getMarkedInstructions()"></span>
 
-<div fxLayout="row" fxLayoutAlign="start center">
-  <mat-icon aria-hidden="false" [attr.aria-label]="timer$ | async" color="warn">
+<div fxLayout="row" fxLayoutAlign="start center" *ngIf="timer$ | async as timer">
+  <mat-icon aria-hidden="false" [attr.aria-label]="timer" color="warn">
     av_timer
   </mat-icon>
-  <span [innerHtml]="timer$ | async"></span>
+  <span [innerHtml]="timer"></span>
 </div>

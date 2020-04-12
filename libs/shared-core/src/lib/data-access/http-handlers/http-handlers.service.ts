@@ -31,7 +31,7 @@ export class HttpHandlersService {
   /**
    * Rest server api domain.
    */
-  private readonly api: string = this.window.location.origin;
+  private readonly api: string = this.win.location.origin;
 
   /**
    * Current user token value.
@@ -47,23 +47,13 @@ export class HttpHandlersService {
     }),
   );
 
-  /**
-   * Constructor.
-   * @param user user service
-   * @param toaster app toaster service
-   * @param httpLink apollo Http Link
-   * @param httpProgress http progress service
-   * @param translate ngx translate service
-   * @param window window reference
-   * @param appEnv app environment
-   */
   constructor(
     private readonly user: UserService,
     private readonly toaster: ToasterService,
     private readonly httpLink: HttpLink,
     private readonly httpProgress: HttpProgressService,
     private readonly translate: TranslateService,
-    @Inject(WINDOW) private readonly window: Window,
+    @Inject(WINDOW) private readonly win,
     @Inject(APP_ENV) private readonly appEnv: AppEnvironment,
   ) {
     this.api = this.appEnv.api || this.api;
@@ -74,14 +64,14 @@ export class HttpHandlersService {
    * Resolves if app is running on localhost.
    */
   public isLocalhost(): boolean {
-    return this.window.location.origin.indexOf('localhost') !== -1;
+    return this.win.location.origin.indexOf('localhost') !== -1;
   }
 
   /**
    * Resolver graphQL base url, adds correct protocol.
    */
   public graphQlEndpoint(): string {
-    const url = `${this.window.location.protocol}//${this.api}/graphql`;
+    const url = `${this.win.location.protocol}//${this.api}/graphql`;
     return url;
   }
 

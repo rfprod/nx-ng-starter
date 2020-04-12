@@ -34,9 +34,9 @@ async function bootstrap(expressInstance: e.Express): Promise<any> {
     - http://localhost:${port}/${globalPrefix}/signup
     - http://localhost:${port}/${globalPrefix}/login
     - http://localhost:${port}/${globalPrefix}/logout
-    - http://localhost:${port}/graphql
-    - http://localhost:${port}/grpc
-    - http://localhost:${port}/grpc/:id`);
+    - http://localhost:${port}/${globalPrefix}/graphql
+    - http://localhost:${port}/${globalPrefix}/grpc
+    - http://localhost:${port}/${globalPrefix}/grpc/:id`);
   });
   return app.init();
 }
@@ -57,4 +57,5 @@ if (firebaseConfig) {
   exports.logout = functions.https.onRequest(server);
   exports.signup = functions.https.onRequest(server);
   exports.graphql = functions.https.onRequest(server);
+  exports.grpc = functions.https.onRequest(server);
 }

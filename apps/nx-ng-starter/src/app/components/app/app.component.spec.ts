@@ -7,7 +7,7 @@ import {
   setupJestSpiesFor,
 } from '@nx-ng-starter/mocks-core';
 import { SharedCoreModule } from '@nx-ng-starter/shared-core';
-import { AppIndexComponent } from '../app-index/app-index.component';
+import { AppIndexComponent } from 'apps/nx-ng-starter/src/app/components/app-index/index/app-index.component';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {

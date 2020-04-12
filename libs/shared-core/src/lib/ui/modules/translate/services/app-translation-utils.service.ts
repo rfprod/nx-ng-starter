@@ -49,16 +49,10 @@ export class AppTranslationUtilsService {
     },
   };
 
-  /**
-   * AppTranslationUtilsService constructor.
-   * @param translate Translate service
-   * @param dateAdapter Datepickers date adapter
-   * @param window Window reference
-   */
   constructor(
     private readonly translate: TranslateService,
     private readonly dateAdapter: DateAdapter<any>,
-    @Inject(WINDOW) private readonly window: Window,
+    @Inject(WINDOW) private readonly win,
     @Inject(RU_DICTIONARY) private readonly ruDictionary: ISharedDictionary,
   ) {
     this.languageChangeSubscription();
@@ -81,7 +75,7 @@ export class AppTranslationUtilsService {
    * Russian language is set is user preference does not include one of the supported languages.
    */
   public getUserLanguagePreference(): ILangCode {
-    const navLang: string = this.window.navigator.language;
+    const navLang: string = this.win.navigator.language;
     const userPreference: ILangCode =
       navLang.match(/(ru-RU|ru)/gi) || navLang[0].match(/(ru)/gi) ? 'ru' : 'en';
     return userPreference;

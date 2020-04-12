@@ -142,6 +142,7 @@
                   "type": "initial"
                 },
                 {
+                  "maximumError": "10kb",
                   "maximumWarning": "6kb",
                   "type": "anyComponentStyle"
                 }
@@ -165,6 +166,7 @@
             }
           },
           "options": {
+            "aot": true,
             "assets": [
               "apps/nx-ng-starter/src/favicon.ico",
               "apps/nx-ng-starter/src/assets",

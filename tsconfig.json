@@ -1,7 +1,12 @@
 {
   "angularCompilerOptions": {
+    "enableIvy": true,
     "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
+    "strictInjectionParameters": true,
+    "annotateForClosureCompiler": true,
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "enableResourceInlining": false
   },
   "compileOnSave": false,
   "compilerOptions": {
@@ -21,7 +26,6 @@
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "noImplicitAny": false,
-    "allowJs": true,
     "paths": {
       "@nx-ng-starter/api-interface": ["libs/api-interface/src/index.ts"],
       "@nx-ng-starter/api-interface/client-gql": ["libs/api-interface/src/lib/generated/index.ts"],
@@ -36,7 +40,6 @@
       "@nx-ng-starter/shared-core/util": ["libs/shared-core/src/lib/util/index.ts"]
     },
     "rootDir": ".",
-    "rootDirs": ["./dist"],
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "sourceMap": true,
