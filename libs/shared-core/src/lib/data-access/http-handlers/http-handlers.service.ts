@@ -30,11 +30,6 @@ export class HttpHandlersService {
   public readonly defaultHttpTimeout = 10000;
 
   /**
-   * Rest server api domain.
-   */
-  private readonly api: string = this.win.location.origin;
-
-  /**
    * Current user token value.
    */
   private userToken = '';
@@ -55,9 +50,8 @@ export class HttpHandlersService {
     private readonly httpProgress: HttpProgressService,
     private readonly translate: TranslateService,
     @Inject(WINDOW) private readonly win: Window,
-    @Inject(APP_ENV) private readonly appEnv: AppEnvironment,
+    @Inject(APP_ENV) private readonly env: AppEnvironment,
   ) {
-    this.api = this.appEnv.api || this.api;
     this.userToken$.subscribe();
   }
 
@@ -72,7 +66,7 @@ export class HttpHandlersService {
    * Resolver graphQL base url, adds correct protocol.
    */
   public graphQlEndpoint(): string {
-    const url = `${this.win.location.protocol}//${this.api}/graphql`;
+    const url = `${this.win.location.protocol}//${this.env.api}/graphql`;
     return url;
   }
 
@@ -93,7 +87,7 @@ export class HttpHandlersService {
   @memo()
   public getEndpoint(path: string): string {
     const p = /^\/.*$/.test(path) ? path : `/${path}`;
-    return this.api + p;
+    return this.env.api + p;
   }
 
   /**

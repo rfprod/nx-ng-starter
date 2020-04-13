@@ -5,5 +5,8 @@ import { AppEnvironment } from '@nx-ng-starter/shared-core/data-access';
  */
 export const environment: AppEnvironment = {
   production: true,
-  appName: 'Nx Ng Starter',
+  appName: 'Nx Ng Starter Client',
+  api: /localhost/.test(window.location.origin)
+    ? 'http://localhost:8080/api'
+    : window.location.origin,
 };

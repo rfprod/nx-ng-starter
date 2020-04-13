@@ -1,1 +1,8 @@
-<span [innerHtml]="getMarkedInstructions()"></span>
+<div class="container" [innerHtml]="getMarkedInstructions()"></div>
+
+<div class="container">
+  <h2>API integration check</h2>
+  <ul>
+    <li [innerHTML]="ping$ | async"></li>
+  </ul>
+</div>

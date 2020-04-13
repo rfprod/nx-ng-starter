@@ -63,17 +63,17 @@ export class GrpcApiController implements OnModuleInit {
 
   @GrpcStreamMethod('EntityService')
   public findMany(data$: Observable<nxngstarter.IEntityById>): Observable<nxngstarter.IEntity> {
-    const hero$ = new Subject<nxngstarter.IEntity>();
+    const entity$ = new Subject<nxngstarter.IEntity>();
 
-    const onNext = (heroById: nxngstarter.IEntityById) => {
-      const item = this.items.find(({ id }) => id === heroById.id);
-      hero$.next(item);
+    const onNext = (entityById: nxngstarter.IEntityById) => {
+      const item = this.items.find(({ id }) => id === entityById.id);
+      entity$.next(item);
     };
     const onComplete = () => {
-      hero$.complete();
+      entity$.complete();
     };
     data$.subscribe(onNext, null, onComplete);
 
-    return hero$.asObservable();
+    return entity$.asObservable();
   }
 }

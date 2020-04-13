@@ -53,7 +53,9 @@ export class HttpApiService {
     private readonly store: Store,
     private readonly httpClient: HttpClient,
     private readonly httpHandlers: HttpHandlersService,
-  ) {}
+  ) {
+    this.handlers.ping.request().subscribe();
+  }
 }
 
 /**
