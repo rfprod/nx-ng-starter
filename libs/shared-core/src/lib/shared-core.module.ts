@@ -3,7 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpProgressModule } from '@nx-ng-starter/shared-core/ui';
+import { HttpApiModule, HttpProgressModule } from '@nx-ng-starter/shared-core/ui';
 import {
   APP_ENV,
   AppEnvironment,
@@ -45,6 +45,7 @@ import {
     CustomMaterialModule,
     AppTranslateModule,
     SharedCoreServicesModule,
+    HttpApiModule,
     HttpProgressModule,
     UserModule,
   ],

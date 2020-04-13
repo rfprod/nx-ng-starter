@@ -1,5 +1,6 @@
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
+import { HttpLink } from 'apollo-angular-link-http';
 import { getWindow } from '../util/general-purpose/factories';
 import { WINDOW } from '../util/general-purpose/injection-tokens';
 import { HttpHandlersService } from './http-handlers/http-handlers.service';
@@ -18,6 +19,7 @@ export const sharedCoreModuleProviders: Provider[] = [
   MarkdownService,
   ToasterService,
   HttpHandlersService,
+  HttpLink,
 ];
 
 /**

@@ -1,3 +1,4 @@
+import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, TestModuleMetadata, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
@@ -6,14 +7,12 @@ import {
   newTestBedMetadata,
   setupJestSpiesFor,
 } from '@nx-ng-starter/mocks-core';
-import { SharedCoreModule } from '@nx-ng-starter/shared-core';
 import { AppIndexApiComponent } from './app-index-api.component';
 
 describe('AppIndexApiComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     declarations: [AppIndexApiComponent],
     imports: [
-      SharedCoreModule.forRoot(),
       RouterTestingModule.withRoutes([
         { path: '', component: AppIndexApiComponent },
         { path: '', redirectTo: '', pathMatch: 'full' },
@@ -29,19 +28,32 @@ describe('AppIndexApiComponent', () => {
     component: TComponentSpiesObject<AppIndexApiComponent>;
   };
 
+  let httpController: HttpTestingController;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
+        httpController = TestBed.inject(HttpTestingController);
         fixture = TestBed.createComponent(AppIndexApiComponent);
         component = fixture.debugElement.componentInstance;
         spy = {
           component: setupJestSpiesFor<AppIndexApiComponent>(component),
         };
         expect(spy.component).toBeDefined();
+        httpController
+          .match(_ => true)
+          .forEach((req: TestRequest) => (!req.cancelled ? req.flush({}) : null));
         fixture.detectChanges();
       });
   }));
+
+  afterEach(() => {
+    httpController
+      .match(_ => true)
+      .forEach((req: TestRequest) => (!req.cancelled ? req.flush({}) : null));
+    httpController.verify();
+  });
 
   it('should be defined', () => {
     expect(component).toBeDefined();

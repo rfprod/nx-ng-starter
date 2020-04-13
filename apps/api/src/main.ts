@@ -1,4 +1,5 @@
 import { ValidationPipe } from '@nestjs/common';
+import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions } from '@nestjs/microservices';
 import { ExpressAdapter } from '@nestjs/platform-express';
@@ -23,14 +24,23 @@ const defaultPort = 8080;
  */
 async function bootstrap(expressInstance: e.Express): Promise<any> {
   const app = await NestFactory.create(AppModule, new ExpressAdapter(expressInstance));
+
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
+
   app.useGlobalPipes(new ValidationPipe());
+
+  const corsOptions: CorsOptions = {
+    origin: /localhost|firebase\.app|web\.app/,
+  };
+  app.enableCors(corsOptions);
+
   // TODO: debug grpc in firebase, currently it causes all functions deployment failure
   if (!environment.firebase) {
     app.connectMicroservice<MicroserviceOptions>(grpcApiClientOptions);
     await app.startAllMicroservicesAsync();
   }
+
   const port = process.env.port || defaultPort;
   await app.listen(port, () => {
     console.log(`Listening at:
@@ -42,6 +52,7 @@ async function bootstrap(expressInstance: e.Express): Promise<any> {
     - http://localhost:${port}/${globalPrefix}/grpc
     - http://localhost:${port}/${globalPrefix}/grpc/:id`);
   });
+
   return app.init();
 }
 
@@ -57,6 +68,7 @@ const firebaseConfig = process.env.FIREBASE_CONFIG;
  */
 if (firebaseConfig) {
   admin.initializeApp();
+  exports.ping = functions.https.onRequest(server);
   exports.login = functions.https.onRequest(server);
   exports.logout = functions.https.onRequest(server);
   exports.signup = functions.https.onRequest(server);

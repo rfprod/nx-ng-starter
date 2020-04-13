@@ -21,9 +21,10 @@ export type AppName = 'Nx Ng Starter' | string;
  */
 export class AppEnvironment {
   public production = false;
+  // This flag indicates that api app build is intended to be deployed to firebase (firebase has specific features that are not working currently)
   public firebase?: boolean;
   public appName: AppName = 'Nx Ng Starter';
-  public api?: string;
+  public api = '';
 
   /**
    * Constructor.

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { MarkdownService } from '@nx-ng-starter/shared-core/data-access';
-import { WINDOW } from '@nx-ng-starter/shared-core/util';
+import { APP_ENV, AppEnvironment, MarkdownService } from '@nx-ng-starter/shared-core/data-access';
+import { HttpApiService } from '@nx-ng-starter/shared-core/ui';
 
 /**
  * Application index api component.
@@ -12,13 +12,12 @@ import { WINDOW } from '@nx-ng-starter/shared-core/util';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppIndexApiComponent {
-  private readonly apiUrl: string = /localhost/.test(this.win.location.origin)
-    ? 'http://localhost:8080/api'
-    : this.win.location.origin;
+  public readonly ping$ = this.httpApi.output.ping$;
 
   constructor(
     private readonly markdown: MarkdownService,
-    @Inject(WINDOW) private readonly win: Window,
+    private readonly httpApi: HttpApiService,
+    @Inject(APP_ENV) private readonly env: AppEnvironment,
   ) {}
 
   /**
@@ -26,13 +25,13 @@ export class AppIndexApiComponent {
    */
   public getMarkedInstructions(): string {
     const apiInstructions = `# API endpoints:\n
-    - ${this.apiUrl}/ping
-    - ${this.apiUrl}/signup
-    - ${this.apiUrl}/login
-    - ${this.apiUrl}/logout
-    - ${this.apiUrl}/graphql
-    - ${this.apiUrl}/grpc
-    - ${this.apiUrl}/grpc/:id`;
+    - ${this.env.api}/ping
+    - ${this.env.api}/signup
+    - ${this.env.api}/login
+    - ${this.env.api}/logout
+    - ${this.env.api}/graphql
+    - ${this.env.api}/grpc
+    - ${this.env.api}/grpc/:id`;
     return this.markdown.process(apiInstructions);
   }
 }

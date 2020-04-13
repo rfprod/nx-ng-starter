@@ -6,7 +6,6 @@ import {
   newTestBedMetadata,
   setupJestSpiesFor,
 } from '@nx-ng-starter/mocks-core';
-import { SharedCoreModule } from '@nx-ng-starter/shared-core';
 import { AppIndexComponent } from 'apps/nx-ng-starter/src/app/components/app-index/index/app-index.component';
 import { AppComponent } from './app.component';
 
@@ -14,7 +13,6 @@ describe('AppComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     declarations: [AppComponent, AppIndexComponent],
     imports: [
-      SharedCoreModule.forRoot(),
       RouterTestingModule.withRoutes([
         { path: '', component: AppIndexComponent },
         { path: '', redirectTo: '', pathMatch: 'full' },

@@ -20,6 +20,14 @@ import { dialogRefMockProvider } from '../../util/refs/dialog-ref.mock';
 import { overlayRefMockProvider } from '../../util/refs/overlay-ref.mock';
 import { matSnackbarRefMockProvider } from '../../util/refs/snackbar-ref.mock';
 
+export const testingEnvironment = {
+  production: false,
+  appName: 'Testing Environment',
+  api: /localhost/.test(window.location.origin)
+    ? 'http://localhost:8080/api'
+    : window.location.origin,
+};
+
 /**
  * Http handlers provider mock.
  */
@@ -34,6 +42,10 @@ export const httpHandlersProviders: Provider[] = [
   matSnackbarRefMockProvider,
   toasterServiceProvider,
   appEnvProvider,
+  {
+    provide: APP_ENV,
+    useValue: testingEnvironment,
+  },
   {
     provide: HttpHandlersService,
     useFactory: (

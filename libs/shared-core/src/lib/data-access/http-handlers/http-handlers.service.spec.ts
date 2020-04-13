@@ -94,7 +94,6 @@ describe('HttpHandlersService', () => {
 
   it('should have variables and methods defined', () => {
     expect(service.defaultHttpTimeout).toEqual(expect.any(Number));
-    expect(service.api).toEqual(expect.any(String));
     expect(service.isLocalhost).toEqual(expect.any(Function));
     expect(service.graphQlEndpoint).toEqual(expect.any(Function));
     expect(service.getGraphQLHttpHeaders).toEqual(expect.any(Function));
@@ -385,7 +384,7 @@ describe('HttpHandlersService', () => {
 
   it('graphQLHttpHeaders should return new http headers with authorization header set', () => {
     const newHeadersObj: any = {
-      Authorization: `Token ${user.userToken}`,
+      Authorization: `Token ${service.userToken}`,
     };
     const newHeaders: HttpHeaders = new HttpHeaders(newHeadersObj);
     expect(service.getGraphQLHttpHeaders().get('Authorization')).toEqual(
