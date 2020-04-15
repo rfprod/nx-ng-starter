@@ -8,6 +8,7 @@ export interface IAppEnvironmentConstructorOptions {
   firebase?: boolean;
   appName?: string;
   api?: string;
+  envoyUrl?: string;
 }
 
 /**
@@ -25,6 +26,7 @@ export class AppEnvironment {
   public firebase?: boolean;
   public appName: AppName = 'Nx Ng Starter';
   public api = '';
+  public envoyUrl? = 'http://localhost:8080';
 
   /**
    * Constructor.

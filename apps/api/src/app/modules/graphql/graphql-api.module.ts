@@ -22,6 +22,10 @@ export class GqlApiModule {
           playground: environment.production ? false : true,
           installSubscriptionHandlers: true,
           autoSchemaFile: 'apps/api/api-schema.gql',
+          cors: {
+            credentials: true,
+            origin: true,
+          },
         }),
       ],
       providers: [...gqlApiModuleProviders],

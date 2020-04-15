@@ -24,7 +24,7 @@ proto.nxngstarter = require('./root_pb.js');
  * @struct
  * @final
  */
-proto.nxngstarter.SampleServiceClient =
+proto.nxngstarter.EntityServiceClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
   options['format'] = 'text';
@@ -50,7 +50,7 @@ proto.nxngstarter.SampleServiceClient =
  * @struct
  * @final
  */
-proto.nxngstarter.SampleServicePromiseClient =
+proto.nxngstarter.EntityServicePromiseClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
   options['format'] = 'text';
@@ -71,80 +71,80 @@ proto.nxngstarter.SampleServicePromiseClient =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.nxngstarter.SampleServiceRequest,
- *   !proto.nxngstarter.SampleServiceResponse>}
+ *   !proto.nxngstarter.EntityById,
+ *   !proto.nxngstarter.Entity>}
  */
-const methodDescriptor_SampleService_SampleServiceMethod = new grpc.web.MethodDescriptor(
-  '/nxngstarter.SampleService/SampleServiceMethod',
+const methodDescriptor_EntityService_FindOne = new grpc.web.MethodDescriptor(
+  '/nxngstarter.EntityService/FindOne',
   grpc.web.MethodType.UNARY,
-  common_pb.SampleServiceRequest,
-  common_pb.SampleServiceResponse,
+  common_pb.EntityById,
+  common_pb.Entity,
   /**
-   * @param {!proto.nxngstarter.SampleServiceRequest} request
+   * @param {!proto.nxngstarter.EntityById} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  common_pb.SampleServiceResponse.deserializeBinary
+  common_pb.Entity.deserializeBinary
 );
 
 
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.nxngstarter.SampleServiceRequest,
- *   !proto.nxngstarter.SampleServiceResponse>}
+ *   !proto.nxngstarter.EntityById,
+ *   !proto.nxngstarter.Entity>}
  */
-const methodInfo_SampleService_SampleServiceMethod = new grpc.web.AbstractClientBase.MethodInfo(
-  common_pb.SampleServiceResponse,
+const methodInfo_EntityService_FindOne = new grpc.web.AbstractClientBase.MethodInfo(
+  common_pb.Entity,
   /**
-   * @param {!proto.nxngstarter.SampleServiceRequest} request
+   * @param {!proto.nxngstarter.EntityById} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  common_pb.SampleServiceResponse.deserializeBinary
+  common_pb.Entity.deserializeBinary
 );
 
 
 /**
- * @param {!proto.nxngstarter.SampleServiceRequest} request The
+ * @param {!proto.nxngstarter.EntityById} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.nxngstarter.SampleServiceResponse)}
+ * @param {function(?grpc.web.Error, ?proto.nxngstarter.Entity)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.nxngstarter.SampleServiceResponse>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.nxngstarter.Entity>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.nxngstarter.SampleServiceClient.prototype.sampleServiceMethod =
+proto.nxngstarter.EntityServiceClient.prototype.findOne =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/nxngstarter.SampleService/SampleServiceMethod',
+      '/nxngstarter.EntityService/FindOne',
       request,
       metadata || {},
-      methodDescriptor_SampleService_SampleServiceMethod,
+      methodDescriptor_EntityService_FindOne,
       callback);
 };
 
 
 /**
- * @param {!proto.nxngstarter.SampleServiceRequest} request The
+ * @param {!proto.nxngstarter.EntityById} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.nxngstarter.SampleServiceResponse>}
+ * @return {!Promise<!proto.nxngstarter.Entity>}
  *     A native promise that resolves to the response
  */
-proto.nxngstarter.SampleServicePromiseClient.prototype.sampleServiceMethod =
+proto.nxngstarter.EntityServicePromiseClient.prototype.findOne =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/nxngstarter.SampleService/SampleServiceMethod',
+      '/nxngstarter.EntityService/FindOne',
       request,
       metadata || {},
-      methodDescriptor_SampleService_SampleServiceMethod);
+      methodDescriptor_EntityService_FindOne);
 };
 
 
