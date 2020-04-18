@@ -17,7 +17,7 @@ const server: e.Express = e();
 /**
  * Defult port value.
  */
-const defaultPort = 8080;
+const defaultPort = 8081;
 
 /**
  * Bootstraps server.

@@ -24,7 +24,7 @@ export const testingEnvironment = {
   production: false,
   appName: 'Testing Environment',
   api: /localhost/.test(window.location.origin)
-    ? 'http://localhost:8080/api'
+    ? 'http://localhost:8081/api'
     : window.location.origin,
 };
 

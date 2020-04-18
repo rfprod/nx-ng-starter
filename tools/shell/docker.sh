@@ -6,16 +6,6 @@
 source tools/shell/colors.sh ''
 
 ##
-# Docker repo name.
-##
-DOCKER_REPO=nx-ng-starter
-
-##
-# Container name
-##
-CONTAINER_NAME=envoy
-
-##
 # Exits with error.
 ##
 exitWithError() {
@@ -53,7 +43,7 @@ composeEnvoy() {
   local TITLE="<< DOCKER COMPOSE: Envoy Proxy >>"
   printf "
     ${GREEN}%s ${DEFAULT}\n" "$TITLE"
-  docker-compose -f .devops/docker-compose.envoy.yml || exitWithError
+  docker-compose -f .devops/docker-compose.envoy.yml up || exitWithError
 }
 
 ##

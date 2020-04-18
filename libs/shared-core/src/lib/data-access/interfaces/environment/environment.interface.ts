@@ -46,6 +46,9 @@ export class AppEnvironment {
     if ('api' in options) {
       this.api = options.api;
     }
+    if ('envoyUrl' in options) {
+      this.envoyUrl = options.envoyUrl;
+    }
   }
 }
 
