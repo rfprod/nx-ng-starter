@@ -2,9 +2,9 @@ import { Provider } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import {
   APP_ENV,
-  AppEnvironment,
   HttpHandlersService,
   ToasterService,
+  WebAppEnvironment,
   appEnvProvider,
   toasterServiceProvider,
 } from '@nx-ng-starter/shared-core/data-access';
@@ -25,7 +25,7 @@ export const testingEnvironment = {
   appName: 'Testing Environment',
   api: /localhost/.test(window.location.origin)
     ? 'http://localhost:8080/api'
-    : window.location.origin,
+    : `${window.location.origin}/api`,
 };
 
 /**
@@ -55,7 +55,7 @@ export const httpHandlersProviders: Provider[] = [
       progress: HttpProgressService,
       translate: TranslateService,
       win: Window,
-      env: AppEnvironment,
+      env: WebAppEnvironment,
     ) => new HttpHandlersService(user, toaster, httpLink, progress, translate, win, env),
     deps: [
       UserService,

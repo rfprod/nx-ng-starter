@@ -6,8 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpApiModule, HttpProgressModule } from '@nx-ng-starter/shared-core/ui';
 import {
   APP_ENV,
-  AppEnvironment,
   SharedCoreServicesModule,
+  WebAppEnvironment,
   sharedCoreModuleProviders,
 } from './data-access';
 import {
@@ -55,7 +55,7 @@ export class SharedCoreModule {
    * Provides services.
    * @param environment application environment, if omitted default environment will be provided.
    */
-  public static forRoot(environment?: AppEnvironment): ModuleWithProviders<SharedCoreModule> {
+  public static forRoot(environment?: WebAppEnvironment): ModuleWithProviders<SharedCoreModule> {
     return {
       ngModule: SharedCoreModule,
       providers: [

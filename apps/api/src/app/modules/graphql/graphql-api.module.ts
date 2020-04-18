@@ -1,7 +1,6 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
-import { GraphQLModule } from '@nestjs/graphql';
-import { DateScalar } from '@nx-ng-starter/api-interface';
-import { AppEnvironment } from '@nx-ng-starter/shared-core/data-access';
+import { GqlModuleOptions, GraphQLModule } from '@nestjs/graphql';
+import { ApiAppEnvironment, DateScalar } from '@nx-ng-starter/api-interface';
 import { GqlMatcompModule } from './matcomp/matcomp.module';
 
 export const gqlApiModuleProviders: Provider[] = [DateScalar];
@@ -11,23 +10,22 @@ export const gqlApiModuleProviders: Provider[] = [DateScalar];
   providers: [...gqlApiModuleProviders],
 })
 export class GqlApiModule {
-  public static forRoot(environment: Partial<AppEnvironment>): DynamicModule {
+  public static forRoot(environment: ApiAppEnvironment): DynamicModule {
+    const gqlOptions: GqlModuleOptions = {
+      path: '/api/graphql',
+      include: [GqlMatcompModule],
+      debug: environment.production ? false : true,
+      playground: environment.production ? false : true,
+      installSubscriptionHandlers: true,
+      autoSchemaFile: 'apps/api/api-schema.gql',
+      cors: {
+        credentials: true,
+        origin: true,
+      },
+    };
     return {
       module: GqlApiModule,
-      imports: [
-        GraphQLModule.forRoot({
-          path: '/api/graphql',
-          include: [GqlMatcompModule],
-          debug: environment.production ? false : true,
-          playground: environment.production ? false : true,
-          installSubscriptionHandlers: true,
-          autoSchemaFile: 'apps/api/api-schema.gql',
-          cors: {
-            credentials: true,
-            origin: true,
-          },
-        }),
-      ],
+      imports: [GraphQLModule.forRoot(gqlOptions)],
       providers: [...gqlApiModuleProviders],
     };
   }

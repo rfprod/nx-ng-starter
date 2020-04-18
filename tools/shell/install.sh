@@ -43,7 +43,8 @@ installProjectDependencies() {
   local TITLE="<< INSTALLING PROJECT DEPENDENCIES >>"
   printf "
     ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
-  npm install || exitWithError
+  cd ./functions npm install || exitWithError
+  yarn install || exitWithError
 }
 
 ##
@@ -199,7 +200,7 @@ elif [ "$1" = "all" ]; then
   installGlobalDependencies
   installProtobuf "$2"
   installShellcheck "$2"
-elif [ "$1" = "local" ]; then
+elif [ "$1" = "project" ]; then
   installProjectDependencies
 elif [ "$1" = "global" ]; then
   installGlobalDependencies

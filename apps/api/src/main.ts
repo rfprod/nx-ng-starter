@@ -31,9 +31,14 @@ async function bootstrap(expressInstance: e.Express): Promise<any> {
   app.useGlobalPipes(new ValidationPipe());
 
   const corsOptions: CorsOptions = {
+    origin: [/localhost/, /firebase\.app/, /web\.app/],
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+    credentials: true,
+    /*
     origin: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
+    */
   };
   app.enableCors(corsOptions);
 

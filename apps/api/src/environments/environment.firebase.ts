@@ -1,11 +1,10 @@
-import { AppEnvironment } from '@nx-ng-starter/shared-core/data-access';
+import { ApiAppEnvironment } from '@nx-ng-starter/api-interface';
 
 /**
  * Production environment variables.
  */
-export const environment: AppEnvironment = {
+export const environment: ApiAppEnvironment = {
   production: true,
   firebase: true,
   appName: 'Nx Ng Starter API',
-  api: '', // If api app has any external API, defined it's url here
 };
