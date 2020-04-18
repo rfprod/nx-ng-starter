@@ -14,7 +14,7 @@ import { HttpProgressService } from '../../ui/modules/state/http-progress/http-p
 import { UserService } from '../../ui/modules/state/user/user.service';
 import { WINDOW } from '../../util/general-purpose';
 import { EHTTP_STATUS } from '../../util/http/http-statuses.interface';
-import { APP_ENV, AppEnvironment } from '../interfaces';
+import { APP_ENV, WebAppEnvironment } from '../interfaces';
 import { ToasterService } from '../toaster/toaster.service';
 
 /**
@@ -50,7 +50,7 @@ export class HttpHandlersService {
     private readonly httpProgress: HttpProgressService,
     private readonly translate: TranslateService,
     @Inject(WINDOW) private readonly win: Window,
-    @Inject(APP_ENV) private readonly env: AppEnvironment,
+    @Inject(APP_ENV) private readonly env: WebAppEnvironment,
   ) {
     this.userToken$.subscribe();
   }
