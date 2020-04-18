@@ -26,7 +26,7 @@ export class AppEnvironment {
   public firebase?: boolean;
   public appName: AppName = 'Nx Ng Starter';
   public api = '';
-  public envoyUrl? = 'http://localhost:8080';
+  public envoyUrl? = 'http://localhost:8081';
 
   /**
    * Constructor.
