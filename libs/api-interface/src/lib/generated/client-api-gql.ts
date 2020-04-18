@@ -11,14 +11,6 @@ export interface IScalars {
   Date: any;
 }
 
-export interface IMatcompModel {
-   __typename?: 'MatcompModel';
-  id: IScalars['ID'];
-  name?: Maybe<IScalars['String']>;
-  description?: Maybe<IScalars['String']>;
-  creationDate?: Maybe<IScalars['Date']>;
-}
-
 export interface IQuery {
    __typename?: 'Query';
   matcomps: Array<IMatcompModel>;
@@ -32,6 +24,14 @@ export interface IQueryMatcompsArgs {
 
 export interface IQueryMatcompArgs {
   id: IScalars['String'];
+}
+
+export interface IMatcompModel {
+   __typename?: 'MatcompModel';
+  id: IScalars['ID'];
+  name?: Maybe<IScalars['String']>;
+  description?: Maybe<IScalars['String']>;
+  creationDate?: Maybe<IScalars['Date']>;
 }
 
 export interface IMutation {
