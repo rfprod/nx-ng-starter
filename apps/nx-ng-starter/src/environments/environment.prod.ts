@@ -9,5 +9,5 @@ export const environment: AppEnvironment = {
   api: /localhost/.test(window.location.origin)
     ? 'http://localhost:8080/api'
     : window.location.origin,
-  envoyUrl: 'http://localhost:8080', // TODO
+  envoyUrl: 'http://localhost:8081', // TODO
 };

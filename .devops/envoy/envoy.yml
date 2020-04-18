@@ -1,8 +1,3 @@
-admin:
-  access_log_path: /tmp/admin_access.log
-  address:
-    socket_address: { address: 0.0.0.0, port_value: 9901 }
-
 static_resources:
   listeners:
     - name: listener_0
@@ -41,7 +36,7 @@ static_resources:
       type: logical_dns
       http2_protocol_options: {}
       lb_policy: round_robin
-      hosts: [{ socket_address: { address: 127.0.0.1, port_value: 50051 } }] # TODO: revise configuration
+      hosts: [{ socket_address: { address: 127.0.0.1, port_value: 50051 } }]
 layered_runtime:
   layers:
     - name: static_layer
