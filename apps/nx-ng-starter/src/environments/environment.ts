@@ -18,6 +18,6 @@ export const environment: WebAppEnvironment = {
   appName: 'Nx Ng Starter Client',
   api: /localhost/.test(window.location.origin)
     ? 'http://localhost:8080/api'
-    : window.location.origin,
+    : `${window.location.origin}/api`,
   envoyUrl: 'http://localhost:8081',
 };

@@ -66,7 +66,7 @@ export class HttpHandlersService {
    * Resolver graphQL base url, adds correct protocol.
    */
   public graphQlEndpoint(): string {
-    const url = `${this.win.location.protocol}//${this.env.api}/graphql`;
+    const url = `${this.env.api}/graphql`;
     return url;
   }
 
