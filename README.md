@@ -88,6 +88,8 @@ Below are some plugins which you can add to your workspace:
   - `ng add @nrwl/express`
 - [Node](https://nodejs.org)
   - `ng add @nrwl/node`
+- [Storybook](https://storybook.js.org/)
+  - `ng add @nrwl/storybook`
 
 ### Generate an application
 
@@ -132,6 +134,12 @@ Run `npm run affected:e2e` to execute the end-to-end tests affected by a change.
 ### Understand your workspace
 
 Run `npm run dep-graph` to see a diagram of the dependencies of your projects.
+
+### Generate a storybook for a feature or ui library
+
+```
+npx nx g @nrwl/angular:storybook-configuration project-name
+```
 
 ### Further help
 
