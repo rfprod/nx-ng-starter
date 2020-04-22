@@ -23,6 +23,9 @@
   "[typescript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "editor.codeActionsOnSave": {
     "source.organizeImports": false,
     "source.fixAll.eslint": true,
@@ -40,17 +43,12 @@
   "files.defaultLanguage": "typescript",
   "files.hotExit": "onExit",
   "files.trimTrailingWhitespace": true,
-  "shellcheck.customArgs": [
-    "-x"
-  ],
+  "shellcheck.customArgs": ["-x"],
   "shellcheck.enable": true,
   "shellcheck.enableQuickFix": false,
   "shellcheck.exclude": [],
   "shellcheck.executablePath": "shellcheck",
-  "shellcheck.ignoreFileSchemes": [
-    "git",
-    "gitfs"
-  ],
+  "shellcheck.ignoreFileSchemes": ["git", "gitfs"],
   "shellcheck.ignorePatterns": {
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
