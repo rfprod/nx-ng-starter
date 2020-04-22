@@ -21,9 +21,11 @@
   "clang-format.language.typescript.enable": false,
   "clang-format.style": "Google",
   "editor.codeActionsOnSave": {
-    "source.organizeImports": false
+    "source.organizeImports": false,
+    "source.fixAll.eslint": true,
+    "source.fixAll.tslint": true,
+    "source.fixAll.stylelint": true
   },
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
   "files.associations": {
@@ -35,12 +37,17 @@
   "files.defaultLanguage": "typescript",
   "files.hotExit": "onExit",
   "files.trimTrailingWhitespace": true,
-  "shellcheck.customArgs": ["-x"],
+  "shellcheck.customArgs": [
+    "-x"
+  ],
   "shellcheck.enable": true,
   "shellcheck.enableQuickFix": false,
   "shellcheck.exclude": [],
   "shellcheck.executablePath": "shellcheck",
-  "shellcheck.ignoreFileSchemes": ["git", "gitfs"],
+  "shellcheck.ignoreFileSchemes": [
+    "git",
+    "gitfs"
+  ],
   "shellcheck.ignorePatterns": {
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
