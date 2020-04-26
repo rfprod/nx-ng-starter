@@ -1,5 +1,9 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { APP_ENV, MarkdownService, WebAppEnvironment } from '@nx-ng-starter/shared-core/data-access';
+import {
+  APP_ENV,
+  MarkdownService,
+  WebAppEnvironment,
+} from '@nx-ng-starter/shared-core/data-access';
 import { HttpApiService } from '@nx-ng-starter/shared-core/ui';
 
 /**

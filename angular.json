@@ -47,8 +47,9 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
+            "eslintConfig": "apps/api/.eslintrc",
             "exclude": ["**/node_modules/**", "!apps/api/**"],
             "tsConfig": ["apps/api/tsconfig.app.json", "apps/api/tsconfig.spec.json"]
           }
@@ -95,8 +96,9 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
+            "eslintConfig": "libs/api-interface/.eslintrc",
             "exclude": ["**/node_modules/**", "!libs/api-interface/**"],
             "tsConfig": [
               "libs/api-interface/tsconfig.lib.json",
@@ -121,8 +123,9 @@
     "mocks-core": {
       "architect": {
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
+            "eslintConfig": "libs/mocks-core/.eslintrc",
             "exclude": ["**/node_modules/**", "!libs/mocks-core/**"],
             "tsConfig": ["libs/mocks-core/tsconfig.lib.json", "libs/mocks-core/tsconfig.spec.json"]
           }
@@ -218,8 +221,9 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
+            "eslintConfig": "apps/nx-ng-starter/.eslintrc",
             "exclude": ["**/node_modules/**", "!apps/nx-ng-starter/**"],
             "tsConfig": [
               "apps/nx-ng-starter/tsconfig.app.json",
@@ -291,9 +295,10 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "exclude": ["!apps/nx-ng-starter-e2e/**"],
+            "eslintConfig": "apps/nx-ng-starter-e2e/.eslintrc",
+            "exclude": ["**/node_modules/**", "!apps/nx-ng-starter-e2e/**"],
             "tsConfig": "apps/nx-ng-starter-e2e/tsconfig.e2e.json"
           }
         }
@@ -305,8 +310,9 @@
     "proto": {
       "architect": {
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
+            "eslintConfig": "libs/proto/.eslintrc",
             "exclude": ["**/node_modules/**", "!libs/proto/**"],
             "tsConfig": ["libs/proto/tsconfig.lib.json", "libs/proto/tsconfig.spec.json"]
           }
@@ -334,8 +340,9 @@
     "shared-core": {
       "architect": {
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
+            "eslintConfig": "libs/shared-core/.eslintrc",
             "exclude": ["**/node_modules/**", "!libs/shared-core/**"],
             "tsConfig": [
               "libs/shared-core/tsconfig.lib.json",
@@ -367,10 +374,20 @@
   "schematics": {
     "@nrwl/angular:application": {
       "e2eTestRunner": "cypress",
-      "unitTestRunner": "jest"
+      "unitTestRunner": "jest",
+      "style": "scss"
     },
     "@nrwl/angular:library": {
-      "unitTestRunner": "jest"
+      "unitTestRunner": "jest",
+      "style": "scss"
+    },
+    "@nrwl/schematics:application": {
+      "framework": "angular",
+      "style": "scss"
+    },
+    "@nrwl/schematics:library": {
+      "unitTestRunner": "jest",
+      "style": "scss"
     }
   },
   "version": 1

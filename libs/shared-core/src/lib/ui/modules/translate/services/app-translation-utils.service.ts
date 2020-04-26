@@ -9,7 +9,9 @@ import {
 } from '@nx-ng-starter/shared-core/data-access';
 import { WINDOW } from '@nx-ng-starter/shared-core/util';
 import { Subject } from 'rxjs';
-import { ISharedDictionary, RU_DICTIONARY } from '../shared/ru';
+
+import { IUiDictionary } from '../../../../data-access/interfaces/ui/ui-dictionary.interface';
+import { RU_DICTIONARY } from '../shared/ru';
 
 /**
  * Application translation utils service.
@@ -51,9 +53,9 @@ export class AppTranslationUtilsService {
 
   constructor(
     private readonly translate: TranslateService,
-    private readonly dateAdapter: DateAdapter<any>,
+    private readonly dateAdapter: DateAdapter<unknown>,
     @Inject(WINDOW) private readonly win: Window,
-    @Inject(RU_DICTIONARY) private readonly ruDictionary: ISharedDictionary,
+    @Inject(RU_DICTIONARY) private readonly ruDictionary: IUiDictionary,
   ) {
     this.languageChangeSubscription();
   }

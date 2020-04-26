@@ -1,17 +1,17 @@
-import { HttpHeaders, HttpRequest } from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
-import { TestBed, TestModuleMetadata, async } from '@angular/core/testing';
+import { async, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import {
-  LocalStorageMock,
   getTestBedConfig,
   httpHandlersProviders,
+  LocalStorageMock,
   newTestBedMetadata,
 } from '@nx-ng-starter/mocks-core';
 import {
   AppTranslateModule,
   HttpProgressModule,
-  UserService,
   httpProgressModuleProviders,
+  UserService,
 } from '@nx-ng-starter/shared-core/ui';
 import { Apollo, ApolloModule } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
@@ -19,6 +19,7 @@ import { ExecutionResult } from 'apollo-link';
 import { GraphQLError } from 'graphql';
 import { cold, getTestScheduler } from 'jasmine-marbles';
 import { Observable, of } from 'rxjs';
+
 import { CustomMaterialModule } from '../../ui/index';
 import { EHTTP_STATUS } from '../../util/http/http-statuses.interface';
 import { ToasterService } from '../toaster/toaster.service';
@@ -37,12 +38,12 @@ describe('HttpHandlersService', () => {
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
-  let service: HttpHandlersService | any;
+  let service: HttpHandlersService;
   let apollo: Apollo;
   let httpTestingController: HttpTestingController;
   let localStorage: LocalStorageMock;
   let toaster: ToasterService;
-  let user: UserService | any;
+  let user: UserService;
   let spy: {
     user: {
       handlers: {
@@ -58,7 +59,7 @@ describe('HttpHandlersService', () => {
     localStorage = window.localStorage;
     jest.spyOn(localStorage, 'setItem');
 
-    TestBed.configureTestingModule(testBedConfig)
+    void TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
         service = TestBed.inject(HttpHandlersService);
@@ -81,7 +82,7 @@ describe('HttpHandlersService', () => {
 
   afterEach(() => {
     httpTestingController
-      .match((req: HttpRequest<any>): boolean => true)
+      .match((req: HttpRequest<unknown>): boolean => true)
       .forEach((req: TestRequest) => (!req.cancelled ? req.flush({}) : null));
     httpTestingController.verify();
   });
@@ -131,6 +132,7 @@ describe('HttpHandlersService', () => {
     try {
       service.extractGraphQLData({ errors: [error] });
     } catch (e) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       expect(e[0]).toBe(error);
     }
   });
@@ -138,10 +140,10 @@ describe('HttpHandlersService', () => {
   it('pipeGraphQLRequest should check error if 401 status', async(() => {
     const q$ = cold('---#|', null, { networkError: { status: EHTTP_STATUS.BAD_REQUEST } });
     service.pipeGraphQLRequest(q$).subscribe(
-      (data: any) => {
-        console.log('pipeGraphQLRequest, data should not be called', data);
+      data => {
+        console.error('pipeGraphQLRequest, data should not be called', data);
       },
-      (error: any) => {
+      _ => {
         expect(spy.service.checkErrorStatusAndRedirect).toHaveBeenCalledWith(
           EHTTP_STATUS.UNAUTHORIZED,
         );
@@ -158,70 +160,13 @@ describe('HttpHandlersService', () => {
   });
 
   describe('handleError', () => {
-    it('should return an Observable', () => {
-      expect(service.handleError({ errors: [{ detail: 'error' }] })).toEqual(
-        expect.any(Observable),
-      );
-    });
-
-    it('should return an Observable with nested error structure', () => {
-      expect(service.handleError({ errors: [{ detail: { err1: 'err1' } }] })).toEqual(
-        expect.any(Observable),
-      );
-    });
-
     it('should handle errors properly', async(() => {
+      let errRes = new HttpErrorResponse({
+        status: 400,
+        statusText: 'error status text',
+      });
       service
-        .handleError({
-          _body: JSON.stringify({
-            code: 'errorType',
-            message: 'errorMessage',
-            detail: {
-              root_erratic_item: {
-                erratic_item: ['error msg 1', 'error msg 2'],
-              },
-            },
-          }),
-        })
-        .toPromise()
-        .then(
-          () => true,
-          (error: string) => {
-            expect(error).toEqual(
-              'errorType - errorMessage: erratic_item - error msg 1, error msg 2',
-            );
-          },
-        );
-
-      service
-        .handleError({
-          _body: JSON.stringify({
-            code: 'errorType',
-            message: 'errorMessage',
-            detail: {
-              root_erratic_item: {
-                erratic_item: ['error msg 1', 'error msg 2'],
-              },
-              erratic_item2: null,
-            },
-          }),
-        })
-        .toPromise()
-        .then(
-          () => true,
-          (error: string) => {
-            expect(error).toEqual(
-              'errorType - errorMessage: erratic_item - error msg 1, error msg 2',
-            );
-          },
-        );
-
-      service
-        .handleError({
-          status: '400',
-          statusText: 'error status text',
-          _body: JSON.stringify(null),
-        })
+        .handleError(errRes)
         .toPromise()
         .then(
           () => true,
@@ -230,136 +175,9 @@ describe('HttpHandlersService', () => {
           },
         );
 
+      errRes = new HttpErrorResponse({});
       service
-        .handleError({ _body: JSON.stringify(null) })
-        .toPromise()
-        .then(
-          () => true,
-          (error: string) => {
-            expect(error).toEqual('Server error');
-          },
-        );
-
-      // Optional error response handling
-      service
-        .handleError({
-          _body: JSON.stringify({
-            errors: [{ code: 'err_code', detail: 'error body' }],
-          }),
-        })
-        .toPromise()
-        .then(
-          () => true,
-          (error: string) => {
-            expect(error).toEqual('err_code - error body');
-          },
-        );
-
-      service
-        .handleError({ errors: [{ code: 'err_code', detail: 'error body' }] })
-        .toPromise()
-        .then(
-          () => true,
-          (error: string) => {
-            expect(error).toEqual('err_code - error body');
-          },
-        );
-
-      service
-        .handleError({
-          errors: [],
-          status: '400',
-          statusText: 'error status text',
-        })
-        .toPromise()
-        .then(
-          () => true,
-          (error: string) => {
-            expect(error).toEqual('400 - error status text');
-          },
-        );
-
-      service
-        .handleError({
-          _body: JSON.stringify({
-            code: 'errorType',
-            message: 'general message',
-          }),
-        })
-        .toPromise()
-        .then(
-          () => true,
-          (error: string) => {
-            expect(error).toEqual('errorType - general message');
-          },
-        );
-
-      service
-        .handleError({ code: 'errorType', message: 'general message' })
-        .toPromise()
-        .then(
-          () => true,
-          (error: string) => {
-            expect(error).toEqual('errorType - general message');
-          },
-        );
-
-      service
-        .handleError({
-          code: 'errorType',
-          message: 'general message',
-          detail: { inn: ['invalidValue'] },
-        })
-        .toPromise()
-        .then(
-          () => true,
-          (error: string) => {
-            expect(error).toEqual('errorType - general message: inn - invalidValue');
-          },
-        );
-
-      service
-        .handleError({
-          code: 'errorType',
-          message: 'general message',
-          detail: { inn: ['invalidValue1', 'invalidValue2'] },
-        })
-        .toPromise()
-        .then(
-          () => true,
-          (error: string) => {
-            expect(error).toEqual(
-              'errorType - general message: inn - invalidValue1, invalidValue2',
-            );
-          },
-        );
-
-      service
-        .handleError({
-          _body: JSON.stringify({}),
-          status: '400',
-          statusText: 'error status text',
-        })
-        .toPromise()
-        .then(
-          () => true,
-          (error: string) => {
-            expect(error).toEqual('400 - error status text');
-          },
-        );
-
-      service
-        .handleError({ status: '400', statusText: 'error status text' })
-        .toPromise()
-        .then(
-          () => true,
-          (error: string) => {
-            expect(error).toEqual('400 - error status text');
-          },
-        );
-
-      service
-        .handleError({})
+        .handleError(errRes)
         .toPromise()
         .then(
           () => true,
@@ -383,7 +201,9 @@ describe('HttpHandlersService', () => {
   });
 
   it('graphQLHttpHeaders should return new http headers with authorization header set', () => {
-    const newHeadersObj: any = {
+    const newHeadersObj: {
+      [name: string]: string | string[];
+    } = {
       Authorization: `Token ${service.userToken}`,
     };
     const newHeaders: HttpHeaders = new HttpHeaders(newHeadersObj);

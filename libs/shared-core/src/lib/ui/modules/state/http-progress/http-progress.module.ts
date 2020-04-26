@@ -1,5 +1,6 @@
 import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
 import { NgxsModule } from '@ngxs/store';
+
 import { httpProgressServiceProvider } from './http-progress.service';
 import { HttpProgressState } from './http-progress.store';
 

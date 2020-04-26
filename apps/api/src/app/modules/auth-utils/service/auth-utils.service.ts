@@ -16,7 +16,8 @@ export class AuthUtilsService {
    * @param payload token payload
    */
   public generateJWToken(payload: IAuthPayload): UserToken {
-    const salt = crypto.randomBytes(24).toString('hex');
+    const bytes = 24;
+    const salt = crypto.randomBytes(bytes).toString('hex');
     const token = jwt.encode(payload, salt, 'HS256'); // HS256, HS384, HS512, RS256.
     const tokenObject: UserToken = new UserToken({ token, salt });
     return tokenObject;
@@ -27,8 +28,8 @@ export class AuthUtilsService {
    * @param token user token
    * @param storedSalt stored salt
    */
-  public decryptJWToken(token: string, storedSalt: string = ''): string {
-    const result: string = !token ? '' : jwt.decode(token, storedSalt, false, 'HS256'); // HS256, HS384, HS512, RS256.
+  public decryptJWToken(token: string, storedSalt = ''): string {
+    const result: string = !Boolean(token) ? '' : jwt.decode(token, storedSalt, false, 'HS256'); // HS256, HS384, HS512, RS256.
     return result;
   }
 

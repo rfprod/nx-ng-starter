@@ -26,6 +26,16 @@ which is deployed to `Firebase`: https://nx-ng-starter.web.app/
 
 - [yarn](https://www.npmjs.com/package/yarn)
 
+#### Committing changes to repo
+
+Using commitizen cli is mandatory, [reference](https://github.com/commitizen/cz-cli)
+
+Provided all dependencies were installed, and this requirements are fulfilled [cz-cli#conventional-commit-messages-as-a-global-utility](https://github.com/commitizen/cz-cli#conventional-commit-messages-as-a-global-utility) this command must be used.
+
+```bash
+git cz
+```
+
 ## Deployment
 
 - [Nx Ng Starter @ Firebase](https://nx-ng-starter.web.app)

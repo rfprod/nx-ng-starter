@@ -2,19 +2,24 @@ import { Injectable, Provider } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
 
+export interface IDialogRefMockCloseEvent {
+  action: string;
+  data: unknown;
+}
+
 /**
  * Mocked material dialog.
  */
 @Injectable()
 export class DialogRefMock {
-  private readonly afterClosedSubject: Subject<any> = new Subject();
-  public close(event: { action: string; data: any } = { action: 'close', data: {} }): boolean {
+  private readonly afterClosedSubject: Subject<IDialogRefMockCloseEvent> = new Subject();
+  public close(event: IDialogRefMockCloseEvent = { action: 'close', data: {} }): boolean {
     this.afterClosedSubject.next(event);
     this.afterClosedSubject.complete();
     return true;
   }
 
-  public hide(event?: { action: string; data: any }): boolean {
+  public hide(event?: IDialogRefMockCloseEvent): boolean {
     return true;
   }
 
@@ -22,7 +27,7 @@ export class DialogRefMock {
     return true;
   }
 
-  public afterClosed(): Subject<any> {
+  public afterClosed(): Subject<IDialogRefMockCloseEvent> {
     return this.afterClosedSubject;
   }
 }

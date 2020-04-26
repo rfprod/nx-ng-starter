@@ -1,4 +1,5 @@
-import { TestBed, async } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
+
 import { MarkdownService } from './markdown.service';
 
 describe('MarkdownService', () => {
@@ -10,7 +11,7 @@ describe('MarkdownService', () => {
   };
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
+    void TestBed.configureTestingModule({
       providers: [
         {
           provide: MarkdownService,

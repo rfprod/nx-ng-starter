@@ -5,7 +5,7 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 export class MatcompGuard implements CanActivate {
   public canActivate(context: ExecutionContext): boolean {
     const ctx = GqlExecutionContext.create(context);
-    console.log('TODO: MatcompGuard canActivate, ctx', ctx);
-    return true;
+    // TODO: MatcompGuard canActivate
+    return Boolean(ctx);
   }
 }

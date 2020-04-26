@@ -53,7 +53,8 @@ export function setupJestSpiesFor<T>(
   const spiesObject: TComponentSpiesObject<T> = Object.keys(component).reduce(
     (accumulator: TComponentSpiesObject<T>, key: string) => {
       let spy: TComponentSpy = null;
-      const classMember: unknown = component[key];
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      const classMember = component[key];
       /**
        * Spy on component functions.
        */

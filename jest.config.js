@@ -18,4 +18,5 @@ module.exports = {
   resolver: '@nrwl/jest/plugins/resolver',
   coverageReporters: ['html'],
   collectCoverage: true,
+  cacheDirectory: '/tmp/jest_rs/nx-ng-starter',
 };

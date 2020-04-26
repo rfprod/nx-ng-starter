@@ -1,9 +1,10 @@
-import { TestBed, async } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
+
 import { SharedCoreModule } from './shared-core.module';
 
 describe('SharedCoreModule', () => {
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
+    void TestBed.configureTestingModule({
       imports: [SharedCoreModule],
     }).compileComponents();
   }));

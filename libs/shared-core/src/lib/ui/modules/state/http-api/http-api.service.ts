@@ -4,13 +4,14 @@ import { Store } from '@ngxs/store';
 import { HttpHandlersService } from '@nx-ng-starter/shared-core/data-access';
 import { Message } from '@nx-ng-starter/shared-core/util';
 import { tap } from 'rxjs/operators';
+
 import {
   IHttpApiHandlers,
   IHttpApiInterface,
   IHttpApiObservableOutput,
   IHttpApiStatePayload,
 } from './http-api.interface';
-import { HttpApiState, httpApiActions } from './http-api.store';
+import { httpApiActions, HttpApiState } from './http-api.store';
 
 /**
  * Http API service.
@@ -20,13 +21,13 @@ import { HttpApiState, httpApiActions } from './http-api.store';
 })
 export class HttpApiService {
   public readonly output: IHttpApiObservableOutput = {
-    all$: this.store.select(HttpApiState.AllData),
-    ping$: this.store.select(HttpApiState.Ping),
+    all$: this.store.select(HttpApiState.allData),
+    ping$: this.store.select(HttpApiState.ping),
   };
 
   public readonly handlers: IHttpApiHandlers = {
     ping: {
-      cached: () => this.store.selectOnce(HttpApiState.Ping),
+      cached: () => this.store.selectOnce(HttpApiState.ping),
       request: () => this.http.ping(),
     },
   };

@@ -18,7 +18,7 @@ export interface IHttpApiObservableOutput {
 
 export interface IHttpApiHandlersActions {
   cached(): Observable<string>;
-  request(): Observable<Message>;
+  request(): Observable<Message | string>;
 }
 
 export interface IHttpApiHandlers {
@@ -26,5 +26,5 @@ export interface IHttpApiHandlers {
 }
 
 export interface IHttpApiInterface {
-  ping(): Observable<Message>;
+  ping(): Observable<Message | string>;
 }

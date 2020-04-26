@@ -1,6 +1,7 @@
-import { TestBed, TestModuleMetadata, async } from '@angular/core/testing';
+import { async, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
+
 import { ToastType } from '../interfaces/toaster/toaster.interface';
 import { ToasterService } from './toaster.service';
 
@@ -36,7 +37,7 @@ describe('ToasterService', () => {
   };
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule(testBedConfig)
+    void TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
         service = TestBed.inject(ToasterService);

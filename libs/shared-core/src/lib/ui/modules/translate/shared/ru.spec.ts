@@ -1,11 +1,13 @@
-import { TestBed, async } from '@angular/core/testing';
+import { async, TestBed } from '@angular/core/testing';
+import { IUiDictionary } from '@nx-ng-starter/shared-core/data-access';
+
 import { RU, RU_DICTIONARY } from './ru';
 
 describe('Russian shared translations', () => {
-  let SHARED_RU: any;
+  let SHARED_RU: IUiDictionary;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
+    void TestBed.configureTestingModule({
       imports: [],
       providers: [
         {

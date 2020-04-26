@@ -1,4 +1,6 @@
+/* eslint-disable compat/compat */
 import { ETIMEOUT } from '@nx-ng-starter/shared-core/util';
+
 import { setUpLocalStorageMock } from '../local-storage/local-storage.mock';
 
 /**
@@ -16,9 +18,6 @@ export const setupJestJsdomGlobalMocks: () => void = () => {
    */
   setUpLocalStorageMock();
 
-  /**
-   * Jest requirement, because it uses jsdom.
-   */
   window.matchMedia = jest.fn().mockImplementation(query => {
     return {
       matches: false,
@@ -29,16 +28,10 @@ export const setupJestJsdomGlobalMocks: () => void = () => {
     };
   });
 
-  /**
-   * Jest requirement, because it uses jsdom.
-   */
   window.resizeTo = jest.fn().mockImplementation((width, height) => {
     return { width, height };
   });
 
-  /**
-   * Jest requires this mock.
-   */
   Object.defineProperty(window, 'customElements', {
     value: {
       define: jest.fn(),
@@ -46,20 +39,14 @@ export const setupJestJsdomGlobalMocks: () => void = () => {
     writable: false,
   });
 
-  /**
-   * Jest requires this mock.
-   */
   Object.defineProperty(window.URL, 'createObjectURL', {
     value: jest.fn(),
     writable: false,
   });
 
-  /**
-   * Jest requires this mock.
-   */
   Object.defineProperty(global, 'fetch', {
     value: jest.fn(async () => {
-      const promise: Promise<any> = new Promise(resolve => {
+      const promise: Promise<unknown> = new Promise(resolve => {
         resolve();
       });
       return promise;
@@ -67,17 +54,11 @@ export const setupJestJsdomGlobalMocks: () => void = () => {
     writable: false,
   });
 
-  /**
-   * Jest requires this mock.
-   */
   Object.defineProperty(global, 'URL', {
     value: window.URL,
     writable: true,
   });
 
-  /**
-   * Markdown global mock.
-   */
   Object.defineProperty(global, 'marked', {
     value: jest.fn((input: string) => `# mocked marked output ${input}`),
     writable: false,

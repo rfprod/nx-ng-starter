@@ -37,7 +37,7 @@ reportUsage() {
 ##
 
 ##
-# Installs project dependencies,
+# Installs project dependencies.
 ##
 installProjectDependencies() {
   local TITLE="<< INSTALLING PROJECT DEPENDENCIES >>"
@@ -45,7 +45,7 @@ installProjectDependencies() {
     ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   cd ./functions npm install || exitWithError
   cd .. || exitWithError
-  yarn install || exitWithError
+  yarn install --frozen-lockfile || exitWithError
 }
 
 ##

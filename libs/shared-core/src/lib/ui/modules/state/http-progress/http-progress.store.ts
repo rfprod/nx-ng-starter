@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { actionPayloadConstructor } from '@nx-ng-starter/shared-core/util';
+
 import { HttpProgressPayload, IHttpProgressStateModel } from './http-progress.interface';
 
 const createAction = actionPayloadConstructor('HttpProgress');
@@ -18,12 +19,12 @@ const StopProgress = createAction<HttpProgressPayload>('Stop');
 })
 class HttpProgressState {
   @Selector()
-  public static AllProgress(state: IHttpProgressStateModel) {
+  public static allProgress(state: IHttpProgressStateModel) {
     return state;
   }
 
   @Selector()
-  public static MainViewProgress(state: IHttpProgressStateModel) {
+  public static mainViewProgress(state: IHttpProgressStateModel) {
     return state.mainView;
   }
 

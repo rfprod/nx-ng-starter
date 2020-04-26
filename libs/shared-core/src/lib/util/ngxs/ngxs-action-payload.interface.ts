@@ -10,7 +10,7 @@ export interface IActionPayload<T> {
  * @param actionScope action scope
  */
 export const actionPayloadConstructor = (actionScope: string) => <
-  T extends IActionPayload<any> = { payload: null }
+  T extends IActionPayload<unknown> = { payload: null }
 >(
   actionName: string,
 ) =>

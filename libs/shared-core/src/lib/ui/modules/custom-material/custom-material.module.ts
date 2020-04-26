@@ -1,3 +1,5 @@
+import 'node_modules/hammerjs/hammer.js';
+
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
 import {
@@ -48,7 +50,6 @@ import {
   MatTooltipModule,
 } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
-import 'node_modules/hammerjs/hammer.js';
 
 /**
  * Animations require hammerjs but it is bundled via angular.json.

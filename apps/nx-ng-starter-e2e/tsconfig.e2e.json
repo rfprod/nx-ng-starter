@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "sourceMap": false
+    "sourceMap": false,
+    "types": ["cypress", "node"]
   },
   "extends": "./tsconfig.json",
   "include": ["src/**/*.ts"]
