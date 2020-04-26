@@ -35,7 +35,9 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "runtimeCacheInputs": ["node -v", "echo $IMPORTANT_ENV_VAR"],
+        "cacheDirectory": "/tmp/nx/nx-ng-starter"
       }
     }
   }

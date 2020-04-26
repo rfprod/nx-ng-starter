@@ -1,12 +1,13 @@
 import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed, TestModuleMetadata, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
-  TComponentSpiesObject,
   getTestBedConfig,
   newTestBedMetadata,
   setupJestSpiesFor,
+  TComponentSpiesObject,
 } from '@nx-ng-starter/mocks-core';
+
 import { AppIndexApiComponent } from './app-index-api.component';
 
 describe('AppIndexApiComponent', () => {
@@ -23,7 +24,7 @@ describe('AppIndexApiComponent', () => {
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
   let fixture: ComponentFixture<AppIndexApiComponent>;
-  let component: AppIndexApiComponent | any;
+  let component: AppIndexApiComponent;
   let spy: {
     component: TComponentSpiesObject<AppIndexApiComponent>;
   };
@@ -31,7 +32,7 @@ describe('AppIndexApiComponent', () => {
   let httpController: HttpTestingController;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule(testBedConfig)
+    void TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
         httpController = TestBed.inject(HttpTestingController);

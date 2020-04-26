@@ -2,26 +2,27 @@ import { Injectable, Provider } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+
 import {
   IUserHandlers,
   IUserObservableOutput,
   IUserStatePayload,
   UserStateModel,
 } from './user.interface';
-import { UserState, userActions } from './user.store';
+import { userActions, UserState } from './user.store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   public readonly output: IUserObservableOutput = {
-    model$: this.store.select(UserState.Model),
-    email$: this.store.select(UserState.Email),
-    token$: this.store.select(UserState.Token),
-    admin$: this.store.select(UserState.Admin),
+    model$: this.store.select(UserState.model),
+    email$: this.store.select(UserState.email),
+    token$: this.store.select(UserState.token),
+    admin$: this.store.select(UserState.admin),
     isLoggedInSubscription$: this.store
-      .select(UserState.Model)
-      .pipe(map((model: UserStateModel) => (model.token ? true : false))),
+      .select(UserState.model)
+      .pipe(map((model: UserStateModel) => (Boolean(model.token) ? true : false))),
   };
 
   public readonly handlers: IUserHandlers = {
@@ -38,7 +39,7 @@ export class UserService {
 
   private restoreUserFromLocalStorage(): void {
     if (
-      localStorage.getItem('userService') &&
+      Boolean(localStorage.getItem('userService')) &&
       typeof localStorage.getItem('userService') !== 'undefined' &&
       JSON.parse(localStorage.getItem('userService')) instanceof UserStateModel
     ) {
@@ -46,7 +47,7 @@ export class UserService {
     }
   }
 
-  private setState(payload: IUserStatePayload): Observable<any> {
+  private setState(payload: IUserStatePayload): Observable<UserStateModel> {
     return this.store.dispatch(new userActions.SetState(payload)).pipe(
       tap((state: UserStateModel) => {
         this.saveUserToLocalStorage(state);

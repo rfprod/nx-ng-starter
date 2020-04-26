@@ -15,12 +15,12 @@ export interface IUiLanguagesInterface {
 /**
  * Laguage codes type.
  */
-export type ILangCode = 'ru'|'en';
+export type ILangCode = 'ru' | 'en';
 
 /**
  * Laguage codes type.
  */
-export type ILangName = 'Russian'|'English'|'Русский'|'Английский';
+export type ILangName = 'Russian' | 'English' | 'Русский' | 'Английский';
 
 /**
  * Supported languages interface.

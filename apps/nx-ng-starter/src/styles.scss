@@ -5,6 +5,7 @@
 /**
  * Define a custom typography config that overrides font-family, and all levels.
  */
+
 $custom-typography: mat-typography-config(
   $font-family: 'Roboto, monospace, "Helvetica Neue", sans-serif',
   $display-4: mat-typography-level(112px, 112px, 300),
@@ -59,60 +60,19 @@ $unicorn-dark-theme: mat-dark-theme(
   @include angular-material-theme($unicorn-dark-theme);
 }
 
-/* Angular Material Theme, and Typography customization */
-
-/* Material Theme extension */
-
 /**
+ * Material Theming extension.
  * Imports and includes variables, and mixins:
  * custom-selectors-colouring, custom-colouring-classes
  */
 @import 'apps/nx-ng-starter/src/theming/theming-extension.scss';
-
-/* Material Theme extension */
-
-/* Margins and padding */
-$boxOffset: 0.5em;
-$boxOffsetSmall: 0.25em;
-
-/* Margins and padding */
-
-/* Required in case of self hosting of material-design-icons */
-.material-icons {
-  display: inline-block;
-  font-weight: normal;
-  font-size: 24px;
-  font-family: 'Material Icons';
-  font-style: normal;
-  line-height: 1;
-  direction: ltr;
-  letter-spacing: normal;
-  white-space: nowrap;
-  text-transform: none;
-  word-wrap: normal;
-
-  /* Support for all WebKit browsers. */
-  -webkit-font-smoothing: antialiased;
-
-  /* Support for Safari and Chrome. */
-  text-rendering: optimizeLegibility;
-
-  /* Support for Firefox. */
-  -moz-osx-font-smoothing: grayscale;
-
-  /* Support for IE. */
-  font-feature-settings: 'liga';
-
-  &:hover {
-    cursor: default;
-  }
-}
 
 /**
  * Classes for font-awesome icons
  * Note: free plan includes only fab (font-awesome-brands) and fas (font-awesome-solid) groups
  */
 
+/* Font awesome bold icons */
 .material-icons-fab {
   display: inline-block;
   font-weight: normal;
@@ -143,6 +103,7 @@ $boxOffsetSmall: 0.25em;
   }
 }
 
+/* Font awesome solid icons */
 .material-icons-fas {
   display: inline-block;
   font-size: 19px; /* Preferred icon size */
@@ -234,7 +195,7 @@ mat-menu-content,
   }
 }
 
-/* Required in case of self hosting of material-design-icons */
+/* Top level DOM elements */
 html {
   width: 100vw;
   height: 100vh;

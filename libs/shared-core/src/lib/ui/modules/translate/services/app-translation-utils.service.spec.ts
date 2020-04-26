@@ -1,9 +1,10 @@
-import { TestBed, TestModuleMetadata, async } from '@angular/core/testing';
+import { async, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { DateAdapter } from '@angular/material/core';
-import { TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
 import { WINDOW } from '@nx-ng-starter/shared-core/util';
 import { Subject } from 'rxjs';
+
 import {
   ILangCode,
   ISupportedLanguage,
@@ -21,7 +22,7 @@ describe('AppTranslationUtilsService', () => {
 
   let service: AppTranslationUtilsService;
   let translate: TranslateService;
-  let dateAdapter: DateAdapter<any>;
+  let dateAdapter: DateAdapter<unknown>;
   let win: Window;
   let spy: {
     service: {
@@ -39,7 +40,7 @@ describe('AppTranslationUtilsService', () => {
   };
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule(testBedConfig)
+    void TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
         service = TestBed.inject(AppTranslationUtilsService);
@@ -97,7 +98,7 @@ describe('AppTranslationUtilsService', () => {
   it('languageChangeSubscription should work correctly', async(() => {
     service['languageChangeSubscription']();
     expect(translate.onLangChange.subscribe).toHaveBeenCalled();
-    translate.onLangChange.subscribe((langChangeEvent: any) => {
+    translate.onLangChange.subscribe((langChangeEvent: LangChangeEvent) => {
       expect(service.languageChanges.next).toHaveBeenCalledWith(langChangeEvent);
       expect(dateAdapter.setLocale).toHaveBeenCalledWith(langChangeEvent.lang);
     });

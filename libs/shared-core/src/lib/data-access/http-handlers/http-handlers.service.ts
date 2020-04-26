@@ -1,3 +1,6 @@
+// TODO: remove this overrides
+/* eslint-disable max-lines-per-function */
+/* eslint-disable complexity */
 import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
@@ -8,8 +11,9 @@ import { createUploadLink } from 'apollo-upload-client';
 import { getMainDefinition } from 'apollo-utilities';
 import { GraphQLError } from 'graphql';
 import memo from 'memo-decorator';
-import { MonoTypeOperatorFunction, Observable, concat, throwError } from 'rxjs';
+import { concat, MonoTypeOperatorFunction, Observable, throwError } from 'rxjs';
 import { catchError, take, tap, timeout } from 'rxjs/operators';
+
 import { HttpProgressService } from '../../ui/modules/state/http-progress/http-progress.service';
 import { UserService } from '../../ui/modules/state/user/user.service';
 import { WINDOW } from '../../util/general-purpose';
@@ -32,25 +36,25 @@ export class HttpHandlersService {
   /**
    * Current user token value.
    */
-  private userToken = '';
+  public userToken = '';
 
   /**
    * User token getter.
    */
-  private readonly userToken$: Observable<string> = this.user.output.token$.pipe(
+  public readonly userToken$: Observable<string> = this.user.output.token$.pipe(
     tap((token: string) => {
       this.userToken = token;
     }),
   );
 
   constructor(
-    private readonly user: UserService,
-    private readonly toaster: ToasterService,
-    private readonly httpLink: HttpLink,
-    private readonly httpProgress: HttpProgressService,
-    private readonly translate: TranslateService,
-    @Inject(WINDOW) private readonly win: Window,
-    @Inject(APP_ENV) private readonly env: WebAppEnvironment,
+    public readonly user: UserService,
+    public readonly toaster: ToasterService,
+    public readonly httpLink: HttpLink,
+    public readonly httpProgress: HttpProgressService,
+    public readonly translate: TranslateService,
+    @Inject(WINDOW) public readonly win: Window,
+    @Inject(APP_ENV) public readonly env: WebAppEnvironment,
   ) {
     this.userToken$.subscribe();
   }
@@ -97,11 +101,11 @@ export class HttpHandlersService {
    */
   public pipeRequestWithObjectResponse<T>(
     observable: Observable<T>,
-    listenX: number = 1,
-  ): Observable<T> {
+    listenX = 1,
+  ): Observable<T | string> {
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
-      this.tapProgress(true),
+      this.tapProgress<T>(true),
       take(listenX),
       catchError(err => this.handleError(err)),
     );
@@ -114,11 +118,11 @@ export class HttpHandlersService {
    */
   public pipeRequestWithArrayResponse<T>(
     observable: Observable<T>,
-    listenX: number = 1,
-  ): Observable<T> {
+    listenX = 1,
+  ): Observable<T | string> {
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
-      this.tapProgress(true),
+      this.tapProgress<T>(true),
       take(listenX),
       catchError(err => this.handleError(err)),
     );
@@ -132,14 +136,14 @@ export class HttpHandlersService {
    */
   public pipeGraphQLRequest<T>(
     observable: Observable<T>,
-    listenX: number = 1,
+    listenX = 1,
     withprogress = true,
-  ): Observable<T> {
+  ): Observable<T | string> {
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
-      this.tapProgress(withprogress),
+      this.tapProgress<T>(withprogress),
       take(listenX),
-      this.tapError(),
+      this.tapError<T>(),
       catchError(err => this.handleGraphQLError(err)),
     );
   }
@@ -151,13 +155,11 @@ export class HttpHandlersService {
   public createApolloLinkFor(errorLinkHandler?: ApolloLink): ApolloLink {
     let linkHandler: ApolloLink = errorLinkHandler;
     const uri = this.graphQlEndpoint();
-
     const httpLinkHandler = this.httpLink.create({ uri });
 
     if (!linkHandler) {
       linkHandler = onError((error: ErrorResponse) => {
         let resultMessage = '';
-
         /**
          * Error code in uppercase, e.g. ACCESS_FORBIDDEN.
          * Should be used as a translate service dictionary key
@@ -170,7 +172,7 @@ export class HttpHandlersService {
         const { graphQLErrors, networkError } = error;
 
         if (graphQLErrors) {
-          console.log('Apollo linkHandler [GraphQL error]: ', graphQLErrors);
+          console.error('Apollo linkHandler [GraphQL error]: ', graphQLErrors);
           graphQLErrors.map(({ message, extensions }) => {
             resultMessage += `[GraphQL]: ${message}`;
             errorCode = extensions && extensions.code;
@@ -178,11 +180,13 @@ export class HttpHandlersService {
         }
 
         if (networkError) {
-          console.log('Apollo linkHandler [Network error]: ', networkError);
+          console.error('Apollo linkHandler [Network error]: ', networkError);
 
           if (networkError instanceof HttpErrorResponse) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             resultMessage += networkError.error.detail;
           } else {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             const errors: GraphQLError[] = networkError['error'].errors;
             errors.map(({ message, extensions }) => {
               resultMessage += `[Network]: ${message}`;
@@ -191,14 +195,14 @@ export class HttpHandlersService {
           }
         }
 
-        if (errorCode) {
+        if (Boolean(errorCode)) {
           errorCodeUITranslation = this.translate.instant(`request.error.${errorCode}`);
           if (errorCodeUITranslation.indexOf(errorCode) === -1) {
             resultMessage = errorCodeUITranslation;
           }
         }
 
-        if (!resultMessage) {
+        if (!Boolean(resultMessage)) {
           resultMessage = 'Graphql request error';
         }
 
@@ -226,8 +230,9 @@ export class HttpHandlersService {
    * Returns data only, excluding meta information located in response object root.
    * @param res Execution result
    */
-  public extractGraphQLData(res: ExecutionResult): any {
+  public extractGraphQLData(res: ExecutionResult): { [key: string]: unknown } {
     if (res.errors) {
+      // eslint-disable-next-line @typescript-eslint/no-throw-literal
       throw res.errors;
     }
     return res.data ? res.data : res;
@@ -237,7 +242,7 @@ export class HttpHandlersService {
    * Extracts HttpResponse.
    * @param res Http response
    */
-  public extractHttpResponse(res: HttpResponse<any>): any {
+  public extractHttpResponse<T>(res: HttpResponse<T>): T {
     return res.body;
   }
 
@@ -247,7 +252,7 @@ export class HttpHandlersService {
    * 401 - unauthorized token expired
    * @param status error status
    */
-  private checkErrorStatusAndRedirect(status: any): void {
+  public checkErrorStatusAndRedirect(status: EHTTP_STATUS): void {
     if (status === EHTTP_STATUS.UNAUTHORIZED) {
       this.user.handlers.setState({ token: '' });
     }
@@ -260,60 +265,12 @@ export class HttpHandlersService {
    * { _body: "{ code: 'c', message: 'm', detail: { inn: ['Invalid inn'] } }" } where _body is a string.
    * @param error error object
    */
-  private handleError(error: any): Observable<any> {
+  public handleError(error: HttpErrorResponse): Observable<string> {
     let msg: string;
-    let errors: any;
-    if (typeof error._body === 'string' && error._body !== 'null') {
-      // Unwrap body
-      error._body = JSON.parse(error._body);
-      errors = error._body.errors
-        ? error._body.errors
-        : error._body.code && error._body.message
-        ? error._body
-        : null;
-    }
-    errors = !errors && error.errors ? error.errors : error.code && error.message ? error : errors;
-    if (errors) {
-      if (Array.isArray(errors)) {
-        // Parse errors as array: { errors: [ { code: 'c', detail: 'd' } ] }
-        if (errors.length) {
-          const e = errors[0]; // Grab only first error
-          msg = e.code && e.detail ? `${e.code} - ${e.detail}` : null;
-        }
-      } else {
-        // Parse errors as object: { code: 'c', message: 'm', detail: { inn: ['Invalid inn'] } }
-        let errDetail = '';
-        if (errors.detail && typeof errors.detail === 'object') {
-          // Unwrap nested structure for errors.detail first, it must be flat.
-          for (const key in errors.detail) {
-            if (errors.detail[key]) {
-              if (!Array.isArray(errors.detail[key]) && typeof errors.detail[key] === 'object') {
-                for (const subkey in errors.detail[key]) {
-                  if (errors.detail[key][subkey]) {
-                    errors.detail[subkey] = errors.detail[key][subkey];
-                  }
-                }
-                delete errors.detail[key];
-              }
-            }
-          }
-          // Now parse it.
-          for (const key in errors.detail) {
-            if (errors.detail[key]) {
-              errDetail += `${key} - ${errors.detail[key].join(', ')} `;
-            }
-          }
-          errDetail = errDetail.trim();
-        }
-        msg = errDetail
-          ? `${errors.code} - ${errors.message}: ${errDetail}`
-          : `${errors.code} - ${errors.message}`;
-      }
-    }
     // Parse error response, fallback: { status: '400', statusText: 'Bad request' }
-    const errMsg: string = msg
+    const errMsg: string = Boolean(msg)
       ? msg
-      : error.status
+      : Boolean(error.status)
       ? `${error.status} - ${error.statusText}`
       : 'Server error';
     return concat(throwError(errMsg));
@@ -323,7 +280,7 @@ export class HttpHandlersService {
    * Handles graphQL error response.
    * @param error error message
    */
-  private handleGraphQLError(error: string): Observable<any> {
+  public handleGraphQLError(error: string): Observable<string> {
     return throwError(error);
   }
 
@@ -331,8 +288,8 @@ export class HttpHandlersService {
    * Taps progress.
    * @param withProgress indicates whether progress should be shown
    */
-  private tapProgress(widhProgress: boolean): MonoTypeOperatorFunction<any> {
-    let handler = () => {};
+  public tapProgress<T>(widhProgress: boolean): MonoTypeOperatorFunction<T> {
+    let handler: () => MonoTypeOperatorFunction<T> = () => null;
     if (widhProgress) {
       handler = this.httpProgress.handlers.mainView.tapStopperObservable;
     }
@@ -342,10 +299,10 @@ export class HttpHandlersService {
   /**
    * Taps errors.
    */
-  private tapError(): MonoTypeOperatorFunction<any> {
+  public tapError<T>(): MonoTypeOperatorFunction<T> {
     return tap(
-      () => {},
-      (error: any) => {
+      (): void => null,
+      (error: { networkError: HttpErrorResponse }) => {
         const unauthorized: boolean =
           error.networkError && error.networkError.status === EHTTP_STATUS.BAD_REQUEST;
         if (unauthorized) {

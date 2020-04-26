@@ -5,13 +5,6 @@ export interface IUiDictionary {
   /**
    * Shared UI dictionary.
    */
-  shared?: any;
-  /**
-   * Carrier UI dictionary.
-   */
-  carrier?: any;
-  /**
-   * Owner UI dictionary.
-   */
-  owner?: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  shared?: { [key: string]: any };
 }

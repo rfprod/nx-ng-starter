@@ -6,7 +6,8 @@ import { Request, Response } from 'express';
  */
 @Injectable()
 export class LoggerMiddleware implements NestMiddleware {
-  public use(req: Request, res: Response, next: () => any) {
+  public use(req: Request, res: Response, next: () => unknown) {
+    // eslint-disable-next-line no-console
     console.log('req', req.originalUrl);
     next();
   }

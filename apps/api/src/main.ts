@@ -6,6 +6,7 @@ import { ExpressAdapter } from '@nestjs/platform-express';
 import e from 'express';
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
+
 import { AppModule } from './app/app.module';
 import { grpcApiClientOptions } from './app/modules/grpc/grpc-api-client.options';
 import { environment } from './environments/environment';
@@ -22,7 +23,7 @@ const defaultPort = 8080;
 /**
  * Bootstraps server.
  */
-async function bootstrap(expressInstance: e.Express): Promise<any> {
+async function bootstrap(expressInstance: e.Express): Promise<unknown> {
   const app = await NestFactory.create(AppModule, new ExpressAdapter(expressInstance));
 
   const globalPrefix = 'api';
@@ -48,9 +49,9 @@ async function bootstrap(expressInstance: e.Express): Promise<any> {
     await app.startAllMicroservicesAsync();
   }
 
-  const port = process.env.port || defaultPort;
+  const port = Boolean(process.env.port) ? process.env.port : defaultPort;
   await app.listen(port, () => {
-    console.log(`Listening at:
+    console.warn(`Listening at:
     - http://localhost:${port}/${globalPrefix}/ping
     - http://localhost:${port}/${globalPrefix}/signup
     - http://localhost:${port}/${globalPrefix}/login
@@ -63,7 +64,7 @@ async function bootstrap(expressInstance: e.Express): Promise<any> {
   return app.init();
 }
 
-bootstrap(server);
+void bootstrap(server);
 
 /**
  * Firebase configuration.
@@ -73,12 +74,17 @@ const firebaseConfig = process.env.FIREBASE_CONFIG;
 /**
  * Initialize admin and export firebase functions only in cloud environment.
  */
-if (firebaseConfig) {
+if (Boolean(firebaseConfig)) {
   admin.initializeApp();
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   exports.ping = functions.https.onRequest(server);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   exports.login = functions.https.onRequest(server);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   exports.logout = functions.https.onRequest(server);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   exports.signup = functions.https.onRequest(server);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   exports.graphql = functions.https.onRequest(server);
   // TODO: exports.grpc = functions.https.onRequest(server);
 }

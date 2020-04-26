@@ -1,12 +1,13 @@
-import { ComponentFixture, TestBed, TestModuleMetadata, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
-  TComponentSpiesObject,
   getTestBedConfig,
   newTestBedMetadata,
   setupJestSpiesFor,
+  TComponentSpiesObject,
 } from '@nx-ng-starter/mocks-core';
 import { AppIndexComponent } from 'apps/nx-ng-starter/src/app/components/app-index/index/app-index.component';
+
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
@@ -23,13 +24,13 @@ describe('AppComponent', () => {
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
   let fixture: ComponentFixture<AppComponent>;
-  let component: AppComponent | any;
+  let component: AppComponent;
   let spy: {
     component: TComponentSpiesObject<AppComponent>;
   };
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule(testBedConfig)
+    void TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(AppComponent);
@@ -48,7 +49,7 @@ describe('AppComponent', () => {
     expect(component.title).toEqual('Nx Ng Starter');
   });
   it('should should render two toolbars', () => {
-    const compiled = fixture.debugElement.nativeElement;
+    const compiled: HTMLElement = fixture.debugElement.nativeElement;
     expect(compiled.querySelectorAll('mat-toolbar').length).toEqual(1 + 1);
   });
 });

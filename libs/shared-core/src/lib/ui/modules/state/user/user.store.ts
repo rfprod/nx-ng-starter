@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { actionPayloadConstructor } from '@nx-ng-starter/shared-core/util';
+
 import { UserPayload, UserStateModel } from './user.interface';
 
 const createAction = actionPayloadConstructor('User');
@@ -19,22 +20,22 @@ const SetState = createAction<UserPayload>('Set state');
 })
 class UserState {
   @Selector()
-  public static Model(state: UserStateModel) {
+  public static model(state: UserStateModel) {
     return state;
   }
 
   @Selector()
-  public static Email(state: UserStateModel) {
+  public static email(state: UserStateModel) {
     return state.email;
   }
 
   @Selector()
-  public static Token(state: UserStateModel) {
+  public static token(state: UserStateModel) {
     return state.token;
   }
 
   @Selector()
-  public static Admin(state: UserStateModel) {
+  public static admin(state: UserStateModel) {
     return state.admin;
   }
 
@@ -42,9 +43,9 @@ class UserState {
   public setState(ctx: StateContext<UserStateModel>, { payload }: UserPayload) {
     // Reuses values from previous state if payload is partial.
     const currentState: UserStateModel = ctx.getState();
-    const email = payload.email || currentState.email;
+    const email = Boolean(payload.email) ? payload.email : currentState.email;
     const admin = typeof payload.admin === 'boolean' ? payload.admin : currentState.admin;
-    const token = payload.token || currentState.token;
+    const token = Boolean(payload.token) ? payload.token : currentState.token;
     const newState: UserStateModel = new UserStateModel({ email, admin, token });
     return ctx.patchState(newState);
   }

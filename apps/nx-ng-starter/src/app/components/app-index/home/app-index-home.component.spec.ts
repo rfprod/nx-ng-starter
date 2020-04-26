@@ -1,13 +1,14 @@
-import { ComponentFixture, TestBed, TestModuleMetadata, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
-  TComponentSpiesObject,
   getTestBedConfig,
   newTestBedMetadata,
   setupJestSpiesFor,
+  TComponentSpiesObject,
 } from '@nx-ng-starter/mocks-core';
 import { SharedCoreModule } from '@nx-ng-starter/shared-core';
 import { MarkdownService } from '@nx-ng-starter/shared-core/data-access';
+
 import { AppIndexHomeComponent } from './app-index-home.component';
 
 describe('AppIndexHomeComponent', () => {
@@ -25,7 +26,7 @@ describe('AppIndexHomeComponent', () => {
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
   let fixture: ComponentFixture<AppIndexHomeComponent>;
-  let component: AppIndexHomeComponent | any;
+  let component: AppIndexHomeComponent;
   let service: MarkdownService;
   let spy: {
     service: {
@@ -35,12 +36,11 @@ describe('AppIndexHomeComponent', () => {
   };
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule(testBedConfig)
+    void TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(AppIndexHomeComponent);
         component = fixture.debugElement.componentInstance;
-        component.timer$ = null;
         service = TestBed.inject(MarkdownService);
         spy = {
           service: {
@@ -52,11 +52,12 @@ describe('AppIndexHomeComponent', () => {
         };
         expect(spy.service.process).toBeDefined();
         expect(spy.component).toBeDefined();
-        fixture.detectChanges();
       });
   }));
 
   it('should be defined', () => {
+    fixture.detectChanges();
     expect(component).toBeDefined();
+    component.ngOnDestroy();
   });
 });

@@ -79,7 +79,7 @@ app.use((req, res, next) => {
 /**
  * Headers config for all Express api routes.
  */
-app.all('/*', function(req, res, next) {
+app.all('/*', function (req, res, next) {
   /** CORS headers */
   res.header('Access-Control-Allow-Origin', '*'); // restrict it to the required domain if needed
   res.header('Allow', 'GET,PUT,POST,DELETE,OPTIONS,HEAD');

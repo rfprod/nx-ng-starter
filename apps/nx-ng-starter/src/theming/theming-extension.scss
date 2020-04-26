@@ -1,7 +1,8 @@
 @import 'node_modules/@angular/material/_theming.scss';
 
 /* Extended palette variables */
-// light
+
+/* Tight theme */
 $primary: mat-color($candy-app-primary);
 $primary-mild: mat-color($mat-cyan, 400);
 $primary-extra-mild: mat-color($mat-cyan, 200);
@@ -11,7 +12,7 @@ $warn: mat-color($candy-app-warn);
 $success: mat-color($mat-green, 900);
 $error: mat-color($mat-red, 900);
 
-// dark
+/* Dark theme */
 $dark-primary: mat-color($unicorn-dark-primary);
 $dark-primary-mild: mat-color($mat-deep-orange, 300);
 $dark-primary-extra-mild: mat-color($mat-brown, 100);
@@ -21,7 +22,7 @@ $dark-warn: mat-color($unicorn-dark-warn);
 $dark-success: mat-color($mat-green, 500);
 $dark-error: mat-color($mat-red, 500);
 
-// general purpose
+/* General purpose */
 $black: #000000;
 $white: #ffffff;
 $darkgrey: mat-color($mat-grey, 900);
@@ -29,9 +30,8 @@ $grey: mat-color($mat-grey, 400);
 $lightgrey: mat-color($mat-grey, 200);
 $extralightgrey: mat-color($mat-grey, 100);
 
-/* Extended palette variables */
+/* Extended palette maps */
 
-/* Extended palette map */
 $extended-bg-palette: (
   light: (
     '.primary': $primary,
@@ -93,21 +93,19 @@ $extended-box-shadow-palette: (
   ),
 );
 
-/* Extended palette map */
-
-/*
-* Include one of the following mixins depending on css attribute that needs to be set, options:
-* - color: extended-color
-* - background-color: extended-background-color
-*
-* Check $extended-palette map above for currently supported selectors, and add new ones when needed.
-* Selector can be one of the following: DOM-element, class, id
-*
-* Example usage, set color for paragraph text:
-* p {
-*   @include extended-color(p);
-* }
-*/
+/**
+ * Include one of the following mixins depending on css attribute that needs to be set, options:
+ * - color: extended-color
+ * - background-color: extended-background-color
+ *
+ * Check $extended-palette map above for currently supported selectors, and add new ones when needed.
+ * Selector can be one of the following: DOM-element, class, id
+ *
+ * Example usage, set color for paragraph text:
+ * p {
+ *   @include extended-color(p);
+ * }
+ */
 @mixin extended-color($selector) {
   color: map-get(map-get($extended-text-palette, light), $selector);
 
@@ -143,13 +141,9 @@ $extended-box-shadow-palette: (
   }
 }
 
-/*
-* TODO:client coloring via mixins
-*/
-
-/*
-* Custom selectors coloring mixin.
-*/
+/**
+ * Custom selectors coloring mixin.
+ */
 @mixin custom-selectors-coloring() {
   mat-grid-tile {
     @include extended-background-color(mat-grid-tile);
@@ -194,8 +188,6 @@ $extended-box-shadow-palette: (
   }
 }
 @include custom-selectors-coloring();
-
-/* Custom selectors coloring mixin */
 
 /*
 * Custom general coloring classes mixin.
@@ -250,5 +242,3 @@ $extended-box-shadow-palette: (
   }
 }
 @include custom-general-coloring-classes();
-
-/* Custom general coloring classes mixin */

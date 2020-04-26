@@ -7,6 +7,7 @@ import {
   NewMatcompInputDto,
 } from '@nx-ng-starter/api-interface';
 import { PubSub } from 'apollo-server-express';
+
 import { MatcompGuard } from './guard/matcomp.guard';
 import { MatcompService } from './matcomp.service';
 
@@ -40,7 +41,7 @@ export class MatcompResolver {
   public async create(@Args('input') args: NewMatcompInputDto) {
     const createdMatcomp = this.service.create(args);
     const matcompSubscription: MatcompSubscription = new MatcompSubscription(createdMatcomp);
-    pubSub.publish('matcompCreated', matcompSubscription);
+    void pubSub.publish('matcompCreated', matcompSubscription);
     return createdMatcomp;
   }
 
@@ -55,7 +56,7 @@ export class MatcompResolver {
   public async remove(@Args('id') id: string) {
     const removedMatcomp = this.service.remove(id);
     const matcompSubscription: MatcompSubscription = new MatcompSubscription(removedMatcomp);
-    pubSub.publish('matcompRemoved', matcompSubscription);
+    void pubSub.publish('matcompRemoved', matcompSubscription);
     return Boolean(removedMatcomp);
   }
 

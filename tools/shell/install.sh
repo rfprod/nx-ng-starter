@@ -20,7 +20,8 @@ reportUsage() {
   printf "
     ${LIGHT_BLUE} %s\n
     ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh${DEFAULT} (print install.sh usage)
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh project${DEFAULT} (install project dependencies only)
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh project${DEFAULT} (install project dependencies only; for local environment)
+    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh project-ci${DEFAULT} (install project dependencies only; for CI environment)
     ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh global${DEFAULT} (install global dependencies only)
     ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh all${DEFAULT} (install projects dependencies, global dependencies, brew (linux), protolint (linux), shellcheck (linux))
     ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh all osx${DEFAULT} (install projects dependencies, global dependencies, protolint (osx), shellcheck (osx))
@@ -37,15 +38,28 @@ reportUsage() {
 ##
 
 ##
-# Installs project dependencies,
+# Installs project dependencies (local environment).
 ##
 installProjectDependencies() {
-  local TITLE="<< INSTALLING PROJECT DEPENDENCIES >>"
+  local TITLE="<< INSTALLING PROJECT DEPENDENCIES [local environment] >>"
   printf "
     ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   cd ./functions npm install || exitWithError
   cd .. || exitWithError
-  yarn install || exitWithError
+  yarn install --frozen-lockfile || exitWithError
+}
+
+##
+# Installs project dependencies (CI environment).
+##
+installProjectDependenciesCI() {
+  local TITLE="<< INSTALLING PROJECT DEPENDENCIES [CI environment] >>"
+  printf "
+    ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
+  cd ./functions npm install || exitWithError
+  cd .. || exitWithError
+  yarn install --frozen-lockfile --ignore-scripts || exitWithError
+  yarn ngcc:ci || exitWithError
 }
 
 ##
@@ -203,6 +217,8 @@ elif [ "$1" = "all" ]; then
   installShellcheck "$2"
 elif [ "$1" = "project" ]; then
   installProjectDependencies
+elif [ "$1" = "project-ci" ]; then
+  installProjectDependenciesCI
 elif [ "$1" = "global" ]; then
   installGlobalDependencies
 elif [ "$1" = "proto" ]; then

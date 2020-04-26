@@ -12,7 +12,7 @@
     <span fxFlex="1 1 auto"></span>
 
     <button mat-button [fxHide.xs]="true" [fxHide.sm]="true">
-      <mat-icon class="material-icons">help_outline</mat-icon> Help
+      <mat-icon>help_outline</mat-icon> Help
     </button>
     <a
       mat-button
@@ -21,7 +21,7 @@
       href="https://cli.angular.io/reference.pdf"
       target="_blank"
     >
-      <mat-icon class="material-icons">build</mat-icon> CLI Reference
+      <mat-icon>build</mat-icon> CLI Reference
     </a>
     <a
       mat-button
@@ -30,7 +30,7 @@
       href="https://material.angular.io/"
       target="_blank"
     >
-      <mat-icon class="material-icons">change_history</mat-icon> Angular Material
+      <mat-icon>change_history</mat-icon> Angular Material
     </a>
     <a
       mat-button
@@ -39,7 +39,7 @@
       href="https://material.io/icons/"
       target="_blank"
     >
-      <mat-icon class="material-icons">info_outline</mat-icon> Material Icons
+      <mat-icon>info_outline</mat-icon> Material Icons
     </a>
 
     <button
@@ -49,24 +49,29 @@
       [fxHide.lg]="true"
       [fxHide.xl]="true"
     >
-      <mat-icon class="material-icons">menu</mat-icon>
+      <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #mobileMenuTop="matMenu" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
-      <button mat-menu-item><mat-icon class="material-icons">help_outline</mat-icon> Help</button>
+      <button mat-menu-item><mat-icon>help_outline</mat-icon> Help</button>
       <a mat-menu-item href="https://cli.angular.io/reference.pdf" target="_blank">
-        <mat-icon class="material-icons">build</mat-icon> CLI Reference
+        <mat-icon>build</mat-icon> CLI Reference
       </a>
       <a mat-menu-item href="https://material.angular.io/" target="_blank">
-        <mat-icon class="material-icons">change_history</mat-icon> Angular Material
+        <mat-icon>change_history</mat-icon> Angular Material
       </a>
       <a mat-menu-item href="https://material.io/icons/" target="_blank">
-        <mat-icon class="material-icons">info_outline</mat-icon> Material Icons
+        <mat-icon>info_outline</mat-icon> Material Icons
       </a>
     </mat-menu>
   </mat-toolbar>
 
   <mat-sidenav-container fxFlex="1 1 auto">
-    <mat-sidenav #appSidenav mode="over" [(opened)]="sidenavOpened">
+    <mat-sidenav
+      #appSidenav
+      mode="over"
+      [opened]="sidenavOpened$"
+      (closedStart)="sidebarCloseHandler()"
+    >
       <mat-grid-list cols="3" rowHeight="1:1">
         <mat-grid-tile [routerLink]="['info']" (click)="appSidenav.close()">
           API info
@@ -80,21 +85,21 @@
 
   <mat-toolbar color="primary" fxFlex="0 1 auto">
     <button mat-icon-button (click)="appSidenav.toggle()">
-      <mat-icon class="material-icons" title="open sidenav" *ngIf="!sidenavOpened">
+      <mat-icon title="open sidenav" *ngIf="(sidenavOpened$ | async) === false">
         flip_to_front
       </mat-icon>
-      <mat-icon class="material-icons" title="open sidenav" *ngIf="sidenavOpened"
-        >flip_to_back</mat-icon
-      >
+      <mat-icon title="open sidenav" *ngIf="sidenavOpened$ | async">
+        flip_to_back
+      </mat-icon>
     </button>
 
     <span fxFlex="1 1 auto"></span>
 
     <button mat-button [routerLink]="['info']" [fxHide.xs]="true" [fxHide.sm]="true">
-      <mat-icon class="material-icons">touch_app</mat-icon> API info
+      <mat-icon>touch_app</mat-icon> API info
     </button>
-    <button mat-button [routerLink]="['index']" [fxHide.xs]="true" [fxHide.sm]="true">
-      <mat-icon class="material-icons">home</mat-icon> Home
+    <button mat-button [routerLink]="['']" [fxHide.xs]="true" [fxHide.sm]="true">
+      <mat-icon>home</mat-icon> Home
     </button>
 
     <button
@@ -104,16 +109,12 @@
       [fxHide.lg]="true"
       [fxHide.xl]="true"
     >
-      <mat-icon class="material-icons">reorder</mat-icon>
+      <mat-icon>reorder</mat-icon>
     </button>
 
     <mat-menu #mobileMenuBottom="matMenu" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
-      <a mat-menu-item [routerLink]="['info']">
-        <mat-icon class="material-icons">touch_app</mat-icon> API info
-      </a>
-      <a mat-menu-item [routerLink]="['index']">
-        <mat-icon class="material-icons">home</mat-icon> Home
-      </a>
+      <a mat-menu-item [routerLink]="['info']"> <mat-icon>touch_app</mat-icon> API info </a>
+      <a mat-menu-item [routerLink]="['']"> <mat-icon>home</mat-icon> Home </a>
     </mat-menu>
   </mat-toolbar>
 </span>

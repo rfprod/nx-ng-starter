@@ -1,5 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { APP_ENV } from '@nx-ng-starter/api-interface';
+
 import { environment } from '../environments/environment';
 import { LoggerMiddleware } from './middleware/logger/logger.middleware';
 import { AuthModule } from './modules/auth/auth.module';

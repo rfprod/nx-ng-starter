@@ -6,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
  */
 @Injectable()
 export class MatSnackbarRefMock {
-  public open(message: any, action: any, options: any): boolean {
+  public open(message: unknown, action: unknown, options: unknown): boolean {
     return true;
   }
 

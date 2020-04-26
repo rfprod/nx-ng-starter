@@ -1,12 +1,13 @@
-import { ComponentFixture, TestBed, TestModuleMetadata, async } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
-  TComponentSpiesObject,
   getTestBedConfig,
   newTestBedMetadata,
   setupJestSpiesFor,
+  TComponentSpiesObject,
 } from '@nx-ng-starter/mocks-core';
 import { SharedCoreModule } from '@nx-ng-starter/shared-core';
+
 import { AppIndexComponent } from './app-index.component';
 
 describe('AppIndexComponent', () => {
@@ -24,13 +25,13 @@ describe('AppIndexComponent', () => {
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
   let fixture: ComponentFixture<AppIndexComponent>;
-  let component: AppIndexComponent | any;
+  let component: AppIndexComponent;
   let spy: {
     component: TComponentSpiesObject<AppIndexComponent>;
   };
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule(testBedConfig)
+    void TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(AppIndexComponent);

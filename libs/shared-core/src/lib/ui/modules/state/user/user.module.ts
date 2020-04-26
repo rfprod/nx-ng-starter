@@ -1,5 +1,6 @@
 import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
 import { NgxsModule } from '@ngxs/store';
+
 import { userServiceProvider } from './user.service';
 import { UserState } from './user.store';
 

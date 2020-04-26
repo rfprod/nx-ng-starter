@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { actionPayloadConstructor } from '@nx-ng-starter/shared-core/util';
+
 import { HttpApiPayload, IHttpApiStateModel } from './http-api.interface';
 
 const createAction = actionPayloadConstructor('HttpApi');
@@ -17,12 +18,12 @@ const Ping = createAction<HttpApiPayload>('Ping');
 })
 class HttpApiState {
   @Selector()
-  public static AllData(state: IHttpApiStateModel) {
+  public static allData(state: IHttpApiStateModel) {
     return state;
   }
 
   @Selector()
-  public static Ping(state: IHttpApiStateModel) {
+  public static ping(state: IHttpApiStateModel) {
     return state.ping;
   }
 

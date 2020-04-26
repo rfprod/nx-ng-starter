@@ -1,6 +1,6 @@
 import { HttpRequest } from '@angular/common/http';
 import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
-import { TestBed, TestModuleMetadata, async } from '@angular/core/testing';
+import { async, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import {
   getTestBedConfig,
   httpHandlersProviders,
@@ -10,6 +10,7 @@ import { HttpHandlersService, ToasterService } from '@nx-ng-starter/shared-core/
 import { Apollo, ApolloModule } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 import { of } from 'rxjs';
+
 import { CustomMaterialModule } from '../../custom-material/custom-material.module';
 import { AppTranslateModule } from '../../translate/app-translate.module';
 import {
@@ -39,9 +40,9 @@ describe('HttpApiService', () => {
 
   let service: HttpApiService;
   let apollo: Apollo;
-  let httpHandlers: HttpHandlersService | any;
+  let httpHandlers: HttpHandlersService;
   let toaster: ToasterService;
-  let user: UserService | any;
+  let user: UserService;
   let spy: {
     httpHandlers: {
       pipeRequestWithObjectResponse: jest.SpyInstance;
@@ -51,7 +52,7 @@ describe('HttpApiService', () => {
   let httpController: HttpTestingController;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule(testBedConfig)
+    void TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
         httpController = TestBed.inject(HttpTestingController);
@@ -76,7 +77,7 @@ describe('HttpApiService', () => {
 
   afterEach(() => {
     httpController
-      .match((req: HttpRequest<any>): boolean => true)
+      .match((req: HttpRequest<unknown>): boolean => true)
       .forEach((req: TestRequest) => (!req.cancelled ? req.flush({}) : null));
     httpController.verify();
   });

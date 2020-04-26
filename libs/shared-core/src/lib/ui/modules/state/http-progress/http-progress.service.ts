@@ -4,20 +4,21 @@ import { Injectable, Provider } from '@angular/core';
 import { MatSpinner } from '@angular/material/progress-spinner';
 import { Store } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
+
 import {
   IHttpProgressHandlers,
   IHttpProgressObservableOutput,
   IHttpProgressStatePayload,
 } from './http-progress.interface';
-import { HttpProgressState, httpProgressActions } from './http-progress.store';
+import { httpProgressActions, HttpProgressState } from './http-progress.store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpProgressService {
   public readonly output: IHttpProgressObservableOutput = {
-    all$: this.store.select(HttpProgressState.AllProgress),
-    mainView$: this.store.select(HttpProgressState.MainViewProgress),
+    all$: this.store.select(HttpProgressState.allProgress),
+    mainView$: this.store.select(HttpProgressState.mainViewProgress),
   };
 
   public readonly handlers: IHttpProgressHandlers = {
@@ -82,11 +83,7 @@ export const httpProgressServiceFactory: HttpProgressServiceFactoryConstructor =
   const progressRef: OverlayRef = overlay.create({
     hasBackdrop: true,
     backdropClass: 'global-spinner-backdrop-dark',
-    positionStrategy: overlay
-      .position()
-      .global()
-      .centerHorizontally()
-      .centerVertically(),
+    positionStrategy: overlay.position().global().centerHorizontally().centerVertically(),
   });
   return new HttpProgressService(store, progressRef);
 };

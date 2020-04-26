@@ -1,6 +1,7 @@
 import { Injectable, Provider } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
-import { ToastType, ToasterExtraClasses, toasterExtraClasses } from '../interfaces';
+
+import { ToasterExtraClasses, toasterExtraClasses, ToastType } from '../interfaces';
 
 /**
  * Toaster service for user feedback.

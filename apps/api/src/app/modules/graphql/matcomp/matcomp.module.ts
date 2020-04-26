@@ -1,5 +1,6 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { DateScalar } from '@nx-ng-starter/api-interface';
+
 import { MatcompGuard } from './guard/matcomp.guard';
 import { MatcompResolver } from './matcomp.resolver';
 import { MatcompService } from './matcomp.service';

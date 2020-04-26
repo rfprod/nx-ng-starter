@@ -4,21 +4,23 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpApiModule, HttpProgressModule } from '@nx-ng-starter/shared-core/ui';
+
 import {
   APP_ENV,
+  sharedCoreModuleProviders,
   SharedCoreServicesModule,
   WebAppEnvironment,
-  sharedCoreModuleProviders,
 } from './data-access';
 import {
   AppTranslateModule,
-  CustomMaterialModule,
-  UserModule,
   appTranslateModuleProviders,
+  CustomMaterialModule,
   customMaterialModuleProviders,
   httpProgressModuleProviders,
+  UserModule,
   userModuleProviders,
 } from './ui';
+import { SidebarUiModule } from './ui/modules/state/sidebar-ui/sidebar-ui.module';
 
 /**
  * Shared core module.
@@ -36,6 +38,7 @@ import {
     SharedCoreServicesModule.forRoot(),
     HttpProgressModule.forRoot(),
     UserModule.forRoot(),
+    SidebarUiModule.forRoot(),
   ],
   exports: [
     FlexLayoutModule,
@@ -48,6 +51,7 @@ import {
     HttpApiModule,
     HttpProgressModule,
     UserModule,
+    SidebarUiModule,
   ],
 })
 export class SharedCoreModule {

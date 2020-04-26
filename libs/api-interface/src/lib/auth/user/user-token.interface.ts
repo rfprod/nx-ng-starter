@@ -4,7 +4,7 @@ export class UserToken {
   constructor(input?: UserToken) {
     if (input) {
       this.token = input.token;
-      this.salt = input.salt ? input.salt : this.salt;
+      this.salt = Boolean(input.salt) ? input.salt : this.salt;
     }
   }
 }
