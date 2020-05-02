@@ -45,7 +45,7 @@ describe('HttpApiService', () => {
   let user: UserService;
   let spy: {
     httpHandlers: {
-      pipeRequestWithObjectResponse: jest.SpyInstance;
+      pipeHttpResponse: jest.SpyInstance;
     };
   };
 
@@ -63,12 +63,10 @@ describe('HttpApiService', () => {
         user = TestBed.inject(UserService);
         spy = {
           httpHandlers: {
-            pipeRequestWithObjectResponse: jest
-              .spyOn(httpHandlers, 'pipeRequestWithObjectResponse')
-              .mockReturnValue(of({})),
+            pipeHttpResponse: jest.spyOn(httpHandlers, 'pipeHttpResponse').mockReturnValue(of({})),
           },
         };
-        expect(spy.httpHandlers.pipeRequestWithObjectResponse).toBeDefined();
+        expect(spy.httpHandlers.pipeHttpResponse).toBeDefined();
         httpController
           .match(_ => true)
           .forEach((req: TestRequest) => (!req.cancelled ? req.flush({}) : null));

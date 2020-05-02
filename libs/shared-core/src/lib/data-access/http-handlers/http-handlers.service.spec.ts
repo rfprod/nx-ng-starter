@@ -103,8 +103,7 @@ describe('HttpHandlersService', () => {
     expect(service.checkErrorStatusAndRedirect).toEqual(expect.any(Function));
     expect(service.handleError).toEqual(expect.any(Function));
     expect(service.handleGraphQLError).toEqual(expect.any(Function));
-    expect(service.pipeRequestWithObjectResponse).toEqual(expect.any(Function));
-    expect(service.pipeRequestWithArrayResponse).toEqual(expect.any(Function));
+    expect(service.pipeHttpResponse).toEqual(expect.any(Function));
     expect(service.pipeGraphQLRequest).toEqual(expect.any(Function));
     expect(service.tapProgress).toEqual(expect.any(Function));
     expect(service.tapError).toEqual(expect.any(Function));
@@ -160,8 +159,8 @@ describe('HttpHandlersService', () => {
   });
 
   describe('handleError', () => {
-    it('should handle errors properly', async(() => {
-      let errRes = new HttpErrorResponse({
+    it('should handle errors properly #1', async(() => {
+      const errRes = new HttpErrorResponse({
         status: 400,
         statusText: 'error status text',
       });
@@ -171,18 +170,20 @@ describe('HttpHandlersService', () => {
         .then(
           () => true,
           (error: string) => {
-            expect(error).toEqual('400 - error status text');
+            expect(error).toEqual(service.getErrorMessage(errRes));
           },
         );
+    }));
 
-      errRes = new HttpErrorResponse({});
+    it('should handle errors properly #2', async(() => {
+      const errRes = new HttpErrorResponse({});
       service
         .handleError(errRes)
         .toPromise()
         .then(
           () => true,
           (error: string) => {
-            expect(error).toEqual('Server error');
+            expect(error).toEqual(service.getErrorMessage(errRes));
           },
         );
     }));
@@ -212,17 +213,10 @@ describe('HttpHandlersService', () => {
     );
   });
 
-  it('pipeRequestWithObjectResponse should work correctly', () => {
+  it('pipeHttpResponse should work correctly', () => {
     const observable = of({ data: {} });
-    let pipedRequest = service.pipeRequestWithObjectResponse(observable);
+    let pipedRequest = service.pipeHttpResponse(observable);
     expect(pipedRequest).toEqual(expect.any(Observable));
-    pipedRequest = service.pipeRequestWithObjectResponse(observable, 1);
-  });
-
-  it('pipeRequestWithArrayResponse should work correctly', () => {
-    const observable = of({ data: [] });
-    let pipedRequest = service.pipeRequestWithArrayResponse(observable);
-    expect(pipedRequest).toEqual(expect.any(Observable));
-    pipedRequest = service.pipeRequestWithArrayResponse(observable, 1);
+    pipedRequest = service.pipeHttpResponse(observable, 1);
   });
 });
