@@ -55,7 +55,7 @@ installGlobalDependencies() {
   local TITLE="<< INSTALLING GLOBAL DEPENDENCIES >>"
   printf "
     ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
-  sudo npm install -g @angular/cli@latest @ionic/cli@latest @nestjs/cli@latest @ngxs/cli@latest @nrwl/schematics@latest typescript@latest firebase-tools@latest @compodoc/compodoc@latest commitizen@latest cz-conventional-changelog@latest clang-format@latest yarn@latest || exitWithError
+  sudo npm install -g @angular/cli@latest @ionic/cli@latest @nestjs/cli@latest @ngxs/cli@latest @nrwl/schematics@latest typescript@latest firebase-tools@latest @compodoc/compodoc@latest commitizen@latest cz-conventional-changelog@latest clang-format@latest yarn@latest yarn || exitWithError
 }
 
 ##

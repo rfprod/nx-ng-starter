@@ -16,7 +16,7 @@ export class LocalStorageMock {
   }
 }
 
-export function setUpLocalStorageMock(): LocalStorageMock {
+export function setupLocalStorageMock(): LocalStorageMock {
   Object.defineProperty(window, 'localStorage', {
     value: new LocalStorageMock(),
     writable: true,

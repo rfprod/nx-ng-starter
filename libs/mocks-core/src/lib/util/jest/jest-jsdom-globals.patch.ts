@@ -1,7 +1,8 @@
-/* eslint-disable compat/compat */
 import { ETIMEOUT } from '@nx-ng-starter/shared-core/util';
 
-import { setUpLocalStorageMock } from '../local-storage/local-storage.mock';
+import { setupJsdomGlobalMocks } from '../globals/globals.mock';
+import { setupLocalStorageMock } from '../local-storage/local-storage.mock';
+import { setupJsdomWindowMocks } from '../window/window.mock';
 
 /**
  * Increase specs timeout.
@@ -13,56 +14,11 @@ jest.setTimeout(ETIMEOUT.FOREVER);
  * which should be used in each app and lib in test-setup.ts files.
  */
 export const setupJestJsdomGlobalMocks: () => void = () => {
-  /**
-   * Set up local storage mock.
-   */
-  setUpLocalStorageMock();
+  setupLocalStorageMock();
 
-  window.matchMedia = jest.fn().mockImplementation(query => {
-    return {
-      matches: false,
-      media: query,
-      onchange: null,
-      addListener: jest.fn(),
-      removeListener: jest.fn(),
-    };
-  });
+  setupJsdomWindowMocks();
 
-  window.resizeTo = jest.fn().mockImplementation((width, height) => {
-    return { width, height };
-  });
-
-  Object.defineProperty(window, 'customElements', {
-    value: {
-      define: jest.fn(),
-    },
-    writable: false,
-  });
-
-  Object.defineProperty(window.URL, 'createObjectURL', {
-    value: jest.fn(),
-    writable: false,
-  });
-
-  Object.defineProperty(global, 'fetch', {
-    value: jest.fn(async () => {
-      const promise: Promise<unknown> = new Promise(resolve => {
-        resolve();
-      });
-      return promise;
-    }),
-    writable: false,
-  });
-
-  Object.defineProperty(global, 'URL', {
-    value: window.URL,
-    writable: true,
-  });
-
-  Object.defineProperty(global, 'marked', {
-    value: jest.fn((input: string) => `# mocked marked output ${input}`),
-    writable: false,
-  });
+  setupJsdomGlobalMocks();
 
   /**
    * Override some console methods for testing environment.
