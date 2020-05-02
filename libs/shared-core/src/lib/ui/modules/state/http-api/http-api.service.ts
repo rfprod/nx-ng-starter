@@ -46,7 +46,7 @@ export class HttpApiService {
           this.store.dispatch(new httpApiActions.Ping(payload));
         }),
       );
-      return this.httpHandlers.pipeRequestWithObjectResponse<Message>(observable);
+      return this.httpHandlers.pipeHttpResponse<Message>(observable);
     },
   };
 

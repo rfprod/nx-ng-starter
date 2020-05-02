@@ -11,7 +11,7 @@ import { createUploadLink } from 'apollo-upload-client';
 import { getMainDefinition } from 'apollo-utilities';
 import { GraphQLError } from 'graphql';
 import memo from 'memo-decorator';
-import { concat, MonoTypeOperatorFunction, Observable, throwError } from 'rxjs';
+import { MonoTypeOperatorFunction, Observable, throwError } from 'rxjs';
 import { catchError, take, tap, timeout } from 'rxjs/operators';
 
 import { HttpProgressService } from '../../ui/modules/state/http-progress/http-progress.service';
@@ -99,27 +99,7 @@ export class HttpHandlersService {
    * @param observable request observable
    * @param listenX number of responses to catch
    */
-  public pipeRequestWithObjectResponse<T>(
-    observable: Observable<T>,
-    listenX = 1,
-  ): Observable<T | string> {
-    return observable.pipe(
-      timeout(this.defaultHttpTimeout),
-      this.tapProgress<T>(true),
-      take(listenX),
-      catchError(err => this.handleError(err)),
-    );
-  }
-
-  /**
-   * Pipes request with array response.
-   * @param observable request observable
-   * @param listenX number of responses to catch
-   */
-  public pipeRequestWithArrayResponse<T>(
-    observable: Observable<T>,
-    listenX = 1,
-  ): Observable<T | string> {
+  public pipeHttpResponse<T>(observable: Observable<T>, listenX = 1): Observable<T> {
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
       this.tapProgress<T>(true),
@@ -138,7 +118,7 @@ export class HttpHandlersService {
     observable: Observable<T>,
     listenX = 1,
     withprogress = true,
-  ): Observable<T | string> {
+  ): Observable<T> {
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
       this.tapProgress<T>(withprogress),
@@ -258,29 +238,31 @@ export class HttpHandlersService {
     }
   }
 
-  /**
-   * Parses error response in the following format
-   * { _body: "{ errors: [ { code: 'c', detail: 'd' } ] }" } where _body is a string
-   * or
-   * { _body: "{ code: 'c', message: 'm', detail: { inn: ['Invalid inn'] } }" } where _body is a string.
-   * @param error error object
-   */
-  public handleError(error: HttpErrorResponse): Observable<string> {
-    let msg: string;
-    // Parse error response, fallback: { status: '400', statusText: 'Bad request' }
-    const errMsg: string = Boolean(msg)
+  public getErrorMessage(error: HttpErrorResponse): string {
+    const msg: string = Boolean(error.message) ? error.message : error.error;
+    const errorMessage: string = Boolean(msg)
       ? msg
       : Boolean(error.status)
       ? `${error.status} - ${error.statusText}`
       : 'Server error';
-    return concat(throwError(errMsg));
+    return errorMessage;
+  }
+
+  /**
+   * Handles error.
+   * @param error error object
+   */
+  public handleError(error: HttpErrorResponse): Observable<never> {
+    const errorMessage = this.getErrorMessage(error);
+    this.toaster.showToaster(errorMessage, 'error');
+    return throwError(errorMessage);
   }
 
   /**
    * Handles graphQL error response.
    * @param error error message
    */
-  public handleGraphQLError(error: string): Observable<string> {
+  public handleGraphQLError(error: string): Observable<never> {
     return throwError(error);
   }
 
