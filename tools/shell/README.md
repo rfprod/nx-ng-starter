@@ -5,9 +5,10 @@ This folder contains utility shell scripts.
 - `build.sh` - project application building script
 - `changelog.sh` - apps/libs changelog generation script
 - `colors.sh` - color definitions for usage with `printf` command for comprehensiveness
+- `docker.sh` - TODO
 - `document.sh` - apps/libs documentation generation script
 - `e2e.sh` - apps e2e testing script
-- `firebase.sh` - firebase deployment script
+- `firebase-deploy.sh` - firebase deployment script
 - `generate-proto.sh` - grpc and ts definitions generation script
 - `git-extension.sh` - git-extension script (detects changed files so that linting/testing can be preformed for changed files only)
 - `install.sh` - dependencies installation script
@@ -17,7 +18,7 @@ This folder contains utility shell scripts.
 
 ## `build.sh`
 
-print `build.sh` usage
+### print usage
 
 ```bash
 bash tools/shell/build.sh
@@ -25,7 +26,7 @@ bash tools/shell/build.sh
 
 ## `changelog.sh`
 
-print `changelog.sh` usage
+### print usage
 
 ```bash
 bash tools/shell/changelog.sh
@@ -33,7 +34,7 @@ bash tools/shell/changelog.sh
 
 ## `colors.sh`
 
-print available colors
+### print usage
 
 ```bash
 bash tools/shell/colors.sh ?
@@ -41,7 +42,7 @@ bash tools/shell/colors.sh ?
 
 ## `document.sh`
 
-print `document.sh` usage
+### print usage
 
 ```bash
 bash tools/shell/document.sh
@@ -49,23 +50,23 @@ bash tools/shell/document.sh
 
 ## `e2e.sh`
 
-print `e2e.sh` usage
+### print usage
 
 ```bash
 bash tools/shell/e2e.sh
 ```
 
-## `firebase.sh`
+## `firebase-deploy.sh`
 
-print `firebase.sh` usage
+### print usage
 
 ```bash
-bash tools/shell/firebase.sh
+bash tools/shell/firebase-deploy.sh
 ```
 
 ## `generate-proto.sh`
 
-print `generate-proto.sh` usage
+### print usage
 
 ```bash
 bash tools/shell/generate-proto.sh
@@ -73,15 +74,15 @@ bash tools/shell/generate-proto.sh
 
 ## `git-extension.sh`
 
-print `git-extension.sh` usage
+### print usage
 
 ```bash
-bash tools/shell/git-extension.sh
+bash tools/shell/git-extension.sh ?
 ```
 
 ## `install.sh`
 
-print `install.sh` usage
+### print usage
 
 ```bash
 bash tools/shell/install.sh
@@ -89,7 +90,7 @@ bash tools/shell/install.sh
 
 ## `lint.sh`
 
-print `lint.sh` usage
+### print usage
 
 ```bash
 bash tools/shell/lint.sh
@@ -97,7 +98,7 @@ bash tools/shell/lint.sh
 
 ## `module-aliases.sh`
 
-print supported module aliases configured in `module-aliases.sh`
+### print usage
 
 ```bash
 bash tools/shell/module-aliases.sh ?
@@ -105,7 +106,7 @@ bash tools/shell/module-aliases.sh ?
 
 ## `test.sh`
 
-print `test.sh` usage
+### print usage
 
 ```bash
 bash tools/shell/test.sh

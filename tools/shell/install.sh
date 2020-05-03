@@ -135,7 +135,7 @@ installBrewAndProtobufLinux() {
   # install protobuf
   brew install protobuf
   # install protoc-gen-grpc-web
-  brew install protoc-gen-grpc-web
+  brew install protoc-gen-grpc-web --ignore-dependencies
 }
 
 installProtobufOsx() {
@@ -144,7 +144,7 @@ installProtobufOsx() {
     ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
   brew install protolint
   brew install protobuf
-  brew install protoc-gen-grpc-web
+  brew install protoc-gen-grpc-web --ignore-dependencies
 }
 
 ##

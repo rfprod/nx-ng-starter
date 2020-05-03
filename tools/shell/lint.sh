@@ -71,7 +71,7 @@ checkConfigPathAndProceed() {
 
   printf "
     ${DEFAULT} - stylelint path: ${YELLOW}%s
-    ${DEFAULT} - prettier html path: ${YELLOW}%s${DEFAULT}\n" "$STYLELINT_PATHS" "$PRETTIER_HTML_PATHS"
+    ${DEFAULT} - prettier html path: ${YELLOW}%s${DEFAULT}" "$STYLELINT_PATHS" "$PRETTIER_HTML_PATHS"
 
   MODULE_HAS_SCSS_FILES="$(find "${2}" -type f -name "*.scss")" # checks if module contains scss files
 
@@ -180,7 +180,7 @@ lintModule() {
     # Import Git extension which finds changed aliases.
     ##
     source tools/shell/git-extension.sh
-    for CHANGED_ALIAS in $CHANGED_ALIASES; do lintModule "$CHANGED_ALIAS" "$OPTIONAL_ACTION"; done
+    for CHANGED_ALIAS in "${CHANGED_ALIASES[@]}"; do lintModule "$CHANGED_ALIAS" "$OPTIONAL_ACTION"; done
   elif [ "$MODULE_ALIAS" = "affected" ]; then
     TITLE="<< LINTING AFFECTED APPS AND LIBS >>"
     printf "

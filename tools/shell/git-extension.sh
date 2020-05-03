@@ -15,6 +15,19 @@ source tools/shell/module-aliases.sh ''
 CHANGED_ALIASES=()
 
 ##
+# Reports usage error and exits.
+##
+reportUsage() {
+  local TITLE="<< USAGE >>"
+  printf "
+    ${RED}%s\n
+    ${DEFAULT} - ${YELLOW} bash tools/shell/git-extension.sh ?${DEFAULT} - print usage
+    ${DEFAULT} - ${YELLOW} bash tools/shell/git-extension.sh print${DEFAULT} - get and print changed apps/libs aliases
+    ${DEFAULT} - ${YELLOW} bash tools/shell/git-extension.sh print${DEFAULT} - get changed apps/libs aliases
+    \n\n" "$TITLE"
+}
+
+##
 # Stores changed aliases in a respective variable.
 ##
 getChangedProjectAliases() {
@@ -51,9 +64,9 @@ printChangedAliases() {
   fi
 }
 
-# getChangedProjectAliases
-
-if [ "$1" = "print" ]; then
+if [ "$1" = "?" ]; then
+  reportUsage
+elif [ "$1" = "print" ]; then
   getChangedProjectAliases
   printChangedAliases
 else

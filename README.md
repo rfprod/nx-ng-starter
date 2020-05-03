@@ -1,12 +1,12 @@
 # NxNgStarter
 
-## Azure DevOps pipelines status
+## Azure DevOps pipeline status
 
 - ### PR Validation [![Azure DevOps PR Validation Build Status](https://rfprod.visualstudio.com/nx-ng-starter/_apis/build/status/PR%20Validation?branchName=master)](https://rfprod.visualstudio.com/nx-ng-starter/_build/latest?definitionId=13&branchName=master)
 
 - ### PROD [![Azure DevOps PROD Build Status](https://rfprod.visualstudio.com/nx-ng-starter/_apis/build/status/PROD?branchName=master)](https://rfprod.visualstudio.com/nx-ng-starter/_build/latest?definitionId=14&branchName=master)
 
-## Project description
+## Description
 
 `NxNgStarter` is a monorepo starter with preconfigured apps:
 
@@ -22,11 +22,11 @@ and libs:
 
 which is deployed to `Firebase`: https://nx-ng-starter.web.app/
 
-## Preferred package manager
+### Preferred package manager
 
 - [yarn](https://www.npmjs.com/package/yarn)
 
-#### Committing changes to repo
+### Committing changes to repo
 
 Using commitizen cli is mandatory, [reference](https://github.com/commitizen/cz-cli)
 
@@ -35,6 +35,10 @@ Provided all dependencies were installed, and this requirements are fulfilled [c
 ```bash
 git cz
 ```
+
+## Manual
+
+- [GitBook documentation `WORK IN PROGRESS`](https://rfprod.gitbook.io/nx-ng-starter/)
 
 ## Deployment
 
