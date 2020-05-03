@@ -1,7 +1,6 @@
 import { ETIMEOUT } from '@nx-ng-starter/shared-core/util';
 
 import { setupJsdomGlobalMocks } from '../globals/globals.mock';
-import { setupLocalStorageMock } from '../local-storage/local-storage.mock';
 import { setupJsdomWindowMocks } from '../window/window.mock';
 
 /**
@@ -14,8 +13,6 @@ jest.setTimeout(ETIMEOUT.FOREVER);
  * which should be used in each app and lib in test-setup.ts files.
  */
 export const setupJestJsdomGlobalMocks: () => void = () => {
-  setupLocalStorageMock();
-
   setupJsdomWindowMocks();
 
   setupJsdomGlobalMocks();

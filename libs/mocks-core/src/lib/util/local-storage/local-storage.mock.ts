@@ -15,15 +15,3 @@ export class LocalStorageMock {
     this[key] = undefined;
   }
 }
-
-export function setupLocalStorageMock(): LocalStorageMock {
-  Object.defineProperty(window, 'localStorage', {
-    value: new LocalStorageMock(),
-    writable: true,
-  });
-  const localStorage = window.localStorage;
-  jest.spyOn(localStorage, 'setItem');
-  jest.spyOn(localStorage, 'getItem');
-
-  return localStorage;
-}
