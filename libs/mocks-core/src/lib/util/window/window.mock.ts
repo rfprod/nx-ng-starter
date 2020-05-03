@@ -1,3 +1,17 @@
+import { LocalStorageMock } from '../local-storage/local-storage.mock';
+
+function setupLocalStorageMock(): LocalStorageMock {
+  Object.defineProperty(window, 'localStorage', {
+    value: new LocalStorageMock(),
+    writable: true,
+  });
+  const localStorage = window.localStorage;
+  jest.spyOn(localStorage, 'setItem');
+  jest.spyOn(localStorage, 'getItem');
+
+  return localStorage;
+}
+
 function setupWindowMatchMediaMock() {
   window.matchMedia = jest.fn().mockImplementation(query => {
     return {
@@ -45,6 +59,7 @@ function setupWindowCreateObjectUrlMock() {
 }
 
 export function setupJsdomWindowMocks() {
+  setupLocalStorageMock();
   setupWindowMatchMediaMock();
   setupWindowResizeToMock();
   setupWindowCustomElementsMock();
