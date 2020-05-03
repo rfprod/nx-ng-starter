@@ -26,14 +26,14 @@ and libs:
 
 ### Preferred package manager
 
-[:link: Yarn](https://www.npmjs.com/package/yarn) is a preferred package manager for dependencies installation in the project root.
-[:link: npm](https://www.npmjs.com/) is a preferred package manager for dependencies installation in the `functions` folder.
+[🔗 Yarn](https://www.npmjs.com/package/yarn) is a preferred package manager for dependencies installation in the project root.
+[🔗 npm](https://www.npmjs.com/) is a preferred package manager for dependencies installation in the `functions` folder.
 
 ### Committing changes to repo
 
-Using [:link: commitizen cli](https://github.com/commitizen/cz-cli) is mandatory.
+Using [🔗 commitizen cli](https://github.com/commitizen/cz-cli) is mandatory.
 
-Provided all dependencies are installed, and [:link: commitizen cli is installed as a global dependency](https://github.com/commitizen/cz-cli#conventional-commit-messages-as-a-global-utility), this command must be used.
+Provided all dependencies are installed, and [🔗 commitizen cli is installed as a global dependency](https://github.com/commitizen/cz-cli#conventional-commit-messages-as-a-global-utility), this command must be used.
 
 ```bash
 git cz
@@ -43,39 +43,39 @@ git cz
 
 Is generated based on GitHub repo.
 
-[:link: GitBook documentation](https://rfprod.gitbook.io/nx-ng-starter/)
+[🔗 GitBook documentation](https://rfprod.gitbook.io/nx-ng-starter/)
 
 ## Firebase deployment
 
 ### Application
 
-[:link: Nx Ng Starter Webapp](https://nx-ng-starter.web.app)
+[🔗 Nx Ng Starter Webapp](https://nx-ng-starter.web.app)
 
 ### Unit coverage
 
-[:link: Nx Ng Starter Client](https://nx-ng-starter.web.app/coverage/nx-ng-starter/index.html)
-[:link: Nx Ng Starter API](https://nx-ng-starter.web.app/coverage/api/index.html)
+[🔗 Nx Ng Starter Client](https://nx-ng-starter.web.app/coverage/nx-ng-starter/index.html)
+[🔗 Nx Ng Starter API](https://nx-ng-starter.web.app/coverage/api/index.html)
 
 ### E2E reports
 
-[:link: Nx Ng Starter E2E](https://nx-ng-starter.web.app/cypress/nx-ng-starter-e2e/mochawesome/mochawesome.html)
+[🔗 Nx Ng Starter E2E](https://nx-ng-starter.web.app/cypress/nx-ng-starter-e2e/mochawesome/mochawesome.html)
 
 ### Compodoc documentation
 
-[:link: Nx Ng Starter Client documentation](https://nx-ng-starter.web.app/documentation/nx-ng-starter/index.html)
-[:link: Nx Ng Starter API documentation](https://nx-ng-starter.web.app/documentation/api/index.html)
+[🔗 Nx Ng Starter Client documentation](https://nx-ng-starter.web.app/documentation/nx-ng-starter/index.html)
+[🔗 Nx Ng Starter API documentation](https://nx-ng-starter.web.app/documentation/api/index.html)
 
 ### Changelog
 
-[:link: Nx Ng Starter](https://nx-ng-starter.web.app/changelog/apps/nx-ng-starter-CHANGELOG.md)
-[:link: API](https://nx-ng-starter.web.app/changelog/apps/api-CHANGELOG.md)
-[:link: API Interface](https://nx-ng-starter.web.app/changelog/libs/api-interface-CHANGELOG.md)
-[:link: Mocks Core](https://nx-ng-starter.web.app/changelog/libs/mocks-core-CHANGELOG.md)
-[:link: Shared Core](https://nx-ng-starter.web.app/changelog/libs/shared-core-CHANGELOG.md)
+[🔗 Nx Ng Starter](https://nx-ng-starter.web.app/changelog/apps/nx-ng-starter-CHANGELOG.md)
+[🔗 API](https://nx-ng-starter.web.app/changelog/apps/api-CHANGELOG.md)
+[🔗 API Interface](https://nx-ng-starter.web.app/changelog/libs/api-interface-CHANGELOG.md)
+[🔗 Mocks Core](https://nx-ng-starter.web.app/changelog/libs/mocks-core-CHANGELOG.md)
+[🔗 Shared Core](https://nx-ng-starter.web.app/changelog/libs/shared-core-CHANGELOG.md)
 
 ## General Tooling
 
-This project was generated using [:link: Nx](https://nx.dev).
+This project was generated using [🔗 Nx](https://nx.dev).
 
 <p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/nx-logo.png" width="450"></p>
 
@@ -83,11 +83,11 @@ This project was generated using [:link: Nx](https://nx.dev).
 
 ### Quick Start & Documentation
 
-[:link: Nx Documentation](https://nx.dev)
+[🔗 Nx Documentation](https://nx.dev)
 
-[:link: 30-minute video showing all Nx features](https://nx.dev/getting-started/what-is-nx)
+[🔗 30-minute video showing all Nx features](https://nx.dev/getting-started/what-is-nx)
 
-[:link: Interactive Tutorial](https://nx.dev/tutorial/01-create-application)
+[🔗 Interactive Tutorial](https://nx.dev/tutorial/01-create-application)
 
 ### Adding capabilities to your workspace
 
@@ -97,13 +97,13 @@ These capabilities include generating applications, libraries, .etc as well as t
 
 Below are some plugins which you can add to your workspace:
 
-[:link: Angular](https://angular.io)
+[🔗 Angular](https://angular.io)
 
 ```bash
 ng add @nrwl/angular
 ```
 
-[:link: React](https://reactjs.org)
+[🔗 React](https://reactjs.org)
 
 ```bash
 ng add @nrwl/react
@@ -115,25 +115,25 @@ Web (no framework frontends)
 ng add @nrwl/web
 ```
 
-[:link: Nest](https://nestjs.com)
+[🔗 Nest](https://nestjs.com)
 
 ```bash
 ng add @nrwl/nest
 ```
 
-[:link: Express](https://expressjs.com)
+[🔗 Express](https://expressjs.com)
 
 ```bash
 ng add @nrwl/express
 ```
 
-[:link: Node](https://nodejs.org)
+[🔗 Node](https://nodejs.org)
 
 ```bash
 ng add @nrwl/node
 ```
 
-[:link: Storybook](https://storybook.js.org/)
+[🔗 Storybook](https://storybook.js.org/)
 
 ```bash
 ng add @nrwl/storybook
@@ -197,7 +197,7 @@ The build artifacts will be stored in the `dist/` directory.
 
 Use the `--prod` flag for a production build.
 
-### Unit testing via [:link: Jest](https://jestjs.io)
+### Unit testing via [🔗 Jest](https://jestjs.io)
 
 To execute the unit tests run:
 
@@ -211,7 +211,7 @@ To execute the unit tests affected by a change run:
 npm run affected:test
 ```
 
-### End-to-end testing via [:link: Cypress](https://www.cypress.io)
+### End-to-end testing via [🔗 Cypress](https://www.cypress.io)
 
 To execute the end-to-end tests run:
 
@@ -241,40 +241,40 @@ npx nx g @nrwl/angular:storybook-configuration project-name
 
 ### Further help
 
-Visit the [:link: Nx Documentation](https://nx.dev) to learn more.
+Visit the [🔗 Nx Documentation](https://nx.dev) to learn more.
 
 ## Technologies Reference
 
 ### Workspace
 
-[:link: Nrwl Nx](https://nx.dev)
+[🔗 Nrwl Nx](https://nx.dev)
 
 ### Client
 
-[:link: Angular](https://angular.io)
-[:link: Angular CLI](https://cli.angular.io/)
-[:link: Angular Material](https://material.angular.io/)
-[:link: Apollo Angular](https://github.com/apollographql/apollo-angular)
-[:link: Material Design Guidelines](https://material.io)
-[:link: NGXS](https://www.ngxs.io/)
+[🔗 Angular](https://angular.io)
+[🔗 Angular CLI](https://cli.angular.io/)
+[🔗 Angular Material](https://material.angular.io/)
+[🔗 Apollo Angular](https://github.com/apollographql/apollo-angular)
+[🔗 Material Design Guidelines](https://material.io)
+[🔗 NGXS](https://www.ngxs.io/)
 
 ### Server
 
-[:link: NestJS](https://nestjs.com/)
-[:link: Firebase JS Reference](https://firebase.google.com/docs/reference/js/)
-[:link: Express GraphQL Server](https://graphql.org/graphql-js/running-an-express-graphql-server/)
-[:link: Angular Firebase: Apollo Server](https://angularfirebase.com/lessons/graphql-apollo-2-tutorial-node/#Apollo-Server)
-[:link: GRPC](https://grpc.io/)
+[🔗 NestJS](https://nestjs.com/)
+[🔗 Firebase JS Reference](https://firebase.google.com/docs/reference/js/)
+[🔗 Express GraphQL Server](https://graphql.org/graphql-js/running-an-express-graphql-server/)
+[🔗 Angular Firebase: Apollo Server](https://angularfirebase.com/lessons/graphql-apollo-2-tutorial-node/#Apollo-Server)
+[🔗 GRPC](https://grpc.io/)
 
 ### Testing
 
-[:link: Cypress](https://www.cypress.io/)
-[:link: Jest](https://jestjs.io/)
+[🔗 Cypress](https://www.cypress.io/)
+[🔗 Jest](https://jestjs.io/)
 
 ### Documentation
 
-[:link: Compodoc](https://compodoc.github.io/compodoc/)
+[🔗 Compodoc](https://compodoc.github.io/compodoc/)
 
 ### CI
 
-[:link: Azure DevOps YAML Schema](https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=vsts&tabs=example#trigger)
+[🔗 Azure DevOps YAML Schema](https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=vsts&tabs=example#trigger)
