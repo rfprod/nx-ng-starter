@@ -27,6 +27,7 @@ and libs:
 ### Preferred package manager
 
 [🔗 Yarn](https://www.npmjs.com/package/yarn) is a preferred package manager for dependencies installation in the project root.
+
 [🔗 npm](https://www.npmjs.com/) is a preferred package manager for dependencies installation in the `functions` folder.
 
 ### Committing changes to repo
@@ -47,6 +48,8 @@ Is generated based on GitHub repo.
 
 ## Firebase deployment
 
+Applications as well as generated documentation, testing reports, and a custom changelog are deployed to Firebase.
+
 ### Application
 
 [🔗 Nx Ng Starter Webapp](https://nx-ng-starter.web.app)
@@ -54,6 +57,7 @@ Is generated based on GitHub repo.
 ### Unit coverage
 
 [🔗 Nx Ng Starter Client](https://nx-ng-starter.web.app/coverage/nx-ng-starter/index.html)
+
 [🔗 Nx Ng Starter API](https://nx-ng-starter.web.app/coverage/api/index.html)
 
 ### E2E reports
@@ -63,14 +67,19 @@ Is generated based on GitHub repo.
 ### Compodoc documentation
 
 [🔗 Nx Ng Starter Client documentation](https://nx-ng-starter.web.app/documentation/nx-ng-starter/index.html)
+
 [🔗 Nx Ng Starter API documentation](https://nx-ng-starter.web.app/documentation/api/index.html)
 
 ### Changelog
 
 [🔗 Nx Ng Starter](https://nx-ng-starter.web.app/changelog/apps/nx-ng-starter-CHANGELOG.md)
+
 [🔗 API](https://nx-ng-starter.web.app/changelog/apps/api-CHANGELOG.md)
+
 [🔗 API Interface](https://nx-ng-starter.web.app/changelog/libs/api-interface-CHANGELOG.md)
+
 [🔗 Mocks Core](https://nx-ng-starter.web.app/changelog/libs/mocks-core-CHANGELOG.md)
+
 [🔗 Shared Core](https://nx-ng-starter.web.app/changelog/libs/shared-core-CHANGELOG.md)
 
 ## General Tooling
@@ -97,47 +106,15 @@ These capabilities include generating applications, libraries, .etc as well as t
 
 Below are some plugins which you can add to your workspace:
 
-[🔗 Angular](https://angular.io)
-
-```bash
-ng add @nrwl/angular
-```
-
-[🔗 React](https://reactjs.org)
-
-```bash
-ng add @nrwl/react
-```
-
-Web (no framework frontends)
-
-```bash
-ng add @nrwl/web
-```
-
-[🔗 Nest](https://nestjs.com)
-
-```bash
-ng add @nrwl/nest
-```
-
-[🔗 Express](https://expressjs.com)
-
-```bash
-ng add @nrwl/express
-```
-
-[🔗 Node](https://nodejs.org)
-
-```bash
-ng add @nrwl/node
-```
-
-[🔗 Storybook](https://storybook.js.org/)
-
-```bash
-ng add @nrwl/storybook
-```
+| Application type                          | Command                  |
+| ----------------------------------------- | ------------------------ |
+| [🔗 Angular](https://angular.io)          | `ng add @nrwl/angular`   |
+| [🔗 React](https://reactjs.org)           | `ng add @nrwl/react`     |
+| Web (no framework frontends)              | `ng add @nrwl/web`       |
+| [🔗 Nest](https://nestjs.com)             | `ng add @nrwl/nest`      |
+| [🔗 Express](https://expressjs.com)       | `ng add @nrwl/express`   |
+| [🔗 Node](https://nodejs.org)             | `ng add @nrwl/node`      |
+| [🔗 Storybook](https://storybook.js.org/) | `ng add @nrwl/storybook` |
 
 ### Generating an application
 
@@ -252,23 +229,33 @@ Visit the [🔗 Nx Documentation](https://nx.dev) to learn more.
 ### Client
 
 [🔗 Angular](https://angular.io)
+
 [🔗 Angular CLI](https://cli.angular.io/)
+
 [🔗 Angular Material](https://material.angular.io/)
+
 [🔗 Apollo Angular](https://github.com/apollographql/apollo-angular)
+
 [🔗 Material Design Guidelines](https://material.io)
+
 [🔗 NGXS](https://www.ngxs.io/)
 
 ### Server
 
 [🔗 NestJS](https://nestjs.com/)
+
 [🔗 Firebase JS Reference](https://firebase.google.com/docs/reference/js/)
+
 [🔗 Express GraphQL Server](https://graphql.org/graphql-js/running-an-express-graphql-server/)
+
 [🔗 Angular Firebase: Apollo Server](https://angularfirebase.com/lessons/graphql-apollo-2-tutorial-node/#Apollo-Server)
+
 [🔗 GRPC](https://grpc.io/)
 
 ### Testing
 
 [🔗 Cypress](https://www.cypress.io/)
+
 [🔗 Jest](https://jestjs.io/)
 
 ### Documentation
@@ -277,4 +264,6 @@ Visit the [🔗 Nx Documentation](https://nx.dev) to learn more.
 
 ### CI
 
-[🔗 Azure DevOps YAML Schema](https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=vsts&tabs=example#trigger)
+[🔗 Azure DevOps](https://azure.microsoft.com/en-us/services/devops/)
+
+[🔗 Azure DevOps Pipeline YAML Schema](https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=vsts&tabs=example#trigger)
