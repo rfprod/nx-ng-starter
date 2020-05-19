@@ -51,7 +51,7 @@ describe('AppComponent', () => {
     expect(component.title).toEqual('Nx Ng Starter');
   });
 
-  it('should should render two toolbars', () => {
+  it('should render two toolbars', () => {
     const compiled: HTMLElement = fixture.debugElement.nativeElement;
     const expectedLength = 2;
     expect(compiled.querySelectorAll('mat-toolbar').length).toEqual(expectedLength);

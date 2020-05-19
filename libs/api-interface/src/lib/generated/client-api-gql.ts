@@ -14,7 +14,7 @@ export type IScalars = {
 
 
 export interface IQuery {
-   __typename?: 'Query';
+  __typename?: 'Query';
   matcomps: Array<IMatcompModel>;
   matcomp: IMatcompModel;
 }
@@ -31,16 +31,16 @@ export type IQueryMatcompArgs = {
 };
 
 export interface IMatcompModel {
-   __typename?: 'MatcompModel';
+  __typename?: 'MatcompModel';
   id: IScalars['ID'];
-  name?: Maybe<IScalars['String']>;
-  description?: Maybe<IScalars['String']>;
-  creationDate?: Maybe<IScalars['Date']>;
+  name: IScalars['String'];
+  description: IScalars['String'];
+  creationDate: IScalars['Date'];
 }
 
 
 export interface IMutation {
-   __typename?: 'Mutation';
+  __typename?: 'Mutation';
   create: IMatcompModel;
   remove: IScalars['Boolean'];
 }
@@ -61,7 +61,7 @@ export interface INewMatcompInputDto {
 }
 
 export interface ISubscription {
-   __typename?: 'Subscription';
+  __typename?: 'Subscription';
   matcompCreated: IMatcompModel;
   matcompRemoved: IMatcompModel;
 }
