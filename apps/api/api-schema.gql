@@ -9,9 +9,9 @@ type Query {
 
 type MatcompModel {
   id: ID!
-  name: String
-  description: String
-  creationDate: Date
+  name: String!
+  description: String!
+  creationDate: Date!
 }
 
 """Date custom scalar type"""
