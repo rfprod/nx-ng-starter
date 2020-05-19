@@ -69,7 +69,7 @@
     <mat-sidenav
       #appSidenav
       mode="over"
-      [opened]="sidenavOpened$"
+      [opened]="sidenavOpened$ | async"
       (closedStart)="sidebarCloseHandler()"
     >
       <mat-grid-list cols="3" rowHeight="1:1">

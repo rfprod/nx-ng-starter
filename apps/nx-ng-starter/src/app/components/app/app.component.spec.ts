@@ -6,8 +6,8 @@ import {
   setupJestSpiesFor,
   TComponentSpiesObject,
 } from '@nx-ng-starter/mocks-core';
-import { AppIndexComponent } from 'apps/nx-ng-starter/src/app/components/app-index/index/app-index.component';
 
+import { AppIndexComponent } from '../app-index/index/app-index.component';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
@@ -42,14 +42,18 @@ describe('AppComponent', () => {
         fixture.detectChanges();
       });
   }));
+
   it('should be defined', () => {
     expect(component).toBeDefined();
   });
+
   it('should have as title "Nx Ng Starter"', () => {
     expect(component.title).toEqual('Nx Ng Starter');
   });
+
   it('should should render two toolbars', () => {
     const compiled: HTMLElement = fixture.debugElement.nativeElement;
-    expect(compiled.querySelectorAll('mat-toolbar').length).toEqual(1 + 1);
+    const expectedLength = 2;
+    expect(compiled.querySelectorAll('mat-toolbar').length).toEqual(expectedLength);
   });
 });

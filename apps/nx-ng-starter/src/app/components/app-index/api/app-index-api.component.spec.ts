@@ -1,7 +1,8 @@
-import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
+import { HttpTestingController } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
+  flushHttpRequests,
   getTestBedConfig,
   newTestBedMetadata,
   setupJestSpiesFor,
@@ -42,18 +43,12 @@ describe('AppIndexApiComponent', () => {
           component: setupJestSpiesFor<AppIndexApiComponent>(component),
         };
         expect(spy.component).toBeDefined();
-        httpController
-          .match(_ => true)
-          .forEach((req: TestRequest) => (!req.cancelled ? req.flush({}) : null));
-        fixture.detectChanges();
+        flushHttpRequests(httpController);
       });
   }));
 
   afterEach(() => {
-    httpController
-      .match(_ => true)
-      .forEach((req: TestRequest) => (!req.cancelled ? req.flush({}) : null));
-    httpController.verify();
+    flushHttpRequests(httpController, true);
   });
 
   it('should be defined', () => {
