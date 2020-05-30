@@ -56,7 +56,7 @@ export class HttpHandlersService {
     @Inject(WINDOW) public readonly win: Window,
     @Inject(APP_ENV) public readonly env: WebAppEnvironment,
   ) {
-    this.userToken$.subscribe();
+    void this.userToken$.subscribe();
   }
 
   /**

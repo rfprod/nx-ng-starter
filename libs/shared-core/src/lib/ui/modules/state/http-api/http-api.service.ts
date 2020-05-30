@@ -43,7 +43,7 @@ export class HttpApiService {
           const payload: IHttpApiStatePayload = {
             ping: result.message,
           };
-          this.store.dispatch(new httpApiActions.Ping(payload));
+          void this.store.dispatch(new httpApiActions.Ping(payload));
         }),
       );
       return this.httpHandlers.pipeHttpResponse<Message>(observable);
@@ -55,7 +55,7 @@ export class HttpApiService {
     private readonly httpClient: HttpClient,
     private readonly httpHandlers: HttpHandlersService,
   ) {
-    this.handlers.ping.request().subscribe();
+    void this.handlers.ping.request().subscribe();
   }
 }
 

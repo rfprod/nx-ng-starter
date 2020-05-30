@@ -43,7 +43,7 @@ export class UserService {
       typeof localStorage.getItem('userService') !== 'undefined' &&
       JSON.parse(localStorage.getItem('userService')) instanceof UserStateModel
     ) {
-      this.setState(JSON.parse(localStorage.getItem('userService')));
+      void this.setState(JSON.parse(localStorage.getItem('userService')));
     }
   }
 

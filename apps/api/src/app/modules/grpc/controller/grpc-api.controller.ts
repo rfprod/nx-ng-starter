@@ -73,7 +73,7 @@ export class GrpcApiController implements OnModuleInit {
     const onComplete = () => {
       entity$.complete();
     };
-    data$.subscribe(onNext, null, onComplete);
+    void data$.subscribe(onNext, null, onComplete);
 
     return entity$.asObservable();
   }

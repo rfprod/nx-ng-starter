@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Title } from '@angular/platform-browser';
+import { APP_ENV, WebAppEnvironment } from '@nx-ng-starter/shared-core/data-access';
 import { SidebarUiService } from '@nx-ng-starter/shared-core/ui';
 
 /**
@@ -13,23 +15,29 @@ import { SidebarUiService } from '@nx-ng-starter/shared-core/ui';
 })
 export class AppComponent {
   /**
-   * Component title.
+   * Sidebar viewchild reference.
    */
-  public title = 'Nx Ng Starter';
+  @ViewChild('appSidebar') public appSidebar: MatSidenav;
 
   /**
-   * Sidenav viewchild reference.
+   * Indicates if sidebar is opened.
    */
-  @ViewChild('appSidenav') public appSidenav: MatSidenav;
+  public readonly sidebarOpened$ = this.sidebarUiService.sidebarOpened$;
+
+  public readonly appName = this.env.appName;
+
+  constructor(
+    private readonly sidebarUiService: SidebarUiService,
+    private readonly title: Title,
+    @Inject(APP_ENV) private readonly env: WebAppEnvironment,
+  ) {}
 
   /**
-   * Indicates if sidenav is opened.
+   * Sidebar close handler.
+   * Propagates sidebar close event from UI to state store.
    */
-  public readonly sidenavOpened$ = this.sidebarUiService.sidebarOpened$;
-
-  constructor(private readonly sidebarUiService: SidebarUiService) {}
-
   public sidebarCloseHandler(): void {
-    this.sidebarUiService.close().subscribe();
+    void this.sidebarUiService.close().subscribe();
+    this.title.setTitle(this.env.appName);
   }
 }

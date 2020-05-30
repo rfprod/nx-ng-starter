@@ -47,10 +47,6 @@ describe('AppComponent', () => {
     expect(component).toBeDefined();
   });
 
-  it('should have as title "Nx Ng Starter"', () => {
-    expect(component.title).toEqual('Nx Ng Starter');
-  });
-
   it('should render two toolbars', () => {
     const compiled: HTMLElement = fixture.debugElement.nativeElement;
     const expectedLength = 2;
