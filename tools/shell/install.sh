@@ -88,6 +88,9 @@ resolveIfPackageIsInstalledAndInstall() {
   fi
 }
 
+##
+# Installs linuxbrew dependencies on Linux.
+##
 installLinuxBrewDependencies() {
   local TITLE="<< INSTALLING LINUXBREW dependencies >>"
   printf "
@@ -97,10 +100,10 @@ installLinuxBrewDependencies() {
 }
 
 ##
-# Installs brew on Linux.
+# Installs brew, protilint, protobuf, and gRPC tools on Linux.
 ##
 installBrewAndProtobufLinux() {
-  local TITLE="<< INSTALLING BREW, PROTOLINT, PROTOBUF, PROTOC-GEN-GRPC-WEB on LINUX >>"
+  local TITLE="<< INSTALLING BREW, PROTOLINT, PROTOBUF, PROTOC-GEN-GRPC-WEB, GRPC TOOLS on LINUX >>"
   printf "
     ${LIGHT_BLUE}%s
     ${DEFAULT}\n\n" "$TITLE"
@@ -136,8 +139,13 @@ installBrewAndProtobufLinux() {
   brew install protobuf
   # install protoc-gen-grpc-web
   brew install protoc-gen-grpc-web --ignore-dependencies
+  # install gRPC tools
+  brew install bradleyjkemp/formulae/grpc-tools
 }
 
+##
+# Installs protobuf and gRPC tools on OSX.
+##
 installProtobufOsx() {
   local TITLE="<< INSTALLING PROTOLINT, PROTOBUF, PROTOC-GEN-GRPC-WEB on OSX >>"
   printf "
@@ -145,12 +153,13 @@ installProtobufOsx() {
   brew install protolint
   brew install protobuf
   brew install protoc-gen-grpc-web --ignore-dependencies
+  brew install bradleyjkemp/formulae/grpc-tools
 }
 
 ##
-# Installs protobuf.
+# Installs protobuf and gRPC tools.
 ##
-installProtobuf() {
+installProtobufAndGrpcTools() {
   if [ "$1" = "osx" ]; then
     installProtobufOsx
   else

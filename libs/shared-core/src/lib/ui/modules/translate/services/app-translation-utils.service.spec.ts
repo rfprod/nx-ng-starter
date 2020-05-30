@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { async, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { DateAdapter } from '@angular/material/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
@@ -50,7 +52,7 @@ describe('AppTranslationUtilsService', () => {
 
         spy = {
           service: {
-            languageChanges: jest.spyOn(service.languageChanges, 'next'),
+            languageChanges: jest.spyOn((service as any).languageChanges, 'next'),
           },
           translate: {
             onLangChange: jest.spyOn(translate.onLangChange, 'subscribe'),
@@ -68,7 +70,7 @@ describe('AppTranslationUtilsService', () => {
   it('should exist and have variables and methods defined', () => {
     expect(service).toBeDefined();
     expect(service['languageChangeSubscription']).toEqual(jasmine.any(Function));
-    expect(service.languageChanges).toEqual(jasmine.any(Subject));
+    expect((service as any).languageChanges).toEqual(jasmine.any(Subject));
     expect(service.initialize).toEqual(jasmine.any(Function));
     expect(service.getUserLanguagePreference).toEqual(jasmine.any(Function));
     const langs: IUiLanguagesInterface = {
@@ -97,11 +99,14 @@ describe('AppTranslationUtilsService', () => {
 
   it('languageChangeSubscription should work correctly', async(() => {
     service['languageChangeSubscription']();
-    expect(translate.onLangChange.subscribe).toHaveBeenCalled();
-    translate.onLangChange.subscribe((langChangeEvent: LangChangeEvent) => {
-      expect(service.languageChanges.next).toHaveBeenCalledWith(langChangeEvent);
-      expect(dateAdapter.setLocale).toHaveBeenCalledWith(langChangeEvent.lang);
-    });
+    expect(spy.translate.onLangChange).toHaveBeenCalled();
+    void translate.onLangChange.subscribe(
+      (langChangeEvent: LangChangeEvent) => {
+        expect(spy.service.languageChanges).toHaveBeenCalledWith(langChangeEvent);
+        expect(dateAdapter.setLocale).toHaveBeenCalledWith(langChangeEvent.lang);
+      },
+      (): void => null,
+    );
   }));
 
   it('initialize should work correctly', () => {

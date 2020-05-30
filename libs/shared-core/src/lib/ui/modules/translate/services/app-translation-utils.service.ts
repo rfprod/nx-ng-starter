@@ -23,7 +23,9 @@ export class AppTranslationUtilsService {
   /**
    * Language changes notifier.
    */
-  public languageChanges: Subject<LangChangeEvent> = new Subject<LangChangeEvent>();
+  private readonly languageChanges = new Subject<LangChangeEvent>();
+
+  public readonly languageChanges$ = this.languageChanges.asObservable();
 
   /**
    * Available UI language codes.
@@ -68,7 +70,7 @@ export class AppTranslationUtilsService {
     this.translate.setDefaultLang(this.langs.ru);
     this.translate.setTranslation(this.langs.ru, this.translations.ru);
     this.translate.setTranslation(this.langs.en, this.translations.en);
-    this.translate.use(this.langs.ru);
+    void this.translate.use(this.langs.ru);
   }
 
   /**
@@ -110,7 +112,7 @@ export class AppTranslationUtilsService {
    */
   public useLanguage(langCode: ILangCode): void {
     if (langCode in this.langs) {
-      this.translate.use(this.langs[langCode]);
+      void this.translate.use(this.langs[langCode]);
     }
   }
   /**
@@ -125,11 +127,14 @@ export class AppTranslationUtilsService {
    * Translate service language change subscription.
    */
   private languageChangeSubscription(): void {
-    this.translate.onLangChange.subscribe((langChangeEvent: LangChangeEvent) => {
-      this.languageChanges.next(langChangeEvent);
-      const langCode: ILangCode = langChangeEvent.lang as ILangCode;
-      this.setDatepickersLocale(langCode);
-    });
+    void this.translate.onLangChange.subscribe(
+      (langChangeEvent: LangChangeEvent) => {
+        this.languageChanges.next(langChangeEvent);
+        const langCode: ILangCode = langChangeEvent.lang as ILangCode;
+        this.setDatepickersLocale(langCode);
+      },
+      (): void => null,
+    );
   }
 
   /**

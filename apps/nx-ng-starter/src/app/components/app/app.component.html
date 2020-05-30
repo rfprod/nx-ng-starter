@@ -1,11 +1,11 @@
 <span fxLayout="column" fxLayoutAlign="start stretch">
   <mat-toolbar color="primary" fxFlex="0 1 auto">
-    <button mat-icon-button (click)="appSidenav.toggle()">
+    <button mat-icon-button (click)="appSidebar.toggle()">
       <img
         [ngStyle]="{ height: '75%', width: 'auto!important' }"
         src="/favicon.ico"
-        alt="{{ title }}"
-        title="{{ title }}"
+        alt="{{ appName }}"
+        title="{{ appName }}"
       />
     </button>
 
@@ -67,13 +67,13 @@
 
   <mat-sidenav-container fxFlex="1 1 auto">
     <mat-sidenav
-      #appSidenav
+      #appSidebar
       mode="over"
-      [opened]="sidenavOpened$ | async"
+      [opened]="sidebarOpened$ | async"
       (closedStart)="sidebarCloseHandler()"
     >
       <mat-grid-list cols="3" rowHeight="1:1">
-        <mat-grid-tile [routerLink]="['info']" (click)="appSidenav.close()">
+        <mat-grid-tile [routerLink]="['info']" (click)="appSidebar.close()">
           API info
         </mat-grid-tile>
       </mat-grid-list>
@@ -84,11 +84,11 @@
   </mat-sidenav-container>
 
   <mat-toolbar color="primary" fxFlex="0 1 auto">
-    <button mat-icon-button (click)="appSidenav.toggle()">
-      <mat-icon title="open sidenav" *ngIf="(sidenavOpened$ | async) === false">
+    <button mat-icon-button (click)="appSidebar.toggle()">
+      <mat-icon title="open sidenav" *ngIf="(sidebarOpened$ | async) === false">
         flip_to_front
       </mat-icon>
-      <mat-icon title="open sidenav" *ngIf="sidenavOpened$ | async">
+      <mat-icon title="open sidenav" *ngIf="sidebarOpened$ | async">
         flip_to_back
       </mat-icon>
     </button>

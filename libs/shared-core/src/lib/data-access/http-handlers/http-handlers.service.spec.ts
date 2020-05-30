@@ -138,7 +138,7 @@ describe('HttpHandlersService', () => {
 
   it('pipeGraphQLRequest should check error if 401 status', async(() => {
     const q$ = cold('---#|', null, { networkError: { status: EHTTP_STATUS.BAD_REQUEST } });
-    service.pipeGraphQLRequest(q$).subscribe(
+    void service.pipeGraphQLRequest(q$).subscribe(
       data => {
         console.error('pipeGraphQLRequest, data should not be called', data);
       },

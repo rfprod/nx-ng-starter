@@ -13,7 +13,7 @@ module.exports = {
     'plugin:prettier/recommended',
   ],
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2020,
     sourceType: 'module',
     project: './tsconfig.json',
   },
@@ -29,7 +29,7 @@ module.exports = {
 
   rules: {
     '@typescript-eslint/await-thenable': 'error',
-    '@typescript-eslint/ban-ts-ignore': 'warn',
+    '@typescript-eslint/ban-ts-ignore': 'error',
     '@typescript-eslint/ban-types': [
       'error',
       {
@@ -136,7 +136,10 @@ module.exports = {
     '@typescript-eslint/no-unnecessary-type-arguments': 'error',
     '@typescript-eslint/no-unnecessary-type-assertion': ['error', { typesToIgnore: [''] }],
     '@typescript-eslint/no-unsafe-member-access': 'error',
-    '@typescript-eslint/no-unused-vars': 'off', // keep off, handled by TS compiler
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      { vars: 'all', args: 'none', ignoreRestSiblings: false },
+    ], // this is handled by TS compiler also
     '@typescript-eslint/no-use-before-define': ['error', { functions: false, classes: false }],
     '@typescript-eslint/no-explicit-any': ['error', { ignoreRestArgs: true }],
     '@typescript-eslint/no-var-requires': 'error',
@@ -158,7 +161,7 @@ module.exports = {
       { ignoreStatic: true },
     ],
     'arrow-parens': ['error', 'as-needed'],
-    'compat/compat': 'warn',
+    'compat/compat': 'error',
     'constructor-super': 'error',
     complexity: ['error', 10],
     'deprecation/deprecation': 'off', // TODO: revise and turn on
@@ -167,7 +170,7 @@ module.exports = {
     'guard-for-in': 'error',
     'max-depth': ['error', 5],
     'max-lines': ['error', { max: 1100, skipBlankLines: true }],
-    'max-lines-per-function': ['error', { max: 50, skipBlankLines: true }],
+    'max-lines-per-function': ['error', { max: 45, skipBlankLines: true }],
     'max-nested-callbacks': ['error', 4],
     'max-params': ['error', 12],
     'no-alert': 'error',
@@ -226,19 +229,19 @@ module.exports = {
     radix: 'error',
     'require-atomic-updates': 'error',
     'require-await': 'off', // handled by typescript-eslint rule
-    'rxjs/ban-observables': 'off', // TODO: turn on
-    'rxjs/ban-operators': 'off', // TODO: turn on
-    'rxjs/no-async-subscribe': 'off', // TODO: turn on
-    'rxjs/no-ignored-error': 'off', // TODO: turn on
-    'rxjs/no-ignored-observable': 'off', // TODO: turn on
-    'rxjs/no-ignored-subscribe': 'off', // keep off
-    'rxjs/no-ignored-subscription': 'off', // TODO: turn on
-    'rxjs/no-internal': 'off', // TODO: turn on
-    'rxjs/no-nested-subscribe': 'off', // TODO: turn on
-    'rxjs/no-subclass': 'error', // TODO: turn on
+    'rxjs/ban-observables': 'off', // keep off
+    'rxjs/ban-operators': 'off', // keep off
+    'rxjs/no-async-subscribe': 'error',
+    'rxjs/no-ignored-error': 'error',
+    'rxjs/no-ignored-observable': 'error',
+    'rxjs/no-ignored-subscribe': 'off',
+    'rxjs/no-ignored-subscription': 'error',
+    'rxjs/no-internal': 'error',
+    'rxjs/no-nested-subscribe': 'error',
+    'rxjs/no-subclass': 'error',
     'rxjs/no-tap': 'off', // keep off
-    'rxjs/no-exposed-subjects': 'off', // TODO: turn on
-    yoda: 'error',
+    'rxjs/no-exposed-subjects': 'error',
+    yoda: ['error', 'never'],
   },
 
   overrides: [
@@ -249,9 +252,54 @@ module.exports = {
       },
     },
     {
+      files: '**/main.ts',
+      rules: {
+        'no-console': 'off',
+      },
+    },
+    {
+      files: '**/polyfills.ts',
+      rules: {
+        '@typescript-eslint/no-unsafe-member-access': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+      },
+    },
+    {
+      files: '**/polyfills/**',
+      rules: {
+        '@typescript-eslint/no-unsafe-member-access': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+        'no-extend-native': 'off',
+        'no-bitwise': 'off',
+      },
+    },
+    {
+      files: '**/*.patch.ts',
+      rules: {
+        'compat/compat': 'off',
+      },
+    },
+    {
+      files: '**/*.mock.ts',
+      rules: {
+        'compat/compat': 'off',
+        'rxjs/no-exposed-subjects': 'off',
+      },
+    },
+    {
       files: '**/*.spec.ts',
       rules: {
+        'max-depth': ['error', 5],
         'max-lines-per-function': 'off',
+        'compat/compat': 'off',
+      },
+    },
+    {
+      files: '**/generated/**',
+      rules: {
+        'max-lines': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
+        '@typescript-eslint/no-unused-vars': 'off',
       },
     },
   ],
