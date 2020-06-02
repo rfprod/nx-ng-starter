@@ -7,15 +7,17 @@ import { UserToken } from './user-token.interface';
  */
 export class UserProfile {
   public id = '';
+
   public name: UserName = new UserName();
+
   public contacts: UserContacts = new UserContacts();
+
   public token: UserToken = new UserToken();
+
   constructor(input?: UserProfile) {
-    if (input) {
-      this.id = input.id;
-      this.name = input.name;
-      this.contacts = input.contacts;
-      this.token = input.token;
+    const keys = Boolean(input) ? Object.keys(input) : [];
+    for (const key of keys) {
+      this[key] = Boolean(input[key]) ? input[key] : this[key];
     }
   }
 }

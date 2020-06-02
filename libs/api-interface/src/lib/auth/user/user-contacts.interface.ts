@@ -3,11 +3,13 @@
  */
 export class UserContacts {
   public email = '';
+
   public phone = '';
+
   constructor(input?: UserContacts) {
-    if (input) {
-      this.email = input.email;
-      this.phone = input.phone;
+    const keys = Boolean(input) ? Object.keys(input) : [];
+    for (const key of keys) {
+      this[key] = Boolean(input[key]) ? input[key] : this[key];
     }
   }
 }

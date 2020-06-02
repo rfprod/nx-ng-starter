@@ -3,11 +3,13 @@
  */
 export class UserLoginCredentials {
   public email = '';
+
   public password = '';
+
   constructor(input?: UserLoginCredentials) {
-    if (input) {
-      this.email = input.email;
-      this.password = input.password;
+    const keys = Boolean(input) ? Object.keys(input) : [];
+    for (const key of keys) {
+      this[key] = Boolean(input[key]) ? input[key] : this[key];
     }
   }
 }

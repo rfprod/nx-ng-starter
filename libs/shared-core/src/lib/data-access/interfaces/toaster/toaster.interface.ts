@@ -36,5 +36,5 @@ export const toasterExtraClasses = (toasterType: ToastType): ToasterExtraClasses
     accent: ['accent-bg'],
     primary: ['primary-bg'],
   };
-  return extraClasses[toasterType] || [];
+  return extraClasses[toasterType] ?? [];
 };

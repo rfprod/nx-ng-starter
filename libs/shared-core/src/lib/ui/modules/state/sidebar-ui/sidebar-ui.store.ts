@@ -17,7 +17,9 @@ const sidebarUiActions = {
     sidebarOpened: false,
   },
 })
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 class SidebarUiState {
   @Selector()
   public static getSidebarUi(state: ISiedbarUiStateModel) {

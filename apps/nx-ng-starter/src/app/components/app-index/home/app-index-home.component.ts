@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MarkdownService } from '@nx-ng-starter/shared-core/data-access';
 import { ETIMEOUT } from '@nx-ng-starter/shared-core/util';
@@ -15,7 +15,7 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./app-index-home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppIndexHomeComponent implements OnDestroy {
+export class AppIndexHomeComponent {
   public readonly timer$ = timer(ETIMEOUT.INSTANT, ETIMEOUT.MEDIUM).pipe(
     map(num => `Until destoyed timer ${num}`),
     untilDestroyed(this),
@@ -33,6 +33,4 @@ export class AppIndexHomeComponent implements OnDestroy {
       '# You can use Markdown \n\n via MarkdownService, just like in this example.';
     return this.markdown.process(`${sidenavInstruction} ${markdownInstructions}`);
   }
-
-  public ngOnDestroy() {}
 }

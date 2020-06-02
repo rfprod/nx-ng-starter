@@ -63,7 +63,7 @@ export class HttpHandlersService {
    * Resolves if app is running on localhost.
    */
   public isLocalhost(): boolean {
-    return this.win.location.origin.indexOf('localhost') !== -1;
+    return this.win.location.origin.includes('localhost');
   }
 
   /**
@@ -79,6 +79,7 @@ export class HttpHandlersService {
    */
   public getGraphQLHttpHeaders(): HttpHeaders {
     return new HttpHeaders({
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       Authorization: `Token ${this.userToken}`,
     });
   }
@@ -137,7 +138,7 @@ export class HttpHandlersService {
     const uri = this.graphQlEndpoint();
     const httpLinkHandler = this.httpLink.create({ uri });
 
-    if (!linkHandler) {
+    if (!Boolean(linkHandler)) {
       linkHandler = onError((error: ErrorResponse) => {
         let resultMessage = '';
         /**
@@ -151,15 +152,17 @@ export class HttpHandlersService {
 
         const { graphQLErrors, networkError } = error;
 
-        if (graphQLErrors) {
+        if (Boolean(graphQLErrors)) {
+          // eslint-disable-next-line no-console
           console.error('Apollo linkHandler [GraphQL error]: ', graphQLErrors);
           graphQLErrors.map(({ message, extensions }) => {
             resultMessage += `[GraphQL]: ${message}`;
-            errorCode = extensions && extensions.code;
+            errorCode = extensions?.code;
           });
         }
 
-        if (networkError) {
+        if (Boolean(networkError)) {
+          // eslint-disable-next-line no-console
           console.error('Apollo linkHandler [Network error]: ', networkError);
 
           if (networkError instanceof HttpErrorResponse) {
@@ -177,7 +180,7 @@ export class HttpHandlersService {
 
         if (Boolean(errorCode)) {
           errorCodeUITranslation = this.translate.instant(`request.error.${errorCode}`);
-          if (errorCodeUITranslation.indexOf(errorCode) === -1) {
+          if (!errorCodeUITranslation.includes(errorCode)) {
             resultMessage = errorCodeUITranslation;
           }
         }
@@ -193,11 +196,12 @@ export class HttpHandlersService {
     const networkLink = split(
       ({ query }) => {
         const { name } = getMainDefinition(query);
-        return !name;
+        return !Boolean(name);
       },
       httpLinkHandler,
       createUploadLink({
         uri,
+        // eslint-disable-next-line @typescript-eslint/naming-convention
         headers: { Authorization: `Token ${this.userToken}` },
       }),
     );
@@ -211,11 +215,11 @@ export class HttpHandlersService {
    * @param res Execution result
    */
   public extractGraphQLData(res: ExecutionResult): { [key: string]: unknown } {
-    if (res.errors) {
+    if (Boolean(res.errors)) {
       // eslint-disable-next-line @typescript-eslint/no-throw-literal
       throw res.errors;
     }
-    return res.data ? res.data : res;
+    return res.data ?? res;
   }
 
   /**
@@ -286,7 +290,7 @@ export class HttpHandlersService {
       (): void => null,
       (error: { networkError: HttpErrorResponse }) => {
         const unauthorized: boolean =
-          error.networkError && error.networkError.status === EHTTP_STATUS.BAD_REQUEST;
+          Boolean(error.networkError) && error.networkError.status === EHTTP_STATUS.BAD_REQUEST;
         if (unauthorized) {
           this.checkErrorStatusAndRedirect(EHTTP_STATUS.UNAUTHORIZED);
         }

@@ -81,7 +81,7 @@ export class AppTranslationUtilsService {
   public getUserLanguagePreference(): ILangCode {
     const navLang: string = this.win.navigator.language;
     const userPreference: ILangCode =
-      navLang.match(/(ru-RU|ru)/gi) || navLang[0].match(/(ru)/gi) ? 'ru' : 'en';
+      Boolean(navLang.match(/(ru-RU|ru)/gi)) || Boolean(navLang[0].match(/(ru)/gi)) ? 'ru' : 'en';
     return userPreference;
   }
 
@@ -115,6 +115,7 @@ export class AppTranslationUtilsService {
       void this.translate.use(this.langs[langCode]);
     }
   }
+
   /**
    * Resolves if language is current based on provided language code
    * @param langCode language code

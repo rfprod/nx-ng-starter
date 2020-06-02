@@ -3,11 +3,13 @@
  */
 export class UserName {
   public first = '';
+
   public last = '';
+
   constructor(input?: UserName) {
-    if (input) {
-      this.first = input.first;
-      this.last = input.last;
+    const keys = Boolean(input) ? Object.keys(input) : [];
+    for (const key of keys) {
+      this[key] = Boolean(input[key]) ? input[key] : this[key];
     }
   }
 }

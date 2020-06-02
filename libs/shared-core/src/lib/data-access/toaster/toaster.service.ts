@@ -52,7 +52,7 @@ export class ToasterService {
    * Dismisses snackbar.
    */
   public hideToaster(): void {
-    if (this.snackBarRef) {
+    if (Boolean(this.snackBarRef)) {
       this.snackBarRef.dismiss();
     }
   }

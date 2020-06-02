@@ -21,8 +21,11 @@ export type ApiAppName = 'Nx Ng Starter' | string;
  */
 export class ApiAppEnvironment {
   public production = false;
+
   public firebase?: boolean;
+
   public appName: ApiAppName = 'Nx Ng Starter API';
+
   public envoyUrl? = 'http://localhost:8081';
 
   /**

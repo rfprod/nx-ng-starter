@@ -146,7 +146,7 @@ describe('AppTranslationUtilsService', () => {
   it('getUserLanguagePreference should work correctly', () => {
     const navLang: string = win.navigator.language;
     const userPreference: ILangCode =
-      navLang.match(/(ru-RU|ru)/gi) || navLang[0].match(/(ru)/gi) ? 'ru' : 'en';
+      Boolean(navLang.match(/(ru-RU|ru)/gi)) || Boolean(navLang[0].match(/(ru)/gi)) ? 'ru' : 'en';
     expect(service.getUserLanguagePreference()).toEqual(userPreference);
   });
 
