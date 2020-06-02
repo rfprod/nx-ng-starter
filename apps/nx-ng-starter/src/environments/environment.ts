@@ -16,7 +16,7 @@ import { WebAppEnvironment } from '@nx-ng-starter/shared-core/data-access';
 export const environment: WebAppEnvironment = {
   production: false,
   appName: 'Nx Ng Starter Client',
-  api: /localhost/.test(window.location.origin)
+  api: window.location.origin.includes('localhost')
     ? 'http://localhost:8080/api'
     : `${window.location.origin}/api`,
   envoyUrl: 'http://localhost:8081',

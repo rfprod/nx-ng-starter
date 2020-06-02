@@ -3,7 +3,9 @@
  */
 export class AppUser {
   public email = '';
+
   public admin = false;
+
   public token = '';
 
   /**

@@ -4,13 +4,15 @@ import { Observable } from 'rxjs';
 
 export class UserStateModel implements AppUser {
   public email = '';
+
   public admin = false;
+
   public token = '';
+
   constructor(input?: UserStateModel) {
-    if (input) {
-      this.email = input.email;
-      this.admin = input.admin;
-      this.token = input.token;
+    const keys = Boolean(input) ? Object.keys(input) : [];
+    for (const key of keys) {
+      this[key] = Boolean(input[key]) ? input[key] : this[key];
     }
   }
 }

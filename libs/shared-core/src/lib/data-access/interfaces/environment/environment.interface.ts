@@ -21,8 +21,11 @@ export type AppName = 'Nx Ng Starter' | string;
  */
 export class WebAppEnvironment {
   public production = false;
+
   public appName: AppName = 'Nx Ng Starter';
+
   public api = '';
+
   public envoyUrl? = 'http://localhost:8081';
 
   /**

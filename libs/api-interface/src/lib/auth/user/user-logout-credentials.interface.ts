@@ -3,9 +3,11 @@
  */
 export class UserLogoutCredentials {
   public token = '';
+
   constructor(input?: UserLogoutCredentials) {
-    if (input) {
-      this.token = input.token;
+    const keys = Boolean(input) ? Object.keys(input) : [];
+    for (const key of keys) {
+      this[key] = Boolean(input[key]) ? input[key] : this[key];
     }
   }
 }

@@ -4,13 +4,13 @@ import { BehaviorSubject, Observable, Subject } from 'rxjs';
 /**
  * Debug element instance type.
  */
-export type DebugElementComponentInstance = DebugElement['componentInstance'];
+export type TDebugElementComponentInstance = DebugElement['componentInstance'];
 
 /**
  * Setup spies function type.
  */
-export type SetupJestSpiesFor<T> = (
-  component: DebugElementComponentInstance,
+export type TSetupJestSpiesFor<T> = (
+  component: TDebugElementComponentInstance,
 ) => TComponentSpiesObject<T>;
 
 /**
@@ -48,13 +48,12 @@ export type TComponentSpiesObject<T> = {
  * @param component debug element component instance
  */
 export function setupJestSpiesFor<T>(
-  component: DebugElementComponentInstance,
+  component: TDebugElementComponentInstance,
 ): TComponentSpiesObject<T> {
   const spiesObject: TComponentSpiesObject<T> = Object.keys(component).reduce(
     (accumulator: TComponentSpiesObject<T>, key: string) => {
       let spy: TComponentSpy = null;
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      const classMember = component[key];
+      const classMember = (component as T)[key];
       /**
        * Spy on component functions.
        */

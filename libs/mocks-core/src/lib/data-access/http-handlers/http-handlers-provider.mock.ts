@@ -24,7 +24,7 @@ import { matSnackbarRefMockProvider } from '../../util/refs/snackbar-ref.mock';
 export const testingEnvironment = {
   production: false,
   appName: 'Testing Environment',
-  api: /localhost/.test(window.location.origin)
+  api: window.location.origin.includes('localhost')
     ? 'http://localhost:8080/api'
     : `${window.location.origin}/api`,
 };

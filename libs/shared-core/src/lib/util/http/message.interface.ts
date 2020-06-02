@@ -1,8 +1,10 @@
 export class Message {
   public message = '';
+
   constructor(input?: Message) {
-    if (input) {
-      this.message = input.message;
+    const keys = Boolean(input) ? Object.keys(input) : [];
+    for (const key of keys) {
+      this[key] = Boolean(input[key]) ? input[key] : this[key];
     }
   }
 }

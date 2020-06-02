@@ -131,23 +131,18 @@ describe('HttpHandlersService', () => {
     try {
       service.extractGraphQLData({ errors: [error] });
     } catch (e) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      expect(e[0]).toBe(error);
+      const errors = e as GraphQLError[];
+      expect(errors[0]).toBe(error);
     }
   });
 
   it('pipeGraphQLRequest should check error if 401 status', async(() => {
     const q$ = cold('---#|', null, { networkError: { status: EHTTP_STATUS.BAD_REQUEST } });
-    void service.pipeGraphQLRequest(q$).subscribe(
-      data => {
-        console.error('pipeGraphQLRequest, data should not be called', data);
-      },
-      _ => {
-        expect(spy.service.checkErrorStatusAndRedirect).toHaveBeenCalledWith(
-          EHTTP_STATUS.UNAUTHORIZED,
-        );
-      },
-    );
+    void service.pipeGraphQLRequest(q$).subscribe(() => {
+      expect(spy.service.checkErrorStatusAndRedirect).toHaveBeenCalledWith(
+        EHTTP_STATUS.UNAUTHORIZED,
+      );
+    });
     getTestScheduler().flush();
   }));
 
@@ -205,6 +200,7 @@ describe('HttpHandlersService', () => {
     const newHeadersObj: {
       [name: string]: string | string[];
     } = {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       Authorization: `Token ${service.userToken}`,
     };
     const newHeaders: HttpHeaders = new HttpHeaders(newHeadersObj);

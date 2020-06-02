@@ -33,6 +33,7 @@ export class GrpcApiController implements OnModuleInit {
       subEntities: [{ id: 'subid1' }],
     },
   ];
+
   private sampleService: IEntityService;
 
   constructor(@Inject(NXNGSTARTER_PACKAGE) private readonly client: ClientGrpc) {}
