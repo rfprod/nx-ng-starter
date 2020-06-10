@@ -5,7 +5,7 @@ export interface ISiedbarUiStateModel {
   sidebarOpened: boolean;
 }
 
-export type SidebarUiPayload = IActionPayload<ISiedbarUiStateModel>;
+export type TSidebarUiPayload = IActionPayload<ISiedbarUiStateModel>;
 
 export interface ISidebarUiService {
   sidebarOpened$: Observable<boolean>;

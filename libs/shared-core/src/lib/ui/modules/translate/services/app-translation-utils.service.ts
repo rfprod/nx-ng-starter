@@ -2,10 +2,10 @@ import { Inject, Injectable } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import {
-  ILangCode,
   ISupportedLanguage,
   IUiLanguagesInterface,
   IUiTranslations,
+  TLangCode,
 } from '@nx-ng-starter/shared-core/data-access';
 import { WINDOW } from '@nx-ng-starter/shared-core/util';
 import { Subject } from 'rxjs';
@@ -78,9 +78,9 @@ export class AppTranslationUtilsService {
    * For now there are only dictionaries only: English, Russian
    * Russian language is set is user preference does not include one of the supported languages.
    */
-  public getUserLanguagePreference(): ILangCode {
+  public getUserLanguagePreference(): TLangCode {
     const navLang: string = this.win.navigator.language;
-    const userPreference: ILangCode =
+    const userPreference: TLangCode =
       Boolean(navLang.match(/(ru-RU|ru)/gi)) || Boolean(navLang[0].match(/(ru)/gi)) ? 'ru' : 'en';
     return userPreference;
   }
@@ -110,7 +110,7 @@ export class AppTranslationUtilsService {
    * Uses specific language for UI.
    * @param langCode language code
    */
-  public useLanguage(langCode: ILangCode): void {
+  public useLanguage(langCode: TLangCode): void {
     if (langCode in this.langs) {
       void this.translate.use(this.langs[langCode]);
     }
@@ -120,7 +120,7 @@ export class AppTranslationUtilsService {
    * Resolves if language is current based on provided language code
    * @param langCode language code
    */
-  public isCurrentLanguage(langCode: ILangCode): boolean {
+  public isCurrentLanguage(langCode: TLangCode): boolean {
     return this.translate.currentLang === langCode;
   }
 
@@ -131,7 +131,7 @@ export class AppTranslationUtilsService {
     void this.translate.onLangChange.subscribe(
       (langChangeEvent: LangChangeEvent) => {
         this.languageChanges.next(langChangeEvent);
-        const langCode: ILangCode = langChangeEvent.lang as ILangCode;
+        const langCode: TLangCode = langChangeEvent.lang as TLangCode;
         this.setDatepickersLocale(langCode);
       },
       (): void => null,
@@ -143,7 +143,7 @@ export class AppTranslationUtilsService {
    * 'ru' if key corresponds Russian language, 'en' in all other cases.
    * @param key language key to be seleted, supported languages: en, ru
    */
-  private setDatepickersLocale(key: ILangCode): void {
+  private setDatepickersLocale(key: TLangCode): void {
     this.dateAdapter.setLocale(key);
   }
 }

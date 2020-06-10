@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { actionPayloadConstructor } from '@nx-ng-starter/shared-core/util';
 
-import { UserPayload, UserStateModel } from './user.interface';
+import { TUserPayload, UserStateModel } from './user.interface';
 
 const createAction = actionPayloadConstructor('User');
-const SetState = createAction<UserPayload>('Set state');
+const setState = createAction<TUserPayload>('Set state');
 
 @State<UserStateModel>({
   name: 'user',
@@ -39,8 +39,8 @@ class UserState {
     return state.admin;
   }
 
-  @Action(SetState)
-  public setState(ctx: StateContext<UserStateModel>, { payload }: UserPayload) {
+  @Action(setState)
+  public setState(ctx: StateContext<UserStateModel>, { payload }: TUserPayload) {
     // Reuses values from previous state if payload is partial.
     const currentState: UserStateModel = ctx.getState();
     const email = Boolean(payload.email) ? payload.email : currentState.email;
@@ -52,6 +52,6 @@ class UserState {
 }
 
 const userActions = {
-  SetState,
+  setState,
 };
 export { UserState, userActions };

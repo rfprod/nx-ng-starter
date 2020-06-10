@@ -1,10 +1,8 @@
 // TODO: remove this overrides
-/* eslint-disable max-lines-per-function */
-/* eslint-disable complexity */
 import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { HttpLink } from 'apollo-angular-link-http';
+import { HttpLink, HttpLinkHandler } from 'apollo-angular-link-http';
 import { ApolloLink, ExecutionResult, split } from 'apollo-link';
 import { ErrorResponse, onError } from 'apollo-link-error';
 import { createUploadLink } from 'apollo-upload-client';
@@ -18,7 +16,7 @@ import { HttpProgressService } from '../../ui/modules/state/http-progress/http-p
 import { UserService } from '../../ui/modules/state/user/user.service';
 import { WINDOW } from '../../util/general-purpose';
 import { EHTTP_STATUS } from '../../util/http/http-statuses.interface';
-import { APP_ENV, WebAppEnvironment } from '../interfaces';
+import { APP_ENV, WebEnvironment } from '../interfaces';
 import { ToasterService } from '../toaster/toaster.service';
 
 /**
@@ -54,7 +52,7 @@ export class HttpHandlersService {
     public readonly httpProgress: HttpProgressService,
     public readonly translate: TranslateService,
     @Inject(WINDOW) public readonly win: Window,
-    @Inject(APP_ENV) public readonly env: WebAppEnvironment,
+    @Inject(APP_ENV) public readonly env: WebEnvironment,
   ) {
     void this.userToken$.subscribe();
   }
@@ -129,71 +127,8 @@ export class HttpHandlersService {
     );
   }
 
-  /**
-   * Creates apollo link with error handler.
-   * @param errorLinkHandler custom error handler
-   */
-  public createApolloLinkFor(errorLinkHandler?: ApolloLink): ApolloLink {
-    let linkHandler: ApolloLink = errorLinkHandler;
-    const uri = this.graphQlEndpoint();
-    const httpLinkHandler = this.httpLink.create({ uri });
-
-    if (!Boolean(linkHandler)) {
-      linkHandler = onError((error: ErrorResponse) => {
-        let resultMessage = '';
-        /**
-         * Error code in uppercase, e.g. ACCESS_FORBIDDEN.
-         * Should be used as a translate service dictionary key
-         * to retrieve a localized substring for UI display.
-         * Only last error code is translated and displayed in UI.
-         */
-        let errorCode: string = null;
-        let errorCodeUITranslation: string = null;
-
-        const { graphQLErrors, networkError } = error;
-
-        if (Boolean(graphQLErrors)) {
-          // eslint-disable-next-line no-console
-          console.error('Apollo linkHandler [GraphQL error]: ', graphQLErrors);
-          graphQLErrors.map(({ message, extensions }) => {
-            resultMessage += `[GraphQL]: ${message}`;
-            errorCode = extensions?.code;
-          });
-        }
-
-        if (Boolean(networkError)) {
-          // eslint-disable-next-line no-console
-          console.error('Apollo linkHandler [Network error]: ', networkError);
-
-          if (networkError instanceof HttpErrorResponse) {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            resultMessage += networkError.error.detail;
-          } else {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            const errors: GraphQLError[] = networkError['error'].errors;
-            errors.map(({ message, extensions }) => {
-              resultMessage += `[Network]: ${message}`;
-              errorCode = extensions.code;
-            });
-          }
-        }
-
-        if (Boolean(errorCode)) {
-          errorCodeUITranslation = this.translate.instant(`request.error.${errorCode}`);
-          if (!errorCodeUITranslation.includes(errorCode)) {
-            resultMessage = errorCodeUITranslation;
-          }
-        }
-
-        if (!Boolean(resultMessage)) {
-          resultMessage = 'Graphql request error';
-        }
-
-        this.toaster.showToaster(resultMessage, 'error');
-      });
-    }
-
-    const networkLink = split(
+  private getGraphqlNetworkLink(httpLinkHandler: HttpLinkHandler, uri: string) {
+    return split(
       ({ query }) => {
         const { name } = getMainDefinition(query);
         return !Boolean(name);
@@ -205,6 +140,79 @@ export class HttpHandlersService {
         headers: { Authorization: `Token ${this.userToken}` },
       }),
     );
+  }
+
+  private getErroLinkHandler(errorLinkHandler?: ApolloLink) {
+    const linkHandler = Boolean(errorLinkHandler)
+      ? errorLinkHandler
+      : onError((error: ErrorResponse) => {
+          let resultMessage = '';
+          /**
+           * Error code in uppercase, e.g. ACCESS_FORBIDDEN.
+           * Should be used as a translate service dictionary key
+           * to retrieve a localized substring for UI display.
+           * Only last error code is translated and displayed in UI.
+           */
+          let errorCode: string = null;
+          let errorCodeUITranslation: string = null;
+
+          const { graphQLErrors, networkError } = error;
+
+          if (Boolean(graphQLErrors)) {
+            // eslint-disable-next-line no-console
+            console.error('Apollo linkHandler [GraphQL error]: ', graphQLErrors);
+            graphQLErrors.map(({ message, extensions }) => {
+              resultMessage += `[GraphQL]: ${message}`;
+              errorCode = extensions?.code;
+            });
+          }
+
+          if (Boolean(networkError)) {
+            // eslint-disable-next-line no-console
+            console.error('Apollo linkHandler [Network error]: ', networkError);
+
+            if (networkError instanceof HttpErrorResponse) {
+              resultMessage += (networkError.error as { detail: string }).detail;
+            } else {
+              const errors: GraphQLError[] = ((networkError as unknown) as {
+                error: {
+                  errors: GraphQLError[];
+                };
+              }).error.errors;
+              errors.map(({ message, extensions }) => {
+                resultMessage += `[Network]: ${message}`;
+                errorCode = extensions.code;
+              });
+            }
+          }
+
+          if (Boolean(errorCode)) {
+            errorCodeUITranslation = this.translate.instant(`request.error.${errorCode}`);
+            if (!errorCodeUITranslation.includes(errorCode)) {
+              resultMessage = errorCodeUITranslation;
+            }
+          }
+
+          if (!Boolean(resultMessage)) {
+            resultMessage = 'Graphql request error';
+          }
+
+          this.toaster.showToaster(resultMessage, 'error');
+        });
+    return linkHandler;
+  }
+
+  /**
+   * Creates apollo link with error handler.
+   * @param errorLinkHandler custom error handler
+   */
+  public createApolloLinkFor(errorLinkHandler?: ApolloLink): ApolloLink {
+    const uri = this.graphQlEndpoint();
+    const httpLinkHandler = this.httpLink.create({ uri });
+
+    const networkLink = this.getGraphqlNetworkLink(httpLinkHandler, uri);
+
+    const linkHandler: ApolloLink = this.getErroLinkHandler(errorLinkHandler);
 
     return linkHandler.concat(networkLink);
   }

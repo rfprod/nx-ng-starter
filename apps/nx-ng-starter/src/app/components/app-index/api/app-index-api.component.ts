@@ -1,9 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import {
-  APP_ENV,
-  MarkdownService,
-  WebAppEnvironment,
-} from '@nx-ng-starter/shared-core/data-access';
+import { APP_ENV, MarkdownService, WebEnvironment } from '@nx-ng-starter/shared-core/data-access';
 import { HttpApiService } from '@nx-ng-starter/shared-core/ui';
 
 /**
@@ -21,7 +17,7 @@ export class AppIndexApiComponent {
   constructor(
     private readonly markdown: MarkdownService,
     private readonly httpApi: HttpApiService,
-    @Inject(APP_ENV) private readonly env: WebAppEnvironment,
+    @Inject(APP_ENV) private readonly env: WebEnvironment,
   ) {}
 
   /**

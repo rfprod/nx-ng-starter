@@ -48,7 +48,7 @@ export class UserService {
   }
 
   private setState(payload: IUserStatePayload): Observable<UserStateModel> {
-    return this.store.dispatch(new userActions.SetState(payload)).pipe(
+    return this.store.dispatch(new userActions.setState(payload)).pipe(
       tap((state: UserStateModel) => {
         this.saveUserToLocalStorage(state);
       }),
@@ -59,12 +59,12 @@ export class UserService {
 /**
  * User service factory constructor.
  */
-export type UserServiceFactoryConstructor = (store: Store) => UserService;
+export type TUserServiceFactoryConstructor = (store: Store) => UserService;
 
 /**
  * User service factory.
  */
-export const userServiceFactory: UserServiceFactoryConstructor = (store: Store) => {
+export const userServiceFactory: TUserServiceFactoryConstructor = (store: Store) => {
   return new UserService(store);
 };
 

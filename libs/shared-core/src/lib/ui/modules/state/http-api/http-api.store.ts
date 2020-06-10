@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { actionPayloadConstructor } from '@nx-ng-starter/shared-core/util';
 
-import { HttpApiPayload, IHttpApiStateModel } from './http-api.interface';
+import { IHttpApiStateModel, THttpApiPayload } from './http-api.interface';
 
 const createAction = actionPayloadConstructor('HttpApi');
-const Ping = createAction<HttpApiPayload>('Ping');
+const ping = createAction<THttpApiPayload>('ping');
 
 @State<IHttpApiStateModel>({
   name: 'httpAPI',
@@ -27,13 +27,13 @@ class HttpApiState {
     return state.ping;
   }
 
-  @Action(Ping)
-  public ping(ctx: StateContext<IHttpApiStateModel>, { payload }: HttpApiPayload) {
+  @Action(ping)
+  public ping(ctx: StateContext<IHttpApiStateModel>, { payload }: THttpApiPayload) {
     return ctx.patchState(payload);
   }
 }
 
 const httpApiActions = {
-  Ping,
+  ping,
 };
 export { HttpApiState, httpApiActions };

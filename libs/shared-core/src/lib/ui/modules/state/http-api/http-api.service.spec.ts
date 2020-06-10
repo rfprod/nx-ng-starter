@@ -68,7 +68,7 @@ describe('HttpApiService', () => {
         };
         expect(spy.httpHandlers.pipeHttpResponse).toBeDefined();
         httpController
-          .match(_ => true)
+          .match(() => true)
           .forEach((req: TestRequest) => (!req.cancelled ? req.flush({}) : null));
       });
   }));

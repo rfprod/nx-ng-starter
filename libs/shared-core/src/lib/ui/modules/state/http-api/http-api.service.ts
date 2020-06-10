@@ -43,7 +43,7 @@ export class HttpApiService {
           const payload: IHttpApiStatePayload = {
             ping: result.message,
           };
-          void this.store.dispatch(new httpApiActions.Ping(payload));
+          void this.store.dispatch(new httpApiActions.ping(payload));
         }),
       );
       return this.httpHandlers.pipeHttpResponse<Message>(observable);
@@ -62,7 +62,7 @@ export class HttpApiService {
 /**
  * Http API service factory constructor.
  */
-export type HttpApiServiceFactoryConstructor = (
+export type THttpApiServiceFactoryConstructor = (
   store: Store,
   httpClient: HttpClient,
   httpHandlers: HttpHandlersService,
@@ -71,7 +71,7 @@ export type HttpApiServiceFactoryConstructor = (
 /**
  * Http API service factory.
  */
-export const httpApiServiceFactory: HttpApiServiceFactoryConstructor = (
+export const httpApiServiceFactory: THttpApiServiceFactoryConstructor = (
   store: Store,
   httpClient: HttpClient,
   httpHandlers: HttpHandlersService,

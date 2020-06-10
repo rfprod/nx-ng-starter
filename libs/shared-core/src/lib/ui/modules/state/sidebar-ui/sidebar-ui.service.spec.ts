@@ -12,7 +12,7 @@ describe('SidebarUiService', () => {
   beforeEach(async(() => {
     void TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
-      .then(_ => {
+      .then(() => {
         service = TestBed.inject(SidebarUiService);
       });
   }));

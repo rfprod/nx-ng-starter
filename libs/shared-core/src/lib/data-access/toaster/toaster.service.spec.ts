@@ -2,7 +2,7 @@ import { async, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
 
-import { ToastType } from '../interfaces/toaster/toaster.interface';
+import { TToastType } from '../interfaces/toaster/toaster.interface';
 import { ToasterService } from './toaster.service';
 
 describe('ToasterService', () => {
@@ -68,7 +68,7 @@ describe('ToasterService', () => {
   it('showToaster should call snackBar.open with proper options depending on supplied arguments', () => {
     const defaultDuration = 7000;
     const duration = 2000;
-    const toastType: ToastType = 'prmiary' as ToastType;
+    const toastType: TToastType = 'prmiary' as TToastType;
     service.showToaster('message', toastType, defaultDuration);
     let spyCalls = spy.snackBar.open.mock.calls.length - 1;
     expect(spy.snackBar.open.mock.calls[spyCalls]).toEqual([

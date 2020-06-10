@@ -9,7 +9,7 @@ export interface IHttpProgressStatePayload {
   mainView?: boolean;
 }
 
-export type HttpProgressPayload = IActionPayload<IHttpProgressStatePayload>;
+export type THttpProgressPayload = IActionPayload<IHttpProgressStatePayload>;
 
 export interface IHttpProgressObservableOutput {
   all$: Observable<IHttpProgressStateModel>;

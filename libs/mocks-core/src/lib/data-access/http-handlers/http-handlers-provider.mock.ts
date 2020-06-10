@@ -6,7 +6,7 @@ import {
   HttpHandlersService,
   ToasterService,
   toasterServiceProvider,
-  WebAppEnvironment,
+  WebEnvironment,
 } from '@nx-ng-starter/shared-core/data-access';
 import {
   HttpProgressService,
@@ -56,7 +56,7 @@ export const httpHandlersProviders: Provider[] = [
       progress: HttpProgressService,
       translate: TranslateService,
       win: Window,
-      env: WebAppEnvironment,
+      env: WebEnvironment,
     ) => new HttpHandlersService(user, toaster, httpLink, progress, translate, win, env),
     deps: [
       UserService,

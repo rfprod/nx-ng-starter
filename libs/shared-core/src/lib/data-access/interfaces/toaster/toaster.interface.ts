@@ -1,34 +1,34 @@
 /**
  * Toaster type.
  */
-export type ToastType = 'error' | 'success' | 'warn' | 'accent' | 'primary';
+export type TToastType = 'error' | 'success' | 'warn' | 'accent' | 'primary';
 
 /**
  * Toaster extra class.
  */
-export type ToasterExtraClass = 'error-bg' | 'success-bg' | 'warn-bg' | 'accent-bg' | 'primary-bg';
+export type TToasterExtraClass = 'error-bg' | 'success-bg' | 'warn-bg' | 'accent-bg' | 'primary-bg';
 
 /**
  * Toaster extra classes.
  */
-export type ToasterExtraClasses = ToasterExtraClass[];
+export type TToasterExtraClasses = TToasterExtraClass[];
 
 /**
  * Toaster classes object.
  */
 export interface IToasterExtraClassesObj {
-  error: ToasterExtraClasses;
-  success: ToasterExtraClasses;
-  warn: ToasterExtraClasses;
-  accent: ToasterExtraClasses;
-  primary: ToasterExtraClasses;
+  error: TToasterExtraClasses;
+  success: TToasterExtraClasses;
+  warn: TToasterExtraClasses;
+  accent: TToasterExtraClasses;
+  primary: TToasterExtraClasses;
 }
 
 /**
  * Returns extra classes for toaster depending on provided toaster type.
  * @param toasterType toaster type
  */
-export const toasterExtraClasses = (toasterType: ToastType): ToasterExtraClasses => {
+export const toasterExtraClasses = (toasterType: TToastType): TToasterExtraClasses => {
   const extraClasses: IToasterExtraClassesObj = {
     error: ['error-bg'],
     success: ['success-bg'],

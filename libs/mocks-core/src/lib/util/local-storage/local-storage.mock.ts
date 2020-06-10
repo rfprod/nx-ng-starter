@@ -11,7 +11,6 @@ export class LocalStorageMock {
   }
 
   public removeItem(key: string): void {
-    // eslint-disable-next-line no-undefined
-    this[key] = undefined;
+    this[key] = void 0;
   }
 }

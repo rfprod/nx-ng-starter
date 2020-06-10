@@ -23,7 +23,7 @@ export interface IUserStatePayload {
   token?: string;
 }
 
-export type UserPayload = IActionPayload<IUserStatePayload>;
+export type TUserPayload = IActionPayload<IUserStatePayload>;
 
 export interface IUserObservableOutput {
   model$: Observable<UserStateModel>;
