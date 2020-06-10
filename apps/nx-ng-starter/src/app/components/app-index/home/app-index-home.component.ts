@@ -10,7 +10,7 @@ import { map } from 'rxjs/operators';
  */
 @UntilDestroy()
 @Component({
-  selector: 'nx-ng-starter-app-index-home',
+  selector: 'app-index-home',
   templateUrl: './app-index-home.component.html',
   styleUrls: ['./app-index-home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

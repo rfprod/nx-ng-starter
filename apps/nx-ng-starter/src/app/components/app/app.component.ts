@@ -8,7 +8,7 @@ import { SidebarUiService } from '@nx-ng-starter/shared-core/ui';
  * Application root component.
  */
 @Component({
-  selector: 'nx-ng-starter-root',
+  selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -138,11 +138,14 @@ describe('HttpHandlersService', () => {
 
   it('pipeGraphQLRequest should check error if 401 status', async(() => {
     const q$ = cold('---#|', null, { networkError: { status: EHTTP_STATUS.BAD_REQUEST } });
-    void service.pipeGraphQLRequest(q$).subscribe(() => {
-      expect(spy.service.checkErrorStatusAndRedirect).toHaveBeenCalledWith(
-        EHTTP_STATUS.UNAUTHORIZED,
-      );
-    });
+    void service.pipeGraphQLRequest(q$).subscribe(
+      () => null,
+      () => {
+        expect(spy.service.checkErrorStatusAndRedirect).toHaveBeenCalledWith(
+          EHTTP_STATUS.UNAUTHORIZED,
+        );
+      },
+    );
     getTestScheduler().flush();
   }));
 

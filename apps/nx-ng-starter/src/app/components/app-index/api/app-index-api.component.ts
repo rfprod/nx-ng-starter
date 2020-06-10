@@ -6,7 +6,7 @@ import { HttpApiService } from '@nx-ng-starter/shared-core/ui';
  * Application index api component.
  */
 @Component({
-  selector: 'nx-ng-starter-app-index-api',
+  selector: 'app-index-api',
   templateUrl: './app-index-api.component.html',
   styleUrls: ['./app-index-api.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

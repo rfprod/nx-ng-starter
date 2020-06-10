@@ -6,11 +6,11 @@ import { getAppIndex, getAppRoot, getToolbar } from '../support/app.po';
 describe('nx-ng-starter', () => {
   beforeEach(() => cy.visit('/'));
 
-  it('should have one nx-ng-starter-root html element', () => {
+  it('should have one app-root html element', () => {
     getAppRoot().should('have.length', ECOUNTER.ONE);
   });
 
-  it('should have one nx-ng-starter-app-index html element', () => {
+  it('should have one app-index html element', () => {
     getAppIndex().should('have.length', ECOUNTER.ONE);
   });
 
