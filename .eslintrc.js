@@ -63,7 +63,7 @@ module.exports = {
       { default: ['static-field', 'instance-field', 'static-method', 'instance-method'] },
     ],
     '@typescript-eslint/naming-convention': [
-      'error', // TODO: refactor sources and turn on error; rule reference https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/naming-convention.md
+      'error', // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/naming-convention.md
       {
         selector: 'default',
         format: ['camelCase'],
@@ -180,7 +180,7 @@ module.exports = {
     '@typescript-eslint/no-unnecessary-type-arguments': 'error',
     '@typescript-eslint/no-unnecessary-type-assertion': ['error', { typesToIgnore: [''] }],
     '@typescript-eslint/no-unnecessary-boolean-literal-compare': 'error',
-    '@typescript-eslint/no-unsafe-member-access': 'error', // TODO: refactor sources, and switch to error
+    '@typescript-eslint/no-unsafe-member-access': 'error',
     '@typescript-eslint/no-unused-vars': [
       'error',
       { vars: 'all', args: 'none', ignoreRestSiblings: false },
@@ -190,10 +190,7 @@ module.exports = {
       'error',
       { functions: false, classes: false /* decorator options become unusable if set to true */ },
     ],
-    '@typescript-eslint/no-explicit-any': [
-      'error', // TODO: refactor sources, and switch to error
-      { ignoreRestArgs: true },
-    ],
+    '@typescript-eslint/no-explicit-any': ['error', { ignoreRestArgs: true }],
     '@typescript-eslint/no-var-requires': 'error',
     '@typescript-eslint/prefer-function-type': 'error',
     '@typescript-eslint/prefer-readonly': ['error'],
@@ -204,11 +201,11 @@ module.exports = {
         checkParameterProperties: false,
       },
     ],
-    '@typescript-eslint/prefer-optional-chain': 'error', // TODO: switch to error
+    '@typescript-eslint/prefer-optional-chain': 'error',
     '@typescript-eslint/prefer-nullish-coalescing': [
       'error',
       { ignoreConditionalTests: true, ignoreMixedLogicalExpressions: true },
-    ], // TODO: turn on
+    ],
     '@typescript-eslint/promise-function-async': 'off', // keep off
     '@typescript-eslint/require-await': 'off', // keep off
     '@typescript-eslint/restrict-plus-operands': 'error',
