@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { actionPayloadConstructor } from '@nx-ng-starter/shared-core/util';
 
-import { HttpProgressPayload, IHttpProgressStateModel } from './http-progress.interface';
+import { IHttpProgressStateModel, THttpProgressPayload } from './http-progress.interface';
 
 const createAction = actionPayloadConstructor('HttpProgress');
-const StartProgress = createAction<HttpProgressPayload>('Start');
-const StopProgress = createAction<HttpProgressPayload>('Stop');
+const startProgress = createAction<THttpProgressPayload>('Start');
+const stopProgress = createAction<THttpProgressPayload>('Stop');
 
 @State<IHttpProgressStateModel>({
   name: 'httpProgress',
@@ -28,25 +28,25 @@ class HttpProgressState {
     return state.mainView;
   }
 
-  @Action(StartProgress)
+  @Action(startProgress)
   public startProgress(
     ctx: StateContext<IHttpProgressStateModel>,
-    { payload }: HttpProgressPayload,
+    { payload }: THttpProgressPayload,
   ) {
     return ctx.patchState(payload);
   }
 
-  @Action(StopProgress)
+  @Action(stopProgress)
   public stopProgress(
     ctx: StateContext<IHttpProgressStateModel>,
-    { payload }: HttpProgressPayload,
+    { payload }: THttpProgressPayload,
   ) {
     return ctx.patchState(payload);
   }
 }
 
 const httpProgressActions = {
-  StartProgress,
-  StopProgress,
+  startProgress,
+  stopProgress,
 };
 export { HttpProgressState, httpProgressActions };

@@ -12,10 +12,10 @@ export class SidebarUiService {
   constructor(private readonly store: Store) {}
 
   public open() {
-    return this.store.dispatch(new sidebarUiActions.SetSidebarUiState({ sidebarOpened: true }));
+    return this.store.dispatch(new sidebarUiActions.setSidebarUiState({ sidebarOpened: true }));
   }
 
   public close() {
-    return this.store.dispatch(new sidebarUiActions.SetSidebarUiState({ sidebarOpened: false }));
+    return this.store.dispatch(new sidebarUiActions.setSidebarUiState({ sidebarOpened: false }));
   }
 }

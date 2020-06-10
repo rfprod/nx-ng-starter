@@ -1,16 +1,12 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import {
-  APP_ENV,
-  MarkdownService,
-  WebAppEnvironment,
-} from '@nx-ng-starter/shared-core/data-access';
+import { APP_ENV, MarkdownService, WebEnvironment } from '@nx-ng-starter/shared-core/data-access';
 import { HttpApiService } from '@nx-ng-starter/shared-core/ui';
 
 /**
  * Application index api component.
  */
 @Component({
-  selector: 'nx-ng-starter-app-index-api',
+  selector: 'app-index-api',
   templateUrl: './app-index-api.component.html',
   styleUrls: ['./app-index-api.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,7 +17,7 @@ export class AppIndexApiComponent {
   constructor(
     private readonly markdown: MarkdownService,
     private readonly httpApi: HttpApiService,
-    @Inject(APP_ENV) private readonly env: WebAppEnvironment,
+    @Inject(APP_ENV) private readonly env: WebEnvironment,
   ) {}
 
   /**

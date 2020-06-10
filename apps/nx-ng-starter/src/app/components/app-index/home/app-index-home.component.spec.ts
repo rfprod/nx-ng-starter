@@ -52,12 +52,12 @@ describe('AppIndexHomeComponent', () => {
         };
         expect(spy.service.process).toBeDefined();
         expect(spy.component).toBeDefined();
+        (component as any).timer$ = null;
+        fixture.detectChanges();
       });
   }));
 
   it('should be defined', () => {
-    fixture.detectChanges();
     expect(component).toBeDefined();
-    component.ngOnDestroy();
   });
 });

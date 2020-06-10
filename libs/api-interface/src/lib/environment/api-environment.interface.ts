@@ -3,7 +3,7 @@ import { Provider } from '@nestjs/common';
 /**
  * Application environment constructor options interface.
  */
-export interface IApiAppEnvironmentConstructorOptions {
+export interface IApiEnvironmentConstructorOptions {
   production?: boolean;
   firebase?: boolean;
   appName?: string;
@@ -13,18 +13,18 @@ export interface IApiAppEnvironmentConstructorOptions {
 /**
  * Application name type.
  */
-export type ApiAppName = 'Nx Ng Starter' | string;
+export type TApiAppName = 'Nx Ng Starter' | string;
 
 /**
  * Application environment.
  * By default generates dev environment.
  */
-export class ApiAppEnvironment {
+export class ApiEnvironment {
   public production = false;
 
   public firebase?: boolean;
 
-  public appName: ApiAppName = 'Nx Ng Starter API';
+  public appName: TApiAppName = 'Nx Ng Starter API';
 
   public envoyUrl? = 'http://localhost:8081';
 
@@ -33,7 +33,7 @@ export class ApiAppEnvironment {
    * By default generates dev environment.
    * @param options app env constructor options
    */
-  constructor(options: IApiAppEnvironmentConstructorOptions = {}) {
+  constructor(options: IApiEnvironmentConstructorOptions = {}) {
     if ('production' in options) {
       this.production = options.production;
     }
@@ -56,5 +56,5 @@ export const APP_ENV = 'API_ENV';
 
 export const apiAppEnvProvider: Provider = {
   provide: APP_ENV,
-  useFactory: () => new ApiAppEnvironment(),
+  useFactory: () => new ApiEnvironment(),
 };

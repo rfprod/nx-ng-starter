@@ -9,7 +9,7 @@ import {
   APP_ENV,
   sharedCoreModuleProviders,
   SharedCoreServicesModule,
-  WebAppEnvironment,
+  WebEnvironment,
 } from './data-access';
 import {
   AppTranslateModule,
@@ -59,7 +59,7 @@ export class SharedCoreModule {
    * Provides services.
    * @param environment application environment, if omitted default environment will be provided.
    */
-  public static forRoot(environment?: WebAppEnvironment): ModuleWithProviders<SharedCoreModule> {
+  public static forRoot(environment?: WebEnvironment): ModuleWithProviders<SharedCoreModule> {
     return {
       ngModule: SharedCoreModule,
       providers: [

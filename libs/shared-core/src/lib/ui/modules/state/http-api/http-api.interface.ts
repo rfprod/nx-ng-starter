@@ -9,7 +9,7 @@ export interface IHttpApiStatePayload {
   ping?: string;
 }
 
-export type HttpApiPayload = IActionPayload<IHttpApiStatePayload>;
+export type THttpApiPayload = IActionPayload<IHttpApiStatePayload>;
 
 export interface IHttpApiObservableOutput {
   all$: Observable<IHttpApiStateModel>;

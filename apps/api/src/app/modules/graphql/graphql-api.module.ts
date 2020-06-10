@@ -1,6 +1,6 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { GqlModuleOptions, GraphQLModule } from '@nestjs/graphql';
-import { ApiAppEnvironment, DateScalar } from '@nx-ng-starter/api-interface';
+import { ApiEnvironment, DateScalar } from '@nx-ng-starter/api-interface';
 
 import { GqlMatcompModule } from './matcomp/matcomp.module';
 
@@ -11,7 +11,7 @@ export const gqlApiModuleProviders: Provider[] = [DateScalar];
   providers: [...gqlApiModuleProviders],
 })
 export class GqlApiModule {
-  public static forRoot(environment: ApiAppEnvironment): DynamicModule {
+  public static forRoot(environment: ApiEnvironment): DynamicModule {
     const gqlOptions: GqlModuleOptions = {
       path: '/api/graphql',
       include: [GqlMatcompModule],

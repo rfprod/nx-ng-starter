@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { actionPayloadConstructor } from '@nx-ng-starter/shared-core/util';
 
-import { ISiedbarUiStateModel, SidebarUiPayload } from './sidebar-ui.interface';
+import { ISiedbarUiStateModel, TSidebarUiPayload } from './sidebar-ui.interface';
 
 const createAction = actionPayloadConstructor('SidebarUI');
-const SetSidebarUiState = createAction<SidebarUiPayload>('Set Sidebar UI state');
+const setSidebarUiState = createAction<TSidebarUiPayload>('Set Sidebar UI state');
 
 const sidebarUiActions = {
-  SetSidebarUiState,
+  setSidebarUiState,
 };
 
 @State<ISiedbarUiStateModel>({
@@ -31,8 +31,11 @@ class SidebarUiState {
     return state.sidebarOpened;
   }
 
-  @Action(SetSidebarUiState)
-  public setSidebarUiState(ctx: StateContext<ISiedbarUiStateModel>, { payload }: SidebarUiPayload) {
+  @Action(setSidebarUiState)
+  public setSidebarUiState(
+    ctx: StateContext<ISiedbarUiStateModel>,
+    { payload }: TSidebarUiPayload,
+  ) {
     return ctx.patchState(payload);
   }
 }

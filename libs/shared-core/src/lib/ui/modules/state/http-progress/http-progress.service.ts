@@ -27,10 +27,10 @@ export class HttpProgressService {
       stop: () => this.stopProgress(this.newHttpProgressState(false)),
       tapStopperObservable: <Any>() => {
         return tap<Any>(
-          _ => {
+          () => {
             this.handlers.mainView.stop();
           },
-          _ => {
+          () => {
             this.handlers.mainView.stop();
           },
         );
@@ -56,19 +56,19 @@ export class HttpProgressService {
 
   private startProgress(payload: Partial<IHttpProgressStatePayload>) {
     this.attachIndicator();
-    return this.store.dispatch(new httpProgressActions.StartProgress(payload));
+    return this.store.dispatch(new httpProgressActions.startProgress(payload));
   }
 
   private stopProgress(payload: Partial<IHttpProgressStatePayload>) {
     this.detachIndicator();
-    return this.store.dispatch(new httpProgressActions.StopProgress(payload));
+    return this.store.dispatch(new httpProgressActions.stopProgress(payload));
   }
 }
 
 /**
  * Http progress service factory constructor.
  */
-export type HttpProgressServiceFactoryConstructor = (
+export type THttpProgressServiceFactoryConstructor = (
   store: Store,
   overlay: Overlay,
 ) => HttpProgressService;
@@ -76,7 +76,7 @@ export type HttpProgressServiceFactoryConstructor = (
 /**
  * Http progress service factory.
  */
-export const httpProgressServiceFactory: HttpProgressServiceFactoryConstructor = (
+export const httpProgressServiceFactory: THttpProgressServiceFactoryConstructor = (
   store: Store,
   overlay: Overlay,
 ) => {

@@ -13,7 +13,7 @@ module.exports = {
   transform: {
     '^.+\\.(ts|js|html)$': 'ts-jest',
   },
-  transformIgnorePatterns: ['node_modules/(?!@ngxs)'],
+  transformIgnorePatterns: ['node_modules/(?!@ngxs|simple-git)'],
   moduleFileExtensions: ['ts', 'html', 'js', 'json'],
   resolver: '@nrwl/jest/plugins/resolver',
   coverageReporters: ['html'],

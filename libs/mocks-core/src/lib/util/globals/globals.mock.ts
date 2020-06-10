@@ -1,5 +1,3 @@
-/* eslint-disable compat/compat */
-
 function setupGlobalFetchMock() {
   Object.defineProperty(global, 'fetch', {
     value: jest.fn(async () => {

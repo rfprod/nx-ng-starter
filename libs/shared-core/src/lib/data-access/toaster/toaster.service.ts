@@ -1,7 +1,7 @@
 import { Injectable, Provider } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 
-import { ToasterExtraClasses, toasterExtraClasses, ToastType } from '../interfaces';
+import { toasterExtraClasses, TToasterExtraClasses, TToastType } from '../interfaces';
 
 /**
  * Toaster service for user feedback.
@@ -37,10 +37,10 @@ export class ToasterService {
    */
   public showToaster(
     message: string,
-    type: ToastType = 'primary',
+    type: TToastType = 'primary',
     duration: number = this.defaultDuration,
   ): void {
-    const ec: ToasterExtraClasses = toasterExtraClasses(type);
+    const ec: TToasterExtraClasses = toasterExtraClasses(type);
     this.snackBarRef = this.snackBar.open(message, null, {
       panelClass: ec,
       verticalPosition: 'bottom',

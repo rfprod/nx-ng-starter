@@ -1,4 +1,4 @@
-import { ApiAppEnvironment } from '@nx-ng-starter/api-interface';
+import { ApiEnvironment } from '@nx-ng-starter/api-interface';
 
 /**
  * Development environment variables.
@@ -6,7 +6,7 @@ import { ApiAppEnvironment } from '@nx-ng-starter/api-interface';
  * `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
  * The list of file replacements can be found in `angular.json`.
  */
-export const environment: ApiAppEnvironment = {
+export const environment: ApiEnvironment = {
   production: false,
   appName: 'Nx Ng Starter API',
 };

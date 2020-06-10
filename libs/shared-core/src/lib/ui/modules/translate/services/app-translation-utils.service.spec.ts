@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { async, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { DateAdapter } from '@angular/material/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
@@ -8,9 +6,9 @@ import { WINDOW } from '@nx-ng-starter/shared-core/util';
 import { Subject } from 'rxjs';
 
 import {
-  ILangCode,
   ISupportedLanguage,
   IUiLanguagesInterface,
+  TLangCode,
 } from '../../../../data-access/index';
 import { CustomMaterialModule } from '../../custom-material/custom-material.module';
 import { AppTranslateModule } from '../app-translate.module';
@@ -145,7 +143,7 @@ describe('AppTranslationUtilsService', () => {
 
   it('getUserLanguagePreference should work correctly', () => {
     const navLang: string = win.navigator.language;
-    const userPreference: ILangCode =
+    const userPreference: TLangCode =
       Boolean(navLang.match(/(ru-RU|ru)/gi)) || Boolean(navLang[0].match(/(ru)/gi)) ? 'ru' : 'en';
     expect(service.getUserLanguagePreference()).toEqual(userPreference);
   });
@@ -186,7 +184,7 @@ describe('AppTranslationUtilsService', () => {
   });
 
   it('isCurrentLanguage should resolve is language is current by its code', () => {
-    const curLang: ILangCode = translate.currentLang as ILangCode;
+    const curLang: TLangCode = translate.currentLang as TLangCode;
     expect(service.isCurrentLanguage(null)).toBeFalsy();
     expect(service.isCurrentLanguage(curLang)).toBeTruthy();
   });
