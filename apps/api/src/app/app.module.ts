@@ -11,11 +11,7 @@ import { GrpcApiModule } from './modules/grpc/grpc-api.module';
  * Root API application module.
  */
 @Module({
-  imports: [
-    AuthModule,
-    GqlApiModule.forRoot(environment),
-    !environment.firebase ? GrpcApiModule : null,
-  ],
+  imports: [AuthModule, GqlApiModule.forRoot(environment), GrpcApiModule],
   providers: [
     {
       provide: APP_ENV,

@@ -14,7 +14,7 @@ import {
   UserService,
   userServiceProvider,
 } from '@nx-ng-starter/shared-core/ui';
-import { WINDOW } from '@nx-ng-starter/shared-core/util';
+import { getWindow, WINDOW } from '@nx-ng-starter/shared-core/util';
 import { HttpLink } from 'apollo-angular-link-http';
 
 import { dialogRefMockProvider } from '../../util/refs/dialog-ref.mock';
@@ -33,7 +33,7 @@ export const testingEnvironment = {
  * Http handlers provider mock.
  */
 export const httpHandlersProviders: Provider[] = [
-  { provide: WINDOW, useValue: window },
+  { provide: WINDOW, useFactory: getWindow },
   HttpLink,
   TranslateService,
   userServiceProvider,

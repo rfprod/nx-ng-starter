@@ -15,11 +15,12 @@ exitWithError() {
 ##
 # Reports usage error.
 ##
-reportUsageError() {
+reportUsage() {
   local TITLE="<< USAGE >>"
   printf "
     ${LIGHT_BLUE}%s\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh${DEFAULT} - build all apps
+    ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh${DEFAULT} - print usage
+    ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh dev${DEFAULT} - build all apps in development mode
     ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh prod${DEFAULT} - build all apps in production mode
     ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh prod api${DEFAULT} - build API app in production mode
     ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh prod nx-ng-starter${DEFAULT} - build Nx Ng Starter app in production mode
@@ -63,6 +64,17 @@ buildAllProd() {
 }
 
 ##
+# Builds all dists in production mode.
+##
+buildAllDev() {
+  local TITLE="<< BUILDING ALL apps DEVELOPMENT mode >>"
+  printf "
+    ${LIGHT_BLUE}%s
+    ${DEFAULT}\n\n" "$TITLE"
+  npm run build:all
+}
+
+##
 # Generates documentation with compodoc.
 ##
 generateDocumentation() {
@@ -80,7 +92,9 @@ generateChangelog() {
 # Building control flow.
 ##
 if [ $# -lt 1 ]; then
-  reportUsageError
+  reportUsage
+elif [ "$1" = "dev" ]; then
+  buildAllDev
 elif [ "$1" = "prod" ]; then
   # build project
   if [ "$2" = "api" ]; then
@@ -96,5 +110,5 @@ elif [ "$1" = "prod" ]; then
     generateChangelog
   fi
 else
-  reportUsageError
+  reportUsage
 fi

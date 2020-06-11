@@ -384,7 +384,7 @@ module.exports = {
       },
     },
     {
-      files: '**/generated/**',
+      files: ['**/generated/**', '**/grpc/**', '**/ts/**'], // generated gql definitions, and protobuf
       rules: {
         'max-lines': 'off',
         '@typescript-eslint/no-explicit-any': 'off',

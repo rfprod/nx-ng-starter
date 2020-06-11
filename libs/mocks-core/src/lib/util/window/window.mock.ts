@@ -30,15 +30,6 @@ function setupWindowResizeToMock() {
   });
 }
 
-function setupWindowCustomElementsMock() {
-  Object.defineProperty(window, 'customElements', {
-    value: {
-      define: jest.fn(),
-    },
-    writable: false,
-  });
-}
-
 function setupWindowGetComputedStyleMock() {
   Object.defineProperty(window, 'getComputedStyle', {
     value: () => {
@@ -54,7 +45,7 @@ function setupWindowGetComputedStyleMock() {
 function setupWindowCreateObjectUrlMock() {
   Object.defineProperty(window.URL, 'createObjectURL', {
     value: jest.fn(),
-    writable: false,
+    writable: true,
   });
 }
 
@@ -62,7 +53,6 @@ export function setupJsdomWindowMocks() {
   setupLocalStorageMock();
   setupWindowMatchMediaMock();
   setupWindowResizeToMock();
-  setupWindowCustomElementsMock();
   setupWindowGetComputedStyleMock();
   setupWindowCreateObjectUrlMock();
 }
