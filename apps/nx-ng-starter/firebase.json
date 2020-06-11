@@ -41,7 +41,7 @@
             "value": "no-cache"
           }
         ],
-        "source": "/(nx-ng-starter|coverage|documentation|cypress|api|graphql)"
+        "source": "/(nx-ng-starter|coverage|documentation|cypress|api)"
       }
     ],
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "**/src/**"],
@@ -89,7 +89,7 @@
       },
       {
         "destination": "/index.html",
-        "source": "**/!(*.*|api|graphq|coverage|documentation|cypress|nx-ng-starter)"
+        "source": "**/!(*.*|api|coverage|documentation|cypress|nx-ng-starter)"
       }
     ]
   }

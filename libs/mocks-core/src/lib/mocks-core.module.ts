@@ -1,5 +1,5 @@
 import { OverlayModule } from '@angular/cdk/overlay';
-import { APP_BASE_HREF } from '@angular/common';
+import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -12,8 +12,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { CustomMaterialModule } from '@nx-ng-starter/shared-core/ui';
+import { getWindow, WINDOW } from '@nx-ng-starter/shared-core/util';
 
 import { SharedCoreModule } from '../../../shared-core/src/lib/shared-core.module';
+import { getDocument } from '../../../shared-core/src/lib/util/general-purpose/factories';
 import { httpHandlersProviders, testingEnvironment } from './data-access';
 import { DummyComponent } from './ui/components/dummy.component.mock';
 import { dialogRefMockProvider } from './util/refs/dialog-ref.mock';
@@ -29,6 +31,8 @@ export const mocksCoreModuleProviders: Provider[] = [
     provide: APP_BASE_HREF,
     useValue: '/',
   },
+  { provide: WINDOW, useFactory: getWindow },
+  { provide: DOCUMENT, useFactory: getDocument },
 ];
 
 @NgModule({

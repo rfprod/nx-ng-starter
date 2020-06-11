@@ -22,8 +22,8 @@ PROTO_SOURCE_PATH=$PROJECT_ROOT/tools/proto
 ##
 # Output directories.
 ##
-OUT_DIR_GRPC=$PROJECT_ROOT/libs/proto/src/lib/interfaces/grpc
-OUT_DIR_TS=$PROJECT_ROOT/libs/proto/src/lib/interfaces/ts
+OUT_DIR_GRPC=$PROJECT_ROOT/libs/proto/src/lib/grpc
+OUT_DIR_TS=$PROJECT_ROOT/libs/proto/src/lib/ts
 
 ##
 # Exits with error.
@@ -86,7 +86,7 @@ run_protobufjs() {
   printf "
     ${LIGHT_BLUE}%s\n
     ${DEFAULT} - ${LIGHT_BLUE} path to proto: ${YELLOW}%s
-    ${DEFAULT} - ${LIGHT_BLUE} path to interfaces: ${YELLOW}%s
+    ${DEFAULT} - ${LIGHT_BLUE} output path: ${YELLOW}%s
     ${DEFAULT} - ${LIGHT_BLUE} path to proto js: ${YELLOW}%s
     ${DEFAULT} - ${LIGHT_BLUE} path to proto ts: ${YELLOW}%s
     ${DEFAULT}\n" "$TITLE" "$PROTO_SOURCE_PATH" "$OUT_DIR_TS" "$PATH_TO_PROTO_JS" "$PATH_TO_PROTO_TS"
