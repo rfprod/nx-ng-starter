@@ -29,7 +29,10 @@ module.exports = {
     '@angular-eslint/use-component-view-encapsulation': 'error',
     '@angular-eslint/use-pipe-decorator': 'error',
     '@angular-eslint/use-pipe-transform-interface': 'error',
-    '@angular-eslint/component-class-suffix': ['error', { suffixes: ['Component'] }],
+    '@angular-eslint/component-class-suffix': [
+      'error',
+      { suffixes: ['Component', 'Page', 'Modal'] },
+    ],
     '@angular-eslint/directive-class-suffix': ['error', { suffixes: ['Directive', 'ViewAdapter'] }],
     '@angular-eslint/no-host-metadata-property': 'error',
     '@angular-eslint/no-inputs-metadata-property': 'error',

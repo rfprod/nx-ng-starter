@@ -40,4 +40,8 @@ export class AppComponent {
     void this.sidebarUiService.close().subscribe();
     this.title.setTitle(this.env.appName);
   }
+
+  public swiperightHandler(event: Event): void {
+    void this.sidebarUiService.open().subscribe();
+  }
 }

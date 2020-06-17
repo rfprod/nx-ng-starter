@@ -78,7 +78,7 @@
         </mat-grid-tile>
       </mat-grid-list>
     </mat-sidenav>
-    <mat-sidenav-content>
+    <mat-sidenav-content (swiperight)="swiperightHandler($event)">
       <router-outlet></router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
