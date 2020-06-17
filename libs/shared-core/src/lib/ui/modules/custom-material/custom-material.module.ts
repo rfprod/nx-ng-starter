@@ -50,6 +50,9 @@ import {
   MatTooltipModule,
 } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
+import { HAMMER_GESTURE_CONFIG, HammerModule } from '@angular/platform-browser';
+
+import { AppHammerGestureConfig } from './hammerjs-gesture.config';
 
 /**
  * Animations require hammerjs but it is bundled via angular.json.
@@ -104,6 +107,7 @@ export const customMaterialModuleProviders: Provider[] = [
     useFactory: matMomentDateAdapterOptionsFactory,
   },
   { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
+  { provide: HAMMER_GESTURE_CONFIG, useClass: AppHammerGestureConfig },
 ];
 
 /**
@@ -160,6 +164,7 @@ export const customMaterialModuleProviders: Provider[] = [
     MatBadgeModule,
     // Cdk
     OverlayModule,
+    HammerModule,
   ],
   exports: [
     // Form controls
@@ -210,6 +215,7 @@ export const customMaterialModuleProviders: Provider[] = [
     MatBadgeModule,
     // Cdk
     OverlayModule,
+    HammerModule,
   ],
 })
 export class CustomMaterialModule {
