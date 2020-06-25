@@ -91,10 +91,10 @@ checkConfigPathAndProceed() {
       # firstly remove spaces between imports in *.ts files
       removeSpacesBetweenImports "$MODULE_PATH"
       # ts formatting with nx
-      npx nx lint "$1" "--${3}" || exitWithError
+      npx nx lint "$1" "--${3}"
       # scss formatting with stylelint
       if [ -n "${MODULE_HAS_SCSS_FILES}" ]; then
-        npx stylelint "$STYLELINT_PATHS" "--${3}" || exitWithError
+        npx stylelint "$STYLELINT_PATHS" "--${3}"
       else
         TITLE="<< INFO (stylelint) >>"
         printf "
@@ -103,7 +103,7 @@ checkConfigPathAndProceed() {
       fi
       # html formatting with prettier
       if [ -n "${MODULE_HAS_HTML_FILES}" ]; then
-        npx prettier -c --write "$PRETTIER_HTML_PATHS" || exitWithError
+        npx prettier -c --write "$PRETTIER_HTML_PATHS"
       else
         TITLE="<< INFO (prettier) >>"
         printf "

@@ -22,7 +22,7 @@ export class UserService {
     admin$: this.store.select(UserState.admin),
     isLoggedInSubscription$: this.store
       .select(UserState.model)
-      .pipe(map((model: UserStateModel) => (Boolean(model.token) ? true : false))),
+      .pipe(map((model: UserStateModel) => (model.token ? true : false))),
   };
 
   public readonly handlers: IUserHandlers = {

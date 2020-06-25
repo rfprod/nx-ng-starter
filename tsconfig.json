@@ -1,66 +1,38 @@
+/*
+  This is a "Solution Style" tsconfig.json file, and is used by editors and TypeScript’s language server to improve development experience.
+  It is not intended to be used to perform a compilation.
+
+  To learn more about this file see: https://angular.io/config/solution-tsconfig.
+*/
 {
-  "angularCompilerOptions": {
-    "enableIvy": true,
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true,
-    "annotateForClosureCompiler": true,
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "enableResourceInlining": true
-  },
-  "compileOnSave": false,
-  "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
-    "downlevelIteration": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": false,
-    "lib": ["ES2018", "DOM", "ESNext.AsyncIterable"],
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "noUnusedLocals": true,
-    "declaration": false,
-    "emitDecoratorMetadata": true,
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "importHelpers": true,
-    "noImplicitAny": true,
-    "paths": {
-      "@nx-ng-starter/api-interface": ["libs/api-interface/src/index.ts"],
-      "@nx-ng-starter/api-interface/client-gql": ["libs/api-interface/src/lib/generated/index.ts"],
-      "@nx-ng-starter/mocks-core": ["libs/mocks-core/src/index.ts"],
-      "@nx-ng-starter/mocks-core/data-access": ["libs/mocks-core/src/lib/data-access/index.ts"],
-      "@nx-ng-starter/mocks-core/ui": ["libs/mocks-core/src/lib/ui/index.ts"],
-      "@nx-ng-starter/mocks-core/util": ["libs/mocks-core/src/lib/util/index.ts"],
-      "@nx-ng-starter/proto": ["libs/proto/src/index.ts"],
-      "@nx-ng-starter/shared-core": ["libs/shared-core/src/index.ts"],
-      "@nx-ng-starter/shared-core/data-access": ["libs/shared-core/src/lib/data-access/index.ts"],
-      "@nx-ng-starter/shared-core/ui": ["libs/shared-core/src/lib/ui/index.ts"],
-      "@nx-ng-starter/shared-core/util": ["libs/shared-core/src/lib/util/index.ts"]
+  "files": [],
+  "references": [
+    {
+      "path": "./apps/api/tsconfig.app.json"
     },
-    "rootDir": ".",
-    "skipDefaultLibCheck": true,
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "target": "ES6",
-    "typeRoots": ["node_modules/@types"]
-  },
-  "exclude": [
-    "node_modules",
-    "tmp",
-    ".azure",
-    ".devops",
-    ".firebase",
-    ".vscode",
-    "coverage",
-    "dist",
-    "documentation",
-    "functions",
-    "libs/proto/src/lib/grpc",
-    "libs/proto/src/lib/ts",
-    "tools/proto",
-    "tools/shell"
+    {
+      "path": "./apps/api/tsconfig.spec.json"
+    },
+    {
+      "path": "./libs/api-interface/tsconfig.spec.json"
+    },
+    {
+      "path": "./libs/mocks-core/tsconfig.spec.json"
+    },
+    {
+      "path": "./apps/nx-ng-starter/tsconfig.app.json"
+    },
+    {
+      "path": "./apps/nx-ng-starter/tsconfig.spec.json"
+    },
+    {
+      "path": "./apps/nx-ng-starter-e2e/tsconfig.e2e.json"
+    },
+    {
+      "path": "./libs/proto/tsconfig.spec.json"
+    },
+    {
+      "path": "./libs/shared-core/tsconfig.spec.json"
+    }
   ]
 }

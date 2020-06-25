@@ -3,7 +3,6 @@
   "cli": {
     "defaultCollection": "@nrwl/angular",
     "warnings": {
-      "typescriptMismatch": false,
       "versionMismatch": false
     }
   },
@@ -228,7 +227,6 @@
                 "output": "./assets"
               }
             ],
-            "es5BrowserSupport": true,
             "index": "apps/nx-ng-starter/src/index.html",
             "main": "apps/nx-ng-starter/src/main.ts",
             "outputPath": "dist/apps/nx-ng-starter",
@@ -240,7 +238,14 @@
               "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "apps/nx-ng-starter/src/styles.scss"
             ],
-            "tsConfig": "apps/nx-ng-starter/tsconfig.app.json"
+            "tsConfig": "apps/nx-ng-starter/tsconfig.app.json",
+            "allowedCommonJsDependencies": [
+              "node_modules/hammerjs/hammer.js",
+              "google-protobuf/google/protobuf/any_pb.js",
+              "protobufjs/minimal",
+              "zen-observable",
+              "apollo-upload-client"
+            ]
           }
         },
         "extract-i18n": {

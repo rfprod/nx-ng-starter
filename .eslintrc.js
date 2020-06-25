@@ -10,15 +10,16 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: 'module',
-    project: './tsconfig.json',
+    project: './tsconfig.base.json',
   },
   extends: [
+    'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'prettier/@typescript-eslint',
     'plugin:prettier/recommended',
     'plugin:@angular-eslint/recommended',
   ],
   plugins: [
+    'prettier',
     '@typescript-eslint', // https://github.com/typescript-eslint/typescript-eslint
     '@angular-eslint', // https://github.com/angular-eslint/angular-eslint
     'deprecation', // https://github.com/gund/eslint-plugin-deprecation
@@ -266,6 +267,7 @@ module.exports = {
     'no-eval': 'error',
     'no-extend-native': 'error',
     'no-extra-parens': 'off', // handled by prettier
+    'no-extra-boolean-cast': 'off', // conflicts with strict boolean expressions
     'no-floating-decimal': 'error',
     'no-implicit-coercion': 'error',
     'no-invalid-this': 'off', // keep off

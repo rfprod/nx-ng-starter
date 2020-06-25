@@ -15,8 +15,8 @@ export class AppUser {
    * @param token user token
    */
   constructor(email?: string, admin?: boolean, token?: string) {
-    this.email = Boolean(email) ? email : this.email;
-    this.admin = Boolean(admin) ? admin : this.admin;
-    this.token = Boolean(token) ? token : this.token;
+    this.email = email ? email : this.email;
+    this.admin = admin ? admin : this.admin;
+    this.token = token ? token : this.token;
   }
 }
