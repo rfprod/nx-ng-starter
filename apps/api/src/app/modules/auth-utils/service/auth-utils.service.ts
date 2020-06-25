@@ -29,7 +29,7 @@ export class AuthUtilsService {
    * @param storedSalt stored salt
    */
   public decryptJWToken(token: string, storedSalt = ''): string {
-    const result: string = !Boolean(token) ? '' : jwt.decode(token, storedSalt, false, 'HS256'); // HS256, HS384, HS512, RS256.
+    const result: string = !token ? '' : jwt.decode(token, storedSalt, false, 'HS256'); // HS256, HS384, HS512, RS256.
     return result;
   }
 

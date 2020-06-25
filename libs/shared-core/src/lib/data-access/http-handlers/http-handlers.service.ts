@@ -186,14 +186,14 @@ export class HttpHandlersService {
             }
           }
 
-          if (Boolean(errorCode)) {
+          if (errorCode) {
             errorCodeUITranslation = this.translate.instant(`request.error.${errorCode}`);
             if (!errorCodeUITranslation.includes(errorCode)) {
               resultMessage = errorCodeUITranslation;
             }
           }
 
-          if (!Boolean(resultMessage)) {
+          if (!resultMessage) {
             resultMessage = 'Graphql request error';
           }
 
@@ -251,10 +251,10 @@ export class HttpHandlersService {
   }
 
   public getErrorMessage(error: HttpErrorResponse): string {
-    const msg: string = Boolean(error.message) ? error.message : error.error;
-    const errorMessage: string = Boolean(msg)
+    const msg: string = error.message ? error.message : error.error;
+    const errorMessage: string = msg
       ? msg
-      : Boolean(error.status)
+      : error.status
       ? `${error.status} - ${error.statusText}`
       : 'Server error';
     return errorMessage;

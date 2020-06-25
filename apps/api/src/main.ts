@@ -49,7 +49,7 @@ async function bootstrap(expressInstance: e.Express): Promise<unknown> {
     await app.startAllMicroservicesAsync();
   }
 
-  const port = Boolean(process.env.port) ? process.env.port : defaultPort;
+  const port = process.env.port ? process.env.port : defaultPort;
   await app.listen(port, () => {
     console.warn(`Listening at:
     - http://localhost:${port}/${globalPrefix}/ping
@@ -74,7 +74,7 @@ const firebaseConfig = process.env.FIREBASE_CONFIG;
 /**
  * Initialize admin and export firebase functions only in cloud environment.
  */
-if (Boolean(firebaseConfig)) {
+if (firebaseConfig) {
   admin.initializeApp();
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   exports.ping = functions.https.onRequest(server);
