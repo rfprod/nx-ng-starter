@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { actionPayloadConstructor } from '@nx-ng-starter/shared-core/util';
+import { actionPayloadConstructor } from '@nx-ng-starter/shared-util';
 
 import { TUserPayload, UserStateModel } from './user.interface';
 

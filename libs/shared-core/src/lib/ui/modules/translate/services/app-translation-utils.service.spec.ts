@@ -2,7 +2,7 @@ import { async, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { DateAdapter } from '@angular/material/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
-import { WINDOW } from '@nx-ng-starter/shared-core/util';
+import { WINDOW } from '@nx-ng-starter/shared-util';
 import { Subject } from 'rxjs';
 
 import {

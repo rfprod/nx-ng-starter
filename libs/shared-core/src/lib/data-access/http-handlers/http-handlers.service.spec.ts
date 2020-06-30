@@ -12,6 +12,7 @@ import {
   httpProgressModuleProviders,
   UserService,
 } from '@nx-ng-starter/shared-store/state';
+import { EHTTP_STATUS } from '@nx-ng-starter/shared-util';
 import { Apollo, ApolloModule } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 import { ExecutionResult } from 'apollo-link';
@@ -20,7 +21,6 @@ import { cold, getTestScheduler } from 'jasmine-marbles';
 import { Observable, of } from 'rxjs';
 
 import { AppTranslateModule, CustomMaterialModule } from '../../ui/index';
-import { EHTTP_STATUS } from '../../util/http/http-statuses.interface';
 import { ToasterService } from '../toaster/toaster.service';
 import { HttpHandlersService } from './http-handlers.service';
 

@@ -1,4 +1,4 @@
-import { IActionPayload } from '@nx-ng-starter/shared-core/util';
+import { IActionPayload } from '@nx-ng-starter/shared-util';
 import { Observable } from 'rxjs';
 
 export interface ISiedbarUiStateModel {

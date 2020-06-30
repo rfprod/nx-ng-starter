@@ -1,6 +1,6 @@
 import 'node_modules/jsdom/lib/jsdom/living/custom-elements/CustomElementRegistry-impl.js';
 
-import { ETIMEOUT } from '@nx-ng-starter/shared-core/util';
+import { ETIMEOUT } from '@nx-ng-starter/shared-util';
 
 import { setupJsdomDocumentMocks } from '../document/document.mock';
 import { setupJsdomGlobalMocks } from '../globals/globals.mock';

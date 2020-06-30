@@ -9,29 +9,32 @@
   "npmScope": "nx-ng-starter",
   "projects": {
     "api": {
-      "tags": []
+      "tags": ["scope:api", "type:application", "platform:desktop"]
     },
     "api-interface": {
-      "tags": []
+      "tags": ["scope:api", "type:data-access", "platform:desktop"]
     },
     "mocks-core": {
       "tags": ["scope:mocks-core", "type:feature", "platform:desktop"]
     },
     "nx-ng-starter": {
-      "tags": ["scope:nx-ng-starter", "type:feature", "platform:desktop"]
+      "tags": ["scope:nx-ng-starter", "type:application", "platform:desktop"]
     },
     "nx-ng-starter-e2e": {
       "implicitDependencies": ["nx-ng-starter"],
       "tags": []
     },
     "proto": {
-      "tags": ["scope:nx-ng-starter", "type:data-access"]
+      "tags": ["scope:shared", "type:data-access"]
     },
     "shared-core": {
-      "tags": ["scope:shared-core", "type:feature", "platform:desktop"]
+      "tags": ["scope:nx-ng-starter", "type:feature", "platform:desktop"]
     },
     "shared-store": {
-      "tags": []
+      "tags": ["scope:nx-ng-starter", "type:data-access", "platform:desktop"]
+    },
+    "shared-util": {
+      "tags": ["scope:nx-ng-starter", "type:util", "platform:desktop"]
     }
   },
   "tasksRunnerOptions": {

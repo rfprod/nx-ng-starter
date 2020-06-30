@@ -1,9 +1,8 @@
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
+import { getWindow, WINDOW } from '@nx-ng-starter/shared-util';
 import { HttpLink } from 'apollo-angular-link-http';
 
-import { getWindow } from '../util/general-purpose/factories';
-import { WINDOW } from '../util/general-purpose/injection-tokens';
 import { HttpHandlersService } from './http-handlers/http-handlers.service';
 import { MarkdownService } from './markdown/markdown.service';
 import { ToasterService } from './toaster/toaster.service';

@@ -7,7 +7,7 @@ import {
   IUiTranslations,
   TLangCode,
 } from '@nx-ng-starter/shared-core/data-access';
-import { WINDOW } from '@nx-ng-starter/shared-core/util';
+import { WINDOW } from '@nx-ng-starter/shared-util';
 import { Subject } from 'rxjs';
 
 import { IUiDictionary } from '../../../../data-access/interfaces/ui/ui-dictionary.interface';

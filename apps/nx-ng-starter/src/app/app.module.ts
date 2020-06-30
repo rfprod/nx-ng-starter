@@ -9,7 +9,7 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { EntityServiceClient } from '@nx-ng-starter/proto';
 import { SharedCoreModule } from '@nx-ng-starter/shared-core';
-import { getWindow, WINDOW } from '@nx-ng-starter/shared-core/util';
+import { getWindow, WINDOW } from '@nx-ng-starter/shared-util';
 
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';

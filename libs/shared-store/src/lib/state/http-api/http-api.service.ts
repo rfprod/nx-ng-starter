@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, Provider } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { HttpHandlersService } from '@nx-ng-starter/shared-core/data-access';
-import { Message } from '@nx-ng-starter/shared-core/util';
+import { Message } from '@nx-ng-starter/shared-util';
 import { tap } from 'rxjs/operators';
 
 import {
