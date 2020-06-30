@@ -16,7 +16,7 @@ import {
   sharedCoreModuleProviders,
   SharedCoreServicesModule,
   WebEnvironment,
-} from './data-access';
+} from './services';
 
 /**
  * Shared core module.

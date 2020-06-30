@@ -1,4 +1,4 @@
-import { WebEnvironment } from '@nx-ng-starter/shared-core/data-access';
+import { WebEnvironment } from '@nx-ng-starter/shared-core/services';
 
 /**
  * Development environment variables.

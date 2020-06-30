@@ -3,14 +3,14 @@ import { DateAdapter } from '@angular/material/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import {
   ISupportedLanguage,
+  IUiDictionary,
   IUiLanguagesInterface,
   IUiTranslations,
   TLangCode,
-} from '@nx-ng-starter/shared-core/data-access';
+} from '@nx-ng-starter/shared-core/services';
 import { WINDOW } from '@nx-ng-starter/shared-util';
 import { Subject } from 'rxjs';
 
-import { IUiDictionary } from '../../../../../../shared-core/src/lib/data-access/interfaces/ui/ui-dictionary.interface';
 import { RU_DICTIONARY } from '../shared/ru';
 
 /**

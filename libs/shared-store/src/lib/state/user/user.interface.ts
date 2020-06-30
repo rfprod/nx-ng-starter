@@ -1,4 +1,4 @@
-import { AppUser } from '@nx-ng-starter/shared-core/data-access';
+import { AppUser } from '@nx-ng-starter/shared-core/services';
 import { IActionPayload } from '@nx-ng-starter/shared-util';
 import { Observable } from 'rxjs';
 

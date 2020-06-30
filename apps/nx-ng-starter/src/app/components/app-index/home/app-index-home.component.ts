@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { MarkdownService } from '@nx-ng-starter/shared-core/data-access';
+import { MarkdownService } from '@nx-ng-starter/shared-core/services';
 import { ETIMEOUT } from '@nx-ng-starter/shared-util';
 import { timer } from 'rxjs';
 import { map } from 'rxjs/operators';
