@@ -402,6 +402,39 @@
         }
       },
       "sourceRoot": "libs/shared-core/src"
+    },
+    "shared-store": {
+      "projectType": "library",
+      "root": "libs/shared-store",
+      "sourceRoot": "libs/shared-store/src",
+      "prefix": "nx-ng-starter",
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/shared-store/.eslintrc",
+            "tsConfig": [
+              "libs/shared-store/tsconfig.lib.json",
+              "libs/shared-store/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/shared-store/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared-store/jest.config.js",
+            "tsConfig": "libs/shared-store/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/shared-store/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "schematics": {

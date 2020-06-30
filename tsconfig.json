@@ -1,9 +1,3 @@
-/*
-  This is a "Solution Style" tsconfig.json file, and is used by editors and TypeScript’s language server to improve development experience.
-  It is not intended to be used to perform a compilation.
-
-  To learn more about this file see: https://angular.io/config/solution-tsconfig.
-*/
 {
   "files": [],
   "references": [
@@ -14,7 +8,13 @@
       "path": "./apps/api/tsconfig.spec.json"
     },
     {
+      "path": "./libs/api-interface/tsconfig.lib.json"
+    },
+    {
       "path": "./libs/api-interface/tsconfig.spec.json"
+    },
+    {
+      "path": "./libs/mocks-core/tsconfig.lib.json"
     },
     {
       "path": "./libs/mocks-core/tsconfig.spec.json"
@@ -29,10 +29,22 @@
       "path": "./apps/nx-ng-starter-e2e/tsconfig.e2e.json"
     },
     {
+      "path": "./libs/proto/tsconfig.lib.json"
+    },
+    {
       "path": "./libs/proto/tsconfig.spec.json"
     },
     {
+      "path": "./libs/shared-core/tsconfig.lib.json"
+    },
+    {
       "path": "./libs/shared-core/tsconfig.spec.json"
+    },
+    {
+      "path": "./libs/shared-store/tsconfig.lib.json"
+    },
+    {
+      "path": "./libs/shared-store/tsconfig.spec.json"
     }
   ]
 }
