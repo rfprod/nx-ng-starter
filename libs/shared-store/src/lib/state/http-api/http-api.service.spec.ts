@@ -6,8 +6,8 @@ import {
   httpHandlersProviders,
   newTestBedMetadata,
 } from '@nx-ng-starter/mocks-core';
-import { HttpHandlersService, ToasterService } from '@nx-ng-starter/shared-core/data-access';
-import { AppTranslateModule, CustomMaterialModule } from '@nx-ng-starter/shared-core/ui';
+import { HttpHandlersService, ToasterService } from '@nx-ng-starter/shared-core/services';
+import { AppTranslateModule, CustomMaterialModule } from '@nx-ng-starter/shared-ui';
 import { Apollo, ApolloModule } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 import { of } from 'rxjs';

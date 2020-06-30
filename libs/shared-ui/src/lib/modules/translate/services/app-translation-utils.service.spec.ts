@@ -9,7 +9,7 @@ import {
   ISupportedLanguage,
   IUiLanguagesInterface,
   TLangCode,
-} from '../../../../data-access/index';
+} from '../../../../../../shared-core/src/lib/services/index';
 import { CustomMaterialModule } from '../../custom-material/custom-material.module';
 import { AppTranslateModule } from '../app-translate.module';
 import { AppTranslationUtilsService } from './app-translation-utils.service';

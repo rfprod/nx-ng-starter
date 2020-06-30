@@ -6,17 +6,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedStoreModule } from '../../../shared-store/src/lib/shared-store.module';
 import {
-  APP_ENV,
-  sharedCoreModuleProviders,
-  SharedCoreServicesModule,
-  WebEnvironment,
-} from './data-access';
-import {
   AppTranslateModule,
   appTranslateModuleProviders,
   CustomMaterialModule,
   customMaterialModuleProviders,
-} from './ui';
+} from '../../../shared-ui/src/lib';
+import {
+  APP_ENV,
+  sharedCoreModuleProviders,
+  SharedCoreServicesModule,
+  WebEnvironment,
+} from './services';
 
 /**
  * Shared core module.

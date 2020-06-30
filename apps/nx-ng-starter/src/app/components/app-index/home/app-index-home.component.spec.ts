@@ -7,7 +7,7 @@ import {
   TComponentSpiesObject,
 } from '@nx-ng-starter/mocks-core';
 import { SharedCoreModule } from '@nx-ng-starter/shared-core';
-import { MarkdownService } from '@nx-ng-starter/shared-core/data-access';
+import { MarkdownService } from '@nx-ng-starter/shared-core/services';
 
 import { AppIndexHomeComponent } from './app-index-home.component';
 

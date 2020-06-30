@@ -7,7 +7,7 @@ import {
   ToasterService,
   toasterServiceProvider,
   WebEnvironment,
-} from '@nx-ng-starter/shared-core/data-access';
+} from '@nx-ng-starter/shared-core/services';
 import {
   HttpProgressService,
   httpProgressServiceProvider,

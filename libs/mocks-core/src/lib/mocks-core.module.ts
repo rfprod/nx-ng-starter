@@ -11,7 +11,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsModule } from '@ngxs/store';
-import { CustomMaterialModule } from '@nx-ng-starter/shared-core/ui';
+import { CustomMaterialModule } from '@nx-ng-starter/shared-ui';
 import { getDocument, getWindow, WINDOW } from '@nx-ng-starter/shared-util';
 
 import { SharedCoreModule } from '../../../shared-core/src/lib/shared-core.module';
