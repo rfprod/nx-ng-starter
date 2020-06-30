@@ -1,0 +1,65 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: PR validation
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  premerge:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Yarn/npm cache
+        uses: actions/cache@v2
+        id: yarn-cache # check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        env:
+          cache-name: cached-dependencies
+        with:
+          path: |
+            ~/.npm
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Workspace cache
+        uses: actions/cache@v2
+        id: workspace-cache # check for `cache-hit` (`steps.workspace-cache.outputs.cache-hit != 'true'`)
+        env:
+          cache-name: cached-workspace
+        with:
+          path: |
+            /tmp/nx
+            /tmp/jest_rs
+          key: ${{ runner.os }}-workspace-${{ hashFiles('**/**.ts') }}
+          restore-keys: |
+            ${{ runner.os }}-workspace-
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm i -g typescript @angular/cli
+      - run: yarn install --frozen-lockfile
+      - run: yarn ngcc
+      - run: npx nx affected --target=lint --base=origin/master --head=HEAD --parallel --maxParallel=2
+      - run: npx nx affected --target=test --base=origin/master --head=HEAD --passWithNoTests --code-coverage=false --watch=false --maxWorkers=2 --ci --updateSnapshot
+      - run: npx nx build nx-ng-starter
+      - run: npx nx build api
