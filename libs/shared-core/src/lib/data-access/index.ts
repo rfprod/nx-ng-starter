@@ -1,6 +1,3 @@
-/**
- * Shared Core Library Data Access barrel.
- */
 export * from './shared-core-services.module';
 
 export * from './http-handlers/http-handlers.service';

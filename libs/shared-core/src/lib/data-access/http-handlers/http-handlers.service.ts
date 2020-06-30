@@ -2,6 +2,8 @@
 import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { HttpProgressService } from '@nx-ng-starter/shared-store/state/http-progress/http-progress.service';
+import { UserService } from '@nx-ng-starter/shared-store/state/user/user.service';
 import { HttpLink, HttpLinkHandler } from 'apollo-angular-link-http';
 import { ApolloLink, ExecutionResult, split } from 'apollo-link';
 import { ErrorResponse, onError } from 'apollo-link-error';
@@ -12,8 +14,6 @@ import memo from 'memo-decorator';
 import { MonoTypeOperatorFunction, Observable, throwError } from 'rxjs';
 import { catchError, take, tap, timeout } from 'rxjs/operators';
 
-import { HttpProgressService } from '../../ui/modules/state/http-progress/http-progress.service';
-import { UserService } from '../../ui/modules/state/user/user.service';
 import { WINDOW } from '../../util/general-purpose';
 import { EHTTP_STATUS } from '../../util/http/http-statuses.interface';
 import { APP_ENV, WebEnvironment } from '../interfaces';

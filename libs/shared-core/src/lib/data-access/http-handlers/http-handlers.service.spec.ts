@@ -8,11 +8,10 @@ import {
   newTestBedMetadata,
 } from '@nx-ng-starter/mocks-core';
 import {
-  AppTranslateModule,
   HttpProgressModule,
   httpProgressModuleProviders,
   UserService,
-} from '@nx-ng-starter/shared-core/ui';
+} from '@nx-ng-starter/shared-store/state';
 import { Apollo, ApolloModule } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 import { ExecutionResult } from 'apollo-link';
@@ -20,7 +19,7 @@ import { GraphQLError } from 'graphql';
 import { cold, getTestScheduler } from 'jasmine-marbles';
 import { Observable, of } from 'rxjs';
 
-import { CustomMaterialModule } from '../../ui/index';
+import { AppTranslateModule, CustomMaterialModule } from '../../ui/index';
 import { EHTTP_STATUS } from '../../util/http/http-statuses.interface';
 import { ToasterService } from '../toaster/toaster.service';
 import { HttpHandlersService } from './http-handlers.service';
@@ -32,7 +31,7 @@ describe('HttpHandlersService', () => {
       AppTranslateModule,
       ApolloModule,
       HttpLinkModule,
-      HttpProgressModule.forRoot(),
+      HttpProgressModule,
     ],
     providers: [...httpHandlersProviders, ...httpProgressModuleProviders],
   });
