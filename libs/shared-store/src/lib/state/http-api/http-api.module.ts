@@ -11,10 +11,10 @@ export const httpApiModuleProviders: Provider[] = [httpApiServiceProvider];
   imports: [NgxsModule.forFeature([HttpApiState])],
   providers: [...httpApiModuleProviders],
 })
-export class HttpApiModule {
-  public static forRoot(): ModuleWithProviders<HttpApiModule> {
+export class AppHttpApiModule {
+  public static forRoot(): ModuleWithProviders<AppHttpApiModule> {
     return {
-      ngModule: HttpApiModule,
+      ngModule: AppHttpApiModule,
       providers: [...httpApiModuleProviders],
     };
   }

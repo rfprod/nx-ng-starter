@@ -6,8 +6,8 @@ import {
   httpHandlersProviders,
   newTestBedMetadata,
 } from '@nx-ng-starter/mocks-core';
-import { HttpHandlersService, ToasterService } from '@nx-ng-starter/shared-core/services';
-import { AppTranslateModule, CustomMaterialModule } from '@nx-ng-starter/shared-ui';
+import { AppHttpHandlersService, AppToasterService } from '@nx-ng-starter/shared-core/services';
+import { AppMaterialModule, AppTranslateModule } from '@nx-ng-starter/shared-ui';
 import { Apollo, ApolloModule } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 import { of } from 'rxjs';
@@ -18,12 +18,12 @@ import {
 } from '../http-progress/http-progress.module';
 import { UserService } from '../user/user.service';
 import { httpApiModuleProviders } from './http-api.module';
-import { HttpApiService } from './http-api.service';
+import { AppHttpApiService } from './http-api.service';
 
-describe('HttpApiService', () => {
+describe('AppHttpApiService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     imports: [
-      CustomMaterialModule,
+      AppMaterialModule,
       AppTranslateModule,
       ApolloModule,
       HttpLinkModule,
@@ -37,10 +37,10 @@ describe('HttpApiService', () => {
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
-  let service: HttpApiService;
+  let service: AppHttpApiService;
   let apollo: Apollo;
-  let httpHandlers: HttpHandlersService;
-  let toaster: ToasterService;
+  let httpHandlers: AppHttpHandlersService;
+  let toaster: AppToasterService;
   let user: UserService;
   let spy: {
     httpHandlers: {
@@ -55,9 +55,9 @@ describe('HttpApiService', () => {
       .compileComponents()
       .then(() => {
         httpController = TestBed.inject(HttpTestingController);
-        service = TestBed.inject(HttpApiService);
-        toaster = TestBed.inject(ToasterService);
-        httpHandlers = TestBed.inject(HttpHandlersService);
+        service = TestBed.inject(AppHttpApiService);
+        toaster = TestBed.inject(AppToasterService);
+        httpHandlers = TestBed.inject(AppHttpHandlersService);
         apollo = TestBed.inject(Apollo);
         user = TestBed.inject(UserService);
         spy = {

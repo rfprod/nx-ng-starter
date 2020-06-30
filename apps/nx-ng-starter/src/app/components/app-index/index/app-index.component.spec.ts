@@ -6,7 +6,7 @@ import {
   setupJestSpiesFor,
   TComponentSpiesObject,
 } from '@nx-ng-starter/mocks-core';
-import { SharedCoreModule } from '@nx-ng-starter/shared-core';
+import { AppSharedCoreModule } from '@nx-ng-starter/shared-core';
 
 import { AppIndexComponent } from './app-index.component';
 
@@ -14,7 +14,7 @@ describe('AppIndexComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     declarations: [AppIndexComponent],
     imports: [
-      SharedCoreModule.forRoot(),
+      AppSharedCoreModule.forRoot(),
       RouterTestingModule.withRoutes([
         { path: '', component: AppIndexComponent },
         { path: '', redirectTo: '', pathMatch: 'full' },

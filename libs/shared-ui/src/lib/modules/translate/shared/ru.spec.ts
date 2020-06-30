@@ -1,5 +1,5 @@
 import { async, TestBed } from '@angular/core/testing';
-import { IUiDictionary } from '@nx-ng-starter/shared-core/services';
+import { IUiDictionary } from '@nx-ng-starter/shared-core/interfaces';
 
 import { RU, RU_DICTIONARY } from './ru';
 

@@ -3,22 +3,22 @@ import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
 import { getWindow, WINDOW } from '@nx-ng-starter/shared-util';
 import { HttpLink } from 'apollo-angular-link-http';
 
-import { HttpHandlersService } from './http-handlers/http-handlers.service';
-import { MarkdownService } from './markdown/markdown.service';
-import { ToasterService } from './toaster/toaster.service';
+import { AppHttpHandlersService } from './http-handlers/http-handlers.service';
+import { AppMarkdownService } from './markdown/markdown.service';
+import { AppToasterService } from './toaster/toaster.service';
 
 /**
  * Module providers.
  */
-export const sharedCoreModuleProviders: Provider[] = [
+export const appSharedCoreModuleProviders: Provider[] = [
   {
     provide: LocationStrategy,
     useClass: PathLocationStrategy,
   },
   { provide: WINDOW, useFactory: getWindow },
-  MarkdownService,
-  ToasterService,
-  HttpHandlersService,
+  AppMarkdownService,
+  AppToasterService,
+  AppHttpHandlersService,
   HttpLink,
 ];
 
@@ -27,14 +27,14 @@ export const sharedCoreModuleProviders: Provider[] = [
  * Contains shared core services.
  */
 @NgModule()
-export class SharedCoreServicesModule {
+export class AppSharedCoreServicesModule {
   /**
    * Provides services.
    */
-  public static forRoot(): ModuleWithProviders<SharedCoreServicesModule> {
+  public static forRoot(): ModuleWithProviders<AppSharedCoreServicesModule> {
     return {
-      ngModule: SharedCoreServicesModule,
-      providers: [...sharedCoreModuleProviders],
+      ngModule: AppSharedCoreServicesModule,
+      providers: [...appSharedCoreModuleProviders],
     };
   }
 }

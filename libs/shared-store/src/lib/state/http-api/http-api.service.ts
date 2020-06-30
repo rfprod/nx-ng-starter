@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Provider } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { HttpHandlersService } from '@nx-ng-starter/shared-core/services';
+import { AppHttpHandlersService } from '@nx-ng-starter/shared-core/services';
 import { Message } from '@nx-ng-starter/shared-util';
 import { tap } from 'rxjs/operators';
 
@@ -19,7 +19,7 @@ import { httpApiActions, HttpApiState } from './http-api.store';
 @Injectable({
   providedIn: 'root',
 })
-export class HttpApiService {
+export class AppHttpApiService {
   public readonly output: IHttpApiObservableOutput = {
     all$: this.store.select(HttpApiState.allData),
     ping$: this.store.select(HttpApiState.ping),
@@ -53,7 +53,7 @@ export class HttpApiService {
   constructor(
     private readonly store: Store,
     private readonly httpClient: HttpClient,
-    private readonly httpHandlers: HttpHandlersService,
+    private readonly httpHandlers: AppHttpHandlersService,
   ) {
     void this.handlers.ping.request().subscribe();
   }
@@ -62,28 +62,28 @@ export class HttpApiService {
 /**
  * Http API service factory constructor.
  */
-export type THttpApiServiceFactoryConstructor = (
+export type TAppHttpApiServiceFactoryConstructor = (
   store: Store,
   httpClient: HttpClient,
-  httpHandlers: HttpHandlersService,
-) => HttpApiService;
+  httpHandlers: AppHttpHandlersService,
+) => AppHttpApiService;
 
 /**
  * Http API service factory.
  */
-export const httpApiServiceFactory: THttpApiServiceFactoryConstructor = (
+export const httpApiServiceFactory: TAppHttpApiServiceFactoryConstructor = (
   store: Store,
   httpClient: HttpClient,
-  httpHandlers: HttpHandlersService,
+  httpHandlers: AppHttpHandlersService,
 ) => {
-  return new HttpApiService(store, httpClient, httpHandlers);
+  return new AppHttpApiService(store, httpClient, httpHandlers);
 };
 
 /**
  * Http API service provider.
  */
 export const httpApiServiceProvider: Provider = {
-  provide: HttpApiService,
+  provide: AppHttpApiService,
   useFactory: httpApiServiceFactory,
-  deps: [Store, HttpClient, HttpHandlersService],
+  deps: [Store, HttpClient, AppHttpHandlersService],
 };

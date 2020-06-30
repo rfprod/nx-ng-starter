@@ -15,8 +15,8 @@ import memo from 'memo-decorator';
 import { MonoTypeOperatorFunction, Observable, throwError } from 'rxjs';
 import { catchError, take, tap, timeout } from 'rxjs/operators';
 
-import { APP_ENV, WebEnvironment } from '../interfaces';
-import { ToasterService } from '../toaster/toaster.service';
+import { APP_ENV, AppWebEnvironment } from '../../interfaces';
+import { AppToasterService } from '../toaster/toaster.service';
 
 /**
  * Http handers service.
@@ -24,7 +24,7 @@ import { ToasterService } from '../toaster/toaster.service';
 @Injectable({
   providedIn: 'root',
 })
-export class HttpHandlersService {
+export class AppHttpHandlersService {
   /**
    * Default timeout interval for http-requests.
    */
@@ -46,12 +46,12 @@ export class HttpHandlersService {
 
   constructor(
     public readonly user: UserService,
-    public readonly toaster: ToasterService,
+    public readonly toaster: AppToasterService,
     public readonly httpLink: HttpLink,
     public readonly httpProgress: HttpProgressService,
     public readonly translate: TranslateService,
     @Inject(WINDOW) public readonly win: Window,
-    @Inject(APP_ENV) public readonly env: WebEnvironment,
+    @Inject(APP_ENV) public readonly env: AppWebEnvironment,
   ) {
     void this.userToken$.subscribe();
   }

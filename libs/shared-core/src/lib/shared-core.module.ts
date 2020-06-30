@@ -6,17 +6,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SharedStoreModule } from '../../../shared-store/src/lib/shared-store.module';
 import {
+  AppMaterialModule,
+  appMaterialModuleProviders,
   AppTranslateModule,
   appTranslateModuleProviders,
-  CustomMaterialModule,
-  customMaterialModuleProviders,
 } from '../../../shared-ui/src/lib';
-import {
-  APP_ENV,
-  sharedCoreModuleProviders,
-  SharedCoreServicesModule,
-  WebEnvironment,
-} from './services';
+import { APP_ENV, AppWebEnvironment } from './interfaces';
+import { appSharedCoreModuleProviders, AppSharedCoreServicesModule } from './services';
 
 /**
  * Shared core module.
@@ -29,9 +25,9 @@ import {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    CustomMaterialModule.forRoot(),
+    AppMaterialModule.forRoot(),
     AppTranslateModule.forRoot(),
-    SharedCoreServicesModule.forRoot(),
+    AppSharedCoreServicesModule.forRoot(),
     SharedStoreModule,
   ],
   exports: [
@@ -39,24 +35,24 @@ import {
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    CustomMaterialModule,
+    AppMaterialModule,
     AppTranslateModule,
-    SharedCoreServicesModule,
+    AppSharedCoreServicesModule,
     SharedStoreModule,
   ],
 })
-export class SharedCoreModule {
+export class AppSharedCoreModule {
   /**
    * Provides services.
    * @param environment application environment, if omitted default environment will be provided.
    */
-  public static forRoot(environment?: WebEnvironment): ModuleWithProviders<SharedCoreModule> {
+  public static forRoot(environment?: AppWebEnvironment): ModuleWithProviders<AppSharedCoreModule> {
     return {
-      ngModule: SharedCoreModule,
+      ngModule: AppSharedCoreModule,
       providers: [
-        ...customMaterialModuleProviders,
+        ...appMaterialModuleProviders,
         ...appTranslateModuleProviders,
-        ...sharedCoreModuleProviders,
+        ...appSharedCoreModuleProviders,
         {
           provide: APP_ENV,
           useValue: environment,

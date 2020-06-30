@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { actionPayloadConstructor } from '@nx-ng-starter/shared-util';
 
-import { TUserPayload, UserStateModel } from './user.interface';
+import { AppUserStateModel, TUserPayload } from './user.interface';
 
 const createAction = actionPayloadConstructor('User');
 const setState = createAction<TUserPayload>('Set state');
 
-@State<UserStateModel>({
+@State<AppUserStateModel>({
   name: 'user',
   defaults: {
     email: '',
@@ -20,33 +20,33 @@ const setState = createAction<TUserPayload>('Set state');
 })
 class UserState {
   @Selector()
-  public static model(state: UserStateModel) {
+  public static model(state: AppUserStateModel) {
     return state;
   }
 
   @Selector()
-  public static email(state: UserStateModel) {
+  public static email(state: AppUserStateModel) {
     return state.email;
   }
 
   @Selector()
-  public static token(state: UserStateModel) {
+  public static token(state: AppUserStateModel) {
     return state.token;
   }
 
   @Selector()
-  public static admin(state: UserStateModel) {
+  public static admin(state: AppUserStateModel) {
     return state.admin;
   }
 
   @Action(setState)
-  public setState(ctx: StateContext<UserStateModel>, { payload }: TUserPayload) {
+  public setState(ctx: StateContext<AppUserStateModel>, { payload }: TUserPayload) {
     // Reuses values from previous state if payload is partial.
-    const currentState: UserStateModel = ctx.getState();
+    const currentState: AppUserStateModel = ctx.getState();
     const email = payload.email ? payload.email : currentState.email;
     const admin = typeof payload.admin === 'boolean' ? payload.admin : currentState.admin;
     const token = payload.token ? payload.token : currentState.token;
-    const newState: UserStateModel = new UserStateModel({ email, admin, token });
+    const newState: AppUserStateModel = new AppUserStateModel({ email, admin, token });
     return ctx.patchState(newState);
   }
 }

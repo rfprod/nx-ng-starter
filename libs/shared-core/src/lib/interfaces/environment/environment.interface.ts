@@ -3,7 +3,7 @@ import { InjectionToken, Provider } from '@angular/core';
 /**
  * Application environment constructor options interface.
  */
-export interface IWebEnvironmentConstructorOptions {
+export interface IAppWebEnvironmentConstructorOptions {
   production?: boolean;
   appName?: string;
   api?: string;
@@ -19,7 +19,7 @@ export type TAppName = 'Nx Ng Starter' | string;
  * Application environment.
  * By default generates dev environment.
  */
-export class WebEnvironment {
+export class AppWebEnvironment {
   public production = false;
 
   public appName: TAppName = 'Nx Ng Starter';
@@ -33,7 +33,7 @@ export class WebEnvironment {
    * By default generates dev environment.
    * @param options app env constructor options
    */
-  constructor(options: IWebEnvironmentConstructorOptions = {}) {
+  constructor(options: IAppWebEnvironmentConstructorOptions = {}) {
     if ('production' in options) {
       this.production = options.production;
     }
@@ -52,14 +52,14 @@ export class WebEnvironment {
 /**
  * Application environment injection token.
  */
-export type TWebClientEnvToken = InjectionToken<WebEnvironment>;
+export type TWebClientEnvToken = InjectionToken<AppWebEnvironment>;
 
 /**
  * Application environment injection token.
  */
-export const APP_ENV: TWebClientEnvToken = new InjectionToken<WebEnvironment>('APP_ENV');
+export const APP_ENV: TWebClientEnvToken = new InjectionToken<AppWebEnvironment>('APP_ENV');
 
 export const appEnvProvider: Provider = {
   provide: APP_ENV,
-  useFactory: () => new WebEnvironment(),
+  useFactory: () => new AppWebEnvironment(),
 };

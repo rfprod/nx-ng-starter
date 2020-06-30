@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { APP_ENV, MarkdownService, WebEnvironment } from '@nx-ng-starter/shared-core/services';
-import { HttpApiService } from '@nx-ng-starter/shared-store/state';
+import { APP_ENV, AppWebEnvironment } from '@nx-ng-starter/shared-core/interfaces';
+import { AppMarkdownService } from '@nx-ng-starter/shared-core/services';
+import { AppHttpApiService } from '@nx-ng-starter/shared-store/state';
 
 /**
  * Application index api component.
@@ -15,9 +16,9 @@ export class AppIndexApiComponent {
   public readonly ping$ = this.httpApi.output.ping$;
 
   constructor(
-    private readonly markdown: MarkdownService,
-    private readonly httpApi: HttpApiService,
-    @Inject(APP_ENV) private readonly env: WebEnvironment,
+    private readonly markdown: AppMarkdownService,
+    private readonly httpApi: AppHttpApiService,
+    @Inject(APP_ENV) private readonly env: AppWebEnvironment,
   ) {}
 
   /**

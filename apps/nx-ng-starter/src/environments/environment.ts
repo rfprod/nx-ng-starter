@@ -1,4 +1,4 @@
-import { WebEnvironment } from '@nx-ng-starter/shared-core/services';
+import { AppWebEnvironment } from '@nx-ng-starter/shared-core/interfaces';
 
 /**
  * Development environment variables.
@@ -13,7 +13,7 @@ import { WebEnvironment } from '@nx-ng-starter/shared-core/services';
  *
  * import 'zone.js/dist/zone-error';  // Included with Angular CLI.
  */
-export const environment: WebEnvironment = {
+export const environment: AppWebEnvironment = {
   production: false,
   appName: 'Nx Ng Starter Client',
   api: window.location.origin.includes('localhost')

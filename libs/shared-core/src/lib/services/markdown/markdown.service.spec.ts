@@ -1,9 +1,9 @@
 import { async, TestBed } from '@angular/core/testing';
 
-import { MarkdownService } from './markdown.service';
+import { AppMarkdownService } from './markdown.service';
 
-describe('MarkdownService', () => {
-  let service: MarkdownService;
+describe('AppMarkdownService', () => {
+  let service: AppMarkdownService;
   let spy: {
     service: {
       process: jest.SpyInstance;
@@ -14,15 +14,15 @@ describe('MarkdownService', () => {
     void TestBed.configureTestingModule({
       providers: [
         {
-          provide: MarkdownService,
-          useFactory: () => new MarkdownService(),
+          provide: AppMarkdownService,
+          useFactory: () => new AppMarkdownService(),
           deps: [],
         },
       ],
     })
       .compileComponents()
       .then(() => {
-        service = TestBed.inject(MarkdownService);
+        service = TestBed.inject(AppMarkdownService);
         spy = {
           service: {
             process: jest
