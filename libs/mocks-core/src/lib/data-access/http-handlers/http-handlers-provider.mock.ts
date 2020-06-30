@@ -8,13 +8,13 @@ import {
   toasterServiceProvider,
   WebEnvironment,
 } from '@nx-ng-starter/shared-core/data-access';
-import { getWindow, WINDOW } from '@nx-ng-starter/shared-core/util';
 import {
   HttpProgressService,
   httpProgressServiceProvider,
   UserService,
   userServiceProvider,
 } from '@nx-ng-starter/shared-store/state';
+import { getWindow, WINDOW } from '@nx-ng-starter/shared-util';
 import { HttpLink } from 'apollo-angular-link-http';
 
 import { dialogRefMockProvider } from '../../util/refs/dialog-ref.mock';

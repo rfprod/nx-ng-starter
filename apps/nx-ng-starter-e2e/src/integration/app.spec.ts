@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { ECOUNTER } from '@nx-ng-starter/shared-core/util';
+import { ECOUNTER } from '@nx-ng-starter/shared-util';
 
 import { getAppIndex, getAppRoot, getToolbar } from '../support/app.po';
 
