@@ -11,10 +11,10 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsModule } from '@ngxs/store';
-import { CustomMaterialModule } from '@nx-ng-starter/shared-ui';
+import { AppMaterialModule } from '@nx-ng-starter/shared-ui';
 import { getDocument, getWindow, WINDOW } from '@nx-ng-starter/shared-util';
 
-import { SharedCoreModule } from '../../../shared-core/src/lib/shared-core.module';
+import { AppSharedCoreModule } from '../../../shared-core/src/lib/shared-core.module';
 import { httpHandlersProviders, testingEnvironment } from './data-access';
 import { DummyComponent } from './ui/components/dummy.component.mock';
 import { dialogRefMockProvider } from './util/refs/dialog-ref.mock';
@@ -42,7 +42,7 @@ export const mocksCoreModuleProviders: Provider[] = [
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    CustomMaterialModule.forRoot(),
+    AppMaterialModule.forRoot(),
     HttpClientTestingModule,
     RouterTestingModule,
     NgxsModule.forRoot([], { developmentMode: true }),
@@ -50,7 +50,7 @@ export const mocksCoreModuleProviders: Provider[] = [
     MatDialogModule,
     OverlayModule,
     MatSnackBarModule,
-    SharedCoreModule.forRoot(testingEnvironment),
+    AppSharedCoreModule.forRoot(testingEnvironment),
   ],
   declarations: [DummyComponent],
   exports: [
@@ -60,13 +60,13 @@ export const mocksCoreModuleProviders: Provider[] = [
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    CustomMaterialModule,
+    AppMaterialModule,
     HttpClientTestingModule,
     RouterTestingModule,
     MatDialogModule,
     OverlayModule,
     MatSnackBarModule,
-    SharedCoreModule,
+    AppSharedCoreModule,
     DummyComponent,
   ],
 })

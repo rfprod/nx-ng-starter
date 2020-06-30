@@ -9,14 +9,14 @@ import {
   ISupportedLanguage,
   IUiLanguagesInterface,
   TLangCode,
-} from '../../../../../../shared-core/src/lib/services/index';
-import { CustomMaterialModule } from '../../custom-material/custom-material.module';
+} from '../../../../../../shared-core/src/lib/interfaces';
+import { AppMaterialModule } from '../../material/app-material.module';
 import { AppTranslateModule } from '../app-translate.module';
 import { AppTranslationUtilsService } from './app-translation-utils.service';
 
 describe('AppTranslationUtilsService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [CustomMaterialModule.forRoot(), AppTranslateModule.forRoot()],
+    imports: [AppMaterialModule.forRoot(), AppTranslateModule.forRoot()],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 

@@ -9,7 +9,7 @@ import memo from 'memo-decorator';
 @Injectable({
   providedIn: 'root',
 })
-export class MarkdownService {
+export class AppMarkdownService {
   /**
    * Processes markdown input.
    * @param input marked input

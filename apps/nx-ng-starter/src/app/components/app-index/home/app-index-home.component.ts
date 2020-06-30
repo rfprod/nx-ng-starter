@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { MarkdownService } from '@nx-ng-starter/shared-core/services';
+import { AppMarkdownService } from '@nx-ng-starter/shared-core/services';
 import { ETIMEOUT } from '@nx-ng-starter/shared-util';
 import { timer } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -21,7 +21,7 @@ export class AppIndexHomeComponent {
     untilDestroyed(this),
   );
 
-  constructor(private readonly markdown: MarkdownService) {}
+  constructor(private readonly markdown: AppMarkdownService) {}
 
   /**
    * Returns sample processed markdown text.
@@ -30,7 +30,7 @@ export class AppIndexHomeComponent {
     const sidenavInstruction =
       'Open **sidenav** by clicking **logo** or **icon** button in the left corner of the browser window, and select an item \n\n';
     const markdownInstructions =
-      '# You can use Markdown \n\n via MarkdownService, just like in this example.';
+      '# You can use Markdown \n\n via AppMarkdownService, just like in this example.';
     return this.markdown.process(`${sidenavInstruction} ${markdownInstructions}`);
   }
 }

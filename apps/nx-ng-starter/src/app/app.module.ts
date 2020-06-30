@@ -8,7 +8,7 @@ import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { EntityServiceClient } from '@nx-ng-starter/proto';
-import { SharedCoreModule } from '@nx-ng-starter/shared-core';
+import { AppSharedCoreModule } from '@nx-ng-starter/shared-core';
 import { getWindow, WINDOW } from '@nx-ng-starter/shared-util';
 
 import { environment } from '../environments/environment';
@@ -37,7 +37,7 @@ export const grpcProviders: Provider[] = [
     NgxsLoggerPluginModule.forRoot({ disabled: environment.production, collapsed: true }),
     NgxsFormPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    SharedCoreModule.forRoot(environment),
+    AppSharedCoreModule.forRoot(environment),
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],

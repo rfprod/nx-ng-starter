@@ -4,10 +4,10 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
 import {
+  AppUserStateModel,
   IUserHandlers,
   IUserObservableOutput,
   IUserStatePayload,
-  UserStateModel,
 } from './user.interface';
 import { userActions, UserState } from './user.store';
 
@@ -22,7 +22,7 @@ export class UserService {
     admin$: this.store.select(UserState.admin),
     isLoggedInSubscription$: this.store
       .select(UserState.model)
-      .pipe(map((model: UserStateModel) => (model.token ? true : false))),
+      .pipe(map((model: AppUserStateModel) => (model.token ? true : false))),
   };
 
   public readonly handlers: IUserHandlers = {
@@ -33,7 +33,7 @@ export class UserService {
     this.restoreUserFromLocalStorage();
   }
 
-  private saveUserToLocalStorage(model: UserStateModel): void {
+  private saveUserToLocalStorage(model: AppUserStateModel): void {
     localStorage.setItem('userService', JSON.stringify(model));
   }
 
@@ -41,15 +41,15 @@ export class UserService {
     if (
       Boolean(localStorage.getItem('userService')) &&
       typeof localStorage.getItem('userService') !== 'undefined' &&
-      JSON.parse(localStorage.getItem('userService')) instanceof UserStateModel
+      JSON.parse(localStorage.getItem('userService')) instanceof AppUserStateModel
     ) {
       void this.setState(JSON.parse(localStorage.getItem('userService')));
     }
   }
 
-  private setState(payload: IUserStatePayload): Observable<UserStateModel> {
+  private setState(payload: IUserStatePayload): Observable<AppUserStateModel> {
     return this.store.dispatch(new userActions.setState(payload)).pipe(
-      tap((state: UserStateModel) => {
+      tap((state: AppUserStateModel) => {
         this.saveUserToLocalStorage(state);
       }),
     );

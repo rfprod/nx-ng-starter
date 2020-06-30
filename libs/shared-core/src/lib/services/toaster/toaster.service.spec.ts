@@ -2,10 +2,10 @@ import { async, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
 
-import { TToastType } from '../interfaces/toaster/toaster.interface';
-import { ToasterService } from './toaster.service';
+import { TToastType } from '../../interfaces/toaster/toaster.interface';
+import { AppToasterService } from './toaster.service';
 
-describe('ToasterService', () => {
+describe('AppToasterService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     providers: [
       {
@@ -19,15 +19,15 @@ describe('ToasterService', () => {
         deps: [],
       },
       {
-        provide: ToasterService,
-        useFactory: (snackbar: MatSnackBar) => new ToasterService(snackbar),
+        provide: AppToasterService,
+        useFactory: (snackbar: MatSnackBar) => new AppToasterService(snackbar),
         deps: [MatSnackBar],
       },
     ],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
-  let service: ToasterService;
+  let service: AppToasterService;
   let snackBar: MatSnackBar;
   let spy: {
     snackBar: {
@@ -40,7 +40,7 @@ describe('ToasterService', () => {
     void TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
-        service = TestBed.inject(ToasterService);
+        service = TestBed.inject(AppToasterService);
         snackBar = TestBed.inject(MatSnackBar);
         spy = {
           snackBar: {

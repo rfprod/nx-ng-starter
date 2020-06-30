@@ -136,6 +136,7 @@ module.exports = {
       },
       {
         selector: 'class',
+        // prefix: ['App'],
         format: ['StrictPascalCase'],
         leadingUnderscore: 'forbid',
         trailingUnderscore: 'forbid',

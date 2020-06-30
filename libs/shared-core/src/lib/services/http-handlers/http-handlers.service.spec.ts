@@ -18,16 +18,16 @@ import { HttpLinkModule } from 'apollo-angular-link-http';
 import { ExecutionResult } from 'apollo-link';
 import { GraphQLError } from 'graphql';
 import { cold, getTestScheduler } from 'jasmine-marbles';
-import { AppTranslateModule, CustomMaterialModule } from 'libs/shared-ui/src/lib';
+import { AppMaterialModule, AppTranslateModule } from 'libs/shared-ui/src/lib';
 import { Observable, of } from 'rxjs';
 
-import { ToasterService } from '../toaster/toaster.service';
-import { HttpHandlersService } from './http-handlers.service';
+import { AppToasterService } from '../toaster/toaster.service';
+import { AppHttpHandlersService } from './http-handlers.service';
 
-describe('HttpHandlersService', () => {
+describe('AppHttpHandlersService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     imports: [
-      CustomMaterialModule,
+      AppMaterialModule,
       AppTranslateModule,
       ApolloModule,
       HttpLinkModule,
@@ -37,11 +37,11 @@ describe('HttpHandlersService', () => {
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
-  let service: HttpHandlersService;
+  let service: AppHttpHandlersService;
   let apollo: Apollo;
   let httpTestingController: HttpTestingController;
   let localStorage: LocalStorageMock;
-  let toaster: ToasterService;
+  let toaster: AppToasterService;
   let user: UserService;
   let spy: {
     user: {
@@ -61,8 +61,8 @@ describe('HttpHandlersService', () => {
     void TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
-        service = TestBed.inject(HttpHandlersService);
-        toaster = TestBed.inject(ToasterService);
+        service = TestBed.inject(AppHttpHandlersService);
+        toaster = TestBed.inject(AppToasterService);
         httpTestingController = TestBed.inject(HttpTestingController);
         apollo = TestBed.inject(Apollo);
         user = TestBed.inject(UserService);

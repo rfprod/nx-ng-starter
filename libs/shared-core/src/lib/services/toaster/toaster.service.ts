@@ -1,7 +1,7 @@
 import { Injectable, Provider } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 
-import { toasterExtraClasses, TToasterExtraClasses, TToastType } from '../interfaces';
+import { toasterExtraClasses, TToasterExtraClasses, TToastType } from '../../interfaces';
 
 /**
  * Toaster service for user feedback.
@@ -12,7 +12,7 @@ import { toasterExtraClasses, TToasterExtraClasses, TToastType } from '../interf
 @Injectable({
   providedIn: 'root',
 })
-export class ToasterService {
+export class AppToasterService {
   /**
    * Snackbar reference.
    */
@@ -59,7 +59,7 @@ export class ToasterService {
 }
 
 export const toasterServiceProvider: Provider = {
-  provide: ToasterService,
-  useFactory: (snackBar: MatSnackBar) => new ToasterService(snackBar),
+  provide: AppToasterService,
+  useFactory: (snackBar: MatSnackBar) => new AppToasterService(snackBar),
   deps: [MatSnackBar],
 };

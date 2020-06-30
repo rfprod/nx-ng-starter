@@ -6,8 +6,8 @@ import {
   setupJestSpiesFor,
   TComponentSpiesObject,
 } from '@nx-ng-starter/mocks-core';
-import { SharedCoreModule } from '@nx-ng-starter/shared-core';
-import { MarkdownService } from '@nx-ng-starter/shared-core/services';
+import { AppSharedCoreModule } from '@nx-ng-starter/shared-core';
+import { AppMarkdownService } from '@nx-ng-starter/shared-core/services';
 
 import { AppIndexHomeComponent } from './app-index-home.component';
 
@@ -15,7 +15,7 @@ describe('AppIndexHomeComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     declarations: [AppIndexHomeComponent],
     imports: [
-      SharedCoreModule.forRoot(),
+      AppSharedCoreModule.forRoot(),
       RouterTestingModule.withRoutes([
         { path: '', component: AppIndexHomeComponent },
         { path: '', redirectTo: '', pathMatch: 'full' },
@@ -27,7 +27,7 @@ describe('AppIndexHomeComponent', () => {
 
   let fixture: ComponentFixture<AppIndexHomeComponent>;
   let component: AppIndexHomeComponent;
-  let service: MarkdownService;
+  let service: AppMarkdownService;
   let spy: {
     service: {
       process: jest.SpyInstance;
@@ -41,7 +41,7 @@ describe('AppIndexHomeComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(AppIndexHomeComponent);
         component = fixture.debugElement.componentInstance;
-        service = TestBed.inject(MarkdownService);
+        service = TestBed.inject(AppMarkdownService);
         spy = {
           service: {
             process: jest

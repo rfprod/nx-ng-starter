@@ -1,12 +1,10 @@
 import { Provider } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { APP_ENV, appEnvProvider, AppWebEnvironment } from '@nx-ng-starter/shared-core/interfaces';
 import {
-  APP_ENV,
-  appEnvProvider,
-  HttpHandlersService,
-  ToasterService,
+  AppHttpHandlersService,
+  AppToasterService,
   toasterServiceProvider,
-  WebEnvironment,
 } from '@nx-ng-starter/shared-core/services';
 import {
   HttpProgressService,
@@ -48,19 +46,19 @@ export const httpHandlersProviders: Provider[] = [
     useValue: testingEnvironment,
   },
   {
-    provide: HttpHandlersService,
+    provide: AppHttpHandlersService,
     useFactory: (
       user: UserService,
-      toaster: ToasterService,
+      toaster: AppToasterService,
       httpLink: HttpLink,
       progress: HttpProgressService,
       translate: TranslateService,
       win: Window,
-      env: WebEnvironment,
-    ) => new HttpHandlersService(user, toaster, httpLink, progress, translate, win, env),
+      env: AppWebEnvironment,
+    ) => new AppHttpHandlersService(user, toaster, httpLink, progress, translate, win, env),
     deps: [
       UserService,
-      ToasterService,
+      AppToasterService,
       HttpLink,
       HttpProgressService,
       TranslateService,
