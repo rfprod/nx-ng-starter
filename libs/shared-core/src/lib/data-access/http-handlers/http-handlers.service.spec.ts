@@ -18,9 +18,9 @@ import { HttpLinkModule } from 'apollo-angular-link-http';
 import { ExecutionResult } from 'apollo-link';
 import { GraphQLError } from 'graphql';
 import { cold, getTestScheduler } from 'jasmine-marbles';
+import { AppTranslateModule, CustomMaterialModule } from 'libs/shared-ui/src/lib';
 import { Observable, of } from 'rxjs';
 
-import { AppTranslateModule, CustomMaterialModule } from '../../ui/index';
 import { ToasterService } from '../toaster/toaster.service';
 import { HttpHandlersService } from './http-handlers.service';
 

@@ -10,7 +10,7 @@ import {
 import { WINDOW } from '@nx-ng-starter/shared-util';
 import { Subject } from 'rxjs';
 
-import { IUiDictionary } from '../../../../data-access/interfaces/ui/ui-dictionary.interface';
+import { IUiDictionary } from '../../../../../../shared-core/src/lib/data-access/interfaces/ui/ui-dictionary.interface';
 import { RU_DICTIONARY } from '../shared/ru';
 
 /**
