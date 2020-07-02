@@ -1,11 +1,7 @@
-import { LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { APP_BASE_HREF, DOCUMENT, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
-import { getWindow, WINDOW } from '@nx-ng-starter/shared-util';
+import { getDocument, getWindow, WINDOW } from '@nx-ng-starter/shared-util';
 import { HttpLink } from 'apollo-angular-link-http';
-
-import { AppHttpHandlersService } from './http-handlers/http-handlers.service';
-import { AppMarkdownService } from './markdown/markdown.service';
-import { AppToasterService } from './toaster/toaster.service';
 
 /**
  * Module providers.
@@ -15,10 +11,9 @@ export const appSharedCoreModuleProviders: Provider[] = [
     provide: LocationStrategy,
     useClass: PathLocationStrategy,
   },
+  { provide: APP_BASE_HREF, useValue: '/' },
   { provide: WINDOW, useFactory: getWindow },
-  AppMarkdownService,
-  AppToasterService,
-  AppHttpHandlersService,
+  { provide: DOCUMENT, useFactory: getDocument },
   HttpLink,
 ];
 

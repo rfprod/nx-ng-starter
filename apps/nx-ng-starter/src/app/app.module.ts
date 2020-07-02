@@ -1,4 +1,3 @@
-import { APP_BASE_HREF } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, Provider } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -9,7 +8,6 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { EntityServiceClient } from '@nx-ng-starter/proto';
 import { AppSharedCoreModule } from '@nx-ng-starter/shared-core';
-import { getWindow, WINDOW } from '@nx-ng-starter/shared-util';
 
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -41,14 +39,7 @@ export const grpcProviders: Provider[] = [
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
-  providers: [
-    { provide: WINDOW, useFactory: getWindow },
-    {
-      provide: APP_BASE_HREF,
-      useValue: '/',
-    },
-    ...grpcProviders,
-  ],
+  providers: [...grpcProviders],
   declarations: [AppComponent, AppIndexComponent, AppIndexHomeComponent, AppIndexApiComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
