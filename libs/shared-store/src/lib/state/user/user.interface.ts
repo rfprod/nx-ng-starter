@@ -1,8 +1,7 @@
-import { AppUser } from '@nx-ng-starter/shared-core/interfaces';
 import { IActionPayload } from '@nx-ng-starter/shared-util';
 import { Observable } from 'rxjs';
 
-export class AppUserStateModel implements AppUser {
+export class AppUserStateModel {
   public email = '';
 
   public admin = false;

@@ -1,12 +1,8 @@
 import { InjectionToken } from '@angular/core';
 
-export const RU_DICTIONARY = new InjectionToken<IUiDictionary>('RU');
+import { IUiDictionary } from '../interfaces';
 
-export interface IUiDictionary {
-  shared: {
-    title: string;
-  };
-}
+export const RU_DICTIONARY = new InjectionToken<IUiDictionary>('RU');
 
 /**
  * Translate service shared dictionary: Russian.

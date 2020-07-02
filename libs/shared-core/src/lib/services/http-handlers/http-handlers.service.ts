@@ -208,11 +208,8 @@ export class AppHttpHandlersService {
   public createApolloLinkFor(errorLinkHandler?: ApolloLink): ApolloLink {
     const uri = this.graphQlEndpoint();
     const httpLinkHandler = this.httpLink.create({ uri });
-
     const networkLink = this.getGraphqlNetworkLink(httpLinkHandler, uri);
-
     const linkHandler: ApolloLink = this.getErroLinkHandler(errorLinkHandler);
-
     return linkHandler.concat(networkLink);
   }
 

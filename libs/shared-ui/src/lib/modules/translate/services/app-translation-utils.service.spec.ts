@@ -5,13 +5,9 @@ import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core'
 import { WINDOW } from '@nx-ng-starter/shared-util';
 import { Subject } from 'rxjs';
 
-import {
-  ISupportedLanguage,
-  IUiLanguagesInterface,
-  TLangCode,
-} from '../../../../../../shared-core/src/lib/interfaces';
 import { AppMaterialModule } from '../../material/app-material.module';
 import { AppTranslateModule } from '../app-translate.module';
+import { ISupportedLanguage, IUiLanguagesInterface, TLangCode } from '../interfaces';
 import { AppTranslationUtilsService } from './app-translation-utils.service';
 
 describe('AppTranslationUtilsService', () => {

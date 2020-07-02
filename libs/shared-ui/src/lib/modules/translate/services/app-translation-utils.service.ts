@@ -1,16 +1,16 @@
 import { Inject, Injectable } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { WINDOW } from '@nx-ng-starter/shared-util';
+import { Subject } from 'rxjs';
+
 import {
   ISupportedLanguage,
   IUiDictionary,
   IUiLanguagesInterface,
   IUiTranslations,
   TLangCode,
-} from '@nx-ng-starter/shared-core/interfaces';
-import { WINDOW } from '@nx-ng-starter/shared-util';
-import { Subject } from 'rxjs';
-
+} from '../interfaces';
 import { RU_DICTIONARY } from '../shared/ru';
 
 /**

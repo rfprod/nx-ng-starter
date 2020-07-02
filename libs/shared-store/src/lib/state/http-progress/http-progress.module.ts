@@ -1,10 +1,10 @@
 import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
 import { NgxsModule } from '@ngxs/store';
 
-import { HttpProgressService } from './http-progress.service';
+import { httpProgressServiceProvider } from './http-progress.service';
 import { HttpProgressState } from './http-progress.store';
 
-export const httpProgressModuleProviders: Provider[] = [HttpProgressService];
+export const httpProgressModuleProviders: Provider[] = [httpProgressServiceProvider];
 
 @NgModule({
   declarations: [],

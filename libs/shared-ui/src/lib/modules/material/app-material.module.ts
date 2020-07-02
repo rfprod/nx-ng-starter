@@ -1,6 +1,6 @@
 import 'node_modules/hammerjs/hammer.js';
 
-import { OverlayModule } from '@angular/cdk/overlay';
+import { OverlayConfig, OverlayModule } from '@angular/cdk/overlay';
 import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
 import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
@@ -108,6 +108,13 @@ export const appMaterialModuleProviders: Provider[] = [
   },
   { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
   { provide: HAMMER_GESTURE_CONFIG, useClass: AppHammerGestureConfig },
+  {
+    provide: OverlayConfig,
+    useFactory: () =>
+      new OverlayConfig({
+        direction: 'ltr',
+      }),
+  },
 ];
 
 /**
