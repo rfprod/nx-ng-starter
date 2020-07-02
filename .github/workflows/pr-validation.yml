@@ -23,7 +23,8 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
+        id: yarn_cache_dir_path
+        shell: bash
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
       - name: Yarn/npm cache
@@ -34,10 +35,16 @@ jobs:
         with:
           path: |
             ~/.npm
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
+            ${{ steps.yarn_cache_dir_path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
+            ${{ runner.os }}-
+
+      - name: Get commit hash
+        id: commit_sha
+        shell: bash
+        run: echo "##[set-output name=sha;]$(echo ${GITHUB_SHA})"
 
       - name: Workspace cache
         uses: actions/cache@v2
@@ -48,9 +55,10 @@ jobs:
           path: |
             /tmp/nx
             /tmp/jest_rs
-          key: ${{ runner.os }}-workspace-${{ hashFiles('**/**.ts') }}
+          key: ${{ runner.os }}-workspace-${{ steps.commit_sha.outputs.sha }}
           restore-keys: |
             ${{ runner.os }}-workspace-
+            ${{ runner.os }}-
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
