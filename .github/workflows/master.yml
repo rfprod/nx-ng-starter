@@ -1,10 +1,10 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: PR validation
+name: Master
 
 on:
-  pull_request:
+  push:
     branches: [master]
 
 jobs:
@@ -22,12 +22,12 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: Get variables (yarn cache directory path, commit hash)
+      - name: Get yarn cache directory path and commit hash
         id: get-variables
         shell: bash
         run: echo "::set-output name=yarncachedir::$(yarn cache dir)"; echo "::set-output name=commitsha::$(echo ${GITHUB_SHA})"
 
-      - name: Workspace cache (npm, yarn, nx, jest)
+      - name: Yarn/npm + Nx + Jest cache
         uses: actions/cache@v2
         id: workspace-cache # use this to check for `cache-hit` (`steps.workspace-cache.outputs.cache-hit != 'true'`)
         env:
@@ -51,7 +51,7 @@ jobs:
       - run: npm i -g typescript @angular/cli
       - run: yarn install --frozen-lockfile
       - run: yarn ngcc
-      - run: npx nx affected --target=lint --base=origin/master --head=HEAD --parallel --maxParallel=2
-      - run: npx nx affected --target=test --base=origin/master --head=HEAD --passWithNoTests --code-coverage=false --watch=false --maxWorkers=2 --ci --updateSnapshot
+      - run: ng lint
+      - run: ng test --passWithNoTests --code-coverage=false --watch=false --maxWorkers=2 --ci --updateSnapshot
       - run: npx nx build nx-ng-starter
       - run: npx nx build api
