@@ -1,6 +1,6 @@
 import { async, TestBed } from '@angular/core/testing';
-import { IUiDictionary } from '@nx-ng-starter/shared-core/interfaces';
 
+import { IUiDictionary } from '../interfaces';
 import { RU, RU_DICTIONARY } from './ru';
 
 describe('Russian shared translations', () => {
