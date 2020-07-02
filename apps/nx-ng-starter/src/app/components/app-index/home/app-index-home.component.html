@@ -1,4 +1,4 @@
-<span [innerHtml]="getMarkedInstructions()"></span>
+<span class="marked-instructions" [innerHtml]="getMarkedInstructions()"></span>
 
 <div fxLayout="row" fxLayoutAlign="start center" *ngIf="timer$ | async as timer">
   <mat-icon aria-hidden="false" [attr.aria-label]="timer" color="warn">
