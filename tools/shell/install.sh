@@ -67,6 +67,7 @@ resolveIfPackageIsInstalledAndInstall() {
     ${LIGHT_BLUE} %s\n
     ${DEFAULT}- package name: ${YELLOW}%s\n
     \n\n" "$TITLE" "$1"
+
   local PACKAGE_EXISTS
   PACKAGE_EXISTS=$(dpkg -s "$1")
 
@@ -96,6 +97,7 @@ installLinuxBrewDependencies() {
   printf "
     ${LIGHT_BLUE}%s
     ${DEFAULT}\n\n" "$TITLE"
+
   resolveIfPackageIsInstalledAndInstall build-essential
 }
 

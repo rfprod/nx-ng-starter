@@ -4,10 +4,16 @@
 # Colors.
 ##
 source tools/shell/colors.sh ''
+
 ##
 # Project aliases.
 ##
 source tools/shell/module-aliases.sh ''
+
+##
+# Configurable project root, may be useful in CI environment.
+##
+PROJECT_ROOT=.
 
 ##
 # Exits with error.
@@ -15,11 +21,6 @@ source tools/shell/module-aliases.sh ''
 exitWithError() {
   exit 1
 }
-
-##
-# Configurable project root, may be useful in CI environment.
-##
-PROJECT_ROOT=.
 
 ##
 # Reports usage error and exits.
