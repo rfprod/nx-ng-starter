@@ -30,6 +30,30 @@ CHANGELOG_APPS=${PROJECT_ROOT}/changelog/apps
 CHANGELOG_LIBS=${PROJECT_ROOT}/changelog/libs
 
 ##
+# Exits with error.
+##
+exitWithError() {
+  exit 1
+}
+
+##
+# Reports usage error and exits.
+##
+reportUsageErrorAndExit() {
+  local TITLE="<< USAGE >>"
+  printf "
+    ${RED}%s\n
+    ${DEFAULT} - ${YELLOW} bash tools/shell/changelog.sh all
+    ${DEFAULT} - ${YELLOW} bash tools/shell/changelog.sh ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n" "$TITLE"
+
+  reportSupportedModuleAliases
+
+  printf "\n\n"
+
+  exitWithError
+}
+
+##
 # Checks changelog directories existence, and creates directories if it does not exist.
 ##
 checkChangelogDirectoriesExistence() {
@@ -72,27 +96,39 @@ checkChangelogDirectoriesExistence() {
 }
 
 ##
-# Exits with error.
+# Generates changelog index.html with relative links.
 ##
-exitWithError() {
-  exit 1
-}
-
-##
-# Reports usage error and exits.
-##
-reportUsageErrorAndExit() {
-  local TITLE="<< USAGE >>"
+generateChangelogIndex() {
+  TITLE="<< GENERATING CHANGELOG INDEX >>"
   printf "
-    ${RED}%s\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/changelog.sh all
-    ${DEFAULT} - ${YELLOW} bash tools/shell/changelog.sh ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n" "$TITLE"
+    ${LIGHT_BLUE}%s
+    ${DEFAULT} - changelog dist root: ${YELLOW}${1}
+    ${DEFAULT}\n\n" "$TITLE"
 
-  reportSupportedModuleAliases
+  ##
+  # Find all changelog files and save in array.
+  ##
+  CHANGELOG_FILE_PATHS=()
+  while IFS= read -r -d $'\0'; do
+    CHANGELOG_FILE_PATHS+=("${REPLY//"$1/changelog/"/}") # remove path part that goes before ./changelog
+  done < <(find "$1/changelog" -name "*.html" -print0)
 
-  printf "\n\n"
+  # To debug found changelog files uncomment the following line.
+  # for CHANGELOG_FILE_PATH in "${CHANGELOG_FILE_PATHS[@]}"; do echo "$CHANGELOG_FILE_PATH"; done
 
-  exitWithError
+  ##
+  # Rewrite index.html relative links to fond changelog html files.
+  ##
+  {
+    echo '<html>'
+    echo '<body>'
+    echo '<h1>Nx-ng-starter changelog index</h1>'
+    echo '<ul>'
+    for CHANGELOG_FILE_PATH in "${CHANGELOG_FILE_PATHS[@]}"; do echo "<li><a href=\"$CHANGELOG_FILE_PATH\" target=_blank>$CHANGELOG_FILE_PATH</a></li>"; done
+    echo '</ul>'
+    echo '</body>'
+    echo '</html>'
+  } >"$1"/changelog/index.html
 }
 
 ##
@@ -122,7 +158,10 @@ copyReportToDist() {
       ${DEFAULT}\n\n" "$TITLE" "$CHANGELOG_DIST_ROOT" "$CHANGELOG_DIST_ROOT"
     mkdir -p $CHANGELOG_DIST_ROOT
   fi
+
   cp -r ${CHANGELOG_ROOT} $CHANGELOG_DIST_ROOT || exitWithError
+
+  generateChangelogIndex "$CHANGELOG_DIST_ROOT"
 }
 
 ##
@@ -172,7 +211,19 @@ checkConfigPathAndProceed() {
     # %cr - Committer date, relative
     # %s  - Subject
     ##
-    git log --pretty=format:"%h - %an, %ad : %s" --date=iso --stat --no-merges --name-status --output="$CHANGELOG_ROOT/$2-CHANGELOG.md" -- "$MODULE_PATH"
+    # git log --pretty=format:"%h - %an, %ad : %s" --date=iso --stat --no-merges --name-status --output="$CHANGELOG_ROOT/$2-CHANGELOG.html" -- "$MODULE_PATH"
+
+    CHANGELOG_CONTENTS=$(git log --pretty=format:"%h - %an, %ad : %s" --date=iso --stat --no-merges --name-status -- "$MODULE_PATH")
+    {
+      echo '<html>'
+      echo '<body>'
+      echo "<h1>CHANGELOG: ${2}</h1>"
+      echo '<pre>'
+      echo "$CHANGELOG_CONTENTS"
+      echo '</pre>'
+      echo '</body>'
+      echo '</html>'
+    } >${CHANGELOG_ROOT}/"${2}"-CHANGELOG.html
   fi
 }
 
@@ -218,6 +269,8 @@ generateModuleChangelog() {
 if [ $# -lt 1 ]; then
   reportUsageErrorAndExit
 else
+  # Remove previously generated changelogs.
+  rm -rf ./changelog
   checkChangelogDirectoriesExistence
   generateModuleChangelog "$1"
   copyReportToDist

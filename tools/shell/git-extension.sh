@@ -53,7 +53,7 @@ printChangedAliases() {
   # Prints app and lib aliases which contain changes.
   ##
   # shellcheck disable=SC2128
-  if [ ! -z "$CHANGED_ALIASES" ]; then
+  if [ -n "$CHANGED_ALIASES" ]; then
     local CHANGED_ALIAS
     for CHANGED_ALIAS in "${CHANGED_ALIASES[@]}"; do printf "
       ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "$CHANGED_ALIAS"; done
