@@ -133,15 +133,17 @@ testModule() {
   moduleAliasUnitExists "${MODULE_ALIAS}" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
 
   if [ "$ALIAS_EXISTS" = 1 ]; then
+    local TITLE="<< ALIAS ESISTS >>"
     local COVERAGE_DIST_PATH=${COVERAGE_BASE_PATH}
     printf "
-    ${DEFAULT} - coverage dist path: ${YELLOW}%s${DEFAULT}\n
-    \n\n" "$COVERAGE_DIST_PATH"
+    ${LIGHT_BLUE}%s${DEFAULT}\n
+    ${DEFAULT} - coverage dist path: ${YELLOW}%s
+    ${DEFAULT}" "$TITLE" "$COVERAGE_DIST_PATH"
     performModuleTesting "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$COVERAGE_DIST_PATH" "$OPTIONAL_ACTION"
   elif [ "$MODULE_ALIAS" = "all" ]; then
     for MODULE_ALIAS_VAR in "${MODULE_ALIAS_VARS_UNIT[@]}"; do testModule "$MODULE_ALIAS_VAR" "$OPTIONAL_ACTION"; done
   elif [ "$MODULE_ALIAS" = "changed" ]; then
-    TITLE="<< TESTING CHANGED APPS AND LIBS >>"
+    local TITLE="<< TESTING CHANGED APPS AND LIBS >>"
     printf "
       ${LIGHT_BLUE}%s${DEFAULT}\n" "$TITLE"
     ##
@@ -150,7 +152,7 @@ testModule() {
     source tools/shell/git-extension.sh
     for CHANGED_ALIAS in "${CHANGED_ALIASES[@]}"; do testModule "$CHANGED_ALIAS" "$OPTIONAL_ACTION"; done
   elif [ "$MODULE_ALIAS" = "affected" ]; then
-    TITLE="<< TESTING AFFECTED APPS AND LIBS >>"
+    local TITLE="<< TESTING AFFECTED APPS AND LIBS >>"
     printf "
       ${LIGHT_BLUE}%s${DEFAULT}\n" "$TITLE"
     testAffected

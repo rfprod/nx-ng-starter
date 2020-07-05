@@ -5,9 +5,11 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
+import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { EntityServiceClient } from '@nx-ng-starter/proto';
 import { AppSharedCoreModule } from '@nx-ng-starter/shared-core';
+import { WebsocketModule } from '@nx-ng-starter/shared-store/state/websocket';
 import { AppMaterialModule } from 'libs/shared-ui/src/lib';
 
 import { httpProgressServiceProvider } from '../../../../libs/shared-store/src/lib/state/http-progress/http-progress.service';
@@ -35,12 +37,14 @@ export const grpcProviders: Provider[] = [
     BrowserAnimationsModule,
     NgxsModule.forRoot([], { developmentMode: !environment.production }),
     NgxsLoggerPluginModule.forRoot({ disabled: environment.production, collapsed: true }),
+    NgxsRouterPluginModule.forRoot(),
     NgxsFormPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     AppSharedCoreModule.forRoot(environment),
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     AppMaterialModule.forRoot(),
+    WebsocketModule.forRoot(environment),
   ],
   providers: [...grpcProviders, httpProgressServiceProvider],
   declarations: [AppComponent, AppIndexComponent, AppIndexHomeComponent, AppIndexApiComponent],
