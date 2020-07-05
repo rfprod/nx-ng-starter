@@ -48,7 +48,6 @@
     "generate:protobufjs": "bash tools/shell/generate-proto.sh protobufjs",
     "generate:protoc": "bash tools/shell/generate-proto.sh protoc",
     "help": "nx help",
-    "preinstall": "rm -rf node_modules",
     "postinstall": "npx sort-package-json && npm run ngcc && node ./decorate-angular-cli.js",
     "install:all:linux": "bash tools/shell/install.sh all",
     "install:all:osx": "bash tools/shell/install.sh all osx",
