@@ -14,7 +14,9 @@ import { NgxsModule } from '@ngxs/store';
 import { AppMaterialModule } from '@nx-ng-starter/shared-ui';
 import { getDocument, getWindow, WINDOW } from '@nx-ng-starter/shared-util';
 
+import { environment } from '../../../../apps/nx-ng-starter/src/environments/environment';
 import { AppSharedCoreModule } from '../../../shared-core/src/lib/shared-core.module';
+import { WebsocketModule } from '../../../shared-store/src/lib/state/websocket/websocket.module';
 import { httpHandlersProviders, testingEnvironment } from './data-access';
 import { DummyComponent } from './ui/components/dummy.component.mock';
 import { dialogRefMockProvider } from './util/refs/dialog-ref.mock';
@@ -51,6 +53,7 @@ export const mocksCoreModuleProviders: Provider[] = [
     OverlayModule,
     MatSnackBarModule,
     AppSharedCoreModule.forRoot(testingEnvironment),
+    WebsocketModule.forRoot(environment),
   ],
   declarations: [DummyComponent],
   exports: [

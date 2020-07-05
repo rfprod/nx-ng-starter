@@ -3528,6 +3528,14 @@
     multer "1.4.2"
     tslib "2.0.0"
 
+"@nestjs/platform-ws@^7.3.1":
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/@nestjs/platform-ws/-/platform-ws-7.3.1.tgz#54d99c23130f646ee27a45cdaaecd4be5a33d5e9"
+  integrity sha512-wYGSHG4SqXHxWzszvhadSDg4DXcW16HkpiUZagJjs0WtHdygwi7De60ra94RAFLGBtE3+ptsLv1xXP498PqiYg==
+  dependencies:
+    tslib "2.0.0"
+    ws "7.3.0"
+
 "@nestjs/schematics@7.0.1":
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/@nestjs/schematics/-/schematics-7.0.1.tgz#bb729d06223d8b4df1a65e94d8fac17ef1b45657"
@@ -3552,6 +3560,14 @@
   integrity sha512-95u/S2CMBr3bxzt0C4FE6uKPmTQJAAEnARFzNwoWBJgRnMixMZ81+eYGr8CwNcHLsiyHlX4N4Sq5W111XBNzLQ==
   dependencies:
     optional "0.1.4"
+    tslib "2.0.0"
+
+"@nestjs/websockets@7.3.1":
+  version "7.3.1"
+  resolved "https://registry.yarnpkg.com/@nestjs/websockets/-/websockets-7.3.1.tgz#a5d9cd79ac42b19a4ba02e4d7b448ebd59728ef2"
+  integrity sha512-FNT4QRU9SF9tJtXIS7RNExCdNwvPQLVnfeWGRJiBWsRTH22VoDzyMSEj3Ub3+Ei3/DUlzvUrzm+kI19dT+6iug==
+  dependencies:
+    iterare "1.2.1"
     tslib "2.0.0"
 
 "@ngneat/until-destroy@7.3.0":
@@ -3597,6 +3613,13 @@
   version "3.6.2"
   resolved "https://registry.yarnpkg.com/@ngxs/logger-plugin/-/logger-plugin-3.6.2.tgz#1a8132a0b1eb95cad79736120fd50a331fe7347b"
   integrity sha512-qF4ci9Ua7jL7r5EhZBEb0JB0HuGsTgFShK3OVTYSXU9+XfSb+5vrDLtmTshmBqQy6dWCd+2xq4LzBgc8IKMRuQ==
+  dependencies:
+    tslib "^1.9.0"
+
+"@ngxs/router-plugin@3.6.2":
+  version "3.6.2"
+  resolved "https://registry.yarnpkg.com/@ngxs/router-plugin/-/router-plugin-3.6.2.tgz#058b09565011203bbf52294f16f29f9337aeaa27"
+  integrity sha512-5J3G9+Qsy/s7iqFivzAN1S6EmaZYTb9hqz7Xjn3c0u3Y44VMP5VWiz77jZ/eowXX0slJywcMxk6oCEFPwz4lXQ==
   dependencies:
     tslib "^1.9.0"
 
@@ -5082,7 +5105,7 @@
     "@types/webpack-sources" "*"
     source-map "^0.6.0"
 
-"@types/websocket@1.0.0":
+"@types/websocket@1.0.0", "@types/websocket@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@types/websocket/-/websocket-1.0.0.tgz#828c794b0a50949ad061aa311af1009934197e4b"
   integrity sha512-MLr8hDM8y7vvdAdnoDEP5LotRoYJj7wgT6mWzCUQH/gHqzS4qcnOT/K4dhC0WimWIUiA3Arj9QAJGGKNRiRZKA==
@@ -23640,6 +23663,11 @@ write@^0.2.1:
   integrity sha1-X8A4KOJkzqP+kUVUdvejxWbLB1c=
   dependencies:
     mkdirp "^0.5.1"
+
+ws@7.3.0:
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.3.0.tgz#4b2f7f219b3d3737bc1a2fbf145d825b94d38ffd"
+  integrity sha512-iFtXzngZVXPGgpTlP1rBqsUK82p9tKqsWRPg5L56egiljujJT3vGAYnHANvFxBieXrTFavhzhxW52jnaWV+w2w==
 
 ws@^5.2.0:
   version "5.2.2"

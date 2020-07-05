@@ -8,12 +8,15 @@ export interface IApiEnvironmentConstructorOptions {
   firebase?: boolean;
   appName?: string;
   envoyUrl?: string;
+  wsPort?: number;
 }
 
 /**
  * Application name type.
  */
-export type TApiAppName = 'Nx Ng Starter' | string;
+export type TApiAppName = 'Nx Ng Starter API' | string;
+
+export const defaultWsPort = 8081;
 
 /**
  * Application environment.
@@ -28,23 +31,17 @@ export class ApiEnvironment {
 
   public envoyUrl? = 'http://localhost:8081';
 
+  public wsPort = defaultWsPort;
+
   /**
    * Constructor.
    * By default generates dev environment.
    * @param options app env constructor options
    */
   constructor(options: IApiEnvironmentConstructorOptions = {}) {
-    if ('production' in options) {
-      this.production = options.production;
-    }
-    if ('firebase' in options) {
-      this.firebase = options.firebase;
-    }
-    if ('appName' in options) {
-      this.appName = options.appName;
-    }
-    if ('envoyUrl' in options) {
-      this.envoyUrl = options.envoyUrl;
+    const keys = Object.keys(options);
+    for (const key of keys) {
+      this[key] = options[key];
     }
   }
 }
@@ -52,9 +49,9 @@ export class ApiEnvironment {
 /**
  * Api environment injection token.
  */
-export const APP_ENV = 'API_ENV';
+export const API_ENV = 'API_ENV';
 
 export const apiAppEnvProvider: Provider = {
-  provide: APP_ENV,
+  provide: API_ENV,
   useFactory: () => new ApiEnvironment(),
 };

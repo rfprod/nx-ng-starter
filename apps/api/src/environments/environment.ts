@@ -9,4 +9,5 @@ import { ApiEnvironment } from '@nx-ng-starter/api-interface';
 export const environment: ApiEnvironment = {
   production: false,
   appName: 'Nx Ng Starter API',
+  wsPort: 8081,
 };
