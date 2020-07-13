@@ -7,7 +7,7 @@ import { NewMatcompInput } from './new-matcomp-input.interface';
  */
 export interface IMatcompQuery {
   findAll(args: MatcompArgs): Matcomp[];
-  findOneById(id: string): Matcomp;
+  findOneById(id: string): Matcomp | undefined;
 }
 
 /**
@@ -31,9 +31,11 @@ export class Matcomp implements MatcompModel {
   public creationDate = new Date().getTime();
 
   constructor(input?: Matcomp | NewMatcompInput) {
-    const keys = Boolean(input) ? Object.keys(input) : [];
-    for (const key of keys) {
-      this[key] = Boolean(input[key]) ? input[key] : this[key];
+    if (typeof input !== 'undefined') {
+      const keys = Object.keys(input);
+      for (const key of keys) {
+        this[key] = Boolean(input[key]) ? input[key] : this[key];
+      }
     }
   }
 }

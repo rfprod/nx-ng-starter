@@ -38,7 +38,7 @@ export class AppHttpApiService {
   private readonly http: IHttpApiInterface = {
     ping: () => {
       const endpoint = this.httpHandlers.getEndpoint('ping');
-      const observable = this.httpClient.get(endpoint).pipe(
+      const observable = this.httpClient.get<Message>(endpoint).pipe(
         tap((result: Message) => {
           const payload: IHttpApiStatePayload = {
             ping: result.message,

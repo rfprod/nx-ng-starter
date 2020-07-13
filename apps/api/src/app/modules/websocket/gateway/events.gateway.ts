@@ -21,7 +21,7 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
    * Platform-specific server instance.
    */
   @WebSocketServer()
-  protected server: Server;
+  protected server?: Server;
 
   /**
    * Currently coonected users count.
@@ -29,9 +29,11 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   private readonly users$ = new BehaviorSubject<number>(0);
 
   private sendClientChangeEvent(data: number): void {
-    const clients = this.server.clients.values();
-    for (const client of clients) {
-      client.send(JSON.stringify({ event: 'users', data }));
+    if (typeof this.server !== 'undefined') {
+      const clients = this.server.clients.values();
+      for (const client of clients) {
+        client.send(JSON.stringify({ event: 'users', data }));
+      }
     }
   }
 

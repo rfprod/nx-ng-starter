@@ -24,7 +24,7 @@ export const grpcProviders: Provider[] = [
   {
     provide: EntityServiceClient,
     useFactory: () =>
-      new EntityServiceClient(environment.envoyUrl, null, { withCredentials: 'true' }),
+      new EntityServiceClient(environment.envoyUrl ?? '', null, { withCredentials: 'true' }),
   },
 ];
 

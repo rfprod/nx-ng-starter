@@ -34,16 +34,16 @@ export class AppWebEnvironment {
    * @param options app env constructor options
    */
   constructor(options: IAppWebEnvironmentConstructorOptions = {}) {
-    if ('production' in options) {
+    if (typeof options.production !== 'undefined') {
       this.production = options.production;
     }
-    if ('appName' in options) {
+    if (typeof options.appName !== 'undefined') {
       this.appName = options.appName;
     }
-    if ('api' in options) {
+    if (typeof options.api !== 'undefined') {
       this.api = options.api;
     }
-    if ('envoyUrl' in options) {
+    if (typeof options.envoyUrl !== 'undefined') {
       this.envoyUrl = options.envoyUrl;
     }
   }

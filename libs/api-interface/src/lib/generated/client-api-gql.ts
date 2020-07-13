@@ -57,8 +57,8 @@ export type IMutationRemoveArgs = {
 };
 
 export interface INewMatcompInputDto {
-  name: IScalars['String'];
-  description: IScalars['String'];
+  name?: Maybe<IScalars['String']>;
+  description?: Maybe<IScalars['String']>;
 }
 
 export interface ISubscription {

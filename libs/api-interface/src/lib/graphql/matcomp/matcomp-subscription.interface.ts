@@ -1,10 +1,10 @@
 import { Matcomp } from './matcomp.interface';
 
 export class MatcompSubscription {
-  public matcomp: Matcomp;
+  public matcomp?: Matcomp;
 
   constructor(input?: Matcomp) {
-    if (Boolean(input)) {
+    if (typeof input !== 'undefined') {
       this.matcomp = input;
     }
   }

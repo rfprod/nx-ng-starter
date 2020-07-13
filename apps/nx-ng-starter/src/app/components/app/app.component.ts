@@ -17,7 +17,7 @@ export class AppComponent {
   /**
    * Sidebar viewchild reference.
    */
-  @ViewChild('appSidebar') public appSidebar: MatSidenav;
+  @ViewChild('appSidebar') public appSidebar?: MatSidenav;
 
   /**
    * Indicates if sidebar is opened.

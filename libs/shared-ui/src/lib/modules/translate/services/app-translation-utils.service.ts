@@ -134,7 +134,7 @@ export class AppTranslationUtilsService {
         const langCode: TLangCode = langChangeEvent.lang as TLangCode;
         this.setDatepickersLocale(langCode);
       },
-      (): void => null,
+      (): void => void 0,
     );
   }
 

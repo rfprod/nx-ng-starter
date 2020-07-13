@@ -4,7 +4,7 @@ import {
   getTestBedConfig,
   newTestBedMetadata,
   setupJestSpiesFor,
-  TComponentSpiesObject,
+  TClassMemberSpiesObject,
 } from '@nx-ng-starter/mocks-core';
 
 import { AppIndexComponent } from '../app-index/index/app-index.component';
@@ -26,7 +26,7 @@ describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
   let component: AppComponent;
   let spy: {
-    component: TComponentSpiesObject<AppComponent>;
+    component: TClassMemberSpiesObject<AppComponent>;
   };
 
   beforeEach(async(() => {

@@ -1,7 +1,7 @@
 import { Controller, Get, Inject, OnModuleInit, Param } from '@nestjs/common';
 import { ClientGrpc, GrpcMethod, GrpcStreamMethod } from '@nestjs/microservices';
 import { nxngstarter } from '@nx-ng-starter/proto';
-import { from, Observable, ReplaySubject, Subject } from 'rxjs';
+import { from, Observable, of, ReplaySubject, Subject } from 'rxjs';
 import { toArray } from 'rxjs/operators';
 
 import { NXNGSTARTER_PACKAGE } from '../grpc-api-client.options';
@@ -34,7 +34,7 @@ export class GrpcApiController implements OnModuleInit {
     },
   ];
 
-  private sampleService: IEntityService;
+  private sampleService?: IEntityService;
 
   constructor(@Inject(NXNGSTARTER_PACKAGE) private readonly client: ClientGrpc) {}
 
@@ -49,17 +49,24 @@ export class GrpcApiController implements OnModuleInit {
     ids$.next({ id: 'id2' });
     ids$.complete();
 
-    const stream = this.sampleService.findMany(ids$.asObservable());
-    return stream.pipe(toArray());
+    return typeof this.sampleService !== 'undefined'
+      ? this.sampleService.findMany(ids$.asObservable()).pipe(toArray())
+      : of([]);
   }
 
   @Get(':id')
   public getById(@Param('id') id: string): Observable<nxngstarter.IEntity> {
-    return from(this.sampleService.findOne({ id }));
+    return typeof this.sampleService !== 'undefined'
+      ? from(this.sampleService.findOne({ id }))
+      : of(
+          nxngstarter.Entity.toObject(new nxngstarter.Entity(), {
+            defaults: true,
+          }),
+        );
   }
 
   @GrpcMethod('EntityService')
-  public findOne(data: nxngstarter.IEntityById): nxngstarter.IEntity {
+  public findOne(data: nxngstarter.IEntityById): nxngstarter.IEntity | undefined {
     return this.items.find(({ id }) => id === data.id);
   }
 

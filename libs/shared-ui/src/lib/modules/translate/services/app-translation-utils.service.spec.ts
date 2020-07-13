@@ -63,32 +63,32 @@ describe('AppTranslationUtilsService', () => {
 
   it('should exist and have variables and methods defined', () => {
     expect(service).toBeDefined();
-    expect(service['languageChangeSubscription']).toEqual(jasmine.any(Function));
-    expect((service as any).languageChanges).toEqual(jasmine.any(Subject));
-    expect(service.initialize).toEqual(jasmine.any(Function));
-    expect(service.getUserLanguagePreference).toEqual(jasmine.any(Function));
+    expect(service['languageChangeSubscription']).toEqual(expect.any(Function));
+    expect((service as any).languageChanges).toEqual(expect.any(Subject));
+    expect(service.initialize).toEqual(expect.any(Function));
+    expect(service.getUserLanguagePreference).toEqual(expect.any(Function));
     const langs: IUiLanguagesInterface = {
       ru: 'ru',
       en: 'en',
     };
-    expect(service['langs']).toEqual(jasmine.objectContaining(langs));
-    expect(service.languages).toEqual(jasmine.any(Function));
+    expect(service['langs']).toEqual(expect.objectContaining(langs));
+    expect(service.languages).toEqual(expect.any(Function));
     const supportedLangs: ISupportedLanguage[] = [
       { key: 'en', name: 'English' },
       { key: 'ru', name: 'Russian' },
     ];
     expect(service['supportedLangs']).toEqual(supportedLangs);
-    expect(service.supportedLanguages).toEqual(jasmine.any(Function));
+    expect(service.supportedLanguages).toEqual(expect.any(Function));
     expect(service['translations']).toEqual(
-      jasmine.objectContaining({
-        ru: jasmine.any(Object),
-        en: jasmine.any(Object),
+      expect.objectContaining({
+        ru: expect.any(Object),
+        en: expect.any(Object),
       }),
     );
-    expect(service.dictionaries).toEqual(jasmine.any(Function));
-    expect(service.useLanguage).toEqual(jasmine.any(Function));
-    expect(service.isCurrentLanguage).toEqual(jasmine.any(Function));
-    expect(service['setDatepickersLocale']).toEqual(jasmine.any(Function));
+    expect(service.dictionaries).toEqual(expect.any(Function));
+    expect(service.useLanguage).toEqual(expect.any(Function));
+    expect(service.isCurrentLanguage).toEqual(expect.any(Function));
+    expect(service['setDatepickersLocale']).toEqual(expect.any(Function));
   });
 
   it('languageChangeSubscription should work correctly', async(() => {
@@ -99,7 +99,7 @@ describe('AppTranslationUtilsService', () => {
         expect(spy.service.languageChanges).toHaveBeenCalledWith(langChangeEvent);
         expect(dateAdapter.setLocale).toHaveBeenCalledWith(langChangeEvent.lang);
       },
-      (): void => null,
+      (): void => void 0,
     );
   }));
 
@@ -162,7 +162,7 @@ describe('AppTranslationUtilsService', () => {
         use: spy.translate.use.mock.calls.length,
       },
     };
-    service.useLanguage(null);
+    service.useLanguage('' as TLangCode);
     const callsAfter = {
       translate: {
         use: spy.translate.use.mock.calls.length,
@@ -181,7 +181,7 @@ describe('AppTranslationUtilsService', () => {
 
   it('isCurrentLanguage should resolve is language is current by its code', () => {
     const curLang: TLangCode = translate.currentLang as TLangCode;
-    expect(service.isCurrentLanguage(null)).toBeFalsy();
+    expect(service.isCurrentLanguage('' as TLangCode)).toBeFalsy();
     expect(service.isCurrentLanguage(curLang)).toBeTruthy();
   });
 });
