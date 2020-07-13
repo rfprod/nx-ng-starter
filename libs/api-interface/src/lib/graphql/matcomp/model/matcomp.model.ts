@@ -3,17 +3,17 @@ import { Field, ID, ObjectType } from '@nestjs/graphql';
 @ObjectType('MatcompModel', { isAbstract: true })
 export class MatcompModel {
   @Field(() => ID)
-  public id: string;
+  public id = '';
 
   @Field(() => String, {
     defaultValue: '',
   })
-  public name: string;
+  public name = '';
 
   @Field(() => String, {
     defaultValue: '',
   })
-  public description: string;
+  public description = '';
 
   @Field(() => Date, {
     defaultValue: new Date().getTime(),

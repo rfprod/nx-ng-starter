@@ -9,7 +9,7 @@ const localProtoPath = [join(__dirname, '..', '..', '..', 'tools/proto/root.prot
 const functionsProtoPath = [join(__dirname, 'proto/root.proto')];
 
 const protoPaths: () => string[] = () => {
-  return !environment.firebase ? [...localProtoPath] : [...functionsProtoPath];
+  return !Boolean(environment.firebase) ? [...localProtoPath] : [...functionsProtoPath];
 };
 
 const rpcUrl = '0.0.0.0:50051';

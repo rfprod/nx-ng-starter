@@ -13,8 +13,8 @@ describe('AppToasterService', () => {
         useFactory: () =>
           new Object({
             open: (): MatSnackBarRef<SimpleSnackBar> =>
-              new Object({ dismiss: (): void => null }) as MatSnackBarRef<SimpleSnackBar>,
-            dismiss: (): void => null,
+              new Object({ dismiss: (): void => void 0 }) as MatSnackBarRef<SimpleSnackBar>,
+            dismiss: (): void => void 0,
           }) as MatSnackBar,
         deps: [],
       },
@@ -73,7 +73,7 @@ describe('AppToasterService', () => {
     let spyCalls = spy.snackBar.open.mock.calls.length - 1;
     expect(spy.snackBar.open.mock.calls[spyCalls]).toEqual([
       'message',
-      null,
+      void 0,
       {
         panelClass: [],
         verticalPosition: 'bottom',
@@ -85,7 +85,7 @@ describe('AppToasterService', () => {
     spyCalls += 1;
     expect(spy.snackBar.open.mock.calls[spyCalls]).toEqual([
       'message',
-      null,
+      void 0,
       {
         panelClass: [],
         verticalPosition: 'bottom',
@@ -97,7 +97,7 @@ describe('AppToasterService', () => {
     spyCalls += 1;
     expect(spy.snackBar.open.mock.calls[spyCalls]).toEqual([
       'message',
-      null,
+      void 0,
       {
         panelClass: ['error-bg'],
         verticalPosition: 'bottom',
@@ -109,7 +109,7 @@ describe('AppToasterService', () => {
     spyCalls += 1;
     expect(spy.snackBar.open.mock.calls[spyCalls]).toEqual([
       'message',
-      null,
+      void 0,
       {
         panelClass: ['success-bg'],
         verticalPosition: 'bottom',
@@ -121,7 +121,7 @@ describe('AppToasterService', () => {
     spyCalls += 1;
     expect(spy.snackBar.open.mock.calls[spyCalls]).toEqual([
       'message',
-      null,
+      void 0,
       {
         panelClass: ['warn-bg'],
         verticalPosition: 'bottom',
@@ -133,7 +133,7 @@ describe('AppToasterService', () => {
     spyCalls += 1;
     expect(spy.snackBar.open.mock.calls[spyCalls]).toEqual([
       'message',
-      null,
+      void 0,
       {
         panelClass: ['accent-bg'],
         verticalPosition: 'bottom',
@@ -145,7 +145,7 @@ describe('AppToasterService', () => {
     spyCalls += 1;
     expect(spy.snackBar.open.mock.calls[spyCalls]).toEqual([
       'message',
-      null,
+      void 0,
       {
         panelClass: ['primary-bg'],
         verticalPosition: 'bottom',
@@ -162,8 +162,11 @@ describe('AppToasterService', () => {
   it('should dismiss snackBar on hideToaster() method call if it was opened previously', () => {
     service.showToaster('message', 'primary');
     expect(service['snackBarRef']).toBeDefined();
-    jest.spyOn(service['snackBarRef'], 'dismiss');
+    jest.spyOn(
+      ((service as unknown) as { snackBarRef: MatSnackBarRef<SimpleSnackBar> }).snackBarRef,
+      'dismiss',
+    );
     service.hideToaster();
-    expect(service['snackBarRef'].dismiss).toHaveBeenCalled();
+    expect(service['snackBarRef']?.dismiss).toHaveBeenCalled();
   });
 });

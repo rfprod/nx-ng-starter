@@ -38,12 +38,13 @@ export class UserService {
   }
 
   private restoreUserFromLocalStorage(): void {
+    const userService = localStorage.getItem('userService');
     if (
-      Boolean(localStorage.getItem('userService')) &&
-      typeof localStorage.getItem('userService') !== 'undefined' &&
-      JSON.parse(localStorage.getItem('userService')) instanceof AppUserStateModel
+      userService !== null &&
+      typeof userService !== 'undefined' &&
+      JSON.parse(userService) instanceof AppUserStateModel
     ) {
-      void this.setState(JSON.parse(localStorage.getItem('userService')));
+      void this.setState(JSON.parse(userService));
     }
   }
 

@@ -23,6 +23,6 @@ export const setupJestJsdomGlobalMocks: () => void = () => {
   /**
    * Override some console methods for testing environment.
    */
-  window.console.log = (): void => null;
-  window.console.group = (): void => null;
+  window.console.log = (): void => void 0;
+  window.console.group = (): void => void 0;
 };

@@ -25,8 +25,8 @@ export class HttpProgressService {
     mainView: {
       start: () => this.startProgress(this.newHttpProgressState(true)),
       stop: () => this.stopProgress(this.newHttpProgressState(false)),
-      tapStopperObservable: <Any>() => {
-        return tap<Any>(
+      tapStopperObservable: <T>() => {
+        return tap<T>(
           () => {
             this.handlers.mainView.stop();
           },

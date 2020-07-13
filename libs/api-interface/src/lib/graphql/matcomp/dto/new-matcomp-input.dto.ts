@@ -9,10 +9,10 @@ export class NewMatcompInputDto {
   @Field(() => String)
   @MinLength(minInputLength)
   @MaxLength(maxInputLength)
-  public name: string;
+  public name = '';
 
   @Field(() => String)
   @MinLength(minInputLength)
   @MaxLength(maxInputLength)
-  public description: string;
+  public description = '';
 }

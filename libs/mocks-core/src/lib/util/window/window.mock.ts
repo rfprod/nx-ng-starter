@@ -36,7 +36,7 @@ function setupWindowGetComputedStyleMock() {
       return {
         display: 'none',
         appearance: ['-webkit-appearance'],
-        getPropertyValue: (): void => null,
+        getPropertyValue: (): void => void 0,
       };
     },
   });

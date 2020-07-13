@@ -4,7 +4,7 @@ import {
   getTestBedConfig,
   newTestBedMetadata,
   setupJestSpiesFor,
-  TComponentSpiesObject,
+  TClassMemberSpiesObject,
 } from '@nx-ng-starter/mocks-core';
 import { AppSharedCoreModule } from '@nx-ng-starter/shared-core';
 import { AppMarkdownService } from '@nx-ng-starter/shared-core/services';
@@ -32,7 +32,7 @@ describe('AppIndexHomeComponent', () => {
     service: {
       process: jest.SpyInstance;
     };
-    component: TComponentSpiesObject<AppIndexHomeComponent>;
+    component: TClassMemberSpiesObject<AppIndexHomeComponent>;
   };
 
   beforeEach(async(() => {

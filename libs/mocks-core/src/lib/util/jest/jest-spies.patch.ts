@@ -11,7 +11,7 @@ export type TDebugElementComponentInstance = DebugElement['componentInstance'];
  */
 export type TSetupJestSpiesFor<T> = (
   component: TDebugElementComponentInstance,
-) => TComponentSpiesObject<T>;
+) => TClassMemberSpiesObject<T>;
 
 /**
  * Function member spy.
@@ -29,13 +29,13 @@ export interface IStreamableMemberSpy {
 /**
  * Component spy.
  */
-export type TComponentSpy = TFunctionSpy | IStreamableMemberSpy;
+export type TClassMemberSpy = TFunctionSpy | IStreamableMemberSpy;
 
 /**
  * Component spies object.
  */
-export type TComponentSpiesObject<T> = {
-  [K in keyof T]: TComponentSpy;
+export type TClassMemberSpiesObject<T> = {
+  [K in keyof T]: TClassMemberSpy;
 };
 
 /**
@@ -49,10 +49,10 @@ export type TComponentSpiesObject<T> = {
  */
 export function setupJestSpiesFor<T>(
   component: TDebugElementComponentInstance,
-): TComponentSpiesObject<T> {
-  const spiesObject: TComponentSpiesObject<T> = Object.keys(component).reduce(
-    (accumulator: TComponentSpiesObject<T>, key: string) => {
-      let spy: TComponentSpy = null;
+): TClassMemberSpiesObject<T> {
+  const spiesObject: TClassMemberSpiesObject<T> = Object.keys(component).reduce(
+    (accumulator: TClassMemberSpiesObject<T>, key: string) => {
+      let spy: TClassMemberSpy | null = null;
       const classMember = (component as T)[key];
       /**
        * Spy on component functions.
@@ -76,7 +76,7 @@ export function setupJestSpiesFor<T>(
       accumulator[key] = spy;
       return accumulator;
     },
-    {} as TComponentSpiesObject<T>,
+    {} as TClassMemberSpiesObject<T>,
   );
 
   return spiesObject;

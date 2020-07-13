@@ -23,7 +23,7 @@ export class WebsocketService implements IWebsocketservice {
       .pipe(
         concatMap(event => {
           const payload = {
-            users: event.event === 'users' ? event.data : null,
+            users: event.event === 'users' ? event.data : void 0,
             events: [event],
           };
           return this.setState(payload);

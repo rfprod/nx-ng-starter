@@ -18,7 +18,7 @@ export class MatcompService implements IMatcompQuery, IMatcompMutation {
   }
 
   public remove(id: string) {
-    let arrayId: number;
+    let arrayId = 0;
     this.matcomps.map((comp: Matcomp, index: number) => {
       if (comp.id === id) {
         arrayId = index;

@@ -7,9 +7,11 @@ export class UserName {
   public last = '';
 
   constructor(input?: UserName) {
-    const keys = Boolean(input) ? Object.keys(input) : [];
-    for (const key of keys) {
-      this[key] = Boolean(input[key]) ? input[key] : this[key];
+    if (typeof input !== 'undefined') {
+      const keys = Object.keys(input);
+      for (const key of keys) {
+        this[key] = Boolean(input[key]) ? input[key] : this[key];
+      }
     }
   }
 }

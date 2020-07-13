@@ -10,7 +10,7 @@ export function flushHttpRequests<T>(
   httpController: HttpTestingController,
   verify = false,
   matcher: THttpRequestMatcher<T> = (req: HttpRequest<T>): boolean => true,
-  responseData: unknown = {},
+  responseData: Record<string, unknown> = {},
 ): void {
   httpController
     .match(matcher)

@@ -142,62 +142,63 @@ export class AppHttpHandlersService {
   }
 
   private getErroLinkHandler(errorLinkHandler?: ApolloLink) {
-    const linkHandler = Boolean(errorLinkHandler)
-      ? errorLinkHandler
-      : onError((error: ErrorResponse) => {
-          let resultMessage = '';
-          /**
-           * Error code in uppercase, e.g. ACCESS_FORBIDDEN.
-           * Should be used as a translate service dictionary key
-           * to retrieve a localized substring for UI display.
-           * Only last error code is translated and displayed in UI.
-           */
-          let errorCode: string = null;
-          let errorCodeUITranslation: string = null;
+    const linkHandler =
+      typeof errorLinkHandler !== 'undefined'
+        ? errorLinkHandler
+        : onError((error: ErrorResponse) => {
+            let resultMessage = '';
+            /**
+             * Error code in uppercase, e.g. ACCESS_FORBIDDEN.
+             * Should be used as a translate service dictionary key
+             * to retrieve a localized substring for UI display.
+             * Only last error code is translated and displayed in UI.
+             */
+            let errorCode = '';
+            let errorCodeUITranslation = '';
 
-          const { graphQLErrors, networkError } = error;
+            const { graphQLErrors, networkError } = error;
 
-          if (Boolean(graphQLErrors)) {
-            // eslint-disable-next-line no-console
-            console.error('Apollo linkHandler [GraphQL error]: ', graphQLErrors);
-            graphQLErrors.map(({ message, extensions }) => {
-              resultMessage += `[GraphQL]: ${message}`;
-              errorCode = extensions?.code;
-            });
-          }
-
-          if (Boolean(networkError)) {
-            // eslint-disable-next-line no-console
-            console.error('Apollo linkHandler [Network error]: ', networkError);
-
-            if (networkError instanceof HttpErrorResponse) {
-              resultMessage += (networkError.error as { detail: string }).detail;
-            } else {
-              const errors: GraphQLError[] = ((networkError as unknown) as {
-                error: {
-                  errors: GraphQLError[];
-                };
-              }).error.errors;
-              errors.map(({ message, extensions }) => {
-                resultMessage += `[Network]: ${message}`;
-                errorCode = extensions.code;
+            if (typeof graphQLErrors !== 'undefined') {
+              // eslint-disable-next-line no-console
+              console.error('Apollo linkHandler [GraphQL error]: ', graphQLErrors);
+              graphQLErrors.map(({ message, extensions }) => {
+                resultMessage += `[GraphQL]: ${message}`;
+                errorCode = extensions?.code;
               });
             }
-          }
 
-          if (errorCode) {
-            errorCodeUITranslation = this.translate.instant(`request.error.${errorCode}`);
-            if (!errorCodeUITranslation.includes(errorCode)) {
-              resultMessage = errorCodeUITranslation;
+            if (Boolean(networkError)) {
+              // eslint-disable-next-line no-console
+              console.error('Apollo linkHandler [Network error]: ', networkError);
+
+              if (networkError instanceof HttpErrorResponse) {
+                resultMessage += (networkError.error as { detail: string }).detail;
+              } else {
+                const errors: GraphQLError[] = ((networkError as unknown) as {
+                  error: {
+                    errors: GraphQLError[];
+                  };
+                }).error.errors;
+                errors.map(({ message, extensions }) => {
+                  resultMessage += `[Network]: ${message}`;
+                  errorCode = extensions?.code;
+                });
+              }
             }
-          }
 
-          if (!resultMessage) {
-            resultMessage = 'Graphql request error';
-          }
+            if (errorCode) {
+              errorCodeUITranslation = this.translate.instant(`request.error.${errorCode}`);
+              if (!errorCodeUITranslation.includes(errorCode)) {
+                resultMessage = errorCodeUITranslation;
+              }
+            }
 
-          this.toaster.showToaster(resultMessage, 'error');
-        });
+            if (!resultMessage) {
+              resultMessage = 'Graphql request error';
+            }
+
+            this.toaster.showToaster(resultMessage, 'error');
+          });
     return linkHandler;
   }
 
@@ -230,7 +231,7 @@ export class AppHttpHandlersService {
    * Extracts HttpResponse.
    * @param res Http response
    */
-  public extractHttpResponse<T>(res: HttpResponse<T>): T {
+  public extractHttpResponse<T>(res: HttpResponse<T>) {
     return res.body;
   }
 
@@ -279,7 +280,11 @@ export class AppHttpHandlersService {
    * @param withProgress indicates whether progress should be shown
    */
   public tapProgress<T>(widhProgress: boolean): MonoTypeOperatorFunction<T> {
-    let handler: () => MonoTypeOperatorFunction<T> = () => null;
+    let handler: () => MonoTypeOperatorFunction<T> = <T>() =>
+      tap<T>(
+        () => void 0,
+        () => void 0,
+      );
     if (widhProgress) {
       handler = this.httpProgress.handlers.mainView.tapStopperObservable;
     }
@@ -291,7 +296,7 @@ export class AppHttpHandlersService {
    */
   public tapError<T>(): MonoTypeOperatorFunction<T> {
     return tap(
-      (): void => null,
+      (): void => void 0,
       (error: { networkError: HttpErrorResponse }) => {
         const unauthorized: boolean =
           Boolean(error.networkError) && error.networkError.status === EHTTP_STATUS.BAD_REQUEST;

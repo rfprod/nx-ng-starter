@@ -43,9 +43,9 @@ class UserState {
   public setState(ctx: StateContext<AppUserStateModel>, { payload }: TUserPayload) {
     // Reuses values from previous state if payload is partial.
     const currentState: AppUserStateModel = ctx.getState();
-    const email = payload.email ? payload.email : currentState.email;
+    const email = typeof payload.email !== 'undefined' ? payload.email : currentState.email;
     const admin = typeof payload.admin === 'boolean' ? payload.admin : currentState.admin;
-    const token = payload.token ? payload.token : currentState.token;
+    const token = typeof payload.token !== 'undefined' ? payload.token : currentState.token;
     const newState: AppUserStateModel = new AppUserStateModel({ email, admin, token });
     return ctx.patchState(newState);
   }

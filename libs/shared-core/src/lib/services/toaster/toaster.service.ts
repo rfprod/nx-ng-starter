@@ -16,7 +16,7 @@ export class AppToasterService {
   /**
    * Snackbar reference.
    */
-  private snackBarRef: MatSnackBarRef<SimpleSnackBar>;
+  private snackBarRef?: MatSnackBarRef<SimpleSnackBar>;
 
   /**
    * Default toaster duration value.
@@ -41,7 +41,7 @@ export class AppToasterService {
     duration: number = this.defaultDuration,
   ): void {
     const ec: TToasterExtraClasses = toasterExtraClasses(type);
-    this.snackBarRef = this.snackBar.open(message, null, {
+    this.snackBarRef = this.snackBar.open(message, void 0, {
       panelClass: ec,
       verticalPosition: 'bottom',
       duration,
@@ -52,7 +52,7 @@ export class AppToasterService {
    * Dismisses snackbar.
    */
   public hideToaster(): void {
-    if (Boolean(this.snackBarRef)) {
+    if (typeof this.snackBarRef !== 'undefined') {
       this.snackBarRef.dismiss();
     }
   }

@@ -6,7 +6,7 @@ import {
   getTestBedConfig,
   newTestBedMetadata,
   setupJestSpiesFor,
-  TComponentSpiesObject,
+  TClassMemberSpiesObject,
 } from '@nx-ng-starter/mocks-core';
 
 import { AppIndexApiComponent } from './app-index-api.component';
@@ -27,7 +27,7 @@ describe('AppIndexApiComponent', () => {
   let fixture: ComponentFixture<AppIndexApiComponent>;
   let component: AppIndexApiComponent;
   let spy: {
-    component: TComponentSpiesObject<AppIndexApiComponent>;
+    component: TClassMemberSpiesObject<AppIndexApiComponent>;
   };
 
   let httpController: HttpTestingController;

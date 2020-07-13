@@ -17,6 +17,6 @@ export class DateScalar implements CustomScalar<number, Date> {
     if (ast.kind === Kind.INT) {
       return new Date(ast.value);
     }
-    return null;
+    return new Date();
   }
 }

@@ -41,12 +41,12 @@ async function bootstrap(expressInstance: e.Express): Promise<unknown> {
   app.enableCors(corsOptions);
 
   // TODO: debug grpc in firebase, currently it causes all functions deployment failure
-  if (!environment.firebase) {
+  if (!Boolean(environment.firebase)) {
     app.connectMicroservice<MicroserviceOptions>(grpcApiClientOptions);
     await app.startAllMicroservicesAsync();
   }
 
-  const port = process.env.port ? process.env.port : defaultPort;
+  const port = typeof process.env.port !== 'undefined' ? process.env.port : defaultPort;
   await app.listen(port, () => {
     console.warn(`Listening at:
     - http://localhost:${port}/${globalPrefix}/ping
@@ -72,7 +72,7 @@ const firebaseConfig = process.env.FIREBASE_CONFIG;
 /**
  * Initialize admin and export firebase functions only in cloud environment.
  */
-if (firebaseConfig) {
+if (Boolean(firebaseConfig)) {
   admin.initializeApp();
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   exports.ping = functions.https.onRequest(server);

@@ -23,8 +23,8 @@ type Mutation {
 }
 
 input NewMatcompInputDto {
-  name: String!
-  description: String!
+  name: String = ""
+  description: String = ""
 }
 
 type Subscription {
