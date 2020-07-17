@@ -26,6 +26,7 @@ module.exports = {
     'simple-import-sort', // https://github.com/lydell/eslint-plugin-simple-import-sort
     'rxjs', // https://github.com/cartant/eslint-plugin-rxjs
     'compat', // https://www.npmjs.com/package/eslint-plugin-compat
+    '@nrwl/eslint-plugin-nx',
   ],
   ignorePatterns: ['*.min.js', 'node_modules/'],
 
@@ -332,6 +333,78 @@ module.exports = {
     'rxjs/no-tap': 'off', // keep off
     'rxjs/no-exposed-subjects': 'error',
     yoda: ['error', 'never'],
+    // TODO: nx workspace rules; revise this config and switch to error once there're no warnings
+    '@nrwl/nx/enforce-module-boundaries': [
+      'warn',
+      {
+        allow: [],
+        depConstraints: [
+          {
+            sourceTag: 'scope:mocks-core',
+            onlyDependOnLibsWithTags: [],
+          },
+          {
+            sourceTag: 'scope:proto',
+            onlyDependOnLibsWithTags: [],
+          },
+          {
+            sourceTag: 'scope:shared-assets',
+            onlyDependOnLibsWithTags: [],
+          },
+          {
+            sourceTag: 'scope:shared-core',
+            onlyDependOnLibsWithTags: [
+              'scope:mocks-core',
+              'scope:proto',
+              'scope:shared-store',
+              'scope:shared-ui',
+              'scope:shared-util',
+            ],
+          },
+          {
+            sourceTag: 'scope:shared-store',
+            onlyDependOnLibsWithTags: ['scope:mocks-core', 'scope:proto', 'scope:shared-util'],
+          },
+          {
+            sourceTag: 'scope:shared-ui',
+            onlyDependOnLibsWithTags: [
+              'scope:mocks-core',
+              'scope:proto',
+              'scope:shared-store',
+              'scope:shared-util',
+            ],
+          },
+          {
+            sourceTag: 'scope:shared-util',
+            onlyDependOnLibsWithTags: [],
+          },
+          {
+            sourceTag: 'scope:nx-ng-starter',
+            onlyDependOnLibsWithTags: ['scope:mocks-core', 'scope:proto', 'scope:shared-*'],
+          },
+          {
+            sourceTag: 'type:feature',
+            onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util'],
+          },
+          {
+            sourceTag: 'type:data-access',
+            onlyDependOnLibsWithTags: ['type:data-access', 'type:util'],
+          },
+          {
+            sourceTag: 'type:ui',
+            onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util'],
+          },
+          {
+            sourceTag: 'type:util',
+            onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util'],
+          },
+          {
+            sourceTag: 'type:e2e',
+            onlyDependOnLibsWithTags: [],
+          },
+        ],
+      },
+    ],
   },
 
   overrides: [

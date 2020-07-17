@@ -1,4 +1,4 @@
-export enum ETIMEOUT {
+export enum TIMEOUT {
   INSTANT = 0,
   SHORTEST = 500,
   SHORT = 1000,

@@ -1,5 +1,5 @@
-import { ECOUNTER } from '../interfaces';
+import { COUNTER } from '../interfaces';
 
-export function generateEmptyArray(length: ECOUNTER | number) {
+export function generateEmptyArray(length: COUNTER | number) {
   return [...new Array(length)];
 }

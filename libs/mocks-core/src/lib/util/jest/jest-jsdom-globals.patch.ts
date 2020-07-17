@@ -1,6 +1,6 @@
 import 'node_modules/jsdom/lib/jsdom/living/custom-elements/CustomElementRegistry-impl.js';
 
-import { ETIMEOUT } from '@nx-ng-starter/shared-util';
+import { TIMEOUT } from '@nx-ng-starter/shared-util';
 
 import { setupJsdomDocumentMocks } from '../document/document.mock';
 import { setupJsdomGlobalMocks } from '../globals/globals.mock';
@@ -9,7 +9,7 @@ import { setupJsdomWindowMocks } from '../window/window.mock';
 /**
  * Increase specs timeout.
  */
-jest.setTimeout(ETIMEOUT.FOREVER);
+jest.setTimeout(TIMEOUT.FOREVER);
 
 /**
  * Sets up Jest global mocks

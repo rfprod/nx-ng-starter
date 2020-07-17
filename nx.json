@@ -9,45 +9,45 @@
   "npmScope": "nx-ng-starter",
   "projects": {
     "api": {
-      "tags": ["scope:api", "type:application", "platform:desktop"]
+      "tags": ["scope:api", "type:application"]
     },
     "api-interface": {
-      "tags": ["scope:api", "type:data-access", "platform:desktop"]
+      "tags": ["scope:api-interface", "type:data-access"]
     },
     "mocks-core": {
-      "tags": ["scope:mocks-core", "type:feature", "platform:desktop"]
+      "tags": ["scope:mocks-core", "type:feature"]
     },
     "nx-ng-starter": {
-      "tags": ["scope:nx-ng-starter", "type:application", "platform:desktop"]
+      "tags": ["scope:nx-ng-starter", "type:application"]
     },
     "nx-ng-starter-e2e": {
       "implicitDependencies": ["nx-ng-starter"],
-      "tags": []
+      "tags": ["scope:nx-ng-starter-e2e"]
     },
     "proto": {
-      "tags": ["scope:shared", "type:data-access"]
+      "tags": ["scope:proto", "type:data-access"]
     },
     "shared-core": {
-      "tags": ["scope:nx-ng-starter", "type:feature", "platform:desktop"]
+      "tags": ["scope:shared-core", "type:feature"]
     },
     "shared-store": {
-      "tags": ["scope:nx-ng-starter", "type:data-access", "platform:desktop"]
-    },
-    "shared-util": {
-      "tags": ["scope:nx-ng-starter", "type:util", "platform:desktop"]
+      "tags": ["scope:shared-store", "type:data-access"]
     },
     "shared-ui": {
-      "tags": ["scope:nx-ng-starter", "type:ui", "platform:desktop"]
+      "tags": ["scope:shared-ui", "type:ui"]
+    },
+    "shared-util": {
+      "tags": ["scope:shared-util", "type:util"]
     }
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
+        "cacheDirectory": "/tmp/nx/nx-ng-starter",
         "cacheableOperations": ["build", "lint", "test", "e2e"],
-        "runtimeCacheInputs": ["node -v", "echo $IMPORTANT_ENV_VAR"],
-        "cacheDirectory": "/tmp/nx/nx-ng-starter"
-      }
+        "runtimeCacheInputs": ["node -v", "echo $IMPORTANT_ENV_VAR"]
+      },
+      "runner": "@nrwl/workspace/tasks-runners/default"
     }
   }
 }

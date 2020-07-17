@@ -14,17 +14,6 @@
         "build": {
           "builder": "@nrwl/node:build",
           "configurations": {
-            "production": {
-              "extractLicenses": true,
-              "fileReplacements": [
-                {
-                  "replace": "apps/api/src/environments/environment.ts",
-                  "with": "apps/api/src/environments/environment.prod.ts"
-                }
-              ],
-              "inspect": false,
-              "optimization": true
-            },
             "firebase": {
               "extractLicenses": true,
               "fileReplacements": [
@@ -35,14 +24,25 @@
               ],
               "inspect": false,
               "optimization": true
+            },
+            "production": {
+              "extractLicenses": true,
+              "fileReplacements": [
+                {
+                  "replace": "apps/api/src/environments/environment.ts",
+                  "with": "apps/api/src/environments/environment.prod.ts"
+                }
+              ],
+              "inspect": false,
+              "optimization": true
             }
           },
           "options": {
             "assets": ["apps/api/src/assets"],
+            "buildLibsFromSource": true,
             "main": "apps/api/src/main.ts",
             "outputPath": "dist/apps/api",
-            "tsConfig": "apps/api/tsconfig.app.json",
-            "buildLibsFromSource": true
+            "tsConfig": "apps/api/tsconfig.app.json"
           }
         },
         "lint": {
@@ -56,11 +56,11 @@
         "serve": {
           "builder": "@nrwl/node:execute",
           "configurations": {
-            "production": {
-              "buildTarget": "api:build:production"
-            },
             "firebase": {
               "buildTarget": "api:build:firebase"
+            },
+            "production": {
+              "buildTarget": "api:build:production"
             }
           },
           "options": {
@@ -216,6 +216,13 @@
             }
           },
           "options": {
+            "allowedCommonJsDependencies": [
+              "node_modules/hammerjs/hammer.js",
+              "google-protobuf/google/protobuf/any_pb.js",
+              "protobufjs/minimal",
+              "zen-observable",
+              "apollo-upload-client"
+            ],
             "aot": true,
             "assets": [
               "apps/nx-ng-starter/src/favicon.ico",
@@ -238,14 +245,7 @@
               "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "apps/nx-ng-starter/src/styles.scss"
             ],
-            "tsConfig": "apps/nx-ng-starter/tsconfig.app.json",
-            "allowedCommonJsDependencies": [
-              "node_modules/hammerjs/hammer.js",
-              "google-protobuf/google/protobuf/any_pb.js",
-              "protobufjs/minimal",
-              "zen-observable",
-              "apollo-upload-client"
-            ]
+            "tsConfig": "apps/nx-ng-starter/tsconfig.app.json"
           }
         },
         "extract-i18n": {
@@ -404,119 +404,119 @@
       "sourceRoot": "libs/shared-core/src"
     },
     "shared-store": {
-      "projectType": "library",
-      "root": "libs/shared-store",
-      "sourceRoot": "libs/shared-store/src",
-      "prefix": "nx-ng-starter",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/shared-store/.eslintrc",
+            "exclude": ["**/node_modules/**", "!libs/shared-store/**/*"],
             "tsConfig": [
               "libs/shared-store/tsconfig.lib.json",
               "libs/shared-store/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/shared-store/**/*"]
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/shared-store/jest.config.js",
-            "tsConfig": "libs/shared-store/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "libs/shared-store/src/test-setup.ts"
+            "setupFile": "libs/shared-store/src/test-setup.ts",
+            "tsConfig": "libs/shared-store/tsconfig.spec.json"
           }
         }
       },
-      "schematics": {
-        "@nrwl/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "shared-util": {
-      "projectType": "library",
-      "root": "libs/shared-util",
-      "sourceRoot": "libs/shared-util/src",
       "prefix": "nx-ng-starter",
-      "architect": {
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "eslintConfig": "libs/shared-util/.eslintrc",
-            "tsConfig": [
-              "libs/shared-util/tsconfig.lib.json",
-              "libs/shared-util/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/shared-util/**/*"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/shared-util/jest.config.js",
-            "tsConfig": "libs/shared-util/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/shared-util/src/test-setup.ts"
-          }
-        }
-      },
+      "projectType": "library",
+      "root": "libs/shared-store",
       "schematics": {
         "@nrwl/angular:component": {
           "style": "scss"
         }
-      }
+      },
+      "sourceRoot": "libs/shared-store/src"
     },
     "shared-ui": {
-      "projectType": "library",
-      "root": "libs/shared-ui",
-      "sourceRoot": "libs/shared-ui/src",
-      "prefix": "nx-ng-starter",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/shared-ui/.eslintrc",
-            "tsConfig": ["libs/shared-ui/tsconfig.lib.json", "libs/shared-ui/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!libs/shared-ui/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/shared-ui/**/*"],
+            "tsConfig": ["libs/shared-ui/tsconfig.lib.json", "libs/shared-ui/tsconfig.spec.json"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/shared-ui/jest.config.js",
-            "tsConfig": "libs/shared-ui/tsconfig.spec.json",
             "passWithNoTests": true,
-            "setupFile": "libs/shared-ui/src/test-setup.ts"
+            "setupFile": "libs/shared-ui/src/test-setup.ts",
+            "tsConfig": "libs/shared-ui/tsconfig.spec.json"
           }
         }
       },
+      "prefix": "nx-ng-starter",
+      "projectType": "library",
+      "root": "libs/shared-ui",
       "schematics": {
         "@nrwl/angular:component": {
           "style": "scss"
         }
-      }
+      },
+      "sourceRoot": "libs/shared-ui/src"
+    },
+    "shared-util": {
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/shared-util/.eslintrc",
+            "exclude": ["**/node_modules/**", "!libs/shared-util/**/*"],
+            "tsConfig": [
+              "libs/shared-util/tsconfig.lib.json",
+              "libs/shared-util/tsconfig.spec.json"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared-util/jest.config.js",
+            "passWithNoTests": true,
+            "setupFile": "libs/shared-util/src/test-setup.ts",
+            "tsConfig": "libs/shared-util/tsconfig.spec.json"
+          }
+        }
+      },
+      "prefix": "nx-ng-starter",
+      "projectType": "library",
+      "root": "libs/shared-util",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "sourceRoot": "libs/shared-util/src"
     }
   },
   "schematics": {
     "@nrwl/angular:application": {
       "e2eTestRunner": "cypress",
-      "unitTestRunner": "jest",
-      "style": "scss"
+      "style": "scss",
+      "unitTestRunner": "jest"
     },
     "@nrwl/angular:library": {
-      "unitTestRunner": "jest",
-      "style": "scss"
+      "style": "scss",
+      "unitTestRunner": "jest"
     },
     "@nrwl/schematics:application": {
       "framework": "angular",
       "style": "scss"
     },
     "@nrwl/schematics:library": {
-      "unitTestRunner": "jest",
-      "style": "scss"
+      "style": "scss",
+      "unitTestRunner": "jest"
     }
   },
   "version": 1
