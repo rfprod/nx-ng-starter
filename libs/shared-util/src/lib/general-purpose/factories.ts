@@ -1,13 +1,13 @@
 /**
- * Window getter for DI.
+ * Window factory.
  */
-export function getWindow() {
+export function windowFactory() {
   return window;
 }
 
 /**
- * Document getter for DI.
+ * Document factory.
  */
-export function getDocument() {
+export function documentFactory() {
   return window.document;
 }

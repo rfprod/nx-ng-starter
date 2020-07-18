@@ -90,9 +90,9 @@ performModuleTesting() {
     ${DEFAULT}\n\n" "$TITLE"
 
   if [ "$4" = "watch" ]; then
-    ng test "$1" --passWithNoTests --watchAll
+    npx nx test "$1" --passWithNoTests --watchAll
   else
-    ng test "$1" --watch=false --silent --passWithNoTests || exitWithError
+    npx nx test "$1" --watch=false --silent --passWithNoTests || exitWithError
     copyReportToDist "$2" "$3" "$4"
   fi
 }

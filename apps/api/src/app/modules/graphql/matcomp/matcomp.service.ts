@@ -8,7 +8,7 @@ import {
 } from '@nx-ng-starter/api-interface';
 
 @Injectable()
-export class MatcompService implements IMatcompQuery, IMatcompMutation {
+export class ApiMatcompService implements IMatcompQuery, IMatcompMutation {
   private readonly matcomps: Matcomp[] = [];
 
   public create(input: NewMatcompInput) {

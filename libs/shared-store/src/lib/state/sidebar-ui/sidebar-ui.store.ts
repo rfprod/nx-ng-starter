@@ -5,10 +5,10 @@ import { actionPayloadConstructor } from '@nx-ng-starter/shared-util';
 import { ISiedbarUiStateModel, TSidebarUiPayload } from './sidebar-ui.interface';
 
 const createAction = actionPayloadConstructor('SidebarUI');
-const setSidebarUiState = createAction<TSidebarUiPayload>('Set Sidebar UI state');
+const setAppSidebarUiState = createAction<TSidebarUiPayload>('Set Sidebar UI state');
 
 const sidebarUiActions = {
-  setSidebarUiState,
+  setAppSidebarUiState,
 };
 
 @State<ISiedbarUiStateModel>({
@@ -20,7 +20,7 @@ const sidebarUiActions = {
 @Injectable({
   providedIn: 'root',
 })
-class SidebarUiState {
+class AppSidebarUiState {
   @Selector()
   public static getSidebarUi(state: ISiedbarUiStateModel) {
     return state;
@@ -31,8 +31,8 @@ class SidebarUiState {
     return state.sidebarOpened;
   }
 
-  @Action(setSidebarUiState)
-  public setSidebarUiState(
+  @Action(setAppSidebarUiState)
+  public setAppSidebarUiState(
     ctx: StateContext<ISiedbarUiStateModel>,
     { payload }: TSidebarUiPayload,
   ) {
@@ -40,4 +40,4 @@ class SidebarUiState {
   }
 }
 
-export { SidebarUiState, sidebarUiActions };
+export { AppSidebarUiState, sidebarUiActions };

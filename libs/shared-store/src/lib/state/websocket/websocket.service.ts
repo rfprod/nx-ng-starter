@@ -3,21 +3,21 @@ import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
 
-import { WebsocketApiService } from './websocket-api.service';
-import { IWebsocketservice, IWebsocketStatePayload } from './websocket.interface';
-import { websocketActions, WebsocketState } from './websocket.store';
+import { AppWebsocketApiService } from './websocket-api.service';
+import { IAppWebsocketStatePayload, IWebsocketservice } from './websocket.interface';
+import { AppWebsocketState, websocketActions } from './websocket.store';
 
 @Injectable({
   providedIn: 'root',
 })
-export class WebsocketService implements IWebsocketservice {
-  public readonly events$ = this.store.select(WebsocketState.getEvents);
+export class AppWebsocketService implements IWebsocketservice {
+  public readonly events$ = this.store.select(AppWebsocketState.getEvents);
 
-  public readonly users$ = this.store.select(WebsocketState.getUsers);
+  public readonly users$ = this.store.select(AppWebsocketState.getUsers);
 
-  public readonly state$ = this.store.select(WebsocketState.getState);
+  public readonly state$ = this.store.select(AppWebsocketState.getState);
 
-  constructor(private readonly store: Store, protected api: WebsocketApiService) {
+  constructor(private readonly store: Store, protected api: AppWebsocketApiService) {
     void this.api
       .connect()
       .pipe(
@@ -32,7 +32,7 @@ export class WebsocketService implements IWebsocketservice {
       .subscribe();
   }
 
-  public setState(payload: IWebsocketStatePayload): Observable<IWebsocketStatePayload> {
+  public setState(payload: IAppWebsocketStatePayload): Observable<IAppWebsocketStatePayload> {
     return this.store.dispatch(new websocketActions.setState(payload));
   }
 
@@ -44,26 +44,26 @@ export class WebsocketService implements IWebsocketservice {
 /**
  * Websocket service factory constructor.
  */
-export type TWebsocketServiceFactoryConstructor = (
+export type TAppWebsocketServiceFactoryConstructor = (
   store: Store,
-  api: WebsocketApiService,
-) => WebsocketService;
+  api: AppWebsocketApiService,
+) => AppWebsocketService;
 
 /**
  * Websocket service factory.
  */
-export const websocketServiceFactory: TWebsocketServiceFactoryConstructor = (
+export const websocketServiceFactory: TAppWebsocketServiceFactoryConstructor = (
   store: Store,
-  api: WebsocketApiService,
+  api: AppWebsocketApiService,
 ) => {
-  return new WebsocketService(store, api);
+  return new AppWebsocketService(store, api);
 };
 
 /**
  * Websocket service provider.
  */
 export const websocketServiceProvider: Provider = {
-  provide: WebsocketService,
+  provide: AppWebsocketService,
   useFactory: websocketServiceFactory,
-  deps: [Store, WebsocketApiService],
+  deps: [Store, AppWebsocketApiService],
 };

@@ -1,17 +1,17 @@
 import { Test } from '@nestjs/testing';
 
-import { AuthUtilsService } from '../../auth-utils/service/auth-utils.service';
-import { AuthService } from './auth.service';
+import { ApiAuthUtilsService } from '../../auth-utils/service/auth-utils.service';
+import { ApiAuthService } from './auth.service';
 
-describe('AuthService', () => {
-  let service: AuthService;
+describe('ApiAuthService', () => {
+  let service: ApiAuthService;
 
   beforeAll(async () => {
     const app = await Test.createTestingModule({
-      providers: [AuthService, AuthUtilsService],
+      providers: [ApiAuthService, ApiAuthUtilsService],
     }).compile();
 
-    service = app.get<AuthService>(AuthService);
+    service = app.get<ApiAuthService>(ApiAuthService);
   });
 
   describe('getData', () => {

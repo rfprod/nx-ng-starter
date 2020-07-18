@@ -5,8 +5,10 @@ import {
   newTestBedMetadata,
   setupJestSpiesFor,
   TClassMemberSpiesObject,
+  testingEnvironment,
 } from '@nx-ng-starter/mocks-core';
 import { AppSharedCoreModule } from '@nx-ng-starter/shared-core';
+import { AppWebsocketModule } from '@nx-ng-starter/shared-store/state/websocket/websocket.module';
 
 import { AppIndexComponent } from './app-index.component';
 
@@ -15,6 +17,7 @@ describe('AppIndexComponent', () => {
     declarations: [AppIndexComponent],
     imports: [
       AppSharedCoreModule.forRoot(),
+      AppWebsocketModule.forRoot(testingEnvironment),
       RouterTestingModule.withRoutes([
         { path: '', component: AppIndexComponent },
         { path: '', redirectTo: '', pathMatch: 'full' },

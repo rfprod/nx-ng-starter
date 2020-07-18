@@ -2,19 +2,19 @@ import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
 import { NgxsModule } from '@ngxs/store';
 
 import { userServiceProvider } from './user.service';
-import { UserState } from './user.store';
+import { AppUserState } from './user.store';
 
 export const userModuleProviders: Provider[] = [userServiceProvider];
 
 @NgModule({
   declarations: [],
-  imports: [NgxsModule.forFeature([UserState])],
+  imports: [NgxsModule.forFeature([AppUserState])],
   providers: [...userModuleProviders],
 })
-export class UserModule {
-  public static forRoot(): ModuleWithProviders<UserModule> {
+export class AppUserModule {
+  public static forRoot(): ModuleWithProviders<AppUserModule> {
     return {
-      ngModule: UserModule,
+      ngModule: AppUserModule,
       providers: [...userModuleProviders],
     };
   }

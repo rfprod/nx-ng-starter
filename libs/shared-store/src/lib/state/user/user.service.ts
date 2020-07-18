@@ -5,28 +5,28 @@ import { map, tap } from 'rxjs/operators';
 
 import {
   AppUserStateModel,
+  IAppUserStatePayload,
   IUserHandlers,
   IUserObservableOutput,
-  IUserStatePayload,
 } from './user.interface';
-import { userActions, UserState } from './user.store';
+import { AppUserState, userActions } from './user.store';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserService {
+export class AppUserService {
   public readonly output: IUserObservableOutput = {
-    model$: this.store.select(UserState.model),
-    email$: this.store.select(UserState.email),
-    token$: this.store.select(UserState.token),
-    admin$: this.store.select(UserState.admin),
+    model$: this.store.select(AppUserState.model),
+    email$: this.store.select(AppUserState.email),
+    token$: this.store.select(AppUserState.token),
+    admin$: this.store.select(AppUserState.admin),
     isLoggedInSubscription$: this.store
-      .select(UserState.model)
+      .select(AppUserState.model)
       .pipe(map((model: AppUserStateModel) => (model.token ? true : false))),
   };
 
   public readonly handlers: IUserHandlers = {
-    setState: (payload: IUserStatePayload) => this.setState(payload),
+    setState: (payload: IAppUserStatePayload) => this.setState(payload),
   };
 
   constructor(private readonly store: Store) {
@@ -48,7 +48,7 @@ export class UserService {
     }
   }
 
-  private setState(payload: IUserStatePayload): Observable<AppUserStateModel> {
+  private setState(payload: IAppUserStatePayload): Observable<AppUserStateModel> {
     return this.store.dispatch(new userActions.setState(payload)).pipe(
       tap((state: AppUserStateModel) => {
         this.saveUserToLocalStorage(state);
@@ -60,20 +60,20 @@ export class UserService {
 /**
  * User service factory constructor.
  */
-export type TUserServiceFactoryConstructor = (store: Store) => UserService;
+export type TAppUserServiceFactoryConstructor = (store: Store) => AppUserService;
 
 /**
  * User service factory.
  */
-export const userServiceFactory: TUserServiceFactoryConstructor = (store: Store) => {
-  return new UserService(store);
+export const userServiceFactory: TAppUserServiceFactoryConstructor = (store: Store) => {
+  return new AppUserService(store);
 };
 
 /**
  * User service provider.
  */
 export const userServiceProvider: Provider = {
-  provide: UserService,
+  provide: AppUserService,
   useFactory: userServiceFactory,
   deps: [Store],
 };

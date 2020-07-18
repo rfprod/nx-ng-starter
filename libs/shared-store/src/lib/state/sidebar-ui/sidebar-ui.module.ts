@@ -2,19 +2,19 @@ import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NgxsModule } from '@ngxs/store';
 
-import { SidebarUiService } from './sidebar-ui.service';
-import { SidebarUiState } from './sidebar-ui.store';
+import { AppSidebarUiService } from './sidebar-ui.service';
+import { AppSidebarUiState } from './sidebar-ui.store';
 
-export const sidebarUiModuleProviders: Provider[] = [SidebarUiService];
+export const sidebarUiModuleProviders: Provider[] = [AppSidebarUiService];
 
 @NgModule({
-  imports: [MatSidenavModule, NgxsModule.forFeature([SidebarUiState])],
+  imports: [MatSidenavModule, NgxsModule.forFeature([AppSidebarUiState])],
   providers: [...sidebarUiModuleProviders],
 })
-export class SidebarUiModule {
-  public static forRoot(): ModuleWithProviders<SidebarUiModule> {
+export class AppSidebarUiModule {
+  public static forRoot(): ModuleWithProviders<AppSidebarUiModule> {
     return {
-      ngModule: SidebarUiModule,
+      ngModule: AppSidebarUiModule,
       providers: [...sidebarUiModuleProviders],
     };
   }

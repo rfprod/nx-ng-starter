@@ -7,7 +7,7 @@ import {
   TClassMemberSpiesObject,
 } from '@nx-ng-starter/mocks-core';
 import { AppSharedCoreModule } from '@nx-ng-starter/shared-core';
-import { AppMarkdownService } from '@nx-ng-starter/shared-core/services';
+import { AppMarkdownService } from '@nx-ng-starter/shared-services';
 
 import { AppIndexHomeComponent } from './app-index-home.component';
 

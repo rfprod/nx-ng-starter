@@ -18,7 +18,7 @@ const setState = createAction<TUserPayload>('Set state');
 @Injectable({
   providedIn: 'root',
 })
-class UserState {
+class AppUserState {
   @Selector()
   public static model(state: AppUserStateModel) {
     return state;
@@ -54,4 +54,4 @@ class UserState {
 const userActions = {
   setState,
 };
-export { UserState, userActions };
+export { AppUserState, userActions };

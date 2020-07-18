@@ -2,19 +2,19 @@ import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { GqlModuleOptions, GraphQLModule } from '@nestjs/graphql';
 import { ApiEnvironment, DateScalar } from '@nx-ng-starter/api-interface';
 
-import { GqlMatcompModule } from './matcomp/matcomp.module';
+import { ApiGqlMatcompModule } from './matcomp/matcomp.module';
 
 export const gqlApiModuleProviders: Provider[] = [DateScalar];
 
 @Module({
-  imports: [GqlMatcompModule.forRoot()],
+  imports: [ApiGqlMatcompModule.forRoot()],
   providers: [...gqlApiModuleProviders],
 })
-export class GqlApiModule {
+export class ApiGqlModule {
   public static forRoot(environment: ApiEnvironment): DynamicModule {
     const gqlOptions: GqlModuleOptions = {
       path: '/api/graphql',
-      include: [GqlMatcompModule],
+      include: [ApiGqlMatcompModule],
       debug: environment.production ? false : true,
       playground: environment.production ? false : true,
       installSubscriptionHandlers: true,
@@ -25,7 +25,7 @@ export class GqlApiModule {
       },
     };
     return {
-      module: GqlApiModule,
+      module: ApiGqlModule,
       imports: [GraphQLModule.forRoot(gqlOptions)],
       providers: [...gqlApiModuleProviders],
     };

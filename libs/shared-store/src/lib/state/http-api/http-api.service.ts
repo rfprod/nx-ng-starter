@@ -1,17 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, Provider } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { AppHttpHandlersService } from '@nx-ng-starter/shared-core/services';
-import { Message } from '@nx-ng-starter/shared-util';
 import { tap } from 'rxjs/operators';
 
 import {
+  IAppHttpApiStatePayload,
   IHttpApiHandlers,
   IHttpApiInterface,
   IHttpApiObservableOutput,
-  IHttpApiStatePayload,
+  IPingResponse,
 } from './http-api.interface';
-import { httpApiActions, HttpApiState } from './http-api.store';
+import { AppHttpApiState, httpApiActions } from './http-api.store';
+import { AppHttpHandlersService } from './http-handlers.service';
 
 /**
  * Http API service.
@@ -21,13 +21,13 @@ import { httpApiActions, HttpApiState } from './http-api.store';
 })
 export class AppHttpApiService {
   public readonly output: IHttpApiObservableOutput = {
-    all$: this.store.select(HttpApiState.allData),
-    ping$: this.store.select(HttpApiState.ping),
+    all$: this.store.select(AppHttpApiState.allData),
+    ping$: this.store.select(AppHttpApiState.ping),
   };
 
   public readonly handlers: IHttpApiHandlers = {
     ping: {
-      cached: () => this.store.selectOnce(HttpApiState.ping),
+      cached: () => this.store.selectOnce(AppHttpApiState.ping),
       request: () => this.http.ping(),
     },
   };
@@ -38,15 +38,15 @@ export class AppHttpApiService {
   private readonly http: IHttpApiInterface = {
     ping: () => {
       const endpoint = this.httpHandlers.getEndpoint('ping');
-      const observable = this.httpClient.get<Message>(endpoint).pipe(
-        tap((result: Message) => {
-          const payload: IHttpApiStatePayload = {
+      const observable = this.httpClient.get<IPingResponse>(endpoint).pipe(
+        tap(result => {
+          const payload: IAppHttpApiStatePayload = {
             ping: result.message,
           };
           void this.store.dispatch(new httpApiActions.ping(payload));
         }),
       );
-      return this.httpHandlers.pipeHttpResponse<Message>(observable);
+      return this.httpHandlers.pipeHttpResponse<IPingResponse>(observable);
     },
   };
 

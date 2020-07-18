@@ -1,15 +1,15 @@
 import { async, TestBed } from '@angular/core/testing';
 
-import { MocksCoreModule } from './mocks-core.module';
+import { AppMocksCoreModule } from './mocks-core.module';
 
-describe('MocksCoreModule', () => {
+describe('AppMocksCoreModule', () => {
   beforeEach(async(() => {
     void TestBed.configureTestingModule({
-      imports: [MocksCoreModule],
+      imports: [AppMocksCoreModule],
     }).compileComponents();
   }));
 
   it('should create', () => {
-    expect(MocksCoreModule).toBeDefined();
+    expect(AppMocksCoreModule).toBeDefined();
   });
 });

@@ -8,23 +8,23 @@ import {
 } from '@nx-ng-starter/api-interface';
 import { PubSub } from 'apollo-server-express';
 
-import { MatcompGuard } from './guard/matcomp.guard';
-import { MatcompService } from './matcomp.service';
+import { ApiMatcompGuard } from './guard/matcomp.guard';
+import { ApiMatcompService } from './matcomp.service';
 
 const pubSub = new PubSub();
 
 @Resolver(() => MatcompModel)
-export class MatcompResolver {
-  constructor(private readonly service: MatcompService) {}
+export class ApiMatcompResolver {
+  constructor(private readonly service: ApiMatcompService) {}
 
   @Query(() => [MatcompModel])
-  @UseGuards(MatcompGuard)
+  @UseGuards(ApiMatcompGuard)
   public async matcomps(@Args() matcompArgs: MatcompArgs) {
     return this.service.findAll(matcompArgs);
   }
 
   @Query(() => MatcompModel)
-  @UseGuards(MatcompGuard)
+  @UseGuards(ApiMatcompGuard)
   public async matcomp(
     @Args('id')
     id: string,
@@ -37,7 +37,7 @@ export class MatcompResolver {
   }
 
   @Mutation(() => MatcompModel)
-  @UseGuards(MatcompGuard)
+  @UseGuards(ApiMatcompGuard)
   public async create(@Args('input') args: NewMatcompInputDto) {
     const createdMatcomp = this.service.create(args);
     const matcompSubscription: MatcompSubscription = new MatcompSubscription(createdMatcomp);
@@ -46,13 +46,13 @@ export class MatcompResolver {
   }
 
   @Subscription(() => MatcompModel)
-  @UseGuards(MatcompGuard)
+  @UseGuards(ApiMatcompGuard)
   public matcompCreated() {
     return pubSub.asyncIterator('matcompCreated');
   }
 
   @Mutation(() => Boolean)
-  @UseGuards(MatcompGuard)
+  @UseGuards(ApiMatcompGuard)
   public async remove(@Args('id') id: string) {
     const removedMatcomp = this.service.remove(id);
     const matcompSubscription: MatcompSubscription = new MatcompSubscription(removedMatcomp);
@@ -61,7 +61,7 @@ export class MatcompResolver {
   }
 
   @Subscription(() => MatcompModel)
-  @UseGuards(MatcompGuard)
+  @UseGuards(ApiMatcompGuard)
   public matcompRemoved() {
     return pubSub.asyncIterator('matcompRemoved');
   }

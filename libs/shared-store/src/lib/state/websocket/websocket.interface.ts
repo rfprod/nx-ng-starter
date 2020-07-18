@@ -12,23 +12,23 @@ export interface IWebsocketResponseEvent<T = unknown> {
   data: T;
 }
 
-export interface IWebsocketStateModel {
+export interface IAppWebsocketStateModel {
   users: number;
   events: IWebsocketResponseEvent[];
 }
 
-export interface IWebsocketStatePayload {
+export interface IAppWebsocketStatePayload {
   users?: number;
   events?: IWebsocketResponseEvent[];
 }
 
-export type TWebsocketPayload = IActionPayload<IWebsocketStatePayload>;
+export type TWebsocketPayload = IActionPayload<IAppWebsocketStatePayload>;
 
 export interface IWebsocketservice {
   events$: Observable<IWebsocketResponseEvent[]>;
   users$: Observable<number>;
-  state$: Observable<IWebsocketStateModel>;
-  setState(payload: IWebsocketStatePayload): void;
+  state$: Observable<IAppWebsocketStateModel>;
+  setState(payload: IAppWebsocketStatePayload): void;
 }
 
 export interface IWebsocketConfig extends WebSocketSubjectConfig<IWebsocketRequestEvent> {

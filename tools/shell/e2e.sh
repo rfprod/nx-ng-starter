@@ -116,9 +116,9 @@ performModuleTesting() {
     ${DEFAULT}\n\n" "$TITLE" "$1" "$2" "$3" "$4" "$5"
 
   if [ "$4" = "headless" ]; then
-    ng e2e "$1" --headless
+    npx nx e2e "$1" --headless
   else
-    ng e2e "$1"
+    npx nx e2e "$1"
   fi
 
   copyReportToDist "$2" "$3" "$5"

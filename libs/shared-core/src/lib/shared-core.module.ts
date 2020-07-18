@@ -3,16 +3,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-import { SharedStoreModule } from '../../../shared-store/src/lib/shared-store.module';
+import { AppSharedStoreModule } from '@nx-ng-starter/shared-store';
 import {
-  AppMaterialModule,
-  appMaterialModuleProviders,
-  AppTranslateModule,
-  appTranslateModuleProviders,
-} from '../../../shared-ui/src/lib';
-import { APP_ENV, AppWebEnvironment } from './interfaces';
-import { appSharedCoreModuleProviders, AppSharedCoreServicesModule } from './services';
+  AppSharedUiMaterialModule,
+  sharedUiMaterialModuleProviders,
+} from '@nx-ng-starter/shared-ui-material';
+import {
+  AppSharedUiTranslateModule,
+  appSharedUiTranslateModuleProviders,
+} from '@nx-ng-starter/shared-ui-translate';
+import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@nx-ng-starter/shared-util';
+
+import { appSharedCoreModuleProviders } from './providers/shared-core-module.providers';
 
 /**
  * Shared core module.
@@ -25,20 +27,18 @@ import { appSharedCoreModuleProviders, AppSharedCoreServicesModule } from './ser
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppMaterialModule.forRoot(),
-    AppTranslateModule.forRoot(),
-    AppSharedCoreServicesModule.forRoot(),
-    SharedStoreModule,
+    AppSharedUiMaterialModule.forRoot(),
+    AppSharedUiTranslateModule.forRoot(),
+    AppSharedStoreModule,
   ],
   exports: [
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppMaterialModule,
-    AppTranslateModule,
-    AppSharedCoreServicesModule,
-    SharedStoreModule,
+    AppSharedUiMaterialModule,
+    AppSharedUiTranslateModule,
+    AppSharedStoreModule,
   ],
 })
 export class AppSharedCoreModule {
@@ -46,15 +46,17 @@ export class AppSharedCoreModule {
    * Provides services.
    * @param environment application environment, if omitted default environment will be provided.
    */
-  public static forRoot(environment?: AppWebEnvironment): ModuleWithProviders<AppSharedCoreModule> {
+  public static forRoot(
+    environment?: IWebClientAppEnvironment,
+  ): ModuleWithProviders<AppSharedCoreModule> {
     return {
       ngModule: AppSharedCoreModule,
       providers: [
-        ...appMaterialModuleProviders,
-        ...appTranslateModuleProviders,
+        ...sharedUiMaterialModuleProviders,
+        ...appSharedUiTranslateModuleProviders,
         ...appSharedCoreModuleProviders,
         {
-          provide: APP_ENV,
+          provide: WEB_CLIENT_APP_ENV,
           useValue: environment,
         },
       ],

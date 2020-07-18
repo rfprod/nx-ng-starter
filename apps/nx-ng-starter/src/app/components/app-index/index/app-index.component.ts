@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { WebsocketService } from '@nx-ng-starter/shared-store/state/websocket/websocket.service';
+import { AppWebsocketService } from '@nx-ng-starter/shared-store/state/websocket/websocket.service';
 
 /**
  * Application index component.
@@ -11,7 +11,7 @@ import { WebsocketService } from '@nx-ng-starter/shared-store/state/websocket/we
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppIndexComponent {
-  constructor(private readonly ws: WebsocketService) {
+  constructor(private readonly ws: AppWebsocketService) {
     this.ws.getData();
   }
 }

@@ -1,11 +1,11 @@
 import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
 import { NgxsModule } from '@ngxs/store';
-import { AppWebEnvironment } from '@nx-ng-starter/shared-core/interfaces';
+import { IWebClientAppEnvironment } from '@nx-ng-starter/shared-util';
 
 import { websocketApiServiceProvider } from './websocket-api.service';
 import { WS_CONFIG } from './websocket.interface';
 import { websocketServiceProvider } from './websocket.service';
-import { WebsocketState } from './websocket.store';
+import { AppWebsocketState } from './websocket.store';
 
 export const websocketModuleProviders: Provider[] = [
   websocketApiServiceProvider,
@@ -13,12 +13,12 @@ export const websocketModuleProviders: Provider[] = [
 ];
 
 @NgModule({
-  imports: [NgxsModule.forFeature([WebsocketState])],
+  imports: [NgxsModule.forFeature([AppWebsocketState])],
 })
-export class WebsocketModule {
-  public static forRoot(env: AppWebEnvironment): ModuleWithProviders<WebsocketModule> {
+export class AppWebsocketModule {
+  public static forRoot(env: IWebClientAppEnvironment): ModuleWithProviders<AppWebsocketModule> {
     return {
-      ngModule: WebsocketModule,
+      ngModule: AppWebsocketModule,
       providers: [
         {
           provide: WS_CONFIG,

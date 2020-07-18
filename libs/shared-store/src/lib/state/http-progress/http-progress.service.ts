@@ -6,25 +6,25 @@ import { Store } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 
 import {
+  IAppHttpProgressStatePayload,
   IHttpProgressHandlers,
   IHttpProgressObservableOutput,
-  IHttpProgressStatePayload,
 } from './http-progress.interface';
-import { httpProgressActions, HttpProgressState } from './http-progress.store';
+import { AppHttpProgressState, httpProgressActions } from './http-progress.store';
 
 @Injectable({
   providedIn: 'root',
 })
-export class HttpProgressService {
+export class AppHttpProgressService {
   public readonly output: IHttpProgressObservableOutput = {
-    all$: this.store.select(HttpProgressState.allProgress),
-    mainView$: this.store.select(HttpProgressState.mainViewProgress),
+    all$: this.store.select(AppHttpProgressState.allProgress),
+    mainView$: this.store.select(AppHttpProgressState.mainViewProgress),
   };
 
   public readonly handlers: IHttpProgressHandlers = {
     mainView: {
-      start: () => this.startProgress(this.newHttpProgressState(true)),
-      stop: () => this.stopProgress(this.newHttpProgressState(false)),
+      start: () => this.startProgress(this.newAppHttpProgressState(true)),
+      stop: () => this.stopProgress(this.newAppHttpProgressState(false)),
       tapStopperObservable: <T>() => {
         return tap<T>(
           () => {
@@ -40,8 +40,8 @@ export class HttpProgressService {
 
   constructor(private readonly store: Store, private readonly progressRef: OverlayRef) {}
 
-  private newHttpProgressState(mainView?: boolean): Partial<IHttpProgressStatePayload> {
-    const payload: Partial<IHttpProgressStatePayload> =
+  private newAppHttpProgressState(mainView?: boolean): Partial<IAppHttpProgressStatePayload> {
+    const payload: Partial<IAppHttpProgressStatePayload> =
       typeof mainView === 'boolean' ? { mainView } : {};
     return payload;
   }
@@ -54,12 +54,12 @@ export class HttpProgressService {
     this.progressRef.detach();
   }
 
-  private startProgress(payload: Partial<IHttpProgressStatePayload>) {
+  private startProgress(payload: Partial<IAppHttpProgressStatePayload>) {
     this.attachIndicator();
     return this.store.dispatch(new httpProgressActions.startProgress(payload));
   }
 
-  private stopProgress(payload: Partial<IHttpProgressStatePayload>) {
+  private stopProgress(payload: Partial<IAppHttpProgressStatePayload>) {
     this.detachIndicator();
     return this.store.dispatch(new httpProgressActions.stopProgress(payload));
   }
@@ -68,15 +68,15 @@ export class HttpProgressService {
 /**
  * Http progress service factory constructor.
  */
-export type THttpProgressServiceFactoryConstructor = (
+export type TAppHttpProgressServiceFactoryConstructor = (
   store: Store,
   overlay: Overlay,
-) => HttpProgressService;
+) => AppHttpProgressService;
 
 /**
  * Http progress service factory.
  */
-export const httpProgressServiceFactory: THttpProgressServiceFactoryConstructor = (
+export const httpProgressServiceFactory: TAppHttpProgressServiceFactoryConstructor = (
   store: Store,
   overlay: Overlay,
 ) => {
@@ -85,14 +85,14 @@ export const httpProgressServiceFactory: THttpProgressServiceFactoryConstructor 
     backdropClass: 'global-spinner-backdrop-dark',
     positionStrategy: overlay.position().global().centerHorizontally().centerVertically(),
   });
-  return new HttpProgressService(store, progressRef);
+  return new AppHttpProgressService(store, progressRef);
 };
 
 /**
  * Http progress service provider.
  */
 export const httpProgressServiceProvider: Provider = {
-  provide: HttpProgressService,
+  provide: AppHttpProgressService,
   useFactory: httpProgressServiceFactory,
   deps: [Store, Overlay],
 };

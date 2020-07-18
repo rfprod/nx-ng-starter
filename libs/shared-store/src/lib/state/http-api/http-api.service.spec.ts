@@ -1,39 +1,29 @@
 import { HttpRequest } from '@angular/common/http';
 import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { async, TestBed, TestModuleMetadata } from '@angular/core/testing';
-import {
-  getTestBedConfig,
-  httpHandlersProviders,
-  newTestBedMetadata,
-} from '@nx-ng-starter/mocks-core';
-import { AppHttpHandlersService, AppToasterService } from '@nx-ng-starter/shared-core/services';
-import { AppMaterialModule, AppTranslateModule } from '@nx-ng-starter/shared-ui';
-import { Apollo, ApolloModule } from 'apollo-angular';
-import { HttpLinkModule } from 'apollo-angular-link-http';
+import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
+import { AppSharedServicesModule, AppToasterService } from '@nx-ng-starter/shared-services';
+import { AppSharedUiTranslateModule } from '@nx-ng-starter/shared-ui-translate';
+import { Apollo } from 'apollo-angular';
 import { of } from 'rxjs';
 
 import {
-  HttpProgressModule,
+  AppHttpProgressModule,
   httpProgressModuleProviders,
 } from '../http-progress/http-progress.module';
-import { UserService } from '../user/user.service';
+import { AppUserService } from '../user/user.service';
 import { httpApiModuleProviders } from './http-api.module';
 import { AppHttpApiService } from './http-api.service';
+import { AppHttpHandlersService } from './http-handlers.service';
 
 describe('AppHttpApiService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     imports: [
-      AppMaterialModule,
-      AppTranslateModule,
-      ApolloModule,
-      HttpLinkModule,
-      HttpProgressModule.forRoot(),
+      AppSharedUiTranslateModule,
+      AppHttpProgressModule.forRoot(),
+      AppSharedServicesModule.forRoot(),
     ],
-    providers: [
-      ...httpHandlersProviders,
-      ...httpProgressModuleProviders,
-      ...httpApiModuleProviders,
-    ],
+    providers: [...httpProgressModuleProviders, ...httpApiModuleProviders],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
@@ -41,7 +31,7 @@ describe('AppHttpApiService', () => {
   let apollo: Apollo;
   let httpHandlers: AppHttpHandlersService;
   let toaster: AppToasterService;
-  let user: UserService;
+  let user: AppUserService;
   let spy: {
     httpHandlers: {
       pipeHttpResponse: jest.SpyInstance;
@@ -59,7 +49,7 @@ describe('AppHttpApiService', () => {
         toaster = TestBed.inject(AppToasterService);
         httpHandlers = TestBed.inject(AppHttpHandlersService);
         apollo = TestBed.inject(Apollo);
-        user = TestBed.inject(UserService);
+        user = TestBed.inject(AppUserService);
         spy = {
           httpHandlers: {
             pipeHttpResponse: jest.spyOn(httpHandlers, 'pipeHttpResponse').mockReturnValue(of({})),

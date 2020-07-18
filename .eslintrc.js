@@ -137,7 +137,7 @@ module.exports = {
       },
       {
         selector: 'class',
-        // prefix: ['App'],
+        prefix: ['App'],
         format: ['StrictPascalCase'],
         leadingUnderscore: 'forbid',
         trailingUnderscore: 'forbid',
@@ -333,15 +333,18 @@ module.exports = {
     'rxjs/no-tap': 'off', // keep off
     'rxjs/no-exposed-subjects': 'error',
     yoda: ['error', 'never'],
-    // TODO: nx workspace rules; revise this config and switch to error once there're no warnings
     '@nrwl/nx/enforce-module-boundaries': [
-      'warn',
+      'error',
       {
         allow: [],
         depConstraints: [
           {
+            sourceTag: 'scope:api',
+            onlyDependOnLibsWithTags: ['scope:api-interface', 'scope:proto'],
+          },
+          {
             sourceTag: 'scope:mocks-core',
-            onlyDependOnLibsWithTags: [],
+            onlyDependOnLibsWithTags: ['*'],
           },
           {
             sourceTag: 'scope:proto',
@@ -359,11 +362,19 @@ module.exports = {
               'scope:shared-store',
               'scope:shared-ui',
               'scope:shared-util',
+              'scope:shared-ui-material',
+              'scope:shared-ui-translate',
             ],
           },
           {
             sourceTag: 'scope:shared-store',
-            onlyDependOnLibsWithTags: ['scope:mocks-core', 'scope:proto', 'scope:shared-util'],
+            onlyDependOnLibsWithTags: [
+              'scope:mocks-core',
+              'scope:proto',
+              'scope:shared-util',
+              'scope:shared-services',
+              'scope:shared-ui-translate',
+            ],
           },
           {
             sourceTag: 'scope:shared-ui',
@@ -380,19 +391,31 @@ module.exports = {
           },
           {
             sourceTag: 'scope:nx-ng-starter',
-            onlyDependOnLibsWithTags: ['scope:mocks-core', 'scope:proto', 'scope:shared-*'],
+            onlyDependOnLibsWithTags: [
+              'scope:mocks-core',
+              'scope:proto',
+              'scope:shared-store',
+              'scope:shared-services',
+              'type:feature',
+              'type:ui',
+              'type:util',
+            ],
+          },
+          {
+            sourceTag: 'scope:nx-ng-starter-e2e',
+            onlyDependOnLibsWithTags: ['scope:shared-util'],
           },
           {
             sourceTag: 'type:feature',
-            onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util'],
+            onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util', 'type:mocks'],
           },
           {
             sourceTag: 'type:data-access',
-            onlyDependOnLibsWithTags: ['type:data-access', 'type:util'],
+            onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util', 'type:mocks'],
           },
           {
             sourceTag: 'type:ui',
-            onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util'],
+            onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util', 'type:mocks'],
           },
           {
             sourceTag: 'type:util',
@@ -400,7 +423,7 @@ module.exports = {
           },
           {
             sourceTag: 'type:e2e',
-            onlyDependOnLibsWithTags: [],
+            onlyDependOnLibsWithTags: ['scope:util'],
           },
         ],
       },
@@ -465,6 +488,7 @@ module.exports = {
         'max-lines': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-unused-vars': 'off',
+        '@typescript-eslint/naming-convention': 'off',
       },
     },
   ],

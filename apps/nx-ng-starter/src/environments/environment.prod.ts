@@ -1,9 +1,9 @@
-import { AppWebEnvironment } from '@nx-ng-starter/shared-core/interfaces';
+import { IWebClientAppEnvironment } from '@nx-ng-starter/shared-util';
 
 /**
  * Production environment variables.
  */
-export const environment: AppWebEnvironment = {
+export const environment: IWebClientAppEnvironment = {
   production: true,
   appName: 'Nx Ng Starter Client',
   api: window.location.origin.includes('localhost')

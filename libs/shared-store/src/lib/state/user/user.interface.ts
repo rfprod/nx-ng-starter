@@ -18,13 +18,13 @@ export class AppUserStateModel {
   }
 }
 
-export interface IUserStatePayload {
+export interface IAppUserStatePayload {
   email?: string;
   admin?: boolean;
   token?: string;
 }
 
-export type TUserPayload = IActionPayload<IUserStatePayload>;
+export type TUserPayload = IActionPayload<IAppUserStatePayload>;
 
 export interface IUserObservableOutput {
   model$: Observable<AppUserStateModel>;
@@ -35,5 +35,5 @@ export interface IUserObservableOutput {
 }
 
 export interface IUserHandlers {
-  setState(payload: IUserStatePayload): void;
+  setState(payload: IAppUserStatePayload): void;
 }

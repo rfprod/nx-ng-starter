@@ -1,18 +1,18 @@
 import { IActionPayload } from '@nx-ng-starter/shared-util';
 import { MonoTypeOperatorFunction, Observable } from 'rxjs';
 
-export interface IHttpProgressStateModel {
+export interface IAppHttpProgressStateModel {
   mainView: boolean;
 }
 
-export interface IHttpProgressStatePayload {
+export interface IAppHttpProgressStatePayload {
   mainView?: boolean;
 }
 
-export type THttpProgressPayload = IActionPayload<IHttpProgressStatePayload>;
+export type THttpProgressPayload = IActionPayload<IAppHttpProgressStatePayload>;
 
 export interface IHttpProgressObservableOutput {
-  all$: Observable<IHttpProgressStateModel>;
+  all$: Observable<IAppHttpProgressStateModel>;
   mainView$: Observable<boolean>;
 }
 

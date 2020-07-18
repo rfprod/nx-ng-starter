@@ -6,11 +6,11 @@ import {
   UserProfile,
 } from '@nx-ng-starter/api-interface';
 
-import { AuthService } from '../service/auth.service';
+import { ApiAuthService } from '../service/auth.service';
 
 @Controller()
-export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+export class ApiAuthController {
+  constructor(private readonly authService: ApiAuthService) {}
 
   @Get('ping')
   public ping(): Message {

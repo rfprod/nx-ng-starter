@@ -1,4 +1,4 @@
 import 'jest-preset-angular';
-import { setupJestJsdomGlobalMocks } from '@nx-ng-starter/mocks-core';
+import { setupJestJsdomGlobalMocks } from './lib/jest/jest-jsdom-globals.patch';
 
 setupJestJsdomGlobalMocks();
