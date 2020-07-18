@@ -9,11 +9,11 @@ import {
   UserToken,
 } from '@nx-ng-starter/api-interface';
 
-import { AuthUtilsService } from '../../auth-utils/service/auth-utils.service';
+import { ApiAuthUtilsService } from '../../auth-utils/service/auth-utils.service';
 
 @Injectable()
-export class AuthService {
-  constructor(private readonly authUtils: AuthUtilsService) {}
+export class ApiAuthService {
+  constructor(private readonly authUtils: ApiAuthUtilsService) {}
 
   public ping(): Message {
     return new Message({

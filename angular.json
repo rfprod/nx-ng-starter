@@ -498,6 +498,105 @@
         }
       },
       "sourceRoot": "libs/shared-util/src"
+    },
+    "shared-ui-material": {
+      "projectType": "library",
+      "root": "libs/shared-ui-material",
+      "sourceRoot": "libs/shared-ui-material/src",
+      "prefix": "nx-ng-starter",
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/shared-ui-material/.eslintrc",
+            "tsConfig": [
+              "libs/shared-ui-material/tsconfig.lib.json",
+              "libs/shared-ui-material/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/shared-ui-material/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared-ui-material/jest.config.js",
+            "tsConfig": "libs/shared-ui-material/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/shared-ui-material/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "shared-ui-translate": {
+      "projectType": "library",
+      "root": "libs/shared-ui-translate",
+      "sourceRoot": "libs/shared-ui-translate/src",
+      "prefix": "nx-ng-starter",
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/shared-ui-translate/.eslintrc",
+            "tsConfig": [
+              "libs/shared-ui-translate/tsconfig.lib.json",
+              "libs/shared-ui-translate/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/shared-ui-translate/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared-ui-translate/jest.config.js",
+            "tsConfig": "libs/shared-ui-translate/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/shared-ui-translate/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "shared-services": {
+      "projectType": "library",
+      "root": "libs/shared-services",
+      "sourceRoot": "libs/shared-services/src",
+      "prefix": "nx-ng-starter",
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/shared-services/.eslintrc",
+            "tsConfig": [
+              "libs/shared-services/tsconfig.lib.json",
+              "libs/shared-services/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**", "!libs/shared-services/**/*"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/shared-services/jest.config.js",
+            "tsConfig": "libs/shared-services/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/shared-services/src/test-setup.ts"
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
     }
   },
   "schematics": {

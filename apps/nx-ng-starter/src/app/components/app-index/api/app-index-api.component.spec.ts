@@ -8,6 +8,7 @@ import {
   setupJestSpiesFor,
   TClassMemberSpiesObject,
 } from '@nx-ng-starter/mocks-core';
+import { AppSharedUiTranslateModule } from '@nx-ng-starter/shared-ui-translate';
 
 import { AppIndexApiComponent } from './app-index-api.component';
 
@@ -15,6 +16,7 @@ describe('AppIndexApiComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     declarations: [AppIndexApiComponent],
     imports: [
+      AppSharedUiTranslateModule.forRoot(),
       RouterTestingModule.withRoutes([
         { path: '', component: AppIndexApiComponent },
         { path: '', redirectTo: '', pathMatch: 'full' },

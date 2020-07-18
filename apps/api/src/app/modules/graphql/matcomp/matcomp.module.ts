@@ -1,25 +1,25 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { DateScalar } from '@nx-ng-starter/api-interface';
 
-import { MatcompGuard } from './guard/matcomp.guard';
-import { MatcompResolver } from './matcomp.resolver';
-import { MatcompService } from './matcomp.service';
+import { ApiMatcompGuard } from './guard/matcomp.guard';
+import { ApiMatcompResolver } from './matcomp.resolver';
+import { ApiMatcompService } from './matcomp.service';
 
-const matcompModuleProviders: Provider[] = [
-  MatcompService,
-  MatcompResolver,
-  MatcompGuard,
+const apiGqlMatcompModuleProviders: Provider[] = [
+  ApiMatcompService,
+  ApiMatcompResolver,
+  ApiMatcompGuard,
   DateScalar,
 ];
 
 @Module({
-  providers: [...matcompModuleProviders],
+  providers: [...apiGqlMatcompModuleProviders],
 })
-export class GqlMatcompModule {
+export class ApiGqlMatcompModule {
   public static forRoot(): DynamicModule {
     return {
-      module: GqlMatcompModule,
-      providers: [...matcompModuleProviders],
+      module: ApiGqlMatcompModule,
+      providers: [...apiGqlMatcompModuleProviders],
     };
   }
 }

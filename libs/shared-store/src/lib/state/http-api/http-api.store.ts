@@ -2,12 +2,12 @@ import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { actionPayloadConstructor } from '@nx-ng-starter/shared-util';
 
-import { IHttpApiStateModel, THttpApiPayload } from './http-api.interface';
+import { IAppHttpApiStateModel, THttpApiPayload } from './http-api.interface';
 
 const createAction = actionPayloadConstructor('HttpApi');
 const ping = createAction<THttpApiPayload>('ping');
 
-@State<IHttpApiStateModel>({
+@State<IAppHttpApiStateModel>({
   name: 'httpAPI',
   defaults: {
     ping: '',
@@ -16,19 +16,19 @@ const ping = createAction<THttpApiPayload>('ping');
 @Injectable({
   providedIn: 'root',
 })
-class HttpApiState {
+class AppHttpApiState {
   @Selector()
-  public static allData(state: IHttpApiStateModel) {
+  public static allData(state: IAppHttpApiStateModel) {
     return state;
   }
 
   @Selector()
-  public static ping(state: IHttpApiStateModel) {
+  public static ping(state: IAppHttpApiStateModel) {
     return state.ping;
   }
 
   @Action(ping)
-  public ping(ctx: StateContext<IHttpApiStateModel>, { payload }: THttpApiPayload) {
+  public ping(ctx: StateContext<IAppHttpApiStateModel>, { payload }: THttpApiPayload) {
     return ctx.patchState(payload);
   }
 }
@@ -36,4 +36,4 @@ class HttpApiState {
 const httpApiActions = {
   ping,
 };
-export { HttpApiState, httpApiActions };
+export { AppHttpApiState, httpApiActions };

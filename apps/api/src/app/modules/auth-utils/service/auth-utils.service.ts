@@ -10,7 +10,7 @@ export interface IAuthPayload {
 }
 
 @Injectable()
-export class AuthUtilsService {
+export class ApiAuthUtilsService {
   /**
    * Generates JWT token
    * @param payload token payload

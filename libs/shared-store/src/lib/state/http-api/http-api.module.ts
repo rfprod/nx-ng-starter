@@ -2,13 +2,12 @@ import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
 import { NgxsModule } from '@ngxs/store';
 
 import { httpApiServiceProvider } from './http-api.service';
-import { HttpApiState } from './http-api.store';
+import { AppHttpApiState } from './http-api.store';
 
 export const httpApiModuleProviders: Provider[] = [httpApiServiceProvider];
 
 @NgModule({
-  declarations: [],
-  imports: [NgxsModule.forFeature([HttpApiState])],
+  imports: [NgxsModule.forFeature([AppHttpApiState])],
   providers: [...httpApiModuleProviders],
 })
 export class AppHttpApiModule {

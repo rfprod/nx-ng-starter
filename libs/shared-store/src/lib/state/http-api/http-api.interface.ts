@@ -1,24 +1,28 @@
-import { IActionPayload, Message } from '@nx-ng-starter/shared-util';
+import { IActionPayload } from '@nx-ng-starter/shared-util';
 import { Observable } from 'rxjs';
 
-export interface IHttpApiStateModel {
+export interface IPingResponse {
+  message: string;
+}
+
+export interface IAppHttpApiStateModel {
   ping: string;
 }
 
-export interface IHttpApiStatePayload {
+export interface IAppHttpApiStatePayload {
   ping?: string;
 }
 
-export type THttpApiPayload = IActionPayload<IHttpApiStatePayload>;
+export type THttpApiPayload = IActionPayload<IAppHttpApiStatePayload>;
 
 export interface IHttpApiObservableOutput {
-  all$: Observable<IHttpApiStateModel>;
+  all$: Observable<IAppHttpApiStateModel>;
   ping$: Observable<string>;
 }
 
 export interface IHttpApiHandlersActions {
   cached(): Observable<string>;
-  request(): Observable<Message | string>;
+  request(): Observable<IPingResponse | string>;
 }
 
 export interface IHttpApiHandlers {
@@ -26,5 +30,5 @@ export interface IHttpApiHandlers {
 }
 
 export interface IHttpApiInterface {
-  ping(): Observable<Message | string>;
+  ping(): Observable<IPingResponse | string>;
 }

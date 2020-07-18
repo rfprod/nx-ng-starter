@@ -1,4 +1,4 @@
-import { AppWebEnvironment } from '@nx-ng-starter/shared-core/interfaces';
+import { IWebClientAppEnvironment } from '@nx-ng-starter/shared-util';
 
 /**
  * Development environment variables.
@@ -13,7 +13,7 @@ import { AppWebEnvironment } from '@nx-ng-starter/shared-core/interfaces';
  *
  * import 'zone.js/dist/zone-error';  // Included with Angular CLI.
  */
-export const environment: AppWebEnvironment = {
+export const environment: IWebClientAppEnvironment = {
   production: false,
   appName: 'Nx Ng Starter Client',
   api: window.location.origin.includes('localhost')

@@ -18,7 +18,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class WebsocketApiService {
+export class AppWebsocketApiService {
   private readonly websocket$: WebSocketSubject<IWebsocketRequestEvent> = new WebSocketSubject(
     this.wsConfig,
   );
@@ -45,24 +45,24 @@ export class WebsocketApiService {
 /**
  * Websocket api service factory constructor.
  */
-export type TWebsocketApiServiceFactoryConstructor = (
+export type TAppWebsocketApiServiceFactoryConstructor = (
   config: IWebsocketConfig,
-) => WebsocketApiService;
+) => AppWebsocketApiService;
 
 /**
  * Websocket api service factory.
  */
-export const websocketApiServiceFactory: TWebsocketApiServiceFactoryConstructor = (
+export const websocketApiServiceFactory: TAppWebsocketApiServiceFactoryConstructor = (
   config: IWebsocketConfig,
 ) => {
-  return new WebsocketApiService(config);
+  return new AppWebsocketApiService(config);
 };
 
 /**
  * Websocket api service provider.
  */
 export const websocketApiServiceProvider: Provider = {
-  provide: WebsocketApiService,
+  provide: AppWebsocketApiService,
   useFactory: websocketApiServiceFactory,
   deps: [WS_CONFIG],
 };

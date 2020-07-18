@@ -2,18 +2,17 @@ import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
 import { NgxsModule } from '@ngxs/store';
 
 import { httpProgressServiceProvider } from './http-progress.service';
-import { HttpProgressState } from './http-progress.store';
+import { AppHttpProgressState } from './http-progress.store';
 
 export const httpProgressModuleProviders: Provider[] = [httpProgressServiceProvider];
 
 @NgModule({
-  declarations: [],
-  imports: [NgxsModule.forFeature([HttpProgressState])],
+  imports: [NgxsModule.forFeature([AppHttpProgressState])],
 })
-export class HttpProgressModule {
-  public static forRoot(): ModuleWithProviders<HttpProgressModule> {
+export class AppHttpProgressModule {
+  public static forRoot(): ModuleWithProviders<AppHttpProgressModule> {
     return {
-      ngModule: HttpProgressModule,
+      ngModule: AppHttpProgressModule,
       providers: [...httpProgressModuleProviders],
     };
   }

@@ -1,16 +1,16 @@
 import { Module, Provider } from '@nestjs/common';
 
-import { AuthUtilsModule } from '../auth-utils/auth-utils.module';
-import { AuthUtilsService } from '../auth-utils/service/auth-utils.service';
-import { AuthController } from './controller/auth.controller';
-import { AuthService } from './service/auth.service';
+import { ApiAuthUtilsModule } from '../auth-utils/auth-utils.module';
+import { ApiAuthUtilsService } from '../auth-utils/service/auth-utils.service';
+import { ApiAuthController } from './controller/auth.controller';
+import { ApiAuthService } from './service/auth.service';
 
-export const authModuleProviders: Provider[] = [AuthService, AuthUtilsService];
+export const authModuleProviders: Provider[] = [ApiAuthService, ApiAuthUtilsService];
 
 @Module({
-  imports: [AuthUtilsModule],
-  exports: [AuthUtilsModule],
-  controllers: [AuthController],
+  imports: [ApiAuthUtilsModule],
+  exports: [ApiAuthUtilsModule],
+  controllers: [ApiAuthController],
   providers: [...authModuleProviders],
 })
-export class AuthModule {}
+export class ApiAuthModule {}

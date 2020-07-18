@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Inject, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Title } from '@angular/platform-browser';
-import { APP_ENV, AppWebEnvironment } from '@nx-ng-starter/shared-core/interfaces';
-import { SidebarUiService } from '@nx-ng-starter/shared-store/state';
+import { AppSidebarUiService } from '@nx-ng-starter/shared-store/state';
+import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@nx-ng-starter/shared-util';
 
 /**
  * Application root component.
@@ -27,9 +27,9 @@ export class AppComponent {
   public readonly appName = this.env.appName;
 
   constructor(
-    private readonly sidebarUiService: SidebarUiService,
+    private readonly sidebarUiService: AppSidebarUiService,
     private readonly title: Title,
-    @Inject(APP_ENV) private readonly env: AppWebEnvironment,
+    @Inject(WEB_CLIENT_APP_ENV) private readonly env: IWebClientAppEnvironment,
   ) {}
 
   /**

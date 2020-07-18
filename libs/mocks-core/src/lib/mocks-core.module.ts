@@ -11,29 +11,46 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsModule } from '@ngxs/store';
-import { AppMaterialModule } from '@nx-ng-starter/shared-ui';
-import { getDocument, getWindow, WINDOW } from '@nx-ng-starter/shared-util';
+import { AppSharedUiMaterialModule } from '@nx-ng-starter/shared-ui-material';
+import {
+  documentFactory,
+  IWebClientAppEnvironment,
+  WEB_CLIENT_APP_ENV,
+  WINDOW,
+  windowFactory,
+} from '@nx-ng-starter/shared-util';
+import { ApolloModule } from 'apollo-angular';
+import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
 
-import { environment } from '../../../../apps/nx-ng-starter/src/environments/environment';
-import { AppSharedCoreModule } from '../../../shared-core/src/lib/shared-core.module';
-import { WebsocketModule } from '../../../shared-store/src/lib/state/websocket/websocket.module';
-import { httpHandlersProviders, testingEnvironment } from './data-access';
-import { DummyComponent } from './ui/components/dummy.component.mock';
-import { dialogRefMockProvider } from './util/refs/dialog-ref.mock';
-import { overlayRefMockProvider } from './util/refs/overlay-ref.mock';
-import { matSnackbarRefMockProvider } from './util/refs/snackbar-ref.mock';
+import { AppDummyComponent } from './components/dummy/dummy.component.mock';
+import { dialogRefMockProvider } from './refs/dialog-ref.mock';
+import { overlayRefMockProvider } from './refs/overlay-ref.mock';
+import { matSnackbarRefMockProvider } from './refs/snackbar-ref.mock';
+
+export const testingEnvironment: IWebClientAppEnvironment = {
+  production: false,
+  appName: 'Testing Environment',
+  api: window.location.origin.includes('localhost')
+    ? 'http://localhost:8080/api'
+    : `${window.location.origin}/api`,
+  envoyUrl: '',
+};
 
 export const mocksCoreModuleProviders: Provider[] = [
+  HttpLink,
   dialogRefMockProvider,
   overlayRefMockProvider,
   matSnackbarRefMockProvider,
-  ...httpHandlersProviders,
   {
     provide: APP_BASE_HREF,
     useValue: '/',
   },
-  { provide: WINDOW, useFactory: getWindow },
-  { provide: DOCUMENT, useFactory: getDocument },
+  { provide: WINDOW, useFactory: windowFactory },
+  { provide: DOCUMENT, useFactory: documentFactory },
+  {
+    provide: WEB_CLIENT_APP_ENV,
+    useValue: testingEnvironment,
+  },
 ];
 
 @NgModule({
@@ -44,7 +61,7 @@ export const mocksCoreModuleProviders: Provider[] = [
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    AppMaterialModule.forRoot(),
+    AppSharedUiMaterialModule.forRoot(),
     HttpClientTestingModule,
     RouterTestingModule,
     NgxsModule.forRoot([], { developmentMode: true }),
@@ -52,10 +69,10 @@ export const mocksCoreModuleProviders: Provider[] = [
     MatDialogModule,
     OverlayModule,
     MatSnackBarModule,
-    AppSharedCoreModule.forRoot(testingEnvironment),
-    WebsocketModule.forRoot(environment),
+    ApolloModule,
+    HttpLinkModule,
   ],
-  declarations: [DummyComponent],
+  declarations: [AppDummyComponent],
   exports: [
     BrowserDynamicTestingModule,
     NoopAnimationsModule,
@@ -63,20 +80,19 @@ export const mocksCoreModuleProviders: Provider[] = [
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    AppMaterialModule,
+    AppSharedUiMaterialModule,
     HttpClientTestingModule,
     RouterTestingModule,
     MatDialogModule,
     OverlayModule,
     MatSnackBarModule,
-    AppSharedCoreModule,
-    DummyComponent,
+    AppDummyComponent,
   ],
 })
-export class MocksCoreModule {
-  public static forRoot(): ModuleWithProviders<MocksCoreModule> {
+export class AppMocksCoreModule {
+  public static forRoot(): ModuleWithProviders<AppMocksCoreModule> {
     return {
-      ngModule: MocksCoreModule,
+      ngModule: AppMocksCoreModule,
       providers: [...mocksCoreModuleProviders],
     };
   }

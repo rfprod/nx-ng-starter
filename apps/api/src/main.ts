@@ -9,8 +9,8 @@ import e from 'express';
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 
-import { AppModule } from './app/app.module';
-import { grpcApiClientOptions } from './app/modules/grpc/grpc-api-client.options';
+import { ApiAppModule } from './app/app.module';
+import { apiGrpcClientOptions } from './app/modules/grpc/grpc-client.options';
 import { environment } from './environments/environment';
 
 /**
@@ -26,7 +26,7 @@ const defaultPort = 8080;
  * Bootstraps server.
  */
 async function bootstrap(expressInstance: e.Express): Promise<unknown> {
-  const app = await NestFactory.create(AppModule, new ExpressAdapter(expressInstance));
+  const app = await NestFactory.create(ApiAppModule, new ExpressAdapter(expressInstance));
   app.useWebSocketAdapter(new WsAdapter(app));
 
   const globalPrefix = 'api';
@@ -42,7 +42,7 @@ async function bootstrap(expressInstance: e.Express): Promise<unknown> {
 
   // TODO: debug grpc in firebase, currently it causes all functions deployment failure
   if (!Boolean(environment.firebase)) {
-    app.connectMicroservice<MicroserviceOptions>(grpcApiClientOptions);
+    app.connectMicroservice<MicroserviceOptions>(apiGrpcClientOptions);
     await app.startAllMicroservicesAsync();
   }
 

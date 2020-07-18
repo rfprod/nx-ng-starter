@@ -7,6 +7,6 @@ export interface ISiedbarUiStateModel {
 
 export type TSidebarUiPayload = IActionPayload<ISiedbarUiStateModel>;
 
-export interface ISidebarUiService {
+export interface IAppSidebarUiService {
   sidebarOpened$: Observable<boolean>;
 }

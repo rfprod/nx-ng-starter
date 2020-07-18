@@ -9,10 +9,10 @@ import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { EntityServiceClient } from '@nx-ng-starter/proto';
 import { AppSharedCoreModule } from '@nx-ng-starter/shared-core';
-import { WebsocketModule } from '@nx-ng-starter/shared-store/state/websocket';
-import { AppMaterialModule } from 'libs/shared-ui/src/lib';
+import { httpProgressServiceProvider } from '@nx-ng-starter/shared-store/state';
+import { AppWebsocketModule } from '@nx-ng-starter/shared-store/state/websocket';
+import { AppSharedUiMaterialModule } from '@nx-ng-starter/shared-ui-material';
 
-import { httpProgressServiceProvider } from '../../../../libs/shared-store/src/lib/state/http-progress/http-progress.service';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppIndexApiComponent } from './components/app-index/api/app-index-api.component';
@@ -43,8 +43,8 @@ export const grpcProviders: Provider[] = [
     AppSharedCoreModule.forRoot(environment),
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    AppMaterialModule.forRoot(),
-    WebsocketModule.forRoot(environment),
+    AppSharedUiMaterialModule.forRoot(),
+    AppWebsocketModule.forRoot(environment),
   ],
   providers: [...grpcProviders, httpProgressServiceProvider],
   declarations: [AppComponent, AppIndexComponent, AppIndexHomeComponent, AppIndexApiComponent],
