@@ -7,5 +7,6 @@
     "target": "ES2015"
   },
   "exclude": ["src/test-setup.ts", "**/*.patch.ts", "**/*.mock.ts", "**/*.spec.ts"],
-  "extends": "./tsconfig.json"
+  "extends": "./tsconfig.json",
+  "include": ["**/*.ts"]
 }
