@@ -71,8 +71,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/api/jest.config.js",
-            "passWithNoTests": true,
-            "tsConfig": "apps/api/tsconfig.spec.json"
+            "passWithNoTests": true
           }
         }
       },
@@ -109,8 +108,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/api-interface/jest.config.js",
-            "passWithNoTests": true,
-            "tsConfig": "libs/api-interface/tsconfig.spec.json"
+            "passWithNoTests": true
           }
         }
       },
@@ -133,9 +131,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/mocks-core/jest.config.js",
-            "passWithNoTests": true,
-            "setupFile": "libs/mocks-core/src/test-setup.ts",
-            "tsConfig": "libs/mocks-core/tsconfig.spec.json"
+            "passWithNoTests": true
           }
         }
       },
@@ -292,14 +288,12 @@
             "jestConfig": "apps/nx-ng-starter/jest.config.js",
             "passWithNoTests": true,
             "scripts": [],
-            "setupFile": "apps/nx-ng-starter/src/test-setup.ts",
             "styles": [
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
               "node_modules/material-design-icon-fonts/iconfont/material-icons.css",
               "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "apps/nx-ng-starter/src/styles.scss"
-            ],
-            "tsConfig": "apps/nx-ng-starter/tsconfig.spec.json"
+            ]
           }
         }
       },
@@ -355,8 +349,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/proto/jest.config.js",
-            "passWithNoTests": true,
-            "tsConfig": "libs/proto/tsconfig.spec.json"
+            "passWithNoTests": true
           }
         }
       },
@@ -387,9 +380,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/shared-core/jest.config.js",
-            "passWithNoTests": true,
-            "setupFile": "libs/shared-core/src/test-setup.ts",
-            "tsConfig": "libs/shared-core/tsconfig.spec.json"
+            "passWithNoTests": true
           }
         }
       },
@@ -420,9 +411,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/shared-store/jest.config.js",
-            "passWithNoTests": true,
-            "setupFile": "libs/shared-store/src/test-setup.ts",
-            "tsConfig": "libs/shared-store/tsconfig.spec.json"
+            "passWithNoTests": true
           }
         }
       },
@@ -450,9 +439,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/shared-ui/jest.config.js",
-            "passWithNoTests": true,
-            "setupFile": "libs/shared-ui/src/test-setup.ts",
-            "tsConfig": "libs/shared-ui/tsconfig.spec.json"
+            "passWithNoTests": true
           }
         }
       },
@@ -483,9 +470,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/shared-util/jest.config.js",
-            "passWithNoTests": true,
-            "setupFile": "libs/shared-util/src/test-setup.ts",
-            "tsConfig": "libs/shared-util/tsconfig.spec.json"
+            "passWithNoTests": true
           }
         }
       },
@@ -520,9 +505,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/shared-ui-material/jest.config.js",
-            "tsConfig": "libs/shared-ui-material/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/shared-ui-material/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
@@ -553,9 +536,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/shared-ui-translate/jest.config.js",
-            "tsConfig": "libs/shared-ui-translate/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/shared-ui-translate/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
@@ -586,9 +567,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/shared-services/jest.config.js",
-            "tsConfig": "libs/shared-services/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/shared-services/src/test-setup.ts"
+            "passWithNoTests": true
           }
         }
       },
