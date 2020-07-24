@@ -1,13 +1,13 @@
 import { async, ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AppSharedCoreModule } from '@nx-ng-starter/client-core';
+import { AppMarkdownService } from '@nx-ng-starter/client-services';
 import {
   getTestBedConfig,
   newTestBedMetadata,
   setupJestSpiesFor,
   TClassMemberSpiesObject,
 } from '@nx-ng-starter/mocks-core';
-import { AppSharedCoreModule } from '@nx-ng-starter/shared-core';
-import { AppMarkdownService } from '@nx-ng-starter/shared-services';
 
 import { AppIndexHomeComponent } from './app-index-home.component';
 

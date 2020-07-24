@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
-import { AppMarkdownService } from '@nx-ng-starter/shared-services';
-import { AppHttpApiService } from '@nx-ng-starter/shared-store/state';
-import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@nx-ng-starter/shared-util';
+import { AppMarkdownService } from '@nx-ng-starter/client-services';
+import { AppHttpApiService } from '@nx-ng-starter/client-store/state';
+import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@nx-ng-starter/client-util';
 
 /**
  * Application index api component.

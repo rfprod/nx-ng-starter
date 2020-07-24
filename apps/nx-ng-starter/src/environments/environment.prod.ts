@@ -1,4 +1,4 @@
-import { IWebClientAppEnvironment } from '@nx-ng-starter/shared-util';
+import { IWebClientAppEnvironment } from '@nx-ng-starter/client-util';
 
 /**
  * Production environment variables.

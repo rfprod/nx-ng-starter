@@ -1,5 +1,7 @@
 import { async, ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AppSharedCoreModule } from '@nx-ng-starter/client-core';
+import { AppWebsocketModule } from '@nx-ng-starter/client-store/state/websocket/websocket.module';
 import {
   getTestBedConfig,
   newTestBedMetadata,
@@ -7,8 +9,6 @@ import {
   TClassMemberSpiesObject,
   testingEnvironment,
 } from '@nx-ng-starter/mocks-core';
-import { AppSharedCoreModule } from '@nx-ng-starter/shared-core';
-import { AppWebsocketModule } from '@nx-ng-starter/shared-store/state/websocket/websocket.module';
 
 import { AppIndexComponent } from './app-index.component';
 

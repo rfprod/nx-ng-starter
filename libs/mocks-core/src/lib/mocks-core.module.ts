@@ -11,14 +11,14 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsModule } from '@ngxs/store';
-import { AppSharedUiMaterialModule } from '@nx-ng-starter/shared-ui-material';
+import { AppSharedUiMaterialModule } from '@nx-ng-starter/client-ui-material';
 import {
   documentFactory,
   IWebClientAppEnvironment,
   WEB_CLIENT_APP_ENV,
   WINDOW,
   windowFactory,
-} from '@nx-ng-starter/shared-util';
+} from '@nx-ng-starter/client-util';
 import { ApolloModule } from 'apollo-angular';
 import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
 

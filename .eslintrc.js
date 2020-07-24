@@ -351,42 +351,42 @@ module.exports = {
             onlyDependOnLibsWithTags: [],
           },
           {
-            sourceTag: 'scope:shared-assets',
+            sourceTag: 'scope:client-assets',
             onlyDependOnLibsWithTags: [],
           },
           {
-            sourceTag: 'scope:shared-core',
+            sourceTag: 'scope:client-core',
             onlyDependOnLibsWithTags: [
               'scope:mocks-core',
               'scope:proto',
-              'scope:shared-store',
-              'scope:shared-ui',
-              'scope:shared-util',
-              'scope:shared-ui-material',
-              'scope:shared-ui-translate',
+              'scope:client-store',
+              'scope:client-ui',
+              'scope:client-util',
+              'scope:client-ui-material',
+              'scope:client-ui-translate',
             ],
           },
           {
-            sourceTag: 'scope:shared-store',
+            sourceTag: 'scope:client-store',
             onlyDependOnLibsWithTags: [
               'scope:mocks-core',
               'scope:proto',
-              'scope:shared-util',
-              'scope:shared-services',
-              'scope:shared-ui-translate',
+              'scope:client-util',
+              'scope:client-services',
+              'scope:client-ui-translate',
             ],
           },
           {
-            sourceTag: 'scope:shared-ui',
+            sourceTag: 'scope:client-ui',
             onlyDependOnLibsWithTags: [
               'scope:mocks-core',
               'scope:proto',
-              'scope:shared-store',
-              'scope:shared-util',
+              'scope:client-store',
+              'scope:client-util',
             ],
           },
           {
-            sourceTag: 'scope:shared-util',
+            sourceTag: 'scope:client-util',
             onlyDependOnLibsWithTags: [],
           },
           {
@@ -394,8 +394,8 @@ module.exports = {
             onlyDependOnLibsWithTags: [
               'scope:mocks-core',
               'scope:proto',
-              'scope:shared-store',
-              'scope:shared-services',
+              'scope:client-store',
+              'scope:client-services',
               'type:feature',
               'type:ui',
               'type:util',
@@ -403,7 +403,7 @@ module.exports = {
           },
           {
             sourceTag: 'scope:nx-ng-starter-e2e',
-            onlyDependOnLibsWithTags: ['scope:shared-util'],
+            onlyDependOnLibsWithTags: ['scope:client-util'],
           },
           {
             sourceTag: 'type:feature',
