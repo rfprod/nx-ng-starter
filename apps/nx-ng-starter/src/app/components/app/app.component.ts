@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Inject, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Title } from '@angular/platform-browser';
-import { AppSidebarUiService } from '@nx-ng-starter/shared-store/state';
-import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@nx-ng-starter/shared-util';
+import { AppSidebarUiService } from '@nx-ng-starter/client-store/state';
+import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@nx-ng-starter/client-util';
 
 /**
  * Application root component.

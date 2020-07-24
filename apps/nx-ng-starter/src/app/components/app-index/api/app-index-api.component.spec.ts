@@ -1,6 +1,7 @@
 import { HttpTestingController } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AppSharedUiTranslateModule } from '@nx-ng-starter/client-ui-translate';
 import {
   flushHttpRequests,
   getTestBedConfig,
@@ -8,7 +9,6 @@ import {
   setupJestSpiesFor,
   TClassMemberSpiesObject,
 } from '@nx-ng-starter/mocks-core';
-import { AppSharedUiTranslateModule } from '@nx-ng-starter/shared-ui-translate';
 
 import { AppIndexApiComponent } from './app-index-api.component';
 

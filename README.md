@@ -80,7 +80,7 @@ Applications as well as generated documentation, testing reports, and a custom c
 
 [🔗 Mocks Core](https://nx-ng-starter.web.app/changelog/libs/mocks-core-CHANGELOG.md)
 
-[🔗 Shared Core](https://nx-ng-starter.web.app/changelog/libs/shared-core-CHANGELOG.md)
+[🔗 Shared Core](https://nx-ng-starter.web.app/changelog/libs/client-core-CHANGELOG.md)
 
 ## General Tooling
 

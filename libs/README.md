@@ -1,6 +1,6 @@
 # Libraries
 
 - `api-interface` - api interface for sample `api` application;
-- `mocks-core` - library used for unit testing mostly, contains different mocks;
+- `mocks-core` - library used for unit testing mostly;
 - `proto` - contains generated protobuf definitions;
-- `shared-core` - shared core library, contains shared classes;
+- `client-core` - client core library;

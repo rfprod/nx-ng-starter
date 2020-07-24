@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AppWebsocketService } from '@nx-ng-starter/shared-store/state/websocket/websocket.service';
+import { AppWebsocketService } from '@nx-ng-starter/client-store/state/websocket/websocket.service';
 
 /**
  * Application index component.

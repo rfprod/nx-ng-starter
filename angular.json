@@ -226,7 +226,7 @@
               "apps/nx-ng-starter/src/manifest.webmanifest",
               {
                 "glob": "**/*",
-                "input": "./libs/shared-core/src/lib/assets",
+                "input": "./libs/client-core/src/lib/assets",
                 "output": "./assets"
               }
             ],
@@ -281,7 +281,7 @@
               "apps/nx-ng-starter/src/assets",
               {
                 "glob": "**/*",
-                "input": "./libs/shared-core/src/lib/assets",
+                "input": "./libs/client-core/src/lib/assets",
                 "output": "./assets"
               }
             ],
@@ -363,148 +363,148 @@
       },
       "sourceRoot": "libs/proto/src"
     },
-    "shared-core": {
+    "client-core": {
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/shared-core/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/shared-core/**"],
+            "eslintConfig": "libs/client-core/.eslintrc",
+            "exclude": ["**/node_modules/**", "!libs/client-core/**"],
             "tsConfig": [
-              "libs/shared-core/tsconfig.lib.json",
-              "libs/shared-core/tsconfig.spec.json"
+              "libs/client-core/tsconfig.lib.json",
+              "libs/client-core/tsconfig.spec.json"
             ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/shared-core/jest.config.js",
+            "jestConfig": "libs/client-core/jest.config.js",
             "passWithNoTests": true
           }
         }
       },
       "prefix": "nx-ng-starter",
       "projectType": "library",
-      "root": "libs/shared-core",
+      "root": "libs/client-core",
       "schematics": {
         "@nrwl/angular:component": {
           "styleext": "scss"
         }
       },
-      "sourceRoot": "libs/shared-core/src"
+      "sourceRoot": "libs/client-core/src"
     },
-    "shared-store": {
+    "client-store": {
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/shared-store/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/shared-store/**/*"],
+            "eslintConfig": "libs/client-store/.eslintrc",
+            "exclude": ["**/node_modules/**", "!libs/client-store/**/*"],
             "tsConfig": [
-              "libs/shared-store/tsconfig.lib.json",
-              "libs/shared-store/tsconfig.spec.json"
+              "libs/client-store/tsconfig.lib.json",
+              "libs/client-store/tsconfig.spec.json"
             ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/shared-store/jest.config.js",
+            "jestConfig": "libs/client-store/jest.config.js",
             "passWithNoTests": true
           }
         }
       },
       "prefix": "nx-ng-starter",
       "projectType": "library",
-      "root": "libs/shared-store",
+      "root": "libs/client-store",
       "schematics": {
         "@nrwl/angular:component": {
           "style": "scss"
         }
       },
-      "sourceRoot": "libs/shared-store/src"
+      "sourceRoot": "libs/client-store/src"
     },
-    "shared-ui": {
+    "client-ui": {
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/shared-ui/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/shared-ui/**/*"],
-            "tsConfig": ["libs/shared-ui/tsconfig.lib.json", "libs/shared-ui/tsconfig.spec.json"]
+            "eslintConfig": "libs/client-ui/.eslintrc",
+            "exclude": ["**/node_modules/**", "!libs/client-ui/**/*"],
+            "tsConfig": ["libs/client-ui/tsconfig.lib.json", "libs/client-ui/tsconfig.spec.json"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/shared-ui/jest.config.js",
+            "jestConfig": "libs/client-ui/jest.config.js",
             "passWithNoTests": true
           }
         }
       },
       "prefix": "nx-ng-starter",
       "projectType": "library",
-      "root": "libs/shared-ui",
+      "root": "libs/client-ui",
       "schematics": {
         "@nrwl/angular:component": {
           "style": "scss"
         }
       },
-      "sourceRoot": "libs/shared-ui/src"
+      "sourceRoot": "libs/client-ui/src"
     },
-    "shared-util": {
+    "client-util": {
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/shared-util/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/shared-util/**/*"],
+            "eslintConfig": "libs/client-util/.eslintrc",
+            "exclude": ["**/node_modules/**", "!libs/client-util/**/*"],
             "tsConfig": [
-              "libs/shared-util/tsconfig.lib.json",
-              "libs/shared-util/tsconfig.spec.json"
+              "libs/client-util/tsconfig.lib.json",
+              "libs/client-util/tsconfig.spec.json"
             ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/shared-util/jest.config.js",
+            "jestConfig": "libs/client-util/jest.config.js",
             "passWithNoTests": true
           }
         }
       },
       "prefix": "nx-ng-starter",
       "projectType": "library",
-      "root": "libs/shared-util",
+      "root": "libs/client-util",
       "schematics": {
         "@nrwl/angular:component": {
           "style": "scss"
         }
       },
-      "sourceRoot": "libs/shared-util/src"
+      "sourceRoot": "libs/client-util/src"
     },
-    "shared-ui-material": {
+    "client-ui-material": {
       "projectType": "library",
-      "root": "libs/shared-ui-material",
-      "sourceRoot": "libs/shared-ui-material/src",
+      "root": "libs/client-ui-material",
+      "sourceRoot": "libs/client-ui-material/src",
       "prefix": "nx-ng-starter",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/shared-ui-material/.eslintrc",
+            "eslintConfig": "libs/client-ui-material/.eslintrc",
             "tsConfig": [
-              "libs/shared-ui-material/tsconfig.lib.json",
-              "libs/shared-ui-material/tsconfig.spec.json"
+              "libs/client-ui-material/tsconfig.lib.json",
+              "libs/client-ui-material/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/shared-ui-material/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/client-ui-material/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/shared-ui-material/jest.config.js",
+            "jestConfig": "libs/client-ui-material/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -515,27 +515,27 @@
         }
       }
     },
-    "shared-ui-translate": {
+    "client-ui-translate": {
       "projectType": "library",
-      "root": "libs/shared-ui-translate",
-      "sourceRoot": "libs/shared-ui-translate/src",
+      "root": "libs/client-ui-translate",
+      "sourceRoot": "libs/client-ui-translate/src",
       "prefix": "nx-ng-starter",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/shared-ui-translate/.eslintrc",
+            "eslintConfig": "libs/client-ui-translate/.eslintrc",
             "tsConfig": [
-              "libs/shared-ui-translate/tsconfig.lib.json",
-              "libs/shared-ui-translate/tsconfig.spec.json"
+              "libs/client-ui-translate/tsconfig.lib.json",
+              "libs/client-ui-translate/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/shared-ui-translate/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/client-ui-translate/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/shared-ui-translate/jest.config.js",
+            "jestConfig": "libs/client-ui-translate/jest.config.js",
             "passWithNoTests": true
           }
         }
@@ -546,27 +546,27 @@
         }
       }
     },
-    "shared-services": {
+    "client-services": {
       "projectType": "library",
-      "root": "libs/shared-services",
-      "sourceRoot": "libs/shared-services/src",
+      "root": "libs/client-services",
+      "sourceRoot": "libs/client-services/src",
       "prefix": "nx-ng-starter",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/shared-services/.eslintrc",
+            "eslintConfig": "libs/client-services/.eslintrc",
             "tsConfig": [
-              "libs/shared-services/tsconfig.lib.json",
-              "libs/shared-services/tsconfig.spec.json"
+              "libs/client-services/tsconfig.lib.json",
+              "libs/client-services/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/shared-services/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/client-services/**/*"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/shared-services/jest.config.js",
+            "jestConfig": "libs/client-services/jest.config.js",
             "passWithNoTests": true
           }
         }
