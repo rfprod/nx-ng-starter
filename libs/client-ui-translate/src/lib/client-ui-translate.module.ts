@@ -12,7 +12,7 @@ import { AppTranslationUtilsService } from './services/app-translation-utils.ser
   exports: [TranslateModule],
   providers: [...appSharedUiTranslateModuleProviders],
 })
-export class AppSharedUiTranslateModule {
+export class AppClientUiTranslateModule {
   /**
    * Constructor.
    * @param utils Translation utils service
@@ -24,9 +24,9 @@ export class AppSharedUiTranslateModule {
   /**
    * Provides services.
    */
-  public static forRoot(): ModuleWithProviders<AppSharedUiTranslateModule> {
+  public static forRoot(): ModuleWithProviders<AppClientUiTranslateModule> {
     return {
-      ngModule: AppSharedUiTranslateModule,
+      ngModule: AppClientUiTranslateModule,
       providers: [...appSharedUiTranslateModuleProviders],
     };
   }

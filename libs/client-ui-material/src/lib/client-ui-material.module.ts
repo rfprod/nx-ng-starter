@@ -147,13 +147,13 @@ import { sharedUiMaterialModuleProviders } from './providers/client-ui-material-
     HammerModule,
   ],
 })
-export class AppSharedUiMaterialModule {
+export class AppClientUiMaterialModule {
   /**
    * Provides services.
    */
-  public static forRoot(): ModuleWithProviders<AppSharedUiMaterialModule> {
+  public static forRoot(): ModuleWithProviders<AppClientUiMaterialModule> {
     return {
-      ngModule: AppSharedUiMaterialModule,
+      ngModule: AppClientUiMaterialModule,
       providers: [...sharedUiMaterialModuleProviders],
     };
   }

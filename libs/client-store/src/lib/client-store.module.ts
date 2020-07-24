@@ -9,4 +9,4 @@ import { AppUserModule } from './state/user/user.module';
   imports: [AppHttpApiModule, AppHttpProgressModule, AppUserModule, AppSidebarUiModule],
   exports: [AppHttpApiModule, AppHttpProgressModule, AppUserModule, AppSidebarUiModule],
 })
-export class AppSharedStoreModule {}
+export class AppClientStoreModule {}

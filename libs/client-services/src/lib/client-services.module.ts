@@ -1,5 +1,5 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { AppSharedUiTranslateModule } from '@nx-ng-starter/client-ui-translate';
+import { AppClientUiTranslateModule } from '@nx-ng-starter/client-ui-translate';
 
 import { AppMarkdownService } from './markdown/markdown.service';
 import { AppToasterService } from './toaster/toaster.service';
@@ -9,13 +9,13 @@ import { AppToasterService } from './toaster/toaster.service';
  * Contains shared core modules with providers.
  */
 @NgModule({
-  imports: [AppSharedUiTranslateModule.forRoot()],
-  exports: [AppSharedUiTranslateModule],
+  imports: [AppClientUiTranslateModule.forRoot()],
+  exports: [AppClientUiTranslateModule],
 })
-export class AppSharedServicesModule {
-  public static forRoot(): ModuleWithProviders<AppSharedServicesModule> {
+export class AppClientServicesModule {
+  public static forRoot(): ModuleWithProviders<AppClientServicesModule> {
     return {
-      ngModule: AppSharedServicesModule,
+      ngModule: AppClientServicesModule,
       providers: [AppMarkdownService, AppToasterService],
     };
   }

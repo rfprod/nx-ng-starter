@@ -7,10 +7,10 @@ import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsModule } from '@ngxs/store';
-import { AppSharedCoreModule } from '@nx-ng-starter/client-core';
+import { AppClientCoreModule } from '@nx-ng-starter/client-core';
 import { httpProgressServiceProvider } from '@nx-ng-starter/client-store/state';
 import { AppWebsocketModule } from '@nx-ng-starter/client-store/state/websocket';
-import { AppSharedUiMaterialModule } from '@nx-ng-starter/client-ui-material';
+import { AppClientUiMaterialModule } from '@nx-ng-starter/client-ui-material';
 import { EntityServiceClient } from '@nx-ng-starter/proto';
 
 import { environment } from '../environments/environment';
@@ -40,10 +40,10 @@ export const grpcProviders: Provider[] = [
     NgxsRouterPluginModule.forRoot(),
     NgxsFormPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    AppSharedCoreModule.forRoot(environment),
+    AppClientCoreModule.forRoot(environment),
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    AppSharedUiMaterialModule.forRoot(),
+    AppClientUiMaterialModule.forRoot(),
     AppWebsocketModule.forRoot(environment),
   ],
   providers: [...grpcProviders, httpProgressServiceProvider],

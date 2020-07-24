@@ -343,6 +343,10 @@ module.exports = {
             onlyDependOnLibsWithTags: ['scope:api-interface', 'scope:proto'],
           },
           {
+            sourceTag: 'scope:api-interface',
+            onlyDependOnLibsWithTags: ['scope:proto'],
+          },
+          {
             sourceTag: 'scope:mocks-core',
             onlyDependOnLibsWithTags: ['*'],
           },

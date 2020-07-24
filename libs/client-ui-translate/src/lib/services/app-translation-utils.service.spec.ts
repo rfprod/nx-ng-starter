@@ -1,17 +1,17 @@
 import { async, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { DateAdapter } from '@angular/material/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { AppSharedUiMaterialModule } from '@nx-ng-starter/client-ui-material';
+import { AppClientUiMaterialModule } from '@nx-ng-starter/client-ui-material';
 import { documentProvider, WINDOW, windowProvider } from '@nx-ng-starter/client-util';
 import { Subject } from 'rxjs';
 
-import { AppSharedUiTranslateModule } from '../client-ui-translate.module';
+import { AppClientUiTranslateModule } from '../client-ui-translate.module';
 import { ISupportedLanguage, IUiLanguagesInterface, TLangCode } from '../interfaces';
 import { AppTranslationUtilsService } from './app-translation-utils.service';
 
 describe('AppTranslationUtilsService', () => {
   const testBedConfig: TestModuleMetadata = {
-    imports: [AppSharedUiTranslateModule.forRoot(), AppSharedUiMaterialModule.forRoot()],
+    imports: [AppClientUiTranslateModule.forRoot(), AppClientUiMaterialModule.forRoot()],
     providers: [windowProvider, documentProvider],
   };
 

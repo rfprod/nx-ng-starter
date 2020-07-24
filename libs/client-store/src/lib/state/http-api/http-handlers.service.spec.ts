@@ -1,9 +1,9 @@
 import { HttpErrorResponse, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { async, TestBed, TestModuleMetadata } from '@angular/core/testing';
-import { AppSharedServicesModule, AppToasterService } from '@nx-ng-starter/client-services';
+import { AppClientServicesModule, AppToasterService } from '@nx-ng-starter/client-services';
 import { AppHttpProgressModule, AppUserService } from '@nx-ng-starter/client-store/state';
-import { AppSharedUiTranslateModule } from '@nx-ng-starter/client-ui-translate';
+import { AppClientUiTranslateModule } from '@nx-ng-starter/client-ui-translate';
 import { HTTP_STATUS } from '@nx-ng-starter/client-util';
 import {
   AppLocalStorageMock,
@@ -21,9 +21,9 @@ import { AppHttpHandlersService } from './http-handlers.service';
 describe('AppHttpHandlersService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     imports: [
-      AppSharedUiTranslateModule.forRoot(),
+      AppClientUiTranslateModule.forRoot(),
       AppHttpProgressModule.forRoot(),
-      AppSharedServicesModule.forRoot(),
+      AppClientServicesModule.forRoot(),
     ],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);

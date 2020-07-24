@@ -3,13 +3,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AppSharedStoreModule } from '@nx-ng-starter/client-store';
+import { AppClientStoreModule } from '@nx-ng-starter/client-store';
 import {
-  AppSharedUiMaterialModule,
+  AppClientUiMaterialModule,
   sharedUiMaterialModuleProviders,
 } from '@nx-ng-starter/client-ui-material';
 import {
-  AppSharedUiTranslateModule,
+  AppClientUiTranslateModule,
   appSharedUiTranslateModuleProviders,
 } from '@nx-ng-starter/client-ui-translate';
 import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@nx-ng-starter/client-util';
@@ -27,30 +27,30 @@ import { appSharedCoreModuleProviders } from './providers/client-core-module.pro
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppSharedUiMaterialModule.forRoot(),
-    AppSharedUiTranslateModule.forRoot(),
-    AppSharedStoreModule,
+    AppClientUiMaterialModule.forRoot(),
+    AppClientUiTranslateModule.forRoot(),
+    AppClientStoreModule,
   ],
   exports: [
     FlexLayoutModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppSharedUiMaterialModule,
-    AppSharedUiTranslateModule,
-    AppSharedStoreModule,
+    AppClientUiMaterialModule,
+    AppClientUiTranslateModule,
+    AppClientStoreModule,
   ],
 })
-export class AppSharedCoreModule {
+export class AppClientCoreModule {
   /**
    * Provides services.
    * @param environment application environment, if omitted default environment will be provided.
    */
   public static forRoot(
     environment?: IWebClientAppEnvironment,
-  ): ModuleWithProviders<AppSharedCoreModule> {
+  ): ModuleWithProviders<AppClientCoreModule> {
     return {
-      ngModule: AppSharedCoreModule,
+      ngModule: AppClientCoreModule,
       providers: [
         ...sharedUiMaterialModuleProviders,
         ...appSharedUiTranslateModuleProviders,
