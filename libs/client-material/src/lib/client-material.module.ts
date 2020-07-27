@@ -38,7 +38,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { HammerModule } from '@angular/platform-browser';
 
-import { sharedUiMaterialModuleProviders } from './providers/client-ui-material-module.providers';
+import { sharedUiMaterialModuleProviders } from './providers/client-material-module.providers';
 
 /**
  * Shared application material module.

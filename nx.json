@@ -1,10 +1,13 @@
 {
+  "affected": {
+    "defaultBase": "master"
+  },
   "implicitDependencies": {
     "angular.json": "*",
     "nx.json": "*",
     "package.json": "*",
-    "tslint.json": "*",
-    "tsconfig.base.json": "*"
+    "tsconfig.base.json": "*",
+    "tslint.json": "*"
   },
   "npmScope": "nx-ng-starter",
   "projects": {
@@ -14,39 +17,39 @@
     "api-interface": {
       "tags": ["scope:api-interface", "type:data-access"]
     },
-    "mocks-core": {
-      "tags": ["scope:mocks-core", "type:mocks"]
-    },
     "client": {
       "tags": ["scope:client", "type:application"]
+    },
+    "client-core": {
+      "tags": ["scope:client-core", "type:feature"]
     },
     "client-e2e": {
       "implicitDependencies": ["client"],
       "tags": ["scope:client-e2e"]
     },
-    "proto": {
-      "tags": ["scope:proto", "type:data-access"]
-    },
-    "client-core": {
-      "tags": ["scope:client-core", "type:feature"]
-    },
-    "client-store": {
-      "tags": ["scope:client-store", "type:data-access"]
-    },
-    "client-util": {
-      "tags": ["scope:client-util", "type:util"]
-    },
-    "client-ui-material": {
-      "tags": ["scope:client-ui-material", "type:ui"]
-    },
-    "client-ui-translate": {
-      "tags": ["scope:client-ui-translate", "type:ui"]
+    "client-gql": {
+      "tags": ["scope:client-gql", "type:data-access"]
     },
     "client-services": {
       "tags": ["scope:client-services", "type:ui"]
     },
-    "client-gql": {
-      "tags": ["scope:client-gql", "type:data-access"]
+    "client-store": {
+      "tags": ["scope:client-store", "type:data-access"]
+    },
+    "client-material": {
+      "tags": ["scope:client-material", "type:ui"]
+    },
+    "client-translate": {
+      "tags": ["scope:client-translate", "type:ui"]
+    },
+    "client-util": {
+      "tags": ["scope:client-util", "type:util"]
+    },
+    "mocks-core": {
+      "tags": ["scope:mocks-core", "type:mocks"]
+    },
+    "proto": {
+      "tags": ["scope:proto", "type:data-access"]
     }
   },
   "tasksRunnerOptions": {
@@ -58,8 +61,5 @@
       },
       "runner": "@nrwl/workspace/tasks-runners/default"
     }
-  },
-  "affected": {
-    "defaultBase": "master"
   }
 }

@@ -1,7 +1,7 @@
 module.exports = {
-  name: 'client-ui-material',
+  name: 'client-translate',
   preset: '../../jest.config.js',
-  coverageDirectory: '../../coverage/libs/client-ui-material',
+  coverageDirectory: '../../coverage/libs/client-translate',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
     'jest-preset-angular/build/AngularSnapshotSerializer.js',

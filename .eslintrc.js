@@ -336,7 +336,7 @@ module.exports = {
     '@nrwl/nx/enforce-module-boundaries': [
       'error',
       {
-        allow: [],
+        allow: ['mocks-core'],
         depConstraints: [
           {
             sourceTag: 'scope:api',
@@ -366,8 +366,8 @@ module.exports = {
               'scope:client-store',
               'scope:client-ui',
               'scope:client-util',
-              'scope:client-ui-material',
-              'scope:client-ui-translate',
+              'scope:client-material',
+              'scope:client-translate',
             ],
           },
           {
@@ -377,7 +377,7 @@ module.exports = {
               'scope:proto',
               'scope:client-util',
               'scope:client-services',
-              'scope:client-ui-translate',
+              'scope:client-translate',
             ],
           },
           {
@@ -387,7 +387,7 @@ module.exports = {
               'scope:proto',
               'scope:client-store',
               'scope:client-util',
-              'scope:client-ui-translate',
+              'scope:client-translate',
             ],
           },
           {
@@ -413,6 +413,16 @@ module.exports = {
           {
             sourceTag: 'scope:client-e2e',
             onlyDependOnLibsWithTags: ['scope:client-util'],
+          },
+          {
+            sourceTag: 'type:application',
+            onlyDependOnLibsWithTags: [
+              'type:feature',
+              'type:data-access',
+              'type:ui',
+              'type:util',
+              'type:mocks',
+            ],
           },
           {
             sourceTag: 'type:feature',

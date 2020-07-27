@@ -11,7 +11,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsModule } from '@ngxs/store';
-import { AppClientUiMaterialModule } from '@nx-ng-starter/client-ui-material';
+import { AppClientUiMaterialModule } from '@nx-ng-starter/client-material';
 import {
   documentFactory,
   IWebClientAppEnvironment,

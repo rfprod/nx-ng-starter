@@ -117,34 +117,6 @@
       "schematics": {},
       "sourceRoot": "libs/api-interface/src"
     },
-    "mocks-core": {
-      "architect": {
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "eslintConfig": "libs/mocks-core/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/mocks-core/**/*.ts"],
-            "tsConfig": ["libs/mocks-core/tsconfig.lib.json", "libs/mocks-core/tsconfig.spec.json"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/mocks-core/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "prefix": "client",
-      "projectType": "library",
-      "root": "libs/mocks-core",
-      "schematics": {
-        "@nrwl/angular:component": {
-          "styleext": "scss"
-        }
-      },
-      "sourceRoot": "libs/mocks-core/src"
-    },
     "client": {
       "architect": {
         "build": {
@@ -306,62 +278,6 @@
       },
       "sourceRoot": "apps/client/src"
     },
-    "client-e2e": {
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "configurations": {
-            "production": {
-              "devServerTarget": "client:serve:production"
-            }
-          },
-          "options": {
-            "cypressConfig": "apps/client-e2e/cypress.json",
-            "devServerTarget": "client:serve",
-            "tsConfig": "apps/client-e2e/tsconfig.e2e.json"
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "eslintConfig": "apps/client-e2e/.eslintrc",
-            "exclude": ["**/node_modules/**", "!apps/client-e2e/**/*.ts"],
-            "tsConfig": "apps/client-e2e/tsconfig.e2e.json"
-          }
-        }
-      },
-      "projectType": "application",
-      "root": "apps/client-e2e",
-      "sourceRoot": "apps/client-e2e/src"
-    },
-    "proto": {
-      "architect": {
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "eslintConfig": "libs/proto/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/proto/**/*.ts"],
-            "tsConfig": ["libs/proto/tsconfig.lib.json", "libs/proto/tsconfig.spec.json"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/proto/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "prefix": "client",
-      "projectType": "library",
-      "root": "libs/proto",
-      "schematics": {
-        "@nrwl/angular:component": {
-          "styleext": "scss"
-        }
-      },
-      "sourceRoot": "libs/proto/src"
-    },
     "client-core": {
       "architect": {
         "lint": {
@@ -392,6 +308,95 @@
         }
       },
       "sourceRoot": "libs/client-core/src"
+    },
+    "client-e2e": {
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "configurations": {
+            "production": {
+              "devServerTarget": "client:serve:production"
+            }
+          },
+          "options": {
+            "cypressConfig": "apps/client-e2e/cypress.json",
+            "devServerTarget": "client:serve",
+            "tsConfig": "apps/client-e2e/tsconfig.e2e.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/client-e2e/.eslintrc",
+            "exclude": ["**/node_modules/**", "!apps/client-e2e/**/*.ts"],
+            "tsConfig": "apps/client-e2e/tsconfig.e2e.json"
+          }
+        }
+      },
+      "projectType": "application",
+      "root": "apps/client-e2e",
+      "sourceRoot": "apps/client-e2e/src"
+    },
+    "client-gql": {
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-gql/.eslintrc",
+            "exclude": ["**/node_modules/**", "!libs/client-gql/**/*.ts"],
+            "tsConfig": ["libs/client-gql/tsconfig.lib.json", "libs/client-gql/tsconfig.spec.json"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-gql/jest.config.js",
+            "passWithNoTests": true,
+            "setupFile": "libs/client-gql/src/test-setup.ts",
+            "tsConfig": "libs/client-gql/tsconfig.spec.json"
+          }
+        }
+      },
+      "prefix": "nx-ng-starter",
+      "projectType": "library",
+      "root": "libs/client-gql",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "sourceRoot": "libs/client-gql/src"
+    },
+    "client-services": {
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-services/.eslintrc",
+            "exclude": ["**/node_modules/**", "!libs/client-services/**/*.ts"],
+            "tsConfig": [
+              "libs/client-services/tsconfig.lib.json",
+              "libs/client-services/tsconfig.spec.json"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-services/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "prefix": "client",
+      "projectType": "library",
+      "root": "libs/client-services",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "sourceRoot": "libs/client-services/src"
     },
     "client-store": {
       "architect": {
@@ -424,6 +429,68 @@
       },
       "sourceRoot": "libs/client-store/src"
     },
+    "client-material": {
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-material/.eslintrc",
+            "exclude": ["**/node_modules/**", "!libs/client-material/**/*.ts"],
+            "tsConfig": [
+              "libs/client-material/tsconfig.lib.json",
+              "libs/client-material/tsconfig.spec.json"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-material/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "prefix": "client",
+      "projectType": "library",
+      "root": "libs/client-material",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "sourceRoot": "libs/client-material/src"
+    },
+    "client-translate": {
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-translate/.eslintrc",
+            "exclude": ["**/node_modules/**", "!libs/client-translate/**/*.ts"],
+            "tsConfig": [
+              "libs/client-translate/tsconfig.lib.json",
+              "libs/client-translate/tsconfig.spec.json"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-translate/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "prefix": "client",
+      "projectType": "library",
+      "root": "libs/client-translate",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "sourceRoot": "libs/client-translate/src"
+    },
     "client-util": {
       "architect": {
         "lint": {
@@ -455,128 +522,61 @@
       },
       "sourceRoot": "libs/client-util/src"
     },
-    "client-ui-material": {
-      "projectType": "library",
-      "root": "libs/client-ui-material",
-      "sourceRoot": "libs/client-ui-material/src",
-      "prefix": "client",
+    "mocks-core": {
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/client-ui-material/.eslintrc",
-            "tsConfig": [
-              "libs/client-ui-material/tsconfig.lib.json",
-              "libs/client-ui-material/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/client-ui-material/**/*.ts"]
+            "eslintConfig": "libs/mocks-core/.eslintrc",
+            "exclude": ["**/node_modules/**", "!libs/mocks-core/**/*.ts"],
+            "tsConfig": ["libs/mocks-core/tsconfig.lib.json", "libs/mocks-core/tsconfig.spec.json"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-ui-material/jest.config.js",
+            "jestConfig": "libs/mocks-core/jest.config.js",
             "passWithNoTests": true
           }
         }
       },
+      "prefix": "client",
+      "projectType": "library",
+      "root": "libs/mocks-core",
       "schematics": {
         "@nrwl/angular:component": {
-          "style": "scss"
+          "styleext": "scss"
         }
-      }
+      },
+      "sourceRoot": "libs/mocks-core/src"
     },
-    "client-ui-translate": {
-      "projectType": "library",
-      "root": "libs/client-ui-translate",
-      "sourceRoot": "libs/client-ui-translate/src",
-      "prefix": "client",
+    "proto": {
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/client-ui-translate/.eslintrc",
-            "tsConfig": [
-              "libs/client-ui-translate/tsconfig.lib.json",
-              "libs/client-ui-translate/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/client-ui-translate/**/*.ts"]
+            "eslintConfig": "libs/proto/.eslintrc",
+            "exclude": ["**/node_modules/**", "!libs/proto/**/*.ts"],
+            "tsConfig": ["libs/proto/tsconfig.lib.json", "libs/proto/tsconfig.spec.json"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-ui-translate/jest.config.js",
+            "jestConfig": "libs/proto/jest.config.js",
             "passWithNoTests": true
           }
         }
       },
-      "schematics": {
-        "@nrwl/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "client-services": {
-      "projectType": "library",
-      "root": "libs/client-services",
-      "sourceRoot": "libs/client-services/src",
       "prefix": "client",
-      "architect": {
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "eslintConfig": "libs/client-services/.eslintrc",
-            "tsConfig": [
-              "libs/client-services/tsconfig.lib.json",
-              "libs/client-services/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/client-services/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/client-services/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "schematics": {
-        "@nrwl/angular:component": {
-          "style": "scss"
-        }
-      }
-    },
-    "client-gql": {
       "projectType": "library",
-      "root": "libs/client-gql",
-      "sourceRoot": "libs/client-gql/src",
-      "prefix": "nx-ng-starter",
-      "architect": {
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "eslintConfig": "libs/client-gql/.eslintrc",
-            "tsConfig": ["libs/client-gql/tsconfig.lib.json", "libs/client-gql/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!libs/client-gql/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/client-gql/jest.config.js",
-            "tsConfig": "libs/client-gql/tsconfig.spec.json",
-            "passWithNoTests": true,
-            "setupFile": "libs/client-gql/src/test-setup.ts"
-          }
-        }
-      },
+      "root": "libs/proto",
       "schematics": {
         "@nrwl/angular:component": {
-          "style": "scss"
+          "styleext": "scss"
         }
-      }
+      },
+      "sourceRoot": "libs/proto/src"
     }
   },
   "schematics": {

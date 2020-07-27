@@ -3,15 +3,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AppClientStoreModule } from '@nx-ng-starter/client-store';
 import {
   AppClientUiMaterialModule,
   sharedUiMaterialModuleProviders,
-} from '@nx-ng-starter/client-ui-material';
+} from '@nx-ng-starter/client-material';
+import { AppClientStoreModule } from '@nx-ng-starter/client-store';
 import {
   AppClientUiTranslateModule,
   appSharedUiTranslateModuleProviders,
-} from '@nx-ng-starter/client-ui-translate';
+} from '@nx-ng-starter/client-translate';
 import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@nx-ng-starter/client-util';
 
 import { appSharedCoreModuleProviders } from './providers/client-core-module.providers';
