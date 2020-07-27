@@ -1,7 +1,7 @@
 import { HttpTestingController } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppClientUiTranslateModule } from '@nx-ng-starter/client-translate';
+import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
 import {
   flushHttpRequests,
   getTestBedConfig,
@@ -16,7 +16,7 @@ describe('AppIndexApiComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     declarations: [AppIndexApiComponent],
     imports: [
-      AppClientUiTranslateModule.forRoot(),
+      AppClientTranslateModule.forRoot(),
       RouterTestingModule.withRoutes([
         { path: '', component: AppIndexApiComponent },
         { path: '', redirectTo: '', pathMatch: 'full' },

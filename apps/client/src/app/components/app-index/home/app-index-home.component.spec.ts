@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppClientCoreModule } from '@nx-ng-starter/client-core';
 import { AppMarkdownService } from '@nx-ng-starter/client-services';
 import {
   getTestBedConfig,
@@ -15,7 +14,6 @@ describe('AppIndexHomeComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     declarations: [AppIndexHomeComponent],
     imports: [
-      AppClientCoreModule.forRoot(),
       RouterTestingModule.withRoutes([
         { path: '', component: AppIndexHomeComponent },
         { path: '', redirectTo: '', pathMatch: 'full' },

@@ -8,8 +8,13 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { AppClientCoreModule } from '@nx-ng-starter/client-core';
-import { AppClientUiMaterialModule } from '@nx-ng-starter/client-material';
-import { AppWebsocketModule, httpProgressServiceProvider } from '@nx-ng-starter/client-store';
+import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
+import {
+  AppClientStoreModule,
+  AppWebsocketModule,
+  httpProgressServiceProvider,
+} from '@nx-ng-starter/client-store';
+import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
 import { EntityServiceClient } from '@nx-ng-starter/proto';
 
 import { environment } from '../environments/environment';
@@ -39,11 +44,14 @@ export const grpcProviders: Provider[] = [
     NgxsRouterPluginModule.forRoot(),
     NgxsFormPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
-    AppClientCoreModule.forRoot(environment),
-    AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    AppClientUiMaterialModule.forRoot(),
+    AppClientCoreModule.forRoot(environment),
+    AppClientMaterialModule.forRoot(),
     AppWebsocketModule.forRoot(environment),
+    AppClientMaterialModule.forRoot(),
+    AppClientTranslateModule.forRoot(),
+    AppClientStoreModule,
+    AppRoutingModule,
   ],
   providers: [...grpcProviders, httpProgressServiceProvider],
   declarations: [AppComponent, AppIndexComponent, AppIndexHomeComponent, AppIndexApiComponent],

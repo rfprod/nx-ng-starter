@@ -16,7 +16,7 @@ import { matTooltipOptionsFactory } from '../configs/mat-tooltip.config';
 /**
  * Shared application material module providers.
  */
-export const sharedUiMaterialModuleProviders: Provider[] = [
+export const appClientMaterialModuleProviders: Provider[] = [
   MatIconRegistry,
   {
     provide: MAT_TOOLTIP_DEFAULT_OPTIONS,
