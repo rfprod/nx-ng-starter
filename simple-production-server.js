@@ -54,7 +54,7 @@ app.use(
 /**
  * Serve public directory.
  */
-app.use('/', express.static(cwd + '/dist/apps/nx-ng-starter'));
+app.use('/', express.static(cwd + '/dist/apps/client'));
 
 /**
  * Serve app index file for paths excluding provided in regX.
@@ -72,7 +72,7 @@ app.use((req, res, next) => {
   if (regX.test(req.path)) {
     return next();
   } else {
-    res.sendFile(cwd + '/dist/apps/nx-ng-starter/index.html');
+    res.sendFile(cwd + '/dist/apps/client/index.html');
   }
 });
 

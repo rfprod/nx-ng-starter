@@ -394,7 +394,7 @@ module.exports = {
             onlyDependOnLibsWithTags: [],
           },
           {
-            sourceTag: 'scope:nx-ng-starter',
+            sourceTag: 'scope:client',
             onlyDependOnLibsWithTags: [
               'scope:mocks-core',
               'scope:proto',
@@ -406,7 +406,7 @@ module.exports = {
             ],
           },
           {
-            sourceTag: 'scope:nx-ng-starter-e2e',
+            sourceTag: 'scope:client-e2e',
             onlyDependOnLibsWithTags: ['scope:client-util'],
           },
           {

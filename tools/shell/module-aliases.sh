@@ -11,10 +11,10 @@ source tools/shell/colors.sh ''
 ##
 
 # Apps
-MODULE_ALIAS_APP_NX_NG_STARTER="app:nx-ng-starter"
+MODULE_ALIAS_APP_CLIENT="app:client"
 MODULE_ALIAS_APP_API="app:api"
 # Apps E2E
-MODULE_ALIAS_APP_NX_NG_STARTER_E2E="app:nx-ng-starter-e2e"
+MODULE_ALIAS_APP_CLIENT_E2E="app:client-e2e"
 # Libs
 MODULE_ALIAS_LIB_API_INTERFACE="lib:api-interface"
 MODULE_ALIAS_LIB_MOCKS_CORE="lib:mocks-core"
@@ -28,9 +28,9 @@ MODULE_ALIAS_LIB_CLIENT_SERVICES="lib:client-services"
 MODULE_ALIAS_LIB_PROTO="lib:proto"
 
 MODULE_ALIAS_NAMES=(
-  MODULE_ALIAS_APP_NX_NG_STARTER
+  MODULE_ALIAS_APP_CLIENT
   MODULE_ALIAS_APP_API
-  MODULE_ALIAS_APP_NX_NG_STARTER_E2E
+  MODULE_ALIAS_APP_CLIENT_E2E
   MODULE_ALIAS_LIB_API_INTERFACE
   MODULE_ALIAS_LIB_MOCKS_CORE
   MODULE_ALIAS_LIB_CLIENT_CORE
@@ -44,9 +44,9 @@ MODULE_ALIAS_NAMES=(
 )
 
 MODULE_ALIAS_VARS=(
-  "$MODULE_ALIAS_APP_NX_NG_STARTER"
+  "$MODULE_ALIAS_APP_CLIENT"
   "$MODULE_ALIAS_APP_API"
-  "$MODULE_ALIAS_APP_NX_NG_STARTER_E2E"
+  "$MODULE_ALIAS_APP_CLIENT_E2E"
   "$MODULE_ALIAS_LIB_API_INTERFACE"
   "$MODULE_ALIAS_LIB_MOCKS_CORE"
   "$MODULE_ALIAS_LIB_CLIENT_CORE"
@@ -60,7 +60,7 @@ MODULE_ALIAS_VARS=(
 )
 
 MODULE_ALIAS_NAMES_UNIT=(
-  MODULE_ALIAS_APP_NX_NG_STARTER
+  MODULE_ALIAS_APP_CLIENT
   MODULE_ALIAS_APP_API
   MODULE_ALIAS_LIB_API_INTERFACE
   MODULE_ALIAS_LIB_MOCKS_CORE
@@ -75,7 +75,7 @@ MODULE_ALIAS_NAMES_UNIT=(
 )
 
 MODULE_ALIAS_VARS_UNIT=(
-  "$MODULE_ALIAS_APP_NX_NG_STARTER"
+  "$MODULE_ALIAS_APP_CLIENT"
   "$MODULE_ALIAS_APP_API"
   "$MODULE_ALIAS_LIB_API_INTERFACE"
   "$MODULE_ALIAS_LIB_MOCKS_CORE"
@@ -90,11 +90,11 @@ MODULE_ALIAS_VARS_UNIT=(
 )
 
 MODULE_ALIAS_NAMES_E2E=(
-  MODULE_ALIAS_APP_NX_NG_STARTER_E2E
+  MODULE_ALIAS_APP_CLIENT_E2E
 )
 
 MODULE_ALIAS_VARS_E2E=(
-  "$MODULE_ALIAS_APP_NX_NG_STARTER_E2E"
+  "$MODULE_ALIAS_APP_CLIENT_E2E"
 )
 
 reportSupportedModuleAliases() {
@@ -165,7 +165,7 @@ fi
 #
 # examples:
 # moduleAliasExists "somealias" && echo yes || echo no                         # no
-# moduleAliasExists "${MODULE_ALIAS_APP_NX_NG_STARTER}" && echo yes || echo no # yes
+# moduleAliasExists "${MODULE_ALIAS_APP_CLIENT}" && echo yes || echo no # yes
 ##
 moduleAliasExists() {
   local SEARCH_VALUE=$1
@@ -185,7 +185,7 @@ moduleAliasExists() {
 #
 # examples:
 # moduleAliasUnitExists "somealias" && echo yes || echo no                         # no
-# moduleAliasUnitExists "${MODULE_ALIAS_APP_NX_NG_STARTER_E2E}" && echo yes || echo no # yes
+# moduleAliasUnitExists "${MODULE_ALIAS_APP_CLIENT_E2E}" && echo yes || echo no # yes
 ##
 moduleAliasUnitExists() {
   local SEARCH_VALUE=$1
@@ -205,7 +205,7 @@ moduleAliasUnitExists() {
 #
 # examples:
 # moduleAliasE2EExists "somealias" && echo yes || echo no                         # no
-# moduleAliasE2EExists "${MODULE_ALIAS_APP_NX_NG_STARTER_E2E}" && echo yes || echo no # yes
+# moduleAliasE2EExists "${MODULE_ALIAS_APP_CLIENT_E2E}" && echo yes || echo no # yes
 ##
 moduleAliasE2EExists() {
   local SEARCH_VALUE=$1

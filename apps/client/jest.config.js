@@ -1,7 +1,7 @@
 module.exports = {
-  name: 'nx-ng-starter',
+  name: 'client',
   preset: '../../jest.config.js',
-  coverageDirectory: '../../coverage/apps/nx-ng-starter',
+  coverageDirectory: '../../coverage/apps/client',
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
     'jest-preset-angular/build/AngularSnapshotSerializer.js',

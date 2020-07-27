@@ -17,12 +17,12 @@
     "mocks-core": {
       "tags": ["scope:mocks-core", "type:mocks"]
     },
-    "nx-ng-starter": {
-      "tags": ["scope:nx-ng-starter", "type:application"]
+    "client": {
+      "tags": ["scope:client", "type:application"]
     },
-    "nx-ng-starter-e2e": {
-      "implicitDependencies": ["nx-ng-starter"],
-      "tags": ["scope:nx-ng-starter-e2e"]
+    "client-e2e": {
+      "implicitDependencies": ["client"],
+      "tags": ["scope:client-e2e"]
     },
     "proto": {
       "tags": ["scope:proto", "type:data-access"]
