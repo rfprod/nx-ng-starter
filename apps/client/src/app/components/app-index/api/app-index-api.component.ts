@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { AppMarkdownService } from '@nx-ng-starter/client-services';
-import { AppHttpApiService } from '@nx-ng-starter/client-store/state';
+import { AppHttpApiService } from '@nx-ng-starter/client-store';
 import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@nx-ng-starter/client-util';
 
 /**

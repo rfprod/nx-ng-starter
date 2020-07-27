@@ -2,7 +2,6 @@ import { HttpErrorResponse, HttpHeaders, HttpRequest } from '@angular/common/htt
 import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { async, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { AppClientServicesModule, AppToasterService } from '@nx-ng-starter/client-services';
-import { AppHttpProgressModule, AppUserService } from '@nx-ng-starter/client-store/state';
 import { AppClientUiTranslateModule } from '@nx-ng-starter/client-ui-translate';
 import { HTTP_STATUS } from '@nx-ng-starter/client-util';
 import {
@@ -16,6 +15,8 @@ import { GraphQLError } from 'graphql';
 import { cold, getTestScheduler } from 'jasmine-marbles';
 import { Observable, of } from 'rxjs';
 
+import { AppHttpProgressModule } from '../http-progress/http-progress.module';
+import { AppUserService } from '../user/user.service';
 import { AppHttpHandlersService } from './http-handlers.service';
 
 describe('AppHttpHandlersService', () => {

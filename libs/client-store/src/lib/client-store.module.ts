@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 
-import { AppHttpApiModule } from './state/http-api/http-api.module';
-import { AppHttpProgressModule } from './state/http-progress/http-progress.module';
-import { AppSidebarUiModule } from './state/sidebar-ui/sidebar-ui.module';
-import { AppUserModule } from './state/user/user.module';
+import { AppHttpApiModule } from './http-api/http-api.module';
+import { AppHttpProgressModule } from './http-progress/http-progress.module';
+import { AppSidebarUiModule } from './sidebar-ui/sidebar-ui.module';
+import { AppUserModule } from './user/user.module';
 
 @NgModule({
   imports: [AppHttpApiModule, AppHttpProgressModule, AppUserModule, AppSidebarUiModule],

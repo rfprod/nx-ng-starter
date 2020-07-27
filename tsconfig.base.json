@@ -29,17 +29,15 @@
     "noUnusedLocals": true,
     "paths": {
       "@nx-ng-starter/api-interface": ["libs/api-interface/src/index.ts"],
-      "@nx-ng-starter/api-interface/client-gql": ["libs/api-interface/src/lib/generated/index.ts"],
       "@nx-ng-starter/mocks-core": ["libs/mocks-core/src/index.ts"],
       "@nx-ng-starter/proto": ["libs/proto/src/index.ts"],
       "@nx-ng-starter/client-core": ["libs/client-core/src/index.ts"],
       "@nx-ng-starter/client-store": ["libs/client-store/src/index.ts"],
-      "@nx-ng-starter/client-store/*": ["libs/client-store/src/lib/*"],
-      "@nx-ng-starter/client-ui": ["libs/client-ui/src/index.ts"],
       "@nx-ng-starter/client-util": ["libs/client-util/src/index.ts"],
       "@nx-ng-starter/client-ui-material": ["libs/client-ui-material/src/index.ts"],
       "@nx-ng-starter/client-ui-translate": ["libs/client-ui-translate/src/index.ts"],
-      "@nx-ng-starter/client-services": ["libs/client-services/src/index.ts"]
+      "@nx-ng-starter/client-services": ["libs/client-services/src/index.ts"],
+      "@nx-ng-starter/client-gql": ["libs/client-gql/src/index.ts"]
     },
     "rootDir": ".",
     "skipDefaultLibCheck": true,
