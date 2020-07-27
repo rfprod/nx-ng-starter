@@ -162,7 +162,7 @@ lintModule() {
   MODULE_NAME="${MODULE_ALIAS//app\:/}" # remove app: prefix
   MODULE_NAME="${MODULE_NAME//lib\:/}"  # remove lib: prefix
 
-  local MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s/}" # partial module path, e.g. apps/nx-ng-starter for subsequent path formation
+  local MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s/}" # partial module path, e.g. apps/client for subsequent path formation
 
   printf "
     ${DEFAULT} - module name: ${YELLOW}%s

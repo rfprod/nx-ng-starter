@@ -54,7 +54,7 @@ copyReportToDist() {
   ##
   # Documentation root path.
   ##
-  local DOC_DIST_ROOT=${PROJECT_ROOT}/dist/apps/nx-ng-starter/documentation
+  local DOC_DIST_ROOT=${PROJECT_ROOT}/dist/apps/client/documentation
 
   if [ "$2" = "report" ]; then
     # check documentation dist path existence
@@ -136,7 +136,7 @@ documentModule() {
   MODULE_NAME="${MODULE_ALIAS//app\:/}" # remove app: prefix
   MODULE_NAME="${MODULE_NAME//lib\:/}"  # removed lib: prefix
 
-  local MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s\/}" # partial module path, e.g. apps/nx-ng-starter for subsequent path formation
+  local MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s\/}" # partial module path, e.g. apps/client for subsequent path formation
 
   local DOCUMENTATION_BASE_PATH=${PROJECT_ROOT}/dist/apps/documentation
   mkdir -p "$DOCUMENTATION_BASE_PATH"

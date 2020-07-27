@@ -23,7 +23,7 @@ reportUsage() {
     ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh dev${DEFAULT} - build all apps in development mode
     ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh prod${DEFAULT} - build all apps in production mode
     ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh prod api${DEFAULT} - build API app in production mode
-    ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh prod nx-ng-starter${DEFAULT} - build Nx Ng Starter app in production mode
+    ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh prod client${DEFAULT} - build Nx Ng Starter app in production mode
     ${DEFAULT}\n\n" "$TITLE"
 
   exitWithError
@@ -37,7 +37,7 @@ buildNxNgStarterProd() {
   printf "
     ${LIGHT_BLUE}%s
     ${DEFAULT}\n\n" "$TITLE"
-  ng build --project nx-ng-starter --configuration production || exitWithError
+  ng build --project client --configuration production || exitWithError
 }
 
 ##
@@ -99,7 +99,7 @@ elif [ "$1" = "prod" ]; then
   # build project
   if [ "$2" = "api" ]; then
     buildAPIProd
-  elif [ "$2" = "nx-ng-starter" ]; then
+  elif [ "$2" = "client" ]; then
     buildNxNgStarterProd
   else
     buildAllProd

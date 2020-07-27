@@ -25,8 +25,8 @@ reportUsageError() {
     ${RED} %s\n
     ${LIGHT_RED}firebase deploy token must be provided as a first argument.\n
     ${DEFAULT}# ${LIGHT_GREEN}NX-NG-STARTER app\n
-    ${DEFAULT}- CI environment - ${YELLOW}bash tools/shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN app:nx-ng-starter\n
-    ${DEFAULT}- LOCALHOST environment, firebase authentication required - ${YELLOW}bash tools/shell/firebase-deploy.sh localhost app:nx-ng-starter\n
+    ${DEFAULT}- CI environment - ${YELLOW}bash tools/shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN app:client\n
+    ${DEFAULT}- LOCALHOST environment, firebase authentication required - ${YELLOW}bash tools/shell/firebase-deploy.sh localhost app:client\n
     ${DEFAULT}# ${LIGHT_GREEN}API app\n
     ${DEFAULT}- CI environment - ${YELLOW}bash tools/shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN app:api\n
     ${DEFAULT}- LOCALHOST environment, firebase authentication required - ${YELLOW}bash tools/shell/firebase-deploy.sh localhost app:api\n
@@ -42,7 +42,7 @@ reportUsageError() {
 ##
 # Project directory
 ##
-PROJECT_DIRECTORY=./apps/nx-ng-starter/
+PROJECT_DIRECTORY=./apps/client/
 
 ##
 # Removes junky files from project root.
@@ -70,7 +70,7 @@ config() {
 # Deploys client application.
 ##
 deployClientApp() {
-  local PROJECT_DIRECTORY=./apps/nx-ng-starter/
+  local PROJECT_DIRECTORY=./apps/client/
 
   config
 

@@ -56,7 +56,7 @@ copyReportToDist() {
   ##
   # Coverage root path.
   ##
-  local COV_DISTR_ROOT=${PROJECT_ROOT}/dist/apps/nx-ng-starter/coverage
+  local COV_DISTR_ROOT=${PROJECT_ROOT}/dist/apps/client/coverage
 
   if [ "$3" = "report" ]; then
     # check coverage dist path existence
@@ -120,9 +120,9 @@ testModule() {
   local MODULE_NAME="${MODULE_ALIAS//app\:/}" # remove app: prefix
   MODULE_NAME="${MODULE_NAME//lib\:/}"        # remove lib: prefix
 
-  local MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s\/}" # partial module path, e.g. apps/nx-ng-starter for subsequent path formation
+  local MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s\/}" # partial module path, e.g. apps/client for subsequent path formation
 
-  local COVERAGE_BASE_PATH=${PROJECT_ROOT}/dist/apps/nx-ng-starter/coverage
+  local COVERAGE_BASE_PATH=${PROJECT_ROOT}/dist/apps/client/coverage
 
   printf "
     ${DEFAULT} - module name: ${YELLOW}%s

@@ -55,7 +55,7 @@ copyReportToDist() {
   ##
   # E2E root path.
   ##
-  local E2E_DISTR_ROOT=${PROJECT_ROOT}/dist/apps/nx-ng-starter/cypress
+  local E2E_DISTR_ROOT=${PROJECT_ROOT}/dist/apps/client/cypress
 
   ##
   # Report directory
@@ -150,7 +150,7 @@ testModule() {
   MODULE_NAME="${MODULE_ALIAS//app\:/}" # remove app: prefix
 
   local MODULE_PARTIAL_PATH
-  MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s\/}" # replace ': ' with 's/ ' to get parial path (e.g. apps/nx-ng-starter-e2e() for paths formation
+  MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s\/}" # replace ': ' with 's/ ' to get parial path (e.g. apps/client-e2e) for paths formation
 
   local E2E_DIST_PATH
   E2E_DIST_PATH=${PROJECT_ROOT}/dist/cypress/${MODULE_PARTIAL_PATH}
