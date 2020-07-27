@@ -2,8 +2,6 @@ import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/ht
 import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AppToasterService } from '@nx-ng-starter/client-services';
-import { AppHttpProgressService } from '@nx-ng-starter/client-store/state/http-progress/http-progress.service';
-import { AppUserService } from '@nx-ng-starter/client-store/state/user/user.service';
 import {
   HTTP_STATUS,
   IWebClientAppEnvironment,
@@ -19,6 +17,9 @@ import { GraphQLError } from 'graphql';
 import memo from 'memo-decorator';
 import { MonoTypeOperatorFunction, Observable, throwError } from 'rxjs';
 import { catchError, take, tap, timeout } from 'rxjs/operators';
+
+import { AppHttpProgressService } from '../http-progress/http-progress.service';
+import { AppUserService } from '../user/user.service';
 
 /**
  * Http handers service.

@@ -6,7 +6,7 @@ config:
     type: 'interface'
     input: 'interface'
 generates:
-  libs/api-interface/src/lib/generated/client-api-gql.ts:
+  libs/client-gql/src/lib/generated/client-api-gql.interface.ts:
     schema: 'apps/api/api-schema.gql'
     plugins:
       - 'typescript'

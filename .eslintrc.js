@@ -381,13 +381,18 @@ module.exports = {
             ],
           },
           {
-            sourceTag: 'scope:client-ui',
+            sourceTag: 'scope:client-services',
             onlyDependOnLibsWithTags: [
               'scope:mocks-core',
               'scope:proto',
               'scope:client-store',
               'scope:client-util',
+              'scope:client-ui-translate',
             ],
+          },
+          {
+            sourceTag: 'scope:client-gql',
+            onlyDependOnLibsWithTags: ['scope:mocks-core', 'scope:proto', 'scope:client-util'],
           },
           {
             sourceTag: 'scope:client-util',

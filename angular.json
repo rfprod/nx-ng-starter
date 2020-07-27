@@ -49,7 +49,7 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "apps/api/.eslintrc",
-            "exclude": ["**/node_modules/**", "!apps/api/**"],
+            "exclude": ["**/node_modules/**", "!apps/api/**/*.ts"],
             "tsConfig": ["apps/api/tsconfig.app.json", "apps/api/tsconfig.spec.json"]
           }
         },
@@ -88,7 +88,7 @@
           "options": {
             "commands": [
               {
-                "command": "npx graphql-codegen --config libs/api-interface/codegen.yml && find libs/api-interface/src/lib/generated/ -type f -name \"*.ts\" -exec sed -i \"s/Scalars/IScalars/g\" {} + && ng lint api-interface --fix"
+                "command": "npx graphql-codegen --config libs/api-interface/codegen.yml && find libs/client-gql/src/lib/generated/ -type f -name \"*.ts\" -exec sed -i \"s/Scalars/IScalars/g\" {} + && ng lint client-gql --fix"
               }
             ]
           }
@@ -97,7 +97,7 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/api-interface/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/api-interface/**"],
+            "exclude": ["**/node_modules/**", "!libs/api-interface/**/*.ts"],
             "tsConfig": [
               "libs/api-interface/tsconfig.lib.json",
               "libs/api-interface/tsconfig.spec.json"
@@ -123,7 +123,7 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/mocks-core/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/mocks-core/**"],
+            "exclude": ["**/node_modules/**", "!libs/mocks-core/**/*.ts"],
             "tsConfig": ["libs/mocks-core/tsconfig.lib.json", "libs/mocks-core/tsconfig.spec.json"]
           }
         },
@@ -256,7 +256,7 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "apps/client/.eslintrc",
-            "exclude": ["**/node_modules/**", "!apps/client/**"],
+            "exclude": ["**/node_modules/**", "!apps/client/**/*.ts"],
             "tsConfig": ["apps/client/tsconfig.app.json", "apps/client/tsconfig.spec.json"]
           }
         },
@@ -325,7 +325,7 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "apps/client-e2e/.eslintrc",
-            "exclude": ["**/node_modules/**", "!apps/client-e2e/**"],
+            "exclude": ["**/node_modules/**", "!apps/client-e2e/**/*.ts"],
             "tsConfig": "apps/client-e2e/tsconfig.e2e.json"
           }
         }
@@ -340,7 +340,7 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/proto/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/proto/**"],
+            "exclude": ["**/node_modules/**", "!libs/proto/**/*.ts"],
             "tsConfig": ["libs/proto/tsconfig.lib.json", "libs/proto/tsconfig.spec.json"]
           }
         },
@@ -368,7 +368,7 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/client-core/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/client-core/**"],
+            "exclude": ["**/node_modules/**", "!libs/client-core/**/*.ts"],
             "tsConfig": [
               "libs/client-core/tsconfig.lib.json",
               "libs/client-core/tsconfig.spec.json"
@@ -399,7 +399,7 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/client-store/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/client-store/**/*"],
+            "exclude": ["**/node_modules/**", "!libs/client-store/**/*.ts"],
             "tsConfig": [
               "libs/client-store/tsconfig.lib.json",
               "libs/client-store/tsconfig.spec.json"
@@ -424,41 +424,13 @@
       },
       "sourceRoot": "libs/client-store/src"
     },
-    "client-ui": {
-      "architect": {
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "eslintConfig": "libs/client-ui/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/client-ui/**/*"],
-            "tsConfig": ["libs/client-ui/tsconfig.lib.json", "libs/client-ui/tsconfig.spec.json"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/client-ui/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "prefix": "client",
-      "projectType": "library",
-      "root": "libs/client-ui",
-      "schematics": {
-        "@nrwl/angular:component": {
-          "style": "scss"
-        }
-      },
-      "sourceRoot": "libs/client-ui/src"
-    },
     "client-util": {
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/client-util/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/client-util/**/*"],
+            "exclude": ["**/node_modules/**", "!libs/client-util/**/*.ts"],
             "tsConfig": [
               "libs/client-util/tsconfig.lib.json",
               "libs/client-util/tsconfig.spec.json"
@@ -497,7 +469,7 @@
               "libs/client-ui-material/tsconfig.lib.json",
               "libs/client-ui-material/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/client-ui-material/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/client-ui-material/**/*.ts"]
           }
         },
         "test": {
@@ -528,7 +500,7 @@
               "libs/client-ui-translate/tsconfig.lib.json",
               "libs/client-ui-translate/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/client-ui-translate/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/client-ui-translate/**/*.ts"]
           }
         },
         "test": {
@@ -559,7 +531,7 @@
               "libs/client-services/tsconfig.lib.json",
               "libs/client-services/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/client-services/**/*"]
+            "exclude": ["**/node_modules/**", "!libs/client-services/**/*.ts"]
           }
         },
         "test": {
@@ -567,6 +539,36 @@
           "options": {
             "jestConfig": "libs/client-services/jest.config.js",
             "passWithNoTests": true
+          }
+        }
+      },
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      }
+    },
+    "client-gql": {
+      "projectType": "library",
+      "root": "libs/client-gql",
+      "sourceRoot": "libs/client-gql/src",
+      "prefix": "nx-ng-starter",
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-gql/.eslintrc",
+            "tsConfig": ["libs/client-gql/tsconfig.lib.json", "libs/client-gql/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/client-gql/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-gql/jest.config.js",
+            "tsConfig": "libs/client-gql/tsconfig.spec.json",
+            "passWithNoTests": true,
+            "setupFile": "libs/client-gql/src/test-setup.ts"
           }
         }
       },

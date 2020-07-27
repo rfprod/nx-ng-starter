@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppClientCoreModule } from '@nx-ng-starter/client-core';
-import { AppWebsocketModule } from '@nx-ng-starter/client-store/state/websocket/websocket.module';
+import { AppWebsocketModule } from '@nx-ng-starter/client-store';
 import {
   getTestBedConfig,
   newTestBedMetadata,
