@@ -2,7 +2,7 @@ import { HttpRequest } from '@angular/common/http';
 import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { async, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { AppClientServicesModule, AppToasterService } from '@nx-ng-starter/client-services';
-import { AppClientUiTranslateModule } from '@nx-ng-starter/client-ui-translate';
+import { AppClientUiTranslateModule } from '@nx-ng-starter/client-translate';
 import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
 import { Apollo } from 'apollo-angular';
 import { of } from 'rxjs';

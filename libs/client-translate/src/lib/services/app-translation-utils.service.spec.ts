@@ -1,12 +1,16 @@
 import { async, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { DateAdapter } from '@angular/material/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { AppClientUiMaterialModule } from '@nx-ng-starter/client-ui-material';
+import { AppClientUiMaterialModule } from '@nx-ng-starter/client-material';
 import { documentProvider, WINDOW, windowProvider } from '@nx-ng-starter/client-util';
 import { Subject } from 'rxjs';
 
-import { AppClientUiTranslateModule } from '../client-ui-translate.module';
-import { ISupportedLanguage, IUiLanguagesInterface, TLangCode } from '../interfaces';
+import { AppClientUiTranslateModule } from '../client-translate.module';
+import {
+  ISupportedLanguage,
+  IUiLanguagesInterface,
+  TLangCode,
+} from '../interfaces/ui-languages.interface';
 import { AppTranslationUtilsService } from './app-translation-utils.service';
 
 describe('AppTranslationUtilsService', () => {

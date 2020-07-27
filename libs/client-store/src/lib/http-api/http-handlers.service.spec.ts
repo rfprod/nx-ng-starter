@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpHeaders, HttpRequest } from '@angular/common/htt
 import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { async, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { AppClientServicesModule, AppToasterService } from '@nx-ng-starter/client-services';
-import { AppClientUiTranslateModule } from '@nx-ng-starter/client-ui-translate';
+import { AppClientUiTranslateModule } from '@nx-ng-starter/client-translate';
 import { HTTP_STATUS } from '@nx-ng-starter/client-util';
 import {
   AppLocalStorageMock,

@@ -8,8 +8,8 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { AppClientCoreModule } from '@nx-ng-starter/client-core';
+import { AppClientUiMaterialModule } from '@nx-ng-starter/client-material';
 import { AppWebsocketModule, httpProgressServiceProvider } from '@nx-ng-starter/client-store';
-import { AppClientUiMaterialModule } from '@nx-ng-starter/client-ui-material';
 import { EntityServiceClient } from '@nx-ng-starter/proto';
 
 import { environment } from '../environments/environment';

@@ -29,12 +29,12 @@
     "document:all:generate": "bash tools/shell/document.sh generate all",
     "document:all:generate-and-report-to-dist": "bash tools/shell/document.sh generate-and-report all",
     "e2e": "bash tools/shell/e2e.sh all",
-    "e2e:headless": "bash tools/shell/e2e.sh all headless",
-    "e2e:headless:report": "bash tools/shell/e2e.sh all headless report",
     "e2e:client": "bash tools/shell/e2e.sh app:client-e2e",
     "e2e:client:headless": "bash tools/shell/e2e.sh app:client-e2e headless",
     "e2e:client:headless:report": "bash tools/shell/e2e.sh app:client-e2e headless report",
     "e2e:client:report": "bash tools/shell/e2e.sh app:client-e2e browser report",
+    "e2e:headless": "bash tools/shell/e2e.sh all headless",
+    "e2e:headless:report": "bash tools/shell/e2e.sh all headless report",
     "firebase:deploy:ci:all": "bash tools/shell/firebase-deploy.sh $FIREBASE_DEPLOY_TOKEN all",
     "firebase:deploy:ci:api": "bash tools/shell/firebase-deploy.sh $FIREBASE_DEPLOY_TOKEN app:api",
     "firebase:deploy:ci:client": "bash tools/shell/firebase-deploy.sh $FIREBASE_DEPLOY_TOKEN app:client",
@@ -80,9 +80,9 @@
     "start": "npm run start:api & npm run start:client",
     "start:api": "ng serve api",
     "start:api:local": "npm run start:envoy:local & ng serve api",
+    "start:client": "ng serve client",
     "start:envoy": "sudo bash tools/shell/docker.sh envoy",
     "start:envoy:local": "sudo bash tools/shell/docker.sh envoy:local",
-    "start:client": "ng serve client",
     "start:production-server": "node simple-production-server.js",
     "stylelint": "npx stylelint --syntax scss",
     "stylelint:all": "npm run stylelint:apps; npm run stylelint:libs",
@@ -97,7 +97,8 @@
     "test:changed:single-run": "bash tools/shell/test.sh single-run changed",
     "update": "ng update @nrwl/workspace",
     "update:check": "ng update",
-    "workspace-schematic": "nx workspace-schematic"
+    "workspace-schematic": "nx workspace-schematic",
+    "workspace:cleanup": "rm -rf documentation/* dist/* coverage/* changelog/*"
   },
   "husky": {
     "hooks": {

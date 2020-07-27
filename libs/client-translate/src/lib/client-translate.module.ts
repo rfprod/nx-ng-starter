@@ -1,7 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { appSharedUiTranslateModuleProviders } from './providers/client-ui-translate-module.providers';
+import { appSharedUiTranslateModuleProviders } from './providers/client-translate-module.providers';
 import { AppTranslationUtilsService } from './services/app-translation-utils.service';
 
 /**

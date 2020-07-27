@@ -5,13 +5,13 @@ import { WINDOW } from '@nx-ng-starter/client-util';
 import { Subject } from 'rxjs';
 
 import { RU_DICTIONARY } from '../dictionaries/ru';
+import { IUiDictionary } from '../interfaces/ui-dictionary.interface';
 import {
   ISupportedLanguage,
-  IUiDictionary,
   IUiLanguagesInterface,
-  IUiTranslations,
   TLangCode,
-} from '../interfaces';
+} from '../interfaces/ui-languages.interface';
+import { IUiTranslations } from '../interfaces/ui-translations.interface';
 
 /**
  * Application translation utils service.
