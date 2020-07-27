@@ -11,7 +11,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsModule } from '@ngxs/store';
-import { AppClientUiMaterialModule } from '@nx-ng-starter/client-material';
+import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
 import {
   documentFactory,
   IWebClientAppEnvironment,
@@ -61,7 +61,7 @@ export const mocksCoreModuleProviders: Provider[] = [
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    AppClientUiMaterialModule.forRoot(),
+    AppClientMaterialModule.forRoot(),
     HttpClientTestingModule,
     RouterTestingModule,
     NgxsModule.forRoot([], { developmentMode: true }),
@@ -80,7 +80,7 @@ export const mocksCoreModuleProviders: Provider[] = [
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    AppClientUiMaterialModule,
+    AppClientMaterialModule,
     HttpClientTestingModule,
     RouterTestingModule,
     MatDialogModule,

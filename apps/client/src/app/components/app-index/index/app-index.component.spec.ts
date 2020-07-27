@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppClientCoreModule } from '@nx-ng-starter/client-core';
 import { AppWebsocketModule } from '@nx-ng-starter/client-store';
 import {
   getTestBedConfig,
@@ -16,7 +15,6 @@ describe('AppIndexComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     declarations: [AppIndexComponent],
     imports: [
-      AppClientCoreModule.forRoot(),
       AppWebsocketModule.forRoot(testingEnvironment),
       RouterTestingModule.withRoutes([
         { path: '', component: AppIndexComponent },

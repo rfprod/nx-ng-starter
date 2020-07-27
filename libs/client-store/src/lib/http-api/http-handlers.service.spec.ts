@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpHeaders, HttpRequest } from '@angular/common/htt
 import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { async, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { AppClientServicesModule, AppToasterService } from '@nx-ng-starter/client-services';
-import { AppClientUiTranslateModule } from '@nx-ng-starter/client-translate';
+import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
 import { HTTP_STATUS } from '@nx-ng-starter/client-util';
 import {
   AppLocalStorageMock,
@@ -22,7 +22,7 @@ import { AppHttpHandlersService } from './http-handlers.service';
 describe('AppHttpHandlersService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     imports: [
-      AppClientUiTranslateModule.forRoot(),
+      AppClientTranslateModule.forRoot(),
       AppHttpProgressModule.forRoot(),
       AppClientServicesModule.forRoot(),
     ],

@@ -6,7 +6,7 @@ import { HttpLink } from 'apollo-angular-link-http';
 /**
  * Shared core module providers.
  */
-export const appSharedCoreModuleProviders: Provider[] = [
+export const appClientCoreModuleProviders: Provider[] = [
   {
     provide: LocationStrategy,
     useClass: PathLocationStrategy,

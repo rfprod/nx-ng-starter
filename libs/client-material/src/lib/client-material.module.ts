@@ -38,7 +38,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { HammerModule } from '@angular/platform-browser';
 
-import { sharedUiMaterialModuleProviders } from './providers/client-material-module.providers';
+import { appClientMaterialModuleProviders } from './providers/client-material-module.providers';
 
 /**
  * Shared application material module.
@@ -147,14 +147,14 @@ import { sharedUiMaterialModuleProviders } from './providers/client-material-mod
     HammerModule,
   ],
 })
-export class AppClientUiMaterialModule {
+export class AppClientMaterialModule {
   /**
    * Provides services.
    */
-  public static forRoot(): ModuleWithProviders<AppClientUiMaterialModule> {
+  public static forRoot(): ModuleWithProviders<AppClientMaterialModule> {
     return {
-      ngModule: AppClientUiMaterialModule,
-      providers: [...sharedUiMaterialModuleProviders],
+      ngModule: AppClientMaterialModule,
+      providers: [...appClientMaterialModuleProviders],
     };
   }
 }
