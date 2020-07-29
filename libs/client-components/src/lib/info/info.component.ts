@@ -3,16 +3,13 @@ import { AppMarkdownService } from '@nx-ng-starter/client-services';
 import { AppHttpApiService } from '@nx-ng-starter/client-store';
 import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@nx-ng-starter/client-util';
 
-/**
- * Application index api component.
- */
 @Component({
-  selector: 'app-index-api',
-  templateUrl: './app-index-api.component.html',
-  styleUrls: ['./app-index-api.component.scss'],
+  selector: 'app-info',
+  templateUrl: './info.component.html',
+  styleUrls: ['./info.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppIndexApiComponent {
+export class AppInfoComponent {
   public readonly ping$ = this.httpApi.output.ping$;
 
   constructor(

@@ -8,14 +8,14 @@ import {
   TClassMemberSpiesObject,
 } from '@nx-ng-starter/mocks-core';
 
-import { AppIndexHomeComponent } from './app-index-home.component';
+import { AppHomeComponent } from './home.component';
 
-describe('AppIndexHomeComponent', () => {
+describe('AppHomeComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    declarations: [AppIndexHomeComponent],
+    declarations: [AppHomeComponent],
     imports: [
       RouterTestingModule.withRoutes([
-        { path: '', component: AppIndexHomeComponent },
+        { path: '', component: AppHomeComponent },
         { path: '', redirectTo: '', pathMatch: 'full' },
         { path: '**', redirectTo: '' },
       ]),
@@ -23,21 +23,21 @@ describe('AppIndexHomeComponent', () => {
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
-  let fixture: ComponentFixture<AppIndexHomeComponent>;
-  let component: AppIndexHomeComponent;
+  let fixture: ComponentFixture<AppHomeComponent>;
+  let component: AppHomeComponent;
   let service: AppMarkdownService;
   let spy: {
     service: {
       process: jest.SpyInstance;
     };
-    component: TClassMemberSpiesObject<AppIndexHomeComponent>;
+    component: TClassMemberSpiesObject<AppHomeComponent>;
   };
 
   beforeEach(async(() => {
     void TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(AppIndexHomeComponent);
+        fixture = TestBed.createComponent(AppHomeComponent);
         component = fixture.debugElement.componentInstance;
         service = TestBed.inject(AppMarkdownService);
         spy = {
@@ -46,7 +46,7 @@ describe('AppIndexHomeComponent', () => {
               .spyOn(service, 'process')
               .mockImplementation((input: string) => `marked ${input}`),
           },
-          component: setupJestSpiesFor<AppIndexHomeComponent>(component),
+          component: setupJestSpiesFor<AppHomeComponent>(component),
         };
         expect(spy.service.process).toBeDefined();
         expect(spy.component).toBeDefined();

@@ -1,0 +1,196 @@
+/* Angular Material Theme, and Typography customization */
+@import 'node_modules/@angular/material/_theming.scss';
+@import 'libs/client-core/src/lib/styles/theming/material-colors.scss';
+
+/**
+ * Define a custom typography config that overrides font-family, and all levels.
+ */
+
+$custom-typography: mat-typography-config(
+  $font-family: 'Roboto, monospace, "Helvetica Neue", sans-serif',
+  $display-4: mat-typography-level(112px, 112px, 300),
+  $display-3: mat-typography-level(56px, 56px, 400),
+  $display-2: mat-typography-level(45px, 48px, 400),
+  $display-1: mat-typography-level(34px, 40px, 400),
+  $headline: mat-typography-level(24px, 32px, 400),
+  $title: mat-typography-level(20px, 32px, 500),
+  $subheading-2: mat-typography-level(16px, 28px, 400),
+  $subheading-1: mat-typography-level(15px, 24px, 400),
+  $body-2: mat-typography-level(14px, 24px, 500),
+  $body-1: mat-typography-level(14px, 20px, 400),
+  $caption: mat-typography-level(12px, 20px, 400),
+  $button: mat-typography-level(14px, 14px, 500),
+  $input: mat-typography-level(inherit, 1.125, 400),
+);
+
+/**
+ * Include the common styles for Angular Material. Include this here so that you only
+ * have to load a single css file for Angular Material in your app.
+ * Be sure to include this mixin once!
+ * Custom typography config is passed to mat-core.
+ */
+@include mat-core($custom-typography);
+
+/* Define a custom light theme. */
+$candy-app-primary: mat-palette($mat-green, 600);
+$candy-app-accent: mat-palette($mat-deep-orange, 500);
+$candy-app-warn: mat-palette($mat-red, 800);
+$candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
+
+/* Include the custom light theme styles. */
+@include angular-material-theme($candy-app-theme);
+
+/* Define an alternate dark theme. */
+$unicorn-dark-primary: mat-palette($mat-deep-orange, 800);
+$unicorn-dark-accent: mat-palette($mat-yellow, 400);
+$unicorn-dark-warn: mat-palette($mat-orange, 300);
+$unicorn-dark-theme: mat-dark-theme(
+  $unicorn-dark-primary,
+  $unicorn-dark-accent,
+  $unicorn-dark-warn
+);
+
+/**
+ * Include the alternative theme styles inside of a block with a CSS class.
+ * This CSS class can be whatever is needed. Any component inside of an element with
+ * `.unicorn-dark-theme` will be affected by the alternate dark theme instead of the light theme.
+ */
+
+.unicorn-dark-theme {
+  @include angular-material-theme($unicorn-dark-theme);
+}
+
+/**
+ * Material Theming extension.
+ * Imports and includes variables, and mixins:
+ * custom-selectors-colouring, custom-colouring-classes
+ */
+@import 'libs/client-core/src/lib/styles/theming/theming-extension.scss';
+
+/**
+ * Classes for font-awesome icons
+ * Note: free plan includes only fab (font-awesome-brands) and fas (font-awesome-solid) groups
+ */
+
+/* Font awesome bold icons */
+.material-icons-fab {
+  display: inline-block;
+  font-weight: normal;
+  font-size: 24px; /* Preferred icon size */
+  font-style: normal;
+  line-height: 1;
+  direction: ltr;
+  letter-spacing: normal;
+  white-space: nowrap;
+  text-align: center;
+  text-transform: none;
+  word-wrap: normal;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+
+  &:hover {
+    cursor: default;
+  }
+}
+
+/* Font awesome solid icons */
+.material-icons-fas {
+  display: inline-block;
+  font-size: 19px; /* Preferred icon size */
+  line-height: 1;
+  direction: ltr;
+  letter-spacing: normal;
+  white-space: nowrap;
+  text-align: center;
+  text-transform: none;
+  word-wrap: normal;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+
+  &:hover {
+    cursor: default;
+  }
+}
+
+/* Class for custom svg icons */
+.material-icons-svg {
+  display: inline-block;
+  font-weight: normal;
+  font-size: 24px; /* Preferred icon size */
+  font-style: normal;
+  line-height: 1;
+  direction: ltr;
+  letter-spacing: normal;
+  white-space: nowrap;
+  text-transform: none;
+  word-wrap: normal;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+
+  &:hover {
+    cursor: default;
+  }
+
+  svg {
+    width: 50%;
+    height: 50%;
+    margin: 25%;
+  }
+}
+
+/* Additional customizations for icons inside anchors and buttons */
+a,
+button,
+mat-button-toggle {
+  .material-icons,
+  .material-icons-fab,
+  .material-icons-fas,
+  .material-icons-svg {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+/* Show cursor when pointing icons in mat-menus if mat-menu-item is not disabled */
+mat-menu-content,
+.mat-menu-content {
+  .mat-menu-item[aria-disabled='false'] > .material-icons,
+  .mat-menu-item[aria-disabled='false'] > .material-icons-fab,
+  .mat-menu-item[aria-disabled='false'] > .material-icons-fas,
+  .mat-menu-item[aria-disabled='false'] > .material-icons-svg {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

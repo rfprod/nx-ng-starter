@@ -5,17 +5,14 @@ import { TIMEOUT } from '@nx-ng-starter/client-util';
 import { timer } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-/**
- * Application index home component.
- */
 @UntilDestroy()
 @Component({
-  selector: 'app-index-home',
-  templateUrl: './app-index-home.component.html',
-  styleUrls: ['./app-index-home.component.scss'],
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppIndexHomeComponent {
+export class AppHomeComponent {
   public readonly timer$ = timer(TIMEOUT.INSTANT, TIMEOUT.MEDIUM).pipe(
     map(num => `Until destoyed timer ${num}`),
     untilDestroyed(this),

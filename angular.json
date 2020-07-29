@@ -213,7 +213,8 @@
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
               "node_modules/material-design-icon-fonts/iconfont/material-icons.css",
               "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
-              "apps/client/src/styles.scss"
+              "apps/client/src/styles.scss",
+              "libs/client-core/src/lib/styles/styles.scss"
             ],
             "tsConfig": "apps/client/tsconfig.app.json"
           }
@@ -263,7 +264,8 @@
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
               "node_modules/material-design-icon-fonts/iconfont/material-icons.css",
               "node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
-              "apps/client/src/styles.scss"
+              "apps/client/src/styles.scss",
+              "libs/client-core/src/lib/styles/styles.scss"
             ]
           }
         }
@@ -277,6 +279,37 @@
         }
       },
       "sourceRoot": "apps/client/src"
+    },
+    "client-components": {
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-components/.eslintrc",
+            "exclude": ["**/node_modules/**", "!libs/client-components/**/*.ts"],
+            "tsConfig": [
+              "libs/client-components/tsconfig.lib.json",
+              "libs/client-components/tsconfig.spec.json"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-components/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "prefix": "nx-ng-starter",
+      "projectType": "library",
+      "root": "libs/client-components",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "sourceRoot": "libs/client-components/src"
     },
     "client-core": {
       "architect": {
@@ -367,6 +400,37 @@
       },
       "sourceRoot": "libs/client-gql/src"
     },
+    "client-material": {
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-material/.eslintrc",
+            "exclude": ["**/node_modules/**", "!libs/client-material/**/*.ts"],
+            "tsConfig": [
+              "libs/client-material/tsconfig.lib.json",
+              "libs/client-material/tsconfig.spec.json"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-material/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "prefix": "client",
+      "projectType": "library",
+      "root": "libs/client-material",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "sourceRoot": "libs/client-material/src"
+    },
     "client-services": {
       "architect": {
         "lint": {
@@ -428,37 +492,6 @@
         }
       },
       "sourceRoot": "libs/client-store/src"
-    },
-    "client-material": {
-      "architect": {
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "eslintConfig": "libs/client-material/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/client-material/**/*.ts"],
-            "tsConfig": [
-              "libs/client-material/tsconfig.lib.json",
-              "libs/client-material/tsconfig.spec.json"
-            ]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/client-material/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "prefix": "client",
-      "projectType": "library",
-      "root": "libs/client-material",
-      "schematics": {
-        "@nrwl/angular:component": {
-          "style": "scss"
-        }
-      },
-      "sourceRoot": "libs/client-material/src"
     },
     "client-translate": {
       "architect": {

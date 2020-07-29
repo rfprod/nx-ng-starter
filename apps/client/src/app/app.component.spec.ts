@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AppIndexComponent } from '@nx-ng-starter/client-components';
 import {
   getTestBedConfig,
   newTestBedMetadata,
@@ -7,7 +8,6 @@ import {
   TClassMemberSpiesObject,
 } from '@nx-ng-starter/mocks-core';
 
-import { AppIndexComponent } from '../app-index/index/app-index.component';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {

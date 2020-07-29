@@ -360,15 +360,7 @@ module.exports = {
           },
           {
             sourceTag: 'scope:client-core',
-            onlyDependOnLibsWithTags: [
-              'scope:mocks-core',
-              'scope:proto',
-              'scope:client-store',
-              'scope:client-ui',
-              'scope:client-util',
-              'scope:client-material',
-              'scope:client-translate',
-            ],
+            onlyDependOnLibsWithTags: ['scope:client-util'],
           },
           {
             sourceTag: 'scope:client-store',
@@ -382,6 +374,16 @@ module.exports = {
           },
           {
             sourceTag: 'scope:client-services',
+            onlyDependOnLibsWithTags: [
+              'scope:mocks-core',
+              'scope:proto',
+              'scope:client-store',
+              'scope:client-util',
+              'scope:client-translate',
+            ],
+          },
+          {
+            sourceTag: 'scope:client-componnents',
             onlyDependOnLibsWithTags: [
               'scope:mocks-core',
               'scope:proto',
@@ -405,9 +407,11 @@ module.exports = {
               'scope:proto',
               'scope:client-store',
               'scope:client-services',
-              'type:feature',
-              'type:ui',
-              'type:util',
+              'scope:client-components',
+              'scope:client-core',
+              'scope:client-material',
+              'scope:client-translate',
+              'scope:client-util',
             ],
           },
           {

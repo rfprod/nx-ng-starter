@@ -6,8 +6,8 @@ import { AppWebsocketService } from '@nx-ng-starter/client-store';
  */
 @Component({
   selector: 'app-index',
-  templateUrl: './app-index.component.html',
-  styleUrls: ['./app-index.component.scss'],
+  templateUrl: './index.component.html',
+  styleUrls: ['./index.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppIndexComponent {

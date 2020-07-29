@@ -1,23 +1,24 @@
+import { HttpTestingController } from '@angular/common/http/testing';
 import { async, ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppWebsocketModule } from '@nx-ng-starter/client-store';
+import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
 import {
+  flushHttpRequests,
   getTestBedConfig,
   newTestBedMetadata,
   setupJestSpiesFor,
   TClassMemberSpiesObject,
-  testingEnvironment,
 } from '@nx-ng-starter/mocks-core';
 
-import { AppIndexComponent } from './app-index.component';
+import { AppInfoComponent } from './info.component';
 
-describe('AppIndexComponent', () => {
+describe('AppInfoComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    declarations: [AppIndexComponent],
+    declarations: [AppInfoComponent],
     imports: [
-      AppWebsocketModule.forRoot(testingEnvironment),
+      AppClientTranslateModule.forRoot(),
       RouterTestingModule.withRoutes([
-        { path: '', component: AppIndexComponent },
+        { path: '', component: AppInfoComponent },
         { path: '', redirectTo: '', pathMatch: 'full' },
         { path: '**', redirectTo: '' },
       ]),
@@ -25,25 +26,32 @@ describe('AppIndexComponent', () => {
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
-  let fixture: ComponentFixture<AppIndexComponent>;
-  let component: AppIndexComponent;
+  let fixture: ComponentFixture<AppInfoComponent>;
+  let component: AppInfoComponent;
   let spy: {
-    component: TClassMemberSpiesObject<AppIndexComponent>;
+    component: TClassMemberSpiesObject<AppInfoComponent>;
   };
+
+  let httpController: HttpTestingController;
 
   beforeEach(async(() => {
     void TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
-        fixture = TestBed.createComponent(AppIndexComponent);
+        httpController = TestBed.inject(HttpTestingController);
+        fixture = TestBed.createComponent(AppInfoComponent);
         component = fixture.debugElement.componentInstance;
         spy = {
-          component: setupJestSpiesFor<AppIndexComponent>(component),
+          component: setupJestSpiesFor<AppInfoComponent>(component),
         };
         expect(spy.component).toBeDefined();
-        fixture.detectChanges();
+        flushHttpRequests(httpController);
       });
   }));
+
+  afterEach(() => {
+    flushHttpRequests(httpController, true);
+  });
 
   it('should be defined', () => {
     expect(component).toBeDefined();

@@ -1,33 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 
-import { AppIndexApiComponent } from './components/app-index/api/app-index-api.component';
-import { AppIndexHomeComponent } from './components/app-index/home/app-index-home.component';
-import { AppIndexComponent } from './components/app-index/index/app-index.component';
-
-/**
- * Application routes.
- */
 export const APP_ROUTES: Route[] = [
   {
     path: '',
-    component: AppIndexComponent,
-    children: [
-      {
-        path: '',
-        component: AppIndexHomeComponent,
-      },
-      {
-        path: 'info',
-        component: AppIndexApiComponent,
-      },
-    ],
+    loadChildren: () =>
+      import('@nx-ng-starter/client-components').then(mod => mod.AppClientComponentsModule),
   },
-  {
-    path: '',
-    redirectTo: '',
-    pathMatch: 'full',
-  },
+  { path: '**', redirectTo: '' },
 ];
 
 /**

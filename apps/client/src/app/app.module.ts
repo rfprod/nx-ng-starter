@@ -19,10 +19,7 @@ import { EntityServiceClient } from '@nx-ng-starter/proto';
 
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
-import { AppIndexApiComponent } from './components/app-index/api/app-index-api.component';
-import { AppIndexHomeComponent } from './components/app-index/home/app-index-home.component';
-import { AppIndexComponent } from './components/app-index/index/app-index.component';
-import { AppComponent } from './components/app/app.component';
+import { AppComponent } from './app.component';
 
 export const grpcProviders: Provider[] = [
   {
@@ -54,7 +51,7 @@ export const grpcProviders: Provider[] = [
     AppRoutingModule,
   ],
   providers: [...grpcProviders, httpProgressServiceProvider],
-  declarations: [AppComponent, AppIndexComponent, AppIndexHomeComponent, AppIndexApiComponent],
+  declarations: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 })
