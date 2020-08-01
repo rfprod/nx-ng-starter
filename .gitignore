@@ -4,6 +4,9 @@
 /dist
 /tmp
 /out-tsc
+/android/build/
+/android/app/build/
+/android/capacitor-cordova-android-plugins/build/
 
 # firebase
 .firebase
@@ -52,3 +55,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Local Files
+*.keystore
+/tools/shell/vars.sh

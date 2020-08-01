@@ -43,7 +43,7 @@ installProjectDependencies() {
   local TITLE="<< INSTALLING PROJECT DEPENDENCIES >>"
   printf "
     ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
-  cd ./functions npm install || exitWithError
+  cd ./functions && npm install || exitWithError
   cd .. || exitWithError
   yarn install --frozen-lockfile || exitWithError
 }
