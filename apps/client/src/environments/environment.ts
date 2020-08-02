@@ -1,4 +1,7 @@
+import { Capacitor } from '@capacitor/core';
 import { IWebClientAppEnvironment } from '@nx-ng-starter/client-util';
+
+const platform: string = Capacitor.getPlatform();
 
 /**
  * Development environment variables.
@@ -15,6 +18,7 @@ import { IWebClientAppEnvironment } from '@nx-ng-starter/client-util';
  */
 export const environment: IWebClientAppEnvironment = {
   production: false,
+  platform,
   appName: 'Nx Ng Starter Client',
   api: window.location.origin.includes('localhost')
     ? 'http://localhost:8080/api'

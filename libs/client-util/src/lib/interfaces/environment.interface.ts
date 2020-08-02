@@ -8,6 +8,7 @@ export type TAppName = 'Nx Ng Starter' | string;
  */
 export interface IWebClientAppEnvironment {
   production: boolean;
+  platform: string;
   appName: TAppName;
   api: string;
   envoyUrl: string;

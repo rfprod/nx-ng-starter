@@ -53,5 +53,5 @@ jobs:
       - run: yarn ngcc
       - run: ng lint
       - run: ng test --passWithNoTests --codeCoverage=false --watch=false --maxWorkers=2 --ci --updateSnapshot
-      - run: npx nx build nx-ng-starter
+      - run: npx nx build client
       - run: npx nx build api
