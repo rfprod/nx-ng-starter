@@ -1,5 +1,8 @@
 import { HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { ApolloLink, split } from '@apollo/client/core';
+import { ErrorResponse, onError } from '@apollo/client/link/error';
+import { getMainDefinition } from '@apollo/client/utilities';
 import { TranslateService } from '@ngx-translate/core';
 import { AppToasterService } from '@nx-ng-starter/client-services';
 import {
@@ -8,12 +11,9 @@ import {
   WEB_CLIENT_APP_ENV,
   WINDOW,
 } from '@nx-ng-starter/client-util';
-import { HttpLink, HttpLinkHandler } from 'apollo-angular-link-http';
-import { ApolloLink, ExecutionResult, split } from 'apollo-link';
-import { ErrorResponse, onError } from 'apollo-link-error';
+import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
 import { createUploadLink } from 'apollo-upload-client';
-import { getMainDefinition } from 'apollo-utilities';
-import { GraphQLError } from 'graphql';
+import { ExecutionResult, GraphQLError } from 'graphql';
 import memo from 'memo-decorator';
 import { MonoTypeOperatorFunction, Observable, throwError } from 'rxjs';
 import { catchError, take, tap, timeout } from 'rxjs/operators';
@@ -136,11 +136,11 @@ export class AppHttpHandlersService {
         return !Boolean(name);
       },
       httpLinkHandler,
-      createUploadLink({
+      (createUploadLink({
         uri,
         // eslint-disable-next-line @typescript-eslint/naming-convention
         headers: { Authorization: `Token ${this.userToken}` },
-      }),
+      }) as unknown) as ApolloLink,
     );
   }
 

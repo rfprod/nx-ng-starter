@@ -10,8 +10,7 @@ import {
   newTestBedMetadata,
 } from '@nx-ng-starter/mocks-core';
 import { Apollo } from 'apollo-angular';
-import { ExecutionResult } from 'apollo-link';
-import { GraphQLError } from 'graphql';
+import { ExecutionResult, GraphQLError } from 'graphql';
 import { cold, getTestScheduler } from 'jasmine-marbles';
 import { Observable, of } from 'rxjs';
 
