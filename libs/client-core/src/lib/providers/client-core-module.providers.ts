@@ -1,7 +1,7 @@
 import { APP_BASE_HREF, DOCUMENT, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Provider } from '@angular/core';
 import { documentFactory, WINDOW, windowFactory } from '@nx-ng-starter/client-util';
-import { HttpLink } from 'apollo-angular-link-http';
+import { HttpLink } from 'apollo-angular/http';
 
 /**
  * Shared core module providers.

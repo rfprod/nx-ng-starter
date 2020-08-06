@@ -19,8 +19,7 @@ import {
   WINDOW,
   windowFactory,
 } from '@nx-ng-starter/client-util';
-import { ApolloModule } from 'apollo-angular';
-import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
+import { HttpLink } from 'apollo-angular/http';
 
 import { AppDummyComponent } from './components/dummy/dummy.component.mock';
 import { dialogRefMockProvider } from './refs/dialog-ref.mock';
@@ -70,8 +69,6 @@ export const mocksCoreModuleProviders: Provider[] = [
     MatDialogModule,
     OverlayModule,
     MatSnackBarModule,
-    ApolloModule,
-    HttpLinkModule,
   ],
   declarations: [AppDummyComponent],
   exports: [
