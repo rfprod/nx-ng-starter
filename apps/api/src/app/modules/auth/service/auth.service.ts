@@ -6,7 +6,6 @@ import {
   UserLogoutCredentials,
   UserName,
   UserProfile,
-  UserToken,
 } from '@nx-ng-starter/api-interface';
 
 import { ApiAuthUtilsService } from '../../auth-utils/service/auth-utils.service';
@@ -43,10 +42,10 @@ export class ApiAuthService {
       email: credentials.email,
       phone: '',
     };
-    const token: UserToken = this.authUtils.getTokenWithPayload(
-      contacts.email,
-      `${name.first} ${name.last}`,
-    );
+    const token = this.authUtils.generateJWToken({
+      email: contacts.email,
+      name: `${name.first} ${name.last}`,
+    });
     const profile: UserProfile = new UserProfile({ id, name, contacts, token });
     return profile;
   }
