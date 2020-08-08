@@ -1,6 +1,5 @@
 import { UserContacts } from './user-contacts.interface';
 import { UserName } from './user-name.interface';
-import { UserToken } from './user-token.interface';
 
 /**
  * User profile interface with initialization.
@@ -12,7 +11,7 @@ export class UserProfile {
 
   public contacts: UserContacts = new UserContacts();
 
-  public token: UserToken = new UserToken();
+  public token = '';
 
   constructor(input?: UserProfile) {
     if (typeof input !== 'undefined') {

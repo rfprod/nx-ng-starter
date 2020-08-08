@@ -1,3 +1,4 @@
+import { JwtModule } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { ApiAuthUtilsService } from '../../auth-utils/service/auth-utils.service';
@@ -9,6 +10,11 @@ describe('ApiAuthController', () => {
 
   beforeAll(async () => {
     app = await Test.createTestingModule({
+      imports: [
+        JwtModule.register({
+          secret: 'jwtsecret',
+        }),
+      ],
       controllers: [ApiAuthController],
       providers: [ApiAuthService, ApiAuthUtilsService],
     }).compile();
