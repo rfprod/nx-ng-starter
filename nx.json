@@ -20,24 +20,31 @@
     "client": {
       "tags": ["scope:client", "type:application"]
     },
+    "client-components": {
+      "tags": ["scope:client-components", "type:ui"]
+    },
+    "client-components-e2e": {
+      "implicitDependencies": ["client-components"],
+      "tags": ["scope:client-components-e2e", "type:e2e"]
+    },
     "client-core": {
       "tags": ["scope:client-core", "type:feature"]
     },
     "client-e2e": {
       "implicitDependencies": ["client"],
-      "tags": ["scope:client-e2e"]
+      "tags": ["scope:client-e2e", "type:e2e"]
     },
     "client-gql": {
       "tags": ["scope:client-gql", "type:data-access"]
+    },
+    "client-material": {
+      "tags": ["scope:client-material", "type:ui"]
     },
     "client-services": {
       "tags": ["scope:client-services", "type:ui"]
     },
     "client-store": {
       "tags": ["scope:client-store", "type:data-access"]
-    },
-    "client-material": {
-      "tags": ["scope:client-material", "type:ui"]
     },
     "client-translate": {
       "tags": ["scope:client-translate", "type:ui"]
@@ -50,16 +57,13 @@
     },
     "proto": {
       "tags": ["scope:proto", "type:data-access"]
-    },
-    "client-components": {
-      "tags": ["scope:client-components", "type:ui"]
     }
   },
   "tasksRunnerOptions": {
     "default": {
       "options": {
         "cacheDirectory": "/tmp/nx/nx-ng-starter",
-        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "cacheableOperations": ["build", "lint", "test", "e2e", "build-storybook"],
         "runtimeCacheInputs": ["node -v", "echo $IMPORTANT_ENV_VAR"]
       },
       "runner": "@nrwl/workspace/tasks-runners/default"

@@ -14,9 +14,10 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
-    'plugin:@angular-eslint/recommended',
+    'prettier',
+    'prettier/@typescript-eslint',
   ],
   plugins: [
     'prettier',
@@ -27,6 +28,7 @@ module.exports = {
     'rxjs', // https://github.com/cartant/eslint-plugin-rxjs
     'compat', // https://www.npmjs.com/package/eslint-plugin-compat
     '@nrwl/eslint-plugin-nx',
+    '@nrwl/nx',
   ],
   ignorePatterns: ['*.min.js', 'node_modules/'],
 
@@ -419,6 +421,10 @@ module.exports = {
             onlyDependOnLibsWithTags: ['scope:client-util'],
           },
           {
+            sourceTag: 'scope:client-components-e2e',
+            onlyDependOnLibsWithTags: ['scope:client-util'],
+          },
+          {
             sourceTag: 'type:application',
             onlyDependOnLibsWithTags: [
               'type:feature',
@@ -446,7 +452,7 @@ module.exports = {
           },
           {
             sourceTag: 'type:e2e',
-            onlyDependOnLibsWithTags: ['scope:util'],
+            onlyDependOnLibsWithTags: ['type:util'],
           },
         ],
       },

@@ -191,7 +191,8 @@
               "zen-observable",
               "apollo-upload-client",
               "extract-files/public/isExtractableFile",
-              "extract-files/public/extractFiles"
+              "extract-files/public/extractFiles",
+              "graphql-tag"
             ],
             "aot": true,
             "assets": [
@@ -282,6 +283,21 @@
     },
     "client-components": {
       "architect": {
+        "build-storybook": {
+          "builder": "@nrwl/storybook:build",
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          },
+          "options": {
+            "config": {
+              "configFolder": "libs/client-components/.storybook"
+            },
+            "outputPath": "dist/storybook/client-components",
+            "uiFramework": "@storybook/angular"
+          }
+        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
@@ -291,6 +307,21 @@
               "libs/client-components/tsconfig.lib.json",
               "libs/client-components/tsconfig.spec.json"
             ]
+          }
+        },
+        "storybook": {
+          "builder": "@nrwl/storybook:storybook",
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          },
+          "options": {
+            "config": {
+              "configFolder": "libs/client-components/.storybook"
+            },
+            "port": 4400,
+            "uiFramework": "@storybook/angular"
           }
         },
         "test": {
@@ -310,6 +341,34 @@
         }
       },
       "sourceRoot": "libs/client-components/src"
+    },
+    "client-components-e2e": {
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "configurations": {
+            "ci": {
+              "devServerTarget": "client-components:storybook:ci"
+            }
+          },
+          "options": {
+            "cypressConfig": "apps/client-components-e2e/cypress.json",
+            "devServerTarget": "client-components:storybook",
+            "tsConfig": "apps/client-components-e2e/tsconfig.e2e.json"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:lint",
+          "options": {
+            "exclude": ["**/node_modules/**", "!apps/client-components-e2e/**/*"],
+            "linter": "eslint",
+            "tsConfig": ["apps/client-components-e2e/tsconfig.e2e.json"]
+          }
+        }
+      },
+      "projectType": "application",
+      "root": "apps/client-components-e2e",
+      "sourceRoot": "apps/client-components-e2e/src"
     },
     "client-core": {
       "architect": {
