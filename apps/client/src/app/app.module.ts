@@ -8,6 +8,7 @@ import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { AppClientCoreModule } from '@nx-ng-starter/client-core';
+import { AppClientGqlModule } from '@nx-ng-starter/client-gql';
 import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
 import {
   AppClientStoreModule,
@@ -47,6 +48,7 @@ export const grpcProviders: Provider[] = [
     AppWebsocketModule.forRoot(environment),
     AppClientMaterialModule.forRoot(),
     AppClientTranslateModule.forRoot(),
+    AppClientGqlModule.forRoot(environment),
     AppClientStoreModule,
     AppRoutingModule,
   ],

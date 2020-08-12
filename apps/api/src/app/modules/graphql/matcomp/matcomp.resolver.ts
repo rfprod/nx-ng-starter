@@ -1,4 +1,4 @@
-import { NotFoundException, UseGuards } from '@nestjs/common';
+import { Inject, NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import {
   MatcompArgs,
@@ -6,16 +6,17 @@ import {
   MatcompSubscription,
   NewMatcompInputDto,
 } from '@nx-ng-starter/api-interface';
-import { PubSub } from 'apollo-server-express';
+import { PubSub } from 'graphql-subscriptions';
 
-import { ApiMatcompGuard } from './guard/matcomp.guard';
+import { ApiMatcompGuard } from './matcomp.guard';
 import { ApiMatcompService } from './matcomp.service';
-
-const pubSub = new PubSub();
 
 @Resolver(() => MatcompModel)
 export class ApiMatcompResolver {
-  constructor(private readonly service: ApiMatcompService) {}
+  constructor(
+    private readonly service: ApiMatcompService,
+    @Inject('PUB_SUB') private readonly pubSub: PubSub,
+  ) {}
 
   @Query(() => [MatcompModel])
   @UseGuards(ApiMatcompGuard)
@@ -41,14 +42,14 @@ export class ApiMatcompResolver {
   public async create(@Args('input') args: NewMatcompInputDto) {
     const createdMatcomp = this.service.create(args);
     const matcompSubscription: MatcompSubscription = new MatcompSubscription(createdMatcomp);
-    void pubSub.publish('matcompCreated', matcompSubscription);
+    void this.pubSub.publish('matcompCreated', matcompSubscription);
     return createdMatcomp;
   }
 
   @Subscription(() => MatcompModel)
   @UseGuards(ApiMatcompGuard)
   public matcompCreated() {
-    return pubSub.asyncIterator('matcompCreated');
+    return this.pubSub.asyncIterator('matcompCreated');
   }
 
   @Mutation(() => Boolean)
@@ -56,13 +57,13 @@ export class ApiMatcompResolver {
   public async remove(@Args('id') id: string) {
     const removedMatcomp = this.service.remove(id);
     const matcompSubscription: MatcompSubscription = new MatcompSubscription(removedMatcomp);
-    void pubSub.publish('matcompRemoved', matcompSubscription);
+    void this.pubSub.publish('matcompRemoved', matcompSubscription);
     return Boolean(removedMatcomp);
   }
 
   @Subscription(() => MatcompModel)
   @UseGuards(ApiMatcompGuard)
   public matcompRemoved() {
-    return pubSub.asyncIterator('matcompRemoved');
+    return this.pubSub.asyncIterator('matcompRemoved');
   }
 }

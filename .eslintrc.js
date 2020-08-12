@@ -407,6 +407,7 @@ module.exports = {
             onlyDependOnLibsWithTags: [
               'scope:mocks-core',
               'scope:proto',
+              'scope:client-gql',
               'scope:client-store',
               'scope:client-services',
               'scope:client-components',
