@@ -4,6 +4,6 @@
   },
   "extends": "./tsconfig.json",
   "files": ["src/main.ts", "src/polyfills.ts"],
-  "include": ["**/*.d.ts"],
-  "exclude": ["**/*.spec.ts"]
+  "include": ["**/*.ts"],
+  "exclude": ["**/test-setup.ts", "**/*.spec.ts"]
 }

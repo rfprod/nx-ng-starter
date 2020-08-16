@@ -1,11 +1,8 @@
-import { OverlayModule } from '@angular/cdk/overlay';
 import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
+import { ModuleWithProviders, NgModule, NgZone, Provider } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -51,6 +48,11 @@ export const mocksCoreModuleProviders: Provider[] = [
     provide: WEB_CLIENT_APP_ENV,
     useValue: testingEnvironment,
   },
+  {
+    provide: NgZone,
+    useFactory: () =>
+      new NgZone({ enableLongStackTrace: false, shouldCoalesceEventChangeDetection: false }),
+  },
 ];
 
 @NgModule({
@@ -66,9 +68,6 @@ export const mocksCoreModuleProviders: Provider[] = [
     RouterTestingModule,
     NgxsModule.forRoot([], { developmentMode: true }),
     NgxsFormPluginModule.forRoot(),
-    MatDialogModule,
-    OverlayModule,
-    MatSnackBarModule,
   ],
   declarations: [AppDummyComponent],
   exports: [
@@ -81,9 +80,6 @@ export const mocksCoreModuleProviders: Provider[] = [
     AppClientMaterialModule,
     HttpClientTestingModule,
     RouterTestingModule,
-    MatDialogModule,
-    OverlayModule,
-    MatSnackBarModule,
     AppDummyComponent,
   ],
 })
