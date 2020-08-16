@@ -1,0 +1,36 @@
+<mat-toolbar color="primary" fxFlex="0 1 auto">
+  <button mat-icon-button (click)="sidebarUiService.toggle()">
+    <mat-icon title="open sidenav" *ngIf="(sidebarOpened$ | async) === false">
+      flip_to_front
+    </mat-icon>
+
+    <mat-icon title="close sidenav" *ngIf="sidebarOpened$ | async">
+      flip_to_back
+    </mat-icon>
+  </button>
+
+  <span fxFlex="1 1 auto"></span>
+
+  <button mat-button [routerLink]="['info']" [fxHide.xs]="true" [fxHide.sm]="true">
+    <mat-icon>touch_app</mat-icon> API info
+  </button>
+
+  <button mat-button [routerLink]="['']" [fxHide.xs]="true" [fxHide.sm]="true">
+    <mat-icon>home</mat-icon> Home
+  </button>
+
+  <button
+    mat-icon-button
+    [matMenuTriggerFor]="mobileMenuBottom"
+    [fxHide.md]="true"
+    [fxHide.lg]="true"
+    [fxHide.xl]="true"
+  >
+    <mat-icon>reorder</mat-icon>
+  </button>
+
+  <mat-menu #mobileMenuBottom="matMenu" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
+    <a mat-menu-item [routerLink]="['info']"> <mat-icon>touch_app</mat-icon> API info </a>
+    <a mat-menu-item [routerLink]="['']"> <mat-icon>home</mat-icon> Home </a>
+  </mat-menu>
+</mat-toolbar>

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
+import { concatMap, first } from 'rxjs/operators';
 
 import { AppSidebarUiState, sidebarUiActions } from './sidebar-ui.store';
 
@@ -17,5 +18,18 @@ export class AppSidebarUiService {
 
   public close() {
     return this.store.dispatch(new sidebarUiActions.setAppSidebarUiState({ sidebarOpened: false }));
+  }
+
+  public toggle() {
+    void this.sidebarOpened$
+      .pipe(
+        first(),
+        concatMap(opened => {
+          return this.store.dispatch(
+            new sidebarUiActions.setAppSidebarUiState({ sidebarOpened: !opened }),
+          );
+        }),
+      )
+      .subscribe();
   }
 }

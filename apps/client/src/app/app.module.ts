@@ -20,7 +20,10 @@ import { EntityServiceClient } from '@nx-ng-starter/proto';
 
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { AppContentComponent } from './components/content/content.component';
+import { AppNavbarComponent } from './components/navbar/navbar.component';
+import { AppRootComponent } from './components/root/root.component';
+import { AppToolbarComponent } from './components/toolbar/toolbar.component';
 
 export const grpcProviders: Provider[] = [
   {
@@ -46,15 +49,14 @@ export const grpcProviders: Provider[] = [
     AppClientCoreModule.forRoot(environment),
     AppClientMaterialModule.forRoot(),
     AppWebsocketModule.forRoot(environment),
-    AppClientMaterialModule.forRoot(),
     AppClientTranslateModule.forRoot(),
     AppClientGqlModule.forRoot(environment),
     AppClientStoreModule,
     AppRoutingModule,
   ],
   providers: [...grpcProviders, httpProgressServiceProvider],
-  declarations: [AppComponent],
+  declarations: [AppRootComponent, AppContentComponent, AppNavbarComponent, AppToolbarComponent],
+  bootstrap: [AppRootComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  bootstrap: [AppComponent],
 })
 export class AppModule {}
