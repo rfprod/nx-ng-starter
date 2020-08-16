@@ -1,0 +1,135 @@
+/*
+ * Remove template code below
+ */
+
+:host {
+  display: block;
+  min-width: 300px;
+  max-width: 600px;
+  margin: 50px auto;
+  font-family: sans-serif;
+}
+
+.gutter-left {
+  margin-left: 9px;
+}
+
+.col-span-2 {
+  grid-column: span 2;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+header {
+  padding: 5px;
+  color: white;
+  background-color: #143055;
+  border-radius: 3px;
+}
+
+main {
+  padding: 0 36px;
+}
+
+p {
+  text-align: center;
+}
+
+h1 {
+  margin-left: 18px;
+  font-size: 24px;
+  text-align: center;
+}
+
+h2 {
+  margin: 40px 0 10px 0;
+  font-size: 20px;
+  text-align: center;
+}
+
+.resources {
+  display: grid;
+  grid-gap: 9px;
+  grid-template-columns: 1fr 1fr;
+  padding: 0;
+  text-align: center;
+  list-style: none;
+}
+
+.resource {
+  height: 36px;
+  padding: 3px 9px;
+  color: #0094ba;
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+}
+
+.resource:hover {
+  background-color: rgba(68, 138, 255, 0.04);
+}
+
+pre {
+  padding: 9px;
+  color: #eeeeee;
+  background-color: black;
+  border-radius: 4px;
+}
+
+details {
+  margin-bottom: 9px;
+  padding: 3px 9px;
+  color: #333333;
+  background-color: rgba(0, 0, 0, 0);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 4px;
+}
+
+summary {
+  height: 36px;
+  line-height: 36px;
+  outline: none;
+  cursor: pointer;
+}
+
+.github-star-container {
+  margin-top: 12px;
+  line-height: 20px;
+}
+
+.github-star-container a {
+  display: flex;
+  align-items: center;
+  color: #333333;
+  text-decoration: none;
+}
+
+.github-star-badge {
+  display: flex;
+  align-items: center;
+  margin-left: 4px;
+  padding: 3px 10px;
+  color: #24292e;
+  font-weight: 600;
+  font-size: 12px;
+  background-image: linear-gradient(-180deg, #fafbfc, #eff3f6 90%);
+  border: 1px solid rgba(27, 31, 35, 0.2);
+  border-radius: 3px;
+}
+
+.github-star-badge:hover {
+  background-image: linear-gradient(-180deg, #f0f3f6, #e6ebf1 90%);
+  background-position: -0.5em;
+  border-color: rgba(27, 31, 35, 0.35);
+}
+
+.github-star-badge .material-icons {
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+}
