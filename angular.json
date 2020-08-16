@@ -613,6 +613,128 @@
       },
       "sourceRoot": "libs/client-util/src"
     },
+    "documentation": {
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "maximumError": "5mb",
+                  "maximumWarning": "2mb",
+                  "type": "initial"
+                },
+                {
+                  "maximumError": "10kb",
+                  "maximumWarning": "6kb",
+                  "type": "anyComponentStyle"
+                }
+              ],
+              "buildOptimizer": true,
+              "extractCss": true,
+              "extractLicenses": true,
+              "fileReplacements": [
+                {
+                  "replace": "apps/documentation/src/environments/environment.ts",
+                  "with": "apps/documentation/src/environments/environment.prod.ts"
+                }
+              ],
+              "namedChunks": false,
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "vendorChunk": false
+            }
+          },
+          "options": {
+            "aot": true,
+            "assets": ["apps/documentation/src/favicon.ico", "apps/documentation/src/assets"],
+            "index": "apps/documentation/src/index.html",
+            "main": "apps/documentation/src/main.ts",
+            "outputPath": "dist/apps/documentation",
+            "polyfills": "apps/documentation/src/polyfills.ts",
+            "scripts": [],
+            "styles": ["apps/documentation/src/styles.scss"],
+            "tsConfig": "apps/documentation/tsconfig.app.json"
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "documentation:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/documentation/.eslintrc",
+            "exclude": ["**/node_modules/**", "!apps/documentation/**/*"],
+            "tsConfig": [
+              "apps/documentation/tsconfig.app.json",
+              "apps/documentation/tsconfig.spec.json"
+            ]
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "documentation:build:production"
+            }
+          },
+          "options": {
+            "browserTarget": "documentation:build"
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "apps/documentation/jest.config.js",
+            "passWithNoTests": true,
+            "setupFile": "apps/documentation/src/test-setup.ts",
+            "tsConfig": "apps/documentation/tsconfig.spec.json"
+          }
+        }
+      },
+      "prefix": "nx-ng-starter",
+      "projectType": "application",
+      "root": "apps/documentation",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "sourceRoot": "apps/documentation/src"
+    },
+    "documentation-e2e": {
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "configurations": {
+            "production": {
+              "devServerTarget": "documentation:serve:production"
+            }
+          },
+          "options": {
+            "cypressConfig": "apps/documentation-e2e/cypress.json",
+            "devServerTarget": "documentation:serve",
+            "tsConfig": "apps/documentation-e2e/tsconfig.e2e.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/documentation-e2e/.eslintrc",
+            "exclude": ["**/node_modules/**", "!apps/documentation-e2e/**/*.ts"],
+            "tsConfig": ["apps/documentation-e2e/tsconfig.e2e.json"]
+          }
+        }
+      },
+      "projectType": "application",
+      "root": "apps/documentation-e2e",
+      "sourceRoot": "apps/documentation-e2e/src"
+    },
     "mocks-core": {
       "architect": {
         "lint": {

@@ -349,6 +349,14 @@ module.exports = {
             onlyDependOnLibsWithTags: ['scope:proto'],
           },
           {
+            sourceTag: 'scope:documentation',
+            onlyDependOnLibsWithTags: [],
+          },
+          {
+            sourceTag: 'scope:documentation-e2e',
+            onlyDependOnLibsWithTags: ['scope:client-util'],
+          },
+          {
             sourceTag: 'scope:mocks-core',
             onlyDependOnLibsWithTags: ['*'],
           },

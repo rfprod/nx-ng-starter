@@ -52,6 +52,13 @@
     "client-util": {
       "tags": ["scope:client-util", "type:util"]
     },
+    "documentation": {
+      "tags": ["scope:documentation", "type:application"]
+    },
+    "documentation-e2e": {
+      "implicitDependencies": ["documentation"],
+      "tags": ["scope:documentation-e2e", "type:e2e"]
+    },
     "mocks-core": {
       "tags": ["scope:mocks-core", "type:mocks"]
     },

@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "module": "commonjs",
+    "outDir": "../../dist/out-tsc"
+  },
+  "extends": "./tsconfig.json",
+  "files": ["src/test-setup.ts"],
+  "include": ["**/*.spec.ts"]
+}
