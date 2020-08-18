@@ -350,7 +350,7 @@ module.exports = {
           },
           {
             sourceTag: 'scope:documentation',
-            onlyDependOnLibsWithTags: [],
+            onlyDependOnLibsWithTags: ['scope:client-util'],
           },
           {
             sourceTag: 'scope:documentation-e2e',
