@@ -648,14 +648,69 @@
             }
           },
           "options": {
+            "allowedCommonJsDependencies": [
+              "node_modules/hammerjs/hammer.js",
+              "apollo-upload-client",
+              "zen-observable",
+              "graphql-tag",
+              "protobufjs/minimal",
+              "extract-files/public/isExtractableFile",
+              "extract-files/public/extractFiles"
+            ],
             "aot": true,
-            "assets": ["apps/documentation/src/favicon.ico", "apps/documentation/src/assets"],
+            "assets": [
+              "apps/documentation/src/favicon.ico",
+              "apps/documentation/src/assets",
+              {
+                "glob": "**/*.*",
+                "input": "./libs/client-core/src/lib/assets",
+                "output": "assets"
+              },
+              {
+                "glob": "*.md",
+                "input": "./",
+                "output": "md/"
+              },
+              {
+                "glob": "**/*.md",
+                "input": "apps",
+                "output": "md/apps"
+              },
+              {
+                "glob": "**/*.md",
+                "input": "libs",
+                "output": "md/libs"
+              },
+              {
+                "glob": "**/*.md",
+                "input": "tools",
+                "output": "md/tools"
+              }
+            ],
             "index": "apps/documentation/src/index.html",
             "main": "apps/documentation/src/main.ts",
             "outputPath": "dist/apps/documentation",
             "polyfills": "apps/documentation/src/polyfills.ts",
-            "scripts": [],
-            "styles": ["apps/documentation/src/styles.scss"],
+            "scripts": [
+              "node_modules/marked/lib/marked.js",
+              "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/components/prism-csharp.min.js",
+              "node_modules/prismjs/components/prism-css.min.js",
+              "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.min.js",
+              "node_modules/prismjs/plugins/line-highlight/prism-line-highlight.min.js",
+              "node_modules/emoji-toolkit/lib/js/joypixels.min.js",
+              "node_modules/katex/dist/katex.min.js"
+            ],
+            "styles": [
+              "apps/documentation/src/styles.scss",
+              "libs/client-core/src/lib/styles/styles.scss",
+              "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+              "node_modules/material-design-icon-fonts/iconfont/material-icons.css",
+              "node_modules/prismjs/themes/prism-okaidia.css",
+              "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css",
+              "node_modules/prismjs/plugins/line-highlight/prism-line-highlight.css",
+              "node_modules/katex/dist/katex.min.css"
+            ],
             "tsConfig": "apps/documentation/tsconfig.app.json"
           }
         },
@@ -691,9 +746,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/documentation/jest.config.js",
-            "passWithNoTests": true,
-            "setupFile": "apps/documentation/src/test-setup.ts",
-            "tsConfig": "apps/documentation/tsconfig.spec.json"
+            "passWithNoTests": true
           }
         }
       },
