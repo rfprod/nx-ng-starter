@@ -56,11 +56,11 @@ copyReportToDist() {
   ##
   # Coverage root path.
   ##
-  local COV_DISTR_ROOT=${PROJECT_ROOT}/dist/apps/client/coverage
+  local COV_DISTR_ROOT=${2}
 
   if [ "$3" = "report" ]; then
     # check coverage dist path existence
-    if [ -d ${COV_DISTR_ROOT} ]; then
+    if [ -d "${COV_DISTR_ROOT}" ]; then
       printf "
         ${LIGHT_GREEN} coverage directory %s exists, proceeding${DEFAULT}\n\n" "$COV_DISTR_ROOT"
     else
@@ -70,7 +70,7 @@ copyReportToDist() {
         ${LIGHT_RED} directory %s does not exist
         ${LIGHT_BLUE} creating directory %s.
         ${DEFAULT}\n\n" "$COV_DISTR_ROOT" "$COV_DISTR_ROOT"
-      mkdir -p $COV_DISTR_ROOT
+      mkdir -p "$COV_DISTR_ROOT"
     fi
     cp -r ${PROJECT_ROOT}/coverage/"${1}" "$2" || exitWithError
   fi
@@ -122,7 +122,7 @@ testModule() {
 
   local MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s\/}" # partial module path, e.g. apps/client for subsequent path formation
 
-  local COVERAGE_BASE_PATH=${PROJECT_ROOT}/dist/apps/client/coverage
+  local COVERAGE_BASE_PATH=${PROJECT_ROOT}/dist/apps/documentation/coverage
 
   printf "
     ${DEFAULT} - module name: ${YELLOW}%s

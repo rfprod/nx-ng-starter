@@ -4,6 +4,7 @@
 # Colors.
 ##
 source tools/shell/colors.sh ''
+
 ##
 # Project aliases.
 ##
@@ -54,7 +55,7 @@ copyReportToDist() {
   ##
   # Documentation root path.
   ##
-  local DOC_DIST_ROOT=${PROJECT_ROOT}/dist/apps/client/documentation
+  local DOC_DIST_ROOT=${PROJECT_ROOT}/dist/apps/documentation/compodoc
 
   if [ "$2" = "report" ]; then
     # check documentation dist path existence
@@ -72,7 +73,7 @@ copyReportToDist() {
     fi
     cp -r ${PROJECT_ROOT}/documentation "$1" || exitWithError
     # copy dists to deployed application dist so that it's accessible online
-    cp -r ${PROJECT_ROOT}/dist/apps/documentation/* "$DOC_DIST_ROOT" || exitWithError
+    cp -r ${PROJECT_ROOT}/dist/compodoc/* "$DOC_DIST_ROOT" || exitWithError
   fi
 }
 
@@ -138,7 +139,7 @@ documentModule() {
 
   local MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s\/}" # partial module path, e.g. apps/client for subsequent path formation
 
-  local DOCUMENTATION_BASE_PATH=${PROJECT_ROOT}/dist/apps/documentation
+  local DOCUMENTATION_BASE_PATH=${PROJECT_ROOT}/dist/compodoc
   mkdir -p "$DOCUMENTATION_BASE_PATH"
 
   printf "

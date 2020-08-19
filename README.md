@@ -56,31 +56,31 @@ Applications as well as generated documentation, testing reports, and a custom c
 
 ### Unit coverage
 
-[🔗 Nx Ng Starter Client](https://nx-ng-starter.web.app/coverage/client/index.html)
+[🔗 Nx Ng Starter Client](https://nx-ng-starter.web.app/documentation/coverage/client/index.html)
 
-[🔗 Nx Ng Starter API](https://nx-ng-starter.web.app/coverage/api/index.html)
+[🔗 Nx Ng Starter API](https://nx-ng-starter.web.app/documentation/coverage/api/index.html)
 
 ### E2E reports
 
-[🔗 Nx Ng Starter E2E](https://nx-ng-starter.web.app/cypress/client-e2e/mochawesome/mochawesome.html)
+[🔗 Nx Ng Starter E2E](https://nx-ng-starter.web.app/documentation/cypress/client-e2e/mochawesome/mochawesome.html)
 
 ### Compodoc documentation
 
-[🔗 Nx Ng Starter Client documentation](https://nx-ng-starter.web.app/documentation/client/index.html)
+[🔗 Nx Ng Starter Client documentation](https://nx-ng-starter.web.app/documentation/compodoc/client/index.html)
 
-[🔗 Nx Ng Starter API documentation](https://nx-ng-starter.web.app/documentation/api/index.html)
+[🔗 Nx Ng Starter API documentation](https://nx-ng-starter.web.app/documentation/compodoc/api/index.html)
 
 ### Changelog
 
-[🔗 Nx Ng Starter](https://nx-ng-starter.web.app/changelog/apps/client-CHANGELOG.md)
+[🔗 Nx Ng Starter](https://nx-ng-starter.web.app/documentation/changelog/apps/client-CHANGELOG.md)
 
-[🔗 API](https://nx-ng-starter.web.app/changelog/apps/api-CHANGELOG.md)
+[🔗 API](https://nx-ng-starter.web.app/documentation/changelog/apps/api-CHANGELOG.md)
 
-[🔗 API Interface](https://nx-ng-starter.web.app/changelog/libs/api-interface-CHANGELOG.md)
+[🔗 API Interface](https://nx-ng-starter.web.app/documentation/changelog/libs/api-interface-CHANGELOG.md)
 
-[🔗 Mocks Core](https://nx-ng-starter.web.app/changelog/libs/mocks-core-CHANGELOG.md)
+[🔗 Mocks Core](https://nx-ng-starter.web.app/documentation/changelog/libs/mocks-core-CHANGELOG.md)
 
-[🔗 Shared Core](https://nx-ng-starter.web.app/changelog/libs/client-core-CHANGELOG.md)
+[🔗 Shared Core](https://nx-ng-starter.web.app/documentation/changelog/libs/client-core-CHANGELOG.md)
 
 ## General Tooling
 

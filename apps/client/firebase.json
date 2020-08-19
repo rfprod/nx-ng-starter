@@ -41,11 +41,11 @@
             "value": "no-cache"
           }
         ],
-        "source": "/(nx-ng-starter|coverage|documentation|cypress|api)"
+        "source": "/(client|documentation|api)"
       }
     ],
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "**/src/**"],
-    "public": "dist/apps/nx-ng-starter",
+    "public": "dist/apps/client",
     "rewrites": [
       {
         "function": "ping",
@@ -76,20 +76,12 @@
         "source": "/client"
       },
       {
-        "destination": "/coverage/client/index.html",
-        "source": "/coverage"
-      },
-      {
-        "destination": "/documentation/client/index.html",
+        "destination": "/documentation/index.html",
         "source": "/documentation"
       },
       {
-        "destination": "/cypress/client-e2e/mochawesome/mochawesome.html",
-        "source": "/cypress"
-      },
-      {
         "destination": "/index.html",
-        "source": "**/!(*.*|api|coverage|documentation|cypress|client)"
+        "source": "**/!(*.*|api|documentation|client)"
       }
     ]
   }
