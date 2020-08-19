@@ -39,9 +39,10 @@ jobs:
             **/node_modules
             /tmp/nx
             /tmp/jest_rs
-          key: ${{ runner.os }}-workspace-${{ steps.get-variables.outputs.commitsha }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-workspace-${{ steps.get-variables.outputs.commitsha }}
           restore-keys: |
-            ${{ runner.os }}-workspace-
+            ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-workspace-
+            ${{ runner.os }}-yarn-
             ${{ runner.os }}-
 
       - name: Use Node.js ${{ matrix.node-version }}
@@ -54,4 +55,5 @@ jobs:
       - run: ng lint
       - run: ng test --passWithNoTests --codeCoverage=false --watch=false --maxWorkers=2 --ci --updateSnapshot
       - run: npx nx build client
+      - run: npx nx build documentation
       - run: npx nx build api

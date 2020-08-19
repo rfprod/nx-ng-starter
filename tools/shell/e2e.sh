@@ -55,7 +55,7 @@ copyReportToDist() {
   ##
   # E2E root path.
   ##
-  local E2E_DISTR_ROOT=${PROJECT_ROOT}/dist/apps/client/cypress
+  local E2E_DISTR_ROOT=${PROJECT_ROOT}/dist/apps/documentation/cypress
 
   ##
   # Report directory

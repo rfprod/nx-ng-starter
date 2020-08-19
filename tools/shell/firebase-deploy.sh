@@ -4,6 +4,7 @@
 # Colors.
 ##
 source tools/shell/colors.sh ''
+
 ##
 # Project aliases.
 ##
@@ -114,7 +115,7 @@ deployAll() {
 if [ $# -lt 1 ]; then
   reportUsageError
 elif [ $# -ge 2 ]; then
-  if [ "$2" = "$MODULE_ALIAS_APP_NX_NG_STARTER" ]; then
+  if [ "$2" = "$MODULE_ALIAS_APP_CLIENT" ]; then
     deployClientApp "$1"
   elif [ "$2" = "$MODULE_ALIAS_APP_API" ]; then
     deployApiApp "$1"

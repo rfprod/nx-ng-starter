@@ -143,7 +143,7 @@ copyReportToDist() {
   ##
   # Changelog root path.
   ##
-  local CHANGELOG_DIST_ROOT=${PROJECT_ROOT}/dist/apps/client
+  local CHANGELOG_DIST_ROOT=${PROJECT_ROOT}/dist/apps/documentation
 
   # check documentation dist path existence
   if [ -d ${CHANGELOG_DIST_ROOT} ]; then

@@ -6,6 +6,13 @@
 source tools/shell/colors.sh ''
 
 ##
+# Project root.
+##
+PROJECT_ROOT=.
+CLIENT_DIST_PATH=${PROJECT_ROOT}/dist/apps/client
+DOCUMENTATION_DIST_PATH=${PROJECT_ROOT}/dist/apps/documentation
+
+##
 # Exits with error.
 ##
 exitWithError() {
@@ -24,16 +31,31 @@ reportUsage() {
     ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh prod${DEFAULT} - build all apps in production mode
     ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh prod api${DEFAULT} - build API app in production mode
     ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh prod client${DEFAULT} - build Nx Ng Starter app in production mode
+    ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh prod documentation${DEFAULT} - build Nx Ng Starter documentation app in production mode
     ${DEFAULT}\n\n" "$TITLE"
 
   exitWithError
 }
 
 ##
-# Builds Nx Ng Starter app in production mode.
+# Generates compodoc documentation.
 ##
-buildNxNgStarterProd() {
-  local TITLE="<< BUILDING Nx Ng Starter app PRODUCTION mode >>"
+generateDocumentation() {
+  npm run document:all:generate-and-report-to-dist
+}
+
+##
+# Generates changelog and reports to dist.
+##
+generateChangelog() {
+  npm run changelog:all:generate
+}
+
+##
+# Builds Nx Ng Starter client app in production mode.
+##
+buildNxNgStarterClientProd() {
+  local TITLE="<< BUILDING Nx Ng Starter client app PRODUCTION mode >>"
   printf "
     ${LIGHT_BLUE}%s
     ${DEFAULT}\n\n" "$TITLE"
@@ -41,14 +63,37 @@ buildNxNgStarterProd() {
 }
 
 ##
-# Builds API app in production mode.
+# Builds Nx Ng Starter documentation app in production mode.
 ##
-buildAPIProd() {
-  local TITLE="<< BUILDING API apps PRODUCTION mode >>"
+buildNxNgStarterDocsProd() {
+  local TITLE="<< BUILDING Nx Ng Starter documentation app PRODUCTION mode >>"
   printf "
     ${LIGHT_BLUE}%s
     ${DEFAULT}\n\n" "$TITLE"
-  ng build --project api --configuration firebase || exitWithError # TODO: firebase configuration does not include grpc module
+  ng build --project documentation --configuration production || exitWithError
+  generateDocumentation
+  generateChangelog
+
+  # TODO: wrap as separate functions in this script
+  npm run e2e:headless:report
+  npm run test:all:single-run-and-report-to-dist
+
+  ##
+  # Copy documentation app to the client app for deployment.
+  # TODO: deploy documentation app to GitHub pages instead.
+  ##
+  cp -r "$DOCUMENTATION_DIST_PATH" "$CLIENT_DIST_PATH" || exitWithError
+}
+
+##
+# Builds API app in production mode.
+##
+buildAPIProd() {
+  local TITLE="<< BUILDING API app PRODUCTION mode >>"
+  printf "
+    ${LIGHT_BLUE}%s
+    ${DEFAULT}\n\n" "$TITLE"
+  ng build --project api --configuration firebase || exitWithError
 }
 
 ##
@@ -60,7 +105,8 @@ buildAllProd() {
     ${LIGHT_BLUE}%s
     ${DEFAULT}\n\n" "$TITLE"
   buildAPIProd
-  buildNxNgStarterProd
+  buildNxNgStarterClientProd
+  buildNxNgStarterDocsProd
 }
 
 ##
@@ -75,20 +121,6 @@ buildAllDev() {
 }
 
 ##
-# Generates documentation with compodoc.
-##
-generateDocumentation() {
-  npm run document:all:generate-and-report-to-dist
-}
-
-##
-# Generates changelog and reports to dist.
-##
-generateChangelog() {
-  npm run changelog:all:generate
-}
-
-##
 # Building control flow.
 ##
 if [ $# -lt 1 ]; then
@@ -96,18 +128,14 @@ if [ $# -lt 1 ]; then
 elif [ "$1" = "dev" ]; then
   buildAllDev
 elif [ "$1" = "prod" ]; then
-  # build project
   if [ "$2" = "api" ]; then
     buildAPIProd
   elif [ "$2" = "client" ]; then
-    buildNxNgStarterProd
+    buildNxNgStarterClientProd
+  elif [ "$2" = "documentation" ]; then
+    buildNxNgStarterDocsProd
   else
     buildAllProd
-  fi
-  # generate documentation and changelog
-  if [ "$3" = "doc" ]; then
-    generateDocumentation
-    generateChangelog
   fi
 else
   reportUsage
