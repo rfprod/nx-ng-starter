@@ -1,0 +1,37 @@
+{
+  "hosting": {
+    "site": "nx-ng-starter-documentation",
+    "headers": [
+      {
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "https://nx-ng-starter-documentation.firebaseapp.com https://nx-ng-starter-documentation.web.app"
+          },
+          {
+            "key": "Access-Control-Allow-Methods",
+            "value": "GET,PUT,POST,DELETE,OPTIONS,HEAD"
+          }
+        ],
+        "source": "**"
+      },
+      {
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=7200"
+          }
+        ],
+        "source": "**/*.@(jpg|jpeg|gif|png|svg)"
+      }
+    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "**/src/**"],
+    "public": "dist/apps/documentation",
+    "rewrites": [
+      {
+        "destination": "/index.html",
+        "source": "**/!(*.*)"
+      }
+    ]
+  }
+}
