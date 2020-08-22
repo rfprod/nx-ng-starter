@@ -6,13 +6,6 @@
 source tools/shell/colors.sh ''
 
 ##
-# Project root.
-##
-PROJECT_ROOT=.
-CLIENT_DIST_PATH=${PROJECT_ROOT}/dist/apps/client
-DOCUMENTATION_DIST_PATH=${PROJECT_ROOT}/dist/apps/documentation
-
-##
 # Exits with error.
 ##
 exitWithError() {
@@ -77,12 +70,6 @@ buildNxNgStarterDocsProd() {
   # TODO: wrap as separate functions in this script
   npm run e2e:headless:report
   npm run test:all:single-run-and-report-to-dist
-
-  ##
-  # Copy documentation app to the client app for deployment.
-  # TODO: deploy documentation app to GitHub pages instead.
-  ##
-  cp -r "$DOCUMENTATION_DIST_PATH" "$CLIENT_DIST_PATH" || exitWithError
 }
 
 ##

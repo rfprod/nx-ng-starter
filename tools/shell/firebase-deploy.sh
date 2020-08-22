@@ -41,9 +41,13 @@ reportUsageError() {
 }
 
 ##
-# Project directory
+# Project directories
 ##
-PROJECT_DIRECTORY=./apps/client/
+declare -A PROJECT_DIRECTORIES=(
+  ["api"]=./apps/api/
+  ["client"]=./apps/client/
+  ["documentation"]=./apps/documentation/
+)
 
 ##
 # Removes junky files from project root.
@@ -59,21 +63,39 @@ cleanup() {
 # Copies firebase config from application root to project root for deployment.
 ##
 config() {
+  local TITLE="<< CONFIG >>"
+  printf "
+    ${LIGHT_BLUE} %s\n
+    ${DEFAULT} %s
+    ${DEFAULT}" "$TITLE" "$1"
   ##
   # Copy firebase files to project root for deployment.
   # Later both will be removed.
   ##
-  cp ${PROJECT_DIRECTORY}.firebaserc ./.firebaserc
-  cp ${PROJECT_DIRECTORY}firebase.json ./firebase.json
+  cp "$1".firebaserc ./.firebaserc
+  cp "$1"firebase.json ./firebase.json
 }
 
 ##
 # Deploys client application.
 ##
 deployClientApp() {
-  local PROJECT_DIRECTORY=./apps/client/
+  config "${PROJECT_DIRECTORIES["client"]}"
 
-  config
+  if [ "$1" = "localhost" ]; then
+    firebase deploy --only hosting || exitWithError
+  else
+    firebase deploy --only hosting --token "$1" || exitWithError
+  fi
+
+  cleanup
+}
+
+##
+# Deploys documentation application.
+##
+deployDocumentationApp() {
+  config "${PROJECT_DIRECTORIES["documentation"]}"
 
   if [ "$1" = "localhost" ]; then
     firebase deploy --only hosting || exitWithError
@@ -88,9 +110,7 @@ deployClientApp() {
 # Deploys api to firebase functions.
 ##
 deployApiApp() {
-  local PROJECT_DIRECTORY=./apps/api/
-
-  config
+  config "${PROJECT_DIRECTORIES["api"]}"
 
   if [ "$1" = "localhost" ]; then
     firebase deploy --only functions || exitWithError
@@ -107,6 +127,7 @@ deployApiApp() {
 deployAll() {
   deployApiApp "$1"
   deployClientApp "$1"
+  deployDocumentationApp "$1"
 }
 
 ##
@@ -117,6 +138,8 @@ if [ $# -lt 1 ]; then
 elif [ $# -ge 2 ]; then
   if [ "$2" = "$MODULE_ALIAS_APP_CLIENT" ]; then
     deployClientApp "$1"
+  elif [ "$2" = "$MODULE_ALIAS_APP_DOCUMENTATION" ]; then
+    deployDocumentationApp "$1"
   elif [ "$2" = "$MODULE_ALIAS_APP_API" ]; then
     deployApiApp "$1"
   else
