@@ -1,5 +1,8 @@
 # Applications
 
 - `api` - provides sample api using rest and graphql;
-- `client` - sample client application;
-- `client-e2e` - sample client application e2e tests;
+- `client` - client application;
+- `client-components-e2e` - client components e2e application;
+- `client-e2e` - client e2e application;
+- `documentation` - documentation application;
+- `documentation-e2e` - documentation e2e application;
