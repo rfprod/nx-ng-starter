@@ -357,7 +357,7 @@
           }
         },
         "lint": {
-          "builder": "@nrwl/linter:lint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
             "exclude": ["**/node_modules/**", "!apps/client-components-e2e/**/*"],
             "linter": "eslint",
