@@ -17,12 +17,12 @@ describe('nx-ng-starter', () => {
     getToolbar().should('have.length', COUNTER.TWO);
   });
 
-  it('first toolbar should have 7 buttons', () => {
-    getToolbar().first().get('button').should('have.length', COUNTER.SEVEN);
+  it('first toolbar should have 6 buttons', () => {
+    getToolbar().first().get('button').should('have.length', COUNTER.SIX);
   });
 
-  it('last toolbar should have 7 buttons', () => {
-    getToolbar().last().get('button').should('have.length', COUNTER.SEVEN);
+  it('last toolbar should have 6 buttons', () => {
+    getToolbar().last().get('button').should('have.length', COUNTER.SIX);
   });
 
   it('first toolbar button should trigger sidebar', () => {
