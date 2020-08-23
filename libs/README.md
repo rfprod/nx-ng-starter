@@ -1,6 +1,13 @@
 # Libraries
 
 - `api-interface` - api interface for sample `api` application;
-- `mocks-core` - library used for unit testing mostly;
-- `proto` - contains generated protobuf definitions;
-- `client-core` - client core library;
+- `client-components` - client application components;
+- `client-core` - assets, styles;
+- `client-gql` - client graphql module, and generated gql definitions;
+- `client-material` - material module with configs;
+- `client-services` - shared services;
+- `client-store` - state store modules;
+- `client-translate` - UI internationalization module, services, dictionaries;
+- `client-util` - utils;
+- `mocks-core` - unit testing sources;
+- `proto` - protobuf definitions;

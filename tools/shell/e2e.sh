@@ -4,13 +4,14 @@
 # Colors.
 ##
 source tools/shell/colors.sh ''
+
 ##
 # Project aliases.
 ##
 source tools/shell/module-aliases.sh ''
 
 ##
-# Configurable project root, may be useful in CI environment.
+# Project root.
 ##
 PROJECT_ROOT=.
 
