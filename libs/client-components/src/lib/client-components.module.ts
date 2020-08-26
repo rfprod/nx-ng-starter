@@ -4,17 +4,13 @@ import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
 
 import { AppClientComponentsRoutingModule } from './client-components-routing.module';
 import { AppHomeComponent } from './home/home.component';
+import { AppHomePage } from './home/page/home-page.component';
 import { AppIndexComponent } from './index/index.component';
 import { AppInfoComponent } from './info/info.component';
-import { AppInfoPresentationalComponent } from './info/presentational/info-presentational.component';
+import { AppInfoPage } from './info/page/info-page.component';
 
 @NgModule({
   imports: [CommonModule, AppClientMaterialModule, AppClientComponentsRoutingModule],
-  declarations: [
-    AppIndexComponent,
-    AppHomeComponent,
-    AppInfoComponent,
-    AppInfoPresentationalComponent,
-  ],
+  declarations: [AppIndexComponent, AppHomeComponent, AppHomePage, AppInfoComponent, AppInfoPage],
 })
 export class AppClientComponentsModule {}
