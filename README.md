@@ -4,10 +4,10 @@ Angular NestJS Nx starter project with workflow automation.
 
 ## Azure DevOps
 
-| Pipeline      | Status                                                                                                                                                                                                                                          |
-| ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| PR Validation | [![Azure DevOps PR Validation Build Status](https://rfprod.visualstudio.com/nx-ng-starter/_apis/build/status/PR%20Validation?branchName=master)](https://rfprod.visualstudio.com/nx-ng-starter/_build/latest?definitionId=13&branchName=master) |
-| PROD          | [![Azure DevOps PROD Build Status](https://rfprod.visualstudio.com/nx-ng-starter/_apis/build/status/PROD?branchName=master)](https://rfprod.visualstudio.com/nx-ng-starter/_build/latest?definitionId=14&branchName=master)                     |
+| Pipeline      | Status                                                                                        |
+| ------------- | --------------------------------------------------------------------------------------------- |
+| PR validation | ![PR validation](https://github.com/rfprod/nx-ng-starter/workflows/PR%20validation/badge.svg) |
+| Master        | ![Master](https://github.com/rfprod/nx-ng-starter/workflows/Master/badge.svg)                 |
 
 ## Description
 

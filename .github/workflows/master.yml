@@ -8,7 +8,7 @@ on:
     branches: [master]
 
 jobs:
-  build-test:
+  test-build-deploy:
     runs-on: ubuntu-latest
 
     strategy:
@@ -51,7 +51,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
         env:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
-      - run: npm i -g typescript @angular/cli @nrwl/cli
+      - run: npm i -g typescript @angular/cli @nrwl/cli firebase-tools
       - run: yarn install --frozen-lockfile
       - run: yarn ngcc
       - run: npx nx run-many --target=lint --all --parallel --maxParallel=2
