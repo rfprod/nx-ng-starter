@@ -2,12 +2,10 @@
 
 Angular NestJS Nx starter project with workflow automation.
 
-## Azure DevOps
+## Pipelines
 
-| Pipeline      | Status                                                                                        |
-| ------------- | --------------------------------------------------------------------------------------------- |
-| PR validation | ![PR validation](https://github.com/rfprod/nx-ng-starter/workflows/PR%20validation/badge.svg) |
-| Master        | ![Master](https://github.com/rfprod/nx-ng-starter/workflows/Master/badge.svg)                 |
+![PR validation](https://github.com/rfprod/nx-ng-starter/workflows/PR%20validation/badge.svg)
+![Master](https://github.com/rfprod/nx-ng-starter/workflows/Master/badge.svg)
 
 ## Description
 
@@ -58,79 +56,71 @@ Applications as well as generated documentation, testing reports, and a custom c
 
 [🔗 Nx Ng Starter Documentation](https://nx-ng-starter-documentation.web.app)
 
-### Unit coverage
-
-[🔗 API](https://nx-ng-starter-documentation.web.app/coverage/api/index.html)
-
-[🔗 API Interface](https://nx-ng-starter-documentation.web.app/coverage/api-interface/index.html)
-
-[🔗 Client](https://nx-ng-starter-documentation.web.app/coverage/client/index.html)
-
-[🔗 Client Components](https://nx-ng-starter-documentation.web.app/coverage/client-components/index.html)
-
-[🔗 Client Core](https://nx-ng-starter-documentation.web.app/coverage/client-core/index.html)
-
-[🔗 Client Gql](https://nx-ng-starter-documentation.web.app/coverage/client-gql/index.html)
-
-[🔗 Client Material](https://nx-ng-starter-documentation.web.app/coverage/client-material/index.html)
-
-[🔗 Client Services](https://nx-ng-starter-documentation.web.app/coverage/client-services/index.html)
-
-[🔗 Client Store](https://nx-ng-starter-documentation.web.app/coverage/client-store/index.html)
-
-[🔗 Client Translate](https://nx-ng-starter-documentation.web.app/coverage/client-translate/index.html)
-
-[🔗 Client Util](https://nx-ng-starter-documentation.web.app/coverage/client-util/index.html)
-
-[🔗 Documentation](https://nx-ng-starter-documentation.web.app/coverage/documentation/index.html)
-
-[🔗 Mocks Core](https://nx-ng-starter-documentation.web.app/coverage/mocks-core/index.html)
-
-[🔗 Proto](https://nx-ng-starter-documentation.web.app/coverage/proto/index.html)
+| Application/Library | Unit coverage                                                                           |
+| ------------------- | --------------------------------------------------------------------------------------- |
+| API                 | [🔗](https://nx-ng-starter-documentation.web.app/coverage/api/index.html)               |
+| API Interface       | [🔗](https://nx-ng-starter-documentation.web.app/coverage/api-interface/index.html)     |
+| Client              | [🔗](https://nx-ng-starter-documentation.web.app/coverage/client/index.html)            |
+| Client Components   | [🔗](https://nx-ng-starter-documentation.web.app/coverage/client-components/index.html) |
+| Client Core         | [🔗](https://nx-ng-starter-documentation.web.app/coverage/client-core/index.html)       |
+| Client Gql          | [🔗](https://nx-ng-starter-documentation.web.app/coverage/client-gql/index.html)        |
+| Client Material     | [🔗](https://nx-ng-starter-documentation.web.app/coverage/client-material/index.html)   |
+| Client Services     | [🔗](https://nx-ng-starter-documentation.web.app/coverage/client-services/index.html)   |
+| Client Store        | [🔗](https://nx-ng-starter-documentation.web.app/coverage/client-store/index.html)      |
+| Client Translate    | [🔗](https://nx-ng-starter-documentation.web.app/coverage/client-translate/index.html)  |
+| Client Util         | [🔗](https://nx-ng-starter-documentation.web.app/coverage/client-util/index.html)       |
+| Documentation       | [🔗](https://nx-ng-starter-documentation.web.app/coverage/documentation/index.html)     |
+| Mocks Core          | [🔗](https://nx-ng-starter-documentation.web.app/coverage/mocks-core/index.html)        |
+| Proto               | [🔗](https://nx-ng-starter-documentation.web.app/coverage/proto/index.html)             |
 
 ### E2E reports
 
-[🔗 Client E2E](https://nx-ng-starter-documentation.web.app/cypress/client-e2e/mochawesome/mochawesome.html)
+| Application          | E2E report                                                                                                   |
+| -------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Client E2E           | [🔗](https://nx-ng-starter-documentation.web.app/cypress/client-e2e/mochawesome/mochawesome.html)            |
+| Client ComponentsE2E | [🔗](https://nx-ng-starter-documentation.web.app/cypress/client-components-e2e/mochawesome/mochawesome.html) |
+| Documentation E2E    | [🔗](https://nx-ng-starter-documentation.web.app/cypress/documentation-e2e/mochawesome/mochawesome.html)     |
 
 ### Compodoc documentation
 
-[🔗 Nx Ng Starter Client documentation](https://nx-ng-starter-documentation.web.app/compodoc/client/index.html)
-
-[🔗 Nx Ng Starter API documentation](https://nx-ng-starter-documentation.web.app/compodoc/api/index.html)
+| Application/Library | Compodoc documentation                                                                  |
+| ------------------- | --------------------------------------------------------------------------------------- |
+| API                 | [🔗](https://nx-ng-starter-documentation.web.app/compodoc/api/index.html)               |
+| API Interface       | [🔗](https://nx-ng-starter-documentation.web.app/compodoc/api-interface/index.html)     |
+| Client              | [🔗](https://nx-ng-starter-documentation.web.app/compodoc/client/index.html)            |
+| Client Components   | [🔗](https://nx-ng-starter-documentation.web.app/compodoc/client-components/index.html) |
+| Client Core         | [🔗](https://nx-ng-starter-documentation.web.app/compodoc/client-core/index.html)       |
+| Client Gql          | [🔗](https://nx-ng-starter-documentation.web.app/compodoc/client-gql/index.html)        |
+| Client Material     | [🔗](https://nx-ng-starter-documentation.web.app/compodoc/client-material/index.html)   |
+| Client Services     | [🔗](https://nx-ng-starter-documentation.web.app/compodoc/client-services/index.html)   |
+| Client Store        | [🔗](https://nx-ng-starter-documentation.web.app/compodoc/client-store/index.html)      |
+| Client Translate    | [🔗](https://nx-ng-starter-documentation.web.app/compodoc/client-translate/index.html)  |
+| Client Util         | [🔗](https://nx-ng-starter-documentation.web.app/compodoc/client-util/index.html)       |
+| Documentation       | [🔗](https://nx-ng-starter-documentation.web.app/compodoc/documentation/index.html)     |
+| Mocks Core          | [🔗](https://nx-ng-starter-documentation.web.app/compodoc/mocks-core/index.html)        |
+| Proto               | [🔗](https://nx-ng-starter-documentation.web.app/compodoc/proto/index.html)             |
 
 ### Changelog
 
-[🔗 API](https://nx-ng-starter-documentation.web.app/changelog/apps/api-CHANGELOG.md)
-
-[🔗 Client](https://nx-ng-starter-documentation.web.app/changelog/apps/client-CHANGELOG.md)
-
-[🔗 Client Components E2E](https://nx-ng-starter-documentation.web.app/changelog/apps/client-components-e2e-CHANGELOG.md)
-
-[🔗 Client E2E](https://nx-ng-starter-documentation.web.app/changelog/apps/client-e2e-CHANGELOG.md)
-
-[🔗 Documentation](https://nx-ng-starter-documentation.web.app/changelog/apps/documentation-CHANGELOG.md)
-
-[🔗 API Interface](https://nx-ng-starter-documentation.web.app/changelog/libs/api-interface-CHANGELOG.md)
-
-[🔗 Client Components](https://nx-ng-starter-documentation.web.app/changelog/libs/client-components-CHANGELOG.md)
-
-[🔗 Client Core](https://nx-ng-starter-documentation.web.app/changelog/libs/client-core-CHANGELOG.md)
-
-[🔗 Client Gql](https://nx-ng-starter-documentation.web.app/changelog/libs/client-gql-CHANGELOG.md)
-
-[🔗 Client Material](https://nx-ng-starter-documentation.web.app/changelog/libs/client-material-CHANGELOG.md)
-
-[🔗 Client Services](https://nx-ng-starter-documentation.web.app/changelog/libs/client-services-CHANGELOG.md)
-
-[🔗 Client Store](https://nx-ng-starter-documentation.web.app/changelog/libs/client-store-CHANGELOG.md)
-
-[🔗 Client Translate](https://nx-ng-starter-documentation.web.app/changelog/libs/client-translate-CHANGELOG.md)
-
-[🔗 Client Util](https://nx-ng-starter-documentation.web.app/changelog/libs/client-util-CHANGELOG.md)
-
-[🔗 Mocks Core](https://nx-ng-starter-documentation.web.app/changelog/libs/mocks-core-CHANGELOG.md)
-
-[🔗 Proto](https://nx-ng-starter-documentation.web.app/changelog/libs/proto-CHANGELOG.md)
+| Application/Library   | Changelog                                                                                                                   |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| API                   | [🔗](https://nx-ng-starter-documentation.web.app/changelog/apps/api/api-CHANGELOG.html)                                     |
+| API Interface         | [🔗](https://nx-ng-starter-documentation.web.app/changelog/libs/api-interface/api-interface-CHANGELOG.html)                 |
+| Client                | [🔗](https://nx-ng-starter-documentation.web.app/changelog/apps/client/client-CHANGELOG.html)                               |
+| Client E2E            | [🔗](https://nx-ng-starter-documentation.web.app/changelog/apps/client-e2e/client-e2e-CHANGELOG.html)                       |
+| Client Components     | [🔗](https://nx-ng-starter-documentation.web.app/changelog/libs/client-components/client-components-CHANGELOG.html)         |
+| Client Components E2E | [🔗](https://nx-ng-starter-documentation.web.app/changelog/libs/client-components-e2e/client-components-e2e-CHANGELOG.html) |
+| Client Core           | [🔗](https://nx-ng-starter-documentation.web.app/changelog/libs/client-core/client-core-CHANGELOG.html)                     |
+| Client Gql            | [🔗](https://nx-ng-starter-documentation.web.app/changelog/libs/client-gql/client-gql-CHANGELOG.html)                       |
+| Client Material       | [🔗](https://nx-ng-starter-documentation.web.app/changelog/libs/client-material/client-material-CHANGELOG.html)             |
+| Client Services       | [🔗](https://nx-ng-starter-documentation.web.app/changelog/libs/client-services/client-services-CHANGELOG.html)             |
+| Client Store          | [🔗](https://nx-ng-starter-documentation.web.app/changelog/libs/client-store/client-store-CHANGELOG.html)                   |
+| Client Translate      | [🔗](https://nx-ng-starter-documentation.web.app/changelog/libs/client-translate/client-translate-CHANGELOG.html)           |
+| Client Util           | [🔗](https://nx-ng-starter-documentation.web.app/changelog/libs/client-util/client-util-CHANGELOG.html)                     |
+| Documentation         | [🔗](https://nx-ng-starter-documentation.web.app/changelog/apps/documentation/documentation-CHANGELOG.html)                 |
+| Documentation E2E     | [🔗](https://nx-ng-starter-documentation.web.app/changelog/apps/documentation-e2e/documentation-e2e-CHANGELOG.html)         |
+| Mocks Core            | [🔗](https://nx-ng-starter-documentation.web.app/changelog/libs/mocks-core/mocks-core-CHANGELOG.html)                       |
+| Proto                 | [🔗](https://nx-ng-starter-documentation.web.app/changelog/libs/proto/proto-CHANGELOG.html)                                 |
 
 ## General Tooling
 

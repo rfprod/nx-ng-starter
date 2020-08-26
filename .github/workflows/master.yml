@@ -16,6 +16,8 @@ jobs:
         node-version: [14.x]
 
     steps:
+      - shell: bash
+
       - name: Checkout sources
         uses: actions/checkout@v2
         with:
@@ -57,5 +59,5 @@ jobs:
       - run: npx nx run-many --target=lint --all --parallel --maxParallel=2
       - run: npx nx run-many --target=test --all --passWithNoTests --code-coverage=false --watch=false --maxWorkers=2 --ci --updateSnapshot
       - run: npx nx run-many --target=build --all
-      - run: bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" client || exit 1
-      - run: bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" documentation || exit 1
+      - run: bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" app:client || exit 1
+      - run: bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" app:documentation || exit 1
