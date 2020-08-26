@@ -49,6 +49,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+        env:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
       - run: npm i -g typescript @angular/cli @nrwl/cli
       - run: yarn install --frozen-lockfile
