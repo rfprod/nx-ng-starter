@@ -49,6 +49,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - shell: pwsh
         env:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
       - run: npm i -g typescript @angular/cli @nrwl/cli firebase-tools
@@ -57,5 +58,5 @@ jobs:
       - run: npx nx run-many --target=lint --all --parallel --maxParallel=2
       - run: npx nx run-many --target=test --all --passWithNoTests --code-coverage=false --watch=false --maxWorkers=2 --ci --updateSnapshot
       - run: npx nx run-many --target=build --all
-      - run: yarn firebase:deploy:ci:client || exit 1
-      - run: yarn firebase:deploy:ci:documentation || exit 1
+      - run: bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" app:client || exit 1
+      - run: bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" app:documentation || exit 1
