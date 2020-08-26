@@ -1,8 +1,4 @@
-<div class="container" [innerHtml]="getMarkedInstructions()"></div>
-
-<div class="container">
-  <h2>API integration check</h2>
-  <ul>
-    <li [innerHTML]="ping$ | async"></li>
-  </ul>
-</div>
+<app-info-presentational
+  [ping]="$any(ping$ | async)"
+  [markedInstructions]="$any(markedInstructions$ | async)"
+></app-info-presentational>
