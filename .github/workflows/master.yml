@@ -49,11 +49,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm i -g typescript @angular/cli
+      - run: npm i -g typescript @angular/cli @nrwl/cli
       - run: yarn install --frozen-lockfile
       - run: yarn ngcc
-      - run: ng lint
-      - run: ng test --passWithNoTests --codeCoverage=false --watch=false --maxWorkers=2 --ci --updateSnapshot
-      - run: npx nx build client
-      - run: npx nx build documentation
-      - run: npx nx build api
+      - run: npx nx run-many --target=lint --all --parallel --maxParallel=2
+      - run: npx nx run-many --target=test --all --passWithNoTests --code-coverage=false --watch=false --maxWorkers=2 --ci --updateSnapshot
+      - run: npx nx run-many --target=build --all
