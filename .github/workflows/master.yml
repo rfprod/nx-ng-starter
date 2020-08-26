@@ -7,6 +7,10 @@ on:
   push:
     branches: [master]
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   test-build-deploy:
     runs-on: ubuntu-latest
@@ -49,7 +53,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - shell: bash
         env:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
       - run: npm i -g typescript @angular/cli @nrwl/cli firebase-tools
