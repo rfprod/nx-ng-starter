@@ -28,7 +28,6 @@ jobs:
 
       - name: Get yarn cache directory path and commit hash
         id: get-variables
-        shell: bash
         run: echo "::set-output name=yarncachedir::$(yarn cache dir)"; echo "::set-output name=commitsha::$(echo ${GITHUB_SHA})"
 
       - name: Yarn/npm + Nx + Jest cache
@@ -53,13 +52,31 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+
+      - name: Install global dependencies
+        run: npm i -g typescript @angular/cli @nrwl/cli firebase-tools
+
+      - name: Install project dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Process depdencncies with ngcc
+        run: yarn ngcc
+
+      - name: Lint all sources
+        run: npx nx run-many --target=lint --all --parallel --maxParallel=2
+
+      - name: Execute all unit tests
+        run: npx nx run-many --target=test --all --passWithNoTests --code-coverage=false --watch=false --maxWorkers=2 --ci --updateSnapshot
+
+      - name: Build all apps
+        run: npx nx run-many --target=build --all
+
+      - name: Deploy client app
+        run: bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" app:client || exit 1
         env:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
-      - run: npm i -g typescript @angular/cli @nrwl/cli firebase-tools
-      - run: yarn install --frozen-lockfile
-      - run: yarn ngcc
-      - run: npx nx run-many --target=lint --all --parallel --maxParallel=2
-      - run: npx nx run-many --target=test --all --passWithNoTests --code-coverage=false --watch=false --maxWorkers=2 --ci --updateSnapshot
-      - run: npx nx run-many --target=build --all
-      - run: bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" app:client || exit 1
-      - run: bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" app:documentation || exit 1
+
+      - name: Deploy documentation app
+        run: bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" app:documentation || exit 1
+        env:
+          FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}

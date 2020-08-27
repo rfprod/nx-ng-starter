@@ -7,6 +7,10 @@ on:
   pull_request:
     branches: [master]
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   premerge:
     runs-on: ubuntu-latest
@@ -24,7 +28,6 @@ jobs:
 
       - name: Get variables (yarn cache directory path, commit hash)
         id: get-variables
-        shell: bash
         run: echo "::set-output name=yarncachedir::$(yarn cache dir)"; echo "::set-output name=commitsha::$(echo ${GITHUB_SHA})"
 
       - name: Workspace cache (npm, yarn, nx, jest)
