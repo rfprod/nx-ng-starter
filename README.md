@@ -304,6 +304,4 @@ Visit the [🔗 Nx Documentation](https://nx.dev) to learn more.
 
 ### CI
 
-[🔗 Azure DevOps](https://azure.microsoft.com/en-us/services/devops/)
-
-[🔗 Azure DevOps Pipeline YAML Schema](https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema?view=vsts&tabs=example#trigger)
+[🔗 GitHub Actions](https://github.com/features/actions)
