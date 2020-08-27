@@ -59,17 +59,17 @@ jobs:
       - name: Install project dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Process depdencncies with ngcc
+      - name: Process dependencies with ngcc
         run: yarn ngcc
 
-      - name: Lint all sources
+      - name: Lint all
         run: npx nx run-many --target=lint --all --parallel --maxParallel=2
 
-      - name: Execute all unit tests
+      - name: Unit test all
         run: npx nx run-many --target=test --all --passWithNoTests --code-coverage=false --watch=false --maxWorkers=2 --ci --updateSnapshot
 
-      - name: Build all apps
-        run: npx nx run-many --target=build --all
+      - name: Build all
+        run: yarn build:all:prod
 
       - name: Deploy client app
         run: bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" app:client || exit 1
