@@ -257,7 +257,7 @@ generateModuleChangelog() {
   elif
     [ "$MODULE_ALIAS" = "all" ]
   then
-    for MODULE_ALIAS_VAR in "${MODULE_ALIAS_VARS[@]}"; do generateModuleChangelog "$MODULE_ALIAS_VAR"; done
+    for MODULE_ALIAS_VAR in "${EXISTING_MODULE_ALIASES[@]}"; do generateModuleChangelog "$MODULE_ALIAS_VAR"; done
   else
     reportUsageErrorAndExit
   fi

@@ -5,133 +5,59 @@
 ##
 source tools/shell/colors.sh ''
 
-##
-# Module aliases.
-# Should be updated here when app or lib are added to the project.
-##
+declare -A EXISTING_MODULE_ALIASES
+declare -A EXISTING_MODULE_ALIASES_E2E
+declare -A EXISTING_MODULE_ALIASES_UNIT
 
-# Apps
-MODULE_ALIAS_APP_CLIENT="app:client"
-MODULE_ALIAS_APP_DOCUMENTATION="app:documentation"
-MODULE_ALIAS_APP_API="app:api"
-# Apps E2E
-MODULE_ALIAS_APP_CLIENT_E2E="app:client-e2e"
-MODULE_ALIAS_APP_DOCUMENTATION_E2E="app:documentation-e2e"
-MODULE_ALIAS_APP_CLIENT_COMPONENTS_E2E="app:client-components-e2e"
-# Libs
-MODULE_ALIAS_LIB_API_INTERFACE="lib:api-interface"
-MODULE_ALIAS_LIB_MOCKS_CORE="lib:mocks-core"
-MODULE_ALIAS_LIB_CLIENT_CORE="lib:client-core"
-MODULE_ALIAS_LIB_CLIENT_STORE="lib:client-store"
-MODULE_ALIAS_LIB_CLIENT_UTIL="lib:client-util"
-MODULE_ALIAS_LIB_CLIENT_MATERIAL="lib:client-material"
-MODULE_ALIAS_LIB_CLIENT_TRANSLATE="lib:client-translate"
-MODULE_ALIAS_LIB_CLIENT_SERVICES="lib:client-services"
-MODULE_ALIAS_LIB_CLIENT_COMPONENTS="lib:client-components"
-MODULE_ALIAS_LIB_CLIENT_GQL="lib:client-gql"
-MODULE_ALIAS_LIB_PROTO="lib:proto"
+findSupportedModuleAliases() {
 
-MODULE_ALIAS_NAMES=(
-  MODULE_ALIAS_APP_CLIENT
-  MODULE_ALIAS_APP_DOCUMENTATION
-  MODULE_ALIAS_APP_API
-  MODULE_ALIAS_APP_CLIENT_E2E
-  MODULE_ALIAS_APP_CLIENT_COMPONENTS_E2E
-  MODULE_ALIAS_LIB_API_INTERFACE
-  MODULE_ALIAS_LIB_MOCKS_CORE
-  MODULE_ALIAS_LIB_CLIENT_CORE
-  MODULE_ALIAS_LIB_CLIENT_STORE
-  MODULE_ALIAS_LIB_CLIENT_UTIL
-  MODULE_ALIAS_LIB_CLIENT_MATERIAL
-  MODULE_ALIAS_LIB_CLIENT_TRANSLATE
-  MODULE_ALIAS_LIB_CLIENT_SERVICES
-  MODULE_ALIAS_LIB_CLIENT_COMPONENTS
-  MODULE_ALIAS_LIB_CLIENT_GQL
-  MODULE_ALIAS_LIB_PROTO
-)
+  readarray -d '' FOUND_LIB_ALIASES < <(find libs/ -mindepth 1 -maxdepth 1 -type d '!' -exec test -e "{}/lib/" ';' -print0)
 
-MODULE_ALIAS_VARS=(
-  "$MODULE_ALIAS_APP_CLIENT"
-  "$MODULE_ALIAS_APP_DOCUMENTATION"
-  "$MODULE_ALIAS_APP_API"
-  "$MODULE_ALIAS_APP_CLIENT_E2E"
-  "$MODULE_ALIAS_APP_CLIENT_COMPONENTS_E2E"
-  "$MODULE_ALIAS_LIB_API_INTERFACE"
-  "$MODULE_ALIAS_LIB_MOCKS_CORE"
-  "$MODULE_ALIAS_LIB_CLIENT_CORE"
-  "$MODULE_ALIAS_LIB_CLIENT_STORE"
-  "$MODULE_ALIAS_LIB_CLIENT_UTIL"
-  "$MODULE_ALIAS_LIB_CLIENT_MATERIAL"
-  "$MODULE_ALIAS_LIB_CLIENT_TRANSLATE"
-  "$MODULE_ALIAS_LIB_CLIENT_SERVICES"
-  "$MODULE_ALIAS_LIB_CLIENT_COMPONENTS"
-  "$MODULE_ALIAS_LIB_CLIENT_GQL"
-  "$MODULE_ALIAS_LIB_PROTO"
-)
+  for LIB_ALIAS in "${FOUND_LIB_ALIASES[@]}"; do
+    local LIB_ALIAS_NAME
+    LIB_ALIAS_NAME="${LIB_ALIAS//s\//:}"
+    EXISTING_MODULE_ALIASES["$LIB_ALIAS_NAME"]="$LIB_ALIAS_NAME"
+    EXISTING_MODULE_ALIASES_UNIT["$LIB_ALIAS_NAME"]="$LIB_ALIAS_NAME"
+  done
 
-MODULE_ALIAS_NAMES_UNIT=(
-  MODULE_ALIAS_APP_CLIENT
-  MODULE_ALIAS_APP_DOCUMENTATION
-  MODULE_ALIAS_APP_API
-  MODULE_ALIAS_LIB_API_INTERFACE
-  MODULE_ALIAS_LIB_MOCKS_CORE
-  MODULE_ALIAS_LIB_CLIENT_CORE
-  MODULE_ALIAS_LIB_CLIENT_STORE
-  MODULE_ALIAS_LIB_CLIENT_UTIL
-  MODULE_ALIAS_LIB_CLIENT_MATERIAL
-  MODULE_ALIAS_LIB_CLIENT_TRANSLATE
-  MODULE_ALIAS_LIB_CLIENT_SERVICES
-  MODULE_ALIAS_LIB_CLIENT_COMPONENTS
-  MODULE_ALIAS_LIB_CLIENT_GQL
-  MODULE_ALIAS_LIB_PROTO
-)
+  readarray -d '' FOUND_APP_ALIASES < <(find apps/ -mindepth 1 -maxdepth 1 -type d '!' -exec test -e "{}/app/" ';' -print0)
 
-MODULE_ALIAS_VARS_UNIT=(
-  "$MODULE_ALIAS_APP_CLIENT"
-  "$MODULE_ALIAS_APP_DOCUMENTATION"
-  "$MODULE_ALIAS_APP_API"
-  "$MODULE_ALIAS_LIB_API_INTERFACE"
-  "$MODULE_ALIAS_LIB_MOCKS_CORE"
-  "$MODULE_ALIAS_LIB_CLIENT_CORE"
-  "$MODULE_ALIAS_LIB_CLIENT_STORE"
-  "$MODULE_ALIAS_LIB_CLIENT_UTIL"
-  "$MODULE_ALIAS_LIB_CLIENT_MATERIAL"
-  "$MODULE_ALIAS_LIB_CLIENT_TRANSLATE"
-  "$MODULE_ALIAS_LIB_CLIENT_SERVICES"
-  "$MODULE_ALIAS_LIB_CLIENT_COMPONENTS"
-  "$MODULE_ALIAS_LIB_CLIENT_GQL"
-  "$MODULE_ALIAS_LIB_PROTO"
-)
+  for APP_ALIAS in "${FOUND_APP_ALIASES[@]}"; do
+    local APP_ALIAS_NAME
+    APP_ALIAS_NAME="${APP_ALIAS//s\//:}"
+    EXISTING_MODULE_ALIASES["$APP_ALIAS_NAME"]="$APP_ALIAS_NAME"
+  done
 
-MODULE_ALIAS_NAMES_E2E=(
-  MODULE_ALIAS_APP_CLIENT_E2E
-  MODULE_ALIAS_APP_DOCUMENTATION_E2E
-  MODULE_ALIAS_APP_CLIENT_COMPONENTS_E2E
-)
+  readarray -d '' FOUND_E2E_ALIASES < <(find apps/ -mindepth 1 -maxdepth 1 -type d '!' -exec test -e "{}/src/app/" ';' -print0)
 
-MODULE_ALIAS_VARS_E2E=(
-  "$MODULE_ALIAS_APP_CLIENT_E2E"
-  "$MODULE_ALIAS_APP_DOCUMENTATION_E2E"
-  "$MODULE_ALIAS_APP_CLIENT_COMPONENTS_E2E"
-)
+  for E2E_ALIAS in "${FOUND_E2E_ALIASES[@]}"; do
+    local E2E_ALIAS_NAME
+    E2E_ALIAS_NAME="${E2E_ALIAS//s\//:}"
+    EXISTING_MODULE_ALIASES_E2E["$E2E_ALIAS_NAME"]="$E2E_ALIAS_NAME"
+  done
+
+  readarray -d '' FOUND_UNIT_ALIASES < <(find apps/ -mindepth 1 -maxdepth 1 -type d '!' -exec test -e "{}/src/fixtures/" ';' -print0)
+
+  for UNIT_ALIAS in "${FOUND_UNIT_ALIASES[@]}"; do
+    local UNIT_ALIAS_NAME
+    UNIT_ALIAS_NAME="${UNIT_ALIAS//s\//:}"
+    EXISTING_MODULE_ALIASES_UNIT["$UNIT_ALIAS_NAME"]="$UNIT_ALIAS_NAME"
+  done
+}
+
+findSupportedModuleAliases
 
 reportSupportedModuleAliases() {
-  local TITLE="<< MODULE ALIASES (all) >>"
+  local TITLE="<< MODULE ALIASES >>"
   printf "
-    ${LIGHT_BLUE}%s
-    ${DEFAULT}\n" "$TITLE"
+    ${LIGHT_BLUE}%s ${DEFAULT}\n" "$TITLE"
 
-  local MODULE_ALIAS_NAME
-  ##
-  # Prints registered module aliases.
-  ##
-  for MODULE_ALIAS_NAME in "${MODULE_ALIAS_NAMES[@]}"; do printf "
-      ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${!MODULE_ALIAS_NAME}${DEFAULT}" "$MODULE_ALIAS_NAME"; done
+  local KEY
+  for KEY in "${!EXISTING_MODULE_ALIASES[@]}"; do printf "
+      ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${EXISTING_MODULE_ALIASES[$KEY]}${DEFAULT}" "${KEY}"; done
 
-  local INFO="Use this aliases in other module related scripts like tools/shell/lint.sh, tools/shell/test.sh etc."
-  printf "
-    ${LIGHT_BLUE}%s
-    ${DEFAULT}\n\n" "$INFO"
+  local INFO="Use this aliases in other module related scripts like tools/shell/changelog.sh, tools/shell/document.sh etc."
+  printf "\n\n\n${LIGHT_BLUE} %s${DEFAULT}\n\n" "$INFO"
 }
 
 reportSupportedModuleAliasesUnit() {
@@ -139,17 +65,12 @@ reportSupportedModuleAliasesUnit() {
   printf "
     ${LIGHT_BLUE}%s ${DEFAULT}\n" "$TITLE"
 
-  local MODULE_ALIAS_NAME
-  ##
-  # Prints registered module aliases.
-  ##
-  for MODULE_ALIAS_NAME in "${MODULE_ALIAS_NAMES_UNIT[@]}"; do printf "
-      ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${!MODULE_ALIAS_NAME}${DEFAULT}" "$MODULE_ALIAS_NAME"; done
+  local KEY
+  for KEY in "${!EXISTING_MODULE_ALIASES_UNIT[@]}"; do printf "
+      ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${EXISTING_MODULE_ALIASES_UNIT[$KEY]}${DEFAULT}" "${KEY}"; done
 
-  local INFO="Use this aliases in other module related scripts like tools/shell/lint.sh, tools/shell/test.sh etc."
-  printf "
-    ${LIGHT_BLUE}%s
-    ${DEFAULT}\n\n" "$INFO"
+  local INFO="Use this aliases in tools/shell/test.sh."
+  printf "\n\n\n${LIGHT_BLUE} %s${DEFAULT}\n\n" "$INFO"
 }
 
 reportSupportedModuleAliasesE2E() {
@@ -158,38 +79,26 @@ reportSupportedModuleAliasesE2E() {
     ${LIGHT_BLUE}%s
     ${DEFAULT}\n" "$TITLE"
 
-  local MODULE_ALIAS_NAME
-  ##
-  # Prints supported module aliases.
-  ##
-  for MODULE_ALIAS_NAME in "${MODULE_ALIAS_NAMES_E2E[@]}"; do printf "
-      ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${!MODULE_ALIAS_NAME}${DEFAULT}" "$MODULE_ALIAS_NAME"; done
+  local KEY
+  for KEY in "${!EXISTING_MODULE_ALIASES_E2E[@]}"; do printf "
+          ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${EXISTING_MODULE_ALIASES_E2E[$KEY]}${DEFAULT}" "${KEY}"; done
 
-  local INFO="Use this aliases in other module related scripts like tools/shell/lint.sh, tools/shell/test.sh etc."
-  printf "
-    ${LIGHT_BLUE}%s
-    ${DEFAULT}\n\n" "$INFO"
+  local INFO="Use this aliases in tools/shell/e2e.sh."
+  printf "\n\n\n${LIGHT_BLUE} %s${DEFAULT}\n\n" "$INFO"
 }
-
-##
-# Supported module (apps and libs) aliases.
-##
-if [ "$1" = "?" ]; then
-  reportSupportedModuleAliases
-fi
 
 ##
 # Returns if module alias exists.
 #
 # examples:
-# moduleAliasExists "somealias" && echo yes || echo no                         # no
-# moduleAliasExists "${MODULE_ALIAS_APP_CLIENT}" && echo yes || echo no # yes
+# moduleAliasExists "somealias" && echo yes || echo no                       # no
+# moduleAliasExists "${MODULE_ALIAS_LIB_SHARED_UTIL}" && echo yes || echo no # yes
 ##
 moduleAliasExists() {
   local SEARCH_VALUE=$1
   local RESULT=1
   local ALIAS
-  for ALIAS in "${MODULE_ALIAS_VARS[@]}"; do
+  for ALIAS in "${EXISTING_MODULE_ALIASES[@]}"; do
     if [ "${ALIAS}" = "$SEARCH_VALUE" ]; then
       RESULT=0
       break
@@ -199,41 +108,10 @@ moduleAliasExists() {
 }
 
 ##
-# Returns if module alias exists.
-#
-# examples:
-# moduleAliasUnitExists "somealias" && echo yes || echo no                         # no
-# moduleAliasUnitExists "${MODULE_ALIAS_APP_CLIENT_E2E}" && echo yes || echo no # yes
+# Supported module (apps and libs) aliases.
 ##
-moduleAliasUnitExists() {
-  local SEARCH_VALUE=$1
-  local RESULT=1
-  local ALIAS
-  for ALIAS in "${MODULE_ALIAS_VARS_UNIT[@]}"; do
-    if [ "$ALIAS" = "$SEARCH_VALUE" ]; then
-      RESULT=0
-      break
-    fi
-  done
-  return $RESULT
-}
-
-##
-# Returns if module alias exists.
-#
-# examples:
-# moduleAliasE2EExists "somealias" && echo yes || echo no                         # no
-# moduleAliasE2EExists "${MODULE_ALIAS_APP_CLIENT_E2E}" && echo yes || echo no # yes
-##
-moduleAliasE2EExists() {
-  local SEARCH_VALUE=$1
-  local RESULT=1
-  local ALIAS
-  for ALIAS in "${MODULE_ALIAS_VARS_E2E[@]}"; do
-    if [ "$ALIAS" = "$SEARCH_VALUE" ]; then
-      RESULT=0
-      break
-    fi
-  done
-  return $RESULT
-}
+if [ "$1" = "?" ]; then
+  reportSupportedModuleAliases
+  reportSupportedModuleAliasesUnit
+  reportSupportedModuleAliasesE2E
+fi
