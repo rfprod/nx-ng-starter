@@ -76,6 +76,9 @@ jobs:
         env:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
 
+      - name: Build documentation
+        run: yarn build:documentation:prod
+
       - name: Deploy documentation app
         run: bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" app:documentation || exit 1
         env:
