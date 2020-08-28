@@ -174,7 +174,7 @@ lintModule() {
   if [ "$ALIAS_EXISTS" = 1 ]; then
     checkConfigPathAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$OPTIONAL_ACTION"
   elif [ "$MODULE_ALIAS" = "all" ]; then
-    for MODULE_ALIAS_VAR in "${MODULE_ALIAS_VARS[@]}"; do lintModule "$MODULE_ALIAS_VAR" "$OPTIONAL_ACTION"; done
+    for MODULE_ALIAS_VAR in "${EXISTING_MODULE_ALIASES[@]}"; do lintModule "$MODULE_ALIAS_VAR" "$OPTIONAL_ACTION"; done
   elif [ "$MODULE_ALIAS" = "changed" ]; then
     ##
     # Import Git extension which finds changed aliases.

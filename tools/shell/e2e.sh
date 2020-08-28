@@ -163,14 +163,14 @@ testModule() {
     ${DEFAULT}\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$E2E_DIST_PATH"
 
   local ALIAS_EXISTS=
-  moduleAliasE2EExists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
+  moduleAliasExists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
 
   if [ "$ALIAS_EXISTS" = 1 ]; then
     performModuleTesting "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$E2E_DIST_PATH" "$OPTIONAL_ACTION" "$COPY_REPORT"
   elif
     [[ "$MODULE_ALIAS" = "all" ]]
   then
-    for MODULE_ALIAS_VAR_E2E in "${MODULE_ALIAS_VARS_E2E[@]}"; do testModule "$MODULE_ALIAS_VAR_E2E" "$OPTIONAL_ACTION" "$COPY_REPORT"; done
+    for MODULE_ALIAS_VAR_E2E in "${EXISTING_MODULE_ALIASES_E2E[@]}"; do testModule "$MODULE_ALIAS_VAR_E2E" "$OPTIONAL_ACTION" "$COPY_REPORT"; done
   elif [ "$MODULE_ALIAS" = "affected" ]; then
     TITLE="<< TESTING AFFECTED APPS AND LIBS >>"
     printf "

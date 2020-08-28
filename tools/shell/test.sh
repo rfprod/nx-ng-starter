@@ -130,7 +130,7 @@ testModule() {
     ${DEFAULT} - coverage report base path: ${YELLOW}%s${DEFAULT}\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$COVERAGE_BASE_PATH"
 
   local ALIAS_EXISTS=
-  moduleAliasUnitExists "${MODULE_ALIAS}" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
+  moduleAliasExists "${MODULE_ALIAS}" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
 
   if [ "$ALIAS_EXISTS" = 1 ]; then
     local TITLE="<< ALIAS ESISTS >>"
@@ -141,7 +141,7 @@ testModule() {
     ${DEFAULT}" "$TITLE" "$COVERAGE_DIST_PATH"
     performModuleTesting "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$COVERAGE_DIST_PATH" "$OPTIONAL_ACTION"
   elif [ "$MODULE_ALIAS" = "all" ]; then
-    for MODULE_ALIAS_VAR in "${MODULE_ALIAS_VARS_UNIT[@]}"; do testModule "$MODULE_ALIAS_VAR" "$OPTIONAL_ACTION"; done
+    for MODULE_ALIAS_VAR in "${EXISTING_MODULE_ALIASES_UNIT[@]}"; do testModule "$MODULE_ALIAS_VAR" "$OPTIONAL_ACTION"; done
   elif [ "$MODULE_ALIAS" = "changed" ]; then
     local TITLE="<< TESTING CHANGED APPS AND LIBS >>"
     printf "
