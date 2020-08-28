@@ -23,7 +23,7 @@
     "build:client:prod": "bash tools/shell/build.sh prod client",
     "build:client:stats": "ng build --stats-json --project client --configuration analyze-bundle",
     "build:documentation": "npm run generate:doc-env; ng build documentation; npm run document:all:generate-and-report-to-dist; npm run changelog:all:generate; npm run e2e:headless:report; npm run test:all:single-run-and-report-to-dist",
-    "build:documentation:prod": "npm run build:documentation; bash tools/shell/build.sh prod documentation",
+    "build:documentation:prod": "npm run generate:doc-env; bash tools/shell/build.sh prod documentation",
     "changelog:all:generate": "bash tools/shell/changelog.sh all",
     "dep-graph": "nx dep-graph",
     "document": "bash tools/shell/document.sh",

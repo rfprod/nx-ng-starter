@@ -33,15 +33,29 @@ reportUsage() {
 ##
 # Generates compodoc documentation.
 ##
-generateDocumentation() {
+generateCompodocs() {
   npm run document:all:generate-and-report-to-dist
 }
 
 ##
 # Generates changelog and reports to dist.
 ##
-generateChangelog() {
+generateChangelogs() {
   npm run changelog:all:generate
+}
+
+##
+# Generates e2e reports and reports to dist.
+##
+generateEnd2EndReports() {
+  npm run e2e:headless:report
+}
+
+##
+# Generates unit test reports and reports to dist.
+##
+generateUnitTestReports() {
+  npm run test:all:single-run-and-report-to-dist
 }
 
 ##
@@ -64,12 +78,10 @@ buildNxNgStarterDocsProd() {
     ${LIGHT_BLUE}%s
     ${DEFAULT}\n\n" "$TITLE"
   ng build --project documentation --configuration production || exitWithError
-  generateDocumentation
-  generateChangelog
-
-  # TODO: wrap as separate functions in this script
-  npm run e2e:headless:report
-  npm run test:all:single-run-and-report-to-dist
+  generateCompodocs
+  generateChangelogs
+  generateEnd2EndReports
+  generateUnitTestReports
 }
 
 ##
