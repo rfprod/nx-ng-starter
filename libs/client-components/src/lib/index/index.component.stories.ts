@@ -5,7 +5,6 @@ import { AppClientCoreModule } from '@nx-ng-starter/client-core';
 import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
 import { AppClientServicesModule } from '@nx-ng-starter/client-services';
 import { AppClientStoreModule, AppWebsocketModule } from '@nx-ng-starter/client-store';
-
 import { AppIndexComponent } from './index.component';
 
 export default {

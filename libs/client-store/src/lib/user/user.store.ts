@@ -1,57 +1,60 @@
 import { Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { actionPayloadConstructor } from '@nx-ng-starter/client-util';
 
-import { AppUserStateModel, TUserPayload } from './user.interface';
+import { IUserState, TUserPayload, USER_STATE, userInitialState } from './user.interface';
+import { AppUserService } from './user.service';
 
-const createAction = actionPayloadConstructor('User');
-const setState = createAction<TUserPayload>('Set state');
+const createAction = actionPayloadConstructor(USER_STATE.getName());
+const setState = createAction<TUserPayload>('set state');
 
-@State<AppUserStateModel>({
-  name: 'user',
+export const userActions = {
+  setState,
+};
+
+@State<IUserState>({
+  name: USER_STATE,
   defaults: {
-    email: '',
-    admin: false,
-    token: '',
+    ...userInitialState,
   },
 })
 @Injectable({
   providedIn: 'root',
 })
-class AppUserState {
+export class AppUserState {
+  constructor(private readonly store: Store, private readonly api: AppUserService) {
+    const user = this.api.restoreUser();
+    void this.store.dispatch(new userActions.setState(user)).subscribe();
+  }
+
   @Selector()
-  public static model(state: AppUserStateModel) {
+  public static model(state: IUserState) {
     return state;
   }
 
   @Selector()
-  public static email(state: AppUserStateModel) {
+  public static email(state: IUserState) {
     return state.email;
   }
 
   @Selector()
-  public static token(state: AppUserStateModel) {
+  public static token(state: IUserState) {
     return state.token;
   }
 
   @Selector()
-  public static admin(state: AppUserStateModel) {
+  public static admin(state: IUserState) {
     return state.admin;
   }
 
   @Action(setState)
-  public setState(ctx: StateContext<AppUserStateModel>, { payload }: TUserPayload) {
-    // Reuses values from previous state if payload is partial.
-    const currentState: AppUserStateModel = ctx.getState();
+  public setState(ctx: StateContext<IUserState>, { payload }: TUserPayload) {
+    const currentState: IUserState = ctx.getState();
     const email = typeof payload.email !== 'undefined' ? payload.email : currentState.email;
     const admin = typeof payload.admin === 'boolean' ? payload.admin : currentState.admin;
     const token = typeof payload.token !== 'undefined' ? payload.token : currentState.token;
-    const newState: AppUserStateModel = new AppUserStateModel({ email, admin, token });
+    const newState: IUserState = { email, admin, token };
+    this.api.saveUser(newState);
     return ctx.patchState(newState);
   }
 }
-
-const userActions = {
-  setState,
-};
-export { AppUserState, userActions };

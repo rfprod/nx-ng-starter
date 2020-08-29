@@ -31,7 +31,7 @@ reportUsageErrorAndExit() {
     ${RED}%s\n
     ${DEFAULT} - ${YELLOW} bash tools/shell/test.sh single-run all
     ${DEFAULT} - ${YELLOW} bash tools/shell/test.sh single-run ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>
-    ${DEFAULT} - ${YELLOW} bash tools/shell/test.sh single-run-and-report ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>
+    ${DEFAULT} - ${YELLOW} bash tools/shell/test.sh single-run:report ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>
     ${DEFAULT} - ${YELLOW} bash tools/shell/test.sh run ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>\n" "$TITLE"
 
   reportSupportedModuleAliasesUnit
@@ -169,7 +169,7 @@ if [ $# -lt 2 ]; then
 else
   if [ "$1" = "single-run" ]; then
     testModule "$2" "none" # test single run.
-  elif [ "$1" = "single-run-and-report" ]; then
+  elif [ "$1" = "single-run:report" ]; then
     testModule "$2" "report" # test single run, generate coverage report, and copy report to dist.
   elif [ "$1" = "run" ]; then
     testModule "$2" "watch" # run in watch mode.

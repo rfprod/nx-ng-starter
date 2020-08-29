@@ -8,7 +8,7 @@ describe('AppSidebarUiService', () => {
   let service: AppSidebarUiService;
 
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [AppSidebarUiModule.forRoot()],
+    imports: [AppSidebarUiModule],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 

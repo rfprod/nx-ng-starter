@@ -1,4 +1,4 @@
-import { Inject, Injectable, Provider } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -41,28 +41,3 @@ export class AppWebsocketApiService {
     this.websocket$.next(event);
   }
 }
-
-/**
- * Websocket api service factory constructor.
- */
-export type TAppWebsocketApiServiceFactoryConstructor = (
-  config: IWebsocketConfig,
-) => AppWebsocketApiService;
-
-/**
- * Websocket api service factory.
- */
-export const websocketApiServiceFactory: TAppWebsocketApiServiceFactoryConstructor = (
-  config: IWebsocketConfig,
-) => {
-  return new AppWebsocketApiService(config);
-};
-
-/**
- * Websocket api service provider.
- */
-export const websocketApiServiceProvider: Provider = {
-  provide: AppWebsocketApiService,
-  useFactory: websocketApiServiceFactory,
-  deps: [WS_CONFIG],
-};

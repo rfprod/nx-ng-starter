@@ -1,4 +1,4 @@
-import { Injectable, Provider } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
@@ -40,30 +40,3 @@ export class AppWebsocketService implements IWebsocketservice {
     this.api.sendEvent('events');
   }
 }
-
-/**
- * Websocket service factory constructor.
- */
-export type TAppWebsocketServiceFactoryConstructor = (
-  store: Store,
-  api: AppWebsocketApiService,
-) => AppWebsocketService;
-
-/**
- * Websocket service factory.
- */
-export const websocketServiceFactory: TAppWebsocketServiceFactoryConstructor = (
-  store: Store,
-  api: AppWebsocketApiService,
-) => {
-  return new AppWebsocketService(store, api);
-};
-
-/**
- * Websocket service provider.
- */
-export const websocketServiceProvider: Provider = {
-  provide: AppWebsocketService,
-  useFactory: websocketServiceFactory,
-  deps: [Store, AppWebsocketApiService],
-};

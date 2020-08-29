@@ -13,11 +13,11 @@ export class AppSidebarUiService {
   constructor(private readonly store: Store) {}
 
   public open() {
-    return this.store.dispatch(new sidebarUiActions.setAppSidebarUiState({ sidebarOpened: true }));
+    return this.store.dispatch(new sidebarUiActions.setState({ sidebarOpened: true }));
   }
 
   public close() {
-    return this.store.dispatch(new sidebarUiActions.setAppSidebarUiState({ sidebarOpened: false }));
+    return this.store.dispatch(new sidebarUiActions.setState({ sidebarOpened: false }));
   }
 
   public toggle() {
@@ -25,9 +25,7 @@ export class AppSidebarUiService {
       .pipe(
         first(),
         concatMap(opened => {
-          return this.store.dispatch(
-            new sidebarUiActions.setAppSidebarUiState({ sidebarOpened: !opened }),
-          );
+          return this.store.dispatch(new sidebarUiActions.setState({ sidebarOpened: !opened }));
         }),
       )
       .subscribe();

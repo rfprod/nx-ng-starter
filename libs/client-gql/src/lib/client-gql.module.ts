@@ -6,6 +6,49 @@ import { IWebClientAppEnvironment } from '@nx-ng-starter/client-util';
 import { APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 
+/**
+ * Creates apollo links: http, ws.
+ */
+export function getApolloLinks(env: IWebClientAppEnvironment, httpLink: HttpLink) {
+  const http = httpLink.create({
+    uri: `${env.api}graphql`,
+  });
+
+  const ws = new WebSocketLink({
+    uri: `${env.api.replace(/http/, 'ws')}/`,
+    options: {
+      reconnect: true,
+    },
+  });
+
+  return { http, ws };
+}
+
+export function apolloClienOptionsFactory(
+  env: IWebClientAppEnvironment,
+  httpLink: HttpLink,
+): ApolloClientOptions<Record<string, unknown>> {
+  // apollo links
+  const links = getApolloLinks(env, httpLink);
+
+  // using the ability to split links, you can send data to each link
+  // depending on what kind of operation is being sent
+  const link = split(
+    // split based on operation type
+    ({ query }) => {
+      const definition = getMainDefinition(query);
+      return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
+    },
+    links.ws,
+    links.http,
+  );
+
+  return {
+    link,
+    cache: new InMemoryCache(),
+  };
+}
+
 @NgModule({})
 export class AppClientGqlModule {
   public static forRoot(env: IWebClientAppEnvironment): ModuleWithProviders<AppClientGqlModule> {
@@ -14,40 +57,7 @@ export class AppClientGqlModule {
       providers: [
         {
           provide: APOLLO_OPTIONS,
-          useFactory(httpLink: HttpLink): ApolloClientOptions<Record<string, unknown>> {
-            // Create an http link:
-            const http = httpLink.create({
-              uri: `${env.api}graphql`,
-            });
-
-            // Create a WebSocket link:
-            const ws = new WebSocketLink({
-              uri: `${env.api.replace(/http/, 'ws')}/`,
-              options: {
-                reconnect: true,
-              },
-            });
-
-            // using the ability to split links, you can send data to each link
-            // depending on what kind of operation is being sent
-            const link = split(
-              // split based on operation type
-              ({ query }) => {
-                const definition = getMainDefinition(query);
-                return (
-                  definition.kind === 'OperationDefinition' &&
-                  definition.operation === 'subscription'
-                );
-              },
-              ws,
-              http,
-            );
-
-            return {
-              link,
-              cache: new InMemoryCache(),
-            };
-          },
+          useFactory: (httpLink: HttpLink) => apolloClienOptionsFactory(env, httpLink),
           deps: [HttpLink],
         },
       ],

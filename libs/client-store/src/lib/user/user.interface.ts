@@ -1,33 +1,31 @@
+import { StateToken } from '@ngxs/store';
 import { IActionPayload } from '@nx-ng-starter/client-util';
 import { Observable } from 'rxjs';
 
-export class AppUserStateModel {
-  public email = '';
-
-  public admin = false;
-
-  public token = '';
-
-  constructor(input?: AppUserStateModel) {
-    if (typeof input !== 'undefined') {
-      const keys = Object.keys(input);
-      for (const key of keys) {
-        this[key] = Boolean(input[key]) ? input[key] : this[key];
-      }
-    }
-  }
+export interface IUserState {
+  email: string;
+  admin: boolean;
+  token: string;
 }
 
-export interface IAppUserStatePayload {
+export const userInitialState: IUserState = {
+  email: '',
+  admin: false,
+  token: '',
+};
+
+export const USER_STATE = new StateToken<IUserState>('USER_STATE');
+
+export interface IUserStatePayload {
   email?: string;
   admin?: boolean;
   token?: string;
 }
 
-export type TUserPayload = IActionPayload<IAppUserStatePayload>;
+export type TUserPayload = IActionPayload<IUserStatePayload>;
 
 export interface IUserObservableOutput {
-  model$: Observable<AppUserStateModel>;
+  model$: Observable<IUserState>;
   email$: Observable<string>;
   token$: Observable<string>;
   admin$: Observable<boolean>;
@@ -35,5 +33,5 @@ export interface IUserObservableOutput {
 }
 
 export interface IUserHandlers {
-  setState(payload: IAppUserStatePayload): void;
+  setState(payload: IUserStatePayload): void;
 }
