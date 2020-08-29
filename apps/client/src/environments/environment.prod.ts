@@ -16,5 +16,5 @@ export const environment: IWebClientAppEnvironment = {
       : window.location.origin.includes('localhost')
       ? 'http://localhost:8080/api'
       : `${window.location.origin}/api`,
-  envoyUrl: 'http://localhost:51051', // TODO
+  envoyUrl: 'http://localhost:8082', // TODO
 };

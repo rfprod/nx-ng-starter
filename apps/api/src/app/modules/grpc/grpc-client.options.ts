@@ -12,7 +12,7 @@ const protoPaths: () => string[] = () => {
   return !Boolean(environment.firebase) ? [...localProtoPath] : [...functionsProtoPath];
 };
 
-const rpcUrl = '0.0.0.0:50051';
+const rpcUrl = '0.0.0.0:15001';
 
 /**
  * Grpc client options.

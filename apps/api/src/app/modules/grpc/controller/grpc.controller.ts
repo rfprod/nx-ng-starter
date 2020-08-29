@@ -65,13 +65,16 @@ export class ApiGrpcController implements OnModuleInit {
         );
   }
 
-  @GrpcMethod('EntityService')
-  public findOne(data: nxngstarter.IEntityById): nxngstarter.IEntity | undefined {
+  @GrpcMethod('EntityService', 'FindOne')
+  public findOne(data: nxngstarter.IEntityById, metadata: any): nxngstarter.IEntity | undefined {
     return this.items.find(({ id }) => id === data.id);
   }
 
-  @GrpcStreamMethod('EntityService')
-  public findMany(data$: Observable<nxngstarter.IEntityById>): Observable<nxngstarter.IEntity> {
+  @GrpcStreamMethod('EntityService', 'FindMany')
+  public findMany(
+    data$: Observable<nxngstarter.IEntityById>,
+    metadata: any,
+  ): Observable<nxngstarter.IEntity> {
     const entity$ = new Subject<nxngstarter.IEntity>();
 
     const onNext = (entityById: nxngstarter.IEntityById) => {
