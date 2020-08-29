@@ -3,8 +3,8 @@ version: '3.5'
 services:
   envoy:
     container_name: envoy
-    image: envoyproxy/envoy-alpine:v1.13.1
+    image: envoyproxy/envoy-alpine:v1.15.0
     volumes:
-      - ./envoy/envoy.yaml:/etc/envoy/envoy.yaml
+      - ./envoy/envoy.yaml:/etc/envoy/envoy.local.yaml
     ports:
-      - 8080:8080
+      - 8082:8082

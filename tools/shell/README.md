@@ -7,7 +7,6 @@ This folder contains utility shell scripts.
 - `build-mobile.sh` - mobile application building script
 - `changelog.sh` - apps/libs changelog generation script
 - `colors.sh` - color definitions for usage with `printf` command for comprehensiveness
-- `docker.sh` - docker images building script
 - `document.sh` - apps/libs documentation generation script
 - `e2e.sh` - apps e2e testing script
 - `firebase-deploy.sh` - firebase deployment script
