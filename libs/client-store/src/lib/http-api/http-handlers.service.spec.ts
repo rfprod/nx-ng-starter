@@ -1,6 +1,7 @@
 import { HttpErrorResponse, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { async, TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { Store } from '@ngxs/store';
 import { AppClientServicesModule, AppToasterService } from '@nx-ng-starter/client-services';
 import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
 import { HTTP_STATUS } from '@nx-ng-starter/client-util';
@@ -13,9 +14,9 @@ import { Apollo } from 'apollo-angular';
 import { ExecutionResult, GraphQLError } from 'graphql';
 import { cold, getTestScheduler } from 'jasmine-marbles';
 import { Observable, of } from 'rxjs';
+import { concatMap, map, tap } from 'rxjs/operators';
 
 import { AppHttpProgressModule } from '../http-progress/http-progress.module';
-import { AppUserService } from '../user/user.service';
 import { AppHttpHandlersService } from './http-handlers.service';
 
 describe('AppHttpHandlersService', () => {
@@ -33,12 +34,10 @@ describe('AppHttpHandlersService', () => {
   let httpTestingController: HttpTestingController;
   let localStorage: AppLocalStorageMock;
   let toaster: AppToasterService;
-  let user: AppUserService;
+  let store: Store;
   let spy: {
-    user: {
-      handlers: {
-        setState: jest.SpyInstance;
-      };
+    store: {
+      dispatch: jest.SpyInstance;
     };
     service: {
       checkErrorStatusAndRedirect: jest.SpyInstance;
@@ -56,12 +55,10 @@ describe('AppHttpHandlersService', () => {
         toaster = TestBed.inject(AppToasterService);
         httpTestingController = TestBed.inject(HttpTestingController);
         apollo = TestBed.inject(Apollo);
-        user = TestBed.inject(AppUserService);
+        store = TestBed.inject(Store);
         spy = {
-          user: {
-            handlers: {
-              setState: jest.spyOn(user.handlers, 'setState'),
-            },
+          store: {
+            dispatch: jest.spyOn(store, 'dispatch'),
           },
           service: {
             checkErrorStatusAndRedirect: jest.spyOn(service, 'checkErrorStatusAndRedirect'),
@@ -141,9 +138,9 @@ describe('AppHttpHandlersService', () => {
 
   it('checkErrorStatusAndRedirect should reset user if error status is 401', () => {
     service.checkErrorStatusAndRedirect(HTTP_STATUS.BAD_REQUEST);
-    expect(spy.user.handlers.setState).not.toHaveBeenCalledWith({ token: '' });
+    expect(spy.store.dispatch).not.toHaveBeenCalled();
     service.checkErrorStatusAndRedirect(HTTP_STATUS.UNAUTHORIZED);
-    expect(spy.user.handlers.setState).toHaveBeenCalledWith({ token: '' });
+    expect(spy.store.dispatch).toHaveBeenCalled();
   });
 
   describe('handleError', () => {
@@ -189,18 +186,25 @@ describe('AppHttpHandlersService', () => {
     });
   });
 
-  it('graphQLHttpHeaders should return new http headers with authorization header set', () => {
-    const newHeadersObj: {
-      [name: string]: string | string[];
-    } = {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      Authorization: `Token ${service.userToken}`,
-    };
-    const newHeaders: HttpHeaders = new HttpHeaders(newHeadersObj);
-    expect(service.getGraphQLHttpHeaders().get('Authorization')).toEqual(
-      newHeaders.get('Authorization'),
-    );
-  });
+  it('graphQLHttpHeaders should return new http headers with authorization header set', async(() => {
+    void service.userToken$
+      .pipe(
+        concatMap(userToken => {
+          const newHeadersObj: {
+            [name: string]: string | string[];
+          } = {
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            Authorization: `Token ${userToken}`,
+          };
+          const newHeaders: HttpHeaders = new HttpHeaders(newHeadersObj);
+          return service.getGraphQLHttpHeaders().pipe(map(headers => ({ headers, newHeaders })));
+        }),
+        tap(({ headers, newHeaders }) => {
+          expect(headers.get('Authorization')).toEqual(newHeaders.get('Authorization'));
+        }),
+      )
+      .subscribe();
+  }));
 
   it('pipeHttpResponse should work correctly', () => {
     const observable = of({ data: {} });

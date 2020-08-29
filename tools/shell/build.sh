@@ -34,14 +34,14 @@ reportUsage() {
 # Generates compodoc documentation.
 ##
 generateCompodocs() {
-  npm run document:all:generate-and-report-to-dist
+  npm run generate:documentation:dist
 }
 
 ##
 # Generates changelog and reports to dist.
 ##
 generateChangelogs() {
-  npm run changelog:all:generate
+  npm run generate:changelog
 }
 
 ##
@@ -55,7 +55,7 @@ generateEnd2EndReports() {
 # Generates unit test reports and reports to dist.
 ##
 generateUnitTestReports() {
-  npm run test:all:single-run-and-report-to-dist
+  npm run test:report
 }
 
 ##

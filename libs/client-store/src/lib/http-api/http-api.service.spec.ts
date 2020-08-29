@@ -12,7 +12,6 @@ import {
   httpProgressModuleProviders,
 } from '../http-progress/http-progress.module';
 import { AppUserService } from '../user/user.service';
-import { httpApiModuleProviders } from './http-api.module';
 import { AppHttpApiService } from './http-api.service';
 import { AppHttpHandlersService } from './http-handlers.service';
 
@@ -23,7 +22,7 @@ describe('AppHttpApiService', () => {
       AppHttpProgressModule.forRoot(),
       AppClientServicesModule.forRoot(),
     ],
-    providers: [...httpProgressModuleProviders, ...httpApiModuleProviders],
+    providers: [...httpProgressModuleProviders],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 

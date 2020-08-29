@@ -618,6 +618,35 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "configurations": {
+            "analyze-bundle": {
+              "aot": true,
+              "budgets": [
+                {
+                  "maximumError": "5mb",
+                  "maximumWarning": "2mb",
+                  "type": "initial"
+                },
+                {
+                  "maximumError": "10kb",
+                  "maximumWarning": "6kb",
+                  "type": "anyComponentStyle"
+                }
+              ],
+              "buildOptimizer": true,
+              "extractCss": true,
+              "extractLicenses": true,
+              "fileReplacements": [
+                {
+                  "replace": "apps/documentation/src/environments/environment.ts",
+                  "with": "apps/documentation/src/environments/environment.prod.ts"
+                }
+              ],
+              "namedChunks": true,
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": true,
+              "vendorChunk": true
+            },
             "production": {
               "budgets": [
                 {
