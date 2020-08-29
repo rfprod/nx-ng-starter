@@ -1,7 +1,8 @@
+import { StateToken } from '@ngxs/store';
 import { IActionPayload } from '@nx-ng-starter/client-util';
 import { MonoTypeOperatorFunction, Observable } from 'rxjs';
 
-export interface IAppHttpProgressStateModel {
+export interface IAppHttpProgressState {
   mainView: boolean;
 }
 
@@ -9,10 +10,16 @@ export interface IAppHttpProgressStatePayload {
   mainView?: boolean;
 }
 
+export const httpProgressInitialState = {
+  mainView: false,
+};
+
+export const HTTP_PROGRESS_STATE = new StateToken<IAppHttpProgressState>('HTTP_PROGRESS_STATE');
+
 export type THttpProgressPayload = IActionPayload<IAppHttpProgressStatePayload>;
 
 export interface IHttpProgressObservableOutput {
-  all$: Observable<IAppHttpProgressStateModel>;
+  all$: Observable<IAppHttpProgressState>;
   mainView$: Observable<boolean>;
 }
 

@@ -10,11 +10,23 @@ export function flushHttpRequests<T>(
   httpController: HttpTestingController,
   verify = false,
   matcher: THttpRequestMatcher<T> = (req: HttpRequest<T>): boolean => true,
-  responseData: Record<string, unknown> = {},
+  responseData:
+    | string
+    | number
+    | Record<string, unknown>
+    | ArrayBuffer
+    | Blob
+    | (string | number | Record<string, unknown> | null)[]
+    | null = {},
+  produceError = false,
 ): void {
-  httpController
-    .match(matcher)
-    .forEach((req: TestRequest) => (!req.cancelled ? req.flush(responseData) : null));
+  httpController.match(matcher).forEach((req: TestRequest) => {
+    return !req.cancelled
+      ? produceError
+        ? req.error(new ErrorEvent('error', { error: responseData }))
+        : req.flush(responseData)
+      : null;
+  });
   if (verify) {
     httpController.verify();
   }

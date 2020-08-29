@@ -10,11 +10,7 @@ import { NgxsModule } from '@ngxs/store';
 import { AppClientCoreModule } from '@nx-ng-starter/client-core';
 import { AppClientGqlModule } from '@nx-ng-starter/client-gql';
 import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
-import {
-  AppClientStoreModule,
-  AppWebsocketModule,
-  httpProgressServiceProvider,
-} from '@nx-ng-starter/client-store';
+import { AppClientStoreModule, AppWebsocketModule } from '@nx-ng-starter/client-store';
 import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
 import { EntityServiceClient } from '@nx-ng-starter/proto';
 
@@ -54,7 +50,7 @@ export const grpcProviders: Provider[] = [
     AppClientStoreModule,
     AppRoutingModule,
   ],
-  providers: [...grpcProviders, httpProgressServiceProvider],
+  providers: [...grpcProviders],
   declarations: [AppRootComponent, AppContentComponent, AppNavbarComponent, AppToolbarComponent],
   bootstrap: [AppRootComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

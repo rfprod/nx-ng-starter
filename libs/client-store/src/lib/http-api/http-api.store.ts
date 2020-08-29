@@ -1,39 +1,55 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { actionPayloadConstructor } from '@nx-ng-starter/client-util';
+import { tap } from 'rxjs/operators';
 
-import { IAppHttpApiStateModel, THttpApiPayload } from './http-api.interface';
+import {
+  HTTP_API_STATE,
+  httpApiInitialState,
+  IAppHttpApiState,
+  IAppHttpApiStatePayload,
+  THttpApiPayload,
+} from './http-api.interface';
+import { AppHttpApiService } from './http-api.service';
 
-const createAction = actionPayloadConstructor('HttpApi');
+const createAction = actionPayloadConstructor(HTTP_API_STATE.getName());
 const ping = createAction<THttpApiPayload>('ping');
 
-@State<IAppHttpApiStateModel>({
-  name: 'httpAPI',
+export const httpApiActions = {
+  ping,
+};
+
+@State<IAppHttpApiState>({
+  name: HTTP_API_STATE,
   defaults: {
-    ping: '',
+    ...httpApiInitialState,
   },
 })
 @Injectable({
   providedIn: 'root',
 })
-class AppHttpApiState {
+export class AppHttpApiState {
+  constructor(private readonly api: AppHttpApiService) {}
+
   @Selector()
-  public static allData(state: IAppHttpApiStateModel) {
+  public static allData(state: IAppHttpApiState) {
     return state;
   }
 
   @Selector()
-  public static ping(state: IAppHttpApiStateModel) {
+  public static ping(state: IAppHttpApiState) {
     return state.ping;
   }
 
   @Action(ping)
-  public ping(ctx: StateContext<IAppHttpApiStateModel>, { payload }: THttpApiPayload) {
-    return ctx.patchState(payload);
+  public ping(ctx: StateContext<IAppHttpApiState>, { payload }: THttpApiPayload) {
+    return this.api.ping().pipe(
+      tap(result => {
+        const pingPayload: IAppHttpApiStatePayload = {
+          ping: result.message,
+        };
+        ctx.patchState(pingPayload);
+      }),
+    );
   }
 }
-
-const httpApiActions = {
-  ping,
-};
-export { AppHttpApiState, httpApiActions };

@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+import { StateToken } from '@ngxs/store';
 import { IActionPayload } from '@nx-ng-starter/client-util';
 import { Observable } from 'rxjs';
 import { WebSocketSubjectConfig } from 'rxjs/webSocket';
@@ -16,6 +17,13 @@ export interface IAppWebsocketStateModel {
   users: number;
   events: IWebsocketResponseEvent[];
 }
+
+export const websocketInitialState = {
+  users: 0,
+  events: [],
+};
+
+export const WEBSOCKET_STATE = new StateToken<IAppWebsocketStateModel>('WEBSOCKET_STATE');
 
 export interface IAppWebsocketStatePayload {
   users?: number;

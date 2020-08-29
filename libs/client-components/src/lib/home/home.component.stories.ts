@@ -10,7 +10,6 @@ import {
   AppWebsocketModule,
 } from '@nx-ng-starter/client-store';
 import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
-
 import { AppHomeComponent } from './home.component';
 
 export default {

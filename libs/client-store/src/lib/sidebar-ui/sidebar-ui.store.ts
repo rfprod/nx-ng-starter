@@ -2,42 +2,42 @@ import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { actionPayloadConstructor } from '@nx-ng-starter/client-util';
 
-import { ISiedbarUiStateModel, TSidebarUiPayload } from './sidebar-ui.interface';
+import {
+  ISiedbarUiState,
+  SIDEBAR_STATE,
+  sidebarUiInitialState,
+  TSidebarUiPayload,
+} from './sidebar-ui.interface';
 
-const createAction = actionPayloadConstructor('SidebarUI');
-const setAppSidebarUiState = createAction<TSidebarUiPayload>('Set Sidebar UI state');
+const createAction = actionPayloadConstructor(SIDEBAR_STATE.getName());
+const setState = createAction<TSidebarUiPayload>('set state');
 
-const sidebarUiActions = {
-  setAppSidebarUiState,
+export const sidebarUiActions = {
+  setState,
 };
 
-@State<ISiedbarUiStateModel>({
-  name: 'sidebarUi',
+@State<ISiedbarUiState>({
+  name: SIDEBAR_STATE,
   defaults: {
-    sidebarOpened: false,
+    ...sidebarUiInitialState,
   },
 })
 @Injectable({
   providedIn: 'root',
 })
-class AppSidebarUiState {
+export class AppSidebarUiState {
   @Selector()
-  public static getSidebarUi(state: ISiedbarUiStateModel) {
+  public static getSidebarUi(state: ISiedbarUiState) {
     return state;
   }
 
   @Selector()
-  public static getSidebarOpened(state: ISiedbarUiStateModel) {
+  public static getSidebarOpened(state: ISiedbarUiState) {
     return state.sidebarOpened;
   }
 
-  @Action(setAppSidebarUiState)
-  public setAppSidebarUiState(
-    ctx: StateContext<ISiedbarUiStateModel>,
-    { payload }: TSidebarUiPayload,
-  ) {
+  @Action(setState)
+  public setState(ctx: StateContext<ISiedbarUiState>, { payload }: TSidebarUiPayload) {
     return ctx.patchState(payload);
   }
 }
-
-export { AppSidebarUiState, sidebarUiActions };

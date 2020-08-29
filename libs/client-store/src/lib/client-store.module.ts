@@ -9,7 +9,7 @@ import { AppWebsocketModule } from './websocket/websocket.module';
 @NgModule({
   imports: [
     AppHttpApiModule,
-    AppHttpProgressModule,
+    AppHttpProgressModule.forRoot(),
     AppUserModule,
     AppSidebarUiModule,
     AppWebsocketModule,

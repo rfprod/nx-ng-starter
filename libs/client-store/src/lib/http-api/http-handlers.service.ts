@@ -4,6 +4,7 @@ import { ApolloLink, split } from '@apollo/client/core';
 import { ErrorResponse, onError } from '@apollo/client/link/error';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { TranslateService } from '@ngx-translate/core';
+import { Store } from '@ngxs/store';
 import { AppToasterService } from '@nx-ng-starter/client-services';
 import {
   HTTP_STATUS,
@@ -16,10 +17,11 @@ import { createUploadLink } from 'apollo-upload-client';
 import { ExecutionResult, GraphQLError } from 'graphql';
 import memo from 'memo-decorator';
 import { MonoTypeOperatorFunction, Observable, throwError } from 'rxjs';
-import { catchError, take, tap, timeout } from 'rxjs/operators';
+import { catchError, first, map, take, tap, timeout } from 'rxjs/operators';
 
 import { AppHttpProgressService } from '../http-progress/http-progress.service';
-import { AppUserService } from '../user/user.service';
+import { AppUserState } from '../user';
+import { userActions } from '../user/user.store';
 
 /**
  * Http handers service.
@@ -33,31 +35,17 @@ export class AppHttpHandlersService {
    */
   public readonly defaultHttpTimeout = 10000;
 
-  /**
-   * Current user token value.
-   */
-  public userToken = '';
-
-  /**
-   * User token getter.
-   */
-  public readonly userToken$: Observable<string> = this.user.output.token$.pipe(
-    tap((token: string) => {
-      this.userToken = token;
-    }),
-  );
+  public readonly userToken$: Observable<string> = this.store.select(AppUserState.token);
 
   constructor(
-    public readonly user: AppUserService,
+    public readonly store: Store,
     public readonly toaster: AppToasterService,
     public readonly httpLink: HttpLink,
     public readonly httpProgress: AppHttpProgressService,
     public readonly translate: TranslateService,
     @Inject(WINDOW) public readonly win: Window,
     @Inject(WEB_CLIENT_APP_ENV) public readonly env: IWebClientAppEnvironment,
-  ) {
-    void this.userToken$.subscribe();
-  }
+  ) {}
 
   /**
    * Resolves if app is running on localhost.
@@ -77,11 +65,16 @@ export class AppHttpHandlersService {
   /**
    * Returns new http headers for GraphQL.
    */
-  public getGraphQLHttpHeaders(): HttpHeaders {
-    return new HttpHeaders({
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      Authorization: `Token ${this.userToken}`,
-    });
+  public getGraphQLHttpHeaders() {
+    return this.userToken$.pipe(
+      first(),
+      map(token => {
+        return new HttpHeaders({
+          // eslint-disable-next-line @typescript-eslint/naming-convention
+          Authorization: `Token ${token}`,
+        });
+      }),
+    );
   }
 
   /**
@@ -130,17 +123,22 @@ export class AppHttpHandlersService {
   }
 
   private getGraphqlNetworkLink(httpLinkHandler: HttpLinkHandler, uri: string) {
-    return split(
-      ({ query }) => {
-        const { name } = getMainDefinition(query);
-        return !Boolean(name);
-      },
-      httpLinkHandler,
-      (createUploadLink({
-        uri,
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        headers: { Authorization: `Token ${this.userToken}` },
-      }) as unknown) as ApolloLink,
+    return this.userToken$.pipe(
+      first(),
+      map(token => {
+        return split(
+          ({ query }) => {
+            const { name } = getMainDefinition(query);
+            return !Boolean(name);
+          },
+          httpLinkHandler,
+          (createUploadLink({
+            uri,
+            // eslint-disable-next-line @typescript-eslint/naming-convention
+            headers: { Authorization: `Token ${token}` },
+          }) as unknown) as ApolloLink,
+        );
+      }),
     );
   }
 
@@ -209,12 +207,12 @@ export class AppHttpHandlersService {
    * Creates apollo link with error handler.
    * @param errorLinkHandler custom error handler
    */
-  public createApolloLinkFor(errorLinkHandler?: ApolloLink): ApolloLink {
+  public createApolloLinkFor(errorLinkHandler?: ApolloLink) {
     const uri = this.graphQlEndpoint();
     const httpLinkHandler = this.httpLink.create({ uri });
-    const networkLink = this.getGraphqlNetworkLink(httpLinkHandler, uri);
     const linkHandler: ApolloLink = this.getErroLinkHandler(errorLinkHandler);
-    return linkHandler.concat(networkLink);
+    const networkLinkObs = this.getGraphqlNetworkLink(httpLinkHandler, uri);
+    return networkLinkObs.pipe(map(networkLink => linkHandler.concat(networkLink)));
   }
 
   /**
@@ -246,7 +244,7 @@ export class AppHttpHandlersService {
    */
   public checkErrorStatusAndRedirect(status: HTTP_STATUS): void {
     if (status === HTTP_STATUS.UNAUTHORIZED) {
-      this.user.handlers.setState({ token: '' });
+      void this.store.dispatch(new userActions.setState({ token: '' })).subscribe();
     }
   }
 

@@ -1,3 +1,4 @@
+import { StateToken } from '@ngxs/store';
 import { IActionPayload } from '@nx-ng-starter/client-util';
 import { Observable } from 'rxjs';
 
@@ -5,7 +6,7 @@ export interface IPingResponse {
   message: string;
 }
 
-export interface IAppHttpApiStateModel {
+export interface IAppHttpApiState {
   ping: string;
 }
 
@@ -13,22 +14,15 @@ export interface IAppHttpApiStatePayload {
   ping?: string;
 }
 
-export type THttpApiPayload = IActionPayload<IAppHttpApiStatePayload>;
+export const httpApiInitialState = {
+  ping: '',
+};
 
-export interface IHttpApiObservableOutput {
-  all$: Observable<IAppHttpApiStateModel>;
-  ping$: Observable<string>;
-}
+export const HTTP_API_STATE = new StateToken<IAppHttpApiState>('HTTP_API_STATE');
+
+export type THttpApiPayload = IActionPayload<IAppHttpApiStatePayload>;
 
 export interface IHttpApiHandlersActions {
   cached(): Observable<string>;
   request(): Observable<IPingResponse | string>;
-}
-
-export interface IHttpApiHandlers {
-  ping: IHttpApiHandlersActions;
-}
-
-export interface IHttpApiInterface {
-  ping(): Observable<IPingResponse | string>;
 }

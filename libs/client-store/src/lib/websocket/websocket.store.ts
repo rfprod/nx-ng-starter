@@ -2,20 +2,24 @@ import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { actionPayloadConstructor } from '@nx-ng-starter/client-util';
 
-import { IAppWebsocketStateModel, TWebsocketPayload } from './websocket.interface';
+import {
+  IAppWebsocketStateModel,
+  TWebsocketPayload,
+  WEBSOCKET_STATE,
+  websocketInitialState,
+} from './websocket.interface';
 
-const createAction = actionPayloadConstructor('Websocket');
-const setState = createAction<TWebsocketPayload>('Set state');
+const createAction = actionPayloadConstructor(WEBSOCKET_STATE.getName());
+const setState = createAction<TWebsocketPayload>('set state');
 
 export const websocketActions = {
   setState,
 };
 
 @State<IAppWebsocketStateModel>({
-  name: 'websocket',
+  name: WEBSOCKET_STATE,
   defaults: {
-    users: 0,
-    events: [],
+    ...websocketInitialState,
   },
 })
 @Injectable({

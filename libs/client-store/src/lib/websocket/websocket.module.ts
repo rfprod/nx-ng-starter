@@ -1,16 +1,9 @@
-import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { NgxsModule } from '@ngxs/store';
 import { IWebClientAppEnvironment } from '@nx-ng-starter/client-util';
 
-import { websocketApiServiceProvider } from './websocket-api.service';
 import { WS_CONFIG } from './websocket.interface';
-import { websocketServiceProvider } from './websocket.service';
 import { AppWebsocketState } from './websocket.store';
-
-export const websocketModuleProviders: Provider[] = [
-  websocketApiServiceProvider,
-  websocketServiceProvider,
-];
 
 @NgModule({
   imports: [NgxsModule.forFeature([AppWebsocketState])],
