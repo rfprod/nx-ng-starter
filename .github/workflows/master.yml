@@ -72,7 +72,7 @@ jobs:
         run: yarn build:all:prod
 
       - name: Deploy client app
-        run: bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" app:client || exit 1
+        run: bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" client || exit 1
         env:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
 
@@ -80,6 +80,6 @@ jobs:
         run: yarn build:documentation:prod
 
       - name: Deploy documentation app
-        run: bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" app:documentation || exit 1
+        run: bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" documentation || exit 1
         env:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}

@@ -1,3 +1,8 @@
+#!/bin/bash
+
+##
+# Colors.
+##
 source tools/shell/colors.sh
 
 set -uo pipefail
@@ -37,7 +42,7 @@ cmd() {
   printf "${DEFAULT}\n" >&2
   eval "$@"
   local rc=$?
-  if (( rc )); then
+  if ((rc)); then
     error "%s " "process exited with status ${rc}:" "$@"
   fi
 }

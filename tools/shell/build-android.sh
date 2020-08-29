@@ -1,6 +1,7 @@
 #!/bin/bash
 
-cd "$(dirname "${BASH_SOURCE[0]}")/../.."
+cd "$(dirname "${BASH_SOURCE[0]}")/../.." || exit
+
 source tools/shell/common.sh
 
 if [[ -f ./tools/shell/vars.sh ]]; then
@@ -45,7 +46,6 @@ fi
 BUILD_APK='app/build/outputs/apk/release/app-release-unsigned.apk'
 UNSIGNED_APK='build/release-unsigned.apk'
 SIGNED_APK='build/release-signed.apk'
-
 
 log 'building web code...'
 cmd npx nx affected:build --prod

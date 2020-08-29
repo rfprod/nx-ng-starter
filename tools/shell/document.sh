@@ -156,7 +156,7 @@ documentModule() {
     local CONFIG_PATH=${PROJECT_ROOT}/${MODULE_PARTIAL_PATH}/tsconfig.json
     checkConfigPathAndProceed "$CONFIG_PATH" "$DOCUMENTATION_DIST_PATH" "$OPTIONAL_ACTION"
   elif [[ "$MODULE_ALIAS" = "all" && "$OPTIONAL_ACTION" != "serve" ]]; then
-    for MODULE_ALIAS_VAR in "${MODULE_ALIAS_VARS[@]}"; do documentModule "$MODULE_ALIAS_VAR" "$OPTIONAL_ACTION"; done
+    for MODULE_ALIAS_VAR in "${EXISTING_MODULE_ALIASES[@]}"; do documentModule "$MODULE_ALIAS_VAR" "$OPTIONAL_ACTION"; done
   else
     reportUsageErrorAndExit
   fi

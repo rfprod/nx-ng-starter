@@ -136,11 +136,11 @@ deployAll() {
 if [ $# -lt 1 ]; then
   reportUsageError
 elif [ $# -ge 2 ]; then
-  if [ "$2" = "$MODULE_ALIAS_APP_CLIENT" ]; then
+  if [ "$2" = "client" ]; then
     deployClientApp "$1"
-  elif [ "$2" = "$MODULE_ALIAS_APP_DOCUMENTATION" ]; then
+  elif [ "$2" = "documentation" ]; then
     deployDocumentationApp "$1"
-  elif [ "$2" = "$MODULE_ALIAS_APP_API" ]; then
+  elif [ "$2" = "api" ]; then
     deployApiApp "$1"
   else
     deployAll "$1"
