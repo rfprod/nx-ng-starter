@@ -54,7 +54,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install global dependencies
-        run: npm i -g typescript @angular/cli @nrwl/cli firebase-tools
+        run: npm i -g typescript @angular/cli @nrwl/cli firebase-tools @compodoc/compodoc
 
       - name: Install project dependencies
         run: yarn install --frozen-lockfile
