@@ -76,6 +76,9 @@ jobs:
         env:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
 
+      - name: Install Cypress
+        run: npx cypress install
+
       - name: Build documentation
         run: yarn build:documentation:prod
 
