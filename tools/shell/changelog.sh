@@ -270,7 +270,7 @@ if [ $# -lt 1 ]; then
   reportUsageErrorAndExit
 else
   # Remove previously generated changelogs.
-  rm -rf ./changelog
+  rm -rf ./changelog/*
   checkChangelogDirectoriesExistence
   generateModuleChangelog "$1"
   copyReportToDist
