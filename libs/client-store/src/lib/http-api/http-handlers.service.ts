@@ -93,7 +93,7 @@ export class AppHttpHandlersService {
    * @param observable request observable
    * @param listenX number of responses to catch
    */
-  public pipeHttpResponse<T>(observable: Observable<T>, listenX = 1): Observable<T> {
+  public pipeHttpResponse<T>(observable: Observable<T>, listenX = 1) {
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
       this.tapProgress<T>(true),
@@ -108,11 +108,7 @@ export class AppHttpHandlersService {
    * @param listenX number of responses to catch
    * @param withprogress should request start progress
    */
-  public pipeGraphQLRequest<T>(
-    observable: Observable<T>,
-    listenX = 1,
-    withprogress = true,
-  ): Observable<T> {
+  public pipeGraphQLRequest<T>(observable: Observable<T>, listenX = 1, withprogress = true) {
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
       this.tapProgress<T>(withprogress),
@@ -281,7 +277,7 @@ export class AppHttpHandlersService {
    * @param withProgress indicates whether progress should be shown
    */
   public tapProgress<T>(widhProgress: boolean): MonoTypeOperatorFunction<T> {
-    let handler: () => MonoTypeOperatorFunction<T> = <T>() =>
+    let handler: () => MonoTypeOperatorFunction<T> = () =>
       tap<T>(
         () => void 0,
         () => void 0,
