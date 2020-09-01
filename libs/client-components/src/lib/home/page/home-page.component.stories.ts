@@ -1,6 +1,7 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppClientCoreModule } from '@nx-ng-starter/client-core';
 import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
+
 import { AppHomePage } from './home-page.component';
 
 export default {

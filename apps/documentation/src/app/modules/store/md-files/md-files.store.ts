@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Selector, State, Action, StateContext } from '@ngxs/store';
-import { IMdFilesState, TSelectMdFilePayload } from './md-files.interface';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { actionPayloadConstructor } from '@nx-ng-starter/client-util';
+
+import { IMdFilesState, TSelectMdFilePayload } from './md-files.interface';
 
 const createAction = actionPayloadConstructor('MdFiles');
 const setState = createAction<TSelectMdFilePayload>('set state');
-
 
 @State<IMdFilesState>({
   name: 'mdFiles',
@@ -17,7 +17,7 @@ const setState = createAction<TSelectMdFilePayload>('set state');
 @Injectable({
   providedIn: 'root',
 })
-export class MdFilesState {
+export class AppMdFilesState {
   @Selector()
   public static state(state: IMdFilesState) {
     return state;
@@ -40,5 +40,5 @@ export class MdFilesState {
 }
 
 export const mdFilesActions = {
-  setState
+  setState,
 };
