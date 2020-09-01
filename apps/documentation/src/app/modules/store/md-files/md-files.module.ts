@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { NgxsModule } from '@ngxs/store';
-import { MdFilesState } from './md-files.store';
+
+import { AppMdFilesState } from './md-files.store';
 
 @NgModule({
-  imports: [NgxsModule.forFeature([MdFilesState])],
+  imports: [NgxsModule.forFeature([AppMdFilesState])],
 })
-export class MdFilesModule {}
+export class AppMdFilesModule {}

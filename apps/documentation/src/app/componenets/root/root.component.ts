@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+
 import { DOC_APP_ENV, IDocAppEnvironment } from '../../interfaces/environment.interface';
 
 @Component({
-  selector: 'documentation-root',
+  selector: 'app-documentation-root',
   templateUrl: './root.component.html',
   styleUrls: ['./root.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

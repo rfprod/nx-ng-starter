@@ -50,7 +50,7 @@
           "options": {
             "eslintConfig": "apps/api/.eslintrc",
             "exclude": ["**/node_modules/**", "!apps/api/**/*.ts"],
-            "tsConfig": ["apps/api/tsconfig.app.json", "apps/api/tsconfig.spec.json"]
+            "lintFilePatterns": ["apps/api/**/*.ts"]
           }
         },
         "serve": {
@@ -98,10 +98,7 @@
           "options": {
             "eslintConfig": "libs/api-interface/.eslintrc",
             "exclude": ["**/node_modules/**", "!libs/api-interface/**/*.ts"],
-            "tsConfig": [
-              "libs/api-interface/tsconfig.lib.json",
-              "libs/api-interface/tsconfig.spec.json"
-            ]
+            "lintFilePatterns": ["libs/api-interface/**/*.ts"]
           }
         },
         "test": {
@@ -231,7 +228,7 @@
           "options": {
             "eslintConfig": "apps/client/.eslintrc",
             "exclude": ["**/node_modules/**", "!apps/client/**/*.ts"],
-            "tsConfig": ["apps/client/tsconfig.app.json", "apps/client/tsconfig.spec.json"]
+            "lintFilePatterns": ["apps/client/**/*.ts"]
           }
         },
         "serve": {
@@ -302,10 +299,7 @@
           "options": {
             "eslintConfig": "libs/client-components/.eslintrc",
             "exclude": ["**/node_modules/**", "!libs/client-components/**/*.ts"],
-            "tsConfig": [
-              "libs/client-components/tsconfig.lib.json",
-              "libs/client-components/tsconfig.spec.json"
-            ]
+            "lintFilePatterns": ["libs/client-components/**/*.ts"]
           }
         },
         "storybook": {
@@ -361,7 +355,7 @@
           "options": {
             "eslintConfig": "apps/client-components-e2e/.eslintrc",
             "exclude": ["**/node_modules/**", "!apps/client-components-e2e/**/*"],
-            "tsConfig": ["apps/client-components-e2e/tsconfig.e2e.json"]
+            "lintFilePatterns": ["apps/client-components-e2e/**/*.ts"]
           }
         }
       },
@@ -376,10 +370,7 @@
           "options": {
             "eslintConfig": "libs/client-core/.eslintrc",
             "exclude": ["**/node_modules/**", "!libs/client-core/**/*.ts"],
-            "tsConfig": [
-              "libs/client-core/tsconfig.lib.json",
-              "libs/client-core/tsconfig.spec.json"
-            ]
+            "lintFilePatterns": ["libs/client-core/**/*.ts"]
           }
         },
         "test": {
@@ -420,7 +411,7 @@
           "options": {
             "eslintConfig": "apps/client-e2e/.eslintrc",
             "exclude": ["**/node_modules/**", "!apps/client-e2e/**/*.ts"],
-            "tsConfig": "apps/client-e2e/tsconfig.e2e.json"
+            "lintFilePatterns": ["apps/client-e2e/**/*.ts"]
           }
         }
       },
@@ -435,7 +426,7 @@
           "options": {
             "eslintConfig": "libs/client-gql/.eslintrc",
             "exclude": ["**/node_modules/**", "!libs/client-gql/**/*.ts"],
-            "tsConfig": ["libs/client-gql/tsconfig.lib.json", "libs/client-gql/tsconfig.spec.json"]
+            "lintFilePatterns": ["libs/client-gql/**/*.ts"]
           }
         },
         "test": {
@@ -465,10 +456,7 @@
           "options": {
             "eslintConfig": "libs/client-material/.eslintrc",
             "exclude": ["**/node_modules/**", "!libs/client-material/**/*.ts"],
-            "tsConfig": [
-              "libs/client-material/tsconfig.lib.json",
-              "libs/client-material/tsconfig.spec.json"
-            ]
+            "lintFilePatterns": ["libs/client-material/**/*.ts"]
           }
         },
         "test": {
@@ -496,10 +484,7 @@
           "options": {
             "eslintConfig": "libs/client-services/.eslintrc",
             "exclude": ["**/node_modules/**", "!libs/client-services/**/*.ts"],
-            "tsConfig": [
-              "libs/client-services/tsconfig.lib.json",
-              "libs/client-services/tsconfig.spec.json"
-            ]
+            "lintFilePatterns": ["libs/client-services/**/*.ts"]
           }
         },
         "test": {
@@ -527,10 +512,7 @@
           "options": {
             "eslintConfig": "libs/client-store/.eslintrc",
             "exclude": ["**/node_modules/**", "!libs/client-store/**/*.ts"],
-            "tsConfig": [
-              "libs/client-store/tsconfig.lib.json",
-              "libs/client-store/tsconfig.spec.json"
-            ]
+            "lintFilePatterns": ["libs/client-store/**/*.ts"]
           }
         },
         "test": {
@@ -558,10 +540,7 @@
           "options": {
             "eslintConfig": "libs/client-translate/.eslintrc",
             "exclude": ["**/node_modules/**", "!libs/client-translate/**/*.ts"],
-            "tsConfig": [
-              "libs/client-translate/tsconfig.lib.json",
-              "libs/client-translate/tsconfig.spec.json"
-            ]
+            "lintFilePatterns": ["libs/client-translate/**/*.ts"]
           }
         },
         "test": {
@@ -589,10 +568,7 @@
           "options": {
             "eslintConfig": "libs/client-util/.eslintrc",
             "exclude": ["**/node_modules/**", "!libs/client-util/**/*.ts"],
-            "tsConfig": [
-              "libs/client-util/tsconfig.lib.json",
-              "libs/client-util/tsconfig.spec.json"
-            ]
+            "lintFilePatterns": ["libs/client-util/**/*.ts"]
           }
         },
         "test": {
@@ -743,6 +719,21 @@
             "tsConfig": "apps/documentation/tsconfig.app.json"
           }
         },
+        "build-storybook": {
+          "builder": "@nrwl/storybook:build",
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          },
+          "options": {
+            "config": {
+              "configFolder": "apps/documentation/.storybook"
+            },
+            "outputPath": "dist/storybook/documentation",
+            "uiFramework": "@storybook/angular"
+          }
+        },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
@@ -754,10 +745,7 @@
           "options": {
             "eslintConfig": "apps/documentation/.eslintrc",
             "exclude": ["**/node_modules/**", "!apps/documentation/**/*"],
-            "tsConfig": [
-              "apps/documentation/tsconfig.app.json",
-              "apps/documentation/tsconfig.spec.json"
-            ]
+            "lintFilePatterns": ["apps/documentation/**/*.ts"]
           }
         },
         "serve": {
@@ -769,6 +757,21 @@
           },
           "options": {
             "browserTarget": "documentation:build"
+          }
+        },
+        "storybook": {
+          "builder": "@nrwl/storybook:storybook",
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          },
+          "options": {
+            "config": {
+              "configFolder": "apps/documentation/.storybook"
+            },
+            "port": 4400,
+            "uiFramework": "@storybook/angular"
           }
         },
         "test": {
@@ -809,7 +812,7 @@
           "options": {
             "eslintConfig": "apps/documentation-e2e/.eslintrc",
             "exclude": ["**/node_modules/**", "!apps/documentation-e2e/**/*.ts"],
-            "tsConfig": ["apps/documentation-e2e/tsconfig.e2e.json"]
+            "lintFilePatterns": ["apps/documentation-e2e/**/*.ts"]
           }
         }
       },
@@ -824,7 +827,7 @@
           "options": {
             "eslintConfig": "libs/mocks-core/.eslintrc",
             "exclude": ["**/node_modules/**", "!libs/mocks-core/**/*.ts"],
-            "tsConfig": ["libs/mocks-core/tsconfig.lib.json", "libs/mocks-core/tsconfig.spec.json"]
+            "lintFilePatterns": ["libs/mocks-core/**/*.ts"]
           }
         },
         "test": {
@@ -852,7 +855,7 @@
           "options": {
             "eslintConfig": "libs/proto/.eslintrc",
             "exclude": ["**/node_modules/**", "!libs/proto/**/*.ts"],
-            "tsConfig": ["libs/proto/tsconfig.lib.json", "libs/proto/tsconfig.spec.json"]
+            "lintFilePatterns": ["libs/proto/**/*.ts"]
           }
         },
         "test": {

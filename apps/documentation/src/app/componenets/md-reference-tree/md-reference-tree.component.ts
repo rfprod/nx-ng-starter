@@ -1,9 +1,10 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { Store } from '@ngxs/store';
+
 import { DOC_APP_ENV, IDocAppEnvironment } from '../../interfaces/environment.interface';
 import { mdFilesActions } from '../../modules/store/md-files/md-files.store';
-import { Store } from '@ngxs/store';
 
 /**
  * Nodes data with nested structure.
@@ -16,7 +17,7 @@ interface IMarkdownReferenceNode {
 }
 
 @Component({
-  selector: 'documentation-md-reference-tree',
+  selector: 'app-documentation-md-reference-tree',
   templateUrl: './md-reference-tree.component.html',
   styleUrls: ['./md-reference-tree.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,7 +43,7 @@ export class AppDocMarkdownReferenceTreeComponent {
       ];
       return { name, children } as IMarkdownReferenceNode;
     });
-    this.store.dispatch(new mdFilesActions.setState({ mdFilePaths }));
+    void this.store.dispatch(new mdFilesActions.setState({ mdFilePaths })).subscribe();
     return treeNodes;
   };
 
@@ -57,6 +58,6 @@ export class AppDocMarkdownReferenceTreeComponent {
     typeof node.children !== 'undefined' && node.children.length > 0;
 
   public showReadme(filePath: string): void {
-    this.store.dispatch(new mdFilesActions.setState({ filePath }));
+    void this.store.dispatch(new mdFilesActions.setState({ filePath })).subscribe();
   }
 }

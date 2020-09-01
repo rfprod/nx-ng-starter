@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
-import { MdFilesModule } from './md-files/md-files.module';
+
+import { AppMdFilesModule } from './md-files/md-files.module';
 
 @NgModule({
-  imports: [
-    MdFilesModule
-  ],
+  imports: [AppMdFilesModule],
 })
 export class AppDocStoreModule {}
