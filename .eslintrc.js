@@ -180,6 +180,7 @@ module.exports = {
     ],
     '@typescript-eslint/no-non-null-assertion': 'error',
     '@typescript-eslint/no-for-in-array': 'error',
+    '@typescript-eslint/no-shadow': 'error',
     '@typescript-eslint/no-this-alias': 'error',
     '@typescript-eslint/no-throw-literal': 'error',
     '@typescript-eslint/no-unnecessary-type-arguments': 'error',
@@ -288,7 +289,7 @@ module.exports = {
     'no-return-await': 'error',
     'no-self-compare': 'error',
     'no-sequences': 'error',
-    'no-shadow': 'error',
+    'no-shadow': 'off', // handled by typescript-eslint rule
     'no-shadow-restricted-names': 'error',
     'no-template-curly-in-string': 'error',
     'no-throw-literal': 'off', // handled by typescript-eslint rule
