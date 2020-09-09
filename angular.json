@@ -433,9 +433,7 @@
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/client-gql/jest.config.js",
-            "passWithNoTests": true,
-            "setupFile": "libs/client-gql/src/test-setup.ts",
-            "tsConfig": "libs/client-gql/tsconfig.spec.json"
+            "passWithNoTests": true
           }
         }
       },
