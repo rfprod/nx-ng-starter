@@ -335,6 +335,31 @@
       },
       "sourceRoot": "libs/client-components/src"
     },
+    "tools": {
+      "architect": {
+        "help": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "npx ts-node ./tools/ts/package-commands.ts"
+              }
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "tools/.eslintrc",
+            "exclude": ["**/node_modules/**", "!tools/ts/**/*"],
+            "lintFilePatterns": ["tools/ts/**/*.ts"]
+          }
+        }
+      },
+      "projectType": "application",
+      "root": "tools",
+      "sourceRoot": "tools/src"
+    },
     "client-components-e2e": {
       "architect": {
         "e2e": {
