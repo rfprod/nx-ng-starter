@@ -1,5 +1,7 @@
 import * as fs from 'fs';
 
+import { COLORS } from './colors';
+
 /**
  * @name cwd
  * @constant
@@ -8,12 +10,12 @@ import * as fs from 'fs';
 const cwd = __dirname;
 
 interface IPackageJSON {
-  scripts: Record<string, unknown>;
+  scripts: Record<string, string>;
   husky: {
-    hooks: Record<string, unknown>;
+    hooks: Record<string, string>;
   };
-  dependencies: Record<string, unknown>;
-  devDependencies: Record<string, unknown>;
+  dependencies: Record<string, string>;
+  devDependencies: Record<string, string>;
   engines: {
     node: string;
     npm: string;
@@ -26,7 +28,15 @@ fs.readFile(`${cwd}/../../package.json`, 'utf8', (error, data) => {
   }
   const parsedPackageJSON: IPackageJSON = JSON.parse(data);
   // eslint-disable-next-line no-console
-  console.log('<< WORKSPACE COMMANDS >>');
-  // eslint-disable-next-line no-console
-  console.log(Object.keys(parsedPackageJSON.scripts));
+  console.log(`${COLORS.YELLOW}%s${COLORS.DEFAULT}`, '<< WORKSPACE COMMANDS >>');
+  const scripts = parsedPackageJSON.scripts;
+  const scriptKeys = Object.keys(scripts);
+  for (const key of scriptKeys) {
+    // eslint-disable-next-line no-console
+    console.log(
+      `$ ${COLORS.CYAN}yarn${COLORS.DEFAULT} ${COLORS.CYAN}%s${COLORS.DEFAULT}: ${COLORS.YELLOW}%s${COLORS.DEFAULT}`,
+      `${key}`,
+      `${scripts[key]}`,
+    );
+  }
 });
