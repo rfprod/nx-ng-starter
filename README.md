@@ -236,6 +236,12 @@ npm run dep-graph
 npx nx g @nrwl/angular:storybook-configuration project-name
 ```
 
+### Tools help
+
+```
+ng run tools:help
+```
+
 ### Further help
 
 Visit the [Nx Documentation](https://nx.dev) to learn more.
