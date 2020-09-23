@@ -49,7 +49,6 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "apps/api/.eslintrc",
-            "exclude": ["**/node_modules/**", "!apps/api/**/*.ts"],
             "lintFilePatterns": ["apps/api/**/*.ts"]
           }
         },
@@ -97,7 +96,6 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/api-interface/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/api-interface/**/*.ts"],
             "lintFilePatterns": ["libs/api-interface/**/*.ts"]
           }
         },
@@ -227,7 +225,6 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "apps/client/.eslintrc",
-            "exclude": ["**/node_modules/**", "!apps/client/**/*.ts"],
             "lintFilePatterns": ["apps/client/**/*.ts"]
           }
         },
@@ -298,7 +295,6 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/client-components/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/client-components/**/*.ts"],
             "lintFilePatterns": ["libs/client-components/**/*.ts"]
           }
         },
@@ -351,7 +347,6 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "tools/.eslintrc",
-            "exclude": ["**/node_modules/**", "!tools/ts/**/*"],
             "lintFilePatterns": ["tools/ts/**/*.ts"]
           }
         }
@@ -379,7 +374,6 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "apps/client-components-e2e/.eslintrc",
-            "exclude": ["**/node_modules/**", "!apps/client-components-e2e/**/*"],
             "lintFilePatterns": ["apps/client-components-e2e/**/*.ts"]
           }
         }
@@ -394,7 +388,6 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/client-core/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/client-core/**/*.ts"],
             "lintFilePatterns": ["libs/client-core/**/*.ts"]
           }
         },
@@ -435,7 +428,6 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "apps/client-e2e/.eslintrc",
-            "exclude": ["**/node_modules/**", "!apps/client-e2e/**/*.ts"],
             "lintFilePatterns": ["apps/client-e2e/**/*.ts"]
           }
         }
@@ -450,7 +442,6 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/client-gql/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/client-gql/**/*.ts"],
             "lintFilePatterns": ["libs/client-gql/**/*.ts"]
           }
         },
@@ -478,7 +469,6 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/client-material/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/client-material/**/*.ts"],
             "lintFilePatterns": ["libs/client-material/**/*.ts"]
           }
         },
@@ -506,7 +496,6 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/client-services/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/client-services/**/*.ts"],
             "lintFilePatterns": ["libs/client-services/**/*.ts"]
           }
         },
@@ -534,7 +523,6 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/client-store/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/client-store/**/*.ts"],
             "lintFilePatterns": ["libs/client-store/**/*.ts"]
           }
         },
@@ -562,7 +550,6 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/client-translate/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/client-translate/**/*.ts"],
             "lintFilePatterns": ["libs/client-translate/**/*.ts"]
           }
         },
@@ -590,7 +577,6 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/client-util/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/client-util/**/*.ts"],
             "lintFilePatterns": ["libs/client-util/**/*.ts"]
           }
         },
@@ -767,7 +753,6 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "apps/documentation/.eslintrc",
-            "exclude": ["**/node_modules/**", "!apps/documentation/**/*"],
             "lintFilePatterns": ["apps/documentation/**/*.ts"]
           }
         },
@@ -834,7 +819,6 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "apps/documentation-e2e/.eslintrc",
-            "exclude": ["**/node_modules/**", "!apps/documentation-e2e/**/*.ts"],
             "lintFilePatterns": ["apps/documentation-e2e/**/*.ts"]
           }
         }
@@ -849,7 +833,6 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/mocks-core/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/mocks-core/**/*.ts"],
             "lintFilePatterns": ["libs/mocks-core/**/*.ts"]
           }
         },
@@ -877,7 +860,6 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/proto/.eslintrc",
-            "exclude": ["**/node_modules/**", "!libs/proto/**/*.ts"],
             "lintFilePatterns": ["libs/proto/**/*.ts"]
           }
         },
