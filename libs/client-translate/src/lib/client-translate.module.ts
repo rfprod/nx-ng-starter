@@ -13,17 +13,10 @@ import { AppTranslationUtilsService } from './services/app-translation-utils.ser
   providers: [...appSharedUiTranslateModuleProviders],
 })
 export class AppClientTranslateModule {
-  /**
-   * Constructor.
-   * @param utils Translation utils service
-   */
   constructor(private readonly utils: AppTranslationUtilsService) {
     this.utils.initialize();
   }
 
-  /**
-   * Provides services.
-   */
   public static forRoot(): ModuleWithProviders<AppClientTranslateModule> {
     return {
       ngModule: AppClientTranslateModule,

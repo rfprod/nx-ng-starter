@@ -1,23 +1,23 @@
 import { async, TestBed } from '@angular/core/testing';
 
 import { IUiDictionary } from '../interfaces';
-import { RU, RU_DICTIONARY } from './ru';
+import { EN, EN_DICTIONARY } from './en';
 
-describe('Russian shared translations', () => {
+describe('English shared translations', () => {
   let dictionary: IUiDictionary;
 
   beforeEach(async(() => {
     void TestBed.configureTestingModule({
       providers: [
         {
-          provide: RU_DICTIONARY,
-          useValue: RU,
+          provide: EN_DICTIONARY,
+          useValue: EN,
         },
       ],
     })
       .compileComponents()
       .then(() => {
-        dictionary = TestBed.inject(RU_DICTIONARY);
+        dictionary = TestBed.inject(EN_DICTIONARY);
       });
   }));
 
