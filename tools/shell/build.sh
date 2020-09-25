@@ -4,30 +4,25 @@
 # Colors.
 ##
 source tools/shell/colors.sh ''
-
 ##
-# Exits with error.
+# Printing utility functions.
 ##
-exitWithError() {
-  exit 1
-}
+source tools/shell/print-utils.sh ''
 
 ##
 # Reports usage error.
 ##
 reportUsage() {
-  local TITLE="<< USAGE >>"
-  printf "
-    ${LIGHT_BLUE}%s\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh${DEFAULT} - print usage
-    ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh dev${DEFAULT} - build all apps in development mode
-    ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh prod${DEFAULT} - build all apps in production mode
-    ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh prod api${DEFAULT} - build API app in production mode
-    ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh prod client${DEFAULT} - build Nx Ng Starter app in production mode
-    ${DEFAULT} - ${YELLOW} bash tools/shell/build.sh prod documentation${DEFAULT} - build Nx Ng Starter documentation app in production mode
-    ${DEFAULT}\n\n" "$TITLE"
+  printInfoTitle "<< USAGE >>"
+  printUsageTip "bash tools/shell/build.sh" "print usage"
+  printUsageTip "bash tools/shell/build.sh dev" "build all apps in development mode"
+  printUsageTip "bash tools/shell/build.sh prod" "build all apps in production mode"
+  printUsageTip "bash tools/shell/build.sh prod api" "build API app in production mode"
+  printUsageTip "bash tools/shell/build.sh prod client" "build client app in production mode"
+  printUsageTip "bash tools/shell/build.sh prod documentation" "build documentation app in production mode"
+  printGap
 
-  exitWithError
+  exit 1
 }
 
 ##
@@ -62,22 +57,20 @@ generateUnitTestReports() {
 # Builds Nx Ng Starter client app in production mode.
 ##
 buildNxNgStarterClientProd() {
-  local TITLE="<< BUILDING Nx Ng Starter client app PRODUCTION mode >>"
-  printf "
-    ${LIGHT_BLUE}%s
-    ${DEFAULT}\n\n" "$TITLE"
-  ng build --project client --configuration production || exitWithError
+  printInfoTitle "<< BUILDING Nx Ng Starter client app PRODUCTION mode >>"
+  printGap
+
+  ng build --project client --configuration production || exit 1
 }
 
 ##
 # Builds Nx Ng Starter documentation app in production mode.
 ##
 buildNxNgStarterDocsProd() {
-  local TITLE="<< BUILDING Nx Ng Starter documentation app PRODUCTION mode >>"
-  printf "
-    ${LIGHT_BLUE}%s
-    ${DEFAULT}\n\n" "$TITLE"
-  ng build --project documentation --configuration production || exitWithError
+  printInfoTitle "<< BUILDING Nx Ng Starter documentation app PRODUCTION mode >>"
+  printGap
+
+  ng build --project documentation --configuration production || exit 1
   generateCompodocs
   generateChangelogs
   generateEnd2EndReports
@@ -88,21 +81,19 @@ buildNxNgStarterDocsProd() {
 # Builds API app in production mode.
 ##
 buildAPIProd() {
-  local TITLE="<< BUILDING API app PRODUCTION mode >>"
-  printf "
-    ${LIGHT_BLUE}%s
-    ${DEFAULT}\n\n" "$TITLE"
-  ng build --project api --configuration firebase || exitWithError
+  printInfoTitle "<< BUILDING API app PRODUCTION mode >>"
+  printGap
+
+  ng build --project api --configuration firebase || exit 1
 }
 
 ##
 # Builds all dists in production mode.
 ##
 buildAllProd() {
-  local TITLE="<< BUILDING ALL apps PRODUCTION mode >>"
-  printf "
-    ${LIGHT_BLUE}%s
-    ${DEFAULT}\n\n" "$TITLE"
+  printInfoTitle "<< BUILDING ALL apps PRODUCTION mode >>"
+  printGap
+
   buildAPIProd
   buildNxNgStarterClientProd
   buildNxNgStarterDocsProd
@@ -112,10 +103,9 @@ buildAllProd() {
 # Builds all dists in production mode.
 ##
 buildAllDev() {
-  local TITLE="<< BUILDING ALL apps DEVELOPMENT mode >>"
-  printf "
-    ${LIGHT_BLUE}%s
-    ${DEFAULT}\n\n" "$TITLE"
+  printInfoTitle "<< BUILDING ALL apps DEVELOPMENT mode >>"
+  printGap
+
   npm run build:all
 }
 

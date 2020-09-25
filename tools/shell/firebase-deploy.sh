@@ -4,40 +4,33 @@
 # Colors.
 ##
 source tools/shell/colors.sh ''
-
 ##
 # Project aliases.
 ##
 source tools/shell/module-aliases.sh ''
-
 ##
-# Exits with error.
+# Printing utility functions.
 ##
-exitWithError() {
-  exit 1
-}
+source tools/shell/print-utils.sh ''
 
 ##
 # Reports usage error.
 ##
 reportUsageError() {
-  local TITLE="<< USAGE >>"
-  printf "
-    ${RED} %s\n
-    ${LIGHT_RED}firebase deploy token must be provided as a first argument.\n
-    ${DEFAULT}# ${LIGHT_GREEN}NX-NG-STARTER app\n
-    ${DEFAULT}- CI environment - ${YELLOW}bash tools/shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN app:client\n
-    ${DEFAULT}- LOCALHOST environment, firebase authentication required - ${YELLOW}bash tools/shell/firebase-deploy.sh localhost app:client\n
-    ${DEFAULT}# ${LIGHT_GREEN}API app\n
-    ${DEFAULT}- CI environment - ${YELLOW}bash tools/shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN app:api\n
-    ${DEFAULT}- LOCALHOST environment, firebase authentication required - ${YELLOW}bash tools/shell/firebase-deploy.sh localhost app:api\n
-    ${DEFAULT}- ${YELLOW}bash tools/shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN localhost app:api\n
-    ${DEFAULT}# ${LIGHT_GREEN}ALL apps\n
-    ${DEFAULT}- CI environment - ${YELLOW}bash tools/shell/firebase-deploy.sh \$FIREBASE_DEPLOY_TOKEN\n
-    ${DEFAULT}- LOCALHOST environment, firebase authentication required - ${YELLOW}bash tools/shell/firebase-deploy.sh localhost\n
-    ${DEFAULT}\n\n" "$TITLE"
+  printInfoTitle "<< USAGE >>"
+  printWarningMessage "firebase deploy token must be provided as a first argument"
+  printInfoMessage "NX-NG-STARTER app"
+  printUsageTip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN app:client" "CI environment"
+  printUsageTip "bash tools/shell/firebase-deploy.sh localhost app:client" "Local environment, firebase authentication required"
+  printInfoMessage "API app"
+  printUsageTip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN app:api" "CI environment"
+  printUsageTip "bash tools/shell/firebase-deploy.sh localhost app:api" "Local environment, firebase authentication required"
+  printInfoMessage "All apps"
+  printUsageTip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN" "CI environment"
+  printUsageTip "bash tools/shell/firebase-deploy.sh localhost" "Local environment, firebase authentication required"
+  printGap
 
-  exitWithError
+  exit 1
 }
 
 ##
@@ -63,11 +56,10 @@ cleanup() {
 # Copies firebase config from application root to project root for deployment.
 ##
 config() {
-  local TITLE="<< CONFIG >>"
-  printf "
-    ${LIGHT_BLUE} %s\n
-    ${DEFAULT} %s
-    ${DEFAULT}" "$TITLE" "$1"
+  printInfoTitle "<< CONFIG >>"
+  printInfoMessage "project directory" "$1"
+  printGap
+
   ##
   # Copy firebase files to project root for deployment.
   # Later both will be removed.
@@ -83,9 +75,9 @@ deployClientApp() {
   config "${PROJECT_DIRECTORIES["client"]}"
 
   if [ "$1" = "localhost" ]; then
-    firebase deploy --only hosting || exitWithError
+    firebase deploy --only hosting || exit 1
   else
-    firebase deploy --only hosting --token "$1" || exitWithError
+    firebase deploy --only hosting --token "$1" || exit 1
   fi
 
   cleanup
@@ -98,9 +90,9 @@ deployDocumentationApp() {
   config "${PROJECT_DIRECTORIES["documentation"]}"
 
   if [ "$1" = "localhost" ]; then
-    firebase deploy --only hosting || exitWithError
+    firebase deploy --only hosting || exit 1
   else
-    firebase deploy --only hosting --token "$1" || exitWithError
+    firebase deploy --only hosting --token "$1" || exit 1
   fi
 
   cleanup
@@ -113,9 +105,9 @@ deployApiApp() {
   config "${PROJECT_DIRECTORIES["api"]}"
 
   if [ "$1" = "localhost" ]; then
-    firebase deploy --only functions || exitWithError
+    firebase deploy --only functions || exit 1
   else
-    firebase deploy --only functions --token "$1" || exitWithError
+    firebase deploy --only functions --token "$1" || exit 1
   fi
 
   cleanup

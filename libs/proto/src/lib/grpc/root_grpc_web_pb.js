@@ -140,7 +140,7 @@ proto.nxngstarter.EntityServiceClient.prototype.findOne =
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
  * @return {!Promise<!proto.nxngstarter.Entity>}
- *     A native promise that resolves to the response
+ *     Promise that resolves to the response
  */
 proto.nxngstarter.EntityServicePromiseClient.prototype.findOne =
     function(request, metadata) {

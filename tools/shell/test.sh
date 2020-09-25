@@ -4,54 +4,45 @@
 # Colors.
 ##
 source tools/shell/colors.sh ''
-
 ##
 # Project aliases.
 ##
 source tools/shell/module-aliases.sh ''
-
 ##
-# Configurable project root, may be useful in CI environment.
+# Printing utility functions.
+##
+source tools/shell/print-utils.sh ''
+##
+# Project root.
 ##
 PROJECT_ROOT=.
-
-##
-# Exits with error.
-##
-exitWithError() {
-  exit 1
-}
 
 ##
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  local TITLE="<< USAGE >>"
-  printf "
-    ${RED}%s\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/test.sh single-run all
-    ${DEFAULT} - ${YELLOW} bash tools/shell/test.sh single-run ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>
-    ${DEFAULT} - ${YELLOW} bash tools/shell/test.sh single-run:report ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>
-    ${DEFAULT} - ${YELLOW} bash tools/shell/test.sh run ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>\n" "$TITLE"
+  printInfoTitle "<< USAGE >>"
+  printUsageTip "bash tools/shell/test.sh single-run all" "run all unit tests"
+  printUsageTip "bash tools/shell/test.sh single-run <MODULE_ALIAS_FROM_TSCONFIG>" "run unit tests for a specific application/library"
+  printUsageTip "bash tools/shell/test.sh single-run:report <MODULE_ALIAS_FROM_TSCONFIG>" "run unit tests for a specific application/library, and collect coverage report"
+  printUsageTip "bash tools/shell/test.sh run <MODULE_ALIAS_FROM_TSCONFIG>" "run unit tests for a specific application/library in watch mode"
 
   reportSupportedModuleAliasesUnit
 
-  printf "\n\n"
+  printGap
 
-  exitWithError
+  exit 1
 }
 
 ##
 # Copies generated report to dist folder.
 ##
 copyReportToDist() {
-  local TITLE="<< COPY REPORT TO DIST >>"
-  printf "
-    ${LIGHT_BLUE}%s\n
-    ${DEFAULT} - module partial path: ${YELLOW}${1}
-    ${DEFAULT} - coverage dist path: ${YELLOW}${2}
-    ${DEFAULT} - optional action (report, watch): ${YELLOW}${3}
-    ${DEFAULT}\n\n" "$TITLE"
+  printInfoTitle "<< COPY REPORT TO DIST >>"
+  printNameAndValue "module partial path" "$1"
+  printNameAndValue "coverage dist path" "$2"
+  printNameAndValue "optional action (report, watch)" "$3"
+  printGap
 
   ##
   # Coverage root path.
@@ -61,18 +52,17 @@ copyReportToDist() {
   if [ "$3" = "report" ]; then
     # check coverage dist path existence
     if [ -d "${COV_DISTR_ROOT}" ]; then
-      printf "
-        ${LIGHT_GREEN} coverage directory %s exists, proceeding${DEFAULT}\n\n" "$COV_DISTR_ROOT"
+      printSuccessMessage "coverage directory $COV_DISTR_ROOT exists, proceeding"
+      printGap
     else
-      TITLE="<< ERROR >>"
-      printf "
-        ${RED}%s\n
-        ${LIGHT_RED} directory %s does not exist
-        ${LIGHT_BLUE} creating directory %s.
-        ${DEFAULT}\n\n" "$COV_DISTR_ROOT" "$COV_DISTR_ROOT"
+      printErrorTitle "<< ERROR >>"
+      printWarningMessage "directory $COV_DISTR_ROOT does not exist"
+      printInfoMessage "creating directory $COV_DISTR_ROOT"
+      printGap
+
       mkdir -p "$COV_DISTR_ROOT"
     fi
-    cp -r ${PROJECT_ROOT}/coverage/"${1}" "$2" || exitWithError
+    cp -r ${PROJECT_ROOT}/coverage/"${1}" "$2" || exit 1
   fi
 }
 
@@ -80,19 +70,17 @@ copyReportToDist() {
 # Performs module testing considering optional action.
 ##
 performModuleTesting() {
-  local TITLE="<< TESTING MODULE >>"
-  printf "
-    ${LIGHT_BLUE}%s\n
-    ${DEFAULT} - module name: ${YELLOW}${1}
-    ${DEFAULT} - module partial path: ${YELLOW}${2}
-    ${DEFAULT} - coverage dist path: ${YELLOW}${3}
-    ${DEFAULT} - optional action (report, watch): ${YELLOW}${4}
-    ${DEFAULT}\n\n" "$TITLE"
+  printInfoTitle "<< TESTING MODULE >>"
+  printNameAndValue "module name" "$1"
+  printNameAndValue "module partial path" "$2"
+  printNameAndValue "coverage dist path" "$3"
+  printNameAndValue "optional action (report, watch)" "$4"
+  printGap
 
   if [ "$4" = "watch" ]; then
     npx nx test "$1" --passWithNoTests --watchAll
   else
-    npx nx test "$1" --watch=false --silent --passWithNoTests || exitWithError
+    npx nx test "$1" --watch=false --silent --passWithNoTests || exit 1
     copyReportToDist "$2" "$3" "$4"
   fi
 }
@@ -108,11 +96,9 @@ testAffected() {
 # Tests module.
 ##
 testModule() {
-  local TITLE="<< TESTING MODULE (unit) >>"
-  printf "
-    ${LIGHT_BLUE}%s\n
-    ${DEFAULT} - module alias: ${YELLOW}%s
-    ${DEFAULT} - optional action (report, watch): ${YELLOW}%s${DEFAULT}" "$TITLE" "$1" "$2"
+  printInfoTitle "<< TESTING MODULE (unit) >>"
+  printNameAndValue "module alias" "$1"
+  printNameAndValue "optional action (report, watch)" "$2"
 
   local MODULE_ALIAS=$1
   local OPTIONAL_ACTION=$2
@@ -124,37 +110,37 @@ testModule() {
 
   local COVERAGE_BASE_PATH=${PROJECT_ROOT}/dist/apps/documentation/coverage
 
-  printf "
-    ${DEFAULT} - module name: ${YELLOW}%s
-    ${DEFAULT} - module partial path name: ${YELLOW}%s
-    ${DEFAULT} - coverage report base path: ${YELLOW}%s${DEFAULT}\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$COVERAGE_BASE_PATH"
+  printNameAndValue "module name" "$MODULE_NAME"
+  printNameAndValue "module partial path name" "$MODULE_PARTIAL_PATH"
+  printNameAndValue "coverage report base path" "$MODULE_COVERAGE_BASE_PATHNAME"
+  printGap
 
   local ALIAS_EXISTS=
   moduleAliasExists "${MODULE_ALIAS}" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
 
   if [ "$ALIAS_EXISTS" = 1 ]; then
-    local TITLE="<< ALIAS ESISTS >>"
+    printInfoTitle "<< ALIAS ESISTS >>"
+
     local COVERAGE_DIST_PATH=${COVERAGE_BASE_PATH}
-    printf "
-    ${LIGHT_BLUE}%s${DEFAULT}\n
-    ${DEFAULT} - coverage dist path: ${YELLOW}%s
-    ${DEFAULT}" "$TITLE" "$COVERAGE_DIST_PATH"
+
+    printNameAndValue "coverage dist path" "$COVERAGE_DIST_PATH"
+    printGap
+
     performModuleTesting "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$COVERAGE_DIST_PATH" "$OPTIONAL_ACTION"
   elif [ "$MODULE_ALIAS" = "all" ]; then
     for MODULE_ALIAS_VAR in "${EXISTING_MODULE_ALIASES_UNIT[@]}"; do testModule "$MODULE_ALIAS_VAR" "$OPTIONAL_ACTION"; done
   elif [ "$MODULE_ALIAS" = "changed" ]; then
-    local TITLE="<< TESTING CHANGED APPS AND LIBS >>"
-    printf "
-      ${LIGHT_BLUE}%s${DEFAULT}\n" "$TITLE"
+    printInfoTitle "<< TESTING CHANGED APPS AND LIBS >>"
+    printGap
     ##
     # Import Git helpers.
     ##
     source tools/shell/git-extension.sh
     for CHANGED_ALIAS in "${CHANGED_ALIASES[@]}"; do testModule "$CHANGED_ALIAS" "$OPTIONAL_ACTION"; done
   elif [ "$MODULE_ALIAS" = "affected" ]; then
-    local TITLE="<< TESTING AFFECTED APPS AND LIBS >>"
-    printf "
-      ${LIGHT_BLUE}%s${DEFAULT}\n" "$TITLE"
+    printInfoTitle "<< TESTING AFFECTED APPS AND LIBS >>"
+    printGap
+
     testAffected
   else
     reportUsageErrorAndExit

@@ -1,5 +1,6 @@
-import * as jspb from "google-protobuf"
+import * as jspb from 'google-protobuf'
 import * as google_protobuf_any_pb from 'google-protobuf/google/protobuf/any_pb';
+
 
 export class Entity extends jspb.Message {
   getId(): string;
