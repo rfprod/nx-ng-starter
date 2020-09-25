@@ -8,46 +8,39 @@ source tools/shell/colors.sh ''
 # Project aliases.
 ##
 source tools/shell/module-aliases.sh ''
-
 ##
-# Configurable project root, may be useful in CI environment.
+# Printing utility functions.
+##
+source tools/shell/print-utils.sh ''
+##
+# Project root.
 ##
 PROJECT_ROOT=.
-
-##
-# Exits with error.
-##
-exitWithError() {
-  exit 1
-}
 
 ##
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  local TITLE="<< USAGE >>"
-  printf "
-    ${RED}%s\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/lint.sh all
-    ${DEFAULT} - ${YELLOW} bash tools/shell/lint.sh all fix
-    ${DEFAULT} - ${YELLOW} bash tools/shell/lint.sh ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>
-    ${DEFAULT} - ${YELLOW} bash tools/shell/lint.sh ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG> ${YELLOW}fix\n" "$TITLE"
+  printInfoTitle "<< USAGE >>"
+  printUsageTip "bash tools/shell/lint.sh all" "lint all apps and libs"
+  printUsageTip "bash tools/shell/lint.sh all fix" "lint all apps and libs fixing linting issues"
+  printUsageTip "bash tools/shell/lint.sh <MODULE_ALIAS_FROM_TSCONFIG>" "lint specific application/library"
+  printUsageTip "bash tools/shell/lint.sh <MODULE_ALIAS_FROM_TSCONFIG> fix" "lint specific application/library fixing linting issues"
 
   reportSupportedModuleAliases
 
-  printf "\n\n"
+  printGap
 
-  exitWithError
+  exit 1
 }
 
 ##
 # Removes spaces between imports in *.ts files.
 ##
 removeSpacesBetweenImports() {
-  local TITLE="<< REMOVING SPACES BETWEEN IMPORTS >>"
-  printf "
-    ${LIGHT_BLUE}%s\n
-    ${DEFAULT} - module path: ${YELLOW}${1}${DEFAULT}\n\n" "$TITLE"
+  printInfoTitle "<< REMOVING SPACES BETWEEN IMPORTS >>"
+  printNameAndValue "module path" "$1"
+  printGap
 
   find "$1" -type f -name "*.ts" -exec sed -i -z 's/\n\nimport/\nimport/g' {} +
 }
@@ -56,12 +49,10 @@ removeSpacesBetweenImports() {
 # Check if required path exists and proceeds with documentation generation.
 ##
 checkConfigPathAndProceed() {
-  local TITLE="<< CHECKING MODULE PATH AND PROCEEDING >>"
-  printf "
-    ${LIGHT_BLUE}%s\n
-    ${DEFAULT} - module name: ${YELLOW}${1}
-    ${DEFAULT} - module partial path: ${YELLOW}${2}
-    ${DEFAULT} - optional action (fix): ${YELLOW}${3}${DEFAULT}" "$TITLE"
+  printInfoTitle "<< CHECKING MODULE PATH AND PROCEEDING >>"
+  printNameAndValue "module name" "$1"
+  printNameAndValue "module partial path" "$2"
+  printNameAndValue "optional action (fix)" "$3"
 
   local MODULE_PATH="${PROJECT_ROOT}/${2}"
 
@@ -69,23 +60,23 @@ checkConfigPathAndProceed() {
 
   local PRETTIER_HTML_PATHS="${MODULE_PATH}/src/**/*.html"
 
-  printf "
-    ${DEFAULT} - stylelint path: ${YELLOW}%s
-    ${DEFAULT} - prettier html path: ${YELLOW}%s${DEFAULT}" "$STYLELINT_PATHS" "$PRETTIER_HTML_PATHS"
+  printNameAndValue "stylelint paths" "$STYLELINT_PATHS"
+  printNameAndValue "prettier html paths" "$PRETTIER_HTML_PATHS"
 
   MODULE_HAS_SCSS_FILES="$(find "${2}" -type f -name "*.scss")" # checks if module contains scss files
 
   MODULE_HAS_HTML_FILES="$(find "${2}" -type f -name "*.html")" # checks if module contains html files
 
-  printf "
-    ${DEFAULT} - module has scss files:\n${YELLOW}%s
-    ${DEFAULT} - module has html files:\n${YELLOW}%s${DEFAULT}
-    \n\n" "$MODULE_HAS_SCSS_FILES" "$MODULE_HAS_HTML_FILES"
+  printNameAndValue "module has scss files" "$MODULE_HAS_SCSS_FILES"
+  printNameAndValue "module has html files" "$MODULE_HAS_HTML_FILES"
+  printGap
 
   if [ ! -d "$MODULE_PATH" ]; then
-    printf "
-      ${RED} ERROR: module path %s not found${DEFAULT}\n\n" "$MODULE_PATH"
-    exitWithError
+    printErrorTitle "<< ERROR >>"
+    printWarningMessage "module path $MODULE_PATH not found"
+    printGap
+
+    exit 1
   else
     if [ "$3" = "fix" ]; then
       # firstly remove spaces between imports in *.ts files
@@ -96,43 +87,39 @@ checkConfigPathAndProceed() {
       if [ -n "${MODULE_HAS_SCSS_FILES}" ]; then
         npx stylelint "$STYLELINT_PATHS" "--${3}"
       else
-        TITLE="<< INFO (stylelint) >>"
-        printf "
-          ${LIGHT_BLUE}%s\n
-          ${DEFAULT} module does not contain scss files and will not be checked with stylelint\n${DEFAULT}\n" "$TITLE"
+        printInfoTitle "<< INFO (stylelint) >>"
+        printInfoMessage "module does not contain scss files and will not be checked with stylelint"
+        printGap
       fi
       # html formatting with prettier
       if [ -n "${MODULE_HAS_HTML_FILES}" ]; then
         npx prettier -c --write "$PRETTIER_HTML_PATHS"
       else
-        TITLE="<< INFO (prettier) >>"
-        printf "
-          ${LIGHT_BLUE}%s\n
-          ${DEFAULT} module does not contain html files and will not be checked with prettier\n${DEFAULT}\n" "$TITLE"
+        printInfoTitle "<< INFO (prettier) >>"
+        printInfoMessage "module does not contain html files and will not be checked with prettier"
+        printGap
       fi
     else
       # ts formatting with nx
-      npx nx lint "$1" || exitWithError
+      npx nx lint "$1" || exit 1
       # scss formatting with stylelint
       if [ -n "${MODULE_HAS_SCSS_FILES}" ]; then
         # catch stylelint exit code; it returns 2 in case of errors
         if ! npx stylelint "$STYLELINT_PATHS"; then
-          exitWithError
+          exit 1
         fi
       else
-        TITLE="<< INFO (stylelint) >>"
-        printf "
-          ${LIGHT_BLUE}%s\n
-          ${DEFAULT} module does not contain scss files and will not be checked with stylelint\n${DEFAULT}\n" "$TITLE"
+        printInfoTitle "<< INFO (stylelint) >>"
+        printInfoMessage "module does not contain scss files and will not be checked with stylelint"
+        printGap
       fi
       # html formatting with prettier
       if [ -n "${MODULE_HAS_HTML_FILES}" ]; then
-        npx prettier -c "$PRETTIER_HTML_PATHS" || exitWithError
+        npx prettier -c "$PRETTIER_HTML_PATHS" || exit 1
       else
-        TITLE="<< INFO (prettier) >>"
-        printf "
-          ${LIGHT_BLUE}%s\n
-          ${DEFAULT} module does not contain html files and will not be checked with prettier\n${DEFAULT}\n" "$TITLE"
+        printInfoTitle "<< INFO (prettier) >>"
+        printInfoMessage "module does not contain html files and will not be checked with prettier"
+        printGap
       fi
     fi
   fi
@@ -149,11 +136,9 @@ lintAffected() {
 # Lints module.
 ##
 lintModule() {
-  local TITLE="<< LINTING MODULE >>"
-  printf "
-    ${LIGHT_BLUE}%s\n
-    ${DEFAULT} - module alias: ${YELLOW}%s
-    ${DEFAULT} - optional action (fix): ${YELLOW}%s${DEFAULT}" "$TITLE" "$1" "$2"
+  printInfoTitle "<< LINTING MODULE >>"
+  printNameAndValue "module alias" "$1"
+  printNameAndValue "optional action (fix)" "$2"
 
   local MODULE_ALIAS=$1
   local OPTIONAL_ACTION=$2
@@ -164,9 +149,9 @@ lintModule() {
 
   local MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s/}" # partial module path, e.g. apps/client for subsequent path formation
 
-  printf "
-    ${DEFAULT} - module name: ${YELLOW}%s
-    ${DEFAULT} - module partial path name: ${YELLOW}%s${DEFAULT}\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH"
+  printNameAndValue "module name" "$MODULE_NAME"
+  printNameAndValue "module partial path name" "$MODULE_PARTIAL_PATH"
+  printGap
 
   local ALIAS_EXISTS=
   moduleAliasExists "${MODULE_ALIAS}" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
@@ -182,9 +167,9 @@ lintModule() {
     source tools/shell/git-extension.sh
     for CHANGED_ALIAS in "${CHANGED_ALIASES[@]}"; do lintModule "$CHANGED_ALIAS" "$OPTIONAL_ACTION"; done
   elif [ "$MODULE_ALIAS" = "affected" ]; then
-    TITLE="<< LINTING AFFECTED APPS AND LIBS >>"
-    printf "
-      ${LIGHT_BLUE}%s${DEFAULT}\n" "$TITLE"
+    printInfoTitle "<< LINTING AFFECTED APPS AND LIBS >>"
+    printGap
+
     lintAffected
   else
     reportUsageErrorAndExit

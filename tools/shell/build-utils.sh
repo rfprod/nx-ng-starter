@@ -3,7 +3,7 @@
 ##
 # Colors.
 ##
-source tools/shell/colors.sh
+source tools/shell/colors.sh ''
 
 set -uo pipefail
 
@@ -13,32 +13,37 @@ ERROR_COLOR="${LIGHT_RED}"
 WARNING_COLOR="${YELLOW}"
 
 log() {
-  printf "${LOG_COLOR}" >&2
-  printf "$@" >&2
+  printf "${LOG_COLOR} %s:" "Log" >&2
+  printf " %s" "$@" >&2
+  # shellcheck disable=SC2059
   printf "${DEFAULT}\n" >&2
 }
 
 warn() {
-  printf "${WARNING_COLOR}Warning: " >&2
-  printf "$@" >&2
+  printf "${WARNING_COLOR} %s:" "Warning" >&2
+  printf " %s" "$@" >&2
+  # shellcheck disable=SC2059
   printf "${DEFAULT}\n" >&2
 }
 
 error() {
-  printf "${ERROR_COLOR}Error: " >&2
-  printf "$@" >&2
+  printf "${ERROR_COLOR} %s:" "Error" >&2
+  printf " %s" "$@" >&2
+  # shellcheck disable=SC2059
   printf "${DEFAULT}\n" >&2
   exit 1
 }
 
 usage() {
+  # shellcheck disable=SC2059
   printf "${USAGE}" >&2
   exit 1
 }
 
 cmd() {
-  printf "${CMD_COLOR}>" >&2
+  printf "${CMD_COLOR}%s" ">" >&2
   printf " %s" "$@" >&2
+  # shellcheck disable=SC2059
   printf "${DEFAULT}\n" >&2
   eval "$@"
   local rc=$?

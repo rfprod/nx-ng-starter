@@ -4,53 +4,44 @@
 # Colors.
 ##
 source tools/shell/colors.sh ''
-
 ##
 # Project aliases.
 ##
 source tools/shell/module-aliases.sh ''
-
 ##
-# Configurable project root, may be useful in CI environment.
+# Printing utility functions.
+##
+source tools/shell/print-utils.sh ''
+##
+# Project root.
 ##
 PROJECT_ROOT=.
-
-##
-# Exits with error.
-##
-exitWithError() {
-  exit 1
-}
 
 ##
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  local TITLE="<< USAGE >>"
-  printf "
-    ${RED}%s\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/document.sh generate all
-    ${DEFAULT} - ${YELLOW} bash tools/shell/document.sh generate ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>
-    ${DEFAULT} - ${YELLOW} bash tools/shell/document.sh generate-and-report ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>
-    ${DEFAULT} - ${YELLOW} bash tools/shell/document.sh serve ${LIGHT_GREEN}<MODULE_ALIAS_FROM_TSCONFIG>\n" "$TITLE"
+  printInfoTitle "<< USAGE >>"
+  printUsageTip "bash tools/shell/document.sh generate all" "generate all documentation"
+  printUsageTip "bash tools/shell/document.sh generate <MODULE_ALIAS_FROM_TSCONFIG>" "generate documentation for a specific application/library"
+  printUsageTip "bash tools/shell/document.sh generate-and-report <MODULE_ALIAS_FROM_TSCONFIG>" "generate documentation for a specific application/library and copy report to dist"
+  printUsageTip "bash tools/shell/document.sh serve <MODULE_ALIAS_FROM_TSCONFIG>" "serve documentation for a specific application/library"
 
   reportSupportedModuleAliases
 
-  printf "\n\n"
+  printGap
 
-  exitWithError
+  exit 1
 }
 
 ##
 # Copies generated documentation to dist.
 ##
 copyReportToDist() {
-  local TITLE="<< COPY report >>"
-  printf "
-    ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - documentation dist path: ${YELLOW}${1}
-    ${DEFAULT} - optional action (report, serve): ${YELLOW}${2}
-    ${DEFAULT}\n\n" "$TITLE"
+  printInfoTitle "<< COPY report >>"
+  printNameAndValue "documentation dist path" "$1"
+  printNameAndValue "optional action (report, serve)" "$2"
+  printGap
 
   ##
   # Documentation root path.
@@ -60,20 +51,18 @@ copyReportToDist() {
   if [ "$2" = "report" ]; then
     # check documentation dist path existence
     if [ -d ${DOC_DIST_ROOT} ]; then
-      printf "
-        ${LIGHT_GREEN} documentation directory %s exists, proceeding${DEFAULT}\n\n" "$DOC_DIST_ROOT"
+      printSuccessMessage "documentation directory $DOC_DIST_ROOT exists, proceeding"
     else
-      TITLE="<< ERROR >>"
-      printf "
-        ${RED} %s\n
-        ${LIGHT_RED} directory %s does not exist
-        ${LIGHT_GREEN} creating directory %s.
-        ${DEFAULT}\n\n" "$TITLE" "$DOC_DIST_ROOT" "$DOC_DIST_ROOT"
+      printErrorTitle "<< ERROR >>"
+      printWarningMessage "directory $DOC_DIST_ROOT does not exist"
+      printSuccessMessage "creating directory $DOC_DIST_ROOT"
+      printGap
+
       mkdir -p "$DOC_DIST_ROOT"
     fi
-    cp -r ${PROJECT_ROOT}/documentation "$1" || exitWithError
+    cp -r ${PROJECT_ROOT}/documentation "$1" || exit 1
     # copy dists to deployed application dist so that it's accessible online
-    cp -r ${PROJECT_ROOT}/dist/compodoc/* "$DOC_DIST_ROOT" || exitWithError
+    cp -r ${PROJECT_ROOT}/dist/compodoc/* "$DOC_DIST_ROOT" || exit 1
   fi
 }
 
@@ -81,13 +70,11 @@ copyReportToDist() {
 # Generates module documentation and performs optional action.
 ##
 generateDocumentation() {
-  local TITLE=">> generating documentation"
-  printf "
-    ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - config path: ${YELLOW}${1}
-    ${DEFAULT} - documentation dist path: ${YELLOW}${2}
-    ${DEFAULT} - optional action (report, serve): ${YELLOW}${3}
-    ${DEFAULT}\n\n" "$TITLE"
+  printInfoTitle "<< GENERATING DOCUMENTATION >>"
+  printNameAndValue "config path" "$1"
+  printNameAndValue "documentation dist path" "$2"
+  printNameAndValue "optional action (report, serve)" "$3"
+  printGap
 
   if [ "$3" = "serve" ]; then
     compodoc -p "$1" -s
@@ -101,20 +88,18 @@ generateDocumentation() {
 # Check if required path exists and proceeds with documentation generation.
 ##
 checkConfigPathAndProceed() {
-  local TITLE=">> checking tsconfig path and proceeding"
-  printf "
-    ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - config path: ${YELLOW}${1}
-    ${DEFAULT} - documentation dist path: ${YELLOW}${2}
-    ${DEFAULT} - optional action (report, serve): ${YELLOW}${3}
-    ${DEFAULT}\n\n" "$TITLE"
+  printInfoTitle "<< checking tsconfig path and proceeding >>"
+  printNameAndValue "config path" "$1"
+  printNameAndValue "documentation dist path" "$2"
+  printNameAndValue "optional action (report, serve)" "$3"
+  printGap
 
   if [ ! -f "$1" ]; then
-    TITLE="<< ERROR >>"
-    printf "
-      ${RED} %s\n
-      ${LIGHT_RED}configuration file %s not found${DEFAULT}\n\n" "$TITLE" "$1"
-    exitWithError
+    printErrorTitle "<< ERROR >>"
+    printWarningMessage "configuration file $1 not found"
+    printGap
+
+    exit 1
   else
     generateDocumentation "$1" "$2" "$3"
   fi
@@ -124,11 +109,9 @@ checkConfigPathAndProceed() {
 # Documents module.
 ##
 documentModule() {
-  local TITLE="<< DOCUMENTING MODULE >>"
-  printf "
-    ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - module alias: ${YELLOW}${1}
-    ${DEFAULT} - optional action (report, serve): ${YELLOW}${2}${DEFAULT}" "$TITLE"
+  printInfoTitle "<< DOCUMENTING MODULE >>"
+  printNameAndValue "module alias" "$1"
+  printNameAndValue "optional action (report, serve)" "$2"
 
   local MODULE_ALIAS=$1
   local OPTIONAL_ACTION=$2
@@ -142,11 +125,10 @@ documentModule() {
   local DOCUMENTATION_BASE_PATH=${PROJECT_ROOT}/dist/compodoc
   mkdir -p "$DOCUMENTATION_BASE_PATH"
 
-  printf "
-    ${DEFAULT} - module name: ${YELLOW}%s
-    ${DEFAULT} - module partial path name: ${YELLOW}%s
-    ${DEFAULT} - documentation base path: ${YELLOW}%s
-    ${DEFAULT}\n\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$DOCUMENTATION_BASE_PATH"
+  printNameAndValue "module name" "$MODULE_NAME"
+  printNameAndValue "module partial path name" "$MODULE_PARTIAL_PATH"
+  printNameAndValue "documentation base path" "$DOCUMENTATION_BASE_PATH"
+  printGap
 
   local ALIAS_EXISTS=
   moduleAliasExists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0

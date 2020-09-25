@@ -2,7 +2,7 @@
 
 cd "$(dirname "${BASH_SOURCE[0]}")/../.." || exit
 
-source tools/shell/common.sh
+source tools/shell/build-utils.sh
 
 if [[ -f ./tools/shell/vars.sh ]]; then
   cmd source tools/shell/vars.sh

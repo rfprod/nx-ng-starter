@@ -1,7 +1,7 @@
 #!/bin/bash
 
 cd "$(dirname "${BASH_SOURCE[0]}")/../.." || exit
-source tools/shell/common.sh
+source tools/shell/build-utils.sh
 
 ##
 # Reports usage error.

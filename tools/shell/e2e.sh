@@ -4,60 +4,50 @@
 # Colors.
 ##
 source tools/shell/colors.sh ''
-
 ##
 # Project aliases.
 ##
 source tools/shell/module-aliases.sh ''
-
+##
+# Printing utility functions.
+##
+source tools/shell/print-utils.sh ''
 ##
 # Project root.
 ##
 PROJECT_ROOT=.
 
 ##
-# Exits with error.
-##
-exitWithError() {
-  exit 1
-}
-
-##
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  local TITLE="<< USAGE >>"
-  printf "
-    ${RED}%s\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/e2e.sh all
-    ${DEFAULT} - ${YELLOW} bash tools/shell/e2e.sh all headless
-    ${DEFAULT} - ${YELLOW} bash tools/shell/e2e.sh ${LIGHT_GREEN}<MODULE_E2E_ALIAS_FROM_TSCONFIG>
-    ${DEFAULT} - ${YELLOW} bash tools/shell/e2e.sh ${LIGHT_GREEN}<MODULE_ALIAS_E2E_FROM_TSCONFIG>${YELLOW} headless\n" "$TITLE"
+  printInfoTitle "<< USAGE >>"
+  printUsageTip "bash tools/shell/e2e.sh all" "run all e2e tests"
+  printUsageTip "bash tools/shell/e2e.sh all headless" "run all e2e tests in headless mode"
+  printUsageTip "bash tools/shell/e2e.sh <MODULE_E2E_ALIAS_FROM_TSCONFIG>" "run e2e tests for a specific application/library"
+  printUsageTip "bash tools/shell/e2e.sh <MODULE_ALIAS_E2E_FROM_TSCONFIG> headless" "run e2e tests for a specific application/library in headless mode"
 
   reportSupportedModuleAliasesE2E
 
-  printf "\n\n"
+  printGap
 
-  exitWithError
+  exit 1
 }
 
 ##
 # Copies generated report to dist folder.
 ##
 copyReportToDist() {
-  local TITLE="<< COPY REPORT TO DIST >>"
-  printf "
-    ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - module partial path: ${YELLOW}%s\n
-    ${DEFAULT} - e2e dist path: ${YELLOW}%s\n
-    ${DEFAULT} - optional action (report): ${YELLOW}%s${DEFAULT}\n
-    \n\n" "$TITLE" "$1" "$2" "$3"
+  printInfoTitle "<< COPY REPORT TO DIST >>"
+  printNameAndValue "module partial path" "$1"
+  printNameAndValue "e2e dist path" "$2"
+  printNameAndValue "optional action (report)" "$3"
+  printGap
 
   ##
   # E2E root path.
   ##
   local E2E_DISTR_ROOT=${PROJECT_ROOT}/dist/apps/documentation/cypress
-
   ##
   # Report directory
   ##
@@ -82,15 +72,13 @@ copyReportToDist() {
   if [ "$3" = "report" ]; then
     # check coverage dist path existence
     if [ -d ${E2E_DISTR_ROOT} ]; then
-      printf "
-        ${LIGHT_GREEN} e2e directory %s exists, proceeding${DEFAULT}\n\n" "$E2E_DISTR_ROOT"
+      printSuccessMessage "e2e directory $E2E_DISTR_ROOT exists, proceeding"
     else
-      TITLE="<< ERROR >>"
-      printf "
-        ${RED}%s\n
-        ${LIGHT_RED} directory %s does not exist
-        ${LIGHT_BLUE} creating directory %s.
-        ${DEFAULT}\n\n" "$TITLE" "$E2E_DISTR_ROOT" "$E2E_DISTR_ROOT"
+      printErrorTitle "<< ERROR >>"
+      printWarningMessage "directory $E2E_DISTR_ROOT does not exist"
+      printInfoMessage "creating directory $E2E_DISTR_ROOT"
+      printGap
+
       mkdir -p $E2E_DISTR_ROOT
     fi
     # merge json reports
@@ -98,7 +86,7 @@ copyReportToDist() {
     # generate html report from merged json
     npx marge --reportDir="$REPORT_DIR" --reportTitle="$REPORT_TITLE" --reportFilename=$REPORT_FILENAME --showSkipped --enableCharts "$MERGED_JSON_REPORT_PATH"
     # copy report
-    cp -r "$2" $E2E_DISTR_ROOT || exitWithError
+    cp -r "$2" $E2E_DISTR_ROOT || exit 1
   fi
 }
 
@@ -106,15 +94,13 @@ copyReportToDist() {
 # Performs module testing considering optional action.
 ##
 performModuleTesting() {
-  local TITLE="<< TESTING MODULE >>"
-  printf "
-    ${LIGHT_BLUE}%s\n
-    ${DEFAULT} - module name: ${YELLOW}%s
-    ${DEFAULT} - module partial path: ${YELLOW}%s
-    ${DEFAULT} - e2e dist path: ${YELLOW}%s
-    ${DEFAULT} - optional action (headless): ${YELLOW}%s
-    ${DEFAULT} - optional action (report): ${YELLOW}%s
-    ${DEFAULT}\n\n" "$TITLE" "$1" "$2" "$3" "$4" "$5"
+  printInfoTitle "<< TESTING MODULE >>"
+  printNameAndValue "module name" "$1"
+  printNameAndValue "module partial path" "$2"
+  printNameAndValue "e2e dist path" "$3"
+  printNameAndValue "optional action (headless)" "$4"
+  printNameAndValue "optional action (report)" "$5"
+  printGap
 
   if [ "$4" = "headless" ]; then
     npx nx e2e "$1" --headless
@@ -136,12 +122,11 @@ testAffected() {
 # Tests module.
 ##
 testModule() {
-  local TITLE="<< TESTING MODULE (e2e) >>"
-  printf "
-    ${LIGHT_BLUE}%s\n
-    ${DEFAULT} - module alias: ${YELLOW}%s
-    ${DEFAULT} - optional action (headless): ${YELLOW}%s
-    ${DEFAULT} - optional action (report): ${YELLOW}%s\n" "$TITLE" "$1" "$2" "$3"
+  printInfoTitle "<< TESTING MODULE (e2e) >>"
+  printNameAndValue "module alias" "$1"
+  printNameAndValue "optional action (headless)" "$2"
+  printNameAndValue "optional action (report)" "$3"
+  printGap
 
   local MODULE_ALIAS=$1
   local OPTIONAL_ACTION=$2
@@ -156,11 +141,10 @@ testModule() {
   local E2E_DIST_PATH
   E2E_DIST_PATH=${PROJECT_ROOT}/dist/cypress/${MODULE_PARTIAL_PATH}
 
-  printf "
-    ${DEFAULT} - module name: ${YELLOW}%s
-    ${DEFAULT} - module partial path name: ${YELLOW}%s
-    ${DEFAULT} - e2e dist path: ${YELLOW}%s
-    ${DEFAULT}\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$E2E_DIST_PATH"
+  printNameAndValue "module name" "$1"
+  printNameAndValue "module partial path name" "$1"
+  printNameAndValue "e2e dist path" "$1"
+  printGap
 
   local ALIAS_EXISTS=
   moduleAliasExists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
@@ -172,9 +156,9 @@ testModule() {
   then
     for MODULE_ALIAS_VAR_E2E in "${EXISTING_MODULE_ALIASES_E2E[@]}"; do testModule "$MODULE_ALIAS_VAR_E2E" "$OPTIONAL_ACTION" "$COPY_REPORT"; done
   elif [ "$MODULE_ALIAS" = "affected" ]; then
-    TITLE="<< TESTING AFFECTED APPS AND LIBS >>"
-    printf "
-      ${LIGHT_BLUE}%s${DEFAULT}\n" "$TITLE"
+    printInfoTitle "<< TESTING AFFECTED APPS AND LIBS >>"
+    printGap
+
     testAffected
   else
     reportUsageErrorAndExit

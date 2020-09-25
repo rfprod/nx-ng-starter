@@ -8,17 +8,18 @@ source tools/shell/colors.sh ''
 # Project aliases.
 ##
 source tools/shell/module-aliases.sh ''
-
+##
+# Printing utility functions.
+##
+source tools/shell/print-utils.sh ''
 ##
 # Project root.
 ##
 PROJECT_ROOT=.
-
 ##
 # Protobuf source directory.
 ##
 PROTO_SOURCE_PATH=$PROJECT_ROOT/tools/proto
-
 ##
 # Output directories.
 ##
@@ -26,34 +27,25 @@ OUT_DIR_GRPC=$PROJECT_ROOT/libs/proto/src/lib/grpc
 OUT_DIR_TS=$PROJECT_ROOT/libs/proto/src/lib/ts
 
 ##
-# Exits with error.
-##
-exitWithError() {
-  exit 1
-}
-
-##
 # Reports script usage.
 ##
 reportUsage() {
-  local TITLE="<< USAGE >>"
-  printf "
-    ${LIGHT_BLUE}%s\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/generate-proto.sh${DEFAULT} (print generate-proto.sh usage)
-    ${DEFAULT} - ${YELLOW} bash tools/shell/generate-proto.sh protoc${DEFAULT} (generate grpc)
-    ${DEFAULT} - ${YELLOW} bash tools/shell/generate-proto.sh protobufjs${DEFAULT} (generate ts definitions)
-    ${DEFAULT}\n\n" "$TITLE"
+  printInfoTitle "<< USAGE >>"
+  printUsageTip "bash tools/shell/generate-proto.sh" "print generate-proto.sh usage"
+  printUsageTip "bash tools/shell/generate-proto.sh protoc" "generate grpc"
+  printUsageTip "bash tools/shell/generate-proto.sh protobufjs" "generate ts definitions"
+  printGap
+
+  exit 1
 }
 
 ##
 # Reports success.
 ##
 reportSuccess() {
-  local TITLE="<< SUCCESS >>"
-  printf "
-    ${LIGHT_GREEN}%s\n
-    ${DEFAULT} - ${YELLOW}libs/proto${DEFAULT} - successfully updated
-    ${DEFAULT}\n" "$TITLE"
+  printSuccessTitle "<< SUCCESS >>"
+  printSuccessMessage "libs/proto successfully updated"
+  printGap
 }
 
 ##
@@ -63,16 +55,14 @@ run_protoc() {
   local PROTO_FILES="$PROTO_SOURCE_PATH/root.proto
     $PROTO_SOURCE_PATH/common.proto"
 
-  local TITLE="<< RUNNING PROTOC >>"
-  printf "
-    ${LIGHT_BLUE}%s\n
-    ${DEFAULT} PROTO_FILES: ${YELLOW}%s
-    ${DEFAULT}\n\n" "$TITLE" "$PROTO_FILES"
+  printInfoTitle "<< RUNNING PROTOC >>"
+  printNameAndValue "proto files" "$PROTO_FILES"
+  printGap
 
   # shellcheck disable=SC2086
   protoc -I="$PROTO_SOURCE_PATH" $PROTO_FILES \
     --grpc-web_out="import_style=commonjs+dts,mode=grpcwebtext:$OUT_DIR_GRPC" \
-    --js_out="import_style=commonjs:$OUT_DIR_GRPC" || exitWithError
+    --js_out="import_style=commonjs:$OUT_DIR_GRPC" || exit 1
 }
 
 ##
@@ -82,14 +72,12 @@ run_protobufjs() {
   local PATH_TO_PROTO_JS="$OUT_DIR_TS/nx-ng-starter_proto.js"
   local PATH_TO_PROTO_TS="$OUT_DIR_TS/nx-ng-starter_proto.d.ts"
 
-  local TITLE="<< RUNNING PROTOBUFJS >>"
-  printf "
-    ${LIGHT_BLUE}%s\n
-    ${DEFAULT} - ${LIGHT_BLUE} path to proto: ${YELLOW}%s
-    ${DEFAULT} - ${LIGHT_BLUE} output path: ${YELLOW}%s
-    ${DEFAULT} - ${LIGHT_BLUE} path to proto js: ${YELLOW}%s
-    ${DEFAULT} - ${LIGHT_BLUE} path to proto ts: ${YELLOW}%s
-    ${DEFAULT}\n" "$TITLE" "$PROTO_SOURCE_PATH" "$OUT_DIR_TS" "$PATH_TO_PROTO_JS" "$PATH_TO_PROTO_TS"
+  printInfoTitle "<< RUNNING PROTOBUFJS >>"
+  printNameAndValue "path to proto" "$PROTO_SOURCE_PATH"
+  printNameAndValue "output path" "$OUT_DIR_TS"
+  printNameAndValue "path to proto js" "$PATH_TO_PROTO_JS"
+  printNameAndValue "path to proto ts" "$PATH_TO_PROTO_TS"
+  printGap
 
   npx pbjs --target static-module --wrap es6 --es6 --force-number --keep-case --no-create --no-encode --no-decode --no-verify --no-delimited --no-beautify -o "$PATH_TO_PROTO_JS" "$PROTO_SOURCE_PATH"/*.proto
   npx pbts -o "$PATH_TO_PROTO_TS" "$PATH_TO_PROTO_JS"
@@ -105,7 +93,7 @@ run_protobufjs() {
 # Lints libs/proto after regeneration.
 ##
 lintProtoLib() {
-  bash $PROJECT_ROOT/tools/shell/lint.sh "$MODULE_ALIAS_LIB_PROTO" fix
+  bash $PROJECT_ROOT/tools/shell/lint.sh "lib:proto" fix
 }
 
 ##

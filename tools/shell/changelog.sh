@@ -8,89 +8,79 @@ source tools/shell/colors.sh ''
 # Project aliases.
 ##
 source tools/shell/module-aliases.sh ''
-
 ##
-# Configurable project root, may be useful in CI environment.
+# Printing utility functions.
+##
+source tools/shell/print-utils.sh ''
+##
+# Project root.
 ##
 PROJECT_ROOT=.
-
 ##
 # Changelog root path.
 ##
 CHANGELOG_ROOT=${PROJECT_ROOT}/changelog
-
 ##
 # Apps changelog path.
 ##
 CHANGELOG_APPS=${PROJECT_ROOT}/changelog/apps
-
 ##
 # Libs changelog path.
 ##
 CHANGELOG_LIBS=${PROJECT_ROOT}/changelog/libs
 
 ##
-# Exits with error.
-##
-exitWithError() {
-  exit 1
-}
-
-##
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  local TITLE="<< USAGE >>"
-  printf "
-    ${RED}%s\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/changelog.sh all
-    ${DEFAULT} - ${YELLOW} bash tools/shell/changelog.sh ${LIGHT_GREEN}<APP_ALIAS_FROM_TSCONFIG>\n" "$TITLE"
+  printInfoTitle "<< USAGE >>"
+  printUsageTip "bash tools/shell/changelog.sh all" "generate all changelogs"
+  printUsageTip "bash tools/shell/changelog.sh <APP_ALIAS_FROM_TSCONFIG>" "generate changelog for a specific application/library"
 
   reportSupportedModuleAliases
 
-  printf "\n\n"
+  printGap
 
-  exitWithError
+  exit 1
 }
 
 ##
 # Checks changelog directories existence, and creates directories if it does not exist.
 ##
 checkChangelogDirectoriesExistence() {
-  local TITLE="<< ERROR >>"
   if [ -d ${CHANGELOG_ROOT} ]; then
-    printf "
-      ${LIGHT_GREEN} changelog directory %s exists, proceeding${DEFAULT}\n\n" "$CHANGELOG_ROOT"
+    printSuccessMessage "changelog directory $CHANGELOG_ROOT exists, proceeding"
+    printGap
   else
-    printf "
-      ${RED}%s\n
-      ${LIGHT_RED} changelog directory %s does not exist
-      ${LIGHT_GREEN} creating changelog directory %s.
-      ${DEFAULT}\n\n" "$TITLE" "$CHANGELOG_ROOT" "$CHANGELOG_ROOT"
+    printInfoTitle "<< ERROR >>"
+    printWarningMessage "changelog directory $CHANGELOG_ROOT does not exist"
+    printInfoMessage "creating changelog directory $CHANGELOG_ROOT"
+    printGap
+
     mkdir -p $CHANGELOG_ROOT
   fi
 
   if [ -d ${CHANGELOG_APPS} ]; then
-    printf "
-      ${LIGHT_GREEN} changelog directory %s exists, proceeding${DEFAULT}\n\n" "$CHANGELOG_APPS"
+    printSuccessMessage "changelog directory $CHANGELOG_APPS exists, proceeding"
+    printGap
   else
-    printf "
-      ${RED} %s\n
-      ${LIGHT_RED} changelog directory %s does not exist
-      ${LIGHT_GREEN} creating changelog directory %s.
-      ${DEFAULT}\n\n" "$TITLE" "$CHANGELOG_APPS" "$CHANGELOG_APPS"
+    printErrorTitle "<< ERROR >>"
+    printWarningMessage "changelog directory $CHANGELOG_APPS does not exist"
+    printSuccessMessage "creating changelog directory $CHANGELOG_APPS"
+    printGap
+
     mkdir -p $CHANGELOG_APPS
   fi
 
   if [ -d ${CHANGELOG_LIBS} ]; then
-    printf "
-      ${LIGHT_GREEN} changelog directory %s exists, proceeding${DEFAULT}\n\n" "$CHANGELOG_LIBS"
+    printSuccessMessage "changelog directory $CHANGELOG_APPS exists, proceeding"
+    printGap
   else
-    printf "
-      ${RED} %s\n
-      ${LIGHT_RED} changelog directory %s does not exist
-      ${LIGHT_GREEN} creating changelog directory %s.
-      ${DEFAULT}\n\n" "$CHANGELOG_LIBS" "$CHANGELOG_LIBS"
+    printErrorTitle "<< ERROR >>"
+    printWarningMessage "changelog directory $CHANGELOG_LIBS does not exist"
+    printSuccessMessage "creating changelog directory $CHANGELOG_LIBS"
+    printGap
+
     mkdir -p $CHANGELOG_LIBS
   fi
 }
@@ -99,11 +89,9 @@ checkChangelogDirectoriesExistence() {
 # Generates changelog index.html with relative links.
 ##
 generateChangelogIndex() {
-  TITLE="<< GENERATING CHANGELOG INDEX >>"
-  printf "
-    ${LIGHT_BLUE}%s
-    ${DEFAULT} - changelog dist root: ${YELLOW}${1}
-    ${DEFAULT}\n\n" "$TITLE"
+  printInfoTitle "<< GENERATING CHANGELOG INDEX >>"
+  printNameAndValue "changelog dist root" "$1"
+  printGap
 
   ##
   # Find all changelog files and save in array.
@@ -135,10 +123,8 @@ generateChangelogIndex() {
 # Copies generated changelog to dist.
 ##
 copyReportToDist() {
-  local TITLE="<< COPY CHANGELOG TO DIST >>"
-  printf "
-    ${LIGHT_BLUE}%s
-    ${DEFAULT}\n\n" "$TITLE"
+  printInfoTitle "<< COPY CHANGELOG TO DIST >>"
+  printGap
 
   ##
   # Changelog root path.
@@ -147,19 +133,18 @@ copyReportToDist() {
 
   # check documentation dist path existence
   if [ -d ${CHANGELOG_DIST_ROOT} ]; then
-    printf "
-      ${LIGHT_GREEN} directory %s exists, proceeding${DEFAULT}\n\n" "$CHANGELOG_DIST_ROOT"
+    printSuccessMessage "directory $CHANGELOG_DIST_ROOT exists, proceeding"
+    printGap
   else
-    TITLE="<< ERROR >>"
-    printf "
-      ${RED}%s\n
-      ${LIGHT_RED} directory %s does not exist
-      ${LIGHT_GREEN} creating directory %s.
-      ${DEFAULT}\n\n" "$TITLE" "$CHANGELOG_DIST_ROOT" "$CHANGELOG_DIST_ROOT"
+    printErrorTitle "<< ERROR >>"
+    printWarningMessage "directory $CHANGELOG_DIST_ROOT does not exist"
+    printInfoMessage "creating directory $CHANGELOG_DIST_ROOT"
+    printGap
+
     mkdir -p $CHANGELOG_DIST_ROOT
   fi
 
-  cp -r ${CHANGELOG_ROOT} $CHANGELOG_DIST_ROOT || exitWithError
+  cp -r ${CHANGELOG_ROOT} $CHANGELOG_DIST_ROOT || exit 1
 
   generateChangelogIndex "$CHANGELOG_DIST_ROOT"
 }
@@ -168,25 +153,21 @@ copyReportToDist() {
 # Checks if required path exists and proceeds with changelog generation.
 ##
 checkConfigPathAndProceed() {
-  local TITLE="<< Checking module path and proceeding >>"
-  printf "
-    ${LIGHT_BLUE}%s\n
-    ${DEFAULT} - module name: ${YELLOW}%s${DEFAULT}
-    ${DEFAULT} - module partial path: ${YELLOW}%s${DEFAULT}\n" "$TITLE" "$1" "$2"
+  printInfoTitle "<< Checking module path and proceeding >>"
+  printNameAndValue "module name" "$1"
+  printNameAndValue "module partial path" "$2"
 
   local MODULE_PATH="${PROJECT_ROOT}/${2}/"
 
-  printf "
-    ${DEFAULT} - module path: ${YELLOW}%s
-    ${DEFAULT}\n\n" "$MODULE_PATH"
+  printNameAndValue "module path" "$MODULE_PATH"
+  printGap
 
   if [ ! -d "$MODULE_PATH" ]; then
-    TITLE="<< ERROR >>"
-    printf "
-      ${RED}%s\n
-      ${LIGHT_RED} module path %s not found
-      ${DEFAULT}\n\n" "$TITLE" "$MODULE_PATH"
-    exitWithError
+    printErrorTitle "<< ERROR >>"
+    printWarningMessage "module path $MODULE_PATH not found"
+    printGap
+
+    exit 1
   else
     ##
     # https://git-scm.com/book/en/v2/Git-Basics-Viewing-the-Commit-History
@@ -231,11 +212,8 @@ checkConfigPathAndProceed() {
 # Generates module changelog.
 ##
 generateModuleChangelog() {
-  local TITLE="<< GENERATING MODULE CHANGELOG >>"
-  printf "
-    ${LIGHT_BLUE}%s\n
-    ${DEFAULT} - module alias: ${YELLOW}%s
-    ${DEFAULT}\n" "$TITLE" "$1"
+  printInfoTitle "<< GENERATING MODULE CHANGELOG >>"
+  printNameAndValue "module alias" "$1"
 
   local MODULE_ALIAS=$1
 
@@ -244,10 +222,9 @@ generateModuleChangelog() {
 
   local MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s/}" # partial module path, e.g. apps/client for subsequent path formation
 
-  printf "
-    ${DEFAULT} - module name: ${YELLOW}%s
-    ${DEFAULT} - module partial path name: ${YELLOW}%s
-    ${DEFAULT}\n\n" "$MODULE_NAME" "$MODULE_PARTIAL_PATH"
+  printNameAndValue "module name" "$MODULE_NAME"
+  printNameAndValue "module partial path name" "$MODULE_PARTIAL_PATH"
+  printGap
 
   local ALIAS_EXISTS=
   moduleAliasExists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0

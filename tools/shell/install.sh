@@ -4,89 +4,77 @@
 # Colors.
 ##
 source tools/shell/colors.sh ''
-
 ##
-# Exits with error.
+# Printing utility functions.
 ##
-exitWithError() {
-  exit 1
-}
+source tools/shell/print-utils.sh ''
 
 ##
 # Reports usage error and exits.
 ##
 reportUsage() {
-  local TITLE="<< USAGE >>"
-  printf "
-    ${LIGHT_BLUE} %s\n
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh${DEFAULT} (print install.sh usage)
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh project${DEFAULT} (install project dependencies only)
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh global${DEFAULT} (install global dependencies only)
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh all${DEFAULT} (install projects dependencies, global dependencies, brew (linux), protolint (linux), shellcheck (linux))
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh all osx${DEFAULT} (install projects dependencies, global dependencies, protolint (osx), shellcheck (osx))
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh proto${DEFAULT} (install protobuf dependencies on linux)
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh proto osx${DEFAULT} (install protobuf dependencies on osx)
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh shellcheck${DEFAULT} (install shellcheck on linux)
-    ${DEFAULT} - ${YELLOW} bash tools/shell/install.sh shellcheck osx${DEFAULT} (install shellcheck on osx)
-    \n\n" "$TITLE"
-}
+  printInfoTitle "<< USAGE >>"
+  printInfoMessage "The script installs dependencies in project root folder as well as in /functions if no arguments are provided."
+  printInfoMessage "The script Installs global dependencies with sudo if first argument equals 'global'."
+  printUsageTip "bash tools/shell/install.sh" "print install.sh usage"
+  printUsageTip "bash tools/shell/install.sh project" "install project dependencies only"
+  printUsageTip "bash tools/shell/install.sh global" "install global dependencies only"
+  printUsageTip "bash tools/shell/install.sh all" "install projects dependencies, global dependencies, brew (linux), protolint (linux), shellcheck (linux)"
+  printUsageTip "bash tools/shell/install.sh all osx" "install projects dependencies, global dependencies, protolint (osx), shellcheck (osx)"
+  printUsageTip "bash tools/shell/install.sh proto" "install protobuf dependencies on linux"
+  printUsageTip "bash tools/shell/install.sh proto osx" "install protobuf dependencies on osx"
+  printUsageTip "bash tools/shell/install.sh shellcheck" "install shellcheck on linux"
+  printUsageTip "bash tools/shell/install.sh shellcheck osx" "install shellcheck on osx"
+  printGap
 
-##
-# Installs dependencies in project root folder as well as in /functions if no arguments are provided.
-# Installs global dependencies with sudo if first argument equals 'global'.
-##
+  exit 1
+}
 
 ##
 # Installs project dependencies.
 ##
 installProjectDependencies() {
-  local TITLE="<< INSTALLING PROJECT DEPENDENCIES >>"
-  printf "
-    ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
-  cd ./functions || exitWithError
-  npm install || exitWithError
-  cd .. || exitWithError
-  yarn install --frozen-lockfile || exitWithError
+  printInfoTitle "<< INSTALLING PROJECT DEPENDENCIES >>"
+  printGap
+
+  cd ./functions || exit 1
+  npm install || exit 1
+  cd .. || exit 1
+  yarn install --frozen-lockfile || exit 1
 }
 
 ##
 # Installs global npm dependencies.
 ##
 installGlobalDependencies() {
-  local TITLE="<< INSTALLING GLOBAL DEPENDENCIES >>"
-  printf "
-    ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
-  sudo npm install -g @angular/cli@latest @ionic/cli@latest @nestjs/cli@latest @ngxs/cli@latest @nrwl/cli@latest typescript@latest firebase-tools@latest @compodoc/compodoc@latest commitizen@latest cz-conventional-changelog@latest clang-format@latest yarn@latest yarn || exitWithError
+  printInfoTitle "<< INSTALLING GLOBAL DEPENDENCIES >>"
+  printGap
+
+  sudo npm install -g @angular/cli@latest @ionic/cli@latest @nestjs/cli@latest @ngxs/cli@latest @nrwl/cli@latest typescript@latest firebase-tools@latest @compodoc/compodoc@latest commitizen@latest cz-conventional-changelog@latest clang-format@latest yarn@latest yarn || exit 1
 }
 
 ##
 # Resolves if package is installed, and installs the package if it is not.
 ##
 resolveIfPackageIsInstalledAndInstall() {
-  local TITLE="<< Resolving if package is installed >>"
-  printf "
-    ${LIGHT_BLUE} %s\n
-    ${DEFAULT}- package name: ${YELLOW}%s\n
-    \n\n" "$TITLE" "$1"
+  printInfoTitle "<< Resolving if package is installed >>"
+  printNameAndValue "package name" "$1"
+  printGap
 
   local PACKAGE_EXISTS
   PACKAGE_EXISTS=$(dpkg -s "$1")
 
   if [ -z "$PACKAGE_EXISTS" ]; then
-    TITLE="<< PACKAGE DOES NOT EXIST >>"
-    printf "
-      ${RED}%s\n
-      ${LIGHT_RED}installing package...\n
-      ${DEFAULT}\n\n" "$TITLE"
+    printErrorTitle "<< PACKAGE DOES NOT EXIST >>"
+    printSuccessMessage "installing package..."
+    printGap
 
     sudo apt update
     sudo apt install "$1"
   else
-    TITLE="<< PACKAGE EXISTS >>"
-    printf "
-      ${GREEN}%s\n
-      ${LIGHT_GREEN}$PACKAGE_EXISTS\n
-      \n\n" "$TITLE"
+    printSuccessTitle "<< PACKAGE EXISTS >>"
+    printSuccessMessage "$PACKAGE_EXISTS"
+    printGap
   fi
 }
 
@@ -94,10 +82,8 @@ resolveIfPackageIsInstalledAndInstall() {
 # Installs linuxbrew dependencies on Linux.
 ##
 installLinuxBrewDependencies() {
-  local TITLE="<< INSTALLING LINUXBREW dependencies >>"
-  printf "
-    ${LIGHT_BLUE}%s
-    ${DEFAULT}\n\n" "$TITLE"
+  printInfoTitle "<< INSTALLING LINUXBREW dependencies >>"
+  printGap
 
   resolveIfPackageIsInstalledAndInstall build-essential
 }
@@ -106,10 +92,9 @@ installLinuxBrewDependencies() {
 # Installs brew, protilint, protobuf, and gRPC tools on Linux.
 ##
 installBrewAndProtobufLinux() {
-  local TITLE="<< INSTALLING BREW, PROTOLINT, PROTOBUF, PROTOC-GEN-GRPC-WEB, GRPC TOOLS on LINUX >>"
-  printf "
-    ${LIGHT_BLUE}%s
-    ${DEFAULT}\n\n" "$TITLE"
+  printInfoTitle "<< INSTALLING BREW, PROTOLINT, PROTOBUF, PROTOC-GEN-GRPC-WEB, GRPC TOOLS on LINUX >>"
+  printGap
+
   # install linux brew dependencies
   installLinuxBrewDependencies
   # install linux brew wrapper
@@ -150,9 +135,9 @@ installBrewAndProtobufLinux() {
 # Installs protobuf and gRPC tools on OSX.
 ##
 installProtobufOsx() {
-  local TITLE="<< INSTALLING PROTOLINT, PROTOBUF, PROTOC-GEN-GRPC-WEB on OSX >>"
-  printf "
-    ${LIGHT_BLUE} %s ${DEFAULT}\n\n" "$TITLE"
+  printInfoTitle "<< INSTALLING PROTOLINT, PROTOBUF, PROTOC-GEN-GRPC-WEB on OSX >>"
+  printGap
+
   brew install protolint
   brew install protobuf
   brew install protoc-gen-grpc-web --ignore-dependencies
@@ -174,10 +159,9 @@ installProtobufAndGrpcTools() {
 # Installs Shellcheck on Linux.
 ##
 installShellcheckLinux() {
-  local TITLE="<< INSTALLING SHELLCHECK on LINUX >>"
-  printf "
-    ${LIGHT_BLUE}%s
-    ${DEFAULT}\n\n" "$TITLE"
+  printInfoTitle "<< INSTALLING SHELLCHECK on LINUX >>"
+  printGap
+
   sudo apt install shellcheck
 }
 
@@ -185,10 +169,9 @@ installShellcheckLinux() {
 # Installs Shellcheck on Osx.
 ##
 installShellcheckOsx() {
-  local TITLE="<< INSTALLING SHELLCHECK on OSX >>"
-  printf "
-    ${LIGHT_BLUE}%s
-    ${DEFAULT}\n\n" "$TITLE"
+  printInfoTitle "<< INSTALLING SHELLCHECK on OSX >>"
+  printGap
+
   brew install shellcheck
 }
 
