@@ -3,7 +3,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { AppMarkdownService } from '@nx-ng-starter/client-services';
 import { TIMEOUT } from '@nx-ng-starter/client-util';
 import { of, timer } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 @UntilDestroy()
 @Component({
@@ -14,11 +14,12 @@ import { map } from 'rxjs/operators';
 })
 export class AppHomeComponent {
   public readonly timer$ = timer(TIMEOUT.INSTANT, TIMEOUT.MEDIUM).pipe(
-    map(num => `Until destoyed timer ${num}`),
+    map(num => `Until destroyed ${num}`),
     untilDestroyed(this),
   );
 
-  public readonly markedInstructions$ = of(null).pipe(
+  public readonly markedInstructions$ = of('').pipe(
+    first(),
     map(() => {
       const sidenavInstruction =
         'Open **sidenav** by clicking **logo** or **icon** button in the left corner of the browser window, and select an item \n\n';
