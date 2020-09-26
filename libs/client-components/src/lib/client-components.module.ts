@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
 
 import { AppClientComponentsRoutingModule } from './client-components-routing.module';
@@ -10,7 +11,12 @@ import { AppInfoComponent } from './info/info.component';
 import { AppInfoPage } from './info/page/info-page.component';
 
 @NgModule({
-  imports: [CommonModule, AppClientMaterialModule, AppClientComponentsRoutingModule],
+  imports: [
+    FlexLayoutModule,
+    CommonModule,
+    AppClientMaterialModule,
+    AppClientComponentsRoutingModule,
+  ],
   declarations: [AppIndexComponent, AppHomeComponent, AppHomePage, AppInfoComponent, AppInfoPage],
 })
 export class AppClientComponentsModule {}
