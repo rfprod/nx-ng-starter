@@ -1,6 +1,5 @@
 module.exports = {
-  name: 'client',
-  preset: '../../jest.config.js',
+  preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/apps/client',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   snapshotSerializers: [
@@ -8,4 +7,5 @@ module.exports = {
     'jest-preset-angular/build/AngularSnapshotSerializer.js',
     'jest-preset-angular/build/HTMLCommentSerializer.js',
   ],
+  displayName: 'client',
 };
