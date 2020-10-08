@@ -38,7 +38,9 @@
             }
           },
           "options": {
-            "assets": ["apps/api/src/assets"],
+            "assets": [
+              "apps/api/src/assets"
+            ],
             "buildLibsFromSource": true,
             "main": "apps/api/src/main.ts",
             "outputPath": "dist/apps/api",
@@ -48,8 +50,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "apps/api/.eslintrc",
-            "lintFilePatterns": ["apps/api/**/*.ts"]
+            "eslintConfig": "apps/api/.eslintrc.json",
+            "lintFilePatterns": [
+              "apps/api/**/*.ts"
+            ]
           }
         },
         "serve": {
@@ -95,8 +99,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/api-interface/.eslintrc",
-            "lintFilePatterns": ["libs/api-interface/**/*.ts"]
+            "eslintConfig": "libs/api-interface/.eslintrc.json",
+            "lintFilePatterns": [
+              "libs/api-interface/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -224,8 +230,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "apps/client/.eslintrc",
-            "lintFilePatterns": ["apps/client/**/*.ts"]
+            "eslintConfig": "apps/client/.eslintrc.json",
+            "lintFilePatterns": [
+              "apps/client/**/*.ts"
+            ]
           }
         },
         "serve": {
@@ -294,8 +302,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/client-components/.eslintrc",
-            "lintFilePatterns": ["libs/client-components/**/*.ts"]
+            "eslintConfig": "libs/client-components/.eslintrc.json",
+            "lintFilePatterns": [
+              "libs/client-components/**/*.ts"
+            ]
           }
         },
         "storybook": {
@@ -331,30 +341,6 @@
       },
       "sourceRoot": "libs/client-components/src"
     },
-    "tools": {
-      "architect": {
-        "help": {
-          "builder": "@nrwl/workspace:run-commands",
-          "options": {
-            "commands": [
-              {
-                "command": "npx ts-node ./tools/ts/package-commands.ts"
-              }
-            ]
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "eslintConfig": "tools/.eslintrc",
-            "lintFilePatterns": ["tools/ts/**/*.ts"]
-          }
-        }
-      },
-      "projectType": "application",
-      "root": "tools",
-      "sourceRoot": "tools/src"
-    },
     "client-components-e2e": {
       "architect": {
         "e2e": {
@@ -373,8 +359,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "apps/client-components-e2e/.eslintrc",
-            "lintFilePatterns": ["apps/client-components-e2e/**/*.ts"]
+            "eslintConfig": "apps/client-components-e2e/.eslintrc.json",
+            "lintFilePatterns": [
+              "apps/client-components-e2e/**/*.ts"
+            ]
           }
         }
       },
@@ -387,8 +375,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/client-core/.eslintrc",
-            "lintFilePatterns": ["libs/client-core/**/*.ts"]
+            "eslintConfig": "libs/client-core/.eslintrc.json",
+            "lintFilePatterns": [
+              "libs/client-core/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -427,8 +417,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "apps/client-e2e/.eslintrc",
-            "lintFilePatterns": ["apps/client-e2e/**/*.ts"]
+            "eslintConfig": "apps/client-e2e/.eslintrc.json",
+            "lintFilePatterns": [
+              "apps/client-e2e/**/*.ts"
+            ]
           }
         }
       },
@@ -441,8 +433,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/client-gql/.eslintrc",
-            "lintFilePatterns": ["libs/client-gql/**/*.ts"]
+            "eslintConfig": "libs/client-gql/.eslintrc.json",
+            "lintFilePatterns": [
+              "libs/client-gql/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -468,8 +462,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/client-material/.eslintrc",
-            "lintFilePatterns": ["libs/client-material/**/*.ts"]
+            "eslintConfig": "libs/client-material/.eslintrc.json",
+            "lintFilePatterns": [
+              "libs/client-material/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -495,8 +491,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/client-services/.eslintrc",
-            "lintFilePatterns": ["libs/client-services/**/*.ts"]
+            "eslintConfig": "libs/client-services/.eslintrc.json",
+            "lintFilePatterns": [
+              "libs/client-services/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -522,8 +520,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/client-store/.eslintrc",
-            "lintFilePatterns": ["libs/client-store/**/*.ts"]
+            "eslintConfig": "libs/client-store/.eslintrc.json",
+            "lintFilePatterns": [
+              "libs/client-store/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -549,8 +549,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/client-translate/.eslintrc",
-            "lintFilePatterns": ["libs/client-translate/**/*.ts"]
+            "eslintConfig": "libs/client-translate/.eslintrc.json",
+            "lintFilePatterns": [
+              "libs/client-translate/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -576,8 +578,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/client-util/.eslintrc",
-            "lintFilePatterns": ["libs/client-util/**/*.ts"]
+            "eslintConfig": "libs/client-util/.eslintrc.json",
+            "lintFilePatterns": [
+              "libs/client-util/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -752,8 +756,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "apps/documentation/.eslintrc",
-            "lintFilePatterns": ["apps/documentation/**/*.ts"]
+            "eslintConfig": "apps/documentation/.eslintrc.json",
+            "lintFilePatterns": [
+              "apps/documentation/**/*.ts"
+            ]
           }
         },
         "serve": {
@@ -818,8 +824,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "apps/documentation-e2e/.eslintrc",
-            "lintFilePatterns": ["apps/documentation-e2e/**/*.ts"]
+            "eslintConfig": "apps/documentation-e2e/.eslintrc.json",
+            "lintFilePatterns": [
+              "apps/documentation-e2e/**/*.ts"
+            ]
           }
         }
       },
@@ -832,8 +840,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/mocks-core/.eslintrc",
-            "lintFilePatterns": ["libs/mocks-core/**/*.ts"]
+            "eslintConfig": "libs/mocks-core/.eslintrc.json",
+            "lintFilePatterns": [
+              "libs/mocks-core/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -859,8 +869,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/proto/.eslintrc",
-            "lintFilePatterns": ["libs/proto/**/*.ts"]
+            "eslintConfig": "libs/proto/.eslintrc.json",
+            "lintFilePatterns": [
+              "libs/proto/**/*.ts"
+            ]
           }
         },
         "test": {
@@ -880,6 +892,32 @@
         }
       },
       "sourceRoot": "libs/proto/src"
+    },
+    "tools": {
+      "architect": {
+        "help": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "npx ts-node ./tools/ts/package-commands.ts"
+              }
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "tools/.eslintrc.json",
+            "lintFilePatterns": [
+              "tools/ts/**/*.ts"
+            ]
+          }
+        }
+      },
+      "projectType": "application",
+      "root": "tools",
+      "sourceRoot": "tools/src"
     }
   },
   "schematics": {
