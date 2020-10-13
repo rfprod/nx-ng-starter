@@ -4,6 +4,10 @@
 # Colors.
 ##
 source tools/shell/colors.sh ''
+##
+# Printing utility functions.
+##
+source tools/shell/print-utils.sh ''
 
 declare -A EXISTING_README
 
@@ -11,18 +15,16 @@ declare -A EXISTING_README
 # Sets markdown file paths array value.
 ##
 setMarkdownFilePathsValue() {
-  local TITLE="<< SETTING MARKDOWN FILE PATHS >>"
-  printf "
-    ${LIGHT_BLUE}%s
-    ${DEFAULT} Readmes:
-    ${DEFAULT}%s
-    ${DEFAULT}\n" "$TITLE" "${EXISTING_README[@]}"
+  printInfoTitle "<< SETTING MARKDOWN FILE PATHS >>"
+  printNameAndValue "readmes" "${EXISTING_README[@]}"
+  printGap
 
   COMMA_SEPARATES_STRINGS=$(
     IFS=","
     echo "${EXISTING_README[*]}"
   )
-  printf "COMMA_SEPARATES_STRINGS: %s" "$COMMA_SEPARATES_STRINGS"
+
+  printNameAndValue "COMMA_SEPARATES_STRINGS" "$COMMA_SEPARATES_STRINGS"
 
   find ./apps/documentation/src/environments/ -type f -name "environment.ts" -exec sed -i "s#mdFilePaths.*#mdFilePaths: [$COMMA_SEPARATES_STRINGS],#g" {} +
   find ./apps/documentation/src/environments/ -type f -name "environment.prod.ts" -exec sed -i "s#mdFilePaths.*#mdFilePaths: [$COMMA_SEPARATES_STRINGS],#g" {} +
@@ -34,16 +36,15 @@ setMarkdownFilePathsValue() {
 # Reports existing *.md files.
 ##
 reportExistingReadmes() {
-  local TITLE="<< README FILES >>"
-  printf "
-    ${LIGHT_BLUE}%s
-    ${DEFAULT} - execute this script without any parameters to find README files and use found paths to update environment of the Documentation app;
-    ${DEFAULT}\n" "$TITLE"
+  printInfoTitle "<< README FILES >>"
+  printInfoMessage "execute this script without any parameters to find README files and use found paths to update environment of the Documentation app"
+  printGap
 
   local KEY
   for KEY in "${!EXISTING_README[@]}"; do printf "
       ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${EXISTING_README[$KEY]}${DEFAULT}" "${KEY}"; done
-  printf "\n"
+
+  printGap
 }
 
 ##
