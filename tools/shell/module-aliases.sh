@@ -4,6 +4,10 @@
 # Colors.
 ##
 source tools/shell/colors.sh ''
+##
+# Printing utility functions.
+##
+source tools/shell/print-utils.sh ''
 
 declare -A EXISTING_MODULE_ALIASES
 declare -A EXISTING_MODULE_ALIASES_E2E
@@ -48,43 +52,42 @@ findSupportedModuleAliases() {
 findSupportedModuleAliases
 
 reportSupportedModuleAliases() {
-  local TITLE="<< MODULE ALIASES >>"
-  printf "
-    ${LIGHT_BLUE}%s ${DEFAULT}\n" "$TITLE"
+  printInfoTitle "<< MODULE ALIASES >>"
+  printGap
 
   local KEY
   for KEY in "${!EXISTING_MODULE_ALIASES[@]}"; do printf "
       ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${EXISTING_MODULE_ALIASES[$KEY]}${DEFAULT}" "${KEY}"; done
 
-  local INFO="Use this aliases in other module related scripts like tools/shell/changelog.sh, tools/shell/document.sh etc."
-  printf "\n\n\n${LIGHT_BLUE} %s${DEFAULT}\n\n" "$INFO"
+  printGap
+  printInfoMessage "Use this aliases in other module related scripts like tools/shell/changelog.sh, tools/shell/document.sh etc."
+  printGap
 }
 
 reportSupportedModuleAliasesUnit() {
-  local TITLE="<< MODULE ALIASES (unit) >>"
-  printf "
-    ${LIGHT_BLUE}%s ${DEFAULT}\n" "$TITLE"
+  printInfoTitle "<< MODULE ALIASES (unit) >>"
+  printGap
 
   local KEY
   for KEY in "${!EXISTING_MODULE_ALIASES_UNIT[@]}"; do printf "
       ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${EXISTING_MODULE_ALIASES_UNIT[$KEY]}${DEFAULT}" "${KEY}"; done
 
-  local INFO="Use this aliases in tools/shell/test.sh."
-  printf "\n\n\n${LIGHT_BLUE} %s${DEFAULT}\n\n" "$INFO"
+  printGap
+  printInfoMessage "Use this aliases in tools/shell/test.sh."
+  printGap
 }
 
 reportSupportedModuleAliasesE2E() {
-  local TITLE="<< MODULE ALIASES (e2e) >>"
-  printf "
-    ${LIGHT_BLUE}%s
-    ${DEFAULT}\n" "$TITLE"
+  printInfoTitle "<< MODULE ALIASES (e2e) >>"
+  printGap
 
   local KEY
   for KEY in "${!EXISTING_MODULE_ALIASES_E2E[@]}"; do printf "
           ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${EXISTING_MODULE_ALIASES_E2E[$KEY]}${DEFAULT}" "${KEY}"; done
 
-  local INFO="Use this aliases in tools/shell/e2e.sh."
-  printf "\n\n\n${LIGHT_BLUE} %s${DEFAULT}\n\n" "$INFO"
+  printGap
+  printInfoMessage "Use this aliases in tools/shell/e2e.sh."
+  printGap
 }
 
 ##
