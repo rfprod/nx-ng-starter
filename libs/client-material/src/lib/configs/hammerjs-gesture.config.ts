@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HammerGestureConfig } from '@angular/platform-browser';
+import * as Hammer from 'hammerjs';
 
 /**
  * HammerJS Gesture Config.
@@ -43,6 +44,7 @@ export class AppHammerGestureConfig extends HammerGestureConfig {
       threshold: 0, // Minimal rotation before recognizing.
     },
     swipe: {
+      direction: Hammer.DIRECTION_HORIZONTAL,
       enable: true,
       pointers: 1, // Required pointers.
       velocity: 0.4, // inimal velocity required before recognizing, unit is in px per ms.

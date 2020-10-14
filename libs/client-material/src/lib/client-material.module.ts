@@ -1,5 +1,3 @@
-import 'node_modules/hammerjs/hammer.js';
-
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
