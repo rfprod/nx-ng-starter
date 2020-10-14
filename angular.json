@@ -119,18 +119,6 @@
           "configurations": {
             "analyze-bundle": {
               "aot": true,
-              "budgets": [
-                {
-                  "maximumError": "5mb",
-                  "maximumWarning": "2mb",
-                  "type": "initial"
-                },
-                {
-                  "maximumError": "10kb",
-                  "maximumWarning": "6kb",
-                  "type": "anyComponentStyle"
-                }
-              ],
               "buildOptimizer": true,
               "extractCss": true,
               "extractLicenses": true,
@@ -148,18 +136,6 @@
             },
             "production": {
               "aot": true,
-              "budgets": [
-                {
-                  "maximumError": "5mb",
-                  "maximumWarning": "2mb",
-                  "type": "initial"
-                },
-                {
-                  "maximumError": "10kb",
-                  "maximumWarning": "6kb",
-                  "type": "anyComponentStyle"
-                }
-              ],
               "buildOptimizer": true,
               "extractCss": true,
               "extractLicenses": true,
@@ -199,6 +175,18 @@
                 "glob": "**/*",
                 "input": "./libs/client-core/src/lib/assets",
                 "output": "./assets"
+              }
+            ],
+            "budgets": [
+              {
+                "maximumError": "5mb",
+                "maximumWarning": "2mb",
+                "type": "initial"
+              },
+              {
+                "maximumError": "10kb",
+                "maximumWarning": "6kb",
+                "type": "anyComponentStyle"
               }
             ],
             "index": "apps/client/src/index.html",
@@ -581,18 +569,6 @@
           "configurations": {
             "analyze-bundle": {
               "aot": true,
-              "budgets": [
-                {
-                  "maximumError": "5mb",
-                  "maximumWarning": "2mb",
-                  "type": "initial"
-                },
-                {
-                  "maximumError": "10kb",
-                  "maximumWarning": "6kb",
-                  "type": "anyComponentStyle"
-                }
-              ],
               "buildOptimizer": true,
               "extractCss": true,
               "extractLicenses": true,
@@ -609,18 +585,6 @@
               "vendorChunk": true
             },
             "production": {
-              "budgets": [
-                {
-                  "maximumError": "5mb",
-                  "maximumWarning": "2mb",
-                  "type": "initial"
-                },
-                {
-                  "maximumError": "10kb",
-                  "maximumWarning": "6kb",
-                  "type": "anyComponentStyle"
-                }
-              ],
               "buildOptimizer": true,
               "extractCss": true,
               "extractLicenses": true,
@@ -675,6 +639,18 @@
                 "glob": "**/*.md",
                 "input": "tools",
                 "output": "md/tools"
+              }
+            ],
+            "budgets": [
+              {
+                "maximumError": "5mb",
+                "maximumWarning": "2mb",
+                "type": "initial"
+              },
+              {
+                "maximumError": "10kb",
+                "maximumWarning": "6kb",
+                "type": "anyComponentStyle"
               }
             ],
             "index": "apps/documentation/src/index.html",
