@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import { argv } from 'yargs';
 
 import { COLORS } from './colors';
 
@@ -22,21 +23,49 @@ interface IPackageJSON {
   };
 }
 
-fs.readFile(`${cwd}/../../package.json`, 'utf8', (error, data) => {
-  if (error) {
-    throw error;
+/**
+ * Prints arguments usage tip if no applicable arguments were used.
+ */
+function printSearchArgumentTip() {
+  const search = argv.search;
+  if (typeof search !== 'string') {
+    console.log(
+      `\n${COLORS.CYAN}%s${COLORS.DEFAULT} ${COLORS.YELLOW}%s${COLORS.DEFAULT}\n`,
+      'Use --search flag to filter available commands, e.g.',
+      'yarn workspace:help --search=build',
+    );
   }
-  const parsedPackageJSON: IPackageJSON = JSON.parse(data);
-  // eslint-disable-next-line no-console
-  console.log(`${COLORS.YELLOW}%s${COLORS.DEFAULT}`, '<< WORKSPACE COMMANDS >>');
-  const scripts = parsedPackageJSON.scripts;
-  const scriptKeys = Object.keys(scripts);
+}
+
+/**
+ * Prints package scripts.
+ * @param scripts package scripts object.
+ */
+function printPackageScripts(scripts: IPackageJSON['scripts']) {
+  const search = argv.search;
+  const scriptKeys =
+    typeof search !== 'string'
+      ? Object.keys(scripts)
+      : Object.keys(scripts).filter(key => new RegExp(search).test(key));
   for (const key of scriptKeys) {
-    // eslint-disable-next-line no-console
     console.log(
       `$ ${COLORS.CYAN}yarn${COLORS.DEFAULT} ${COLORS.CYAN}%s${COLORS.DEFAULT}: ${COLORS.YELLOW}%s${COLORS.DEFAULT}`,
       `${key}`,
       `${scripts[key]}`,
     );
   }
+}
+
+fs.readFile(`${cwd}/../../package.json`, 'utf8', (error, data) => {
+  if (error) {
+    throw error;
+  }
+
+  const parsedPackageJSON: IPackageJSON = JSON.parse(data);
+  console.log(`${COLORS.YELLOW}%s${COLORS.DEFAULT}`, '<< WORKSPACE COMMANDS >>');
+
+  const scripts = parsedPackageJSON.scripts;
+  printPackageScripts(scripts);
+
+  printSearchArgumentTip();
 });

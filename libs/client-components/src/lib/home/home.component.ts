@@ -22,7 +22,7 @@ export class AppHomeComponent {
     first(),
     map(() => {
       const sidenavInstruction =
-        'Open **sidenav** by clicking **logo** or **icon** button in the left corner of the browser window, and select an item \n\n';
+        'Open **sidenav** by clicking **logo** or **icon** button in the left corner of the browser window, and select an item. \n\n Alternatively, use swipe gesture (using mouse cursor or actual touch gesture) to manupulate the sidebar. \n\n';
       const markdownInstructions =
         '# You can use Markdown \n\n via AppMarkdownService, just like in this example.';
       return this.markdown.process(`${sidenavInstruction} ${markdownInstructions}`);
