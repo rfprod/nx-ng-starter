@@ -20,7 +20,7 @@ module.exports = {
   transformIgnorePatterns: ['node_modules/(?!@ngxs|simple-git)'],
   moduleFileExtensions: ['ts', 'html', 'js', 'json'],
   resolver: '@nrwl/jest/plugins/resolver',
-  coverageReporters: ['html'],
+  coverageReporters: ['json-summary', 'html-spa'],
   collectCoverage: true,
   cacheDirectory: '/tmp/jest_rs/nx-ng-starter',
 };

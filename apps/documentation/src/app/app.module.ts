@@ -10,7 +10,6 @@ import { NgxsModule } from '@ngxs/store';
 import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
 import { documentFactory, WINDOW, windowFactory } from '@nx-ng-starter/client-util';
 import { MarkdownModule, MarkdownModuleConfig, MarkedOptions } from 'ngx-markdown';
-
 import { environment } from '../environments/environment';
 import { AppDocRoutingModule } from './app-routing.module';
 import { AppDocMarkdownReferenceTreeComponent } from './componenets/md-reference-tree/md-reference-tree.component';

@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Store } from '@ngxs/store';
-
 import { DOC_APP_ENV, IDocAppEnvironment } from '../../interfaces/environment.interface';
 import { AppMdFilesState } from '../../modules/store/md-files/md-files.store';
 
