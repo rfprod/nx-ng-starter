@@ -1,6 +1,5 @@
 import { Provider } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-
 import { EN, EN_DICTIONARY } from '../dictionaries/en';
 import { RU, RU_DICTIONARY } from '../dictionaries/ru';
 

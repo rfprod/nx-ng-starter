@@ -1,5 +1,4 @@
 import { async, TestBed } from '@angular/core/testing';
-
 import { IUiDictionary } from '../interfaces';
 import { EN, EN_DICTIONARY } from './en';
 

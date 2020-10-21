@@ -1,5 +1,4 @@
 import { InjectionToken } from '@angular/core';
-
 import { IWebClientAppEnvironment } from '../interfaces';
 
 export type TWindowToken = InjectionToken<Window>;
