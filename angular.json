@@ -835,6 +835,16 @@
     },
     "tools": {
       "architect": {
+        "coverage-stats": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "npx ts-node ./tools/ts/coverage-stats.ts"
+              }
+            ]
+          }
+        },
         "help": {
           "builder": "@nrwl/workspace:run-commands",
           "options": {
