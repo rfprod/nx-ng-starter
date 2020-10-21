@@ -56,7 +56,7 @@
     "install:shellcheck:osx": "bash tools/shell/install.sh shellcheck osx",
     "lint": "bash tools/shell/lint.sh all",
     "lint:changed": "bash tools/shell/lint.sh changed",
-    "lint:changed:fix": "bash tools/shell/lint.sh changed fix && git add --all",
+    "lint:changed:fix": "bash tools/shell/lint.sh changed fix",
     "lint:fix": "bash tools/shell/lint.sh all fix",
     "lint:html": "npm run lint:html:apps && lint:html:libs",
     "lint:html:apps": "npx prettier -c apps/**/**/*.html",
