@@ -35,6 +35,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { HammerModule } from '@angular/platform-browser';
+
 import { appClientMaterialModuleProviders } from './providers/client-material-module.providers';
 
 /**

@@ -1,5 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { Provider } from '@angular/core';
+
 import { documentFactory, windowFactory } from './factories';
 import { WINDOW } from './injection-tokens';
 

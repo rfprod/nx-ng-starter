@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+
 import { IUiDictionary } from '../interfaces/ui-dictionary.interface';
 
 export const RU_DICTIONARY = new InjectionToken<IUiDictionary>('RU');

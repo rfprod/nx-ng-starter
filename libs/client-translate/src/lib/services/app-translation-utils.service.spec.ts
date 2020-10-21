@@ -4,6 +4,7 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
 import { documentProvider, WINDOW, windowProvider } from '@nx-ng-starter/client-util';
 import { Subject } from 'rxjs';
+
 import { AppClientTranslateModule } from '../client-translate.module';
 import {
   ISupportedLanguage,

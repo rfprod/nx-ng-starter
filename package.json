@@ -99,7 +99,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint:changed:fix",
+      "pre-commit": "npm run lint:changed",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
