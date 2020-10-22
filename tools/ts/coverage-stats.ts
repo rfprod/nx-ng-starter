@@ -65,12 +65,12 @@ const readFileCallback = (error: NodeJS.ErrnoException | null, data?: Buffer) =>
     const summaryKeys = Object.keys(summary) as (keyof ICoverageSummaryObj)[];
 
     parseSummary(summary, summaryKeys);
+  }
 
-    readFiles += 1;
+  readFiles += 1;
 
-    if (readFiles === projects.length) {
-      writeAverageStats();
-    }
+  if (readFiles === projects.length) {
+    writeAverageStats();
   }
 };
 
