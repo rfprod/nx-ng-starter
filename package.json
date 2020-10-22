@@ -23,7 +23,7 @@
     "build:client": "ng build client",
     "build:client:prod": "bash tools/shell/build.sh prod client",
     "build:client:stats": "ng build --stats-json --project client --configuration analyze-bundle",
-    "build:documentation": "npm run generate:env:documentation; ng build documentation; npm run generate:documentation:dist; npm run generate:changelog; npm run e2e:headless:report; npm run test:all:single-run-and-report-to-dist",
+    "build:documentation": "npm run test:report; ng run tools:coverage-stats; npm run generate:env:documentation; ng build documentation; npm run generate:documentation:dist; npm run generate:changelog; npm run e2e:headless:report; npm run test:report",
     "build:documentation:prod": "npm run generate:env:documentation; bash tools/shell/build.sh prod documentation",
     "build:documentation:stats": "ng build --stats-json --project documentation --configuration analyze-bundle",
     "e2e": "bash tools/shell/e2e.sh all",

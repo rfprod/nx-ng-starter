@@ -26,34 +26,6 @@ reportUsage() {
 }
 
 ##
-# Generates compodoc documentation.
-##
-generateCompodocs() {
-  npm run generate:documentation:dist
-}
-
-##
-# Generates changelog and reports to dist.
-##
-generateChangelogs() {
-  npm run generate:changelog
-}
-
-##
-# Generates e2e reports and reports to dist.
-##
-generateEnd2EndReports() {
-  npm run e2e:headless:report
-}
-
-##
-# Generates unit test reports and reports to dist.
-##
-generateUnitTestReports() {
-  npm run test:report
-}
-
-##
 # Builds Nx Ng Starter client app in production mode.
 ##
 buildNxNgStarterClientProd() {
@@ -70,11 +42,14 @@ buildNxNgStarterDocsProd() {
   printInfoTitle "<< BUILDING Nx Ng Starter documentation app PRODUCTION mode >>"
   printGap
 
+  yarn test
+  ng run tools:coverage-stats
+  yarn generate:env:documentation
   ng build --project documentation --configuration production || exit 1
-  generateCompodocs
-  generateChangelogs
-  generateEnd2EndReports
-  generateUnitTestReports
+  yarn generate:documentation:dist
+  yarn generate:changelog
+  yarn e2e:headless:report
+  yarn test:report
 }
 
 ##
