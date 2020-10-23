@@ -80,8 +80,10 @@ performModuleTesting() {
   if [ "$4" = "watch" ]; then
     npx nx test "$1" --passWithNoTests --watchAll
   elif [ "$4" = "report" ]; then
-    npx nx test "$1" --watch=false --silent --passWithNoTests || exit 1
+    npx nx test "$1" --watch=false --silent --passWithNoTests --code-coverage || exit 1
     copyReportToDist "$2" "$3" "$4"
+  else
+    npx nx test "$1" --watch=false --silent --passWithNoTests || exit 1
   fi
 }
 
