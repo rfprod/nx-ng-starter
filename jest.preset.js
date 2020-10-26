@@ -4,7 +4,7 @@ module.exports = {
   testMatch: ['**/+(*.)+(spec|test).+(ts|js)?(x)'],
   globals: {
     'ts-jest': {
-      tsConfig: '<rootDir>/tsconfig.spec.json',
+      tsconfig: '<rootDir>/tsconfig.spec.json',
       stringifyContentPathRegex: '\\.(html|svg)$',
       astTransformers: {
         before: [
