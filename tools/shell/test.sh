@@ -24,7 +24,8 @@ reportUsageErrorAndExit() {
   printInfoTitle "<< USAGE >>"
   printUsageTip "bash tools/shell/test.sh single-run all" "run all unit tests"
   printUsageTip "bash tools/shell/test.sh single-run <MODULE_ALIAS_FROM_TSCONFIG>" "run unit tests for a specific application/library"
-  printUsageTip "bash tools/shell/test.sh single-run:report <MODULE_ALIAS_FROM_TSCONFIG>" "run unit tests for a specific application/library, and collect coverage report"
+  printUsageTip "bash tools/shell/test.sh single-run:coverage <MODULE_ALIAS_FROM_TSCONFIG>" "run unit tests for a specific application/library, and collect coverage report"
+  printUsageTip "bash tools/shell/test.sh report all" "copy all coverage reports to the documentation app dist"
   printUsageTip "bash tools/shell/test.sh run <MODULE_ALIAS_FROM_TSCONFIG>" "run unit tests for a specific application/library in watch mode"
 
   reportSupportedModuleAliasesUnit
@@ -35,35 +36,42 @@ reportUsageErrorAndExit() {
 }
 
 ##
-# Copies generated report to dist folder.
+# Copies all pregenerated coverage reports to the dist folder.
 ##
-copyReportToDist() {
-  printInfoTitle "<< COPY REPORT TO DIST >>"
-  printNameAndValue "module partial path" "$1"
-  printNameAndValue "coverage dist path" "$2"
-  printNameAndValue "optional action (report, watch)" "$3"
+copyReportsToDist() {
+  printInfoTitle "<< COPY REPORTS TO DIST >>"
   printGap
+
+  ##
+  # Documentation app dist path.
+  ##
+  local DOCUMENTATION_APP_DIST_PATH=${PROJECT_ROOT}/dist/apps/documentation/assets
+
+  if [ ! -d ${DOCUMENTATION_APP_DIST_PATH} ]; then
+    printErrorTitle "<< ERROR >>"
+    printWarningMessage "Documentation app dist should be generated first."
+    printGap
+    exit 1
+  fi
 
   ##
   # Coverage root path.
   ##
-  local COV_DISTR_ROOT=${2}
+  local COVERAGE_DIST_ROOT=${DOCUMENTATION_APP_DIST_PATH}/coverage
 
-  if [ "$3" = "report" ]; then
-    # check coverage dist path existence
-    if [ -d "${COV_DISTR_ROOT}" ]; then
-      printSuccessMessage "coverage directory $COV_DISTR_ROOT exists, proceeding"
-      printGap
-    else
-      printErrorTitle "<< ERROR >>"
-      printWarningMessage "directory $COV_DISTR_ROOT does not exist"
-      printInfoMessage "creating directory $COV_DISTR_ROOT"
-      printGap
+  if [ -d ${COVERAGE_DIST_ROOT} ]; then
+    printSuccessMessage "directory $COVERAGE_DIST_ROOT exists, proceeding"
+    printGap
+  else
+    printErrorTitle "<< ERROR >>"
+    printWarningMessage "directory $COVERAGE_DIST_ROOT does not exist"
+    printInfoMessage "creating directory $COVERAGE_DIST_ROOT"
+    printGap
 
-      mkdir -p "$COV_DISTR_ROOT"
-    fi
-    cp -r ${PROJECT_ROOT}/coverage/"${1}" "$2" || exit 1
+    mkdir -p $COVERAGE_DIST_ROOT
   fi
+
+  cp -r "$COVERAGE_ROOT" "$COVERAGE_DIST_ROOT" || exit 1
 }
 
 ##
@@ -72,16 +80,13 @@ copyReportToDist() {
 performModuleTesting() {
   printInfoTitle "<< TESTING MODULE >>"
   printNameAndValue "module name" "$1"
-  printNameAndValue "module partial path" "$2"
-  printNameAndValue "coverage dist path" "$3"
-  printNameAndValue "optional action (report, watch)" "$4"
+  printNameAndValue "optional action (coverage, watch)" "$2"
   printGap
 
-  if [ "$4" = "watch" ]; then
+  if [ "$2" = "watch" ]; then
     npx nx test "$1" --passWithNoTests --watchAll
-  elif [ "$4" = "report" ]; then
+  elif [ "$2" = "coverage" ]; then
     npx nx test "$1" --watch=false --silent --passWithNoTests --code-coverage || exit 1
-    copyReportToDist "$2" "$3" "$4"
   else
     npx nx test "$1" --watch=false --silent --passWithNoTests || exit 1
   fi
@@ -108,13 +113,7 @@ testModule() {
   local MODULE_NAME="${MODULE_ALIAS//app\:/}" # remove app: prefix
   MODULE_NAME="${MODULE_NAME//lib\:/}"        # remove lib: prefix
 
-  local MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s\/}" # partial module path, e.g. apps/client for subsequent path formation
-
-  local COVERAGE_BASE_PATH=${PROJECT_ROOT}/dist/apps/documentation/coverage
-
   printNameAndValue "module name" "$MODULE_NAME"
-  printNameAndValue "module partial path name" "$MODULE_PARTIAL_PATH"
-  printNameAndValue "coverage report base path" "$MODULE_COVERAGE_BASE_PATHNAME"
   printGap
 
   local ALIAS_EXISTS=
@@ -123,12 +122,7 @@ testModule() {
   if [ "$ALIAS_EXISTS" = 1 ]; then
     printInfoTitle "<< ALIAS ESISTS >>"
 
-    local COVERAGE_DIST_PATH=${COVERAGE_BASE_PATH}
-
-    printNameAndValue "coverage dist path" "$COVERAGE_DIST_PATH"
-    printGap
-
-    performModuleTesting "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$COVERAGE_DIST_PATH" "$OPTIONAL_ACTION"
+    performModuleTesting "$MODULE_NAME" "$OPTIONAL_ACTION"
   elif [ "$MODULE_ALIAS" = "all" ]; then
     for MODULE_ALIAS_VAR in "${EXISTING_MODULE_ALIASES_UNIT[@]}"; do testModule "$MODULE_ALIAS_VAR" "$OPTIONAL_ACTION"; done
   elif [ "$MODULE_ALIAS" = "changed" ]; then
@@ -157,8 +151,10 @@ if [ $# -lt 2 ]; then
 else
   if [ "$1" = "single-run" ]; then
     testModule "$2" "none" # test single run.
-  elif [ "$1" = "single-run:report" ]; then
-    testModule "$2" "report" # test single run, generate coverage report, and copy report to dist.
+  elif [ "$1" = "single-run:coverage" ]; then
+    testModule "$2" "coverage" # test single run, generate coverage report.
+  elif [ "$1" = "report" ]; then
+    copyReportsToDist # copy pregenerated reports to dist.
   elif [ "$1" = "run" ]; then
     testModule "$2" "watch" # run in watch mode.
   else
