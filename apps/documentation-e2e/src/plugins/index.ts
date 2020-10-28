@@ -13,7 +13,10 @@
 
 import { preprocessTypescript } from '@nrwl/cypress/plugins/preprocessor';
 
-export default (on, config) => {
+export default (
+  on: (arg0: string, arg1: (...args: any[]) => Promise<unknown>) => void,
+  config: Record<string, unknown>,
+) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
 

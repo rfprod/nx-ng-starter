@@ -42,14 +42,14 @@ buildNxNgStarterDocsProd() {
   printInfoTitle "<< BUILDING Nx Ng Starter documentation app PRODUCTION mode >>"
   printGap
 
-  yarn test
+  yarn test:coverage
   ng run tools:coverage-stats
   yarn generate:env:documentation
   ng build --project documentation --configuration production || exit 1
-  yarn generate:documentation:dist
+  yarn test:reports
+  yarn generate:compodocs
   yarn generate:changelog
   yarn e2e:headless:report
-  yarn test:report
 }
 
 ##

@@ -34,22 +34,62 @@ const totalCoverage: ICoverageSummaryObj = {
   branches: { total: 0, covered: 0, skipped: 0, pct: 0 },
 };
 
+let readFiles = 0;
+
+const writeAverageStats = () => {
+  const readmePath = `${cwd}/UNIT_COVERAGE.md`;
+  const coverageSummary = `# Unit Coverage Stats
+
+## Lines
+
+| Total                         | Covered                         | Skipped                         | PCT                         |
+| ----------------------------- | ------------------------------- | ------------------------------- | --------------------------- |
+| ${totalCoverage.lines.total}  | ${totalCoverage.lines.covered}  | ${totalCoverage.lines.skipped}  | ${totalCoverage.lines.pct}% |
+
+## Statements
+
+| Total                              | Covered                              | Skipped                              | PCT                              |
+| ---------------------------------- | ------------------------------------ | ------------------------------------ | -------------------------------- |
+| ${totalCoverage.statements.total}  | ${totalCoverage.statements.covered}  | ${totalCoverage.statements.skipped}  | ${totalCoverage.statements.pct}% |
+
+## Functions
+
+| Total                             | Covered                             | Skipped                             | PCT                             |
+| --------------------------------- | ----------------------------------- | ----------------------------------- | ------------------------------- |
+| ${totalCoverage.functions.total}  | ${totalCoverage.functions.covered}  | ${totalCoverage.functions.skipped}  | ${totalCoverage.functions.pct}% |
+
+## Branches
+
+| Total                            | Covered                            | Skipped                            | PCT                            |
+| -------------------------------- | ---------------------------------- | ---------------------------------- | ------------------------------ |
+| ${totalCoverage.branches.total}  | ${totalCoverage.branches.covered}  | ${totalCoverage.branches.skipped}  | ${totalCoverage.branches.pct}% |
+`;
+
+  fs.writeFile(readmePath, coverageSummary, (error: NodeJS.ErrnoException | null) => {
+    if (error !== null) {
+      return console.log(error);
+    }
+  });
+};
+
 const parseSummary = (summary: ICoverageSummaryObj, summaryKeys: (keyof ICoverageSummaryObj)[]) => {
   for (const summaryKey of summaryKeys) {
     const total = summary[summaryKey];
     const totalKeys = Object.keys(total) as (keyof ICoverageSummary)[];
     for (const totalKey of totalKeys) {
       const value = total[totalKey];
-      if (typeof value === 'number') {
-        totalCoverage[summaryKey][totalKey] += value / projects.length;
+      const currentValue = totalCoverage[summaryKey][totalKey];
+      if (typeof value === 'number' && typeof currentValue === 'number') {
+        const digits = 2;
+        totalCoverage[summaryKey][totalKey] = Number(
+          (currentValue + (totalKey === 'pct' ? value / projects.length : value)).toFixed(digits),
+        );
       }
     }
   }
 
   console.log(`✅ ${COLORS.GREEN}%s %o${COLORS.DEFAULT}`, `Total coverage:\n`, totalCoverage);
 };
-
-let readFiles = 0;
 
 const readFileCallback = (error: NodeJS.ErrnoException | null, data?: Buffer) => {
   if (error) {
@@ -78,40 +118,4 @@ for (const project of projects) {
   const path = project.replace(/<rootDir>/, '');
 
   fs.readFile(`${cwd}/../../coverage${path}/coverage-summary.json`, readFileCallback);
-}
-
-function writeAverageStats() {
-  const readmePath = `${cwd}/UNIT_COVERAGE.md`;
-  const coverageSummary = `# Unit Coverage Average Stats
-
-## Lines
-
-| Total                         | Covered                         | Skipped                         | PCT                         |
-| ----------------------------- | ------------------------------- | ------------------------------- | --------------------------- |
-|  ${totalCoverage.lines.total} |  ${totalCoverage.lines.covered} |  ${totalCoverage.lines.skipped} |  ${totalCoverage.lines.pct} |
-
-## Statements
-
-| Total                              | Covered                              | Skipped                              | PCT                              |
-| ---------------------------------- | ------------------------------------ | ------------------------------------ | -------------------------------- |
-|  ${totalCoverage.statements.total} |  ${totalCoverage.statements.covered} |  ${totalCoverage.statements.skipped} |  ${totalCoverage.statements.pct} |
-
-## Functions
-
-| Total                             | Covered                             | Skipped                             | PCT                             |
-| --------------------------------- | ----------------------------------- | ----------------------------------- | ------------------------------- |
-|  ${totalCoverage.functions.total} |  ${totalCoverage.functions.covered} |  ${totalCoverage.functions.skipped} |  ${totalCoverage.functions.pct} |
-
-## Branches
-
-| Total                            | Covered                            | Skipped                            | PCT                            |
-| -------------------------------- | ---------------------------------- | ---------------------------------- | ------------------------------ |
-|  ${totalCoverage.branches.total} |  ${totalCoverage.branches.covered} |  ${totalCoverage.branches.skipped} |  ${totalCoverage.branches.pct} |
-`;
-
-  fs.writeFile(readmePath, coverageSummary, (error: NodeJS.ErrnoException | null) => {
-    if (error !== null) {
-      return console.log(error);
-    }
-  });
 }
