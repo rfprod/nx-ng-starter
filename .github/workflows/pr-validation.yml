@@ -68,5 +68,8 @@ jobs:
       - name: Test affected
         run: npx nx affected --target=test --base=origin/master --head=HEAD --passWithNoTests --codeCoverage=false --watch=false --maxWorkers=2 --ci --updateSnapshot
 
+      - name: Install Cypress
+        run: npx cypress install
+
       - name: Build all
         run: yarn build:all:prod
