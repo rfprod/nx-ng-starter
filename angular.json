@@ -42,7 +42,14 @@
             "buildLibsFromSource": true,
             "main": "apps/api/src/main.ts",
             "outputPath": "dist/apps/api",
-            "tsConfig": "apps/api/tsconfig.app.json"
+            "tsConfig": "apps/api/tsconfig.app.json",
+            "budgets": [
+              {
+                "maximumError": "15mb",
+                "maximumWarning": "12mb",
+                "type": "initial"
+              }
+            ]
           }
         },
         "lint": {
@@ -179,8 +186,8 @@
             ],
             "budgets": [
               {
-                "maximumError": "5mb",
-                "maximumWarning": "2mb",
+                "maximumError": "15mb",
+                "maximumWarning": "12mb",
                 "type": "initial"
               },
               {
@@ -643,8 +650,8 @@
             ],
             "budgets": [
               {
-                "maximumError": "5mb",
-                "maximumWarning": "2mb",
+                "maximumError": "15mb",
+                "maximumWarning": "12mb",
                 "type": "initial"
               },
               {

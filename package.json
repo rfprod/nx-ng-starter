@@ -15,7 +15,7 @@
     "affected:test": "nx affected:test",
     "analyze:client": "yarn build:client:stats; npx webpack-bundle-analyzer ./dist/apps/client/stats.json",
     "analyze:documentation": "yarn build:documentation:stats; npx webpack-bundle-analyzer ./dist/apps/documentation/stats.json",
-    "build:all": "yarn build:api && yarn build:client && yarn build:documentaion",
+    "build:all": "yarn build:api && yarn build:client && yarn build:documentation",
     "build:all:prod": "bash tools/shell/build.sh prod all",
     "build:api": "ng build api",
     "build:api:firebase": "ng build api --configuration=firebase",
