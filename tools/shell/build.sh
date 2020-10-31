@@ -84,7 +84,7 @@ buildAllProd() {
 
   buildAPIProd
   buildNxNgStarterClientProd
-  buildNxNgStarterDocsProd
+  buildNxNgStarterDocs "prod"
 }
 
 ##
