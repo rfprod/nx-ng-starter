@@ -92,7 +92,7 @@ const parseSummary = (summary: ICoverageSummaryObj, summaryKeys: (keyof ICoverag
 };
 
 const readFileCallback = (error: NodeJS.ErrnoException | null, data?: Buffer) => {
-  if (error) {
+  if (error !== null) {
     console.log(`❗ ${COLORS.LIGHT_RED}%s${COLORS.DEFAULT}`, 'No coverage summary for the project');
   }
 

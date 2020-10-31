@@ -116,6 +116,8 @@ documentModule() {
   local MODULE_ALIAS=$1
   local OPTIONAL_ACTION=$2
 
+  local MODULE_TYPE="${MODULE_ALIAS//\:[a-z]*/}"
+
   local MODULE_NAME
   MODULE_NAME="${MODULE_ALIAS//app\:/}" # remove app: prefix
   MODULE_NAME="${MODULE_NAME//lib\:/}"  # removed lib: prefix
@@ -135,7 +137,7 @@ documentModule() {
 
   if [ "$ALIAS_EXISTS" = 1 ]; then
     DOCUMENTATION_DIST_PATH=${DOCUMENTATION_BASE_PATH}/${MODULE_NAME}
-    local CONFIG_PATH=${PROJECT_ROOT}/${MODULE_PARTIAL_PATH}/tsconfig.json
+    local CONFIG_PATH=${PROJECT_ROOT}/${MODULE_PARTIAL_PATH}/tsconfig."$MODULE_TYPE".json
     checkConfigPathAndProceed "$CONFIG_PATH" "$DOCUMENTATION_DIST_PATH" "$OPTIONAL_ACTION"
   elif [[ "$MODULE_ALIAS" = "all" && "$OPTIONAL_ACTION" != "serve" ]]; then
     for MODULE_ALIAS_VAR in "${EXISTING_MODULE_ALIASES[@]}"; do documentModule "$MODULE_ALIAS_VAR" "$OPTIONAL_ACTION"; done
