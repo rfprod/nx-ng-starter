@@ -57,7 +57,7 @@ function printPackageScripts(scripts: IPackageJSON['scripts']) {
 }
 
 fs.readFile(`${cwd}/../../package.json`, 'utf8', (error, data) => {
-  if (error) {
+  if (error !== null) {
     throw error;
   }
 

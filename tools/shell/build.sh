@@ -38,18 +38,31 @@ buildNxNgStarterClientProd() {
 ##
 # Builds Nx Ng Starter documentation app in production mode.
 ##
-buildNxNgStarterDocsProd() {
+buildNxNgStarterDocs() {
   printInfoTitle "<< BUILDING Nx Ng Starter documentation app PRODUCTION mode >>"
+  printNameAndValue "configuration" "$1"
   printGap
 
-  yarn test:coverage
-  ng run tools:coverage-stats
-  yarn generate:env:documentation
-  ng build --project documentation --configuration production || exit 1
-  yarn test:reports
-  yarn generate:compodocs
-  yarn generate:changelog
-  yarn e2e:headless:report
+  if [ "$1" = "dev" ] || [ "$1" = "prod" ]; then
+    yarn test:coverage
+    ng run tools:coverage-stats
+    yarn generate:env:documentation
+
+    if [ "$1" = "dev" ]; then
+      ng build --project documentation || exit 1
+    else
+      ng build --project documentation --configuration "$1" || exit 1
+    fi
+
+    yarn test:reports
+    yarn generate:compodocs
+    yarn generate:changelog
+    yarn e2e:headless:report
+  else
+    printErrorTitle "<< ERROR >>"
+    printWarningMessage "Environment $1 is not supported"
+  fi
+
 }
 
 ##
@@ -90,14 +103,18 @@ buildAllDev() {
 if [ $# -lt 1 ]; then
   reportUsage
 elif [ "$1" = "dev" ]; then
-  buildAllDev
+  if [ "$2" = "documentation" ]; then
+    buildNxNgStarterDocs "$1"
+  else
+    buildAllDev
+  fi
 elif [ "$1" = "prod" ]; then
   if [ "$2" = "api" ]; then
     buildAPIProd
   elif [ "$2" = "client" ]; then
     buildNxNgStarterClientProd
   elif [ "$2" = "documentation" ]; then
-    buildNxNgStarterDocsProd
+    buildNxNgStarterDocs "$1"
   else
     buildAllProd
   fi
