@@ -55,14 +55,13 @@ buildNxNgStarterDocs() {
     fi
 
     yarn test:reports
-    yarn generate:compodocs
+    ng run tools:compodoc-build
     yarn generate:changelog
     yarn e2e:headless:report
   else
     printErrorTitle "<< ERROR >>"
     printWarningMessage "Environment $1 is not supported"
   fi
-
 }
 
 ##
