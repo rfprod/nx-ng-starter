@@ -45,7 +45,7 @@ copyReportsToDist() {
   ##
   # Documentation app dist path.
   ##
-  local DOCUMENTATION_APP_DIST_PATH=${PROJECT_ROOT}/dist/apps/documentation/assets
+  local DOCUMENTATION_APP_DIST_PATH=${PROJECT_ROOT}/dist/apps/documentation
 
   if [ ! -d ${DOCUMENTATION_APP_DIST_PATH} ]; then
     printErrorTitle "<< ERROR >>"
@@ -57,7 +57,7 @@ copyReportsToDist() {
   ##
   # Coverage root path.
   ##
-  local COVERAGE_DIST_ROOT=${DOCUMENTATION_APP_DIST_PATH}/coverage
+  local COVERAGE_DIST_ROOT=${DOCUMENTATION_APP_DIST_PATH}/assets
 
   if [ -d ${COVERAGE_DIST_ROOT} ]; then
     printSuccessMessage "directory $COVERAGE_DIST_ROOT exists, proceeding"
@@ -71,7 +71,7 @@ copyReportsToDist() {
     mkdir -p $COVERAGE_DIST_ROOT
   fi
 
-  cp -r "$COVERAGE_ROOT" "$COVERAGE_DIST_ROOT" || exit 1
+  cp -r ./coverage "$COVERAGE_DIST_ROOT" || exit 1
 }
 
 ##

@@ -842,6 +842,26 @@
     },
     "tools": {
       "architect": {
+        "compodoc-build": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "npx compodoc -p tsconfig.compodoc.json -d ./dist/compodoc; cp -r ./dist/compodoc ./dist/apps/documentation/assets"
+              }
+            ]
+          }
+        },
+        "compodoc-serve": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "npx compodoc -p tsconfig.compodoc.json -s"
+              }
+            ]
+          }
+        },
         "coverage-stats": {
           "builder": "@nrwl/workspace:run-commands",
           "options": {

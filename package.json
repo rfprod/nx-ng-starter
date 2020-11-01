@@ -39,7 +39,6 @@
     "firebase:deploy:localhost:documentation": "yarn build:documentation:prod && bash tools/shell/firebase-deploy.sh localhost documentation",
     "generate:changelog": "bash tools/shell/changelog.sh all",
     "generate:client-gql": "ng run api-interface:generate-client-definitions",
-    "generate:compodocs": "bash tools/shell/document.sh generate-and-report all",
     "generate:env:documentation": "bash tools/shell/set-documentation-env.sh",
     "generate:proto:all": "npx npm-run-all -s generate:protobufjs generate:protoc",
     "generate:protobufjs": "bash tools/shell/generate-proto.sh protobufjs",
