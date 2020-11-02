@@ -44,9 +44,10 @@ buildNxNgStarterDocs() {
   printGap
 
   if [ "$1" = "dev" ] || [ "$1" = "prod" ]; then
-    yarn test:coverage
-    ng run tools:coverage-stats
-    yarn generate:env:documentation
+    ng run tools:clear-nx-cache || exit 0
+    yarn test:coverage || exit 1
+    ng run tools:coverage-stats || exit 1
+    yarn generate:env:documentation || exit 1
 
     if [ "$1" = "dev" ]; then
       ng build --project documentation || exit 1
@@ -54,10 +55,10 @@ buildNxNgStarterDocs() {
       ng build --project documentation --configuration "$1" || exit 1
     fi
 
-    yarn test:reports
-    ng run tools:compodoc-build
-    yarn generate:changelog
-    yarn e2e:headless:report
+    yarn test:reports || exit 1
+    ng run tools:compodoc-build || exit 1
+    yarn generate:changelog || exit 1
+    yarn e2e:headless:report || exit 1
   else
     printErrorTitle "<< ERROR >>"
     printWarningMessage "Environment $1 is not supported"

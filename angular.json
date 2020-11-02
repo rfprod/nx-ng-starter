@@ -842,6 +842,16 @@
     },
     "tools": {
       "architect": {
+        "clear-nx-cache": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "rm -rf /tmp/nx/nx-ng-starter"
+              }
+            ]
+          }
+        },
         "compodoc-build": {
           "builder": "@nrwl/workspace:run-commands",
           "options": {

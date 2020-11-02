@@ -69,7 +69,7 @@ jobs:
         run: npx nx run-many --target=test --all --passWithNoTests --code-coverage=false --watch=false --maxWorkers=2 --ci --updateSnapshot
 
       - name: Build all
-        run: yarn build:all:prod
+        run: npx nx run-many --target=build --all
 
       - name: Deploy client app
         run: bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" client || exit 1
