@@ -22,6 +22,7 @@ export const DOC_APP_ROUTES: Array<Route> = [
     RouterModule.forRoot(DOC_APP_ROUTES, {
       initialNavigation: 'enabled',
       onSameUrlNavigation: 'reload',
+      relativeLinkResolution: 'legacy',
     }),
   ],
   exports: [RouterModule],

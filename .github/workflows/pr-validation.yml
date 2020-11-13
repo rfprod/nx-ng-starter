@@ -57,7 +57,7 @@ jobs:
         run: npm i -g typescript @angular/cli @nrwl/cli
 
       - name: Install project dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile --ignore-scripts
 
       - name: Process dependencies with ngcc
         run: yarn ngcc

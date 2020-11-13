@@ -127,7 +127,6 @@
             "analyze-bundle": {
               "aot": true,
               "buildOptimizer": true,
-              "extractCss": true,
               "extractLicenses": true,
               "fileReplacements": [
                 {
@@ -144,7 +143,6 @@
             "production": {
               "aot": true,
               "buildOptimizer": true,
-              "extractCss": true,
               "extractLicenses": true,
               "fileReplacements": [
                 {
@@ -163,7 +161,6 @@
           },
           "options": {
             "allowedCommonJsDependencies": [
-              "hammerjs",
               "google-protobuf/google/protobuf/any_pb.js",
               "protobufjs/minimal",
               "zen-observable",
@@ -577,7 +574,6 @@
             "analyze-bundle": {
               "aot": true,
               "buildOptimizer": true,
-              "extractCss": true,
               "extractLicenses": true,
               "fileReplacements": [
                 {
@@ -593,7 +589,6 @@
             },
             "production": {
               "buildOptimizer": true,
-              "extractCss": true,
               "extractLicenses": true,
               "fileReplacements": [
                 {
@@ -610,7 +605,6 @@
           },
           "options": {
             "allowedCommonJsDependencies": [
-              "hammerjs",
               "apollo-upload-client",
               "zen-observable",
               "graphql-tag",

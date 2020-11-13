@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HammerGestureConfig } from '@angular/platform-browser';
-import * as Hammer from 'hammerjs';
 
 /**
  * HammerJS Gesture Config.
  * Documentation reference: https://hammerjs.github.io/
  */
-@Injectable({
-  providedIn: 'root',
-})
+// eslint-disable-next-line @angular-eslint/use-injectable-provided-in
+@Injectable()
 export class AppHammerGestureConfig extends HammerGestureConfig {
   public readonly overrides: {
     [key: string]: Record<string, unknown>;
@@ -44,7 +42,6 @@ export class AppHammerGestureConfig extends HammerGestureConfig {
       threshold: 0, // Minimal rotation before recognizing.
     },
     swipe: {
-      direction: Hammer.DIRECTION_HORIZONTAL,
       enable: true,
       pointers: 1, // Required pointers.
       velocity: 0.4, // inimal velocity required before recognizing, unit is in px per ms.
