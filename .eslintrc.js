@@ -10,7 +10,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: 'module',
-    project: './tsconfig.base.json',
+    project: './tsconfig.json',
   },
   extends: [
     'eslint:recommended',

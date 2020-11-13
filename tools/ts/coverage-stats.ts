@@ -72,7 +72,25 @@ const writeAverageStats = () => {
   });
 };
 
+/**
+ * Projects count which coverage is more than 0.
+ */
+const projectsCount: Record<keyof ICoverageSummaryObj, number> = {
+  branches: 0,
+  functions: 0,
+  lines: 0,
+  statements: 0,
+};
+const projectsCountKeys = Object.keys(projectsCount) as Array<keyof ICoverageSummaryObj>;
+
 const parseSummary = (summary: ICoverageSummaryObj, summaryKeys: (keyof ICoverageSummaryObj)[]) => {
+  const zeroCoverage: Record<keyof ICoverageSummaryObj, number> = {
+    branches: 0,
+    functions: 0,
+    lines: 0,
+    statements: 0,
+  };
+
   for (const summaryKey of summaryKeys) {
     const total = summary[summaryKey];
     const totalKeys = Object.keys(total) as (keyof ICoverageSummary)[];
@@ -80,15 +98,35 @@ const parseSummary = (summary: ICoverageSummaryObj, summaryKeys: (keyof ICoverag
       const value = total[totalKey];
       const currentValue = totalCoverage[summaryKey][totalKey];
       if (typeof value === 'number' && typeof currentValue === 'number') {
+        if (totalKey === 'pct' && value > 0) {
+          zeroCoverage[summaryKey] = zeroCoverage[summaryKey] + 1;
+        }
         const digits = 2;
         totalCoverage[summaryKey][totalKey] = Number(
-          (currentValue + (totalKey === 'pct' ? value / projects.length : value)).toFixed(digits),
+          (currentValue + (totalKey === 'pct' ? value : value)).toFixed(digits),
         );
       }
     }
   }
 
-  console.log(`✅ ${COLORS.GREEN}%s %o${COLORS.DEFAULT}`, `Total coverage:\n`, totalCoverage);
+  for (const projectCountKey of projectsCountKeys) {
+    if (zeroCoverage[projectCountKey] > 0) {
+      projectsCount[projectCountKey] = projectsCount[projectCountKey] + 1;
+    }
+  }
+};
+
+/**
+ * Counts average PCT.
+ */
+const recalculateStats = () => {
+  for (const projectsCountKey of projectsCountKeys) {
+    const value = totalCoverage[projectsCountKey].pct as number;
+    const digits = 2;
+    totalCoverage[projectsCountKey].pct = Number(
+      (value / projectsCount[projectsCountKey]).toFixed(digits),
+    );
+  }
 };
 
 const readFileCallback = (error: NodeJS.ErrnoException | null, data?: Buffer) => {
@@ -110,6 +148,7 @@ const readFileCallback = (error: NodeJS.ErrnoException | null, data?: Buffer) =>
   readFiles += 1;
 
   if (readFiles === projects.length) {
+    recalculateStats();
     writeAverageStats();
   }
 };
