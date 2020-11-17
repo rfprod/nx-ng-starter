@@ -13,6 +13,7 @@
     "affected:libs": "nx affected:libs",
     "affected:lint": "nx affected:lint",
     "affected:test": "nx affected:test",
+    "analyze:circular-deps": "madge --circular --extensions ts ./",
     "analyze:client": "yarn build:client:stats; npx webpack-bundle-analyzer ./dist/apps/client/stats.json",
     "analyze:documentation": "yarn build:documentation:stats; npx webpack-bundle-analyzer ./dist/apps/documentation/stats.json",
     "build:all": "yarn build:api && yarn build:client && yarn build:documentation",
@@ -92,6 +93,7 @@
     "test:reports": "bash tools/shell/test.sh report all",
     "workspace:cleanup": "rm -rf documentation/* dist/* coverage/* changelog/*",
     "workspace:help": "ng run tools:help",
+    "workspace:mmdc": "./node_modules/.bin/mmdc",
     "workspace:schematic": "nx workspace-schematic",
     "workspace:update": "ng update @angular/core @angular/cli @angular/cdk @angular/material @angular/flex-layout @angular/material-moment-adapter @angular/service-worker @nestjs/common @nestjs/core @nestjs/graphql @nestjs/jwt @nestjs/microservices @nestjs/platform-express @nestjs/platform-ws @nestjs/websockets apollo-angular apollo-upload-client grpc marked @angular-devkit/build-angular @angular-devkit/core @angular-devkit/schematics @graphql-codegen/cli @graphql-codegen/typescript-apollo-angular @graphql-codegen/typescript-operations @nestjs/schematics @nestjs/testing @nrwl/angular @nrwl/workspace @types/express @types/node @typescript-eslint/eslint-plugin @typescript-eslint/parser babel-loader core-js cypress eslint eslint-plugin-rxjs firebase firebase-admin firebase-tools jest mocha ts-jest webpack-bundle-analyzer",
     "workspace:update:check": "ng update"
@@ -177,6 +179,7 @@
     "@graphql-codegen/typescript": "1.17.11",
     "@graphql-codegen/typescript-apollo-angular": "2.1.0",
     "@graphql-codegen/typescript-operations": "1.17.9",
+    "@mermaid-js/mermaid-cli": "^8.8.2-beta.8",
     "@nestjs/schematics": "7.2.1",
     "@nestjs/testing": "7.5.2",
     "@ngx-translate/core": "13.0.0",

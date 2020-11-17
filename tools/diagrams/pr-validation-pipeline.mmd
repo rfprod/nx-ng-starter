@@ -1,0 +1,28 @@
+graph TD;
+
+    subgraph 0[PR validation]
+      A{Install}-->|No| F;
+      A{Install}-->|Yes| B;
+
+      B{Lint: affected}-->|No| F;
+      B{Lint: affected}-->|Yes| C;
+
+      C{Unit Test: affected}-->|No| F;
+      C{Unit Test: affected}-->|Yes| D;
+
+      D{Build}-->D0;
+      D{Build}-->D1;
+      D{Build}-->D2;
+
+      D0{API}-->|No| F;
+      D1{Client}-->|No| F;
+      D2{Documentation}-->|No| F;
+
+      D0{API}-->|Yes| S;
+      D1{Client}-->|Yes| S;
+      D2{Documentation}-->|Yes| S;
+
+      S(Pipeline success)
+
+      F(Pipeline failure)
+    end

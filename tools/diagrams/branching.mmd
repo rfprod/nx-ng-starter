@@ -1,0 +1,28 @@
+sequenceDiagram
+    autonumber
+    working branch->>master: Can I merge changes?
+
+    loop MERGE CONFLICTS
+      master-->>working branch: Merge conflicts.
+      working branch-->>master: Merge conflicts resolved.
+    end
+    Note right of working branch: Merge conflicts are addressed <br> before premerge check starts.
+
+    loop PREMERGE CHECK
+      master->>master: Lint, Test (unit), Build.
+      master-->>working branch: Premerge check failure.
+      working branch-->>master: Premerge failures fixed.
+    end
+    Note right of working branch: Premerge checks <br> affected sources.
+
+    master->>master: Premerge success: Lint, Test (unit), Build / Deploy master.
+    Note left of master: On premerge success <br> all sources are checked.
+
+    loop RELEASE
+      master->>release: Release functionality
+      Note left of master: Each release release branch <br> gets overwritten with master.
+      release->>release: Lint, Test (E2E, optional), Build / Deploy staging.
+      release-->>master: Hotfix required.
+      master-->>working branch: Hotfix required.
+      working branch-->>working branch: I have a hotfix. Go to step 1.
+    end
