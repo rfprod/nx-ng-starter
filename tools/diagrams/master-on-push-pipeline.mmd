@@ -1,0 +1,40 @@
+graph TD;
+
+    subgraph 0[master]
+      A{Install}-->|No| F;
+      A{Install}-->|Yes| B;
+
+      B{Lint: all}-->|No| F;
+      B{Lint: all}-->|Yes| C;
+
+      C{Unit Test: all}-->|No| F;
+      C{Unit Test: all}-->|Yes| D;
+
+      D{Build}-->D0;
+      D{Build}-->D1;
+      D{Build}-->D2;
+
+      D0{API}-->|No| F;
+      D1{Client}-->|No| F;
+      D2{Documentation}-->|No| F;
+
+      D0{API}-->|Yes| E;
+      D1{Client}-->|Yes| E;
+      D2{Documentation}-->|Yes| E;
+
+      E{Deploy}-->E0
+      E{Deploy}-->E1
+      E{Deploy}-->E2
+
+      E0{Deploy<br>api}-->|Yes| S
+      E1{Deploy<br>client}-->|Yes| S
+      E2{Deploy<br>documentation}-->|Yes| S
+
+      E0{Deploy<br>api}-->|No| F
+      E1{Deploy<br>client}-->|No| F
+      E2{Deploy<br>documentation}-->|Yes| F
+
+      S(Pipeline success)
+
+      F(Pipeline failure)
+    end
