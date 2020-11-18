@@ -871,7 +871,7 @@
           "options": {
             "commands": [
               {
-                "command": "npx ts-node ./tools/ts/coverage-stats.ts"
+                "command": "npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/coverage-stats.ts"
               }
             ]
           }
