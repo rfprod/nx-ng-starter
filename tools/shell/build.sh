@@ -52,7 +52,7 @@ buildNxNgStarterDocs() {
     if [ "$1" = "dev" ]; then
       ng build --project documentation || exit 1
     else
-      ng build --project documentation --configuration "$1" || exit 1
+      ng build --project documentation --configuration production || exit 1
     fi
 
     yarn test:reports || exit 1
