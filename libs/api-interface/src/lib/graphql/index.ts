@@ -1,2 +1,2 @@
-export * from './upload/index';
 export * from './matcomp/index';
+export * from './upload/index';

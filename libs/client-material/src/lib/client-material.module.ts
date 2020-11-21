@@ -1,6 +1,5 @@
 import { OverlayModule } from '@angular/cdk/overlay';
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
@@ -34,6 +33,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { HammerModule } from '@angular/platform-browser';
 
 import { appClientMaterialModuleProviders } from './providers/client-material-module.providers';

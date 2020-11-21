@@ -1,9 +1,9 @@
 import { OverlayConfig } from '@angular/cdk/overlay';
 import { Provider } from '@angular/core';
-import { MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY } from '@angular/material-moment-adapter';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY } from '@angular/material-moment-adapter';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 import { AppHammerGestureConfig } from '../configs/hammerjs-gesture.config';

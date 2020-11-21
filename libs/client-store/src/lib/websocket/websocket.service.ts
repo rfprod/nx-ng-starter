@@ -3,9 +3,9 @@ import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { concatMap } from 'rxjs/operators';
 
-import { AppWebsocketApiService } from './websocket-api.service';
 import { IAppWebsocketStatePayload, IWebsocketservice } from './websocket.interface';
 import { AppWebsocketState, websocketActions } from './websocket.store';
+import { AppWebsocketApiService } from './websocket-api.service';
 
 @Injectable({
   providedIn: 'root',
