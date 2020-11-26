@@ -881,7 +881,7 @@
           "options": {
             "commands": [
               {
-                "command": "npx ts-node ./tools/ts/package-commands.ts"
+                "command": "npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/package-commands.ts"
               }
             ]
           }
