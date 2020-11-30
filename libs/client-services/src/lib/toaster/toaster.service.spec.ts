@@ -1,4 +1,4 @@
-import { async, TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { TToastType } from '@nx-ng-starter/client-util';
 
@@ -34,20 +34,22 @@ describe('AppToasterService', () => {
     };
   };
 
-  beforeEach(async(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        service = TestBed.inject(AppToasterService);
-        snackBar = TestBed.inject(MatSnackBar);
-        spy = {
-          snackBar: {
-            open: jest.spyOn(snackBar, 'open'),
-            dismiss: jest.spyOn(snackBar, 'dismiss'),
-          },
-        };
-      });
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      void TestBed.configureTestingModule(testBedConfig)
+        .compileComponents()
+        .then(() => {
+          service = TestBed.inject(AppToasterService);
+          snackBar = TestBed.inject(MatSnackBar);
+          spy = {
+            snackBar: {
+              open: jest.spyOn(snackBar, 'open'),
+              dismiss: jest.spyOn(snackBar, 'dismiss'),
+            },
+          };
+        });
+    }),
+  );
 
   afterEach(() => {
     TestBed.resetTestingModule();

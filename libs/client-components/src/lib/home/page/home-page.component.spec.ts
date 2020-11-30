@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
 
@@ -20,14 +20,16 @@ describe('AppHomePage', () => {
   let fixture: ComponentFixture<AppHomePage>;
   let component: AppHomePage;
 
-  beforeEach(async(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(AppHomePage);
-        component = fixture.debugElement.componentInstance;
-      });
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      void TestBed.configureTestingModule(testBedConfig)
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(AppHomePage);
+          component = fixture.debugElement.componentInstance;
+        });
+    }),
+  );
 
   it('should be defined', () => {
     expect(component).toBeDefined();

@@ -1,4 +1,4 @@
-import { async, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AppMarkdownService } from './markdown.service';
 
@@ -10,28 +10,30 @@ describe('AppMarkdownService', () => {
     };
   };
 
-  beforeEach(async(() => {
-    void TestBed.configureTestingModule({
-      providers: [
-        {
-          provide: AppMarkdownService,
-          useFactory: () => new AppMarkdownService(),
-          deps: [],
-        },
-      ],
-    })
-      .compileComponents()
-      .then(() => {
-        service = TestBed.inject(AppMarkdownService);
-        spy = {
-          service: {
-            process: jest
-              .spyOn(service, 'process')
-              .mockImplementation((input: string) => `marked ${input}`),
+  beforeEach(
+    waitForAsync(() => {
+      void TestBed.configureTestingModule({
+        providers: [
+          {
+            provide: AppMarkdownService,
+            useFactory: () => new AppMarkdownService(),
+            deps: [],
           },
-        };
-      });
-  }));
+        ],
+      })
+        .compileComponents()
+        .then(() => {
+          service = TestBed.inject(AppMarkdownService);
+          spy = {
+            service: {
+              process: jest
+                .spyOn(service, 'process')
+                .mockImplementation((input: string) => `marked ${input}`),
+            },
+          };
+        });
+    }),
+  );
 
   it('should exist', () => {
     expect(service).toBeTruthy();

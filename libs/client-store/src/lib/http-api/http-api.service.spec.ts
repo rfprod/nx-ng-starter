@@ -1,6 +1,6 @@
 import { HttpRequest } from '@angular/common/http';
 import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
-import { async, TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { AppClientServicesModule, AppToasterService } from '@nx-ng-starter/client-services';
 import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
 import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
@@ -39,27 +39,31 @@ describe('AppHttpApiService', () => {
 
   let httpController: HttpTestingController;
 
-  beforeEach(async(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        httpController = TestBed.inject(HttpTestingController);
-        service = TestBed.inject(AppHttpApiService);
-        toaster = TestBed.inject(AppToasterService);
-        httpHandlers = TestBed.inject(AppHttpHandlersService);
-        apollo = TestBed.inject(Apollo);
-        user = TestBed.inject(AppUserService);
-        spy = {
-          httpHandlers: {
-            pipeHttpResponse: jest.spyOn(httpHandlers, 'pipeHttpResponse').mockReturnValue(of({})),
-          },
-        };
-        expect(spy.httpHandlers.pipeHttpResponse).toBeDefined();
-        httpController
-          .match(() => true)
-          .forEach((req: TestRequest) => (!req.cancelled ? req.flush({}) : null));
-      });
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      void TestBed.configureTestingModule(testBedConfig)
+        .compileComponents()
+        .then(() => {
+          httpController = TestBed.inject(HttpTestingController);
+          service = TestBed.inject(AppHttpApiService);
+          toaster = TestBed.inject(AppToasterService);
+          httpHandlers = TestBed.inject(AppHttpHandlersService);
+          apollo = TestBed.inject(Apollo);
+          user = TestBed.inject(AppUserService);
+          spy = {
+            httpHandlers: {
+              pipeHttpResponse: jest
+                .spyOn(httpHandlers, 'pipeHttpResponse')
+                .mockReturnValue(of({})),
+            },
+          };
+          expect(spy.httpHandlers.pipeHttpResponse).toBeDefined();
+          httpController
+            .match(() => true)
+            .forEach((req: TestRequest) => (!req.cancelled ? req.flush({}) : null));
+        });
+    }),
+  );
 
   afterEach(() => {
     httpController

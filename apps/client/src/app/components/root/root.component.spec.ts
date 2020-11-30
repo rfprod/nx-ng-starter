@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
   getTestBedConfig,
@@ -22,19 +22,21 @@ describe('AppRootComponent', () => {
     component: TClassMemberSpiesObject<AppRootComponent>;
   };
 
-  beforeEach(async(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(AppRootComponent);
-        component = fixture.componentInstance;
-        spy = {
-          component: setupJestSpiesFor<AppRootComponent>(component),
-        };
-        expect(spy.component).toBeDefined();
-        fixture.detectChanges();
-      });
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      void TestBed.configureTestingModule(testBedConfig)
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(AppRootComponent);
+          component = fixture.componentInstance;
+          spy = {
+            component: setupJestSpiesFor<AppRootComponent>(component),
+          };
+          expect(spy.component).toBeDefined();
+          fixture.detectChanges();
+        });
+    }),
+  );
 
   it('should be defined', () => {
     expect(component).toBeDefined();
