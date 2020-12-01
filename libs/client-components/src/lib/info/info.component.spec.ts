@@ -1,5 +1,5 @@
 import { HttpTestingController } from '@angular/common/http/testing';
-import { async, ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
 import {
@@ -34,20 +34,22 @@ describe('AppInfoComponent', () => {
 
   let httpController: HttpTestingController;
 
-  beforeEach(async(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        httpController = TestBed.inject(HttpTestingController);
-        fixture = TestBed.createComponent(AppInfoComponent);
-        component = fixture.debugElement.componentInstance;
-        spy = {
-          component: setupJestSpiesFor<AppInfoComponent>(component),
-        };
-        expect(spy.component).toBeDefined();
-        flushHttpRequests(httpController);
-      });
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      void TestBed.configureTestingModule(testBedConfig)
+        .compileComponents()
+        .then(() => {
+          httpController = TestBed.inject(HttpTestingController);
+          fixture = TestBed.createComponent(AppInfoComponent);
+          component = fixture.debugElement.componentInstance;
+          spy = {
+            component: setupJestSpiesFor<AppInfoComponent>(component),
+          };
+          expect(spy.component).toBeDefined();
+          flushHttpRequests(httpController);
+        });
+    }),
+  );
 
   afterEach(() => {
     flushHttpRequests(httpController, true);

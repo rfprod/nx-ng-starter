@@ -50,20 +50,20 @@ Applications as well as generated documentation, testing reports, and a custom c
 
 #### Unit coverage
 
-- [API](https://nx-ng-starter-documentation.web.app/assets/coverage/api/index.html)
-- [API Interface](https://nx-ng-starter-documentation.web.app/assets/coverage/api-interface/index.html)
-- [Client](https://nx-ng-starter-documentation.web.app/assets/coverage/client/index.html)
-- [Client Components](https://nx-ng-starter-documentation.web.app/assets/coverage/client-components/index.html)
-- [Client Core](https://nx-ng-starter-documentation.web.app/assets/coverage/client-core/index.html)
-- [Client Gql](https://nx-ng-starter-documentation.web.app/assets/coverage/client-gql/index.html)
-- [Client Material](https://nx-ng-starter-documentation.web.app/assets/coverage/client-material/index.html)
-- [Client Services](https://nx-ng-starter-documentation.web.app/assets/coverage/client-services/index.html)
-- [Client Store](https://nx-ng-starter-documentation.web.app/assets/coverage/client-store/index.html)
-- [Client Translate](https://nx-ng-starter-documentation.web.app/assets/coverage/client-translate/index.html)
-- [Client Util](https://nx-ng-starter-documentation.web.app/assets/coverage/client-util/index.html)
-- [Documentation](https://nx-ng-starter-documentation.web.app/assets/coverage/documentation/index.html)
-- [Mocks Core](https://nx-ng-starter-documentation.web.app/assets/coverage/mocks-core/index.html)
-- [Proto](https://nx-ng-starter-documentation.web.app/assets/coverage/proto/index.html)
+- [API](https://nx-ng-starter-documentation.web.app/assets/coverage/apps/api/index.html)
+- [API Interface](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/api-interface/index.html)
+- [Client](https://nx-ng-starter-documentation.web.app/assets/coverage/apps/client/index.html)
+- [Client Components](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/client-components/index.html)
+- [Client Core](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/client-core/index.html)
+- [Client Gql](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/client-gql/index.html)
+- [Client Material](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/client-material/index.html)
+- [Client Services](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/client-services/index.html)
+- [Client Store](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/client-store/index.html)
+- [Client Translate](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/client-translate/index.html)
+- [Client Util](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/client-util/index.html)
+- [Documentation](https://nx-ng-starter-documentation.web.app/assets/coverage/apps/documentation/index.html)
+- [Mocks Core](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/mocks-core/index.html)
+- [Proto](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/proto/index.html)
 
 #### E2E report
 

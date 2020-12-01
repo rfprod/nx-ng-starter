@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppMarkdownService } from '@nx-ng-starter/client-services';
 import {
@@ -33,27 +33,29 @@ describe('AppHomeComponent', () => {
     component: TClassMemberSpiesObject<AppHomeComponent>;
   };
 
-  beforeEach(async(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(AppHomeComponent);
-        component = fixture.debugElement.componentInstance;
-        service = TestBed.inject(AppMarkdownService);
-        spy = {
-          service: {
-            process: jest
-              .spyOn(service, 'process')
-              .mockImplementation((input: string) => `marked ${input}`),
-          },
-          component: setupJestSpiesFor<AppHomeComponent>(component),
-        };
-        expect(spy.service.process).toBeDefined();
-        expect(spy.component).toBeDefined();
-        (component as any).timer$ = null;
-        fixture.detectChanges();
-      });
-  }));
+  beforeEach(
+    waitForAsync(() => {
+      void TestBed.configureTestingModule(testBedConfig)
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(AppHomeComponent);
+          component = fixture.debugElement.componentInstance;
+          service = TestBed.inject(AppMarkdownService);
+          spy = {
+            service: {
+              process: jest
+                .spyOn(service, 'process')
+                .mockImplementation((input: string) => `marked ${input}`),
+            },
+            component: setupJestSpiesFor<AppHomeComponent>(component),
+          };
+          expect(spy.service.process).toBeDefined();
+          expect(spy.component).toBeDefined();
+          (component as any).timer$ = null;
+          fixture.detectChanges();
+        });
+    }),
+  );
 
   it('should be defined', () => {
     expect(component).toBeDefined();
