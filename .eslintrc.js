@@ -10,7 +10,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: 'module',
-    project: './tsconfig.json',
+    project: ['./tsconfig.json', './tsconfig-workspace-js.eslint.json'],
   },
   extends: [
     'eslint:recommended',
@@ -471,6 +471,24 @@ module.exports = {
   },
 
   overrides: [
+    {
+      files: '**/*.js',
+      parser: 'esprima',
+      parserOptions: {
+        ecmaVersion: 2020,
+        sourceType: 'module',
+      },
+      extends: [
+        'eslint:recommended',
+        'plugin:prettier/recommended',
+        'plugin:@angular-eslint/recommended',
+      ],
+      plugins: [
+        'prettier',
+        '@angular-eslint', // https://github.com/angular-eslint/angular-eslint
+        'simple-import-sort', // https://github.com/lydell/eslint-plugin-simple-import-sort
+      ],
+    },
     {
       files: '**/test-setup.ts',
       rules: {
