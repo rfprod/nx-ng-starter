@@ -25,7 +25,7 @@ export class AppHomeComponent {
         'Open **sidenav** by clicking the **icon** button in the left corner of the browser window, and select an item.';
       const markdownInstructions =
         '# You can use Markdown \n\n via AppMarkdownService, just like in this example.';
-      return this.markdown.process(`${sidenavInstruction} ${markdownInstructions}`);
+      return this.markdown.process(`${sidenavInstruction}\n${markdownInstructions}`);
     }),
   );
 
