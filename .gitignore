@@ -7,6 +7,10 @@
 /android/build/
 /android/app/build/
 /android/capacitor-cordova-android-plugins/build/
+# diagrams are saved by default to the directory where input files reside
+tools/diagrams/*.*
+!tools/diagrams/*.mmd
+
 
 # firebase
 .firebase
@@ -59,3 +63,4 @@ Thumbs.db
 # Local Files
 *.keystore
 /tools/shell/vars.sh
+
