@@ -10,7 +10,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig-workspace-js.eslint.json'],
+    project: ['./tsconfig.json', './tsconfig.eslint-js.json'],
   },
   extends: [
     'eslint:recommended',
