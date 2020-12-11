@@ -1,5 +1,5 @@
 /**
- * This file decorate the Angular CLI with the Nx CLI to enable features such as computation caching,
+ * This file decorates the Angular CLI with the Nx CLI to enable features such as computation caching
  * and faster execution of tasks.
  *
  * It does this by:
@@ -11,7 +11,7 @@
  * The Nx CLI decorates the Angular CLI, so the Nx CLI is fully compatible with it.
  * Every command you run should work the same when using the Nx CLI, except faster.
  *
- * Because of symliking you can still type `ng build/test/lint` in the terminal. The ng command, in this case,
+ * Because of symlinking you can still type `ng build/test/lint` in the terminal. The ng command, in this case,
  * will point to nx, which will perform optimizations before invoking ng. So the Angular CLI is always invoked.
  * The Nx CLI simply does some optimizations before invoking the Angular CLI.
  *
@@ -25,7 +25,15 @@ const fs = require('fs');
 const os = require('os');
 const cp = require('child_process');
 const isWindows = os.platform() === 'win32';
-const { output } = require('@nrwl/workspace');
+let output;
+try {
+  output = require('@nrwl/workspace').output;
+} catch (e) {
+  console.warn(
+    'Angular CLI could not be decorated to enable computation caching. Please ensure @nrwl/workspace is installed.',
+  );
+  process.exit(0);
+}
 
 /**
  * Paths to files being patched
@@ -45,6 +53,14 @@ function patchAngularCLI(initPath) {
 if (!process.env['NX_CLI_SET']) {
   const { output } = require('@nrwl/workspace');
   output.warn({ title: 'The Angular CLI was invoked instead of the Nx CLI. Use "npx ng [command]" or "nx [command]" instead.' });
+}
+
+if (process.argv[2] === 'update') {
+  const { output } = require('@nrwl/workspace');
+  output.error({
+    title: '"ng update" is deprecated in favor of "nx migrate". Read more: https://nx.dev/latest/angular/workspace/update'
+  });
+  throw new Error();
 }
 ${angularCLIInit}
     `,
@@ -66,7 +82,8 @@ function symlinkNgCLItoNxCLI() {
        * Such that it works in all shells and works with npx.
        */
       ['', '.cmd', '.ps1'].forEach(ext => {
-        fs.writeFileSync(ngPath + ext, fs.readFileSync(nxPath + ext));
+        if (fs.existsSync(nxPath + ext))
+          fs.writeFileSync(ngPath + ext, fs.readFileSync(nxPath + ext));
       });
     } else {
       // If unix-based, symlink
