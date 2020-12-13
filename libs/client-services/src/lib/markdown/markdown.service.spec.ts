@@ -1,6 +1,6 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
 
-import { AppMarkdownService } from './markdown.service';
+import { AppMarkdownService, markdownServiceProvider } from './markdown.service';
 
 describe('AppMarkdownService', () => {
   let service: AppMarkdownService;
@@ -13,13 +13,7 @@ describe('AppMarkdownService', () => {
   beforeEach(
     waitForAsync(() => {
       void TestBed.configureTestingModule({
-        providers: [
-          {
-            provide: AppMarkdownService,
-            useFactory: () => new AppMarkdownService(),
-            deps: [],
-          },
-        ],
+        providers: [markdownServiceProvider],
       })
         .compileComponents()
         .then(() => {

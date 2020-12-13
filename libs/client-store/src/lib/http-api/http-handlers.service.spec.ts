@@ -2,7 +2,11 @@ import { HttpErrorResponse, HttpHeaders, HttpRequest } from '@angular/common/htt
 import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { Store } from '@ngxs/store';
-import { AppClientServicesModule, AppToasterService } from '@nx-ng-starter/client-services';
+import {
+  AppToasterService,
+  markdownServiceProvider,
+  toasterServiceProvider,
+} from '@nx-ng-starter/client-services';
 import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
 import { HTTP_STATUS } from '@nx-ng-starter/client-util';
 import {
@@ -21,11 +25,8 @@ import { AppHttpHandlersService } from './http-handlers.service';
 
 describe('AppHttpHandlersService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [
-      AppClientTranslateModule.forRoot(),
-      AppHttpProgressModule.forRoot(),
-      AppClientServicesModule.forRoot(),
-    ],
+    imports: [AppClientTranslateModule.forRoot(), AppHttpProgressModule.forRoot()],
+    providers: [markdownServiceProvider, toasterServiceProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 

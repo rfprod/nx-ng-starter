@@ -1,7 +1,11 @@
 import { HttpRequest } from '@angular/common/http';
 import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import { AppClientServicesModule, AppToasterService } from '@nx-ng-starter/client-services';
+import {
+  AppToasterService,
+  markdownServiceProvider,
+  toasterServiceProvider,
+} from '@nx-ng-starter/client-services';
 import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
 import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
 import { Apollo } from 'apollo-angular';
@@ -17,12 +21,8 @@ import { AppHttpHandlersService } from './http-handlers.service';
 
 describe('AppHttpApiService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [
-      AppClientTranslateModule,
-      AppHttpProgressModule.forRoot(),
-      AppClientServicesModule.forRoot(),
-    ],
-    providers: [...httpProgressModuleProviders],
+    imports: [AppClientTranslateModule, AppHttpProgressModule.forRoot()],
+    providers: [...httpProgressModuleProviders, markdownServiceProvider, toasterServiceProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 

@@ -2,7 +2,7 @@ import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { TToastType } from '@nx-ng-starter/client-util';
 
-import { AppToasterService } from './toaster.service';
+import { AppToasterService, toasterServiceProvider } from './toaster.service';
 
 describe('AppToasterService', () => {
   const testBedConfig: TestModuleMetadata = {
@@ -17,11 +17,7 @@ describe('AppToasterService', () => {
           }) as MatSnackBar,
         deps: [],
       },
-      {
-        provide: AppToasterService,
-        useFactory: (snackbar: MatSnackBar) => new AppToasterService(snackbar),
-        deps: [MatSnackBar],
-      },
+      toasterServiceProvider,
     ],
   };
 

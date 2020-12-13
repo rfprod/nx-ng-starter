@@ -1,0 +1,86 @@
+# This workflow will do a clean install of node dependencies, and will run all Nx e2e apps using Cypress
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Nx E2E
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploymentEnv:
+        description: 'Deployment Environment'
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Test scenario tags'
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - name: Print inputs
+        run: |
+          echo "Deployment Environment: ${{ github.event.inputs.logLevel }}"
+          echo "Tags: ${{ github.event.inputs.tags }}"
+
+      - name: Checkout sources
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Get variables (yarn cache directory path, commit hash)
+        id: get-variables
+        run: echo "::set-output name=yarncachedir::$(yarn cache dir)"; echo "::set-output name=commitsha::$(echo ${GITHUB_SHA})"
+
+      - name: Workspace cache (npm, yarn, nx, jest)
+        uses: actions/cache@v2
+        id: workspace-cache # use this to check for `cache-hit` (`steps.workspace-cache.outputs.cache-hit != 'true'`)
+        env:
+          cache-name: workspace-cache
+        with:
+          path: |
+            ~/.npm
+            ${{ steps.get-variables.outputs.yarncachedir }}
+            **/node_modules
+            /tmp/nx
+            /tmp/jest_rs
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}-workspace-${{ steps.get-variables.outputs.commitsha }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}-workspace-
+            ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-
+            ${{ runner.os }}-
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install global dependencies
+        run: npm i -g typescript @angular/cli @nrwl/cli
+
+      - name: Install project dependencies
+        run: yarn install --frozen-lockfile --ignore-scripts
+
+      - name: Process dependencies with ngcc
+        run: yarn ngcc
+
+      - name: Install Cypress
+        run: npx cypress install
+
+      - name: E2E - client app
+        run: npx nx e2e client-e2e --headless
+
+      - name: E2E - client components library
+        run: npx nx e2e client-components-e2e --headless
+
+      - name: E2E - documentation
+        run: npx nx e2e documentation-e2e --headless
