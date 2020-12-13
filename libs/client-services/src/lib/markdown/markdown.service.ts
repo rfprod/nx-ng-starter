@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Provider } from '@angular/core';
 import marked from 'marked';
 import memo from 'memo-decorator';
 
@@ -19,3 +19,8 @@ export class AppMarkdownService {
     return marked(input);
   }
 }
+
+export const markdownServiceProvider: Provider = {
+  provide: AppMarkdownService,
+  useFactory: () => new AppMarkdownService(),
+};

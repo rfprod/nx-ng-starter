@@ -12,6 +12,7 @@ import {
 import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
 
 import { AppHomeComponent } from './home.component';
+import { AppHomePage } from './page/home-page.component';
 
 export default {
   title: 'AppHomeComponent',
@@ -39,6 +40,7 @@ export const primary = () => ({
       AppHttpProgressModule.forRoot(),
       AppWebsocketModule.forRoot(testingEnvironment),
     ],
+    declarations: [AppHomePage],
   },
   component: AppHomeComponent,
   props: {},
