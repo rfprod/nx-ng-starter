@@ -1,8 +1,8 @@
 function setupGlobalFetchMock() {
   Object.defineProperty(global, 'fetch', {
     value: jest.fn(async () => {
-      const promise: Promise<unknown> = new Promise(resolve => {
-        resolve();
+      const promise: Promise<boolean> = new Promise(resolve => {
+        resolve(true);
       });
       return promise;
     }),
