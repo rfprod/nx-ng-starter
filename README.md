@@ -2,10 +2,11 @@
 
 Angular NestJS Nx starter project with workflow automation.
 
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+
 ## Pipelines
 
-![PR validation](https://github.com/rfprod/nx-ng-starter/workflows/PR%20validation/badge.svg)
-![Master](https://github.com/rfprod/nx-ng-starter/workflows/Master/badge.svg)
+![Master](https://github.com/rfprod/nx-ng-starter/workflows/Master/badge.svg) ![PR validation](https://github.com/rfprod/nx-ng-starter/workflows/PR%20validation/badge.svg)
 
 ## Description
 
