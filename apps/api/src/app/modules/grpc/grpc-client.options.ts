@@ -1,6 +1,5 @@
 import { ClientOptions, Transport } from '@nestjs/microservices';
 import { join } from 'path';
-
 import { environment } from '../../../environments/environment';
 
 export const NXNGSTARTER_PACKAGE = 'NXNGSTARTER_PACKAGE';

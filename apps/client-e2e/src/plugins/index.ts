@@ -10,7 +10,6 @@
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
-
 import { preprocessTypescript } from '@nrwl/cypress/plugins/preprocessor';
 
 export default (
