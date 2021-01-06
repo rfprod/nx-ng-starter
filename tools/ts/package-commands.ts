@@ -30,9 +30,12 @@ function printSearchArgumentTip() {
   const search = argv.search;
   if (typeof search !== 'string') {
     console.log(
-      `\n${COLORS.CYAN}%s${COLORS.DEFAULT} ${COLORS.YELLOW}%s${COLORS.DEFAULT}\n`,
+      `\n${COLORS.CYAN}%s${COLORS.DEFAULT} ${COLORS.YELLOW}%s${COLORS.DEFAULT}
+      ${COLORS.CYAN}%s${COLORS.DEFAULT} ${COLORS.YELLOW}%s${COLORS.DEFAULT}\n`,
       'Use --search flag to filter available commands, e.g.',
       'yarn workspace:help --search=build',
+      'Some common --search flag values:',
+      'start generate install build lint test e2e affected analyze firebase nx workspace',
     );
   }
 }

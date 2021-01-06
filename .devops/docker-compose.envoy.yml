@@ -3,7 +3,7 @@ version: '3.5'
 services:
   envoy:
     container_name: envoy
-    image: envoyproxy/envoy-alpine:v1.15.0
+    image: envoyproxy/envoy-alpine
     volumes:
       - ./envoy/envoy.yml:/etc/envoy/envoy.yml
     ports:
