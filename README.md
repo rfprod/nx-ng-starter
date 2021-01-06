@@ -4,20 +4,42 @@ Angular NestJS Nx starter project with workflow automation.
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-## Pipelines
-
 ![Master](https://github.com/rfprod/nx-ng-starter/workflows/Master/badge.svg) ![PR validation](https://github.com/rfprod/nx-ng-starter/workflows/PR%20validation/badge.svg)
 
-## Description
+## Requirements
 
-`NxNgStarter` is a monorepo starter with preconfigured `Angular`, and `NestJS` apps.
+In order to run own copy of the project one must fulfill the following requirements.
+
+### Operating system
+
+- [Debian based Linux](https://en.wikipedia.org/wiki/List_of_Linux_distributions#Debian-based)
+- [OSX](https://en.wikipedia.org/wiki/MacOS)
+
+#### Supported operating systems notes
+
+- ~~`Windows`~~ - not supported due idiosyncrasies.
+
+### Core dependencies
+
+- [Node.js](https://nodejs.org/)
+- [NPM](https://nodejs.org/)
+- [Yarn](https://yarnpkg.com/)
+- [Git](https://git-scm.com/)
 
 ### Preferred package manager
 
 - [Yarn](https://www.npmjs.com/package/yarn) is a preferred package manager for dependencies installation in the project root.
 - [npm](https://www.npmjs.com/) is a preferred package manager for dependencies installation in the `functions` folder.
 
-### Committing changes to repo
+## Package scripts reference
+
+The project has lots of package scripts, check it in the `package.json` located in the project root, or use the following command (see terminal output for usage tips)
+
+```
+yarn workspace:help
+```
+
+## Committing changes to repo
 
 Using [commitizen cli](https://github.com/commitizen/cz-cli) is mandatory.
 

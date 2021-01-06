@@ -911,6 +911,16 @@
             "eslintConfig": "tools/.eslintrc.json",
             "lintFilePatterns": ["tools/ts/**/*"]
           }
+        },
+        "update": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts"
+              }
+            ]
+          }
         }
       },
       "projectType": "application",
