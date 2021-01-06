@@ -103,7 +103,7 @@
     "workspace:update:migrate:step-1": "ng run tools:update --check --jsonUpgraded",
     "workspace:update:migrate:step-2": "ng run tools:update --migrate=start",
     "workspace:update:migrate:step-3": "yarn install && yarn ngcc && ng run tools:update --migrate=execute",
-    "workspace:update:migrate:step-4": "rm -rf migrations.json migrations-dependencies.json"
+    "workspace:update:migrate:step-4": "rm -rf migrations.json migrations-packages.json"
   },
   "husky": {
     "hooks": {
