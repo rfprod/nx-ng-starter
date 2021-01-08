@@ -28,7 +28,7 @@ jobs:
     steps:
       - name: Print inputs
         run: |
-          echo "Deployment Environment: ${{ github.event.inputs.logLevel }}"
+          echo "Deployment Environment: ${{ github.event.inputs.deploymentEnv }}"
           echo "Tags: ${{ github.event.inputs.tags }}"
 
       - name: Checkout sources
