@@ -1,4 +1,10 @@
 {
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "[proto3]": {
     "editor.defaultFormatter": "xaver.clang-format"
   },
@@ -7,6 +13,9 @@
   },
   "[shellscript]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "clang-format.fallbackStyle": "Google",
   "clang-format.language.apex.enable": false,
@@ -20,20 +29,11 @@
   "clang-format.language.objective-cpp.enable": false,
   "clang-format.language.typescript.enable": false,
   "clang-format.style": "Google",
-  "[typescript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-  "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "editor.codeActionsOnSave": {
-    "source.organizeImports": false,
     "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true,
     "source.fixAll.tslint": true,
-    "source.fixAll.stylelint": true
+    "source.organizeImports": false
   },
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,

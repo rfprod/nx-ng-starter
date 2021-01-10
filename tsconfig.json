@@ -47,7 +47,8 @@
     "strict": true,
     "suppressImplicitAnyIndexErrors": true,
     "target": "ES6",
-    "typeRoots": ["node_modules/@types"]
+    "noEmit": true,
+    "typeRoots": ["node_modules/@types", "node_modules/cypress"]
   },
   "exclude": [
     "node_modules",
