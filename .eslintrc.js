@@ -28,7 +28,6 @@ module.exports = {
     'rxjs', // https://github.com/cartant/eslint-plugin-rxjs
     'compat', // https://www.npmjs.com/package/eslint-plugin-compat
     '@nrwl/eslint-plugin-nx',
-    '@nrwl/nx',
   ],
   ignorePatterns: ['*.min.js', 'node_modules/'],
 
