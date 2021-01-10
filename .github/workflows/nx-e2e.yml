@@ -76,11 +76,5 @@ jobs:
       - name: Install Cypress
         run: npx cypress install
 
-      - name: E2E - client app
-        run: npx nx e2e client-e2e --headless
-
-      - name: E2E - client components library
-        run: npx nx e2e client-components-e2e --headless
-
-      - name: E2E - documentation
-        run: npx nx e2e documentation-e2e --headless
+      - name: E2E all
+        run: npx nx run-many --target=e2e --all --headless
