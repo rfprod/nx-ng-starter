@@ -6,11 +6,10 @@ export function trackChanges<TargetClass, Value, Method = (value: Value) => void
 ) {
   return function (
     targetClass: TargetClass,
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    _functionName: 'ngOnChanges',
+    functionName: 'ngOnChanges',
     descriptor: PropertyDescriptor,
   ) {
-    const source: OnChanges['ngOnChanges'] = descriptor.value;
+    const source: OnChanges[typeof functionName] = descriptor.value;
 
     descriptor.value = function (changes: SimpleChanges) {
       const currentValue: Value | undefined | null = changes[key]?.currentValue;

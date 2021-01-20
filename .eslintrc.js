@@ -18,12 +18,12 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
     'prettier/@typescript-eslint',
+    'plugin:eslint-comments/recommended', // https://mysticatea.github.io/eslint-plugin-eslint-comments/rules/
   ],
   plugins: [
     'prettier',
     '@typescript-eslint', // https://github.com/typescript-eslint/typescript-eslint
     '@angular-eslint', // https://github.com/angular-eslint/angular-eslint
-    'deprecation', // https://github.com/gund/eslint-plugin-deprecation
     'simple-import-sort', // https://github.com/lydell/eslint-plugin-simple-import-sort
     'rxjs', // https://github.com/cartant/eslint-plugin-rxjs
     'compat', // https://www.npmjs.com/package/eslint-plugin-compat
@@ -32,6 +32,16 @@ module.exports = {
   ignorePatterns: ['*.min.js', 'node_modules/'],
 
   rules: {
+    'eslint-comments/no-unused-disable': 'error',
+    'eslint-comments/no-use': [
+      'error',
+      {
+        allow: [/*'eslint-enable', 'eslint-disable',*/ 'eslint-disable-next-line'],
+      },
+    ],
+    'eslint-comments/disable-enable-pair': ['error', { allowWholeFile: false }],
+    'eslint-comments/require-description': ['error', { ignore: [] }],
+    'eslint-comments/no-restricted-disable': ['error', '*', '!no-console', '!prettier'], // TODO: restrict what can be disabled
     '@typescript-eslint/await-thenable': 'error',
     '@typescript-eslint/ban-ts-comment': 'error',
     '@typescript-eslint/ban-types': [
@@ -82,6 +92,16 @@ module.exports = {
       {
         selector: 'parameter',
         format: ['camelCase'],
+        leadingUnderscore: 'forbid',
+        trailingUnderscore: 'forbid',
+      },
+      {
+        selector: 'objectLiteralProperty',
+        /**
+         * PascalCase can be used only in cases when camelCase is not applicable, like in http headers, e.g. 'Authorization'.
+         * In all other cases camelCase must be used.
+         */
+        format: ['camelCase', 'PascalCase'],
         leadingUnderscore: 'forbid',
         trailingUnderscore: 'forbid',
       },
@@ -230,7 +250,6 @@ module.exports = {
     'constructor-super': 'error',
     complexity: ['error', 10],
     'default-param-last': 'off', // handled by @typescript-eslint rule
-    'deprecation/deprecation': 'off', // TODO: turn on, and switch to error
     eqeqeq: 'error',
     'func-name-matching': ['error', 'always'],
     'guard-for-in': 'error',
@@ -242,10 +261,12 @@ module.exports = {
         code: 140,
         comments: 140,
         ignoreStrings: true,
+        ignorePattern: '// eslint-disable',
+        ignoreComments: true,
+        ignoreTrailingComments: true,
         ignoreUrls: true,
         ignoreTemplateLiterals: true,
         ignoreRegExpLiterals: true,
-        ignoreTrailingComments: true,
       },
     ],
     'max-lines': ['error', { max: 1100, skipBlankLines: true }],
@@ -496,7 +517,7 @@ module.exports = {
       },
     },
     {
-      files: '**/main.ts',
+      files: ['**/main.ts', '*logger*.ts', '**/http-handlers.service.ts'],
       rules: {
         'no-console': 'off',
       },
@@ -549,6 +570,13 @@ module.exports = {
         '@typescript-eslint/naming-convention': 'off',
         'simple-import-sort/imports': 'off',
         'simple-import-sort/exports': 'off',
+      },
+    },
+    {
+      files: ['**/src/support/index.ts'],
+      rules: {
+        'no-console': 'off',
+        '@typescript-eslint/triple-slash-reference': 'off',
       },
     },
   ],

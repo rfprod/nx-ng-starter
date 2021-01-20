@@ -55,5 +55,11 @@ module.exports = {
         '@angular-eslint/prefer-on-push-component-change-detection': 'off',
       },
     },
+    {
+      files: ['**/hammerjs-gesture.config.ts'],
+      rules: {
+        '@angular-eslint/use-injectable-provided-in': 'off',
+      },
+    },
   ],
 };

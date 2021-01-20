@@ -1,3 +1,5 @@
+/// <reference types="cypress" />
+
 /**
  * This example support/index.js is processed and
  * loaded automatically before your test files.
@@ -20,7 +22,6 @@ import './commands';
  * Documentation reference: https://docs.cypress.io/api/events/catalog-of-events.html#Examples
  */
 Cypress.on('uncaught:exception', (err, runnable) => {
-  // eslint-disable-next-line no-console
   console.warn('Cypress:uncaught:exception', err);
   /**
    * Returning false here prevents Cypress from failing the test if Cypress encounters application error.

@@ -66,7 +66,8 @@ export class ApiEventsGateway implements OnGatewayConnection, OnGatewayDisconnec
     return timer(0, timeout).pipe(
       takeWhile(item => item < eventsCount),
       map(item => {
-        return { event: 'timer', data: item };
+        const wsResponse: WsResponse<number> = { event: 'timer', data: item };
+        return wsResponse;
       }),
     );
   }

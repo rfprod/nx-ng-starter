@@ -5,7 +5,6 @@ import { HammerGestureConfig } from '@angular/platform-browser';
  * HammerJS Gesture Config.
  * Documentation reference: https://hammerjs.github.io/
  */
-// eslint-disable-next-line @angular-eslint/use-injectable-provided-in
 @Injectable()
 export class AppHammerGestureConfig extends HammerGestureConfig {
   public readonly overrides: {
