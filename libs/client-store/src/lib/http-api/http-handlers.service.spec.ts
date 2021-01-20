@@ -107,8 +107,17 @@ describe('AppHttpHandlersService', () => {
         const executionResult: ExecutionResult = {
           data: [{ x: 'x' }, { y: 'y' }],
         };
-        expect(service.extractGraphQLData(executionResult)).toEqual(expect.any(Array));
-        expect(service.extractGraphQLData(executionResult)).toEqual(executionResult.data);
+        void service.extractGraphQLData(executionResult).pipe(
+          tap(result => {
+            expect(result).toEqual(expect.any(Array));
+          }),
+        );
+
+        void service.extractGraphQLData(executionResult).pipe(
+          tap(result => {
+            expect(result).toEqual(executionResult.data);
+          }),
+        );
       }),
     );
 
@@ -116,20 +125,33 @@ describe('AppHttpHandlersService', () => {
       'should return execution result if response does not contain nested data object',
       waitForAsync(() => {
         const executionResult: ExecutionResult = {};
-        expect(service.extractGraphQLData(executionResult)).toEqual(expect.any(Object));
-        expect(service.extractGraphQLData(executionResult)).toEqual(executionResult);
+        void service.extractGraphQLData(executionResult).pipe(
+          tap(result => {
+            expect(result).toEqual(expect.any(Object));
+          }),
+        );
+
+        void service.extractGraphQLData(executionResult).pipe(
+          tap(result => {
+            expect(result).toEqual(executionResult);
+          }),
+        );
       }),
     );
   });
 
   it('extractGraphQLData should throw errors if get', () => {
     const error: GraphQLError = new GraphQLError('message');
-    try {
-      service.extractGraphQLData({ errors: [error] });
-    } catch (e) {
-      const errors = e as GraphQLError[];
-      expect(errors[0]).toBe(error);
-    }
+    void service.extractGraphQLData({ errors: [error] }).pipe(
+      tap(
+        () => {
+          // empty
+        },
+        errors => {
+          expect(errors[0]).toBe(error);
+        },
+      ),
+    );
   });
 
   it(
@@ -213,7 +235,6 @@ describe('AppHttpHandlersService', () => {
             const newHeadersObj: {
               [name: string]: string | string[];
             } = {
-              // eslint-disable-next-line @typescript-eslint/naming-convention
               Authorization: `Token ${userToken}`,
             };
             const newHeaders: HttpHeaders = new HttpHeaders(newHeadersObj);

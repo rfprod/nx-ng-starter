@@ -74,16 +74,11 @@ const firebaseConfig = process.env.FIREBASE_CONFIG;
  */
 if (Boolean(firebaseConfig)) {
   admin.initializeApp();
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  exports.ping = functions.https.onRequest(server);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  exports.login = functions.https.onRequest(server);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  exports.logout = functions.https.onRequest(server);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  exports.signup = functions.https.onRequest(server);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-  exports.graphql = functions.https.onRequest(server);
-  // TODO: handle websocket events exports.events = functions.https.onRequest(server);
-  // TODO: exports.grpc = functions.https.onRequest(server);
+  (exports as Record<string, unknown>).ping = functions.https.onRequest(server);
+  (exports as Record<string, unknown>).login = functions.https.onRequest(server);
+  (exports as Record<string, unknown>).logout = functions.https.onRequest(server);
+  (exports as Record<string, unknown>).signup = functions.https.onRequest(server);
+  (exports as Record<string, unknown>).graphql = functions.https.onRequest(server);
+  // TODO: handle websocket events (exports as Record<string, unknown>).events = functions.https.onRequest(server);
+  // TODO: (exports as Record<string, unknown>).grpc = functions.https.onRequest(server);
 }

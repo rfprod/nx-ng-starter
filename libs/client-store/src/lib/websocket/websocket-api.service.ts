@@ -29,7 +29,7 @@ export class AppWebsocketApiService {
     return this.websocket$.pipe(
       untilDestroyed(this),
       catchError((error: Event, caught: Observable<IWebsocketRequestEvent>) => {
-        // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console -- this is needed so that websocket erros are reported to console
         console.error('error', error);
         return of();
       }),

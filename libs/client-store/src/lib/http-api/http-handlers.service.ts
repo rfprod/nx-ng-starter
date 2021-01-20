@@ -16,7 +16,7 @@ import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
 import { createUploadLink } from 'apollo-upload-client';
 import { ExecutionResult, GraphQLError } from 'graphql';
 import memo from 'memo-decorator';
-import { MonoTypeOperatorFunction, Observable, throwError } from 'rxjs';
+import { MonoTypeOperatorFunction, Observable, of, throwError } from 'rxjs';
 import { catchError, first, map, take, tap, timeout } from 'rxjs/operators';
 
 import { AppHttpProgressService } from '../http-progress/http-progress.service';
@@ -70,7 +70,6 @@ export class AppHttpHandlersService {
       first(),
       map(token => {
         return new HttpHeaders({
-          // eslint-disable-next-line @typescript-eslint/naming-convention
           Authorization: `Token ${token}`,
         });
       }),
@@ -130,7 +129,6 @@ export class AppHttpHandlersService {
           httpLinkHandler,
           (createUploadLink({
             uri,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             headers: { Authorization: `Token ${token}` },
           }) as unknown) as ApolloLink,
         );
@@ -156,7 +154,6 @@ export class AppHttpHandlersService {
             const { graphQLErrors, networkError } = error;
 
             if (typeof graphQLErrors !== 'undefined') {
-              // eslint-disable-next-line no-console
               console.error('Apollo linkHandler [GraphQL error]: ', graphQLErrors);
               graphQLErrors.map(({ message, extensions }) => {
                 resultMessage += `[GraphQL]: ${message}`;
@@ -165,7 +162,6 @@ export class AppHttpHandlersService {
             }
 
             if (Boolean(networkError)) {
-              // eslint-disable-next-line no-console
               console.error('Apollo linkHandler [Network error]: ', networkError);
 
               if (networkError instanceof HttpErrorResponse) {
@@ -216,12 +212,11 @@ export class AppHttpHandlersService {
    * Returns data only, excluding meta information located in response object root.
    * @param res Execution result
    */
-  public extractGraphQLData(res: ExecutionResult): { [key: string]: unknown } {
+  public extractGraphQLData(res: ExecutionResult): Observable<{ [key: string]: unknown }> {
     if (Boolean(res.errors)) {
-      // eslint-disable-next-line @typescript-eslint/no-throw-literal
-      throw res.errors;
+      return throwError(res.errors);
     }
-    return res.data ?? res;
+    return of(res.data ?? res);
   }
 
   /**
