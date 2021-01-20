@@ -95,6 +95,7 @@
     "test:reports": "bash tools/shell/test.sh report all",
     "workspace:cleanup": "rm -rf documentation/* dist/* coverage/* changelog/*",
     "workspace:help": "ng run tools:help",
+    "workspace:integrity-check": "bash tools/shell/yarn-extension.sh integrity-check",
     "workspace:mmdc": "./node_modules/.bin/mmdc",
     "workspace:schematic": "nx workspace-schematic",
     "workspace:update": "nx migrate latest",

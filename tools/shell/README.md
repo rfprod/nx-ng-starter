@@ -16,6 +16,7 @@ This folder contains utility shell scripts.
 - `module-aliases.sh` - supported module aliases script (used by other scripts to determine if module alias exists before performing action)
 - `set-documentation-env.sh` - documentation app prebuild script, collects references to \*.md files across the repo
 - `test.sh` - apps/libs unit testing script
+- `yarn-extension.sh` - checks package integrity and cleans up workspace if there is no integrity
 
 ## `build.sh`
 

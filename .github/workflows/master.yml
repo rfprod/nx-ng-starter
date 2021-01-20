@@ -47,6 +47,9 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-
             ${{ runner.os }}-
 
+      - name: Workspace integrity check
+        run: yarn workspace:integrity-check
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
