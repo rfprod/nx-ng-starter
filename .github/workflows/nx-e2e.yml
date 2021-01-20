@@ -37,6 +37,11 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
 
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
       - name: Get variables (yarn cache directory path, commit hash)
         id: get-variables
         run: echo "::set-output name=yarncachedir::$(yarn cache dir)"; echo "::set-output name=commitsha::$(echo ${GITHUB_SHA})"
@@ -59,13 +64,11 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-
             ${{ runner.os }}-
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-
       - name: Install global dependencies
         run: npm i -g typescript @angular/cli @nrwl/cli
+
+      - name: Workspace integrity check
+        run: yarn workspace:integrity-check
 
       - name: Install project dependencies
         run: yarn install --frozen-lockfile --ignore-scripts
