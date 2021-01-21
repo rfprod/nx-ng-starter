@@ -36,12 +36,12 @@ module.exports = {
     'eslint-comments/no-use': [
       'error',
       {
-        allow: [/*'eslint-enable', 'eslint-disable',*/ 'eslint-disable-next-line'],
+        allow: ['eslint-disable-next-line'],
       },
     ],
     'eslint-comments/disable-enable-pair': ['error', { allowWholeFile: false }],
     'eslint-comments/require-description': ['error', { ignore: [] }],
-    'eslint-comments/no-restricted-disable': ['error', '*', '!no-console', '!prettier'], // TODO: restrict what can be disabled
+    'eslint-comments/no-restricted-disable': ['error', '*', '!no-console', '!prettier'],
     '@typescript-eslint/await-thenable': 'error',
     '@typescript-eslint/ban-ts-comment': 'error',
     '@typescript-eslint/ban-types': [
