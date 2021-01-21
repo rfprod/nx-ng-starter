@@ -18,7 +18,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
     'prettier/@typescript-eslint',
-    'plugin:eslint-comments/recommended', // https://mysticatea.github.io/eslint-plugin-eslint-comments/rules/
+    'plugin:eslint-comments/recommended',
   ],
   plugins: [
     'prettier',
@@ -27,6 +27,7 @@ module.exports = {
     'simple-import-sort', // https://github.com/lydell/eslint-plugin-simple-import-sort
     'rxjs', // https://github.com/cartant/eslint-plugin-rxjs
     'compat', // https://www.npmjs.com/package/eslint-plugin-compat
+    'eslint-comments', // https://mysticatea.github.io/eslint-plugin-eslint-comments/rules/
     '@nrwl/eslint-plugin-nx',
   ],
   ignorePatterns: ['*.min.js', 'node_modules/'],
@@ -36,12 +37,12 @@ module.exports = {
     'eslint-comments/no-use': [
       'error',
       {
-        allow: [/*'eslint-enable', 'eslint-disable',*/ 'eslint-disable-next-line'],
+        allow: ['eslint-disable-next-line'],
       },
     ],
     'eslint-comments/disable-enable-pair': ['error', { allowWholeFile: false }],
     'eslint-comments/require-description': ['error', { ignore: [] }],
-    'eslint-comments/no-restricted-disable': ['error', '*', '!no-console', '!prettier'], // TODO: restrict what can be disabled
+    'eslint-comments/no-restricted-disable': ['error', '*', '!no-console', '!prettier'],
     '@typescript-eslint/await-thenable': 'error',
     '@typescript-eslint/ban-ts-comment': 'error',
     '@typescript-eslint/ban-types': [
