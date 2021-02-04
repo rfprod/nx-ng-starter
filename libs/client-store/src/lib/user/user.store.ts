@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 import { actionPayloadConstructor } from '@nx-ng-starter/client-util';
 
-import { IUserState, TUserPayload, USER_STATE, userInitialState } from './user.interface';
+import { IUserState, TUserPayload, USER_STATE_TOKEN, userInitialState } from './user.interface';
 import { AppUserService } from './user.service';
 
-const createAction = actionPayloadConstructor(USER_STATE.getName());
+const createAction = actionPayloadConstructor(USER_STATE_TOKEN.getName());
 const setState = createAction<TUserPayload>('set state');
 
 export const userActions = {
@@ -13,7 +13,7 @@ export const userActions = {
 };
 
 @State<IUserState>({
-  name: USER_STATE,
+  name: USER_STATE_TOKEN,
   defaults: {
     ...userInitialState,
   },

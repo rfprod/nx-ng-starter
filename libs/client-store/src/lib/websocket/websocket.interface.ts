@@ -23,7 +23,7 @@ export const websocketInitialState = {
   events: [],
 };
 
-export const WEBSOCKET_STATE = new StateToken<IAppWebsocketStateModel>('WEBSOCKET_STATE');
+export const WEBSOCKET_STATE_TOKEN = new StateToken<IAppWebsocketStateModel>('websocket');
 
 export interface IAppWebsocketStatePayload {
   users?: number;

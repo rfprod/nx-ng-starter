@@ -10,7 +10,7 @@ export const sidebarUiInitialState: ISiedbarUiState = {
   sidebarOpened: false,
 };
 
-export const SIDEBAR_STATE = new StateToken<ISiedbarUiState>('SIDEBAR_STATE');
+export const SIDEBAR_STATE_TOKEN = new StateToken<ISiedbarUiState>('sidebar');
 
 export type TSidebarUiPayload = IActionPayload<ISiedbarUiState>;
 

@@ -14,7 +14,7 @@ export const httpProgressInitialState = {
   mainView: false,
 };
 
-export const HTTP_PROGRESS_STATE = new StateToken<IAppHttpProgressState>('HTTP_PROGRESS_STATE');
+export const HTTP_PROGRESS_STATE_TOKEN = new StateToken<IAppHttpProgressState>('httpProgress');
 
 export type THttpProgressPayload = IActionPayload<IAppHttpProgressStatePayload>;
 

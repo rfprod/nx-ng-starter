@@ -4,7 +4,7 @@ import { actionPayloadConstructor } from '@nx-ng-starter/client-util';
 import { tap } from 'rxjs/operators';
 
 import {
-  HTTP_API_STATE,
+  HTTP_API_STATE_TOKEN,
   httpApiInitialState,
   IAppHttpApiState,
   IAppHttpApiStatePayload,
@@ -12,7 +12,7 @@ import {
 } from './http-api.interface';
 import { AppHttpApiService } from './http-api.service';
 
-const createAction = actionPayloadConstructor(HTTP_API_STATE.getName());
+const createAction = actionPayloadConstructor(HTTP_API_STATE_TOKEN.getName());
 const ping = createAction<THttpApiPayload>('ping');
 
 export const httpApiActions = {
@@ -20,7 +20,7 @@ export const httpApiActions = {
 };
 
 @State<IAppHttpApiState>({
-  name: HTTP_API_STATE,
+  name: HTTP_API_STATE_TOKEN,
   defaults: {
     ...httpApiInitialState,
   },

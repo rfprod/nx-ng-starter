@@ -25,7 +25,7 @@ export class AppSidebarUiService {
       .pipe(
         first(),
         concatMap(opened => {
-          return this.store.dispatch(new sidebarUiActions.setState({ sidebarOpened: !opened }));
+          return opened ? this.close() : this.open();
         }),
       )
       .subscribe();

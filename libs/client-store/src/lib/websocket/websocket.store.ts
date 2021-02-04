@@ -5,11 +5,11 @@ import { actionPayloadConstructor } from '@nx-ng-starter/client-util';
 import {
   IAppWebsocketStateModel,
   TWebsocketPayload,
-  WEBSOCKET_STATE,
+  WEBSOCKET_STATE_TOKEN,
   websocketInitialState,
 } from './websocket.interface';
 
-const createAction = actionPayloadConstructor(WEBSOCKET_STATE.getName());
+const createAction = actionPayloadConstructor(WEBSOCKET_STATE_TOKEN.getName());
 const setState = createAction<TWebsocketPayload>('set state');
 
 export const websocketActions = {
@@ -17,7 +17,7 @@ export const websocketActions = {
 };
 
 @State<IAppWebsocketStateModel>({
-  name: WEBSOCKET_STATE,
+  name: WEBSOCKET_STATE_TOKEN,
   defaults: {
     ...websocketInitialState,
   },

@@ -7,6 +7,12 @@ export const APP_ROUTES: Route[] = [
     loadChildren: () =>
       import('@nx-ng-starter/client-components').then(mod => mod.AppClientComponentsModule),
   },
+  {
+    path: '',
+    outlet: 'chatbot',
+    loadChildren: () =>
+      import('@nx-ng-starter/client-chatbot').then(mod => mod.AppClientChatbotModule),
+  },
   { path: '**', redirectTo: '' },
 ];
 

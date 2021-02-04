@@ -1,7 +1,5 @@
 {
-  "affected": {
-    "defaultBase": "master"
-  },
+  "affected": { "defaultBase": "master" },
   "implicitDependencies": {
     "angular.json": "*",
     "nx.json": "*",
@@ -68,6 +66,9 @@
     },
     "tools": {
       "tags": ["scope:tools", "type:workspace"]
+    },
+    "client-chatbot": {
+      "tags": ["scope:client-chatbot", "type:feature"]
     }
   },
   "tasksRunnerOptions": {

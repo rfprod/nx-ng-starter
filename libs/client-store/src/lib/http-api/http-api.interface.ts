@@ -18,7 +18,7 @@ export const httpApiInitialState = {
   ping: '',
 };
 
-export const HTTP_API_STATE = new StateToken<IAppHttpApiState>('HTTP_API_STATE');
+export const HTTP_API_STATE_TOKEN = new StateToken<IAppHttpApiState>('httpApi');
 
 export type THttpApiPayload = IActionPayload<IAppHttpApiStatePayload>;
 

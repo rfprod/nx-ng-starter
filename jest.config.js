@@ -14,5 +14,6 @@ module.exports = {
     '<rootDir>/apps/documentation',
     '<rootDir>/libs/mocks-core',
     '<rootDir>/libs/proto',
+    '<rootDir>/libs/client-chatbot',
   ],
 };
