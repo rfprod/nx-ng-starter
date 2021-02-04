@@ -1,0 +1,23 @@
+<h3>Chatbot</h3>
+
+<cdk-virtual-scroll-viewport itemSize="20" class="messages-list">
+  <div
+    class="message"
+    *cdkVirtualFor="let message of messages$ | async"
+    [ngClass]="{ 'message--bot': message.bot, 'message--user': !message.bot }"
+  >
+    {{ message.text || 'Loading...' }}
+  </div>
+</cdk-virtual-scroll-viewport>
+
+<form [formGroup]="form" (ngSubmit)="sendMessage()">
+  <mat-form-field>
+    <mat-label>Your message</mat-label>
+
+    <textarea type="text" matInput formControlName="message"></textarea>
+
+    <button mat-button matSuffix mat-icon-button type="submit" aria-label="Sibmit">
+      <mat-icon>check</mat-icon>
+    </button>
+  </mat-form-field>
+</form>

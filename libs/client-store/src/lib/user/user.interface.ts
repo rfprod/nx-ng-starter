@@ -14,7 +14,7 @@ export const userInitialState: IUserState = {
   token: '',
 };
 
-export const USER_STATE = new StateToken<IUserState>('USER_STATE');
+export const USER_STATE_TOKEN = new StateToken<IUserState>('user');
 
 export interface IUserStatePayload {
   email?: string;

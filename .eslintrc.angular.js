@@ -2,6 +2,7 @@
  * Rules reference: https://github.com/angular-eslint/angular-eslint
  */
 module.exports = {
+  extends: ['plugin:@nrwl/nx/angular', 'plugin:@angular-eslint/template/process-inline-templates'],
   rules: {
     '@angular-eslint/directive-selector': [
       'error',
@@ -60,6 +61,11 @@ module.exports = {
       rules: {
         '@angular-eslint/use-injectable-provided-in': 'off',
       },
+    },
+    {
+      files: ['**/*.html'],
+      extends: ['plugin:@nrwl/nx/angular-template'],
+      rules: {},
     },
   ],
 };

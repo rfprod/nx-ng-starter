@@ -19,6 +19,7 @@ module.exports = {
     'plugin:prettier/recommended',
     'prettier/@typescript-eslint',
     'plugin:eslint-comments/recommended',
+    'plugin:@nrwl/nx/typescript',
   ],
   plugins: [
     'prettier',
@@ -361,6 +362,7 @@ module.exports = {
     '@nrwl/nx/enforce-module-boundaries': [
       'error',
       {
+        enforceBuildableLibDependency: true,
         allow: ['mocks-core'],
         depConstraints: [
           {
@@ -441,6 +443,7 @@ module.exports = {
               'scope:client-gql',
               'scope:client-store',
               'scope:client-services',
+              'scope:client-chatbot',
               'scope:client-components',
               'scope:client-core',
               'scope:client-material',
@@ -503,6 +506,7 @@ module.exports = {
         'eslint:recommended',
         'plugin:prettier/recommended',
         'plugin:@angular-eslint/recommended',
+        'plugin:@nrwl/nx/javascript',
       ],
       plugins: [
         'prettier',

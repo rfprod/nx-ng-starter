@@ -4,12 +4,12 @@ import { actionPayloadConstructor } from '@nx-ng-starter/client-util';
 
 import {
   ISiedbarUiState,
-  SIDEBAR_STATE,
+  SIDEBAR_STATE_TOKEN,
   sidebarUiInitialState,
   TSidebarUiPayload,
 } from './sidebar-ui.interface';
 
-const createAction = actionPayloadConstructor(SIDEBAR_STATE.getName());
+const createAction = actionPayloadConstructor(SIDEBAR_STATE_TOKEN.getName());
 const setState = createAction<TSidebarUiPayload>('set state');
 
 export const sidebarUiActions = {
@@ -17,7 +17,7 @@ export const sidebarUiActions = {
 };
 
 @State<ISiedbarUiState>({
-  name: SIDEBAR_STATE,
+  name: SIDEBAR_STATE_TOKEN,
   defaults: {
     ...sidebarUiInitialState,
   },

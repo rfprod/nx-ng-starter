@@ -39,17 +39,17 @@
           },
           "options": {
             "assets": ["apps/api/src/assets"],
-            "buildLibsFromSource": true,
-            "main": "apps/api/src/main.ts",
-            "outputPath": "dist/apps/api",
-            "tsConfig": "apps/api/tsconfig.app.json",
             "budgets": [
               {
                 "maximumError": "15mb",
                 "maximumWarning": "12mb",
                 "type": "initial"
               }
-            ]
+            ],
+            "buildLibsFromSource": true,
+            "main": "apps/api/src/main.ts",
+            "outputPath": "dist/apps/api",
+            "tsConfig": "apps/api/tsconfig.app.json"
           },
           "outputs": ["{options.outputPath}"]
         },
@@ -271,6 +271,32 @@
         }
       },
       "sourceRoot": "apps/client/src"
+    },
+    "client-chatbot": {
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-chatbot/.eslintrc.json",
+            "lintFilePatterns": [
+              "libs/client-chatbot/src/**/*.ts",
+              "libs/client-chatbot/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-chatbot/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/client-chatbot"]
+        }
+      },
+      "prefix": "nx-ng-starter",
+      "projectType": "library",
+      "root": "libs/client-chatbot",
+      "sourceRoot": "libs/client-chatbot/src"
     },
     "client-components": {
       "architect": {
@@ -933,10 +959,15 @@
   "schematics": {
     "@nrwl/angular:application": {
       "e2eTestRunner": "cypress",
+      "linter": "eslint",
       "style": "scss",
       "unitTestRunner": "jest"
     },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    },
     "@nrwl/angular:library": {
+      "linter": "eslint",
       "style": "scss",
       "unitTestRunner": "jest"
     },
