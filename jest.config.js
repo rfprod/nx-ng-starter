@@ -3,6 +3,7 @@ module.exports = {
     '<rootDir>/apps/api',
     '<rootDir>/libs/api-interface',
     '<rootDir>/apps/client',
+    '<rootDir>/libs/client-chatbot',
     '<rootDir>/libs/client-components',
     '<rootDir>/libs/client-core',
     '<rootDir>/libs/client-gql',
@@ -14,6 +15,6 @@ module.exports = {
     '<rootDir>/apps/documentation',
     '<rootDir>/libs/mocks-core',
     '<rootDir>/libs/proto',
-    '<rootDir>/libs/client-chatbot',
+    '<rootDir>/apps/elements',
   ],
 };

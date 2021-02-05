@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AppSidebarUiService } from '@nx-ng-starter/client-store';
+import { AppSidebarService } from '@nx-ng-starter/client-store';
 
 @Component({
   selector: 'app-content',
@@ -8,19 +8,19 @@ import { AppSidebarUiService } from '@nx-ng-starter/client-store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppContentComponent {
-  public readonly sidebarOpened$ = this.sidebarUiService.sidebarOpened$;
+  public readonly sidebarOpened$ = this.sidebarService.sidebarOpened$;
 
-  constructor(private readonly sidebarUiService: AppSidebarUiService) {}
+  constructor(private readonly sidebarService: AppSidebarService) {}
 
   /**
    * Sidebar close handler.
    * Propagates sidebar close event from UI to state store.
    */
   public sidebarCloseHandler(): void {
-    void this.sidebarUiService.close().subscribe();
+    void this.sidebarService.close().subscribe();
   }
 
   public swiperightHandler(event: Event): void {
-    void this.sidebarUiService.open().subscribe();
+    void this.sidebarService.open().subscribe();
   }
 }

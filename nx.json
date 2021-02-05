@@ -1,12 +1,14 @@
 {
-  "affected": { "defaultBase": "master" },
+  "affected": {
+    "defaultBase": "master"
+  },
   "implicitDependencies": {
+    ".eslintrc.json": "*",
     "angular.json": "*",
     "nx.json": "*",
     "package.json": "*",
     "tsconfig.base.json": "*",
-    "tslint.json": "*",
-    ".eslintrc.json": "*"
+    "tslint.json": "*"
   },
   "npmScope": "nx-ng-starter",
   "projects": {
@@ -18,6 +20,9 @@
     },
     "client": {
       "tags": ["scope:client", "type:application"]
+    },
+    "client-chatbot": {
+      "tags": ["scope:client-chatbot", "type:feature"]
     },
     "client-components": {
       "tags": ["scope:client-components", "type:ui"]
@@ -58,6 +63,13 @@
       "implicitDependencies": ["documentation"],
       "tags": ["scope:documentation-e2e", "type:e2e"]
     },
+    "elements": {
+      "tags": ["scope:elements", "type:application"]
+    },
+    "elements-e2e": {
+      "implicitDependencies": ["elements"],
+      "tags": ["scope:elements-e2e", "type:e2e"]
+    },
     "mocks-core": {
       "tags": ["scope:mocks-core", "type:mocks"]
     },
@@ -66,9 +78,6 @@
     },
     "tools": {
       "tags": ["scope:tools", "type:workspace"]
-    },
-    "client-chatbot": {
-      "tags": ["scope:client-chatbot", "type:feature"]
     }
   },
   "tasksRunnerOptions": {

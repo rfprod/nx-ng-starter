@@ -6,11 +6,11 @@ import {
   ISiedbarUiState,
   SIDEBAR_STATE_TOKEN,
   sidebarUiInitialState,
-  TSidebarUiPayload,
-} from './sidebar-ui.interface';
+  TSidebarPayload,
+} from './sidebar.interface';
 
 const createAction = actionPayloadConstructor(SIDEBAR_STATE_TOKEN.getName());
-const setState = createAction<TSidebarUiPayload>('set state');
+const setState = createAction<TSidebarPayload>('set state');
 
 export const sidebarUiActions = {
   setState,
@@ -22,12 +22,10 @@ export const sidebarUiActions = {
     ...sidebarUiInitialState,
   },
 })
-@Injectable({
-  providedIn: 'root',
-})
-export class AppSidebarUiState {
+@Injectable()
+export class AppSidebarState {
   @Selector()
-  public static getSidebarUi(state: ISiedbarUiState) {
+  public static getSidebar(state: ISiedbarUiState) {
     return state;
   }
 
@@ -37,7 +35,7 @@ export class AppSidebarUiState {
   }
 
   @Action(setState)
-  public setState(ctx: StateContext<ISiedbarUiState>, { payload }: TSidebarUiPayload) {
+  public setState(ctx: StateContext<ISiedbarUiState>, { payload }: TSidebarPayload) {
     return ctx.patchState(payload);
   }
 }

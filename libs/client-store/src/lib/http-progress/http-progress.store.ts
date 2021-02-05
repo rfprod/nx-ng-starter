@@ -24,9 +24,7 @@ export const httpProgressActions = {
     ...httpProgressInitialState,
   },
 })
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AppHttpProgressState {
   @Selector()
   public static allProgress(state: IAppHttpProgressState) {

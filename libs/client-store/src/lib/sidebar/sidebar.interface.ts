@@ -12,8 +12,8 @@ export const sidebarUiInitialState: ISiedbarUiState = {
 
 export const SIDEBAR_STATE_TOKEN = new StateToken<ISiedbarUiState>('sidebar');
 
-export type TSidebarUiPayload = IActionPayload<ISiedbarUiState>;
+export type TSidebarPayload = IActionPayload<ISiedbarUiState>;
 
-export interface IAppSidebarUiService {
+export interface IAppSidebarService {
   sidebarOpened$: Observable<boolean>;
 }
