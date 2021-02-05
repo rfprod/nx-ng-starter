@@ -1078,12 +1078,22 @@
             "lintFilePatterns": ["tools/ts/**/*.{js,ts}"]
           }
         },
-        "update": {
+        "update-check": {
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
               {
-                "command": "npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts"
+                "command": "npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --check"
+              }
+            ]
+          }
+        },
+        "update-migrate": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --check --jsonUpgraded; npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --migrate=start; yarn install && yarn ngcc && npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --migrate=execute; rm -rf migrations.json migrations-packages.json"
               }
             ]
           }

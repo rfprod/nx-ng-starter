@@ -395,7 +395,7 @@ module.exports = {
           },
           {
             sourceTag: 'scope:client-core',
-            onlyDependOnLibsWithTags: ['scope:client-util'],
+            onlyDependOnLibsWithTags: ['scope:client-util', 'scope:client-store'],
           },
           {
             sourceTag: 'scope:client-store',
@@ -422,6 +422,8 @@ module.exports = {
             onlyDependOnLibsWithTags: [
               'scope:mocks-core',
               'scope:proto',
+              'scope:client-core',
+              'scope:client-material',
               'scope:client-store',
               'scope:client-util',
               'scope:client-translate',
