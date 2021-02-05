@@ -22,9 +22,7 @@ export const websocketActions = {
     ...websocketInitialState,
   },
 })
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AppWebsocketState {
   @Selector()
   public static getState(state: IAppWebsocketStateModel) {

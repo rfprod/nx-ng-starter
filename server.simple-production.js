@@ -107,5 +107,9 @@ app.all('/*', function (req, res, next) {
 const port = process.env.PORT || 8080;
 
 app.listen(port, () => {
-  console.log(`\n# > SIMPLE PRODUCTION SERVER STARTED > Node.js listening on ${port}...\n`);
+  const message = `
+  # Simple production server started
+      > Node.js listening on ${port}...
+`;
+  console.log(message);
 });

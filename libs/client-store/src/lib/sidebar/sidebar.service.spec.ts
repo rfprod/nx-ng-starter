@@ -1,14 +1,14 @@
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
 
-import { AppSidebarUiModule } from './sidebar-ui.module';
-import { AppSidebarUiService } from './sidebar-ui.service';
+import { AppSidebarModule } from './sidebar.module';
+import { AppSidebarService } from './sidebar.service';
 
-describe('AppSidebarUiService', () => {
-  let service: AppSidebarUiService;
+describe('AppSidebarService', () => {
+  let service: AppSidebarService;
 
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [AppSidebarUiModule],
+    imports: [AppSidebarModule],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
@@ -17,7 +17,7 @@ describe('AppSidebarUiService', () => {
       void TestBed.configureTestingModule(testBedConfig)
         .compileComponents()
         .then(() => {
-          service = TestBed.inject(AppSidebarUiService);
+          service = TestBed.inject(AppSidebarService);
         });
     }),
   );

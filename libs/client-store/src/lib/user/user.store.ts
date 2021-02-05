@@ -1,12 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
-import { actionPayloadConstructor } from '@nx-ng-starter/client-util';
 
+import { setState } from './user.actions';
 import { IUserState, TUserPayload, USER_STATE_TOKEN, userInitialState } from './user.interface';
 import { AppUserService } from './user.service';
-
-const createAction = actionPayloadConstructor(USER_STATE_TOKEN.getName());
-const setState = createAction<TUserPayload>('set state');
 
 export const userActions = {
   setState,
@@ -18,9 +15,7 @@ export const userActions = {
     ...userInitialState,
   },
 })
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AppUserState {
   constructor(private readonly store: Store, private readonly api: AppUserService) {
     const user = this.api.restoreUser();

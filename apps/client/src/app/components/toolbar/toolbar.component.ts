@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { AppSidebarUiService, chatbotActions } from '@nx-ng-starter/client-store';
+import { AppSidebarService, chatbotActions } from '@nx-ng-starter/client-store';
 
 @Component({
   selector: 'app-toolbar',
@@ -9,12 +9,9 @@ import { AppSidebarUiService, chatbotActions } from '@nx-ng-starter/client-store
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppToolbarComponent {
-  public readonly sidebarOpened$ = this.sidebarUiService.sidebarOpened$;
+  public readonly sidebarOpened$ = this.sidebarService.sidebarOpened$;
 
-  constructor(
-    private readonly store: Store,
-    public readonly sidebarUiService: AppSidebarUiService,
-  ) {}
+  constructor(private readonly store: Store, public readonly sidebarService: AppSidebarService) {}
 
   public toggleChatbot(): void {
     void this.store.dispatch(new chatbotActions.toggle());

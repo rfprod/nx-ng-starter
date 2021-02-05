@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { AppChatbotModule } from './chatbot/chatbot.module';
 import { AppHttpApiModule } from './http-api/http-api.module';
 import { AppHttpProgressModule } from './http-progress/http-progress.module';
-import { AppSidebarUiModule } from './sidebar-ui/sidebar-ui.module';
+import { AppSidebarModule } from './sidebar/sidebar.module';
+import { AppThemeModule } from './theme/theme.module';
 import { AppUserModule } from './user/user.module';
 import { AppWebsocketModule } from './websocket/websocket.module';
 
@@ -12,17 +13,19 @@ import { AppWebsocketModule } from './websocket/websocket.module';
     AppHttpApiModule,
     AppHttpProgressModule.forRoot(),
     AppUserModule,
-    AppSidebarUiModule,
+    AppSidebarModule,
     AppWebsocketModule,
     AppChatbotModule,
+    AppThemeModule,
   ],
   exports: [
     AppHttpApiModule,
     AppHttpProgressModule,
     AppUserModule,
-    AppSidebarUiModule,
+    AppSidebarModule,
     AppWebsocketModule,
     AppChatbotModule,
+    AppThemeModule,
   ],
 })
 export class AppClientStoreModule {}

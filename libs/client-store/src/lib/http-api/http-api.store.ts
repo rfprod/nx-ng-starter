@@ -25,9 +25,7 @@ export const httpApiActions = {
     ...httpApiInitialState,
   },
 })
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AppHttpApiState {
   constructor(private readonly api: AppHttpApiService) {}
 

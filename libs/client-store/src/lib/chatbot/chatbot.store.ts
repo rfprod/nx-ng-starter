@@ -16,9 +16,7 @@ import {
     ...chatbotInitialState,
   },
 })
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AppChatbotState {
   constructor(private readonly store: Store) {}
 
