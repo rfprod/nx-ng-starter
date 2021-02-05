@@ -422,6 +422,8 @@ module.exports = {
             onlyDependOnLibsWithTags: [
               'scope:mocks-core',
               'scope:proto',
+              'scope:client-core',
+              'scope:client-material',
               'scope:client-store',
               'scope:client-util',
               'scope:client-translate',
