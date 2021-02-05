@@ -100,9 +100,9 @@
     "workspace:mmdc": "./node_modules/.bin/mmdc",
     "workspace:schematic": "nx workspace-schematic",
     "workspace:update": "nx migrate latest",
-    "workspace:update:check": "ng run tools:update --check",
+    "workspace:update:check": "ng run tools:update --check=true",
     "workspace:update:migrate": "npx run-s workspace:update:migrate:step-1 workspace:update:migrate:step-2 workspace:update:migrate:step-3 workspace:update:migrate:step-4",
-    "workspace:update:migrate:step-1": "ng run tools:update --check --jsonUpgraded",
+    "workspace:update:migrate:step-1": "ng run tools:update --check=true --jsonUpgraded=true",
     "workspace:update:migrate:step-2": "ng run tools:update --migrate=start",
     "workspace:update:migrate:step-3": "yarn install && yarn ngcc && ng run tools:update --migrate=execute",
     "workspace:update:migrate:step-4": "rm -rf migrations.json migrations-packages.json"

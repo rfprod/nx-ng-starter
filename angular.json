@@ -1085,7 +1085,9 @@
               {
                 "command": "npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts"
               }
-            ]
+            ],
+            "cwd": "./",
+            "parallel": false
           }
         }
       },

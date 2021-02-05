@@ -395,7 +395,7 @@ module.exports = {
           },
           {
             sourceTag: 'scope:client-core',
-            onlyDependOnLibsWithTags: ['scope:client-util'],
+            onlyDependOnLibsWithTags: ['scope:client-util', 'scope:client-store'],
           },
           {
             sourceTag: 'scope:client-store',

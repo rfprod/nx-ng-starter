@@ -5,10 +5,6 @@ import { Store } from '@ngxs/store';
 import { DOC_APP_ENV, IDocAppEnvironment } from '../../interfaces/environment.interface';
 import { AppMdFilesState } from '../../modules/store/md-files/md-files.store';
 
-/**
- * TODO: this component should read from the store, and use markown file source from there. Then use it in the template.
- */
-
 @Component({
   selector: 'app-documentation-md-reference',
   templateUrl: './md-reference.component.html',

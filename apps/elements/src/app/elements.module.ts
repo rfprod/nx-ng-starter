@@ -7,7 +7,6 @@ import {
   Provider,
 } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
-import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -20,11 +19,7 @@ import { AppChatbotRootComponent, AppClientChatbotModule } from '@nx-ng-starter/
 import { AppClientCoreModule } from '@nx-ng-starter/client-core';
 import { AppClientGqlModule } from '@nx-ng-starter/client-gql';
 import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
-import {
-  AppChatbotModule,
-  AppClientStoreModule,
-  AppWebsocketModule,
-} from '@nx-ng-starter/client-store';
+import { AppWebsocketModule } from '@nx-ng-starter/client-store';
 import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
 import { WINDOW } from '@nx-ng-starter/client-util';
 import { EntityServiceClient } from '@nx-ng-starter/proto';
@@ -44,7 +39,6 @@ export const grpcProviders: Provider[] = [
  */
 @NgModule({
   imports: [
-    BrowserModule,
     BrowserAnimationsModule,
     NgxsModule.forRoot([], { developmentMode: !environment.production }),
     NgxsLoggerPluginModule.forRoot({ disabled: environment.production, collapsed: true }),
@@ -54,11 +48,9 @@ export const grpcProviders: Provider[] = [
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     AppClientCoreModule.forRoot(environment),
     AppClientMaterialModule.forRoot(),
-    AppWebsocketModule.forRoot(environment),
     AppClientTranslateModule.forRoot(),
     AppClientGqlModule.forRoot(environment),
-    AppClientStoreModule,
-    AppChatbotModule,
+    AppWebsocketModule.forRoot(environment),
     RouterModule.forRoot([]),
     AppClientChatbotModule,
   ],

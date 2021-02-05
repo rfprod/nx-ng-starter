@@ -1,5 +1,4 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, Provider } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
@@ -10,7 +9,7 @@ import { NgxsModule } from '@ngxs/store';
 import { AppClientCoreModule } from '@nx-ng-starter/client-core';
 import { AppClientGqlModule } from '@nx-ng-starter/client-gql';
 import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
-import { AppClientStoreModule, AppWebsocketModule } from '@nx-ng-starter/client-store';
+import { AppWebsocketModule } from '@nx-ng-starter/client-store';
 import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
 import { EntityServiceClient } from '@nx-ng-starter/proto';
 
@@ -34,7 +33,6 @@ export const grpcProviders: Provider[] = [
  */
 @NgModule({
   imports: [
-    BrowserModule,
     BrowserAnimationsModule,
     NgxsModule.forRoot([], { developmentMode: !environment.production }),
     NgxsLoggerPluginModule.forRoot({ disabled: environment.production, collapsed: true }),
@@ -47,7 +45,6 @@ export const grpcProviders: Provider[] = [
     AppWebsocketModule.forRoot(environment),
     AppClientTranslateModule.forRoot(),
     AppClientGqlModule.forRoot(environment),
-    AppClientStoreModule,
     AppRoutingModule,
   ],
   providers: [...grpcProviders],
