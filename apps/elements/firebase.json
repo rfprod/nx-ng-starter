@@ -1,0 +1,58 @@
+{
+  "hosting": {
+    "headers": [
+      {
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "https://nx-ng-starter-elements.firebaseapp.com https://nx-ng-starter-elements.web.app"
+          },
+          {
+            "key": "Access-Control-Allow-Methods",
+            "value": "GET,PUT,POST,DELETE,OPTIONS,HEAD"
+          }
+        ],
+        "source": "**"
+      },
+      {
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=7200"
+          }
+        ],
+        "source": "**/*.@(jpg|jpeg|gif|png|svg)"
+      },
+      {
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, no-cache, no-store, must-ravalidate, max-age=0"
+          },
+          {
+            "key": "Expires",
+            "value": "-1"
+          },
+          {
+            "key": "Pragma",
+            "value": "no-cache"
+          }
+        ],
+        "source": "/elements"
+      }
+    ],
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "**/src/**"],
+    "public": "./dist/apps/elements",
+    "rewrites": [
+      {
+        "destination": "/index.html",
+        "source": "/elements"
+      },
+      {
+        "destination": "/index.html",
+        "source": "**/!(*.*|elements)"
+      }
+    ],
+    "site": "nx-ng-starter-elements"
+  }
+}
