@@ -1,0 +1,17 @@
+{
+  "baseUrl": "http://localhost:4400",
+  "chromeWebSecurity": false,
+  "fileServerFolder": ".",
+  "fixturesFolder": "./src/fixtures",
+  "integrationFolder": "./src/integration",
+  "modifyObstructiveCode": false,
+  "pluginsFile": "./src/plugins/index.ts",
+  "reporter": "../../node_modules/cypress-multi-reporters/index.js",
+  "reporterOptions": {
+    "configFile": "cypress-reporter-options.json"
+  },
+  "screenshotsFolder": "../../dist/cypress/apps/elements-testing-e2e/screenshots",
+  "supportFile": "./src/support/index.ts",
+  "video": true,
+  "videosFolder": "../../dist/cypress/apps/elements-testing-e2e/videos"
+}

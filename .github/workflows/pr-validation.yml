@@ -69,7 +69,7 @@ jobs:
         run: npx nx affected --target=lint --base=origin/master --head=HEAD --parallel --maxParallel=2
 
       - name: Test affected
-        run: npx nx affected --target=test --base=origin/master --head=HEAD --passWithNoTests --codeCoverage=false --watch=false --maxWorkers=2 --ci --updateSnapshot
+        run: npx nx affected --target=test --base=origin/master --head=HEAD --passWithNoTests --codeCoverage=false --watch=false --runInBand --ci
 
       - name: Build all
         run: npx nx run-many --target=build --all

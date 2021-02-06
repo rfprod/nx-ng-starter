@@ -16,5 +16,6 @@ module.exports = {
     '<rootDir>/libs/mocks-core',
     '<rootDir>/libs/proto',
     '<rootDir>/apps/elements',
+    '<rootDir>/apps/elements-testing',
   ],
 };

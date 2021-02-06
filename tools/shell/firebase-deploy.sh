@@ -19,9 +19,12 @@ source tools/shell/print-utils.sh ''
 reportUsageError() {
   printInfoTitle "<< USAGE >>"
   printWarningMessage "firebase deploy token must be provided as a first argument"
-  printInfoMessage "NX-NG-STARTER app"
+  printInfoMessage "Client app"
   printUsageTip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN app:client" "CI environment"
   printUsageTip "bash tools/shell/firebase-deploy.sh localhost app:client" "Local environment, firebase authentication required"
+  printInfoMessage "Elements app"
+  printUsageTip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN app:elements" "CI environment"
+  printUsageTip "bash tools/shell/firebase-deploy.sh localhost app:elements" "Local environment, firebase authentication required"
   printInfoMessage "API app"
   printUsageTip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN app:api" "CI environment"
   printUsageTip "bash tools/shell/firebase-deploy.sh localhost app:api" "Local environment, firebase authentication required"
@@ -40,6 +43,7 @@ declare -A PROJECT_DIRECTORIES=(
   ["api"]=./apps/api/
   ["client"]=./apps/client/
   ["documentation"]=./apps/documentation/
+  ["elements"]=./apps/elements/
 )
 
 ##
@@ -73,6 +77,21 @@ config() {
 ##
 deployClientApp() {
   config "${PROJECT_DIRECTORIES["client"]}"
+
+  if [ "$1" = "localhost" ]; then
+    firebase deploy --only hosting || exit 1
+  else
+    firebase deploy --only hosting --token "$1" || exit 1
+  fi
+
+  cleanup
+}
+
+##
+# Deploys elements application.
+##
+deployElementsApp() {
+  config "${PROJECT_DIRECTORIES["elements"]}"
 
   if [ "$1" = "localhost" ]; then
     firebase deploy --only hosting || exit 1
@@ -119,6 +138,7 @@ deployApiApp() {
 deployAll() {
   deployApiApp "$1"
   deployClientApp "$1"
+  deployElementsApp "$1"
   deployDocumentationApp "$1"
 }
 
@@ -130,6 +150,8 @@ if [ $# -lt 1 ]; then
 elif [ $# -ge 2 ]; then
   if [ "$2" = "client" ]; then
     deployClientApp "$1"
+  elif [ "$2" = "elements" ]; then
+    deployElementsApp "$1"
   elif [ "$2" = "documentation" ]; then
     deployDocumentationApp "$1"
   elif [ "$2" = "api" ]; then
