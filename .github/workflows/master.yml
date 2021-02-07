@@ -67,11 +67,14 @@ jobs:
       - name: Lint all
         run: npx nx run-many --target=lint --all --parallel --maxParallel=2
 
-      - name: Unit test all
-        run: npx nx run-many --target=test --all --passWithNoTests --code-coverage=false --watch=false --runInBand --ci --updateSnapshot
+      - name: Unit test all (with code coverage)
+        run: |
+          npx nx run-many --target=test --all --passWithNoTests --code-coverage=true --watch=false --runInBand --ci --updateSnapshot
+          ng run tools:coverage-stats
+          cat ./tools/ts/UNIT_COVERAGE.md
 
-      - name: Build all
-        run: npx nx run-many --target=build --all
+      - name: Build all (production)
+        run: npx nx run-many --target=build --all --configuration production
 
       - name: Deploy client app
         run: bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" client || exit 1
@@ -79,7 +82,9 @@ jobs:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
 
       - name: Deploy elements app
-        run: bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" elements || exit 1
+        run: |
+          bash tools/shell/generate-elements-bootstrap-script.sh ./dist/apps elements
+          bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" elements || exit 1
         env:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
 
