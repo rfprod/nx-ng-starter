@@ -68,8 +68,8 @@ jobs:
       - name: Lint affected
         run: npx nx affected --target=lint --base=origin/master --head=HEAD --parallel --maxParallel=2
 
-      - name: Test affected
-        run: npx nx affected --target=test --base=origin/master --head=HEAD --passWithNoTests --codeCoverage=false --watch=false --runInBand --ci
+      - name: Unit test affected (without code coverage)
+        run: npx nx affected --target=test --base=origin/master --head=HEAD --passWithNoTests --code-coverage=false --watch=false --runInBand --ci
 
-      - name: Build all
+      - name: Build all (development)
         run: npx nx run-many --target=build --all

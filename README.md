@@ -59,16 +59,17 @@ Is generated based on GitHub repo.
 
 Applications as well as generated documentation, testing reports, and a custom changelog are deployed to Firebase.
 
-### Application
+### Webapp
 
-- [Nx Ng Starter Webapp](https://nx-ng-starter.web.app)
+- [Nx Ng Starter](https://nx-ng-starter.web.app)
+
+### Elements webapp
+
+- [Nx Ng Starter Elements](https://nx-ng-starter-elements.web.app)
 
 ### Documentation
 
 - [Nx Ng Starter Documentation](https://nx-ng-starter-documentation.web.app)
-
-#### Compodoc
-
 - [Nx Ng Starter Compodoc](https://nx-ng-starter-documentation.web.app/assets/compodoc/index.html)
 
 #### Unit coverage
