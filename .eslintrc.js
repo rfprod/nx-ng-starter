@@ -383,14 +383,14 @@ module.exports = {
           },
           {
             sourceTag: 'scope:mocks-core',
-            onlyDependOnLibsWithTags: ['*'],
+            onlyDependOnLibsWithTags: ['*'], // TODO
           },
           {
             sourceTag: 'scope:proto',
             onlyDependOnLibsWithTags: [],
           },
           {
-            sourceTag: 'scope:client-assets',
+            sourceTag: 'scope:client-material',
             onlyDependOnLibsWithTags: [],
           },
           {
@@ -403,19 +403,12 @@ module.exports = {
               'scope:mocks-core',
               'scope:proto',
               'scope:client-util',
-              'scope:client-services',
               'scope:client-translate',
             ],
           },
           {
             sourceTag: 'scope:client-services',
-            onlyDependOnLibsWithTags: [
-              'scope:mocks-core',
-              'scope:proto',
-              'scope:client-store',
-              'scope:client-util',
-              'scope:client-translate',
-            ],
+            onlyDependOnLibsWithTags: ['scope:mocks-core', 'scope:proto'],
           },
           {
             sourceTag: 'scope:client-componnents',
@@ -434,7 +427,21 @@ module.exports = {
             onlyDependOnLibsWithTags: ['scope:mocks-core', 'scope:proto', 'scope:client-util'],
           },
           {
+            sourceTag: 'scope:client-chatbot',
+            onlyDependOnLibsWithTags: [
+              'scope:mocks-core',
+              'scope:proto',
+              'scope:client-material',
+              'scope:client-store',
+              'scope:client-translate',
+            ],
+          },
+          {
             sourceTag: 'scope:client-util',
+            onlyDependOnLibsWithTags: [],
+          },
+          {
+            sourceTag: 'scope:translate',
             onlyDependOnLibsWithTags: [],
           },
           {
