@@ -40,5 +40,5 @@ export const getTestBedConfig: TTestBedConfigGetter = (
     declarations: [...(metadata?.declarations ?? [])],
     imports: [AppMocksCoreModule.forRoot(), ...(metadata?.imports ?? [])],
     providers: [...(metadata?.providers ?? [])],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA, ...(metadata?.providers ?? [])],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA, ...(metadata?.schemas ?? [])],
   });

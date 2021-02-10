@@ -1,9 +1,6 @@
 import { Injectable, Provider } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-/**
- * Mocked snackbar ref.
- */
 @Injectable()
 export class AppMatSnackbarRefMock {
   public open(message: unknown, action: unknown, options: unknown): boolean {

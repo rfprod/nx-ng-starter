@@ -7,9 +7,6 @@ export interface IAppDialogRefMockCloseEvent {
   data: unknown;
 }
 
-/**
- * Mocked material dialog.
- */
 @Injectable()
 export class AppDialogRefMock {
   private readonly afterClosedSubject: Subject<IAppDialogRefMockCloseEvent> = new Subject();

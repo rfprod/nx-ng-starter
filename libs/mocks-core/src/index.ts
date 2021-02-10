@@ -5,5 +5,4 @@ export * from './lib/jest/jest-spies.patch';
 export * from './lib/local-storage/local-storage.mock';
 export * from './lib/mocks-core.module';
 export * from './lib/refs/index';
-export * from './lib/routing/app-routes.mock';
 export * from './lib/test-bed/test-bed-config.mock';
