@@ -5,11 +5,7 @@
     (closedStart)="sidebarCloseHandler()"
     (swipeleft)="sidebarCloseHandler()"
   >
-    <mat-grid-list cols="3" rowHeight="1:1">
-      <mat-grid-tile [routerLink]="['info']" (click)="sidebarCloseHandler()">
-        API info
-      </mat-grid-tile>
-    </mat-grid-list>
+    <router-outlet name="sidebar"></router-outlet>
   </mat-sidenav>
 
   <mat-sidenav-content (swiperight)="swiperightHandler($event)">

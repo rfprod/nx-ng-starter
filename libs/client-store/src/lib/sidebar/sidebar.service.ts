@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Navigate } from '@ngxs/router-plugin';
 import { Store } from '@ngxs/store';
-import { concatMap, first } from 'rxjs/operators';
+import { first, tap } from 'rxjs/operators';
 
 import { AppSidebarState, sidebarUiActions } from './sidebar.store';
 
@@ -13,19 +14,21 @@ export class AppSidebarService {
   constructor(private readonly store: Store) {}
 
   public open() {
-    return this.store.dispatch(new sidebarUiActions.setState({ sidebarOpened: true }));
+    void this.store.dispatch(new Navigate([{ outlets: { sidebar: ['root'] } }]));
+    void this.store.dispatch(new sidebarUiActions.setState({ sidebarOpened: true }));
   }
 
   public close() {
-    return this.store.dispatch(new sidebarUiActions.setState({ sidebarOpened: false }));
+    void this.store.dispatch(new Navigate([{ outlets: { sidebar: [] } }]));
+    void this.store.dispatch(new sidebarUiActions.setState({ sidebarOpened: false }));
   }
 
   public toggle() {
     void this.sidebarOpened$
       .pipe(
         first(),
-        concatMap(opened => {
-          return opened ? this.close() : this.open();
+        tap(opened => {
+          opened ? this.close() : this.open();
         }),
       )
       .subscribe();

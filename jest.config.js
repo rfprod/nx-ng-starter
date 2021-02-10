@@ -17,5 +17,6 @@ module.exports = {
     '<rootDir>/libs/proto',
     '<rootDir>/apps/elements',
     '<rootDir>/apps/elements-testing',
+    '<rootDir>/libs/client-sidebar',
   ],
 };

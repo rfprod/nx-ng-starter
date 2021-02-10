@@ -9,6 +9,12 @@ export const APP_ROUTES: Route[] = [
   },
   {
     path: '',
+    outlet: 'sidebar',
+    loadChildren: () =>
+      import('@nx-ng-starter/client-sidebar').then(mod => mod.AppClientSidebarModule),
+  },
+  {
+    path: '',
     outlet: 'chatbot',
     loadChildren: () =>
       import('@nx-ng-starter/client-chatbot').then(mod => mod.AppClientChatbotModule),

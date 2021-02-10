@@ -524,6 +524,29 @@
       },
       "sourceRoot": "libs/client-services/src"
     },
+    "client-sidebar": {
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-sidebar/.eslintrc.json",
+            "lintFilePatterns": ["libs/client-sidebar/**/*.{js,ts}"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-sidebar/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/client-sidebar"]
+        }
+      },
+      "prefix": "nx-ng-starter",
+      "projectType": "library",
+      "root": "libs/client-sidebar",
+      "sourceRoot": "libs/client-sidebar/src"
+    },
     "client-store": {
       "architect": {
         "lint": {
@@ -833,9 +856,9 @@
           "builder": "@angular-devkit/build-angular:browser",
           "configurations": {
             "production": {
-              "deployUrl": "https://nx-ng-starter-elements.web.app/",
               "aot": true,
               "buildOptimizer": true,
+              "deployUrl": "https://nx-ng-starter-elements.web.app/",
               "extractLicenses": true,
               "fileReplacements": [
                 {

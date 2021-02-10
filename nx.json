@@ -1,5 +1,7 @@
 {
-  "affected": { "defaultBase": "master" },
+  "affected": {
+    "defaultBase": "master"
+  },
   "implicitDependencies": {
     ".eslintrc.json": "*",
     "angular.json": "*",
@@ -10,38 +12,83 @@
   },
   "npmScope": "nx-ng-starter",
   "projects": {
-    "api": { "tags": ["scope:api", "type:application"] },
-    "api-interface": { "tags": ["scope:api-interface", "type:data-access"] },
-    "client": { "tags": ["scope:client", "type:application"] },
-    "client-chatbot": { "tags": ["scope:client-chatbot", "type:feature"] },
-    "client-components": { "tags": ["scope:client-components", "type:feature"] },
+    "api": {
+      "tags": ["scope:api", "type:application"]
+    },
+    "api-interface": {
+      "tags": ["scope:api-interface", "type:data-access"]
+    },
+    "client": {
+      "tags": ["scope:client", "type:application"]
+    },
+    "client-chatbot": {
+      "tags": ["scope:client-chatbot", "type:feature"]
+    },
+    "client-components": {
+      "tags": ["scope:client-components", "type:feature"]
+    },
     "client-components-e2e": {
       "implicitDependencies": ["client-components"],
       "tags": ["scope:client-components-e2e", "type:e2e"]
     },
-    "client-core": { "tags": ["scope:client-core", "type:ui"] },
-    "client-e2e": { "implicitDependencies": ["client"], "tags": ["scope:client-e2e", "type:e2e"] },
-    "client-gql": { "tags": ["scope:client-gql", "type:data-access"] },
-    "client-material": { "tags": ["scope:client-material", "type:ui"] },
-    "client-services": { "tags": ["scope:client-services", "type:ui"] },
-    "client-store": { "tags": ["scope:client-store", "type:data-access"] },
-    "client-translate": { "tags": ["scope:client-translate", "type:ui"] },
-    "client-util": { "tags": ["scope:client-util", "type:util"] },
-    "documentation": { "tags": ["scope:documentation", "type:application"] },
+    "client-core": {
+      "tags": ["scope:client-core", "type:ui"]
+    },
+    "client-e2e": {
+      "implicitDependencies": ["client"],
+      "tags": ["scope:client-e2e", "type:e2e"]
+    },
+    "client-gql": {
+      "tags": ["scope:client-gql", "type:data-access"]
+    },
+    "client-material": {
+      "tags": ["scope:client-material", "type:ui"]
+    },
+    "client-services": {
+      "tags": ["scope:client-services", "type:ui"]
+    },
+    "client-sidebar": {
+      "tags": ["scope:client-sidebar", "type:application"]
+    },
+    "client-store": {
+      "tags": ["scope:client-store", "type:data-access"]
+    },
+    "client-translate": {
+      "tags": ["scope:client-translate", "type:ui"]
+    },
+    "client-util": {
+      "tags": ["scope:client-util", "type:util"]
+    },
+    "documentation": {
+      "tags": ["scope:documentation", "type:application"]
+    },
     "documentation-e2e": {
       "implicitDependencies": ["documentation"],
       "tags": ["scope:documentation-e2e", "type:e2e"]
     },
-    "elements": { "tags": ["scope:elements", "type:application"] },
+    "elements": {
+      "tags": ["scope:elements", "type:application"]
+    },
     "elements-e2e": {
       "implicitDependencies": ["elements"],
       "tags": ["scope:elements-e2e", "type:e2e"]
     },
-    "mocks-core": { "tags": ["scope:mocks-core", "type:mocks"] },
-    "proto": { "tags": ["scope:proto", "type:data-access"] },
-    "tools": { "tags": ["scope:tools", "type:workspace"] },
-    "elements-testing": { "tags": [] },
-    "elements-testing-e2e": { "tags": [], "implicitDependencies": ["elements-testing"] }
+    "elements-testing": {
+      "tags": ["scope:elements-testing", "type:application"]
+    },
+    "elements-testing-e2e": {
+      "implicitDependencies": ["elements-testing"],
+      "tags": ["scope:elements-testing-e2e", "type:e2e"]
+    },
+    "mocks-core": {
+      "tags": ["scope:mocks-core", "type:mocks"]
+    },
+    "proto": {
+      "tags": ["scope:proto", "type:data-access"]
+    },
+    "tools": {
+      "tags": ["scope:tools", "type:workspace"]
+    }
   },
   "tasksRunnerOptions": {
     "default": {
