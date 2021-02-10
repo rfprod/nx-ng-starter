@@ -5,7 +5,6 @@ import { ErrorResponse, onError } from '@apollo/client/link/error';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngxs/store';
-import { AppToasterService } from '@nx-ng-starter/client-services';
 import {
   HTTP_STATUS,
   IWebClientAppEnvironment,
@@ -20,6 +19,7 @@ import { MonoTypeOperatorFunction, Observable, of, throwError } from 'rxjs';
 import { catchError, first, map, take, tap, timeout } from 'rxjs/operators';
 
 import { AppHttpProgressService } from '../http-progress/http-progress.service';
+import { AppToasterService } from '../http-progress/services/toaster/toaster.service';
 import { AppUserState } from '../user';
 import { userActions } from '../user/user.store';
 

@@ -1,11 +1,7 @@
 import { HttpRequest } from '@angular/common/http';
 import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import {
-  AppToasterService,
-  markdownServiceProvider,
-  toasterServiceProvider,
-} from '@nx-ng-starter/client-services';
+import { markdownServiceProvider } from '@nx-ng-starter/client-services';
 import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
 import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
 import { Apollo } from 'apollo-angular';
@@ -15,6 +11,10 @@ import {
   AppHttpProgressModule,
   httpProgressModuleProviders,
 } from '../http-progress/http-progress.module';
+import {
+  AppToasterService,
+  toasterServiceProvider,
+} from '../http-progress/services/toaster/toaster.service';
 import { AppUserService } from '../user/user.service';
 import { AppHttpApiService } from './http-api.service';
 import { AppHttpHandlersService } from './http-handlers.service';
