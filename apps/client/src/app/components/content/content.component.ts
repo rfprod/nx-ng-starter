@@ -17,10 +17,10 @@ export class AppContentComponent {
    * Propagates sidebar close event from UI to state store.
    */
   public sidebarCloseHandler(): void {
-    void this.sidebarService.close().subscribe();
+    this.sidebarService.close();
   }
 
   public swiperightHandler(event: Event): void {
-    void this.sidebarService.open().subscribe();
+    this.sidebarService.open();
   }
 }
