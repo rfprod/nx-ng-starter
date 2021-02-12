@@ -13,7 +13,6 @@ import { Server } from 'ws';
 
 @WebSocketGateway(defaultWsPort, {
   path: '/api/events',
-  namespace: 'events',
   transports: ['websocket'],
 })
 export class ApiEventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
