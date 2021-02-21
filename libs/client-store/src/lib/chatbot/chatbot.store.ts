@@ -38,7 +38,7 @@ export class AppChatbotState {
   @Action(chatbotActions.toggle)
   public toggle(ctx: StateContext<IChatbotState>) {
     const opened = ctx.getState().chatbotOpened;
-    if (opened) {
+    if (!opened) {
       void this.store.dispatch(new Navigate([{ outlets: { chatbot: ['root'] } }]));
     } else {
       void this.store.dispatch(new Navigate([{ outlets: { chatbot: null } }]));
