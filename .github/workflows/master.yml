@@ -30,6 +30,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Configure kernel (increase watchers)
+        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
       - name: Get yarn cache directory path and commit hash
         id: get-variables
         run: echo "::set-output name=yarncachedir::$(yarn cache dir)"; echo "::set-output name=commitsha::$(echo ${GITHUB_SHA})"
