@@ -3,7 +3,9 @@
     "target": "es5",
     "module": "commonjs",
     "moduleResolution": "node",
+    "outDir": "../dist/out-tsc/tools",
     "lib": ["es2017", "dom"],
+    "rootDir": ".",
     "allowJs": true,
     "checkJs": true,
     "types": ["node", "jest"]
