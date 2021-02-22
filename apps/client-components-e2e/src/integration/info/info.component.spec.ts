@@ -1,7 +1,7 @@
 describe('client-components', () => {
-  beforeEach(() => cy.visit('/iframe.html?id=appinfocomponent--primary'));
+  beforeEach(() => cy.visit('/?path=/story/appinfopage--primary'));
 
   it('should render the component', () => {
-    cy.get('app-info').should('exist');
+    cy.get('app-info-page').should('exist');
   });
 });
