@@ -86,9 +86,9 @@ performModuleTesting() {
   if [ "$2" = "watch" ]; then
     npx nx test "$1" --passWithNoTests --watchAll
   elif [ "$2" = "coverage" ]; then
-    npx nx test "$1" --watch=false --silent --passWithNoTests --code-coverage || exit 1
+    npx nx test "$1" --watch=false --silent --code-coverage --run-in-band --passWithNoTests || exit 1
   else
-    npx nx test "$1" --watch=false --silent --passWithNoTests || exit 1
+    npx nx test "$1" --watch=false --silent --run-in-band --passWithNoTests || exit 1
   fi
 }
 
@@ -96,7 +96,7 @@ performModuleTesting() {
 # Tests affected using NX.
 ##
 testAffected() {
-  npx nx affected --target=test --base=origin/master --passWithNoTests --watch=false --maxWorkers=2 --ci
+  npx nx affected --target=test --base=origin/master --passWithNoTests --watch=false --run-in-band --ci
 }
 
 ##

@@ -37,14 +37,7 @@ findSupportedModuleAliases() {
   for E2E_ALIAS in "${FOUND_E2E_ALIASES[@]}"; do
     local E2E_ALIAS_NAME
     E2E_ALIAS_NAME="${E2E_ALIAS//s\//:}"
-    printf "$E2E_ALIAS_NAME"
-    ##
-    # TODO: debug cypress tests vs storybook.
-    # Details: currently cypress vs storybook tests hang after starting storybook.
-    ##
-    if [ "$E2E_ALIAS_NAME" != 'app:client-components-e2e' ]; then
-      EXISTING_MODULE_ALIASES_E2E["$E2E_ALIAS_NAME"]="$E2E_ALIAS_NAME"
-    fi
+    EXISTING_MODULE_ALIASES_E2E["$E2E_ALIAS_NAME"]="$E2E_ALIAS_NAME"
   done
 
   readarray -d '' FOUND_UNIT_ALIASES < <(find apps/ -mindepth 1 -maxdepth 1 -type d '!' -exec test -e "{}/src/fixtures/" ';' -print0)
