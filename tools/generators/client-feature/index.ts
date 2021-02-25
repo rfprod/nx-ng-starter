@@ -12,8 +12,8 @@ import {
   Tree,
   url,
 } from '@angular-devkit/schematics';
-import { updateProjectConfiguration, Tree as NxTree, ProjectConfiguration, NxJsonProjectConfiguration } from '@nrwl/devkit';
-import { getProjectConfig } from '@nrwl/workspace';
+import { formatFiles, getProjectConfig } from '@nrwl/workspace';
+import fs from 'fs';
 import * as path from 'path';
 
 import { ISchematicContext } from './schema.interface';
@@ -56,16 +56,43 @@ const addFiles = (schema: ISchematicContext): Rule => (tree: Tree, context: Sche
   return chain([mergeWith(templateSource, MergeStrategy.Overwrite)])(tree, context);
 };
 
-const updateProjectConfig = (schema: ISchematicContext): Rule => (tree: Tree, context: SchematicContext) => {
-  const projectConfig: IProjectConfig & ProjectConfiguration & NxJsonProjectConfiguration = getProjectConfig(tree, schema.name);
+/**
+ * Updates angular.json
+ */
+const updateProjectConfig = (schema: ISchematicContext): Rule => (
+  tree: Tree,
+  context: SchematicContext,
+) => {
+  const projectConfig: IProjectConfig = getProjectConfig(tree, schema.name);
   projectConfig.architect.lint.builder = '@angular-eslint/builder:lint';
   projectConfig.architect.lint.options.lintFilePatterns = [`libs/${schema.name}/src/**/*.ts`];
-  console.log('projectConfig', JSON.stringify(projectConfig));
 
-  updateProjectConfiguration(tree as unknown as NxTree, schema.name, projectConfig);
+  const projectRoot = `${process.cwd()}`;
+  const angularJsonPath = `${projectRoot}/angular.json`;
+
+  const angularJson: Record<string, Record<string, unknown>> = JSON.parse(
+    fs.readFileSync(angularJsonPath)?.toString() ?? '{}',
+  );
+  angularJson.projects[schema.name] = projectConfig;
+  fs.writeFileSync(angularJsonPath, Buffer.from(JSON.stringify(angularJson)));
+
+  return chain([formatFiles({ skipFormat: false }, angularJsonPath)]);
+};
+
+/**
+ * Removes unneeded files.
+ * TODO: remove unneeded files.
+ */
+const cleanup = (schema: ISchematicContext): Rule => {
+  const projectRoot = `${process.cwd()}`;
+  /**
+   * @note this file is not needed, and is removed.
+   */
+  const rslintRcPath = `${projectRoot}/.eslintrc.json`;
+  fs.unlinkSync(rslintRcPath);
 
   return chain([]);
-}
+};
 
 export default function (schema: ISchematicContext) {
   return (tree: Tree, context: SchematicContext) => {
@@ -74,32 +101,35 @@ export default function (schema: ISchematicContext) {
     const tags = schema.tags;
 
     return chain([
-      externalSchematic('@nrwl/angular', 'lib', {
-        name,
-        tags,
-        style: 'scss',
-      }),
-      updateProjectConfig(schema),
-      addFiles(schema),
-      externalSchematic('@schematics/angular', 'component', {
-        project: name,
-        name,
-        path: path.join('libs', name, 'src', 'lib', 'components'),
-        style: 'scss',
-        skipImport: true,
-      }),
-      externalSchematic('@schematics/angular', 'service', {
-        project: name,
-        name,
-        path: path.join('libs', name, 'src', 'lib', 'services'),
-        skipImport: true,
-      }),
-      externalSchematic('@schematics/angular', 'guard', {
-        project: name,
-        name,
-        path: path.join('libs', name, 'src', 'lib', 'guards'),
-        skipImport: true,
-      }),
+      chain([
+        externalSchematic('@nrwl/angular', 'lib', {
+          name,
+          tags,
+          style: 'scss',
+        }),
+        updateProjectConfig(schema),
+        addFiles(schema),
+        externalSchematic('@schematics/angular', 'component', {
+          project: name,
+          name,
+          path: path.join('libs', name, 'src', 'lib', 'components'),
+          style: 'scss',
+          skipImport: true,
+        }),
+        externalSchematic('@schematics/angular', 'service', {
+          project: name,
+          name,
+          path: path.join('libs', name, 'src', 'lib', 'services'),
+          skipImport: true,
+        }),
+        externalSchematic('@schematics/angular', 'guard', {
+          project: name,
+          name,
+          path: path.join('libs', name, 'src', 'lib', 'guards'),
+          skipImport: true,
+        }),
+      ]),
+      // cleanup(schema),
     ])(tree, context);
   };
 }

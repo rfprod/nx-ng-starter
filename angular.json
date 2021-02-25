@@ -1199,7 +1199,7 @@
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "tools/.eslintrc.json",
-            "lintFilePatterns": ["tools/ts/**/*.ts"]
+            "lintFilePatterns": ["tools/generators/**/*.ts", "tools/ts/**/*.ts"]
           }
         },
         "update-check": {
