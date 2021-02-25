@@ -1,6 +1,14 @@
+import { DOCUMENT, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppClientCoreModule } from '@nx-ng-starter/client-core';
 import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
+import {
+  documentFactory,
+  WEB_CLIENT_APP_ENV,
+  WINDOW,
+  windowFactory,
+} from '@nx-ng-starter/client-util';
+import { text } from '@storybook/addon-knobs';
 
 import { AppHomePage } from './home-page.component';
 
@@ -18,12 +26,23 @@ const testingEnvironment = {
 
 export const primary = () => ({
   moduleMetadata: {
-    imports: [
-      BrowserAnimationsModule,
-      AppClientCoreModule.forRoot(testingEnvironment),
-      AppClientMaterialModule.forRoot(),
+    imports: [BrowserAnimationsModule, FlexLayoutModule, AppClientMaterialModule.forRoot()],
+    providers: [
+      {
+        provide: LocationStrategy,
+        useClass: PathLocationStrategy,
+      },
+      { provide: WINDOW, useFactory: windowFactory },
+      { provide: DOCUMENT, useFactory: documentFactory },
+      {
+        provide: WEB_CLIENT_APP_ENV,
+        useValue: testingEnvironment,
+      },
     ],
   },
   component: AppHomePage,
-  props: {},
+  props: {
+    timer: text('Timer', '1'),
+    markedInstructions: text('Marked Instructions', 'Marked instructions'),
+  },
 });
