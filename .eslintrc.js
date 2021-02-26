@@ -1,3 +1,5 @@
+const { nxModuleBoundaryRules } = require('./.eslintrc.module-boundaries');
+
 /**
  * Roadmap typescript-eslint
  * https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/ROADMAP.md
@@ -17,9 +19,7 @@ module.exports = {
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
-    'prettier/@typescript-eslint',
     'plugin:eslint-comments/recommended',
-    'plugin:@nrwl/nx/typescript',
   ],
   plugins: [
     'prettier',
@@ -359,148 +359,7 @@ module.exports = {
     'rxjs/no-tap': 'off', // keep off
     'rxjs/no-exposed-subjects': 'error',
     yoda: ['error', 'never'],
-    '@nrwl/nx/enforce-module-boundaries': [
-      'error',
-      {
-        enforceBuildableLibDependency: true,
-        allow: ['mocks-core'],
-        depConstraints: [
-          {
-            sourceTag: 'scope:api',
-            onlyDependOnLibsWithTags: ['scope:api-interface', 'scope:proto'],
-          },
-          {
-            sourceTag: 'scope:api-interface',
-            onlyDependOnLibsWithTags: ['scope:proto'],
-          },
-          {
-            sourceTag: 'scope:documentation',
-            onlyDependOnLibsWithTags: ['scope:client-material', 'scope:client-util'],
-          },
-          {
-            sourceTag: 'scope:documentation-e2e',
-            onlyDependOnLibsWithTags: ['scope:client-util'],
-          },
-          {
-            sourceTag: 'scope:mocks-core',
-            onlyDependOnLibsWithTags: ['*'], // TODO
-          },
-          {
-            sourceTag: 'scope:proto',
-            onlyDependOnLibsWithTags: [],
-          },
-          {
-            sourceTag: 'scope:client-material',
-            onlyDependOnLibsWithTags: [],
-          },
-          {
-            sourceTag: 'scope:client-core',
-            onlyDependOnLibsWithTags: ['scope:client-util', 'scope:client-store'],
-          },
-          {
-            sourceTag: 'scope:client-store',
-            onlyDependOnLibsWithTags: [
-              'scope:mocks-core',
-              'scope:proto',
-              'scope:client-util',
-              'scope:client-translate',
-            ],
-          },
-          {
-            sourceTag: 'scope:client-services',
-            onlyDependOnLibsWithTags: ['scope:mocks-core', 'scope:proto'],
-          },
-          {
-            sourceTag: 'scope:client-componnents',
-            onlyDependOnLibsWithTags: [
-              'scope:mocks-core',
-              'scope:proto',
-              'scope:client-core',
-              'scope:client-material',
-              'scope:client-store',
-              'scope:client-util',
-              'scope:client-translate',
-            ],
-          },
-          {
-            sourceTag: 'scope:client-gql',
-            onlyDependOnLibsWithTags: ['scope:mocks-core', 'scope:proto', 'scope:client-util'],
-          },
-          {
-            sourceTag: 'scope:client-chatbot',
-            onlyDependOnLibsWithTags: [
-              'scope:mocks-core',
-              'scope:proto',
-              'scope:client-material',
-              'scope:client-store',
-              'scope:client-translate',
-            ],
-          },
-          {
-            sourceTag: 'scope:client-util',
-            onlyDependOnLibsWithTags: [],
-          },
-          {
-            sourceTag: 'scope:translate',
-            onlyDependOnLibsWithTags: [],
-          },
-          {
-            sourceTag: 'scope:client',
-            onlyDependOnLibsWithTags: [
-              'scope:mocks-core',
-              'scope:proto',
-              'scope:client-gql',
-              'scope:client-store',
-              'scope:client-services',
-              'scope:client-chatbot',
-              'scope:client-components',
-              'scope:client-core',
-              'scope:client-material',
-              'scope:client-translate',
-              'scope:client-util',
-            ],
-          },
-          {
-            sourceTag: 'scope:client-e2e',
-            onlyDependOnLibsWithTags: ['scope:client-util'],
-          },
-          {
-            sourceTag: 'scope:client-components-e2e',
-            onlyDependOnLibsWithTags: ['scope:client-util'],
-          },
-          {
-            sourceTag: 'type:application',
-            onlyDependOnLibsWithTags: [
-              'type:feature',
-              'type:data-access',
-              'type:ui',
-              'type:util',
-              'type:mocks',
-            ],
-          },
-          {
-            sourceTag: 'type:feature',
-            onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util', 'type:mocks'],
-          },
-          {
-            sourceTag: 'type:data-access',
-            onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util', 'type:mocks'],
-          },
-          {
-            sourceTag: 'type:ui',
-            onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util', 'type:mocks'],
-          },
-          {
-            sourceTag: 'type:util',
-            onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util'],
-          },
-          {
-            sourceTag: 'type:e2e',
-            onlyDependOnLibsWithTags: ['type:util'],
-          },
-        ],
-      },
-    ],
+    '@nrwl/nx/enforce-module-boundaries': ['error', nxModuleBoundaryRules],
   },
 
   overrides: [
@@ -516,7 +375,6 @@ module.exports = {
         'eslint:recommended',
         'plugin:prettier/recommended',
         'plugin:@angular-eslint/recommended',
-        'plugin:@nrwl/nx/javascript',
       ],
       plugins: [
         'prettier',
