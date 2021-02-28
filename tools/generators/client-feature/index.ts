@@ -15,6 +15,8 @@ import {
 import { formatFiles, getProjectConfig } from '@nrwl/workspace';
 import fs from 'fs';
 import * as path from 'path';
+import { timer } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { ISchematicContext } from './schema.interface';
 
@@ -49,7 +51,7 @@ const addFiles = (schema: ISchematicContext): Rule => (tree: Tree, context: Sche
     move(projectConfig.root),
     template({
       ...strings,
-      ...schema, // pass the objects containing the properties & functions to be used in template file
+      ...schema, // pass the objects containing the properties & functions to be used in template files
     }),
   ]);
 
@@ -76,22 +78,40 @@ const updateProjectConfig = (schema: ISchematicContext): Rule => (
   angularJson.projects[schema.name] = projectConfig;
   fs.writeFileSync(angularJsonPath, Buffer.from(JSON.stringify(angularJson)));
 
-  return chain([formatFiles({ skipFormat: false }, angularJsonPath)]);
+  return chain([formatFiles({ skipFormat: false }, angularJsonPath)])(tree, context);
 };
 
 /**
  * Removes unneeded files.
- * TODO: remove unneeded files.
+ * @note TODO: revise and debug it.
  */
-const cleanup = (schema: ISchematicContext): Rule => {
+const cleanup = (schema: ISchematicContext): Rule => (tree: Tree, context: SchematicContext) => {
   const projectRoot = `${process.cwd()}`;
-  /**
-   * @note this file is not needed, and is removed.
-   */
-  const rslintRcPath = `${projectRoot}/.eslintrc.json`;
-  fs.unlinkSync(rslintRcPath);
 
-  return chain([]);
+  /**
+   * @note workaround to wait until all files are created.
+   * @note TODO: improve solution
+   */
+  const timeout = 3000;
+  void timer(timeout)
+    .pipe(
+      tap(() => {
+        /**
+         * @note this file is not needed, and is removed.
+         */
+        const rslintRcPath = `${projectRoot}/.eslintrc.json`;
+        fs.stat(rslintRcPath, (err: NodeJS.ErrnoException | null, stats: fs.Stats) => {
+          if (err !== null) {
+            console.log(`${rslintRcPath} does not exist`);
+          } else {
+            fs.unlinkSync(rslintRcPath);
+          }
+        });
+      }),
+    )
+    .subscribe();
+
+  return chain([])(tree, context);
 };
 
 export default function (schema: ISchematicContext) {
@@ -129,7 +149,7 @@ export default function (schema: ISchematicContext) {
           skipImport: true,
         }),
       ]),
-      // cleanup(schema),
+      cleanup(schema),
     ])(tree, context);
   };
 }
