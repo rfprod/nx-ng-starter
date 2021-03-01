@@ -51,7 +51,8 @@ const addFiles = (schema: ISchematicContext): Rule => (tree: Tree, context: Sche
     move(projectConfig.root),
     template({
       ...strings,
-      ...schema, // pass the objects containing the properties & functions to be used in template files
+      ...schema, // pass the objects containing the properties & functions to be used in template files.
+      tmpl: '', // this value is used to files naming to that template files do not affect development processes.
     }),
   ]);
 
