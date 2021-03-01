@@ -3,12 +3,16 @@
     "defaultBase": "master"
   },
   "implicitDependencies": {
-    ".eslintrc.json": "*",
+    ".eslintrc.js": "*",
     "angular.json": "*",
     "nx.json": "*",
-    "package.json": "*",
-    "tsconfig.base.json": "*",
-    "tslint.json": "*"
+    "tsconfig.json": "*",
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*",
+      "engines": "*",
+      "scripts": "*"
+    }
   },
   "npmScope": "nx-ng-starter",
   "projects": {
@@ -99,5 +103,9 @@
       },
       "runner": "@nrwl/workspace/tasks-runners/default"
     }
+  },
+  "workspaceLayout": {
+    "appsDir": "apps",
+    "libsDir": "libs"
   }
 }
