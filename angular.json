@@ -600,6 +600,34 @@
       },
       "sourceRoot": "libs/client-translate/src"
     },
+    "client-unit-testing": {
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-unit-testing/.eslintrc.json",
+            "lintFilePatterns": ["libs/client-unit-testing/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-unit-testing/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/client-unit-testing"]
+        }
+      },
+      "prefix": "client",
+      "projectType": "library",
+      "root": "libs/client-unit-testing",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "styleext": "scss"
+        }
+      },
+      "sourceRoot": "libs/client-unit-testing/src"
+    },
     "client-util": {
       "architect": {
         "lint": {
@@ -1087,34 +1115,6 @@
       "root": "apps/elements-testing-e2e",
       "sourceRoot": "apps/elements-testing-e2e/src"
     },
-    "mocks-core": {
-      "architect": {
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "eslintConfig": "libs/mocks-core/.eslintrc.json",
-            "lintFilePatterns": ["libs/mocks-core/**/*.ts"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/mocks-core/jest.config.js",
-            "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/mocks-core"]
-        }
-      },
-      "prefix": "client",
-      "projectType": "library",
-      "root": "libs/mocks-core",
-      "schematics": {
-        "@nrwl/angular:component": {
-          "styleext": "scss"
-        }
-      },
-      "sourceRoot": "libs/mocks-core/src"
-    },
     "proto": {
       "architect": {
         "lint": {
@@ -1236,10 +1236,10 @@
       "unitTestRunner": "jest"
     },
     "@nrwl/angular:component": {
-      "style": "scss",
+      "changeDetection": "OnPush",
       "inlineStyle": false,
       "inlineTemplate": false,
-      "changeDetection": "OnPush"
+      "style": "scss"
     },
     "@nrwl/angular:library": {
       "linter": "eslint",

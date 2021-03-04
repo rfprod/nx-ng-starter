@@ -3,16 +3,19 @@
     "defaultBase": "master"
   },
   "implicitDependencies": {
+    ".eslintrc.angular.js": "*",
+    ".eslintrc.cypress.js": "*",
     ".eslintrc.js": "*",
+    ".eslintrc.module-boundaries.js": "*",
     "angular.json": "*",
     "nx.json": "*",
-    "tsconfig.json": "*",
     "package.json": {
       "dependencies": "*",
       "devDependencies": "*",
       "engines": "*",
       "scripts": "*"
-    }
+    },
+    "tsconfig.json": "*"
   },
   "npmScope": "nx-ng-starter",
   "projects": {
@@ -60,6 +63,9 @@
     "client-translate": {
       "tags": ["scope:client-translate", "type:ui"]
     },
+    "client-unit-testing": {
+      "tags": ["scope:client-unit-testing", "type:unit-testing"]
+    },
     "client-util": {
       "tags": ["scope:client-util", "type:util"]
     },
@@ -83,9 +89,6 @@
     "elements-testing-e2e": {
       "implicitDependencies": ["elements-testing"],
       "tags": ["scope:elements-testing-e2e", "type:e2e"]
-    },
-    "mocks-core": {
-      "tags": ["scope:mocks-core", "type:mocks"]
     },
     "proto": {
       "tags": ["scope:proto", "type:data-access"]

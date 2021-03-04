@@ -9,20 +9,20 @@ const typeConstraints = [
       'type:data-access',
       'type:ui',
       'type:util',
-      'type:mocks',
+      'type:unit-testing',
     ],
   },
   {
     sourceTag: 'type:feature',
-    onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util', 'type:mocks'],
+    onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util', 'type:unit-testing'],
   },
   {
     sourceTag: 'type:data-access',
-    onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util', 'type:mocks'],
+    onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util', 'type:unit-testing'],
   },
   {
     sourceTag: 'type:ui',
-    onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util', 'type:mocks'],
+    onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util', 'type:unit-testing'],
   },
   {
     sourceTag: 'type:util',
@@ -71,8 +71,8 @@ const clientConstraints = [
     onlyDependOnLibsWithTags: ['scope:client-util'],
   },
   {
-    sourceTag: 'scope:mocks-core',
-    onlyDependOnLibsWithTags: ['*'], // TODO: remove all library imports from mocks-core
+    sourceTag: 'scope:client-unit-testing',
+    onlyDependOnLibsWithTags: ['*'], // TODO: remove all library imports from client-unit-testing
   },
   {
     sourceTag: 'scope:client-material',
@@ -85,7 +85,7 @@ const clientConstraints = [
   {
     sourceTag: 'scope:client-store',
     onlyDependOnLibsWithTags: [
-      'scope:mocks-core',
+      'scope:client-unit-testing',
       'scope:proto',
       'scope:client-util',
       'scope:client-translate',
@@ -93,12 +93,12 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:client-services',
-    onlyDependOnLibsWithTags: ['scope:mocks-core', 'scope:proto'],
+    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:proto'],
   },
   {
     sourceTag: 'scope:client-componnents',
     onlyDependOnLibsWithTags: [
-      'scope:mocks-core',
+      'scope:client-unit-testing',
       'scope:proto',
       'scope:client-core',
       'scope:client-material',
@@ -109,12 +109,12 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:client-gql',
-    onlyDependOnLibsWithTags: ['scope:mocks-core', 'scope:proto', 'scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:proto', 'scope:client-util'],
   },
   {
     sourceTag: 'scope:client-chatbot',
     onlyDependOnLibsWithTags: [
-      'scope:mocks-core',
+      'scope:client-unit-testing',
       'scope:proto',
       'scope:client-material',
       'scope:client-store',
@@ -132,7 +132,7 @@ const clientConstraints = [
   {
     sourceTag: 'scope:client',
     onlyDependOnLibsWithTags: [
-      'scope:mocks-core',
+      'scope:client-unit-testing',
       'scope:proto',
       'scope:client-gql',
       'scope:client-store',
@@ -160,7 +160,7 @@ const clientConstraints = [
  */
 exports.nxModuleBoundaryRules = {
   enforceBuildableLibDependency: true,
-  allow: ['mocks-core'], // TODO: remove all library imports from mocks-core
+  allow: ['client-unit-testing'], // TODO: remove all library imports from client-unit-testing
   depConstraints: [
     ...sharedConstraints,
     ...clientConstraints,

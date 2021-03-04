@@ -7,7 +7,7 @@ import {
   setupJestSpiesFor,
   TClassMemberSpiesObject,
   testingEnvironment,
-} from '@nx-ng-starter/mocks-core';
+} from '@nx-ng-starter/client-unit-testing';
 
 import { AppIndexComponent } from './index.component';
 

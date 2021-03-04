@@ -1,6 +1,6 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
 
-import { AppMocksCoreModule } from './mocks-core.module';
+import { AppMocksCoreModule } from './client-unit-testing.module';
 
 describe('AppMocksCoreModule', () => {
   beforeEach(

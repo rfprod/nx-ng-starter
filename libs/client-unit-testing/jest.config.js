@@ -1,11 +1,11 @@
 module.exports = {
   preset: '../../jest.preset.js',
-  coverageDirectory: '../../coverage/libs/mocks-core',
+  coverageDirectory: '../../coverage/libs/client-unit-testing',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   snapshotSerializers: [
     'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
     'jest-preset-angular/build/AngularSnapshotSerializer.js',
     'jest-preset-angular/build/HTMLCommentSerializer.js',
   ],
-  displayName: 'mocks-core',
+  displayName: 'client-unit-testing',
 };
