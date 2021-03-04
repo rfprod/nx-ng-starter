@@ -9,5 +9,5 @@
 - `client-store` - state store modules;
 - `client-translate` - UI internationalization module, services, dictionaries;
 - `client-util` - utils;
-- `mocks-core` - unit testing sources;
+- `client-unit-testing` - unit testing sources;
 - `proto` - protobuf definitions;
