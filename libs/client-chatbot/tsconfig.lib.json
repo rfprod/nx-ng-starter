@@ -1,13 +1,18 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
+    "outDir": "../../dist/libs/client-chatbot",
     "target": "es2015",
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": [],
-    "lib": ["dom", "es2018"]
+    "lib": ["dom", "es2018"],
+    "types": []
+  },
+  "angularCompilerOptions": {
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "enableResourceInlining": true
   },
   "exclude": ["src/test-setup.ts", "**/*.spec.ts"],
   "include": ["**/*.ts"]

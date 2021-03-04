@@ -16,7 +16,7 @@ module.exports = {
     '<rootDir>/libs/client-store',
     '<rootDir>/libs/client-translate',
     '<rootDir>/libs/client-util',
-    '<rootDir>/libs/mocks-core',
+    '<rootDir>/libs/client-unit-testing',
     '<rootDir>/libs/proto',
   ],
 };

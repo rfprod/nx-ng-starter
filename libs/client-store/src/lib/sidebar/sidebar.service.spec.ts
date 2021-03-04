@@ -1,5 +1,5 @@
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
+import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/client-unit-testing';
 
 import { AppSidebarModule } from './sidebar.module';
 import { AppSidebarService } from './sidebar.service';

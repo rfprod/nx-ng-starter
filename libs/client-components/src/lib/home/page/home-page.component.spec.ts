@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/mocks-core';
+import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/client-unit-testing';
 
 import { AppHomePage } from './home-page.component';
 

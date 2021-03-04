@@ -1,10 +1,16 @@
 {
   "compilerOptions": {
     "declaration": true,
+    "declarationMap": true,
     "inlineSources": true,
     "lib": ["DOM", "ES2018"],
-    "outDir": "../../dist/out-tsc",
+    "outDir": "../../dist/libs/client-unit-testing",
     "target": "ES2015"
+  },
+  "angularCompilerOptions": {
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "enableResourceInlining": true
   },
   "exclude": ["**/test-setup.ts", "**/*.spec.ts"],
   "extends": "./tsconfig.json",

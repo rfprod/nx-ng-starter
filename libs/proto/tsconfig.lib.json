@@ -1,10 +1,16 @@
 {
   "compilerOptions": {
     "declaration": true,
+    "declarationMap": true,
     "inlineSources": true,
     "lib": ["DOM", "ES2018"],
     "outDir": "../../dist/out-tsc",
     "target": "ES2015"
+  },
+  "angularCompilerOptions": {
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "enableResourceInlining": true
   },
   "exclude": ["src/test-setup.ts", "**/*.patch.ts", "**/*.mock.ts", "**/*.spec.ts"],
   "extends": "./tsconfig.json",

@@ -6,7 +6,7 @@ import {
   newTestBedMetadata,
   setupJestSpiesFor,
   TClassMemberSpiesObject,
-} from '@nx-ng-starter/mocks-core';
+} from '@nx-ng-starter/client-unit-testing';
 
 import { AppHomeComponent } from './home.component';
 
