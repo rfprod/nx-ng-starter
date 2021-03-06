@@ -72,7 +72,7 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:client-unit-testing',
-    onlyDependOnLibsWithTags: ['*'], // TODO: remove all library imports from client-unit-testing
+    onlyDependOnLibsWithTags: ['scope:client-material', 'scope:client-util'],
   },
   {
     sourceTag: 'scope:client-material',
@@ -160,7 +160,7 @@ const clientConstraints = [
  */
 exports.nxModuleBoundaryRules = {
   enforceBuildableLibDependency: true,
-  allow: ['client-unit-testing'], // TODO: remove all library imports from client-unit-testing
+  allow: [],
   depConstraints: [
     ...sharedConstraints,
     ...clientConstraints,
