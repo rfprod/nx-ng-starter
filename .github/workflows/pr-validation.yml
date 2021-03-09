@@ -26,6 +26,12 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
 
+      - name: GitHub CODEOWNERS Validator
+        uses: mszostok/codeowners-validator@v0.5.1
+        with:
+          checks: 'files,duppatterns'
+          experimental_checks: 'notowned'
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v1
         with:
