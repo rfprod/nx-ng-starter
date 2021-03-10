@@ -5,22 +5,13 @@ import { MatSpinner } from '@angular/material/progress-spinner';
 import { Store } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 
-import {
-  IAppHttpProgressStatePayload,
-  IHttpProgressHandlers,
-  IHttpProgressObservableOutput,
-} from './http-progress.interface';
-import { AppHttpProgressState, httpProgressActions } from './http-progress.store';
+import { IAppHttpProgressStatePayload, IHttpProgressHandlers } from './http-progress.interface';
+import { httpProgressActions } from './http-progress.store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppHttpProgressService {
-  public readonly output: IHttpProgressObservableOutput = {
-    all$: this.store.select(AppHttpProgressState.allProgress),
-    mainView$: this.store.select(AppHttpProgressState.mainViewProgress),
-  };
-
   public readonly handlers: IHttpProgressHandlers = {
     mainView: {
       start: () => this.startProgress(this.newAppHttpProgressState(true)),
