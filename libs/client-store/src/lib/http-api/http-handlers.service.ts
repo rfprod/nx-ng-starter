@@ -16,9 +16,10 @@ import { createUploadLink } from 'apollo-upload-client';
 import { ExecutionResult, GraphQLError } from 'graphql';
 import memo from 'memo-decorator';
 import { MonoTypeOperatorFunction, Observable, of, throwError } from 'rxjs';
-import { catchError, first, map, take, tap, timeout } from 'rxjs/operators';
+import { catchError, finalize, first, map, take, tap, timeout } from 'rxjs/operators';
 
 import { AppHttpProgressService } from '../http-progress/http-progress.service';
+import { httpProgressActions } from '../http-progress/http-progress.store';
 import { AppToasterService } from '../http-progress/services/toaster/toaster.service';
 import { AppUserState } from '../user';
 import { userActions } from '../user/user.store';
@@ -93,11 +94,14 @@ export class AppHttpHandlersService {
    * @param listenX number of responses to catch
    */
   public pipeHttpResponse<T>(observable: Observable<T>, listenX = 1) {
+    void this.store.dispatch(new httpProgressActions.startProgress({ mainView: true }));
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
-      this.tapProgress<T>(true),
       take(listenX),
       catchError(err => this.handleError(err)),
+      finalize(() => {
+        void this.store.dispatch(new httpProgressActions.stopProgress({ mainView: true }));
+      }),
     );
   }
 
@@ -108,12 +112,17 @@ export class AppHttpHandlersService {
    * @param withprogress should request start progress
    */
   public pipeGraphQLRequest<T>(observable: Observable<T>, listenX = 1, withprogress = true) {
+    if (withprogress) {
+      void this.store.dispatch(new httpProgressActions.startProgress({ mainView: true }));
+    }
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
-      this.tapProgress<T>(withprogress),
       take(listenX),
       this.tapError<T>(),
       catchError(err => this.handleGraphQLError(err)),
+      finalize(() => {
+        void this.store.dispatch(new httpProgressActions.stopProgress({ mainView: true }));
+      }),
     );
   }
 
@@ -265,22 +274,6 @@ export class AppHttpHandlersService {
    */
   public handleGraphQLError(error: string): Observable<never> {
     return throwError(error);
-  }
-
-  /**
-   * Taps progress.
-   * @param withProgress indicates whether progress should be shown
-   */
-  public tapProgress<T>(widhProgress: boolean): MonoTypeOperatorFunction<T> {
-    let handler: () => MonoTypeOperatorFunction<T> = () =>
-      tap<T>(
-        () => void 0,
-        () => void 0,
-      );
-    if (widhProgress) {
-      handler = this.httpProgress.handlers.mainView.tapStopperObservable;
-    }
-    return tap(handler, handler, handler);
   }
 
   /**
