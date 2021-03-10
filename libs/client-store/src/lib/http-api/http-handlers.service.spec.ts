@@ -94,7 +94,6 @@ describe('AppHttpHandlersService', () => {
     expect(service.handleGraphQLError).toEqual(expect.any(Function));
     expect(service.pipeHttpResponse).toEqual(expect.any(Function));
     expect(service.pipeGraphQLRequest).toEqual(expect.any(Function));
-    expect(service.tapProgress).toEqual(expect.any(Function));
     expect(service.tapError).toEqual(expect.any(Function));
     expect(service.createApolloLinkFor).toEqual(expect.any(Function));
   });

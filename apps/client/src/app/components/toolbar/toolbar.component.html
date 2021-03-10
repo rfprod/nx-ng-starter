@@ -1,10 +1,16 @@
 <mat-toolbar color="primary" fxFlex="0 1 auto">
-  <button mat-icon-button (click)="sidebarService.toggle()">
-    <mat-icon title="open sidenav" *ngIf="(sidebarOpened$ | async) === false">
+  <button mat-icon-button>
+    <mat-icon
+      title="open sidenav"
+      *ngIf="(sidebarOpened$ | async) === false"
+      (click)="sidebarOpenHandler()"
+    >
       flip_to_front
     </mat-icon>
 
-    <mat-icon title="close sidenav" *ngIf="sidebarOpened$ | async"> flip_to_back </mat-icon>
+    <mat-icon title="close sidenav" *ngIf="sidebarOpened$ | async" (click)="sidebarCloseHandler()">
+      flip_to_back
+    </mat-icon>
   </button>
 
   <span fxFlex="1 1 auto"></span>
