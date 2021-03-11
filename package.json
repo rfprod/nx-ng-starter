@@ -13,7 +13,7 @@
     "affected:libs": "nx affected:libs",
     "affected:lint": "nx affected:lint",
     "affected:test": "nx affected:test",
-    "analyze:circular-deps": "madge --circular --extensions ts ./",
+    "analyze:circular-deps": "madge --circular --extensions ts ./apps ./libs ./tools --ts-config ./tsconfig.json",
     "analyze:client": "yarn build:client:stats; npx webpack-bundle-analyzer ./dist/apps/client/stats.json",
     "analyze:documentation": "yarn build:documentation:stats; npx webpack-bundle-analyzer ./dist/apps/documentation/stats.json",
     "build:all": "yarn build:api && yarn build:client && yarn build:documentation",
