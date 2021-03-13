@@ -16,7 +16,7 @@ import { createUploadLink } from 'apollo-upload-client';
 import { ExecutionResult, GraphQLError } from 'graphql';
 import memo from 'memo-decorator';
 import { MonoTypeOperatorFunction, Observable, of, throwError } from 'rxjs';
-import { catchError, finalize, first, map, take, tap, timeout } from 'rxjs/operators';
+import { catchError, finalize, first, map, tap, timeout } from 'rxjs/operators';
 
 import { AppHttpProgressService } from '../http-progress/http-progress.service';
 import { httpProgressActions } from '../http-progress/http-progress.store';
@@ -47,13 +47,6 @@ export class AppHttpHandlersService {
     @Inject(WINDOW) public readonly win: Window,
     @Inject(WEB_CLIENT_APP_ENV) public readonly env: IWebClientAppEnvironment,
   ) {}
-
-  /**
-   * Resolves if app is running on localhost.
-   */
-  public isLocalhost(): boolean {
-    return this.win.location.origin.includes('localhost');
-  }
 
   /**
    * Resolver graphQL base url, adds correct protocol.
@@ -89,15 +82,16 @@ export class AppHttpHandlersService {
   }
 
   /**
-   * Pipes request with object response.
-   * @param observable request observable
-   * @param listenX number of responses to catch
+   * Pipes http response.
+   * Attaches settings:
+   * - timeout
+   * - error handler
+   * - progress indicator
    */
-  public pipeHttpResponse<T>(observable: Observable<T>, listenX = 1) {
+  public pipeHttpResponse<T>(observable: Observable<T>) {
     void this.store.dispatch(new httpProgressActions.startProgress({ mainView: true }));
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
-      take(listenX),
       catchError(err => this.handleError(err)),
       finalize(() => {
         void this.store.dispatch(new httpProgressActions.stopProgress({ mainView: true }));
@@ -107,21 +101,23 @@ export class AppHttpHandlersService {
 
   /**
    * Pipes graphQL request response.
-   * @param observable request observable
-   * @param listenX number of responses to catch
-   * @param withprogress should request start progress
+   * Attaches settings:
+   * - timeout
+   * - error handler
+   * - progress indicator
    */
-  public pipeGraphQLRequest<T>(observable: Observable<T>, listenX = 1, withprogress = true) {
+  public pipeGraphQLRequest<T>(observable: Observable<T>, withprogress = true) {
     if (withprogress) {
       void this.store.dispatch(new httpProgressActions.startProgress({ mainView: true }));
     }
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
-      take(listenX),
       this.tapError<T>(),
       catchError(err => this.handleGraphQLError(err)),
       finalize(() => {
-        void this.store.dispatch(new httpProgressActions.stopProgress({ mainView: true }));
+        if (withprogress) {
+          void this.store.dispatch(new httpProgressActions.stopProgress({ mainView: true }));
+        }
       }),
     );
   }
