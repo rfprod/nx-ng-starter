@@ -1,13 +1,28 @@
 # Libraries
 
-- `api-interface` - api interface for sample `api` application;
-- `client-components` - client application components;
-- `client-core` - assets, styles;
-- `client-gql` - client graphql module, and generated gql definitions;
-- `client-material` - material module with configs;
-- `client-services` - shared services;
-- `client-store` - state store modules;
-- `client-translate` - UI internationalization module, services, dictionaries;
-- `client-util` - utils;
-- `client-unit-testing` - unit testing sources;
-- `proto` - protobuf definitions;
+## Backend
+
+- `backend-auth`
+- `backend-gql`
+- `backend-grpc`
+- `backend-interfaces`
+- `backend-logger`
+- `backend-websocket`
+
+## Frrontend
+
+- `client-chatbot`
+- `client-components`
+- `client-core`
+- `client-gql`
+- `client-material`
+- `client-services`
+- `client-sidebar`
+- `client-store`
+- `client-translate`
+- `client-unit-testing`
+- `client-util`
+
+## Shared
+
+- `proto`
