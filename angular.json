@@ -111,27 +111,27 @@
       "root": "libs/backend-auth",
       "sourceRoot": "libs/backend-auth/src"
     },
-    "backend-graphql": {
+    "backend-gql": {
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/backend-graphql/.eslintrc.json",
-            "lintFilePatterns": ["libs/backend-graphql/**/*.ts"]
+            "eslintConfig": "libs/backend-gql/.eslintrc.json",
+            "lintFilePatterns": ["libs/backend-gql/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/backend-graphql/jest.config.js",
+            "jestConfig": "libs/backend-gql/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/backend-graphql"]
+          "outputs": ["coverage/libs/backend-gql"]
         }
       },
       "projectType": "library",
-      "root": "libs/backend-graphql",
-      "sourceRoot": "libs/backend-graphql/src"
+      "root": "libs/backend-gql",
+      "sourceRoot": "libs/backend-gql/src"
     },
     "backend-grpc": {
       "architect": {

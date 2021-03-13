@@ -1,5 +1,5 @@
 module.exports = {
-  displayName: 'backend-graphql',
+  displayName: 'backend-gql',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,5 +11,5 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../coverage/libs/backend-graphql',
+  coverageDirectory: '../../coverage/libs/backend-gql',
 };

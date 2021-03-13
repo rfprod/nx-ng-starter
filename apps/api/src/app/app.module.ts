@@ -1,6 +1,6 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { BackendAuthModule } from '@nx-ng-starter/backend-auth';
-import { BackendGqlModule } from '@nx-ng-starter/backend-graphql';
+import { BackendGqlModule } from '@nx-ng-starter/backend-gql';
 import { BackendGrpcModule } from '@nx-ng-starter/backend-grpc';
 import { API_ENV } from '@nx-ng-starter/backend-interfaces';
 import { BackendLoggerMiddleware } from '@nx-ng-starter/backend-logger';

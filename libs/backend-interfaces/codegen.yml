@@ -7,7 +7,7 @@ config:
     input: 'interface'
 generates:
   libs/client-gql/src/lib/generated/client-api-gql.interface.ts:
-    schema: 'libs/backend-graphql/schema.gql'
+    schema: 'libs/backend-gql/schema.gql'
     plugins:
       - 'typescript'
       - 'typescript-operations'

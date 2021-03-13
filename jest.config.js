@@ -7,7 +7,7 @@ module.exports = {
     '<rootDir>/apps/elements-testing',
     '<rootDir>/libs/backend-auth',
     '<rootDir>/libs/backend-grpc',
-    '<rootDir>/libs/backend-graphql',
+    '<rootDir>/libs/backend-gql',
     '<rootDir>/libs/backend-interfaces',
     '<rootDir>/libs/backend-logger',
     '<rootDir>/libs/backend-websocket',

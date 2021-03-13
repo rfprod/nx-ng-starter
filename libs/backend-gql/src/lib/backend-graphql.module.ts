@@ -18,7 +18,7 @@ export class BackendGqlModule {
       debug: environment.production ? false : true,
       playground: environment.production ? false : true,
       installSubscriptionHandlers: true,
-      autoSchemaFile: 'libs/backend-graphql/schema.gql',
+      autoSchemaFile: 'libs/backend-gql/schema.gql',
       subscriptions: {
         path: '/api/graphql',
       },

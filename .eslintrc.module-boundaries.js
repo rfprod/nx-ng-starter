@@ -54,7 +54,7 @@ const backendConstraints = [
       'scope:proto',
       'scope:backend-auth',
       'scope:backend-grpc',
-      'scope:backend-graphql',
+      'scope:backend-gql',
       'scope:backend-interfaces',
       'scope:backend-logger',
       'scope:backend-websocket',
@@ -69,7 +69,7 @@ const backendConstraints = [
     onlyDependOnLibsWithTags: ['scope:proto', 'scope:backend-interfaces'],
   },
   {
-    sourceTag: 'scope:backend-graphql',
+    sourceTag: 'scope:backend-gql',
     onlyDependOnLibsWithTags: ['scope:backend-interfaces'],
   },
   {

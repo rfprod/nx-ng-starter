@@ -75,8 +75,14 @@ Applications as well as generated documentation, testing reports, and a custom c
 #### Unit coverage
 
 - [API](https://nx-ng-starter-documentation.web.app/assets/coverage/apps/api/index.html)
-- [API Interface](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/api-interface/index.html)
+- [Backend Auth](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/backend-auth/index.html)
+- [Backend Gql](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/backend-gql/index.html)
+- [Backend gRPC](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/backend-grpc/index.html)
+- [Backend Interfaces](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/backend-interfaces/index.html)
+- [Backend Logger](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/backend-logger/index.html)
+- [Backend Websocket](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/backend-websocket/index.html)
 - [Client](https://nx-ng-starter-documentation.web.app/assets/coverage/apps/client/index.html)
+- [Client Chatbot](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/client-chatbot/index.html)
 - [Client Components](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/client-components/index.html)
 - [Client Core](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/client-core/index.html)
 - [Client Gql](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/client-gql/index.html)
