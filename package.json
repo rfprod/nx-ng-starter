@@ -39,7 +39,7 @@
     "firebase:deploy:localhost:client": "yarn build:client:prod && bash tools/shell/firebase-deploy.sh localhost client",
     "firebase:deploy:localhost:documentation": "yarn build:documentation:prod && bash tools/shell/firebase-deploy.sh localhost documentation",
     "generate:changelog": "bash tools/shell/changelog.sh all",
-    "generate:client-gql": "ng run api-interface:generate-client-definitions",
+    "generate:client-gql": "ng run backend-interfaces:generate-client-definitions",
     "generate:diagrams": "mkdir dist/diagrams || true && yarn workspace:mmdc -i tools/diagrams/branching.mmd -o dist/diagrams/branching.png && yarn workspace:mmdc -i tools/diagrams/master-on-push-pipeline.mmd -o dist/diagrams/master-on-push-pipeline.png && yarn workspace:mmdc -i tools/diagrams/pr-validation-pipeline.mmd -o dist/diagrams/pr-validation-pipeline.png",
     "generate:env:documentation": "bash tools/shell/set-documentation-env.sh",
     "generate:proto": "npx npm-run-all -s generate:protobufjs generate:protoc",

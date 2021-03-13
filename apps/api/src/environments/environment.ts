@@ -1,4 +1,4 @@
-import { ApiEnvironment } from '@nx-ng-starter/api-interface';
+import { ApiEnvironment } from '@nx-ng-starter/backend-interfaces';
 
 /**
  * Development environment variables.

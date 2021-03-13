@@ -50,11 +50,39 @@ const sharedConstraints = [
 const backendConstraints = [
   {
     sourceTag: 'scope:api',
-    onlyDependOnLibsWithTags: ['scope:api-interface', 'scope:proto'],
+    onlyDependOnLibsWithTags: [
+      'scope:proto',
+      'scope:backend-auth',
+      'scope:backend-grpc',
+      'scope:backend-gql',
+      'scope:backend-interfaces',
+      'scope:backend-logger',
+      'scope:backend-websocket',
+    ],
   },
   {
-    sourceTag: 'scope:api-interface',
+    sourceTag: 'scope:backend-auth',
+    onlyDependOnLibsWithTags: ['scope:proto', 'scope:backend-interfaces'],
+  },
+  {
+    sourceTag: 'scope:backend-grpc',
+    onlyDependOnLibsWithTags: ['scope:proto', 'scope:backend-interfaces'],
+  },
+  {
+    sourceTag: 'scope:backend-gql',
+    onlyDependOnLibsWithTags: ['scope:backend-interfaces'],
+  },
+  {
+    sourceTag: 'scope:backend-interfaces',
+    onlyDependOnLibsWithTags: [],
+  },
+  {
+    sourceTag: 'scope:backend-logger',
     onlyDependOnLibsWithTags: ['scope:proto'],
+  },
+  {
+    sourceTag: 'scope:backend-websocket',
+    onlyDependOnLibsWithTags: ['scope:proto', 'scope:backend-interfaces'],
   },
 ];
 

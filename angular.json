@@ -89,14 +89,80 @@
       "schematics": {},
       "sourceRoot": "apps/api/src"
     },
-    "api-interface": {
+    "backend-auth": {
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/backend-auth/.eslintrc.json",
+            "lintFilePatterns": ["libs/backend-auth/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/backend-auth/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/backend-auth"]
+        }
+      },
+      "projectType": "library",
+      "root": "libs/backend-auth",
+      "sourceRoot": "libs/backend-auth/src"
+    },
+    "backend-gql": {
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/backend-gql/.eslintrc.json",
+            "lintFilePatterns": ["libs/backend-gql/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/backend-gql/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/backend-gql"]
+        }
+      },
+      "projectType": "library",
+      "root": "libs/backend-gql",
+      "sourceRoot": "libs/backend-gql/src"
+    },
+    "backend-grpc": {
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/backend-grpc/.eslintrc.json",
+            "lintFilePatterns": ["libs/backend-grpc/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/backend-grpc/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/backend-grpc"]
+        }
+      },
+      "projectType": "library",
+      "root": "libs/backend-grpc",
+      "sourceRoot": "libs/backend-grpc/src"
+    },
+    "backend-interfaces": {
       "architect": {
         "generate-client-definitions": {
           "builder": "@nrwl/workspace:run-commands",
           "options": {
             "commands": [
               {
-                "command": "npx graphql-codegen --config libs/api-interface/codegen.yml && find libs/client-gql/src/lib/generated/ -type f -name \"*.ts\" -exec sed -i \"s/Scalars/IScalars/g\" {} + && ng lint client-gql --fix"
+                "command": "npx graphql-codegen --config libs/backend-interfaces/codegen.yml && find libs/client-gql/src/lib/generated/ -type f -name \"*.ts\" -exec sed -i \"s/Scalars/IScalars/g\" {} + && ng lint client-gql --fix"
               }
             ]
           }
@@ -104,23 +170,67 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "eslintConfig": "libs/api-interface/.eslintrc.json",
-            "lintFilePatterns": ["libs/api-interface/**/*.ts"]
+            "eslintConfig": "libs/backend-interfaces/.eslintrc.json",
+            "lintFilePatterns": ["libs/backend-interfaces/**/*.ts"]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/api-interface/jest.config.js",
+            "jestConfig": "libs/backend-interfaces/jest.config.js",
             "passWithNoTests": true
           },
-          "outputs": ["coverage/libs/api-interface"]
+          "outputs": ["coverage/libs/backend-interfaces"]
         }
       },
       "projectType": "library",
-      "root": "libs/api-interface",
+      "root": "libs/backend-interfaces",
       "schematics": {},
-      "sourceRoot": "libs/api-interface/src"
+      "sourceRoot": "libs/backend-interfaces/src"
+    },
+    "backend-logger": {
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/backend-logger/.eslintrc.json",
+            "lintFilePatterns": ["libs/backend-logger/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/backend-logger/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/backend-logger"]
+        }
+      },
+      "projectType": "library",
+      "root": "libs/backend-logger",
+      "sourceRoot": "libs/backend-logger/src"
+    },
+    "backend-websocket": {
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/backend-websocket/.eslintrc.json",
+            "lintFilePatterns": ["libs/backend-websocket/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/backend-websocket/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/backend-websocket"]
+        }
+      },
+      "projectType": "library",
+      "root": "libs/backend-websocket",
+      "sourceRoot": "libs/backend-websocket/src"
     },
     "client": {
       "architect": {

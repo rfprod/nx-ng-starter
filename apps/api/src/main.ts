@@ -4,13 +4,13 @@ import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions } from '@nestjs/microservices';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { WsAdapter } from '@nestjs/platform-ws';
-import { defaultWsPort } from '@nx-ng-starter/api-interface';
+import { backendGrpcClientOptions } from '@nx-ng-starter/backend-grpc';
+import { defaultWsPort } from '@nx-ng-starter/backend-interfaces';
 import e from 'express';
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 
 import { ApiAppModule } from './app/app.module';
-import { apiGrpcClientOptions } from './app/modules/grpc/grpc-client.options';
 import { environment } from './environments/environment';
 
 /**
@@ -42,7 +42,8 @@ async function bootstrap(expressInstance: e.Express): Promise<unknown> {
 
   // TODO: debug grpc in firebase, currently it causes all functions deployment failure
   if (!Boolean(environment.firebase)) {
-    app.connectMicroservice<MicroserviceOptions>(apiGrpcClientOptions);
+    const grpcClientOptions = backendGrpcClientOptions(environment);
+    app.connectMicroservice<MicroserviceOptions>(grpcClientOptions);
     await app.startAllMicroservicesAsync();
   }
 
