@@ -104,7 +104,12 @@ Applications as well as generated documentation, testing reports, and a custom c
 #### Changelog
 
 - [API](https://nx-ng-starter-documentation.web.app/assets/changelog/apps/api-CHANGELOG.html)
-- [API Interface](https://nx-ng-starter-documentation.web.app/assets/changelog/libs/api-interface-CHANGELOG.html)
+- [Backend Auth](https://nx-ng-starter-documentation.web.app/assets/changelog/libs/backend-auth-CHANGELOG.html)
+- [Backend Gql](https://nx-ng-starter-documentation.web.app/assets/changelog/libs/backend-gql-CHANGELOG.html)
+- [Backend gRPC](https://nx-ng-starter-documentation.web.app/assets/changelog/libs/backend-grpc-CHANGELOG.html)
+- [Backend Interfaces](https://nx-ng-starter-documentation.web.app/assets/changelog/libs/backend-interfaces-CHANGELOG.html)
+- [Backend Logger](https://nx-ng-starter-documentation.web.app/assets/changelog/libs/backend-logger-CHANGELOG.html)
+- [Backend Websocket](https://nx-ng-starter-documentation.web.app/assets/changelog/libs/backend-websocket-CHANGELOG.html)
 - [Client](https://nx-ng-starter-documentation.web.app/assets/changelog/apps/client-CHANGELOG.html)
 - [Client E2E](https://nx-ng-starter-documentation.web.app/assets/changelog/apps/client-e2e-CHANGELOG.html)
 - [Client Components](https://nx-ng-starter-documentation.web.app/assets/changelog/libs/client-components-CHANGELOG.html)
