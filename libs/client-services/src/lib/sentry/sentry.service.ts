@@ -7,7 +7,7 @@ import { Integrations } from '@sentry/tracing';
 /**
  * Sentry is disabled for environments defined in this array.
  */
-const sentryDisabledEnvironments: TSentryEnvironment[] = ['unit-testing'];
+const sentryDisabledEnvironments: TSentryEnvironment[] = ['unit-testing', 'development'];
 
 /**
  * This method must be used only in main.ts on client.
