@@ -1,18 +1,23 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { API_ENV } from '@nx-ng-starter/api-interface';
+import { BackendAuthModule } from '@nx-ng-starter/backend-auth';
+import { BackendGqlModule } from '@nx-ng-starter/backend-graphql';
+import { BackendGrpcModule } from '@nx-ng-starter/backend-grpc';
+import { API_ENV } from '@nx-ng-starter/backend-interfaces';
+import { BackendLoggerMiddleware } from '@nx-ng-starter/backend-logger';
+import { BackendWebsocketModule } from '@nx-ng-starter/backend-websocket';
 
 import { environment } from '../environments/environment';
-import { ApiLoggerMiddleware } from './middleware/logger/logger.middleware';
-import { ApiAuthModule } from './modules/auth/auth.module';
-import { ApiGqlModule } from './modules/graphql/graphql-api.module';
-import { ApiGrpcApiModule } from './modules/grpc/grpc.module';
-import { ApiWebsocketModule } from './modules/websocket/websocket.module';
 
 /**
  * Root API application module.
  */
 @Module({
-  imports: [ApiAuthModule, ApiWebsocketModule, ApiGqlModule.forRoot(environment), ApiGrpcApiModule],
+  imports: [
+    BackendAuthModule,
+    BackendWebsocketModule,
+    BackendGqlModule.forRoot(environment),
+    BackendGrpcModule.forRoot(environment),
+  ],
   providers: [
     {
       provide: API_ENV,
@@ -22,6 +27,6 @@ import { ApiWebsocketModule } from './modules/websocket/websocket.module';
 })
 export class ApiAppModule implements NestModule {
   public configure(consumer: MiddlewareConsumer) {
-    consumer.apply(ApiLoggerMiddleware).forRoutes('*');
+    consumer.apply(BackendLoggerMiddleware).forRoutes('*');
   }
 }
