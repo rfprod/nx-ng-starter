@@ -84,7 +84,6 @@ describe('AppHttpHandlersService', () => {
 
   it('should have variables and methods defined', () => {
     expect(service.defaultHttpTimeout).toEqual(expect.any(Number));
-    expect(service.isLocalhost).toEqual(expect.any(Function));
     expect(service.graphQlEndpoint).toEqual(expect.any(Function));
     expect(service.getGraphQLHttpHeaders).toEqual(expect.any(Function));
     expect(service.getEndpoint).toEqual(expect.any(Function));
@@ -218,12 +217,6 @@ describe('AppHttpHandlersService', () => {
     });
   });
 
-  describe('isLocalhost', () => {
-    it('should resolve if application is requested from localhost over http', () => {
-      expect(service.isLocalhost()).toBeTruthy();
-    });
-  });
-
   it(
     'graphQLHttpHeaders should return new http headers with authorization header set',
     waitForAsync(() => {
@@ -250,6 +243,6 @@ describe('AppHttpHandlersService', () => {
     const observable = of({ data: {} });
     let pipedRequest = service.pipeHttpResponse(observable);
     expect(pipedRequest).toEqual(expect.any(Observable));
-    pipedRequest = service.pipeHttpResponse(observable, 1);
+    pipedRequest = service.pipeHttpResponse(observable);
   });
 });
