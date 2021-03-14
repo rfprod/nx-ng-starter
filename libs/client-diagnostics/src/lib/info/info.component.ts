@@ -16,7 +16,7 @@ export class AppInfoComponent {
   /**
    * Ping result.
    */
-  public readonly ping$ = this.store.select(AppHttpApiState.ping);
+  public readonly ping$ = this.store.select(AppHttpApiState.allData).pipe(map(ping => ping.ping));
 
   /**
    * Sample processed markdown.
@@ -24,11 +24,12 @@ export class AppInfoComponent {
   public readonly markedInstructions$ = of(null).pipe(
     map(() => {
       const apiInstructions = `# API endpoints:\n
-    - ${this.env.api}/ping
+    - ${this.env.api}/auth
     - ${this.env.api}/signup
     - ${this.env.api}/login
     - ${this.env.api}/logout
-    - ${this.env.api}/graphql
+    - ${this.env.api}/mailer
+    - ${this.env.api}/mail
     - ${this.env.api}/grpc
     - ${this.env.api}/grpc/:id`;
       return this.markdown.process(apiInstructions);

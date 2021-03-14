@@ -1,4 +1,4 @@
-describe('client-components', () => {
+describe('home component', () => {
   beforeEach(() => cy.visit('/?path=/story/apphomepage--primary'));
 
   it('should render the component', () => {

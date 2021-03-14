@@ -1,4 +1,4 @@
-describe('client-components', () => {
+describe('info component', () => {
   beforeEach(() => cy.visit('/?path=/story/appinfopage--primary'));
 
   it('should render the component', () => {

@@ -520,6 +520,92 @@
       },
       "sourceRoot": "libs/client-core/src"
     },
+    "client-diagnostics": {
+      "architect": {
+        "build-storybook": {
+          "builder": "@nrwl/storybook:build",
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          },
+          "options": {
+            "config": {
+              "configFolder": "libs/client-diagnostics/.storybook"
+            },
+            "outputPath": "dist/storybook/client-diagnostics",
+            "uiFramework": "@storybook/angular"
+          },
+          "outputs": ["{options.outputPath}"]
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-diagnostics/.eslintrc.json",
+            "lintFilePatterns": ["libs/client-diagnostics/**/*.ts"]
+          }
+        },
+        "storybook": {
+          "builder": "@nrwl/storybook:storybook",
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          },
+          "options": {
+            "config": {
+              "configFolder": "libs/client-diagnostics/.storybook"
+            },
+            "port": 4400,
+            "uiFramework": "@storybook/angular"
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-diagnostics/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/client-diagnostics"]
+        }
+      },
+      "prefix": "mono",
+      "projectType": "library",
+      "root": "libs/client-diagnostics",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "sourceRoot": "libs/client-diagnostics/src"
+    },
+    "client-diagnostics-e2e": {
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "configurations": {
+            "ci": {
+              "devServerTarget": "client-diagnostics:storybook:ci"
+            }
+          },
+          "options": {
+            "cypressConfig": "apps/client-diagnostics-e2e/cypress.json",
+            "devServerTarget": "client-diagnostics:storybook",
+            "tsConfig": "apps/client-diagnostics-e2e/tsconfig.e2e.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/client-diagnostics-e2e/.eslintrc.json",
+            "lintFilePatterns": ["apps/client-diagnostics-e2e/**/*.ts"]
+          }
+        }
+      },
+      "projectType": "application",
+      "root": "apps/client-diagnostics-e2e",
+      "sourceRoot": "apps/client-diagnostics-e2e/src"
+    },
     "client-e2e": {
       "architect": {
         "e2e": {

@@ -5,10 +5,7 @@ import { AppHomeComponent } from './home/home.component';
 import { AppIndexComponent } from './index/index.component';
 import { AppInfoComponent } from './info/info.component';
 
-/**
- * Application routes.
- */
-export const APP_ROUTES: Route[] = [
+const routes: Route[] = [
   {
     path: '',
     component: AppIndexComponent,
@@ -26,7 +23,7 @@ export const APP_ROUTES: Route[] = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(APP_ROUTES)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AppClientComponentsRoutingModule {}
+export class AppClientDiagnosticsRoutingModule {}

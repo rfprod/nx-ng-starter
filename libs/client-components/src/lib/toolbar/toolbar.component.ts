@@ -14,7 +14,7 @@ export class AppToolbarComponent {
     .select(AppSidebarState.getState)
     .pipe(map(state => state.sidebarOpened));
 
-  constructor(private readonly store: Store) {}
+  constructor(public readonly store: Store) {}
 
   public sidebarCloseHandler(): void {
     void this.store.dispatch(new sidebarUiActions.closeSidebar());

@@ -56,6 +56,13 @@
     "client-core": {
       "tags": ["scope:client-core", "type:ui"]
     },
+    "client-diagnostics": {
+      "tags": ["scope:client-diagnostics", "type:feature"]
+    },
+    "client-diagnostics-e2e": {
+      "implicitDependencies": ["client-diagnostics"],
+      "tags": ["scope:client-diagnostics-e2e", "type:e2e"]
+    },
     "client-e2e": {
       "implicitDependencies": ["client"],
       "tags": ["scope:client-e2e", "type:e2e"]

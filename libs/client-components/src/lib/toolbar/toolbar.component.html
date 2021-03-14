@@ -38,6 +38,7 @@
   </button>
 
   <mat-menu #mobileMenuBottom="matMenu" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
+    <a mat-menu-item (click)="toggleChatbot()"> <mat-icon>touch_app</mat-icon> Chat bot </a>
     <a mat-menu-item [routerLink]="['info']"> <mat-icon>touch_app</mat-icon> API info </a>
     <a mat-menu-item [routerLink]="['']"> <mat-icon>home</mat-icon> Home </a>
   </mat-menu>

@@ -5,7 +5,7 @@ export const APP_ROUTES: Route[] = [
   {
     path: '',
     loadChildren: () =>
-      import('@nx-ng-starter/client-components').then(mod => mod.AppClientComponentsModule),
+      import('@nx-ng-starter/client-diagnostics').then(mod => mod.AppClientDiagnosticsModule),
   },
   {
     path: '',
