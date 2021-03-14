@@ -1,0 +1,23 @@
+appId: com.client.app
+
+mac:
+  category: Utility
+
+linux:
+  category: Utility
+
+win:
+  target:
+    - target: snap
+      arch:
+        - x64
+        - ia32
+    - target: nsis
+      arch:
+        - x64
+        - ia32
+
+files:
+  - ./dist/apps/client/**
+  - ./.*
+  - ./*.*
