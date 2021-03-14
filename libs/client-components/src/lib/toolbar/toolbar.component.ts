@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { AppSidebarState, sidebarUiActions } from '@nx-ng-starter/client-store';
+import { AppSidebarState, chatbotActions, sidebarUiActions } from '@nx-ng-starter/client-store';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -22,5 +22,9 @@ export class AppToolbarComponent {
 
   public sidebarOpenHandler(): void {
     void this.store.dispatch(new sidebarUiActions.openSidebar());
+  }
+
+  public toggleChatbot(): void {
+    void this.store.dispatch(new chatbotActions.toggle());
   }
 }
