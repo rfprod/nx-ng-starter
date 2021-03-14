@@ -5,6 +5,7 @@ import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsModule } from '@ngxs/store';
+import { AppClientComponentsModule } from '@nx-ng-starter/client-components';
 import { AppClientCoreModule } from '@nx-ng-starter/client-core';
 import { AppClientGqlModule } from '@nx-ng-starter/client-gql';
 import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
@@ -15,7 +16,6 @@ import { EntityServiceClient } from '@nx-ng-starter/proto';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppRootComponent } from './components/root.component';
-import { AppClientComponentsModule } from '@nx-ng-starter/client-components';
 
 export const grpcProviders: Provider[] = [
   {
