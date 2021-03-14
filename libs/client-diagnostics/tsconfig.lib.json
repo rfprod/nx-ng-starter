@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSources": true,
+    "lib": ["dom", "es2018"],
+    "outDir": "../../dist/libs/client-diagnostics",
+    "target": "es2015",
+    "types": []
+  },
+  "angularCompilerOptions": {
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "enableResourceInlining": true
+  },
+  "exclude": ["src/test-setup.ts", "**/*.spec.ts", "**/*.stories.ts", "**/*.stories.js"],
+  "extends": "./tsconfig.json",
+  "include": ["**/*.ts"]
+}
