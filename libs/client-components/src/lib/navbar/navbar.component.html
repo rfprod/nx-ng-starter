@@ -1,7 +1,7 @@
 <mat-toolbar color="primary" fxFlex="0 1 auto">
   <img
     [ngStyle]="{ height: '75%', width: 'auto!important' }"
-    src="assets/icons/icon-72x72.png"
+    [src]="logoSrc"
     alt="{{ appName }}"
     title="{{ appName }}"
   />
@@ -14,32 +14,13 @@
 
   <a
     mat-button
+    *ngFor="let anchor of anchors"
     [fxHide.xs]="true"
     [fxHide.sm]="true"
-    href="https://cli.angular.io/reference.pdf"
+    [href]="anchor.href"
     target="_blank"
   >
-    <mat-icon>build</mat-icon> CLI Reference
-  </a>
-
-  <a
-    mat-button
-    [fxHide.xs]="true"
-    [fxHide.sm]="true"
-    href="https://material.angular.io/"
-    target="_blank"
-  >
-    <mat-icon>change_history</mat-icon> Angular Material
-  </a>
-
-  <a
-    mat-button
-    [fxHide.xs]="true"
-    [fxHide.sm]="true"
-    href="https://material.io/icons/"
-    target="_blank"
-  >
-    <mat-icon>info_outline</mat-icon> Material Icons
+    <mat-icon>{{ anchor.icon }}</mat-icon> {{ anchor.title }}
   </a>
 
   <button
@@ -54,14 +35,9 @@
 
   <mat-menu #mobileMenuTop="matMenu" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
     <button mat-menu-item><mat-icon>help_outline</mat-icon> Help</button>
-    <a mat-menu-item href="https://cli.angular.io/reference.pdf" target="_blank">
-      <mat-icon>build</mat-icon> CLI Reference
-    </a>
-    <a mat-menu-item href="https://material.angular.io/" target="_blank">
-      <mat-icon>change_history</mat-icon> Angular Material
-    </a>
-    <a mat-menu-item href="https://material.io/icons/" target="_blank">
-      <mat-icon>info_outline</mat-icon> Material Icons
+
+    <a mat-menu-item *ngFor="let anchor of anchors" [href]="anchor.href" target="_blank">
+      <mat-icon>{{ anchor.icon }}</mat-icon> {{ anchor.title }}
     </a>
   </mat-menu>
 </mat-toolbar>
