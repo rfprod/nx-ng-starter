@@ -50,7 +50,7 @@
     "generate:proto": "npx npm-run-all -s generate:protobufjs generate:protoc",
     "generate:protobufjs": "bash tools/shell/generate-proto.sh protobufjs",
     "generate:protoc": "bash tools/shell/generate-proto.sh protoc",
-    "postinstall": "husky install && npx sort-package-json && npx electron-builder install-app-deps && yarn ngcc && node ./decorate-angular-cli.js",
+    "postinstall": "husky install && npx sort-package-json && yarn ngcc && node ./decorate-angular-cli.js",
     "install:all:linux": "bash tools/shell/install.sh all",
     "install:all:osx": "bash tools/shell/install.sh all osx",
     "install:global": "bash tools/shell/install.sh global",
