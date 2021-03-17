@@ -15,7 +15,7 @@ import { cold, getTestScheduler } from 'jasmine-marbles';
 import { Observable, of } from 'rxjs';
 import { concatMap, map, tap } from 'rxjs/operators';
 
-import { AppHttpProgressModule } from '../http-progress/http-progress.module';
+import { AppHttpProgressStoreModule } from '../http-progress/http-progress.module';
 import {
   AppToasterService,
   toasterServiceProvider,
@@ -24,7 +24,7 @@ import { AppHttpHandlersService } from './http-handlers.service';
 
 describe('AppHttpHandlersService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [AppClientTranslateModule.forRoot(), AppHttpProgressModule.forRoot()],
+    imports: [AppClientTranslateModule.forRoot(), AppHttpProgressStoreModule.forRoot()],
     providers: [toasterServiceProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
