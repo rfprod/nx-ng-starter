@@ -13,7 +13,7 @@ import {
   url,
 } from '@angular-devkit/schematics';
 import { formatFiles, getProjectConfig } from '@nrwl/workspace';
-import fs from 'fs';
+import * as fs from 'fs';
 import * as path from 'path';
 import { timer } from 'rxjs';
 import { tap } from 'rxjs/operators';
