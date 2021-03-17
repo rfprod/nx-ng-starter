@@ -7,4 +7,4 @@ import { AppSidebarState } from './sidebar.store';
 @NgModule({
   imports: [MatSidenavModule, NgxsModule.forFeature([AppSidebarState])],
 })
-export class AppSidebarModule {}
+export class AppSidebarStoreModule {}

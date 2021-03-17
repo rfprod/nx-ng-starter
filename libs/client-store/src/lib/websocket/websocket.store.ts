@@ -47,15 +47,18 @@ export class AppWebsocketState {
 
   @Action(websocketActions.connect)
   public connect(ctx: StateContext<IAppWebsocketStateModel>) {
-    return this.api.connect().pipe(
-      tap(event => {
-        const payload = {
-          users: event.event === 'users' ? event.data : void 0,
-          events: [event],
-        };
-        this.setState(ctx, { payload });
-      }),
-    );
+    void this.api
+      .connect()
+      .pipe(
+        tap(event => {
+          const payload = {
+            users: event.event === 'users' ? event.data : 0,
+            events: [event],
+          };
+          void ctx.dispatch(new websocketActions.setState(payload));
+        }),
+      )
+      .subscribe();
   }
 
   @Action(websocketActions.getEvents)

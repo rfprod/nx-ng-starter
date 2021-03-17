@@ -6,4 +6,4 @@ import { AppUserState } from './user.store';
 @NgModule({
   imports: [NgxsModule.forFeature([AppUserState])],
 })
-export class AppUserModule {}
+export class AppUserStoreModule {}

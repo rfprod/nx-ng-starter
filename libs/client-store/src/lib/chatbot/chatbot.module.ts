@@ -6,4 +6,4 @@ import { AppChatbotState } from './chatbot.store';
 @NgModule({
   imports: [NgxsModule.forFeature([AppChatbotState])],
 })
-export class AppChatbotModule {}
+export class AppChatbotStoreModule {}

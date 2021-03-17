@@ -12,4 +12,4 @@ export const uiStoreModuleProviders: Provider[] = [AppThemeService];
   imports: [MatSidenavModule, OverlayModule, NgxsModule.forFeature([AppThemeState])],
   providers: [],
 })
-export class AppThemeModule {}
+export class AppThemeStoreModule {}

@@ -8,10 +8,12 @@ import { AppWebsocketState } from './websocket.store';
 @NgModule({
   imports: [NgxsModule.forFeature([AppWebsocketState])],
 })
-export class AppWebsocketModule {
-  public static forRoot(env: IWebClientAppEnvironment): ModuleWithProviders<AppWebsocketModule> {
+export class AppWebsocketStoreModule {
+  public static forRoot(
+    env: IWebClientAppEnvironment,
+  ): ModuleWithProviders<AppWebsocketStoreModule> {
     return {
-      ngModule: AppWebsocketModule,
+      ngModule: AppWebsocketStoreModule,
       providers: [
         {
           provide: WS_CONFIG,

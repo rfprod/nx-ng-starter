@@ -6,4 +6,4 @@ import { AppHttpApiState } from './http-api.store';
 @NgModule({
   imports: [NgxsModule.forFeature([AppHttpApiState])],
 })
-export class AppHttpApiModule {}
+export class AppHttpApStoreModule {}
