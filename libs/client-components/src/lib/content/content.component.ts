@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { AppSidebarState, sidebarUiActions } from '@nx-ng-starter/client-store';
+import { AppSidebarState, sidebarActions } from '@nx-ng-starter/client-store';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -17,10 +17,10 @@ export class AppContentComponent {
   constructor(private readonly store: Store) {}
 
   public sidebarCloseHandler(): void {
-    void this.store.dispatch(new sidebarUiActions.closeSidebar());
+    void this.store.dispatch(new sidebarActions.closeSidebar());
   }
 
   public sidebarOpenHandler(): void {
-    void this.store.dispatch(new sidebarUiActions.openSidebar());
+    void this.store.dispatch(new sidebarActions.openSidebar());
   }
 }

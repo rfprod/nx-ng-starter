@@ -1,20 +1,23 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AppWebsocketModule } from '@nx-ng-starter/client-store';
 import {
   getTestBedConfig,
   newTestBedMetadata,
   setupJestSpiesFor,
   TClassMemberSpiesObject,
+  testingEnvironment,
 } from '@nx-ng-starter/client-unit-testing';
 
-import { AppInfoPage } from './info-page.component';
+import { AppDiagnosticsIndexComponent } from './diagnostics-index.component';
 
-describe('AppInfoPage', () => {
+describe('AppDiagnosticsIndexComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    declarations: [AppInfoPage],
+    declarations: [AppDiagnosticsIndexComponent],
     imports: [
+      AppWebsocketModule.forRoot(testingEnvironment),
       RouterTestingModule.withRoutes([
-        { path: '', component: AppInfoPage },
+        { path: '', component: AppDiagnosticsIndexComponent },
         { path: '', redirectTo: '', pathMatch: 'full' },
         { path: '**', redirectTo: '' },
       ]),
@@ -22,10 +25,10 @@ describe('AppInfoPage', () => {
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
-  let fixture: ComponentFixture<AppInfoPage>;
-  let component: AppInfoPage;
+  let fixture: ComponentFixture<AppDiagnosticsIndexComponent>;
+  let component: AppDiagnosticsIndexComponent;
   let spy: {
-    component: TClassMemberSpiesObject<AppInfoPage>;
+    component: TClassMemberSpiesObject<AppDiagnosticsIndexComponent>;
   };
 
   beforeEach(
@@ -33,12 +36,13 @@ describe('AppInfoPage', () => {
       void TestBed.configureTestingModule(testBedConfig)
         .compileComponents()
         .then(() => {
-          fixture = TestBed.createComponent(AppInfoPage);
+          fixture = TestBed.createComponent(AppDiagnosticsIndexComponent);
           component = fixture.debugElement.componentInstance;
           spy = {
-            component: setupJestSpiesFor<AppInfoPage>(component),
+            component: setupJestSpiesFor<AppDiagnosticsIndexComponent>(component),
           };
           expect(spy.component).toBeDefined();
+          fixture.detectChanges();
         });
     }),
   );

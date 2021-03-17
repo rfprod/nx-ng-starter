@@ -4,11 +4,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
 
 import { AppClientDiagnosticsRoutingModule } from './client-diagnostics-routing.module';
-import { AppHomeComponent } from './home/home.component';
-import { AppHomePage } from './home/page/home-page.component';
-import { AppIndexComponent } from './index/index.component';
-import { AppInfoComponent } from './info/info.component';
-import { AppInfoPage } from './info/page/info-page.component';
+import { AppDiagnosticsHomeComponent } from './home/diagnostics-home.component';
+import { AppDiagnosticsHomePage } from './home/page/diagnostics-home-page.component';
+import { AppDiagnosticsIndexComponent } from './index/diagnostics-index.component';
+import { AppDiagnosticsInfoComponent } from './info/diagnostics-info.component';
+import { AppDiagnosticsInfoPage } from './info/page/diagnostics-info-page.component';
 
 @NgModule({
   imports: [
@@ -17,6 +17,12 @@ import { AppInfoPage } from './info/page/info-page.component';
     AppClientMaterialModule,
     AppClientDiagnosticsRoutingModule,
   ],
-  declarations: [AppIndexComponent, AppHomeComponent, AppHomePage, AppInfoComponent, AppInfoPage],
+  declarations: [
+    AppDiagnosticsIndexComponent,
+    AppDiagnosticsHomeComponent,
+    AppDiagnosticsHomePage,
+    AppDiagnosticsInfoComponent,
+    AppDiagnosticsInfoPage,
+  ],
 })
 export class AppClientDiagnosticsModule {}

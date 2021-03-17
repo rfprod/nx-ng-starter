@@ -10,10 +10,10 @@ import {
 } from '@nx-ng-starter/client-util';
 import { text } from '@storybook/addon-knobs';
 
-import { AppInfoPage } from './info-page.component';
+import { AppDiagnosticsInfoPage } from './diagnostics-info-page.component';
 
 export default {
-  title: 'AppInfoPage',
+  title: 'AppDiagnosticsInfoPage',
 };
 
 const testingEnvironment = {
@@ -40,7 +40,7 @@ export const primary = () => ({
       },
     ],
   },
-  component: AppInfoPage,
+  component: AppDiagnosticsInfoPage,
   props: {
     ping: text('ping', 'ping result'),
     markedInstructions: text('Marked Instructions', 'Marked instructions'),
