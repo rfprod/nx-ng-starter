@@ -26,6 +26,14 @@
     "noImplicitAny": true,
     "noImplicitReturns": false,
     "noUnusedLocals": true,
+    "rootDir": ".",
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "target": "ES6",
+    "typeRoots": ["node_modules/@types"],
     "paths": {
       "@nx-ng-starter/backend-auth": ["libs/backend-auth/src/index.ts"],
       "@nx-ng-starter/backend-gql": ["libs/backend-gql/src/index.ts"],
@@ -46,15 +54,7 @@
       "@nx-ng-starter/client-unit-testing": ["libs/client-unit-testing/src/index.ts"],
       "@nx-ng-starter/client-util": ["libs/client-util/src/index.ts"],
       "@nx-ng-starter/proto": ["libs/proto/src/index.ts"]
-    },
-    "rootDir": ".",
-    "skipDefaultLibCheck": true,
-    "skipLibCheck": true,
-    "sourceMap": true,
-    "strict": true,
-    "suppressImplicitAnyIndexErrors": true,
-    "target": "ES6",
-    "typeRoots": ["node_modules/@types"]
+    }
   },
   "exclude": [
     "node_modules",
