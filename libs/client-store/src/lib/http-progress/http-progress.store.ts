@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 
-import { displayToast, startProgress, stopProgress } from './http-progress.actions';
+import { httpProgressActions } from './http-progress.actions';
 import {
   HTTP_PROGRESS_STATE_TOKEN,
   httpProgressInitialState,
@@ -11,12 +11,6 @@ import {
 } from './http-progress.interface';
 import { AppHttpProgressService } from './http-progress.service';
 import { AppToasterService } from './services/toaster/toaster.service';
-
-export const httpProgressActions = {
-  startProgress,
-  stopProgress,
-  displayToast,
-};
 
 @State<IAppHttpProgressState>({
   name: HTTP_PROGRESS_STATE_TOKEN,
@@ -41,7 +35,7 @@ export class AppHttpProgressState {
     return state.mainView;
   }
 
-  @Action(startProgress)
+  @Action(httpProgressActions.startProgress)
   public startProgress(
     ctx: StateContext<IAppHttpProgressState>,
     { payload }: THttpProgressPayload,
@@ -61,7 +55,7 @@ export class AppHttpProgressState {
     return ctx.patchState(newState);
   }
 
-  @Action(stopProgress)
+  @Action(httpProgressActions.stopProgress)
   public stopProgress(ctx: StateContext<IAppHttpProgressState>, { payload }: THttpProgressPayload) {
     const newState = { mainView: { ...ctx.getState().mainView } };
     const keys = Object.keys(payload);
@@ -78,7 +72,7 @@ export class AppHttpProgressState {
     return ctx.patchState(newState);
   }
 
-  @Action(displayToast)
+  @Action(httpProgressActions.displayToast)
   public displayToast(ctx: StateContext<IAppHttpProgressState>, { payload }: TShowToastPayload) {
     this.toaster.showToaster(payload.message, payload.type, payload.duration);
   }

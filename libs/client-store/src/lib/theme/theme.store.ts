@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 
-import { setThemeState } from './theme.actions';
+import { themeActions } from './theme.actions';
 import { IThemeStateModel, THEME_STATE_TOKEN, TThemePayload } from './theme.interface';
-
-const themeThemeActions = {
-  setThemeState,
-};
 
 @State<IThemeStateModel>({
   name: THEME_STATE_TOKEN,
@@ -15,7 +11,7 @@ const themeThemeActions = {
   },
 })
 @Injectable()
-class AppThemeState {
+export class AppThemeState {
   @Selector()
   public static getTheme(state: IThemeStateModel) {
     return state;
@@ -26,10 +22,8 @@ class AppThemeState {
     return state.darkThemeEnabled;
   }
 
-  @Action(setThemeState)
-  public setThemeState(ctx: StateContext<IThemeStateModel>, { payload }: TThemePayload) {
+  @Action(themeActions.setState)
+  public setState(ctx: StateContext<IThemeStateModel>, { payload }: TThemePayload) {
     return ctx.patchState(payload);
   }
 }
-
-export { AppThemeState, themeThemeActions };

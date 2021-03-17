@@ -7,12 +7,12 @@ import { first, map } from 'rxjs/operators';
 
 @UntilDestroy()
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  selector: 'app-diagnostics-home',
+  templateUrl: './diagnostics-home.component.html',
+  styleUrls: ['./diagnostics-home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppHomeComponent {
+export class AppDiagnosticsHomeComponent {
   public readonly timer$ = timer(TIMEOUT.INSTANT, TIMEOUT.MEDIUM).pipe(
     map(num => `Until destroyed ${num}`),
     untilDestroyed(this),

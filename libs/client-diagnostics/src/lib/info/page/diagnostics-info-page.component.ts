@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-info-page',
-  templateUrl: './info-page.component.html',
-  styleUrls: ['./info-page.component.scss'],
+  selector: 'app-diagnostics-info-page',
+  templateUrl: './diagnostics-info-page.component.html',
+  styleUrls: ['./diagnostics-info-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppInfoPage {
+export class AppDiagnosticsInfoPage {
   @Input() public readonly ping = '';
 
   @Input() public readonly markedInstructions = '';

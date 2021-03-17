@@ -1,24 +1,20 @@
-import { HttpTestingController } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
 import {
-  flushHttpRequests,
   getTestBedConfig,
   newTestBedMetadata,
   setupJestSpiesFor,
   TClassMemberSpiesObject,
 } from '@nx-ng-starter/client-unit-testing';
 
-import { AppInfoComponent } from './info.component';
+import { AppDiagnosticsInfoPage } from './diagnostics-info-page.component';
 
-describe('AppInfoComponent', () => {
+describe('AppDiagnosticsInfoPage', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    declarations: [AppInfoComponent],
+    declarations: [AppDiagnosticsInfoPage],
     imports: [
-      AppClientTranslateModule.forRoot(),
       RouterTestingModule.withRoutes([
-        { path: '', component: AppInfoComponent },
+        { path: '', component: AppDiagnosticsInfoPage },
         { path: '', redirectTo: '', pathMatch: 'full' },
         { path: '**', redirectTo: '' },
       ]),
@@ -26,34 +22,26 @@ describe('AppInfoComponent', () => {
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
-  let fixture: ComponentFixture<AppInfoComponent>;
-  let component: AppInfoComponent;
+  let fixture: ComponentFixture<AppDiagnosticsInfoPage>;
+  let component: AppDiagnosticsInfoPage;
   let spy: {
-    component: TClassMemberSpiesObject<AppInfoComponent>;
+    component: TClassMemberSpiesObject<AppDiagnosticsInfoPage>;
   };
-
-  let httpController: HttpTestingController;
 
   beforeEach(
     waitForAsync(() => {
       void TestBed.configureTestingModule(testBedConfig)
         .compileComponents()
         .then(() => {
-          httpController = TestBed.inject(HttpTestingController);
-          fixture = TestBed.createComponent(AppInfoComponent);
+          fixture = TestBed.createComponent(AppDiagnosticsInfoPage);
           component = fixture.debugElement.componentInstance;
           spy = {
-            component: setupJestSpiesFor<AppInfoComponent>(component),
+            component: setupJestSpiesFor<AppDiagnosticsInfoPage>(component),
           };
           expect(spy.component).toBeDefined();
-          flushHttpRequests(httpController);
         });
     }),
   );
-
-  afterEach(() => {
-    flushHttpRequests(httpController, true);
-  });
 
   it('should be defined', () => {
     expect(component).toBeDefined();

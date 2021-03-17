@@ -8,14 +8,14 @@ import {
   TClassMemberSpiesObject,
 } from '@nx-ng-starter/client-unit-testing';
 
-import { AppHomeComponent } from './home.component';
+import { AppDiagnosticsHomeComponent } from './diagnostics-home.component';
 
-describe('AppHomeComponent', () => {
+describe('AppDiagnosticsHomeComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    declarations: [AppHomeComponent],
+    declarations: [AppDiagnosticsHomeComponent],
     imports: [
       RouterTestingModule.withRoutes([
-        { path: '', component: AppHomeComponent },
+        { path: '', component: AppDiagnosticsHomeComponent },
         { path: '', redirectTo: '', pathMatch: 'full' },
         { path: '**', redirectTo: '' },
       ]),
@@ -23,14 +23,14 @@ describe('AppHomeComponent', () => {
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
-  let fixture: ComponentFixture<AppHomeComponent>;
-  let component: AppHomeComponent;
+  let fixture: ComponentFixture<AppDiagnosticsHomeComponent>;
+  let component: AppDiagnosticsHomeComponent;
   let service: AppMarkdownService;
   let spy: {
     service: {
       process: jest.SpyInstance;
     };
-    component: TClassMemberSpiesObject<AppHomeComponent>;
+    component: TClassMemberSpiesObject<AppDiagnosticsHomeComponent>;
   };
 
   beforeEach(
@@ -38,7 +38,7 @@ describe('AppHomeComponent', () => {
       void TestBed.configureTestingModule(testBedConfig)
         .compileComponents()
         .then(() => {
-          fixture = TestBed.createComponent(AppHomeComponent);
+          fixture = TestBed.createComponent(AppDiagnosticsHomeComponent);
           component = fixture.debugElement.componentInstance;
           service = TestBed.inject(AppMarkdownService);
           spy = {
@@ -47,7 +47,7 @@ describe('AppHomeComponent', () => {
                 .spyOn(service, 'process')
                 .mockImplementation((input: string) => `marked ${input}`),
             },
-            component: setupJestSpiesFor<AppHomeComponent>(component),
+            component: setupJestSpiesFor<AppDiagnosticsHomeComponent>(component),
           };
           expect(spy.service.process).toBeDefined();
           expect(spy.component).toBeDefined();

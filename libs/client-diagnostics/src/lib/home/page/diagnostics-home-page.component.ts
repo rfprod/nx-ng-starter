@@ -14,17 +14,17 @@ interface IAppHomePageChanges extends SimpleChanges {
 }
 
 @Component({
-  selector: 'app-home-page',
-  templateUrl: './home-page.component.html',
-  styleUrls: ['./home-page.component.scss'],
+  selector: 'app-diagnostics-home-page',
+  templateUrl: './diagnostics-home-page.component.html',
+  styleUrls: ['./diagnostics-home-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppHomePage implements OnChanges {
+export class AppDiagnosticsHomePage implements OnChanges {
   @Input() public timer = '';
 
   @Input() public markedInstructions = '';
 
-  @trackChanges<AppHomePage, string>('timer', 'timerChanges')
+  @trackChanges<AppDiagnosticsHomePage, string>('timer', 'timerChanges')
   public ngOnChanges(changes: IAppHomePageChanges) {
     return changes;
   }

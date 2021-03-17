@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { AppSidebarState, chatbotActions, sidebarUiActions } from '@nx-ng-starter/client-store';
+import { AppSidebarState, chatbotActions, sidebarActions } from '@nx-ng-starter/client-store';
 import { IToolbarButton } from '@nx-ng-starter/client-util';
 import { map } from 'rxjs/operators';
 
@@ -31,11 +31,11 @@ export class AppToolbarComponent {
   constructor(public readonly store: Store) {}
 
   public sidebarCloseHandler(): void {
-    void this.store.dispatch(new sidebarUiActions.closeSidebar());
+    void this.store.dispatch(new sidebarActions.closeSidebar());
   }
 
   public sidebarOpenHandler(): void {
-    void this.store.dispatch(new sidebarUiActions.openSidebar());
+    void this.store.dispatch(new sidebarActions.openSidebar());
   }
 
   public toggleChatbot(): void {

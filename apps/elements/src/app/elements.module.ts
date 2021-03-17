@@ -18,7 +18,7 @@ import { AppChatbotRootComponent, AppClientChatbotModule } from '@nx-ng-starter/
 import { AppClientCoreModule } from '@nx-ng-starter/client-core';
 import { AppClientGqlModule } from '@nx-ng-starter/client-gql';
 import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
-import { AppWebsocketModule } from '@nx-ng-starter/client-store';
+import { AppWebsocketStoreModule } from '@nx-ng-starter/client-store';
 import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
 import { WINDOW } from '@nx-ng-starter/client-util';
 import { EntityServiceClient } from '@nx-ng-starter/proto';
@@ -48,7 +48,7 @@ export const grpcProviders: Provider[] = [
     AppClientMaterialModule.forRoot(),
     AppClientTranslateModule.forRoot(),
     AppClientGqlModule.forRoot(environment),
-    AppWebsocketModule.forRoot(environment),
+    AppWebsocketStoreModule.forRoot(environment),
     RouterModule.forRoot([]),
     AppClientChatbotModule,
   ],

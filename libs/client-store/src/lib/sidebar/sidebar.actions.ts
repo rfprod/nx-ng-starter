@@ -4,6 +4,11 @@ import { SIDEBAR_STATE_TOKEN } from './sidebar.interface';
 
 const createAction = actionPayloadConstructor(SIDEBAR_STATE_TOKEN.getName());
 
-export const openSidebar = createAction('open');
+const openSidebar = createAction('open');
 
-export const closeSidebar = createAction('close');
+const closeSidebar = createAction('close');
+
+export const sidebarActions = {
+  openSidebar,
+  closeSidebar,
+};

@@ -9,7 +9,7 @@ import { AppClientComponentsModule } from '@nx-ng-starter/client-components';
 import { AppClientCoreModule } from '@nx-ng-starter/client-core';
 import { AppClientGqlModule } from '@nx-ng-starter/client-gql';
 import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
-import { AppWebsocketModule } from '@nx-ng-starter/client-store';
+import { AppWebsocketStoreModule } from '@nx-ng-starter/client-store';
 import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
 import { EntityServiceClient } from '@nx-ng-starter/proto';
 
@@ -38,7 +38,7 @@ export const grpcProviders: Provider[] = [
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     AppClientCoreModule.forRoot(environment),
     AppClientMaterialModule.forRoot(),
-    AppWebsocketModule.forRoot(environment),
+    AppWebsocketStoreModule.forRoot(environment),
     AppClientTranslateModule.forRoot(),
     AppClientGqlModule.forRoot(environment),
     AppClientComponentsModule,

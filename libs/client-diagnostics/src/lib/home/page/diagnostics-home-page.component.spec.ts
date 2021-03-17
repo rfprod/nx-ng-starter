@@ -2,14 +2,14 @@ import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@an
 import { RouterTestingModule } from '@angular/router/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/client-unit-testing';
 
-import { AppHomePage } from './home-page.component';
+import { AppDiagnosticsHomePage } from './diagnostics-home-page.component';
 
-describe('AppHomePage', () => {
+describe('AppDiagnosticsHomePage', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    declarations: [AppHomePage],
+    declarations: [AppDiagnosticsHomePage],
     imports: [
       RouterTestingModule.withRoutes([
-        { path: '', component: AppHomePage },
+        { path: '', component: AppDiagnosticsHomePage },
         { path: '', redirectTo: '', pathMatch: 'full' },
         { path: '**', redirectTo: '' },
       ]),
@@ -17,15 +17,15 @@ describe('AppHomePage', () => {
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
-  let fixture: ComponentFixture<AppHomePage>;
-  let component: AppHomePage;
+  let fixture: ComponentFixture<AppDiagnosticsHomePage>;
+  let component: AppDiagnosticsHomePage;
 
   beforeEach(
     waitForAsync(() => {
       void TestBed.configureTestingModule(testBedConfig)
         .compileComponents()
         .then(() => {
-          fixture = TestBed.createComponent(AppHomePage);
+          fixture = TestBed.createComponent(AppDiagnosticsHomePage);
           component = fixture.debugElement.componentInstance;
         });
     }),

@@ -1,31 +1,28 @@
 import { NgModule } from '@angular/core';
 
-import { AppChatbotModule } from './chatbot/chatbot.module';
-import { AppHttpApiModule } from './http-api/http-api.module';
-import { AppHttpProgressModule } from './http-progress/http-progress.module';
-import { AppSidebarModule } from './sidebar/sidebar.module';
-import { AppThemeModule } from './theme/theme.module';
-import { AppUserModule } from './user/user.module';
-import { AppWebsocketModule } from './websocket/websocket.module';
+import { AppChatbotStoreModule } from './chatbot/chatbot.module';
+import { AppHttpApStoreModule } from './http-api/http-api.module';
+import { AppHttpProgressStoreModule } from './http-progress/http-progress.module';
+import { AppSidebarStoreModule } from './sidebar/sidebar.module';
+import { AppThemeStoreModule } from './theme/theme.module';
+import { AppUserStoreModule } from './user/user.module';
 
 @NgModule({
   imports: [
-    AppHttpApiModule,
-    AppHttpProgressModule.forRoot(),
-    AppUserModule,
-    AppSidebarModule,
-    AppWebsocketModule,
-    AppChatbotModule,
-    AppThemeModule,
+    AppChatbotStoreModule,
+    AppHttpApStoreModule,
+    AppHttpProgressStoreModule.forRoot(),
+    AppSidebarStoreModule,
+    AppThemeStoreModule,
+    AppUserStoreModule,
   ],
   exports: [
-    AppHttpApiModule,
-    AppHttpProgressModule,
-    AppUserModule,
-    AppSidebarModule,
-    AppWebsocketModule,
-    AppChatbotModule,
-    AppThemeModule,
+    AppChatbotStoreModule,
+    AppHttpApStoreModule,
+    AppHttpProgressStoreModule,
+    AppSidebarStoreModule,
+    AppThemeStoreModule,
+    AppUserStoreModule,
   ],
 })
 export class AppClientStoreModule {}

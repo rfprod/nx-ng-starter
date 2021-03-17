@@ -12,10 +12,10 @@ export const httpProgressModuleProviders: Provider[] = [httpProgressServiceProvi
   imports: [NgxsModule.forFeature([AppHttpProgressState]), MatProgressBarModule],
   declarations: [AppGlobalProgressBarComponent],
 })
-export class AppHttpProgressModule {
-  public static forRoot(): ModuleWithProviders<AppHttpProgressModule> {
+export class AppHttpProgressStoreModule {
+  public static forRoot(): ModuleWithProviders<AppHttpProgressStoreModule> {
     return {
-      ngModule: AppHttpProgressModule,
+      ngModule: AppHttpProgressStoreModule,
       providers: [...httpProgressModuleProviders],
     };
   }

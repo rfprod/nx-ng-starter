@@ -7,12 +7,12 @@ import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-info',
-  templateUrl: './info.component.html',
-  styleUrls: ['./info.component.scss'],
+  selector: 'app-diagnostics-info',
+  templateUrl: './diagnostics-info.component.html',
+  styleUrls: ['./diagnostics-info.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppInfoComponent {
+export class AppDiagnosticsInfoComponent {
   /**
    * Ping result.
    */
