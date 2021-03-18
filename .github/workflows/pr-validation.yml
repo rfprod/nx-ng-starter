@@ -26,6 +26,35 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
 
+      - name: Detect changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            nx:
+              - 'apps/**'
+              - 'libs/**'
+              - 'tools/**'
+              - 'tsconfig*'
+              - 'nx.json'
+              - 'angular.json'
+              - 'package.json'
+              - 'jest*'
+              - '.eslint*'
+              - '.prettier*'
+              - '.protolint.yaml'
+              - '.stylelint*'
+            electron:
+              - '.electron/**'
+              - 'index.js'
+            mobile:
+              - 'android/**'
+              - 'capacitor.config.json'
+            devops:
+              - '.devops/**'
+              - '.github/**'
+              - '.dockerignore'
+
       - name: GitHub CODEOWNERS Validator
         uses: mszostok/codeowners-validator@v0.5.1
         with:
@@ -33,18 +62,22 @@ jobs:
           experimental_checks: 'notowned'
 
       - name: Use Node.js ${{ matrix.node-version }}
+        if: steps.changes.outputs.nx == 'true'
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
 
       - name: Configure kernel (increase watchers)
+        if: steps.changes.outputs.nx == 'true'
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
-      - name: Get variables (yarn cache directory path, commit hash)
+      - name: Get variables (yarn cache directory, commit hash)
+        if: steps.changes.outputs.nx == 'true'
         id: get-variables
         run: echo "::set-output name=yarncachedir::$(yarn cache dir)"; echo "::set-output name=commitsha::$(echo ${GITHUB_SHA})"
 
       - name: Workspace cache (npm, yarn, nx, jest)
+        if: steps.changes.outputs.nx == 'true'
         uses: actions/cache@v2
         id: workspace-cache # use this to check for `cache-hit` (`steps.workspace-cache.outputs.cache-hit != 'true'`)
         env:
@@ -63,22 +96,29 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install global dependencies
+        if: steps.changes.outputs.nx == 'true'
         run: npm i -g typescript @angular/cli @nrwl/cli
 
       - name: Workspace integrity check
+        if: steps.changes.outputs.nx == 'true'
         run: yarn workspace:integrity-check
 
       - name: Install project dependencies
+        if: steps.changes.outputs.nx == 'true'
         run: yarn install --frozen-lockfile --ignore-scripts
 
       - name: Process dependencies with ngcc
+        if: steps.changes.outputs.nx == 'true'
         run: yarn ngcc
 
       - name: Lint affected
+        if: steps.changes.outputs.nx == 'true'
         run: npx nx affected --target=lint --base=origin/master --head=HEAD --parallel --maxParallel=2
 
       - name: Unit test affected (without code coverage)
+        if: steps.changes.outputs.nx == 'true'
         run: npx nx affected --target=test --base=origin/master --head=HEAD --passWithNoTests --code-coverage=false --watch=false --run-in-band --ci
 
       - name: Build all (development)
+        if: steps.changes.outputs.nx == 'true'
         run: npx nx affected --target=build --base=origin/master --head=HEAD
