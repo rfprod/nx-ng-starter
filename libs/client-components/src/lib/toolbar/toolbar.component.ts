@@ -13,14 +13,19 @@ import { map } from 'rxjs/operators';
 export class AppToolbarComponent {
   @Input() public buttons: IToolbarButton[] = [
     {
+      routerLink: [''],
+      icon: 'home',
+      title: 'Home',
+    },
+    {
       routerLink: ['info'],
       icon: 'touch_app',
       title: 'API info',
     },
     {
-      routerLink: [''],
-      icon: 'home',
-      title: 'Home',
+      routerLink: ['chatbot'],
+      icon: 'chat',
+      title: 'Chat',
     },
   ];
 

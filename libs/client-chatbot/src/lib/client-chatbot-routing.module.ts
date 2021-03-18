@@ -3,15 +3,15 @@ import { Route, RouterModule } from '@angular/router';
 
 import { AppChatbotRootComponent } from './components/chatbot-root/chatbot-root.component';
 
-export const CHATBOT_ROUTES: Route[] = [
+const routes: Route[] = [
   {
-    path: 'root',
+    path: '',
     component: AppChatbotRootComponent,
   },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(CHATBOT_ROUTES)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class AppClientChatbotRoutingModule {}

@@ -8,6 +8,11 @@ export const APP_ROUTES: Route[] = [
       import('@nx-ng-starter/client-diagnostics').then(mod => mod.AppClientDiagnosticsModule),
   },
   {
+    path: 'chatbot',
+    loadChildren: () =>
+      import('@nx-ng-starter/client-chatbot').then(mod => mod.AppClientChatbotModule),
+  },
+  {
     path: '',
     outlet: 'sidebar',
     loadChildren: () =>
@@ -17,7 +22,7 @@ export const APP_ROUTES: Route[] = [
     path: '',
     outlet: 'chatbot',
     loadChildren: () =>
-      import('@nx-ng-starter/client-chatbot').then(mod => mod.AppClientChatbotModule),
+      import('@nx-ng-starter/client-chatbot').then(mod => mod.AppClientChatbotWidgetModule),
   },
   { path: '**', redirectTo: '' },
 ];
