@@ -6,15 +6,22 @@ mat-sidenav-container {
   height: 100%;
 }
 
-mat-sidenav {
-  width: 50vw;
+mat-sidenav.mat-drawer-opened {
+  height: 100%;
+
+  @media screen and (min-width: 960px) {
+    width: 520px;
+  }
+
+  @media screen and (min-width: 481px) and (max-width: 959px) {
+    width: 480px;
+  }
+
+  @media screen and (max-width: 480px) {
+    width: 100%;
+  }
 }
 
-mat-grid-tile {
-  cursor: pointer;
-}
-
-mat-grid-tile:hover {
-  background-color: #c7c7c7c7;
-  cursor: pointer;
+mat-sidenav-content {
+  height: 100%;
 }
