@@ -33,4 +33,13 @@ export class AppSidebarState {
     this.service.closeSidebar();
     return ctx.patchState({ sidebarOpened });
   }
+
+  @Action(sidebarActions.toggleSidebar)
+  public toggleSidebar(ctx: StateContext<ISiedbarState>) {
+    const sidebarOpened = ctx.getState().sidebarOpened;
+    const action = sidebarOpened
+      ? new sidebarActions.closeSidebar()
+      : new sidebarActions.openSidebar();
+    return ctx.dispatch(action);
+  }
 }

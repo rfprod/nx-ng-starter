@@ -35,12 +35,8 @@ export class AppToolbarComponent {
 
   constructor(public readonly store: Store) {}
 
-  public sidebarCloseHandler(): void {
-    void this.store.dispatch(new sidebarActions.closeSidebar());
-  }
-
-  public sidebarOpenHandler(): void {
-    void this.store.dispatch(new sidebarActions.openSidebar());
+  public toggleSidebar(): void {
+    void this.store.dispatch(new sidebarActions.toggleSidebar());
   }
 
   public toggleChatbot(): void {
