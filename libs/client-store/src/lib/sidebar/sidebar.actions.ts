@@ -8,7 +8,10 @@ const openSidebar = createAction('open');
 
 const closeSidebar = createAction('close');
 
+const toggleSidebar = createAction('toggle');
+
 export const sidebarActions = {
   openSidebar,
   closeSidebar,
+  toggleSidebar,
 };
