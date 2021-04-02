@@ -183,6 +183,7 @@ const clientConstraints = [
       'scope:client-material',
       'scope:client-translate',
       'scope:client-util',
+      'scope:client-sidebar',
     ],
   },
   {
