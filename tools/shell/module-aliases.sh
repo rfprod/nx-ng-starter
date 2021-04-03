@@ -83,7 +83,7 @@ reportSupportedModuleAliasesE2E() {
 
   local KEY
   for KEY in "${!EXISTING_MODULE_ALIASES_E2E[@]}"; do printf "
-          ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${EXISTING_MODULE_ALIASES_E2E[$KEY]}${DEFAULT}" "${KEY}"; done
+      ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${EXISTING_MODULE_ALIASES_E2E[$KEY]}${DEFAULT}" "${KEY}"; done
 
   printGap
   printInfoMessage "Use this aliases in tools/shell/e2e.sh."
