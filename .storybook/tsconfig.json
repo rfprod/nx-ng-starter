@@ -1,5 +1,5 @@
 {
-  "exclude": ["../**/*.spec.ts"],
+  "exclude": ["../**/*.spec.ts", "../**/*.mock.ts"],
   "extends": "../tsconfig.base.json",
-  "include": ["../apps/**/*.ts", "../libs/**/*.ts"]
+  "include": ["../libs/client-components/src/**/*.ts", "../libs/client-diagnostics/src/**/*.ts"]
 }
