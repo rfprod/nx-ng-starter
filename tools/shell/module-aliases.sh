@@ -19,7 +19,7 @@ findSupportedModuleAliases() {
 
   for LIB_ALIAS in "${FOUND_LIB_ALIASES[@]}"; do
     local LIB_ALIAS_NAME
-    LIB_ALIAS_NAME="${LIB_ALIAS//s\//:}"
+    LIB_ALIAS_NAME=$(echo "$LIB_ALIAS" | sed -E 's/(s\/\/)|(s\/)/\:/g') # (s\/\/) expression in sed command addresses osx (and probably windows) file system peculiarity
     EXISTING_MODULE_ALIASES["$LIB_ALIAS_NAME"]="$LIB_ALIAS_NAME"
     EXISTING_MODULE_ALIASES_UNIT["$LIB_ALIAS_NAME"]="$LIB_ALIAS_NAME"
   done
@@ -28,7 +28,7 @@ findSupportedModuleAliases() {
 
   for APP_ALIAS in "${FOUND_APP_ALIASES[@]}"; do
     local APP_ALIAS_NAME
-    APP_ALIAS_NAME="${APP_ALIAS//s\//:}"
+    APP_ALIAS_NAME=$(echo "$APP_ALIAS" | sed -E 's/(s\/\/)|(s\/)/\:/g') # (s\/\/) expression in sed command addresses osx (and probably windows) file system peculiarity
     EXISTING_MODULE_ALIASES["$APP_ALIAS_NAME"]="$APP_ALIAS_NAME"
   done
 
@@ -36,7 +36,7 @@ findSupportedModuleAliases() {
 
   for E2E_ALIAS in "${FOUND_E2E_ALIASES[@]}"; do
     local E2E_ALIAS_NAME
-    E2E_ALIAS_NAME="${E2E_ALIAS//s\//:}"
+    E2E_ALIAS_NAME=$(echo "$E2E_ALIAS" | sed -E 's/(s\/\/)|(s\/)/\:/g') # (s\/\/) expression in sed command addresses osx (and probably windows) file system peculiarity
     EXISTING_MODULE_ALIASES_E2E["$E2E_ALIAS_NAME"]="$E2E_ALIAS_NAME"
   done
 
@@ -44,7 +44,7 @@ findSupportedModuleAliases() {
 
   for UNIT_ALIAS in "${FOUND_UNIT_ALIASES[@]}"; do
     local UNIT_ALIAS_NAME
-    UNIT_ALIAS_NAME="${UNIT_ALIAS//s\//:}"
+    UNIT_ALIAS_NAME=$(echo "$UNIT_ALIAS" | sed -E 's/(s\/\/)|(s\/)/\:/g') # (s\/\/) expression in sed command addresses osx (and probably windows) file system peculiarity
     EXISTING_MODULE_ALIASES_UNIT["$UNIT_ALIAS_NAME"]="$UNIT_ALIAS_NAME"
   done
 }
