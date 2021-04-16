@@ -28,7 +28,7 @@ checkIntegrity() {
   printInfoTitle "<< Checking package integrity >>"
   printGap
 
-  if ! yarn install --ignore-scripts --frozen-lockfile --check-files --integrity; then
+  if ! yarn check --integrity; then
     printInfoTitle "<< Cleaning up workspace, and caches >>"
     printGap
 
