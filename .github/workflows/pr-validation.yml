@@ -71,6 +71,9 @@ jobs:
         if: steps.changes.outputs.nx == 'true'
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
+      - name: Use yarn 1.22.1 (required for integrity check)
+        run: yarn set version 1.22.1 # this is mandatory, yarn v2 does not have integrity check which is needed for the pipeline
+
       - name: Get variables (yarn cache directory, commit hash)
         if: steps.changes.outputs.nx == 'true'
         id: get-variables
