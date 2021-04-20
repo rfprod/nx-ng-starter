@@ -28,7 +28,7 @@ checkIntegrity() {
   printInfoTitle "<< Checking package integrity >>"
   printGap
 
-  if ! yarn check --integrity; then
+  if ! yarn check --verify-tree; then
     printInfoTitle "<< Cleaning up workspace, and caches >>"
     printGap
 
