@@ -137,7 +137,7 @@ jobs:
         if: steps.changes.outputs.nx == 'true'
         run: |
           npx cypress install
-          yarn build:documentation:prod
+          yarn build:documentation
 
       - name: Deploy documentation app
         if: steps.changes.outputs.nx == 'true'
