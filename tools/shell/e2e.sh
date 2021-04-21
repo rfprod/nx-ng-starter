@@ -4,14 +4,17 @@
 # Colors.
 ##
 source tools/shell/colors.sh ''
+
+##
+# Printing utils.
+##
+source tools/shell/print-utils.sh ''
+
 ##
 # Project aliases.
 ##
 source tools/shell/module-aliases.sh ''
-##
-# Printing utility functions.
-##
-source tools/shell/print-utils.sh ''
+
 ##
 # Project root.
 ##
@@ -21,11 +24,14 @@ PROJECT_ROOT=.
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  printInfoTitle "<< USAGE >>"
-  printUsageTip "bash tools/shell/e2e.sh all" "run all e2e tests"
-  printUsageTip "bash tools/shell/e2e.sh all headless" "run all e2e tests in headless mode"
-  printUsageTip "bash tools/shell/e2e.sh <MODULE_E2E_ALIAS_FROM_TSCONFIG>" "run e2e tests for a specific application/library"
-  printUsageTip "bash tools/shell/e2e.sh <MODULE_ALIAS_E2E_FROM_TSCONFIG> headless" "run e2e tests for a specific application/library in headless mode"
+  printInfoTitle "<< ${0} USAGE >>"
+  printUsageTip "bash tools/shell/e2e.sh reports" "copy e2e reports to dist"
+  printUsageTip "bash tools/shell/e2e.sh all" "run all e2e apps"
+  printUsageTip "bash tools/shell/e2e.sh all headless" "run all e2e apps in the headless mode"
+  printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS>" "run a single e2e app"
+  printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS> headless" "run a single e2e app in the headless mode"
+  printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS> headless report" "run a single e2e app in the headless mode and save report"
+  printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS> headless report e2e-testing" "run a single e2e app in the headless mode and save report versus dedicated e2e testing environment"
 
   reportSupportedModuleAliasesE2E
 
@@ -38,128 +44,142 @@ reportUsageErrorAndExit() {
 # Copies generated report to dist folder.
 ##
 copyReportToDist() {
-  printInfoTitle "<< COPY REPORT TO DIST >>"
-  printNameAndValue "module partial path" "$1"
-  printNameAndValue "e2e dist path" "$2"
-  printNameAndValue "optional action (report)" "$3"
+  printInfoTitle "<< Copy report to dist >>"
+  printNameAndValue "module name" "$1"
+  printNameAndValue "module partial path" "$2"
+  printNameAndValue "e2e dist path" "$3"
+  printNameAndValue "optional action (report)" "$4"
   printGap
 
   ##
-  # E2E root path.
+  # E2E root paths.
   ##
-  local E2E_DISTR_ROOT=${PROJECT_ROOT}/dist/apps/documentation/assets/cypress
+  local -A E2E_DIST_ROOTS=(
+    ["${PROJECT_ROOT}/dist/apps/transport-documentation/assets/cypress"]="${PROJECT_ROOT}"/dist/apps/transport-documentation/assets/cypress
+  )
+
   ##
   # Report directory
   ##
-  local REPORT_DIR="${2}/mochawesome"
+  local REPORT_DIR
+  REPORT_DIR="${3}/mochawesome"
   ##
   # Reports glob for mochawesome merge.
   ##
-  local REPORTS_GLOB="${REPORT_DIR}/json/mochawesome*.json"
+  local REPORTS_GLOB
+  REPORTS_GLOB="${REPORT_DIR}/json/mochawesome*.json"
   ##
   # Merged report path
   ##
-  local MERGED_JSON_REPORT_PATH="${REPORT_DIR}/mochawesome-merge.json"
+  local MERGED_JSON_REPORT_PATH
+  MERGED_JSON_REPORT_PATH="${REPORT_DIR}/mochawesome-merge.json"
   ##
   # Report title
   ##
-  local REPORT_TITLE="Nx Ng Starter E2E"
+  local REPORT_TITLE
+  REPORT_TITLE="Transport E2E"
   ##
   # Html report filename
   ##
-  local REPORT_FILENAME="mochawesome.html"
+  local REPORT_FILENAME
+  REPORT_FILENAME="mochawesome.html"
 
-  if [ "$3" = "report" ]; then
-    # check coverage dist path existence
-    if [ -d ${E2E_DISTR_ROOT} ]; then
-      printSuccessMessage "e2e directory $E2E_DISTR_ROOT exists, proceeding"
-    else
-      printErrorTitle "<< ERROR >>"
-      printWarningMessage "directory $E2E_DISTR_ROOT does not exist"
-      printInfoMessage "creating directory $E2E_DISTR_ROOT"
-      printGap
+  if [ "$4" = "report" ]; then
+    for E2E_DISTR_ROOT in "${E2E_DIST_ROOTS[@]}"; do
+      # check coverage dist path existence
+      if [ -d "$E2E_DISTR_ROOT" ]; then
+        printSuccessMessage "e2e directory $E2E_DISTR_ROOT exists, proceeding"
+      else
+        printErrorTitle "<< ERROR >>"
+        printWarningMessage "directory $E2E_DISTR_ROOT does not exist"
+        printSuccessMessage "creating directory $E2E_DISTR_ROOT"
+        printGap
 
-      mkdir -p $E2E_DISTR_ROOT
-    fi
-    # merge json reports
-    npx mochawesome-merge "$REPORTS_GLOB" >"$MERGED_JSON_REPORT_PATH"
-    # generate html report from merged json
-    npx marge --reportDir="$REPORT_DIR" --reportTitle="$REPORT_TITLE" --reportFilename=$REPORT_FILENAME --showSkipped --enableCharts "$MERGED_JSON_REPORT_PATH"
-    # copy report
-    cp -r "$2" $E2E_DISTR_ROOT || exit 1
+        mkdir -p "$E2E_DISTR_ROOT"
+      fi
+      # proceed only if report exists
+      if [ -d "$REPORT_DIR" ]; then
+        printSuccessMessage "e2e directory $REPORT_DIR exists, proceeding"
+
+        # merge json reports
+        npx mochawesome-merge "$REPORTS_GLOB" >"$MERGED_JSON_REPORT_PATH"
+        # generate html report from merged json
+        npx marge --reportDir="$REPORT_DIR" --reportTitle="${REPORT_TITLE}" --reportFilename=$REPORT_FILENAME --showSkipped --enableCharts "$MERGED_JSON_REPORT_PATH"
+        # copy report
+        cp -r "$3" "$E2E_DISTR_ROOT" || exit 1
+      fi
+    done
   fi
 }
 
 ##
-# Performs module testing considering optional action.
+# Checks provided variables and proceeds with testing.
 ##
-performModuleTesting() {
-  printInfoTitle "<< TESTING MODULE >>"
+checkVariablesAndProceed() {
+  printInfoTitle "<< Checking variables and proceeding >>"
   printNameAndValue "module name" "$1"
   printNameAndValue "module partial path" "$2"
   printNameAndValue "e2e dist path" "$3"
   printNameAndValue "optional action (headless)" "$4"
   printNameAndValue "optional action (report)" "$5"
+  printNameAndValue "optional environment (e2e-testing)" "$6"
   printGap
 
-  if [ "$4" = "headless" ]; then
+  if [ "$4" = "headless" ] && [ "$6" = "e2e-testing" ]; then
+    npx nx e2e "$1" --configuration "$6" --headless
+  elif [ "$4" = "headless" ]; then
     npx nx e2e "$1" --headless
+  elif [ "$6" = "e2e-testing" ]; then
+    npx nx e2e "$1" --configuration "$6"
   else
     npx nx e2e "$1"
   fi
 
-  copyReportToDist "$2" "$3" "$5"
-}
-
-##
-# Tests affected using NX.
-##
-testAffected() {
-  npx nx affected --target=e2e --base=origin/master --headless
+  copyReportToDist "$1" "$2" "$3" "$5"
 }
 
 ##
 # Tests module.
 ##
 testModule() {
-  printInfoTitle "<< TESTING MODULE (e2e) >>"
-  printNameAndValue "module alias" "$1"
+  printInfoTitle "<< Testing module >>"
+  printNameAndValue "module name" "$1"
   printNameAndValue "optional action (headless)" "$2"
   printNameAndValue "optional action (report)" "$3"
-  printGap
+  printNameAndValue "optional environment (e2e-testing)" "$4"
 
-  local MODULE_ALIAS=$1
-  local OPTIONAL_ACTION=$2
-  local COPY_REPORT=$3
+  local MODULE_ALIAS
+  MODULE_ALIAS=$1
+  local OPTIONAL_ACTION
+  OPTIONAL_ACTION=$2
+  local COPY_REPORT
+  COPY_REPORT=$3
+  local E2E_ENVIRONMENT
+  E2E_ENVIRONMENT=$4
 
   local MODULE_NAME
   MODULE_NAME="${MODULE_ALIAS//app\:/}" # remove app: prefix
 
   local MODULE_PARTIAL_PATH
-  MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s\/}" # replace ': ' with 's/ ' to get parial path (e.g. apps/client-e2e) for paths formation
+  MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s\/}" # replace ': ' with 's/ ' to get parial path (e.g. apps/transport-e2e() for paths formation
 
   local E2E_DIST_PATH
   E2E_DIST_PATH=${PROJECT_ROOT}/dist/cypress/${MODULE_PARTIAL_PATH}
 
-  printNameAndValue "module name" "$1"
-  printNameAndValue "module partial path name" "$1"
-  printNameAndValue "e2e dist path" "$1"
+  printNameAndValue "module name" "$MODULE_NAME"
+  printNameAndValue "module partial path name" "$MODULE_PARTIAL_PATH"
+  printNameAndValue "e2e dist path" "$E2E_DIST_PATH"
   printGap
 
   local ALIAS_EXISTS=
-  moduleAliasExists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
+  moduleAliasE2EExists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
 
   if [ "$ALIAS_EXISTS" = 1 ]; then
-    performModuleTesting "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$E2E_DIST_PATH" "$OPTIONAL_ACTION" "$COPY_REPORT"
+    checkVariablesAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$E2E_DIST_PATH" "$OPTIONAL_ACTION" "$COPY_REPORT" "$E2E_ENVIRONMENT"
   elif
     [[ "$MODULE_ALIAS" = "all" ]]
   then
-    for MODULE_ALIAS_VAR_E2E in "${EXISTING_MODULE_ALIASES_E2E[@]}"; do testModule "$MODULE_ALIAS_VAR_E2E" "$OPTIONAL_ACTION" "$COPY_REPORT"; done
-  elif [ "$MODULE_ALIAS" = "affected" ]; then
-    printInfoTitle "<< TESTING AFFECTED APPS AND LIBS >>"
-    printGap
-
-    testAffected
+    for MODULE_ALIAS_E2E in "${EXISTING_MODULE_ALIASES_E2E[@]}"; do testModule "$MODULE_ALIAS_E2E" "$OPTIONAL_ACTION" "$COPY_REPORT" "$E2E_ENVIRONMENT"; done
   else
     reportUsageErrorAndExit
   fi
@@ -170,6 +190,10 @@ testModule() {
 ##
 if [ $# -lt 1 ]; then
   reportUsageErrorAndExit
+elif [ "$1" = "reports" ]; then
+  copyReportToDist "transport-e2e" "apps/transport-e2e" "./dist/cypress/apps/transport-e2e" "report"
+  copyReportToDist "transport-documentation-e2e" "apps/transport-documentation-e2e" "./dist/cypress/apps/transport-documentation-e2e" "report"
+  copyReportToDist "transport-landing-e2e" "apps/transport-landing-e2e" "./dist/cypress/apps/transport-landing-e2e" "report"
 else
-  testModule "$1" "$2" "$3"
+  testModule "$1" "$2" "$3" "$4"
 fi
