@@ -2,7 +2,7 @@
 
 This folder contains utility shell scripts.
 
-- `build.sh` - applications building script
+- `build-docs.sh` - documentation application build script
 - `build-android.sh` - android application building script
 - `build-mobile.sh` - mobile application building script
 - `changelog.sh` - apps/libs changelog generation script

@@ -4,14 +4,22 @@
 # Colors.
 ##
 source tools/shell/colors.sh ''
+
+##
+# Printing utils.
+##
+source tools/shell/print-utils.sh ''
+
 ##
 # Project aliases.
 ##
 source tools/shell/module-aliases.sh ''
+
 ##
-# Printing utility functions.
+# Import Git helpers.
 ##
-source tools/shell/print-utils.sh ''
+source tools/shell/git-extension.sh ''
+
 ##
 # Project root.
 ##
@@ -21,12 +29,14 @@ PROJECT_ROOT=.
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  printInfoTitle "<< USAGE >>"
-  printUsageTip "bash tools/shell/test.sh single-run all" "run all unit tests"
-  printUsageTip "bash tools/shell/test.sh single-run <MODULE_ALIAS_FROM_TSCONFIG>" "run unit tests for a specific application/library"
-  printUsageTip "bash tools/shell/test.sh single-run:coverage <MODULE_ALIAS_FROM_TSCONFIG>" "run unit tests for a specific application/library, and collect coverage report"
-  printUsageTip "bash tools/shell/test.sh report all" "copy all coverage reports to the documentation app dist"
-  printUsageTip "bash tools/shell/test.sh run <MODULE_ALIAS_FROM_TSCONFIG>" "run unit tests for a specific application/library in watch mode"
+  printInfoTitle "<< ${0} USAGE >>"
+  printUsageTip "bash tools/shell/test.sh single-run all" "test all modules"
+  printUsageTip "bash tools/shell/test.sh single-run changed" "test changed modules"
+  printUsageTip "bash tools/shell/test.sh single-run-and-report changed" "test changed modules and collect coverage"
+  printUsageTip "bash tools/shell/test.sh single-run-and-report:ci \$MODULE_ALIAS" "test a module and collect coverage in CI environment"
+  printUsageTip "bash tools/shell/test.sh single-run \$MODULE_ALIAS" "test a module"
+  printUsageTip "bash tools/shell/test.sh single-run-and-report \$MODULE_ALIAS" "test a module and collect coverage"
+  printUsageTip "bash tools/shell/test.sh report" "copy pregenerated reports to dist"
 
   reportSupportedModuleAliasesUnit
 
@@ -39,13 +49,14 @@ reportUsageErrorAndExit() {
 # Copies all pregenerated coverage reports to the dist folder.
 ##
 copyReportsToDist() {
-  printInfoTitle "<< COPY REPORTS TO DIST >>"
+  printInfoTitle "<< Copy reports to dist >>"
   printGap
 
   ##
   # Documentation app dist path.
   ##
-  local DOCUMENTATION_APP_DIST_PATH=${PROJECT_ROOT}/dist/apps/documentation
+  local DOCUMENTATION_APP_DIST_PATH
+  DOCUMENTATION_APP_DIST_PATH=${PROJECT_ROOT}/dist/apps/transport-documentation
 
   if [ ! -d ${DOCUMENTATION_APP_DIST_PATH} ]; then
     printErrorTitle "<< ERROR >>"
@@ -57,7 +68,8 @@ copyReportsToDist() {
   ##
   # Coverage root path.
   ##
-  local COVERAGE_DIST_ROOT=${DOCUMENTATION_APP_DIST_PATH}/assets
+  local COVERAGE_DIST_ROOT
+  COVERAGE_DIST_ROOT=${DOCUMENTATION_APP_DIST_PATH}/assets
 
   if [ -d ${COVERAGE_DIST_ROOT} ]; then
     printSuccessMessage "directory $COVERAGE_DIST_ROOT exists, proceeding"
@@ -75,20 +87,65 @@ copyReportsToDist() {
 }
 
 ##
+# Copies generated report to dist folder.
+##
+copyReportToDist() {
+  printInfoTitle "<< Copy report to dist >>"
+  printNameAndValue "module partial path" "$1"
+  printNameAndValue "optional action: report" "$2"
+  printGap
+
+  if [ "$2" = "report" ]; then
+    ##
+    # Coverage root paths.
+    ##
+    local -A COV_DIST_ROOTS=(
+      ["${PROJECT_ROOT}/dist/coverage"]="${PROJECT_ROOT}"/dist/coverage
+    )
+
+    for COV_DISTR_ROOT in "${COV_DIST_ROOTS[@]}"; do
+      # check coverage dist path existence
+      if [ -d "${COV_DISTR_ROOT}" ]; then
+        printSuccessMessage "coverage directory $COV_DISTR_ROOT exists, proceeding"
+      else
+        printErrorTitle "<< ERROR >>"
+        printWarningMessage "directory $COV_DISTR_ROOT does not exist"
+        printSuccessMessage "creating directory $COV_DISTR_ROOT"
+        printGap
+
+        mkdir -p "$COV_DISTR_ROOT"
+      fi
+      cp -r ${PROJECT_ROOT}/coverage/"${1}" "$COV_DISTR_ROOT" || exit 1
+    done
+  fi
+}
+
+##
 # Performs module testing considering optional action.
 ##
 performModuleTesting() {
-  printInfoTitle "<< TESTING MODULE >>"
+  printInfoTitle "<< Perform module testing >>"
   printNameAndValue "module name" "$1"
-  printNameAndValue "optional action (coverage, watch)" "$2"
+  printNameAndValue "module partial path" "$2"
+  printNameAndValue "optional action: report" "$3"
+  printNameAndValue "optional environment: ci" "$4"
   printGap
 
-  if [ "$2" = "watch" ]; then
-    npx nx test "$1" --passWithNoTests --watchAll
-  elif [ "$2" = "coverage" ]; then
-    npx nx test "$1" --watch=false --silent --code-coverage --run-in-band --passWithNoTests || exit 1
+  if [ "$3" = "report" ]; then
+    # use additional flags in CI environment
+    if [ "$4" = "ci" ]; then
+      npx nx test "$1" --watch=false --silent --passWithNoTests --run-in-band --ci || exit 1
+    else
+      npx nx test "$1" --watch=false --silent --passWithNoTests --run-in-band || exit 1
+    fi
+    copyReportToDist "$2" "$3"
   else
-    npx nx test "$1" --watch=false --silent --run-in-band --passWithNoTests || exit 1
+    # use additional flags in CI environment
+    if [ "$4" = "ci" ]; then
+      npx nx test --project="$1" --watch=false --silent --passWithNoTests --run-in-band --ci --code-coverage=true || exit 1
+    else
+      npx nx test --project="$1" --watch=false --silent --passWithNoTests --run-in-band --code-coverage=true || exit 1
+    fi
   fi
 }
 
@@ -96,47 +153,61 @@ performModuleTesting() {
 # Tests affected using NX.
 ##
 testAffected() {
-  npx nx affected --target=test --base=origin/master --passWithNoTests --watch=false --run-in-band --ci
+  npx nx affected --target=test --base=origin/dev --head=HEAD --passWithNoTests --watch=false --run-in-band --ci --code-coverage=true || exit 1
+}
+
+##
+# Tests all using NX.
+##
+testAll() {
+  npx nx run-many --target=test --all --passWithNoTests --watch=false --run-in-band --ci --code-coverage=true || exit 1
 }
 
 ##
 # Tests module.
 ##
 testModule() {
-  printInfoTitle "<< TESTING MODULE (unit) >>"
+  printInfoTitle "<< Testing module >>"
   printNameAndValue "module alias" "$1"
-  printNameAndValue "optional action (report, watch)" "$2"
+  printNameAndValue "optional action: report" "$2"
+  printNameAndValue "optional environment: ci" "$3"
 
-  local MODULE_ALIAS=$1
-  local OPTIONAL_ACTION=$2
+  local MODULE_ALIAS
+  MODULE_ALIAS=$1
 
-  local MODULE_NAME="${MODULE_ALIAS//app\:/}" # remove app: prefix
-  MODULE_NAME="${MODULE_NAME//lib\:/}"        # remove lib: prefix
+  local OPTIONAL_ACTION
+  OPTIONAL_ACTION=$2
+
+  local OPTIONAL_ENVIRONMENT
+  OPTIONAL_ENVIRONMENT=$3
+
+  local MODULE_NAME
+  MODULE_NAME="${MODULE_ALIAS//app\:/}" # remove app: prefix
+  MODULE_NAME="${MODULE_NAME//lib\:/}"  # remove lib: prefix
+
+  local MODULE_PARTIAL_PATH
+  MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s\/}" # partial module path, e.g. apps/transport for subsequent path formation
 
   printNameAndValue "module name" "$MODULE_NAME"
+  printNameAndValue "module partial path name" "$MODULE_PARTIAL_PATH"
   printGap
 
-  local ALIAS_EXISTS=
-  moduleAliasExists "${MODULE_ALIAS}" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
+  local ALIAS_EXISTS
+  moduleAliasUnitExists "${MODULE_ALIAS}" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
 
   if [ "$ALIAS_EXISTS" = 1 ]; then
-    printInfoTitle "<< ALIAS ESISTS >>"
-
-    performModuleTesting "$MODULE_NAME" "$OPTIONAL_ACTION"
+    performModuleTesting "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$OPTIONAL_ACTION" "$OPTIONAL_ENVIRONMENT"
   elif [ "$MODULE_ALIAS" = "all" ]; then
-    for MODULE_ALIAS_VAR in "${EXISTING_MODULE_ALIASES_UNIT[@]}"; do testModule "$MODULE_ALIAS_VAR" "$OPTIONAL_ACTION"; done
-  elif [ "$MODULE_ALIAS" = "changed" ]; then
-    printInfoTitle "<< TESTING CHANGED APPS AND LIBS >>"
+    printInfoTitle "<< Testing all apps and libs >>"
     printGap
-    ##
-    # Import Git helpers.
-    ##
-    source tools/shell/git-extension.sh
+    testAll
+  elif [ "$MODULE_ALIAS" = "changed" ]; then
+    printInfoTitle "<< Testing changed apps and libs >>"
+    printGap
+    getChangedProjectAliases
     for CHANGED_ALIAS in "${CHANGED_ALIASES[@]}"; do testModule "$CHANGED_ALIAS" "$OPTIONAL_ACTION"; done
   elif [ "$MODULE_ALIAS" = "affected" ]; then
-    printInfoTitle "<< TESTING AFFECTED APPS AND LIBS >>"
-    printGap
-
+    printInfoTitle "<< Testing affected apps and libs >>"
     testAffected
   else
     reportUsageErrorAndExit
@@ -151,12 +222,12 @@ if [ $# -lt 2 ]; then
 else
   if [ "$1" = "single-run" ]; then
     testModule "$2" "none" # test single run.
-  elif [ "$1" = "single-run:coverage" ]; then
-    testModule "$2" "coverage" # test single run, generate coverage report.
+  elif [ "$1" = "single-run-and-report" ]; then
+    testModule "$2" "report" # test single run, generate coverage report, and copy report to dist.
+  elif [ "$1" = "single-run-and-report:ci" ]; then
+    testModule "$2" "report" "ci" # test single run, generate coverage report, and copy report to dist in CI environment.
   elif [ "$1" = "report" ]; then
     copyReportsToDist # copy pregenerated reports to dist.
-  elif [ "$1" = "run" ]; then
-    testModule "$2" "watch" # run in watch mode.
   else
     reportUsageErrorAndExit
   fi
