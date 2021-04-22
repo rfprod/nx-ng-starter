@@ -55,7 +55,7 @@ copyReportToDist() {
   # E2E root paths.
   ##
   local -A E2E_DIST_ROOTS=(
-    ["${PROJECT_ROOT}/dist/apps/transport-documentation/assets/cypress"]="${PROJECT_ROOT}"/dist/apps/transport-documentation/assets/cypress
+    ["${PROJECT_ROOT}/dist/apps/documentation/assets/cypress"]="${PROJECT_ROOT}"/dist/apps/documentation/assets/cypress
   )
 
   ##
@@ -161,7 +161,7 @@ testModule() {
   MODULE_NAME="${MODULE_ALIAS//app\:/}" # remove app: prefix
 
   local MODULE_PARTIAL_PATH
-  MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s\/}" # replace ': ' with 's/ ' to get parial path (e.g. apps/transport-e2e() for paths formation
+  MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s\/}" # replace ': ' with 's/ ' to get parial path (e.g. apps/client-e2e() for paths formation
 
   local E2E_DIST_PATH
   E2E_DIST_PATH=${PROJECT_ROOT}/dist/cypress/${MODULE_PARTIAL_PATH}
@@ -191,9 +191,8 @@ testModule() {
 if [ $# -lt 1 ]; then
   reportUsageErrorAndExit
 elif [ "$1" = "reports" ]; then
-  copyReportToDist "transport-e2e" "apps/transport-e2e" "./dist/cypress/apps/transport-e2e" "report"
-  copyReportToDist "transport-documentation-e2e" "apps/transport-documentation-e2e" "./dist/cypress/apps/transport-documentation-e2e" "report"
-  copyReportToDist "transport-landing-e2e" "apps/transport-landing-e2e" "./dist/cypress/apps/transport-landing-e2e" "report"
+  copyReportToDist "app:client-e2e" "apps/client-e2e" "./dist/cypress/apps/client-e2e" "report"
+  copyReportToDist "app:documentation-e2e" "apps/documentation-e2e" "./dist/cypress/apps/documentation-e2e" "report"
 else
   testModule "$1" "$2" "$3" "$4"
 fi

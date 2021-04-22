@@ -56,7 +56,7 @@ copyReportsToDist() {
   # Documentation app dist path.
   ##
   local DOCUMENTATION_APP_DIST_PATH
-  DOCUMENTATION_APP_DIST_PATH=${PROJECT_ROOT}/dist/apps/transport-documentation
+  DOCUMENTATION_APP_DIST_PATH=${PROJECT_ROOT}/dist/apps/documentation
 
   if [ ! -d ${DOCUMENTATION_APP_DIST_PATH} ]; then
     printErrorTitle "<< ERROR >>"
@@ -217,7 +217,7 @@ testModule() {
 ##
 # Testing control flow.
 ##
-if [ $# -lt 2 ]; then
+if [ $# -lt 1 ]; then
   reportUsageErrorAndExit
 else
   if [ "$1" = "single-run" ]; then
