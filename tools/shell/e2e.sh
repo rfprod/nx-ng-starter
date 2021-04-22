@@ -31,7 +31,7 @@ reportUsageErrorAndExit() {
   printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS>" "run a single e2e app"
   printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS> headless" "run a single e2e app in the headless mode"
   printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS> headless report" "run a single e2e app in the headless mode and save report"
-  printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS> headless report e2e-testing" "run a single e2e app in the headless mode and save report versus dedicated e2e testing environment"
+  printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS> headless report CONFIGURATION" "run a single e2e app in the headless mode and save report versus a specific configuration/environment"
 
   reportSupportedModuleAliasesE2E
 
@@ -122,17 +122,21 @@ checkVariablesAndProceed() {
   printNameAndValue "e2e dist path" "$3"
   printNameAndValue "optional action (headless)" "$4"
   printNameAndValue "optional action (report)" "$5"
-  printNameAndValue "optional environment (e2e-testing)" "$6"
+  printNameAndValue "optional configuration (see angular.json)" "$6"
   printGap
 
-  if [ "$4" = "headless" ] && [ "$6" = "e2e-testing" ]; then
-    npx nx e2e "$1" --configuration "$6" --headless
-  elif [ "$4" = "headless" ]; then
-    npx nx e2e "$1" --headless
-  elif [ "$6" = "e2e-testing" ]; then
-    npx nx e2e "$1" --configuration "$6"
+  if [ -z "$6" ]; then
+    if [ "$4" = "headless" ]; then
+      npx nx e2e "$1" --headless --configuration "$6"
+    else
+      npx nx e2e "$1" --configuration "$6"
+    fi
   else
-    npx nx e2e "$1"
+    if [ "$4" = "headless" ]; then
+      npx nx e2e "$1" --headless
+    else
+      npx nx e2e "$1"
+    fi
   fi
 
   copyReportToDist "$1" "$2" "$3" "$5"
@@ -146,7 +150,7 @@ testModule() {
   printNameAndValue "module name" "$1"
   printNameAndValue "optional action (headless)" "$2"
   printNameAndValue "optional action (report)" "$3"
-  printNameAndValue "optional environment (e2e-testing)" "$4"
+  printNameAndValue "optional configuration (see angular.json)" "$4"
 
   local MODULE_ALIAS
   MODULE_ALIAS=$1
@@ -154,8 +158,8 @@ testModule() {
   OPTIONAL_ACTION=$2
   local COPY_REPORT
   COPY_REPORT=$3
-  local E2E_ENVIRONMENT
-  E2E_ENVIRONMENT=$4
+  local CONFIGURATION
+  CONFIGURATION=$4
 
   local MODULE_NAME
   MODULE_NAME="${MODULE_ALIAS//app\:/}" # remove app: prefix
@@ -172,14 +176,14 @@ testModule() {
   printGap
 
   local ALIAS_EXISTS=
-  moduleAliasE2EExists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
+  moduleAliasExists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
 
   if [ "$ALIAS_EXISTS" = 1 ]; then
-    checkVariablesAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$E2E_DIST_PATH" "$OPTIONAL_ACTION" "$COPY_REPORT" "$E2E_ENVIRONMENT"
+    checkVariablesAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$E2E_DIST_PATH" "$OPTIONAL_ACTION" "$COPY_REPORT" "$CONFIGURATION"
   elif
     [[ "$MODULE_ALIAS" = "all" ]]
   then
-    for MODULE_ALIAS_E2E in "${EXISTING_MODULE_ALIASES_E2E[@]}"; do testModule "$MODULE_ALIAS_E2E" "$OPTIONAL_ACTION" "$COPY_REPORT" "$E2E_ENVIRONMENT"; done
+    for MODULE_ALIAS_E2E in "${EXISTING_MODULE_ALIASES_E2E[@]}"; do testModule "$MODULE_ALIAS_E2E" "$OPTIONAL_ACTION" "$COPY_REPORT" "$CONFIGURATION"; done
   else
     reportUsageErrorAndExit
   fi
