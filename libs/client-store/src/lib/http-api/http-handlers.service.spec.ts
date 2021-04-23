@@ -182,15 +182,12 @@ describe('AppHttpHandlersService', () => {
           status: 400,
           statusText: 'error status text',
         });
-        service
-          .handleError(errRes)
-          .toPromise()
-          .then(
-            () => true,
-            (error: string) => {
-              expect(error).toEqual(service.getErrorMessage(errRes));
-            },
-          );
+        void service.handleError(errRes).subscribe(
+          () => true,
+          (error: string) => {
+            expect(error).toEqual(service.getErrorMessage(errRes));
+          },
+        );
       }),
     );
 
@@ -198,15 +195,12 @@ describe('AppHttpHandlersService', () => {
       'should handle errors properly #2',
       waitForAsync(() => {
         const errRes = new HttpErrorResponse({});
-        service
-          .handleError(errRes)
-          .toPromise()
-          .then(
-            () => true,
-            (error: string) => {
-              expect(error).toEqual(service.getErrorMessage(errRes));
-            },
-          );
+        void service.handleError(errRes).subscribe(
+          () => true,
+          (error: string) => {
+            expect(error).toEqual(service.getErrorMessage(errRes));
+          },
+        );
       }),
     );
   });
