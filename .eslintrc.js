@@ -1,4 +1,5 @@
 const { nxModuleBoundaryRules } = require('./.eslintrc.module-boundaries');
+const { join } = require('path');
 
 /**
  * Roadmap typescript-eslint
@@ -12,7 +13,8 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: 'module',
-    project: ['./tsconfig.base.json'],
+    project: [join(__dirname, './tsconfig.base.json')],
+    createDefaultProgram: true,
   },
   extends: [
     'eslint:recommended',
@@ -32,6 +34,10 @@ module.exports = {
     '@nrwl/eslint-plugin-nx',
   ],
   ignorePatterns: ['*.min.js', 'node_modules/'],
+
+  settings: {
+    polyfills: ['fetch', 'Promise'],
+  },
 
   rules: {
     'eslint-comments/no-unused-disable': 'error',
@@ -358,6 +364,14 @@ module.exports = {
     'rxjs/no-subclass': 'error',
     'rxjs/no-tap': 'off', // keep off
     'rxjs/no-exposed-subjects': 'error',
+    'rxjs/no-subject-unsubscribe': 'error',
+    'rxjs/no-topromise': 'error',
+    'rxjs/no-redundant-notify': 'error',
+    'rxjs/no-unsafe-catch': 'warn',
+    'rxjs/no-unsafe-subject-next': 'error',
+    'rxjs/no-unsafe-switchmap': 'error',
+    'rxjs/no-unsafe-takeuntil': 'error',
+    'rxjs/no-unbound-methods': 'error',
     yoda: ['error', 'never'],
     '@nrwl/nx/enforce-module-boundaries': ['error', nxModuleBoundaryRules],
   },
@@ -369,7 +383,8 @@ module.exports = {
       parserOptions: {
         ecmaVersion: 2020,
         sourceType: 'module',
-        project: ['./tsconfig.eslint-js.json'],
+        project: [join(__dirname, './tsconfig.eslint-js.json')],
+        createDefaultProgram: true,
       },
       extends: [
         'eslint:recommended',

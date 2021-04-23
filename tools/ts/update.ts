@@ -139,7 +139,7 @@ function checkForUpdates(jsonUpgraded = false): TUpdatablePackages {
   console.log(`\n${COLORS.YELLOW}%s${COLORS.DEFAULT}\n`, 'Checking for updates. Wait for it...');
   const ncuOutput = spawnCommandSync('ncu', args);
   const updatablePackages: TUpdatablePackages = jsonUpgraded
-    ? JSON.parse(ncuOutput.stdout) ?? {}
+    ? JSON.parse(ncuOutput.stdout.replace(/Using yarn/gi, '').trim()) ?? {}
     : {};
   if (jsonUpgraded) {
     writeUpdateSummary(updatablePackages);
