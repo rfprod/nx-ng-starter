@@ -7,12 +7,12 @@ import { ITestingData } from '../../../interfaces/testing-data.interface';
  * @note utility function, do not remove.
  */
 export const setViewportSize = (options: {
-  testingData: BehaviorSubject<ITestingData>;
+  testingDataSubject: BehaviorSubject<ITestingData>;
   height?: number;
   widht?: number;
 }) => {
-  const height = options?.height ?? options.testingData.value.viewport.defaultHeight;
-  const width = options?.widht ?? options.testingData.value.viewport.defaultWidth;
+  const height = options?.height ?? options.testingDataSubject.value.viewport.defaultHeight;
+  const width = options?.widht ?? options.testingDataSubject.value.viewport.defaultWidth;
 
   return cy.viewport(height, width);
 };

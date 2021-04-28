@@ -219,7 +219,7 @@ export class AppHttpHandlersService {
    */
   public extractGraphQLData(res: ExecutionResult): Observable<{ [key: string]: unknown }> {
     if (Boolean(res.errors)) {
-      return throwError(res.errors);
+      return throwError(new Error(res.errors?.join(', ')));
     }
     return of(res.data ?? res);
   }
@@ -261,7 +261,7 @@ export class AppHttpHandlersService {
   public handleError(error: HttpErrorResponse): Observable<never> {
     const errorMessage = this.getErrorMessage(error);
     this.toaster.showToaster(errorMessage, 'error');
-    return throwError(errorMessage);
+    return throwError(new Error(errorMessage));
   }
 
   /**
@@ -269,7 +269,7 @@ export class AppHttpHandlersService {
    * @param error error message
    */
   public handleGraphQLError(error: string): Observable<never> {
-    return throwError(error);
+    return throwError(new Error(error));
   }
 
   /**
