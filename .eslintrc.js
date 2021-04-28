@@ -345,16 +345,18 @@ module.exports = {
       'off', // TODO: turn on
       {
         require: {
-          FunctionDeclaration: true,
-          MethodDefinition: true,
+          FunctionDeclaration: false,
+          MethodDefinition: false,
           ClassDeclaration: true,
-          ArrowFunctionExpression: true,
+          ArrowFunctionExpression: false,
         },
       },
     ],
     'rxjs/ban-observables': 'off', // keep off
     'rxjs/ban-operators': 'off', // keep off
     'rxjs/no-async-subscribe': 'error',
+    'rxjs/no-compat': 'error',
+    'rxjs/no-create': 'error',
     'rxjs/no-ignored-error': 'off', // keep of for now; turn it on later maybe
     'rxjs/no-ignored-observable': 'error',
     'rxjs/no-ignored-subscribe': 'off', // keep off
@@ -362,12 +364,25 @@ module.exports = {
     'rxjs/no-internal': 'error',
     'rxjs/no-nested-subscribe': 'error',
     'rxjs/no-subclass': 'error',
+    'rxjs/throw-error': 'error',
     'rxjs/no-tap': 'off', // keep off
     'rxjs/no-exposed-subjects': 'error',
     'rxjs/no-subject-unsubscribe': 'error',
+    'rxjs/suffix-subjects': [
+      'error',
+      {
+        parameters: true,
+        properties: true,
+        suffix: 'Subject',
+        types: {
+          '^EventEmitter$': false,
+        },
+        variables: true,
+      },
+    ],
     'rxjs/no-topromise': 'error',
     'rxjs/no-redundant-notify': 'error',
-    'rxjs/no-unsafe-catch': 'warn',
+    'rxjs/no-unsafe-catch': 'error',
     'rxjs/no-unsafe-subject-next': 'error',
     'rxjs/no-unsafe-switchmap': 'error',
     'rxjs/no-unsafe-takeuntil': 'error',

@@ -3,7 +3,6 @@ import { DateAdapter } from '@angular/material/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
 import { documentProvider, WINDOW, windowProvider } from '@nx-ng-starter/client-util';
-import { Subject } from 'rxjs';
 
 import { AppClientTranslateModule } from '../client-translate.module';
 import {
@@ -50,7 +49,7 @@ describe('AppTranslationUtilsService', () => {
 
           spy = {
             service: {
-              languageChanges: jest.spyOn((service as any).languageChanges, 'next'),
+              languageChanges: jest.spyOn((service as any).languageChangesSubject, 'next'),
             },
             translate: {
               onLangChange: jest.spyOn(translate.onLangChange, 'subscribe'),
@@ -69,7 +68,6 @@ describe('AppTranslationUtilsService', () => {
   it('should exist and have variables and methods defined', () => {
     expect(service).toBeDefined();
     expect(service['languageChangeSubscription']).toEqual(expect.any(Function));
-    expect((service as any).languageChanges).toEqual(expect.any(Subject));
     expect(service.initialize).toEqual(expect.any(Function));
     expect(service.getUserLanguagePreference).toEqual(expect.any(Function));
     const langs: IUiLanguagesInterface = {
