@@ -10,14 +10,11 @@ Angular NestJS Nx starter project with workflow automation.
 
 In order to run own copy of the project one must fulfill the following requirements.
 
-### Operating system
+### Supported operating systems
 
 - [Debian based Linux](https://en.wikipedia.org/wiki/List_of_Linux_distributions#Debian-based)
 - [OSX](https://en.wikipedia.org/wiki/MacOS)
-
-#### Supported operating systems notes
-
-- ~~`Windows`~~ - not supported due idiosyncrasies.
+- ~~`Windows`~~ - poorly supported
 
 ### Core dependencies
 
