@@ -54,6 +54,10 @@ cleanup() {
   # Remove firebase files from project root which are copied there from project directory.
   ##
   rm -f ./.firebaserc ./firebase.json
+  ##
+  # Remove .firebase directory with hosting cache
+  ##
+  rm -rf ./.firebase/
 }
 
 ##
