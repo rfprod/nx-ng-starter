@@ -119,6 +119,16 @@ jobs:
         if: steps.changes.outputs.nx == 'true'
         run: npx nx run-many --target=build --all --configuration production
 
+      - name: Build documentation (compodoc, unit coverage, e2e coverage)
+        if: steps.changes.outputs.nx == 'true'
+        run: |
+          npx cypress install
+          yarn generate:env:documentation
+          yarn test:reports
+          ng run tools:compodoc-build
+          yarn generate:changelog
+          yarn e2e:headless:report
+
       - name: Deploy client app
         if: steps.changes.outputs.nx == 'true'
         run: bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" client || exit 1
@@ -132,12 +142,6 @@ jobs:
           bash tools/shell/firebase-deploy.sh "$FIREBASE_DEPLOY_TOKEN" elements || exit 1
         env:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
-
-      - name: Build documentation
-        if: steps.changes.outputs.nx == 'true'
-        run: |
-          npx cypress install
-          yarn build:documentation
 
       - name: Deploy documentation app
         if: steps.changes.outputs.nx == 'true'
