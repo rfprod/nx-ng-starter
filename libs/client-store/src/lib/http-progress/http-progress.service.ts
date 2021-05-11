@@ -30,9 +30,7 @@ export class AppHttpProgressService {
   constructor(private readonly progressRef: OverlayRef) {}
 
   private attachIndicator(): void {
-    this.progressRef.attach(
-      new ComponentPortal<AppGlobalProgressBarComponent>(AppGlobalProgressBarComponent),
-    );
+    this.progressRef.attach(new ComponentPortal<AppGlobalProgressBarComponent>(AppGlobalProgressBarComponent));
   }
 
   public detachIndicator(): void {

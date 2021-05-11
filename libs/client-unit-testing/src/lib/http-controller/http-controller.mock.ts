@@ -21,11 +21,7 @@ export function flushHttpRequests<T>(
   produceError = false,
 ): void {
   httpController.match(matcher).forEach((req: TestRequest) => {
-    return !req.cancelled
-      ? produceError
-        ? req.error(new ErrorEvent('error', { error: responseData }))
-        : req.flush(responseData)
-      : null;
+    return !req.cancelled ? (produceError ? req.error(new ErrorEvent('error', { error: responseData })) : req.flush(responseData)) : null;
   });
   if (verify) {
     httpController.verify();

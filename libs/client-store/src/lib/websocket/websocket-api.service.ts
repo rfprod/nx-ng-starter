@@ -4,12 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { WebSocketSubject } from 'rxjs/webSocket';
 
-import {
-  IWebsocketConfig,
-  IWebsocketRequestEvent,
-  IWebsocketResponseEvent,
-  WS_CONFIG,
-} from './websocket.interface';
+import { IWebsocketConfig, IWebsocketRequestEvent, IWebsocketResponseEvent, WS_CONFIG } from './websocket.interface';
 
 /**
  * Websocket Service.
@@ -19,9 +14,7 @@ import {
   providedIn: 'root',
 })
 export class AppWebsocketApiService {
-  private readonly websocket$: WebSocketSubject<IWebsocketRequestEvent> = new WebSocketSubject(
-    this.wsConfig,
-  );
+  private readonly websocket$: WebSocketSubject<IWebsocketRequestEvent> = new WebSocketSubject(this.wsConfig);
 
   constructor(@Inject(WS_CONFIG) private readonly wsConfig: IWebsocketConfig) {}
 

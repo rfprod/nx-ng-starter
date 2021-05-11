@@ -24,8 +24,7 @@ export const customCommands = {
   /**
    * @note utility function, do not remove.
    */
-  setViewportSize: (options: { height?: number; widht?: number }) =>
-    setViewportSize({ testingDataSubject, ...options }),
+  setViewportSize: (options: { height?: number; widht?: number }) => setViewportSize({ testingDataSubject, ...options }),
   /**
    * @note utility function, do not remove.
    */

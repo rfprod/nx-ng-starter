@@ -7,13 +7,7 @@ import { AppClientChatbotWidgetRoutingModule } from './client-chatbot-widget-rou
 import { AppChatbotWidgetRootComponent } from './components/chatbot-widget-root/chatbot-widget-root.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AppClientMaterialModule,
-    AppClientChatbotWidgetRoutingModule,
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AppClientMaterialModule, AppClientChatbotWidgetRoutingModule],
   declarations: [AppChatbotWidgetRootComponent],
 })
 export class AppClientChatbotWidgetModule {}

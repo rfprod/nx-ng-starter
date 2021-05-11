@@ -24,10 +24,7 @@ export function getApolloLinks(env: IWebClientAppEnvironment, httpLink: HttpLink
   return { http, ws };
 }
 
-export function apolloClienOptionsFactory(
-  env: IWebClientAppEnvironment,
-  httpLink: HttpLink,
-): ApolloClientOptions<Record<string, unknown>> {
+export function apolloClienOptionsFactory(env: IWebClientAppEnvironment, httpLink: HttpLink): ApolloClientOptions<Record<string, unknown>> {
   // apollo links
   const links = getApolloLinks(env, httpLink);
 

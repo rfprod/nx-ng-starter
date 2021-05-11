@@ -9,10 +9,7 @@ import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@nx-ng-starter/cli
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppRootComponent implements OnInit {
-  constructor(
-    private readonly title: Title,
-    @Inject(WEB_CLIENT_APP_ENV) private readonly env: IWebClientAppEnvironment,
-  ) {}
+  constructor(private readonly title: Title, @Inject(WEB_CLIENT_APP_ENV) private readonly env: IWebClientAppEnvironment) {}
 
   public ngOnInit(): void {
     this.title.setTitle(this.env.appName);

@@ -20,8 +20,7 @@ import { AppRootComponent } from './components/root.component';
 export const grpcProviders: Provider[] = [
   {
     provide: EntityServiceClient,
-    useFactory: () =>
-      new EntityServiceClient(environment.envoyUrl ?? '', null, { withCredentials: 'true' }),
+    useFactory: () => new EntityServiceClient(environment.envoyUrl ?? '', null, { withCredentials: 'true' }),
   },
 ];
 

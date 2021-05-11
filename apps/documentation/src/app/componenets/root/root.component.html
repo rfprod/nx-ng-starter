@@ -4,59 +4,27 @@
 
     <span fxFlex="1 1 auto"></span>
 
-    <a mat-button [fxHide.xs]="true" [fxHide.sm]="true" href="https://nx.dev" target="_blank">
-      <mat-icon>library_books</mat-icon> Nx
-    </a>
-    <a
-      mat-button
-      [fxHide.xs]="true"
-      [fxHide.sm]="true"
-      href="https://cli.angular.io/reference.pdf"
-      target="_blank"
-    >
+    <a mat-button [fxHide.xs]="true" [fxHide.sm]="true" href="https://nx.dev" target="_blank"> <mat-icon>library_books</mat-icon> Nx </a>
+    <a mat-button [fxHide.xs]="true" [fxHide.sm]="true" href="https://cli.angular.io/reference.pdf" target="_blank">
       <mat-icon>build</mat-icon> Angular CLI
     </a>
-    <a
-      mat-button
-      [fxHide.xs]="true"
-      [fxHide.sm]="true"
-      href="https://material.angular.io/"
-      target="_blank"
-    >
+    <a mat-button [fxHide.xs]="true" [fxHide.sm]="true" href="https://material.angular.io/" target="_blank">
       <mat-icon>change_history</mat-icon> Angular Material
     </a>
-    <a
-      mat-button
-      [fxHide.xs]="true"
-      [fxHide.sm]="true"
-      href="https://material.io/icons/"
-      target="_blank"
-    >
+    <a mat-button [fxHide.xs]="true" [fxHide.sm]="true" href="https://material.io/icons/" target="_blank">
       <mat-icon>info_outline</mat-icon> Material Icons
     </a>
 
-    <button
-      mat-icon-button
-      [matMenuTriggerFor]="mobileMenuTop"
-      [fxHide.md]="true"
-      [fxHide.lg]="true"
-      [fxHide.xl]="true"
-    >
+    <button mat-icon-button [matMenuTriggerFor]="mobileMenuTop" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
       <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #mobileMenuTop="matMenu" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
       <a mat-button [fxHide.xs]="true" [fxHide.sm]="true" href="https://nx.dev" target="_blank">
         <mat-icon>library_books</mat-icon> Nx Reference
       </a>
-      <a mat-menu-item href="https://cli.angular.io/reference.pdf" target="_blank">
-        <mat-icon>build</mat-icon> Angular CLI Reference
-      </a>
-      <a mat-menu-item href="https://material.angular.io/" target="_blank">
-        <mat-icon>change_history</mat-icon> Angular Material
-      </a>
-      <a mat-menu-item href="https://material.io/icons/" target="_blank">
-        <mat-icon>info_outline</mat-icon> Material Icons
-      </a>
+      <a mat-menu-item href="https://cli.angular.io/reference.pdf" target="_blank"> <mat-icon>build</mat-icon> Angular CLI Reference </a>
+      <a mat-menu-item href="https://material.angular.io/" target="_blank"> <mat-icon>change_history</mat-icon> Angular Material </a>
+      <a mat-menu-item href="https://material.io/icons/" target="_blank"> <mat-icon>info_outline</mat-icon> Material Icons </a>
     </mat-menu>
   </mat-toolbar>
 

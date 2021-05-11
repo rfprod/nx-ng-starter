@@ -34,11 +34,7 @@ const markdownModuleConfig: MarkdownModuleConfig = {
 };
 
 @NgModule({
-  declarations: [
-    AppDocRootComponent,
-    AppDocMarkdownReferenceTreeComponent,
-    AppDocMarkdownReferenceComponent,
-  ],
+  declarations: [AppDocRootComponent, AppDocMarkdownReferenceTreeComponent, AppDocMarkdownReferenceComponent],
   imports: [
     BrowserAnimationsModule,
     HttpClientModule,

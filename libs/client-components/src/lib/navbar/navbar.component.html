@@ -1,35 +1,15 @@
 <mat-toolbar color="primary" fxFlex="0 1 auto">
-  <img
-    [ngStyle]="{ height: '75%', width: 'auto!important' }"
-    [src]="logoSrc"
-    alt="{{ appName }}"
-    title="{{ appName }}"
-  />
+  <img [ngStyle]="{ height: '75%', width: 'auto!important' }" [src]="logoSrc" alt="{{ appName }}" title="{{ appName }}" />
 
   <span fxFlex="1 1 auto"></span>
 
-  <button mat-button [fxHide.xs]="true" [fxHide.sm]="true">
-    <mat-icon>help_outline</mat-icon> Help
-  </button>
+  <button mat-button [fxHide.xs]="true" [fxHide.sm]="true"><mat-icon>help_outline</mat-icon> Help</button>
 
-  <a
-    mat-button
-    *ngFor="let anchor of anchors"
-    [fxHide.xs]="true"
-    [fxHide.sm]="true"
-    [href]="anchor.href"
-    target="_blank"
-  >
+  <a mat-button *ngFor="let anchor of anchors" [fxHide.xs]="true" [fxHide.sm]="true" [href]="anchor.href" target="_blank">
     <mat-icon>{{ anchor.icon }}</mat-icon> {{ anchor.title }}
   </a>
 
-  <button
-    mat-icon-button
-    [matMenuTriggerFor]="mobileMenuTop"
-    [fxHide.md]="true"
-    [fxHide.lg]="true"
-    [fxHide.xl]="true"
-  >
+  <button mat-icon-button [matMenuTriggerFor]="mobileMenuTop" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
     <mat-icon>menu</mat-icon>
   </button>
 

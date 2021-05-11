@@ -11,29 +11,15 @@ import { appClientCoreModuleProviders } from './providers/client-core-module.pro
  * Client core module.
  */
 @NgModule({
-  imports: [
-    FlexLayoutModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    AppClientStoreModule,
-  ],
-  exports: [
-    FlexLayoutModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    AppClientStoreModule,
-  ],
+  imports: [FlexLayoutModule, FormsModule, ReactiveFormsModule, HttpClientModule, AppClientStoreModule],
+  exports: [FlexLayoutModule, FormsModule, ReactiveFormsModule, HttpClientModule, AppClientStoreModule],
 })
 export class AppClientCoreModule {
   /**
    * Provides services.
    * @param environment application environment, if omitted default environment will be provided.
    */
-  public static forRoot(
-    environment?: IWebClientAppEnvironment,
-  ): ModuleWithProviders<AppClientCoreModule> {
+  public static forRoot(environment?: IWebClientAppEnvironment): ModuleWithProviders<AppClientCoreModule> {
     return {
       ngModule: AppClientCoreModule,
       providers: [

@@ -1,44 +1,23 @@
 <mat-toolbar color="primary" fxFlex="0 1 auto">
   <button mat-icon-button (click)="toggleSidebar()">
-    <mat-icon title="open sidenav" *ngIf="(sidebarOpened$ | async) === false">
-      flip_to_front
-    </mat-icon>
+    <mat-icon title="open sidenav" *ngIf="(sidebarOpened$ | async) === false"> flip_to_front </mat-icon>
 
     <mat-icon title="close sidenav" *ngIf="sidebarOpened$ | async"> flip_to_back </mat-icon>
   </button>
 
   <span fxFlex="1 1 auto"></span>
 
-  <button
-    mat-button
-    *ngFor="let button of buttons"
-    [routerLink]="button.routerLink"
-    [fxHide.xs]="true"
-    [fxHide.sm]="true"
-  >
+  <button mat-button *ngFor="let button of buttons" [routerLink]="button.routerLink" [fxHide.xs]="true" [fxHide.sm]="true">
     <mat-icon>{{ button.icon }}</mat-icon> {{ button.title }}
   </button>
 
-  <button
-    mat-icon-button
-    [matMenuTriggerFor]="mobileMenuBottom"
-    [fxHide.md]="true"
-    [fxHide.lg]="true"
-    [fxHide.xl]="true"
-  >
+  <button mat-icon-button [matMenuTriggerFor]="mobileMenuBottom" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
     <mat-icon>reorder</mat-icon>
   </button>
 
-  <mat-divider
-    [ngStyle]="{ height: '100%' }"
-    [vertical]="true"
-    [fxHide.xs]="true"
-    [fxHide.sm]="true"
-  ></mat-divider>
+  <mat-divider [ngStyle]="{ height: '100%' }" [vertical]="true" [fxHide.xs]="true" [fxHide.sm]="true"></mat-divider>
 
-  <button mat-button (click)="toggleChatbot()" [fxHide.xs]="true" [fxHide.sm]="true">
-    <mat-icon>touch_app</mat-icon> Chat widget
-  </button>
+  <button mat-button (click)="toggleChatbot()" [fxHide.xs]="true" [fxHide.sm]="true"><mat-icon>touch_app</mat-icon> Chat widget</button>
 
   <mat-menu #mobileMenuBottom="matMenu" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
     <a mat-menu-item *ngFor="let button of buttons" [routerLink]="button.routerLink">

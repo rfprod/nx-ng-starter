@@ -120,24 +120,13 @@ $extended-box-shadow-palette: (
     background-color: map-get(map-get($extended-bg-palette, dark), $selector);
   }
 }
-@mixin extended-box-shadow-color(
-  $inset,
-  $offsetX,
-  $offsetY,
-  $blurRadius,
-  $spreadRadius,
-  $selector
-) {
-  -webkit-box-shadow: $inset $offsetX $offsetY $blurRadius $spreadRadius
-    map-get(map-get($extended-box-shadow-palette, light), $selector);
-  box-shadow: $inset $offsetX $offsetY $blurRadius $spreadRadius
-    map-get(map-get($extended-box-shadow-palette, light), $selector);
+@mixin extended-box-shadow-color($inset, $offsetX, $offsetY, $blurRadius, $spreadRadius, $selector) {
+  -webkit-box-shadow: $inset $offsetX $offsetY $blurRadius $spreadRadius map-get(map-get($extended-box-shadow-palette, light), $selector);
+  box-shadow: $inset $offsetX $offsetY $blurRadius $spreadRadius map-get(map-get($extended-box-shadow-palette, light), $selector);
 
   .unicorn-dark-theme & {
-    -webkit-box-shadow: $inset $offsetX $offsetY $blurRadius $spreadRadius
-      map-get(map-get($extended-box-shadow-palette, dark), $selector);
-    box-shadow: $inset $offsetX $offsetY $blurRadius $spreadRadius
-      map-get(map-get($extended-box-shadow-palette, dark), $selector);
+    -webkit-box-shadow: $inset $offsetX $offsetY $blurRadius $spreadRadius map-get(map-get($extended-box-shadow-palette, dark), $selector);
+    box-shadow: $inset $offsetX $offsetY $blurRadius $spreadRadius map-get(map-get($extended-box-shadow-palette, dark), $selector);
   }
 }
 

@@ -19,9 +19,7 @@ const rpcUrl = '0.0.0.0:15001';
 /**
  * Grpc client options.
  */
-export const backendGrpcClientOptions: (env: ApiEnvironment) => ClientOptions = (
-  env: ApiEnvironment,
-) => ({
+export const backendGrpcClientOptions: (env: ApiEnvironment) => ClientOptions = (env: ApiEnvironment) => ({
   transport: Transport.GRPC,
   options: {
     url: rpcUrl,

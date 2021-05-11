@@ -7,10 +7,7 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY } from '@angular/material-momen
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 import { AppHammerGestureConfig } from '../configs/hammerjs-gesture.config';
-import {
-  CUSTOM_DATE_FORMATS,
-  matMomentDateAdapterOptionsFactory,
-} from '../configs/mat-date.config';
+import { CUSTOM_DATE_FORMATS, matMomentDateAdapterOptionsFactory } from '../configs/mat-date.config';
 import { matTooltipOptionsFactory } from '../configs/mat-tooltip.config';
 
 /**

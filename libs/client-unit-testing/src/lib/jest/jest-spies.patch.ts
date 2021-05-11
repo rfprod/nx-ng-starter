@@ -9,9 +9,7 @@ export type TDebugElementComponentInstance = DebugElement['componentInstance'];
 /**
  * Setup spies function type.
  */
-export type TSetupJestSpiesFor<T> = (
-  component: TDebugElementComponentInstance,
-) => TClassMemberSpiesObject<T>;
+export type TSetupJestSpiesFor<T> = (component: TDebugElementComponentInstance) => TClassMemberSpiesObject<T>;
 
 /**
  * Function member spy.
@@ -47,37 +45,28 @@ export type TClassMemberSpiesObject<T> = {
  * - a subject or behavior subject, then subject's pipe and subscribe methods are being spied on.
  * @param component debug element component instance
  */
-export function setupJestSpiesFor<T>(
-  component: TDebugElementComponentInstance,
-): TClassMemberSpiesObject<T> {
-  const spiesObject: TClassMemberSpiesObject<T> = Object.keys(component).reduce(
-    (accumulator: TClassMemberSpiesObject<T>, key: string) => {
-      let spy: TClassMemberSpy | null = null;
-      const classMember = (component as T)[key];
-      /**
-       * Spy on component functions.
-       */
-      if (classMember instanceof Function) {
-        spy = jest.spyOn(component, key);
-      }
-      /**
-       * Spy on pipe and subscribe methods of observables, subjects, and behavior subjects.
-       */
-      if (
-        classMember instanceof Observable ||
-        classMember instanceof Subject ||
-        classMember instanceof BehaviorSubject
-      ) {
-        spy = {
-          pipe: jest.spyOn(classMember, 'pipe'),
-          subscribe: jest.spyOn(classMember, 'subscribe'),
-        };
-      }
-      accumulator[key] = spy;
-      return accumulator;
-    },
-    {} as TClassMemberSpiesObject<T>,
-  );
+export function setupJestSpiesFor<T>(component: TDebugElementComponentInstance): TClassMemberSpiesObject<T> {
+  const spiesObject: TClassMemberSpiesObject<T> = Object.keys(component).reduce((accumulator: TClassMemberSpiesObject<T>, key: string) => {
+    let spy: TClassMemberSpy | null = null;
+    const classMember = (component as T)[key];
+    /**
+     * Spy on component functions.
+     */
+    if (classMember instanceof Function) {
+      spy = jest.spyOn(component, key);
+    }
+    /**
+     * Spy on pipe and subscribe methods of observables, subjects, and behavior subjects.
+     */
+    if (classMember instanceof Observable || classMember instanceof Subject || classMember instanceof BehaviorSubject) {
+      spy = {
+        pipe: jest.spyOn(classMember, 'pipe'),
+        subscribe: jest.spyOn(classMember, 'subscribe'),
+      };
+    }
+    accumulator[key] = spy;
+    return accumulator;
+  }, {} as TClassMemberSpiesObject<T>);
 
   return spiesObject;
 }

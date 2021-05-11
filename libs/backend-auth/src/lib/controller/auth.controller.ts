@@ -1,10 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import {
-  Message,
-  UserLoginCredentials,
-  UserLogoutCredentials,
-  UserProfile,
-} from '@nx-ng-starter/backend-interfaces';
+import { Message, UserLoginCredentials, UserLogoutCredentials, UserProfile } from '@nx-ng-starter/backend-interfaces';
 
 import { BackendAuthService } from '../service/auth.service';
 

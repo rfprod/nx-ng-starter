@@ -62,10 +62,7 @@ const addFiles = (schema: ISchematicContext): Rule => (tree: Tree, context: Sche
 /**
  * Updates angular.json
  */
-const updateProjectConfig = (schema: ISchematicContext): Rule => (
-  tree: Tree,
-  context: SchematicContext,
-) => {
+const updateProjectConfig = (schema: ISchematicContext): Rule => (tree: Tree, context: SchematicContext) => {
   const projectConfig: IProjectConfig = getProjectConfig(tree, schema.name);
   projectConfig.architect.lint.builder = '@angular-eslint/builder:lint';
   projectConfig.architect.lint.options.lintFilePatterns = [`libs/${schema.name}/src/**/*.ts`];
@@ -73,9 +70,7 @@ const updateProjectConfig = (schema: ISchematicContext): Rule => (
   const projectRoot = `${process.cwd()}`;
   const angularJsonPath = `${projectRoot}/angular.json`;
 
-  const angularJson: Record<string, Record<string, unknown>> = JSON.parse(
-    fs.readFileSync(angularJsonPath)?.toString() ?? '{}',
-  );
+  const angularJson: Record<string, Record<string, unknown>> = JSON.parse(fs.readFileSync(angularJsonPath)?.toString() ?? '{}');
   angularJson.projects[schema.name] = projectConfig;
   fs.writeFileSync(angularJsonPath, Buffer.from(JSON.stringify(angularJson)));
 

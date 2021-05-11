@@ -1,12 +1,7 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppMarkdownService } from '@nx-ng-starter/client-services';
-import {
-  getTestBedConfig,
-  newTestBedMetadata,
-  setupJestSpiesFor,
-  TClassMemberSpiesObject,
-} from '@nx-ng-starter/client-unit-testing';
+import { getTestBedConfig, newTestBedMetadata, setupJestSpiesFor, TClassMemberSpiesObject } from '@nx-ng-starter/client-unit-testing';
 
 import { AppDiagnosticsHomeComponent } from './diagnostics-home.component';
 
@@ -43,9 +38,7 @@ describe('AppDiagnosticsHomeComponent', () => {
           service = TestBed.inject(AppMarkdownService);
           spy = {
             service: {
-              process: jest
-                .spyOn(service, 'process')
-                .mockImplementation((input: string) => `marked ${input}`),
+              process: jest.spyOn(service, 'process').mockImplementation((input: string) => `marked ${input}`),
             },
             component: setupJestSpiesFor<AppDiagnosticsHomeComponent>(component),
           };

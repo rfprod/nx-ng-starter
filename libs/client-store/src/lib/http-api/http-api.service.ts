@@ -11,10 +11,7 @@ import { AppHttpHandlersService } from './http-handlers.service';
   providedIn: 'root',
 })
 export class AppHttpApiService {
-  constructor(
-    private readonly httpClient: HttpClient,
-    private readonly httpHandlers: AppHttpHandlersService,
-  ) {}
+  constructor(private readonly httpClient: HttpClient, private readonly httpHandlers: AppHttpHandlersService) {}
 
   public ping() {
     const endpoint = this.httpHandlers.getEndpoint('ping');

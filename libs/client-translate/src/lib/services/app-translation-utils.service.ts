@@ -6,11 +6,7 @@ import { Subject } from 'rxjs';
 
 import { RU_DICTIONARY } from '../dictionaries/ru';
 import { IUiDictionary } from '../interfaces/ui-dictionary.interface';
-import {
-  ISupportedLanguage,
-  IUiLanguagesInterface,
-  TLangCode,
-} from '../interfaces/ui-languages.interface';
+import { ISupportedLanguage, IUiLanguagesInterface, TLangCode } from '../interfaces/ui-languages.interface';
 import { IUiTranslations } from '../interfaces/ui-translations.interface';
 
 /**
@@ -80,8 +76,7 @@ export class AppTranslationUtilsService {
    */
   public getUserLanguagePreference(): TLangCode {
     const navLang: string = this.win.navigator.language;
-    const userPreference: TLangCode =
-      Boolean(navLang.match(/(ru-RU|ru)/gi)) || Boolean(navLang[0].match(/(ru)/gi)) ? 'ru' : 'en';
+    const userPreference: TLangCode = Boolean(navLang.match(/(ru-RU|ru)/gi)) || Boolean(navLang[0].match(/(ru)/gi)) ? 'ru' : 'en';
     return userPreference;
   }
 

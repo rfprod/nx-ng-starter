@@ -3,11 +3,7 @@ import { HttpTestingController, TestRequest } from '@angular/common/http/testing
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { Store } from '@ngxs/store';
 import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
-import {
-  AppLocalStorageMock,
-  getTestBedConfig,
-  newTestBedMetadata,
-} from '@nx-ng-starter/client-unit-testing';
+import { AppLocalStorageMock, getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/client-unit-testing';
 import { HTTP_STATUS } from '@nx-ng-starter/client-util';
 import { Apollo } from 'apollo-angular';
 import { ExecutionResult, GraphQLError } from 'graphql';
@@ -16,10 +12,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, concatMap, map, tap } from 'rxjs/operators';
 
 import { AppHttpProgressStoreModule } from '../http-progress/http-progress.module';
-import {
-  AppToasterService,
-  toasterServiceProvider,
-} from '../http-progress/services/toaster/toaster.service';
+import { AppToasterService, toasterServiceProvider } from '../http-progress/services/toaster/toaster.service';
 import { AppHttpHandlersService } from './http-handlers.service';
 
 describe('AppHttpHandlersService', () => {
@@ -158,9 +151,7 @@ describe('AppHttpHandlersService', () => {
       void service.pipeGraphQLRequest(q$).subscribe(
         () => null,
         () => {
-          expect(spy.service.checkErrorStatusAndRedirect).toHaveBeenCalledWith(
-            HTTP_STATUS.UNAUTHORIZED,
-          );
+          expect(spy.service.checkErrorStatusAndRedirect).toHaveBeenCalledWith(HTTP_STATUS.UNAUTHORIZED);
         },
       );
       getTestScheduler().flush();

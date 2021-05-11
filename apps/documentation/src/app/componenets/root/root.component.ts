@@ -12,10 +12,7 @@ import { DOC_APP_ENV, IDocAppEnvironment } from '../../interfaces/environment.in
 export class AppDocRootComponent implements OnInit {
   public inlineTitle = this.env.appName;
 
-  constructor(
-    private readonly title: Title,
-    @Inject(DOC_APP_ENV) private readonly env: IDocAppEnvironment,
-  ) {}
+  constructor(private readonly title: Title, @Inject(DOC_APP_ENV) private readonly env: IDocAppEnvironment) {}
 
   public ngOnInit(): void {
     this.title.setTitle(this.env.appName ?? '');

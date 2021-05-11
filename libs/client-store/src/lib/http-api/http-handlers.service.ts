@@ -5,12 +5,7 @@ import { ErrorResponse, onError } from '@apollo/client/link/error';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngxs/store';
-import {
-  HTTP_STATUS,
-  IWebClientAppEnvironment,
-  WEB_CLIENT_APP_ENV,
-  WINDOW,
-} from '@nx-ng-starter/client-util';
+import { HTTP_STATUS, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV, WINDOW } from '@nx-ng-starter/client-util';
 import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
 import { createUploadLink } from 'apollo-upload-client';
 import { ExecutionResult, GraphQLError } from 'graphql';
@@ -246,11 +241,7 @@ export class AppHttpHandlersService {
 
   public getErrorMessage(error: HttpErrorResponse): string {
     const msg: string = error.message ? error.message : error.error;
-    const errorMessage: string = msg
-      ? msg
-      : error.status
-      ? `${error.status} - ${error.statusText}`
-      : 'Server error';
+    const errorMessage: string = msg ? msg : error.status ? `${error.status} - ${error.statusText}` : 'Server error';
     return errorMessage;
   }
 
@@ -279,8 +270,7 @@ export class AppHttpHandlersService {
     return tap(
       (): void => void 0,
       (error: { networkError: HttpErrorResponse }) => {
-        const unauthorized: boolean =
-          Boolean(error.networkError) && error.networkError.status === HTTP_STATUS.BAD_REQUEST;
+        const unauthorized: boolean = Boolean(error.networkError) && error.networkError.status === HTTP_STATUS.BAD_REQUEST;
         if (unauthorized) {
           this.checkErrorStatusAndRedirect(HTTP_STATUS.UNAUTHORIZED);
         }

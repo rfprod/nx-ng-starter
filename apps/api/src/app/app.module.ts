@@ -12,12 +12,7 @@ import { environment } from '../environments/environment';
  * Root API application module.
  */
 @Module({
-  imports: [
-    BackendAuthModule,
-    BackendWebsocketModule,
-    BackendGqlModule.forRoot(environment),
-    BackendGrpcModule.forRoot(environment),
-  ],
+  imports: [BackendAuthModule, BackendWebsocketModule, BackendGqlModule.forRoot(environment), BackendGrpcModule.forRoot(environment)],
   providers: [
     {
       provide: API_ENV,
