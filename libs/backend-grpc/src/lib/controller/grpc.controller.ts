@@ -49,9 +49,7 @@ export class BackendGrpcController implements OnModuleInit {
     idsSubject.next({ id: 'id2' });
     idsSubject.complete();
 
-    return typeof this.sampleService !== 'undefined'
-      ? this.sampleService.findMany(idsSubject.asObservable()).pipe(toArray())
-      : of([]);
+    return typeof this.sampleService !== 'undefined' ? this.sampleService.findMany(idsSubject.asObservable()).pipe(toArray()) : of([]);
   }
 
   @Get(':id')
@@ -66,18 +64,12 @@ export class BackendGrpcController implements OnModuleInit {
   }
 
   @GrpcMethod('EntityService', 'FindOne')
-  public findOne(
-    data: nxngstarter.IEntityById,
-    metadata: Record<string, unknown>,
-  ): nxngstarter.IEntity | undefined {
+  public findOne(data: nxngstarter.IEntityById, metadata: Record<string, unknown>): nxngstarter.IEntity | undefined {
     return this.items.find(({ id }) => id === data.id);
   }
 
   @GrpcStreamMethod('EntityService', 'FindMany')
-  public findMany(
-    data$: Observable<nxngstarter.IEntityById>,
-    metadata: Record<string, unknown>,
-  ): Observable<nxngstarter.IEntity> {
+  public findMany(data$: Observable<nxngstarter.IEntityById>, metadata: Record<string, unknown>): Observable<nxngstarter.IEntity> {
     const entitySubject = new Subject<nxngstarter.IEntity>();
 
     const onNext = (entityById: nxngstarter.IEntityById) => {

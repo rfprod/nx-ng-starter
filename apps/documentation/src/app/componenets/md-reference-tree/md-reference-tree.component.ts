@@ -23,9 +23,7 @@ interface IMarkdownReferenceNode {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppDocMarkdownReferenceTreeComponent {
-  public readonly treeControl = new NestedTreeControl<IMarkdownReferenceNode>(
-    node => node.children,
-  );
+  public readonly treeControl = new NestedTreeControl<IMarkdownReferenceNode>(node => node.children);
 
   public readonly dataSource = new MatTreeNestedDataSource<IMarkdownReferenceNode>();
 
@@ -38,19 +36,14 @@ export class AppDocMarkdownReferenceTreeComponent {
     const treeNodes = mdFilePaths.map(item => {
       const name = item.replace(/\/[A-Za-z]+\.md/, '/');
       const filePath = `${basePath}${item}`;
-      const children: IMarkdownReferenceNode[] = [
-        { name: item.replace(/^.*\/(?=[A-Za-z]+\.md$)/, ''), filePath },
-      ];
+      const children: IMarkdownReferenceNode[] = [{ name: item.replace(/^.*\/(?=[A-Za-z]+\.md$)/, ''), filePath }];
       return { name, children } as IMarkdownReferenceNode;
     });
     void this.store.dispatch(new mdFilesActions.setState({ mdFilePaths })).subscribe();
     return treeNodes;
   };
 
-  constructor(
-    private readonly store: Store,
-    @Inject(DOC_APP_ENV) private readonly env: IDocAppEnvironment,
-  ) {
+  constructor(private readonly store: Store, @Inject(DOC_APP_ENV) private readonly env: IDocAppEnvironment) {
     this.dataSource.data = this.treeData();
   }
 

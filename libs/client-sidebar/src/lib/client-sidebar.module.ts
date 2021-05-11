@@ -7,13 +7,7 @@ import { AppClientSidebarRoutingModule } from './client-sidebar-routing.module';
 import { AppSidebarRootComponent } from './components/sidebar-root/sidebar-root.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AppClientMaterialModule,
-    AppClientSidebarRoutingModule,
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, AppClientMaterialModule, AppClientSidebarRoutingModule],
   declarations: [AppSidebarRootComponent],
 })
 export class AppClientSidebarModule {}

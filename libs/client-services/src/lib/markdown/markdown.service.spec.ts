@@ -20,9 +20,7 @@ describe('AppMarkdownService', () => {
           service = TestBed.inject(AppMarkdownService);
           spy = {
             service: {
-              process: jest
-                .spyOn(service, 'process')
-                .mockImplementation((input: string) => `marked ${input}`),
+              process: jest.spyOn(service, 'process').mockImplementation((input: string) => `marked ${input}`),
             },
           };
         });

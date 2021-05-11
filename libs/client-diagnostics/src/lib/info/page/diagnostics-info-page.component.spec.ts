@@ -1,11 +1,6 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  getTestBedConfig,
-  newTestBedMetadata,
-  setupJestSpiesFor,
-  TClassMemberSpiesObject,
-} from '@nx-ng-starter/client-unit-testing';
+import { getTestBedConfig, newTestBedMetadata, setupJestSpiesFor, TClassMemberSpiesObject } from '@nx-ng-starter/client-unit-testing';
 
 import { AppDiagnosticsInfoPage } from './diagnostics-info-page.component';
 

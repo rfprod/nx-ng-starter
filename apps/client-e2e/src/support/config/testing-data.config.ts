@@ -15,5 +15,4 @@ const testingDataInitialValue = {
  * This testing data subject should be used as a global state.
  * Add variables as needed.
  */
-export const initializeTestingData = () =>
-  new BehaviorSubject<ITestingData>(testingDataInitialValue);
+export const initializeTestingData = () => new BehaviorSubject<ITestingData>(testingDataInitialValue);

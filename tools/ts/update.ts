@@ -94,10 +94,7 @@ ${COLORS.CYAN}%s:${COLORS.DEFAULT}\n%s\n`,
  * Reads migrations.json, and executes migrations if file exists.
  */
 function executeMigrations(): Observable<SpawnSyncReturns<string> | null> {
-  const result = new Observable(function (
-    this,
-    subscriber: Subscriber<SpawnSyncReturns<string> | null>,
-  ) {
+  const result = new Observable(function (this, subscriber: Subscriber<SpawnSyncReturns<string> | null>) {
     fs.readFile(`${root}/migrations.json`, 'utf8', (error, data) => {
       if (error !== null) {
         console.log(`\n${COLORS.GREEN}%s${COLORS.DEFAULT}\n`, '<< NO MIGRATIONS >>');
@@ -106,9 +103,7 @@ function executeMigrations(): Observable<SpawnSyncReturns<string> | null> {
         console.log(`\n${COLORS.YELLOW}%s${COLORS.DEFAULT}\n`, '<< EXECUTING MIGRATIONS >>');
         console.log(data);
 
-        const migrationProcessOutput = spawnCommandSync(
-          `yarn nx migrate --run-migrations=${root}/migrations.json`,
-        );
+        const migrationProcessOutput = spawnCommandSync(`yarn nx migrate --run-migrations=${root}/migrations.json`);
         subscriber.next(migrationProcessOutput);
       }
 

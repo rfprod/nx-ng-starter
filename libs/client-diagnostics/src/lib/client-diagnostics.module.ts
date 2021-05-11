@@ -11,12 +11,7 @@ import { AppDiagnosticsInfoComponent } from './info/diagnostics-info.component';
 import { AppDiagnosticsInfoPage } from './info/page/diagnostics-info-page.component';
 
 @NgModule({
-  imports: [
-    FlexLayoutModule,
-    CommonModule,
-    AppClientMaterialModule,
-    AppClientDiagnosticsRoutingModule,
-  ],
+  imports: [FlexLayoutModule, CommonModule, AppClientMaterialModule, AppClientDiagnosticsRoutingModule],
   declarations: [
     AppDiagnosticsIndexComponent,
     AppDiagnosticsHomeComponent,

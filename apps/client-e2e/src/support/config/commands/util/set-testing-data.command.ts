@@ -6,10 +6,7 @@ import { ITestingData, TTestingDataPayload } from '../../../interfaces/testing-d
  * Sets testing data.
  * @note utility function, do not remove.
  */
-export const setTestingData = (
-  testingDataSubject: BehaviorSubject<ITestingData>,
-  payload: TTestingDataPayload,
-) => {
+export const setTestingData = (testingDataSubject: BehaviorSubject<ITestingData>, payload: TTestingDataPayload) => {
   const currentValue = { ...testingDataSubject.value };
 
   for (const k of Object.keys(payload)) {

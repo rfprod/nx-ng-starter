@@ -6,14 +6,8 @@ import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/client-unit
 import { Apollo } from 'apollo-angular';
 import { of } from 'rxjs';
 
-import {
-  AppHttpProgressStoreModule,
-  httpProgressModuleProviders,
-} from '../http-progress/http-progress.module';
-import {
-  AppToasterService,
-  toasterServiceProvider,
-} from '../http-progress/services/toaster/toaster.service';
+import { AppHttpProgressStoreModule, httpProgressModuleProviders } from '../http-progress/http-progress.module';
+import { AppToasterService, toasterServiceProvider } from '../http-progress/services/toaster/toaster.service';
 import { AppUserService } from '../user/user.service';
 import { AppHttpApiService } from './http-api.service';
 import { AppHttpHandlersService } from './http-handlers.service';
@@ -51,15 +45,11 @@ describe('AppHttpApiService', () => {
           user = TestBed.inject(AppUserService);
           spy = {
             httpHandlers: {
-              pipeHttpResponse: jest
-                .spyOn(httpHandlers, 'pipeHttpResponse')
-                .mockReturnValue(of({})),
+              pipeHttpResponse: jest.spyOn(httpHandlers, 'pipeHttpResponse').mockReturnValue(of({})),
             },
           };
           expect(spy.httpHandlers.pipeHttpResponse).toBeDefined();
-          httpController
-            .match(() => true)
-            .forEach((req: TestRequest) => (!req.cancelled ? req.flush({}) : null));
+          httpController.match(() => true).forEach((req: TestRequest) => (!req.cancelled ? req.flush({}) : null));
         });
     }),
   );

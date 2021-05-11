@@ -102,9 +102,7 @@ const parseSummary = (summary: ICoverageSummaryObj, summaryKeys: (keyof ICoverag
           zeroCoverage[summaryKey] = zeroCoverage[summaryKey] + 1;
         }
         const digits = 2;
-        totalCoverage[summaryKey][totalKey] = Number(
-          (currentValue + (totalKey === 'pct' ? value : value)).toFixed(digits),
-        );
+        totalCoverage[summaryKey][totalKey] = Number((currentValue + (totalKey === 'pct' ? value : value)).toFixed(digits));
       }
     }
   }
@@ -123,9 +121,7 @@ const recalculateStats = () => {
   for (const projectsCountKey of projectsCountKeys) {
     const value = totalCoverage[projectsCountKey].pct as number;
     const digits = 2;
-    totalCoverage[projectsCountKey].pct = Number(
-      (value / projectsCount[projectsCountKey]).toFixed(digits),
-    );
+    totalCoverage[projectsCountKey].pct = Number((value / projectsCount[projectsCountKey]).toFixed(digits));
   }
 };
 

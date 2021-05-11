@@ -14,6 +14,4 @@ export type TWebClientEnvToken = InjectionToken<IWebClientAppEnvironment>;
 /**
  * Web client environment injection token.
  */
-export const WEB_CLIENT_APP_ENV: TWebClientEnvToken = new InjectionToken<IWebClientAppEnvironment>(
-  'WEB_CLIENT_APP_ENV',
-);
+export const WEB_CLIENT_APP_ENV: TWebClientEnvToken = new InjectionToken<IWebClientAppEnvironment>('WEB_CLIENT_APP_ENV');

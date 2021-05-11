@@ -3,12 +3,7 @@ import { Navigate } from '@ngxs/router-plugin';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 
 import { chatbotActions } from './chatbot.actions';
-import {
-  CHATBOT_STATE_TOKEN,
-  chatbotInitialState,
-  IChatbotState,
-  TChatbotPayload,
-} from './chatbot.interface';
+import { CHATBOT_STATE_TOKEN, chatbotInitialState, IChatbotState, TChatbotPayload } from './chatbot.interface';
 
 @State<IChatbotState>({
   name: CHATBOT_STATE_TOKEN,

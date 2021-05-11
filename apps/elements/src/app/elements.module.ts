@@ -1,11 +1,4 @@
-import {
-  CUSTOM_ELEMENTS_SCHEMA,
-  DoBootstrap,
-  Inject,
-  Injector,
-  NgModule,
-  Provider,
-} from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, DoBootstrap, Inject, Injector, NgModule, Provider } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
@@ -28,8 +21,7 @@ import { environment } from '../environments/environment';
 export const grpcProviders: Provider[] = [
   {
     provide: EntityServiceClient,
-    useFactory: () =>
-      new EntityServiceClient(environment.envoyUrl ?? '', null, { withCredentials: 'true' }),
+    useFactory: () => new EntityServiceClient(environment.envoyUrl ?? '', null, { withCredentials: 'true' }),
   },
 ];
 
@@ -56,10 +48,7 @@ export const grpcProviders: Provider[] = [
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppElementsModule implements DoBootstrap {
-  constructor(
-    private readonly injector: Injector,
-    @Inject(WINDOW) private readonly window: Window,
-  ) {}
+  constructor(private readonly injector: Injector, @Inject(WINDOW) private readonly window: Window) {}
 
   public ngDoBootstrap() {
     this.registerChatbotWidget();

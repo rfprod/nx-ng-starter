@@ -1,9 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
-import {
-  IToolbarAnchor,
-  IWebClientAppEnvironment,
-  WEB_CLIENT_APP_ENV,
-} from '@nx-ng-starter/client-util';
+import { IToolbarAnchor, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@nx-ng-starter/client-util';
 
 @Component({
   selector: 'app-navbar',

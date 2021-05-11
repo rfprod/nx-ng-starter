@@ -1,10 +1,6 @@
 import { actionPayloadConstructor } from '@nx-ng-starter/client-util';
 
-import {
-  HTTP_PROGRESS_STATE_TOKEN,
-  THttpProgressPayload,
-  TShowToastPayload,
-} from './http-progress.interface';
+import { HTTP_PROGRESS_STATE_TOKEN, THttpProgressPayload, TShowToastPayload } from './http-progress.interface';
 
 const createAction = actionPayloadConstructor(HTTP_PROGRESS_STATE_TOKEN.toString());
 

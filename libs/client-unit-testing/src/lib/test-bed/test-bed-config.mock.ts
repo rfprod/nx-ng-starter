@@ -33,9 +33,7 @@ export type TTestBedConfigGetter = (metadata: TestModuleMetadata) => TestModuleM
  * TestBed configuration getter.
  * @param metadata additional test bed metadata
  */
-export const getTestBedConfig: TTestBedConfigGetter = (
-  metadata: TestModuleMetadata = newTestBedMetadata(),
-) =>
+export const getTestBedConfig: TTestBedConfigGetter = (metadata: TestModuleMetadata = newTestBedMetadata()) =>
   new Object({
     declarations: [...(metadata?.declarations ?? [])],
     imports: [AppMocksCoreModule.forRoot(), ...(metadata?.imports ?? [])],
