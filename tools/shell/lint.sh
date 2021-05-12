@@ -141,12 +141,12 @@ lintAffected() {
 
   if [ "$1" = "fix" ]; then
     npx nx affected --target=lint --base=origin/dev --head=HEAD --fix --parallel --maxParallel=2 || exit 1
-    npm run lint:all:scss:fix || exit 1
-    npm run lint:all:html:fix || exit 1
+    npm run lint:scss:fix || exit 1
+    npm run lint:html:fix || exit 1
   else
     npx nx affected --target=lint --base=origin/dev --head=HEAD --parallel --maxParallel=2 || exit 1
-    npm run lint:all:scss || exit 1
-    npm run lint:all:html || exit 1
+    npm run lint:scss || exit 1
+    npm run lint:html || exit 1
   fi
 }
 
@@ -162,12 +162,12 @@ lintAll() {
 
   if [ "$1" = "fix" ]; then
     npx nx run-many --target=lint --all --fix --parallel --maxParallel=2 || exit 1
-    npm run lint:all:scss:fix || exit 1
-    npm run lint:all:html:fix || exit 1
+    npm run lint:scss:fix || exit 1
+    npm run lint:html:fix || exit 1
   else
     npx nx run-many --target=lint --all --parallel --maxParallel=2 || exit 1
-    npm run lint:all:scss || exit 1
-    npm run lint:all:html || exit 1
+    npm run lint:scss || exit 1
+    npm run lint:html || exit 1
   fi
 }
 
