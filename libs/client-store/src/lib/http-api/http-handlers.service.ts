@@ -127,10 +127,10 @@ export class AppHttpHandlersService {
             return !Boolean(name);
           },
           httpLinkHandler,
-          (createUploadLink({
+          createUploadLink({
             uri,
             headers: { Authorization: `Token ${token}` },
-          }) as unknown) as ApolloLink,
+          }) as unknown as ApolloLink,
         );
       }),
     );
@@ -142,12 +142,7 @@ export class AppHttpHandlersService {
         ? errorLinkHandler
         : onError((error: ErrorResponse) => {
             let resultMessage = '';
-            /**
-             * Error code in uppercase, e.g. ACCESS_FORBIDDEN.
-             * Should be used as a translate service dictionary key
-             * to retrieve a localized substring for UI display.
-             * Only last error code is translated and displayed in UI.
-             */
+
             let errorCode = '';
             let errorCodeUITranslation = '';
 
@@ -167,11 +162,13 @@ export class AppHttpHandlersService {
               if (networkError instanceof HttpErrorResponse) {
                 resultMessage += (networkError.error as { detail: string }).detail;
               } else {
-                const errors: GraphQLError[] = ((networkError as unknown) as {
-                  error: {
-                    errors: GraphQLError[];
-                  };
-                }).error.errors;
+                const errors: GraphQLError[] = (
+                  networkError as unknown as {
+                    error: {
+                      errors: GraphQLError[];
+                    };
+                  }
+                ).error.errors;
                 errors.map(({ message, extensions }) => {
                   resultMessage += `[Network]: ${message}`;
                   errorCode = extensions?.code;
@@ -186,9 +183,7 @@ export class AppHttpHandlersService {
               }
             }
 
-            if (!resultMessage) {
-              resultMessage = 'Graphql request error';
-            }
+            resultMessage = !resultMessage ? 'Graphql request error' : resultMessage;
 
             this.toaster.showToaster(resultMessage, 'error');
           });

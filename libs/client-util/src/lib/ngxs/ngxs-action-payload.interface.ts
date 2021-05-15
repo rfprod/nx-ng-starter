@@ -17,11 +17,13 @@ export class AppStoreAction<T extends IActionPayload = { payload: void }> {
  * Action payload constructor.
  * @param actionScope action scope
  */
-export const actionPayloadConstructor = (actionScope: string) => <T extends IActionPayload = { payload: void }>(actionName: string) =>
-  class extends AppStoreAction<T> {
-    public static readonly type: string = `[${actionScope}]: ${actionName}`;
+export const actionPayloadConstructor =
+  (actionScope: string) =>
+  <T extends IActionPayload = { payload: void }>(actionName: string) =>
+    class extends AppStoreAction<T> {
+      public static readonly type: string = `[${actionScope}]: ${actionName}`;
 
-    constructor(public payload: T['payload']) {
-      super(payload);
-    }
-  } as ActionDef<T['payload'], AppStoreAction<T>>;
+      constructor(public payload: T['payload']) {
+        super(payload);
+      }
+    } as ActionDef<T['payload'], AppStoreAction<T>>;

@@ -157,7 +157,7 @@ describe('AppToasterService', () => {
   it('should dismiss snackBar on hideToaster() method call if it was opened previously', () => {
     service.showToaster('message', 'primary');
     expect(service['snackBarRef']).toBeDefined();
-    jest.spyOn(((service as unknown) as { snackBarRef: MatSnackBarRef<SimpleSnackBar> }).snackBarRef, 'dismiss');
+    jest.spyOn((service as unknown as { snackBarRef: MatSnackBarRef<SimpleSnackBar> }).snackBarRef, 'dismiss');
     service.hideToaster();
     expect(service['snackBarRef']?.dismiss).toHaveBeenCalled();
   });

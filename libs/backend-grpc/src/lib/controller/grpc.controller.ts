@@ -74,7 +74,9 @@ export class BackendGrpcController implements OnModuleInit {
 
     const onNext = (entityById: nxngstarter.IEntityById) => {
       const item = this.items.find(({ id }) => id === entityById.id);
-      entitySubject.next(item);
+      if (typeof item !== 'undefined') {
+        entitySubject.next(item);
+      }
     };
     const onComplete = () => {
       entitySubject.complete();
