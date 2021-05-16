@@ -44,71 +44,77 @@ interface IProjectConfig {
   };
 }
 
-const addFiles = (schema: ISchematicContext): Rule => (tree: Tree, context: SchematicContext) => {
-  const projectConfig: IProjectConfig = getProjectConfig(tree, schema.name);
+const addFiles =
+  (schema: ISchematicContext): Rule =>
+  (tree: Tree, context: SchematicContext) => {
+    const projectConfig: IProjectConfig = getProjectConfig(tree, schema.name);
 
-  const templateSource = apply(url('./files'), [
-    move(projectConfig.root),
-    template({
-      ...strings,
-      ...schema, // pass the objects containing the properties & functions to be used in template files.
-      tmpl: '', // this value is used to files naming to that template files do not affect development processes.
-    }),
-  ]);
+    const templateSource = apply(url('./files'), [
+      move(projectConfig.root),
+      template({
+        ...strings,
+        ...schema, // pass the objects containing the properties & functions to be used in template files.
+        tmpl: '', // this value is used to files naming to that template files do not affect development processes.
+      }),
+    ]);
 
-  return chain([mergeWith(templateSource, MergeStrategy.Overwrite)])(tree, context);
-};
+    return chain([mergeWith(templateSource, MergeStrategy.Overwrite)])(tree, context);
+  };
 
 /**
  * Updates angular.json
  */
-const updateProjectConfig = (schema: ISchematicContext): Rule => (tree: Tree, context: SchematicContext) => {
-  const projectConfig: IProjectConfig = getProjectConfig(tree, schema.name);
-  projectConfig.architect.lint.builder = '@angular-eslint/builder:lint';
-  projectConfig.architect.lint.options.lintFilePatterns = [`libs/${schema.name}/src/**/*.ts`];
+const updateProjectConfig =
+  (schema: ISchematicContext): Rule =>
+  (tree: Tree, context: SchematicContext) => {
+    const projectConfig: IProjectConfig = getProjectConfig(tree, schema.name);
+    projectConfig.architect.lint.builder = '@angular-eslint/builder:lint';
+    projectConfig.architect.lint.options.lintFilePatterns = [`libs/${schema.name}/src/**/*.ts`];
 
-  const projectRoot = `${process.cwd()}`;
-  const angularJsonPath = `${projectRoot}/angular.json`;
+    const projectRoot = `${process.cwd()}`;
+    const angularJsonPath = `${projectRoot}/angular.json`;
 
-  const angularJson: Record<string, Record<string, unknown>> = JSON.parse(fs.readFileSync(angularJsonPath)?.toString() ?? '{}');
-  angularJson.projects[schema.name] = projectConfig;
-  fs.writeFileSync(angularJsonPath, Buffer.from(JSON.stringify(angularJson)));
+    const angularJson: Record<string, Record<string, unknown>> = JSON.parse(fs.readFileSync(angularJsonPath)?.toString() ?? '{}');
+    angularJson.projects[schema.name] = projectConfig;
+    fs.writeFileSync(angularJsonPath, Buffer.from(JSON.stringify(angularJson)));
 
-  return chain([formatFiles({ skipFormat: false }, angularJsonPath)])(tree, context);
-};
+    return chain([formatFiles({ skipFormat: false }, angularJsonPath)])(tree, context);
+  };
 
 /**
  * Removes unneeded files.
  * @note TODO: revise and debug it.
  */
-const cleanup = (schema: ISchematicContext): Rule => (tree: Tree, context: SchematicContext) => {
-  const projectRoot = `${process.cwd()}`;
+const cleanup =
+  (schema: ISchematicContext): Rule =>
+  (tree: Tree, context: SchematicContext) => {
+    const projectRoot = `${process.cwd()}`;
 
-  /**
-   * @note workaround to wait until all files are created.
-   * @note TODO: improve solution
-   */
-  const timeout = 3000;
-  void timer(timeout)
-    .pipe(
-      tap(() => {
-        /**
-         * @note this file is not needed, and is removed.
-         */
-        const rslintRcPath = `${projectRoot}/.eslintrc.json`;
-        fs.stat(rslintRcPath, (err: NodeJS.ErrnoException | null, stats: fs.Stats) => {
-          if (err !== null) {
-            console.log(`${rslintRcPath} does not exist`);
-          } else {
-            fs.unlinkSync(rslintRcPath);
-          }
-        });
-      }),
-    )
-    .subscribe();
+    /**
+     * @note workaround to wait until all files are created.
+     * @note TODO: improve solution
+     */
+    const timeout = 3000;
+    void timer(timeout)
+      .pipe(
+        tap(() => {
+          /**
+           * @note this file is not needed, and is removed.
+           */
+          const rslintRcPath = `${projectRoot}/.eslintrc.json`;
+          fs.stat(rslintRcPath, (err: NodeJS.ErrnoException | null, stats: fs.Stats) => {
+            if (err !== null) {
+              console.log(`${rslintRcPath} does not exist`);
+            } else {
+              fs.unlinkSync(rslintRcPath);
+            }
+          });
+        }),
+      )
+      .subscribe();
 
-  return chain([])(tree, context);
-};
+    return chain([])(tree, context);
+  };
 
 export default function (schema: ISchematicContext) {
   return (tree: Tree, context: SchematicContext) => {

@@ -20,15 +20,12 @@ import { userActions } from '../user/user.actions';
 import { AppUserState } from '../user/user.store';
 
 /**
- * Http handers service.
+ * Handlers to work with http requests.
  */
 @Injectable({
   providedIn: 'root',
 })
 export class AppHttpHandlersService {
-  /**
-   * Default timeout interval for http-requests.
-   */
   public readonly defaultHttpTimeout = 10000;
 
   public readonly userToken$: Observable<string> = this.store.select(AppUserState.token);
@@ -44,11 +41,10 @@ export class AppHttpHandlersService {
   ) {}
 
   /**
-   * Resolver graphQL base url, adds correct protocol.
+   * Gql endpoint former.
    */
   public graphQlEndpoint(): string {
-    const url = `${this.env.api}/graphql`;
-    return url;
+    return `${this.env.api}/graphql`;
   }
 
   /**
@@ -72,8 +68,8 @@ export class AppHttpHandlersService {
    */
   @memo()
   public getEndpoint(path: string): string {
-    const p = /^\/.*$/.test(path) ? path : `/${path}`;
-    return this.env.api + p;
+    const endpoint = /^\/.*$/.test(path) ? path : `/${path}`;
+    return `${this.env.api}${endpoint}`;
   }
 
   /**
@@ -127,10 +123,10 @@ export class AppHttpHandlersService {
             return !Boolean(name);
           },
           httpLinkHandler,
-          (createUploadLink({
+          createUploadLink({
             uri,
             headers: { Authorization: `Token ${token}` },
-          }) as unknown) as ApolloLink,
+          }) as unknown as ApolloLink,
         );
       }),
     );
@@ -142,12 +138,7 @@ export class AppHttpHandlersService {
         ? errorLinkHandler
         : onError((error: ErrorResponse) => {
             let resultMessage = '';
-            /**
-             * Error code in uppercase, e.g. ACCESS_FORBIDDEN.
-             * Should be used as a translate service dictionary key
-             * to retrieve a localized substring for UI display.
-             * Only last error code is translated and displayed in UI.
-             */
+
             let errorCode = '';
             let errorCodeUITranslation = '';
 
@@ -167,11 +158,13 @@ export class AppHttpHandlersService {
               if (networkError instanceof HttpErrorResponse) {
                 resultMessage += (networkError.error as { detail: string }).detail;
               } else {
-                const errors: GraphQLError[] = ((networkError as unknown) as {
-                  error: {
-                    errors: GraphQLError[];
-                  };
-                }).error.errors;
+                const errors: GraphQLError[] = (
+                  networkError as unknown as {
+                    error: {
+                      errors: GraphQLError[];
+                    };
+                  }
+                ).error.errors;
                 errors.map(({ message, extensions }) => {
                   resultMessage += `[Network]: ${message}`;
                   errorCode = extensions?.code;
@@ -186,9 +179,7 @@ export class AppHttpHandlersService {
               }
             }
 
-            if (!resultMessage) {
-              resultMessage = 'Graphql request error';
-            }
+            resultMessage = !resultMessage ? 'Graphql request error' : resultMessage;
 
             this.toaster.showToaster(resultMessage, 'error');
           });

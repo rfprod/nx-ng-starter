@@ -20,11 +20,11 @@ module.exports = {
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
-    // 'prettier', // prettier is too opinionated, not flexible
+    'prettier',
     'plugin:eslint-comments/recommended',
   ],
   plugins: [
-    // 'prettier', // prettier is too opinionated, not flexible
+    'prettier',
     '@typescript-eslint', // https://github.com/typescript-eslint/typescript-eslint
     '@angular-eslint', // https://github.com/angular-eslint/angular-eslint
     'simple-import-sort', // https://github.com/lydell/eslint-plugin-simple-import-sort
@@ -310,7 +310,7 @@ module.exports = {
     'prefer-object-spread': 'error',
     'prefer-spread': 'error',
     'prefer-promise-reject-errors': 'error',
-    // 'prettier/prettier': 'error', // prettier is too opinionated, not flexible
+    'prettier/prettier': 'error',
     quotes: 'off', // handled by typescript eslint rule
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
