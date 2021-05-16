@@ -7,7 +7,6 @@ import { AppLocalStorageMock, getTestBedConfig, newTestBedMetadata } from '@nx-n
 import { HTTP_STATUS } from '@nx-ng-starter/client-util';
 import { Apollo } from 'apollo-angular';
 import { ExecutionResult, GraphQLError } from 'graphql';
-import { cold, getTestScheduler } from 'jasmine-marbles';
 import { Observable, of } from 'rxjs';
 import { catchError, concatMap, map, tap } from 'rxjs/operators';
 
@@ -147,14 +146,11 @@ describe('AppHttpHandlersService', () => {
   it(
     'pipeGraphQLRequest should check error if 401 status',
     waitForAsync(() => {
-      const q$ = cold('---#|', null, { networkError: { status: HTTP_STATUS.BAD_REQUEST } });
-      void service.pipeGraphQLRequest(q$).subscribe(
-        () => null,
-        () => {
-          expect(spy.service.checkErrorStatusAndRedirect).toHaveBeenCalledWith(HTTP_STATUS.UNAUTHORIZED);
-        },
-      );
-      getTestScheduler().flush();
+      const observable$ = of({ networkError: { status: HTTP_STATUS.BAD_REQUEST } });
+      void service
+        .pipeGraphQLRequest(observable$)
+        .pipe(tap({ error: () => expect(spy.service.checkErrorStatusAndRedirect).toHaveBeenCalledWith(HTTP_STATUS.UNAUTHORIZED) }))
+        .subscribe();
     }),
   );
 

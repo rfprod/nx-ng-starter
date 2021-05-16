@@ -20,15 +20,12 @@ import { userActions } from '../user/user.actions';
 import { AppUserState } from '../user/user.store';
 
 /**
- * Http handers service.
+ * Handlers to work with http requests.
  */
 @Injectable({
   providedIn: 'root',
 })
 export class AppHttpHandlersService {
-  /**
-   * Default timeout interval for http-requests.
-   */
   public readonly defaultHttpTimeout = 10000;
 
   public readonly userToken$: Observable<string> = this.store.select(AppUserState.token);
@@ -44,11 +41,10 @@ export class AppHttpHandlersService {
   ) {}
 
   /**
-   * Resolver graphQL base url, adds correct protocol.
+   * Gql endpoint former.
    */
   public graphQlEndpoint(): string {
-    const url = `${this.env.api}/graphql`;
-    return url;
+    return `${this.env.api}/graphql`;
   }
 
   /**
