@@ -68,8 +68,8 @@ export class AppHttpHandlersService {
    */
   @memo()
   public getEndpoint(path: string): string {
-    const p = /^\/.*$/.test(path) ? path : `/${path}`;
-    return this.env.api + p;
+    const endpoint = /^\/.*$/.test(path) ? path : `/${path}`;
+    return `${this.env.api}${endpoint}`;
   }
 
   /**
