@@ -132,14 +132,11 @@ describe('AppHttpHandlersService', () => {
   it('extractGraphQLData should throw errors if get', () => {
     const error: GraphQLError = new GraphQLError('message');
     void service.extractGraphQLData({ errors: [error] }).pipe(
-      tap(
-        () => {
-          // empty
-        },
-        errors => {
+      tap({
+        error: errors => {
           expect(errors[0]).toBe(error);
         },
-      ),
+      }),
     );
   });
 
