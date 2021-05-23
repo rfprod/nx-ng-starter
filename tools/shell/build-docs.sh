@@ -10,17 +10,6 @@ source tools/shell/colors.sh ''
 ##
 source tools/shell/print-utils.sh ''
 
-##
-# Reports usage error.
-##
-reportUsageError() {
-  printInfoTitle "<< ${0} USAGE >>"
-  printUsageTip "bash tools/shell/build-docs.sh" "build documentation app"
-  printGap
-
-  exit 1
-}
-
 buildDocumentation() {
   printInfoTitle "<< Building documentation app >>"
   printGap
