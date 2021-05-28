@@ -5,6 +5,7 @@
     "enableResourceInlining": true,
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
   "compileOnSave": false,
@@ -24,7 +25,7 @@
     "noEmit": false,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
-    "noImplicitReturns": false,
+    "noImplicitReturns": true,
     "noUnusedLocals": true,
     "paths": {
       "@nx-ng-starter/backend-auth": ["libs/backend-auth/src/index.ts"],

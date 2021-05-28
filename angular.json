@@ -50,8 +50,7 @@
             "main": "apps/api/src/main.ts",
             "outputPath": "dist/apps/api",
             "tsConfig": "apps/api/tsconfig.app.json"
-          },
-          "outputs": ["{options.outputPath}"]
+          }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -79,8 +78,7 @@
           "options": {
             "jestConfig": "apps/api/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/apps/api"]
+          }
         }
       },
       "prefix": "api",
@@ -103,8 +101,7 @@
           "options": {
             "jestConfig": "libs/backend-auth/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/backend-auth"]
+          }
         }
       },
       "projectType": "library",
@@ -125,8 +122,7 @@
           "options": {
             "jestConfig": "libs/backend-gql/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/backend-gql"]
+          }
         }
       },
       "projectType": "library",
@@ -147,8 +143,7 @@
           "options": {
             "jestConfig": "libs/backend-grpc/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/backend-grpc"]
+          }
         }
       },
       "projectType": "library",
@@ -179,8 +174,7 @@
           "options": {
             "jestConfig": "libs/backend-interfaces/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/backend-interfaces"]
+          }
         }
       },
       "projectType": "library",
@@ -202,8 +196,7 @@
           "options": {
             "jestConfig": "libs/backend-logger/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/backend-logger"]
+          }
         }
       },
       "projectType": "library",
@@ -224,8 +217,7 @@
           "options": {
             "jestConfig": "libs/backend-websocket/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/backend-websocket"]
+          }
         }
       },
       "projectType": "library",
@@ -308,20 +300,26 @@
                 "type": "anyComponentStyle"
               }
             ],
+            "buildOptimizer": false,
+            "extractLicenses": true,
             "index": "apps/client/src/index.html",
             "main": "apps/client/src/main.ts",
+            "namedChunks": true,
+            "optimization": false,
+            "outputHashing": "none",
             "outputPath": "dist/apps/client",
             "polyfills": "apps/client/src/polyfills.ts",
             "scripts": [],
+            "sourceMap": true,
             "styles": [
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
               "node_modules/material-design-icon-fonts/iconfont/material-icons.css",
               "apps/client/src/styles.scss",
               "libs/client-core/src/lib/styles/styles.scss"
             ],
-            "tsConfig": "apps/client/tsconfig.app.json"
-          },
-          "outputs": ["{options.outputPath}"]
+            "tsConfig": "apps/client/tsconfig.app.json",
+            "vendorChunk": true
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -369,8 +367,7 @@
               "apps/client/src/styles.scss",
               "libs/client-core/src/lib/styles/styles.scss"
             ]
-          },
-          "outputs": ["coverage/apps/client"]
+          }
         }
       },
       "prefix": "client",
@@ -397,8 +394,7 @@
           "options": {
             "jestConfig": "libs/client-chatbot/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/client-chatbot"]
+          }
         }
       },
       "prefix": "nx-ng-starter",
@@ -421,8 +417,7 @@
             },
             "outputPath": "dist/storybook/client-components",
             "uiFramework": "@storybook/angular"
-          },
-          "outputs": ["{options.outputPath}"]
+          }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -451,8 +446,7 @@
           "options": {
             "jestConfig": "libs/client-components/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/client-components"]
+          }
         }
       },
       "prefix": "nx-ng-starter",
@@ -506,8 +500,7 @@
           "options": {
             "jestConfig": "libs/client-core/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/client-core"]
+          }
         }
       },
       "prefix": "client",
@@ -535,8 +528,7 @@
             },
             "outputPath": "dist/storybook/client-diagnostics",
             "uiFramework": "@storybook/angular"
-          },
-          "outputs": ["{options.outputPath}"]
+          }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -565,8 +557,7 @@
           "options": {
             "jestConfig": "libs/client-diagnostics/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/client-diagnostics"]
+          }
         }
       },
       "prefix": "mono",
@@ -647,8 +638,7 @@
           "options": {
             "jestConfig": "libs/client-gql/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/client-gql"]
+          }
         }
       },
       "prefix": "nx-ng-starter",
@@ -675,8 +665,7 @@
           "options": {
             "jestConfig": "libs/client-material/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/client-material"]
+          }
         }
       },
       "prefix": "client",
@@ -703,8 +692,7 @@
           "options": {
             "jestConfig": "libs/client-services/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/client-services"]
+          }
         }
       },
       "prefix": "client",
@@ -731,8 +719,7 @@
           "options": {
             "jestConfig": "libs/client-sidebar/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/client-sidebar"]
+          }
         }
       },
       "prefix": "nx-ng-starter",
@@ -754,8 +741,7 @@
           "options": {
             "jestConfig": "libs/client-store/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/client-store"]
+          }
         }
       },
       "prefix": "client",
@@ -782,8 +768,7 @@
           "options": {
             "jestConfig": "libs/client-translate/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/client-translate"]
+          }
         }
       },
       "prefix": "client",
@@ -810,8 +795,7 @@
           "options": {
             "jestConfig": "libs/client-unit-testing/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/client-unit-testing"]
+          }
         }
       },
       "prefix": "client",
@@ -838,8 +822,7 @@
           "options": {
             "jestConfig": "libs/client-util/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/client-util"]
+          }
         }
       },
       "prefix": "client",
@@ -942,8 +925,13 @@
                 "type": "anyComponentStyle"
               }
             ],
+            "buildOptimizer": false,
+            "extractLicenses": true,
             "index": "apps/documentation/src/index.html",
             "main": "apps/documentation/src/main.ts",
+            "namedChunks": true,
+            "optimization": false,
+            "outputHashing": "none",
             "outputPath": "dist/apps/documentation",
             "polyfills": "apps/documentation/src/polyfills.ts",
             "scripts": [
@@ -956,6 +944,7 @@
               "node_modules/emoji-toolkit/lib/js/joypixels.min.js",
               "node_modules/katex/dist/katex.min.js"
             ],
+            "sourceMap": true,
             "styles": [
               "apps/documentation/src/styles.scss",
               "libs/client-core/src/lib/styles/styles.scss",
@@ -966,9 +955,9 @@
               "node_modules/prismjs/plugins/line-highlight/prism-line-highlight.css",
               "node_modules/katex/dist/katex.min.css"
             ],
-            "tsConfig": "apps/documentation/tsconfig.app.json"
-          },
-          "outputs": ["{options.outputPath}"]
+            "tsConfig": "apps/documentation/tsconfig.app.json",
+            "vendorChunk": true
+          }
         },
         "build-storybook": {
           "builder": "@nrwl/storybook:build",
@@ -983,8 +972,7 @@
             },
             "outputPath": "dist/storybook/documentation",
             "uiFramework": "@storybook/angular"
-          },
-          "outputs": ["{options.outputPath}"]
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -1015,8 +1003,7 @@
           "options": {
             "jestConfig": "apps/documentation/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/apps/documentation"]
+          }
         }
       },
       "prefix": "nx-ng-starter",
@@ -1116,18 +1103,25 @@
                 "type": "anyComponentStyle"
               }
             ],
+            "buildOptimizer": false,
+            "extractLicenses": true,
             "index": "apps/elements/src/index.html",
             "main": "apps/elements/src/main.ts",
+            "namedChunks": true,
+            "optimization": false,
+            "outputHashing": "none",
             "outputPath": "dist/apps/elements",
             "polyfills": "apps/elements/src/polyfills.ts",
             "scripts": [],
+            "sourceMap": true,
             "styles": [
               "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
               "node_modules/material-design-icon-fonts/iconfont/material-icons.css",
               "apps/elements/src/styles.scss",
               "libs/client-core/src/lib/styles/styles.scss"
             ],
-            "tsConfig": "apps/elements/tsconfig.app.json"
+            "tsConfig": "apps/elements/tsconfig.app.json",
+            "vendorChunk": true
           }
         },
         "extract-i18n": {
@@ -1160,8 +1154,7 @@
           "options": {
             "jestConfig": "apps/elements/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/apps/elements"]
+          }
         }
       },
       "prefix": "nx-ng-starter",
@@ -1202,7 +1195,6 @@
           "builder": "@nrwl/web:build",
           "configurations": {
             "production": {
-              "extractCss": true,
               "extractLicenses": true,
               "fileReplacements": [
                 {
@@ -1234,8 +1226,7 @@
             "scripts": [],
             "styles": ["apps/elements-testing/src/styles.scss"],
             "tsConfig": "apps/elements-testing/tsconfig.app.json"
-          },
-          "outputs": ["{options.outputPath}"]
+          }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -1261,8 +1252,7 @@
           "options": {
             "jestConfig": "apps/elements-testing/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/apps/elements-testing"]
+          }
         }
       },
       "projectType": "application",
@@ -1310,8 +1300,7 @@
           "options": {
             "jestConfig": "libs/proto/jest.config.js",
             "passWithNoTests": true
-          },
-          "outputs": ["coverage/libs/proto"]
+          }
         }
       },
       "prefix": "client",
