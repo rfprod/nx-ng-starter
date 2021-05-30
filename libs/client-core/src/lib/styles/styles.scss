@@ -1,4 +1,5 @@
 /* Angular Material Theme, and Typography customization */
+@use '~@angular/material' as mat;
 @import 'node_modules/@angular/material/_theming.scss';
 @import 'libs/client-core/src/lib/styles/theming/material-colors.scss';
 
@@ -6,21 +7,21 @@
  * Define a custom typography config that overrides font-family, and all levels.
  */
 
-$custom-typography: mat-typography-config(
+$custom-typography: mat.define-typography-config(
   $font-family: 'Roboto, monospace, "Helvetica Neue", sans-serif',
-  $display-4: mat-typography-level(112px, 112px, 300),
-  $display-3: mat-typography-level(56px, 56px, 400),
-  $display-2: mat-typography-level(45px, 48px, 400),
-  $display-1: mat-typography-level(34px, 40px, 400),
-  $headline: mat-typography-level(24px, 32px, 400),
-  $title: mat-typography-level(20px, 32px, 500),
-  $subheading-2: mat-typography-level(16px, 28px, 400),
-  $subheading-1: mat-typography-level(15px, 24px, 400),
-  $body-2: mat-typography-level(14px, 24px, 500),
-  $body-1: mat-typography-level(14px, 20px, 400),
-  $caption: mat-typography-level(12px, 20px, 400),
-  $button: mat-typography-level(14px, 14px, 500),
-  $input: mat-typography-level(inherit, 1.125, 400),
+  $display-4: mat.define-typography-level(112px, 112px, 300),
+  $display-3: mat.define-typography-level(56px, 56px, 400),
+  $display-2: mat.define-typography-level(45px, 48px, 400),
+  $display-1: mat.define-typography-level(34px, 40px, 400),
+  $headline: mat.define-typography-level(24px, 32px, 400),
+  $title: mat.define-typography-level(20px, 32px, 500),
+  $subheading-2: mat.define-typography-level(16px, 28px, 400),
+  $subheading-1: mat.define-typography-level(15px, 24px, 400),
+  $body-2: mat.define-typography-level(14px, 24px, 500),
+  $body-1: mat.define-typography-level(14px, 20px, 400),
+  $caption: mat.define-typography-level(12px, 20px, 400),
+  $button: mat.define-typography-level(14px, 14px, 500),
+  $input: mat.define-typography-level(inherit, 1.125, 400),
 );
 
 /**
@@ -29,22 +30,22 @@ $custom-typography: mat-typography-config(
  * Be sure to include this mixin once!
  * Custom typography config is passed to mat-core.
  */
-@include mat-core($custom-typography);
+@include mat.core($custom-typography);
 
 /* Define a custom light theme. */
-$candy-app-primary: mat-palette($mat-green, 600);
-$candy-app-accent: mat-palette($mat-deep-orange, 500);
-$candy-app-warn: mat-palette($mat-red, 800);
-$candy-app-theme: mat-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
+$candy-app-primary: mat.define-palette(mat.$green-palette, 600);
+$candy-app-accent: mat.define-palette(mat.$deep-orange-palette, 500);
+$candy-app-warn: mat.define-palette(mat.$red-palette, 800);
+$candy-app-theme: mat.define-light-theme($candy-app-primary, $candy-app-accent, $candy-app-warn);
 
 /* Include the custom light theme styles. */
-@include angular-material-theme($candy-app-theme);
+@include mat.all-component-themes($candy-app-theme);
 
 /* Define an alternate dark theme. */
-$unicorn-dark-primary: mat-palette($mat-deep-orange, 800);
-$unicorn-dark-accent: mat-palette($mat-yellow, 400);
-$unicorn-dark-warn: mat-palette($mat-orange, 300);
-$unicorn-dark-theme: mat-dark-theme($unicorn-dark-primary, $unicorn-dark-accent, $unicorn-dark-warn);
+$unicorn-dark-primary: mat.define-palette(mat.$deep-orange-palette, 800);
+$unicorn-dark-accent: mat.define-palette(mat.$yellow-palette, 400);
+$unicorn-dark-warn: mat.define-palette(mat.$orange-palette, 300);
+$unicorn-dark-theme: mat.define-dark-theme($unicorn-dark-primary, $unicorn-dark-accent, $unicorn-dark-warn);
 
 /**
  * Include the alternative theme styles inside of a block with a CSS class.
@@ -53,7 +54,7 @@ $unicorn-dark-theme: mat-dark-theme($unicorn-dark-primary, $unicorn-dark-accent,
  */
 
 .unicorn-dark-theme {
-  @include angular-material-theme($unicorn-dark-theme);
+  @include mat.all-component-themes($unicorn-dark-theme);
 }
 
 /**
