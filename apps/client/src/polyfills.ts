@@ -78,7 +78,7 @@ import 'isomorphic-fetch';
 /**
  * Zone JS is required by default for Angular itself.
  */
-import 'zone.js/dist/zone'; // Included with Angular CLI.
+import 'zone.js'; // Included with Angular CLI.
 /**
  * Custom Elements v1 aren’t fully supported by the browsers yet, so we need to install a polyfill.
  */
