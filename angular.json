@@ -1377,7 +1377,7 @@
           "options": {
             "commands": [
               {
-                "command": "npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --check --jsonUpgraded; yarn install && yarn ngcc && npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --migrate=only; rm -rf migrations.json migrations-packages.json"
+                "command": "yarn install && yarn ngcc && npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --migrate=only; rm -rf migrations.json migrations-packages.json"
               }
             ]
           }
