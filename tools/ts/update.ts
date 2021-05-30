@@ -1,5 +1,5 @@
 import { Observable, Subscriber, timer } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { finalize, tap } from 'rxjs/operators';
 import * as fs from 'fs';
 import { argv } from 'yargs';
 import { spawnSync, SpawnSyncOptionsWithStringEncoding, SpawnSyncReturns } from 'child_process';
@@ -22,6 +22,19 @@ const cwd = __dirname;
 const root = `${cwd}/../..`;
 
 type TUpdatablePackages = Record<string, string>;
+
+interface IPackageJson {
+  scripts: Record<string, string>;
+  husky: {
+    hooks: Record<string, string>;
+  };
+  dependencies: Record<string, string>;
+  devDependencies: Record<string, string>;
+  engines: {
+    node: string;
+    npm: string;
+  };
+}
 
 /**
  * Prints script usage instructions.
@@ -90,30 +103,6 @@ ${COLORS.CYAN}%s:${COLORS.DEFAULT}\n%s\n`,
   return spawnSyncOutput;
 }
 
-/**
- * Reads migrations.json, and executes migrations if file exists.
- */
-function executeMigrations(): Observable<SpawnSyncReturns<string> | null> {
-  const result = new Observable(function (this, subscriber: Subscriber<SpawnSyncReturns<string> | null>) {
-    fs.readFile(`${root}/migrations.json`, 'utf8', (error, data) => {
-      if (error !== null) {
-        console.log(`\n${COLORS.GREEN}%s${COLORS.DEFAULT}\n`, '<< NO MIGRATIONS >>');
-        subscriber.next(null);
-      } else {
-        console.log(`\n${COLORS.YELLOW}%s${COLORS.DEFAULT}\n`, '<< EXECUTING MIGRATIONS >>');
-        console.log(data);
-
-        const migrationProcessOutput = spawnCommandSync(`yarn nx migrate --run-migrations=${root}/migrations.json`);
-        subscriber.next(migrationProcessOutput);
-      }
-
-      subscriber.complete();
-      subscriber.unsubscribe();
-    });
-  });
-  return result;
-}
-
 function writeUpdateSummary(packages: TUpdatablePackages) {
   const path = `${root}/migrations-packages.json`;
   fs.writeFile(path, JSON.stringify(packages), (error: NodeJS.ErrnoException | null) => {
@@ -133,9 +122,10 @@ function checkForUpdates(jsonUpgraded = false): TUpdatablePackages {
   const args = jsonUpgraded ? ['--jsonUpgraded'] : [];
   console.log(`\n${COLORS.YELLOW}%s${COLORS.DEFAULT}\n`, 'Checking for updates. Wait for it...');
   const ncuOutput = spawnCommandSync('ncu', args);
-  const updatablePackages: TUpdatablePackages = jsonUpgraded
-    ? JSON.parse(ncuOutput.stdout.replace(/Using yarn(.*package\.json)?/gi, '').trim()) ?? {}
-    : {};
+  const updatablePackages: TUpdatablePackages =
+    jsonUpgraded && typeof ncuOutput.error === 'undefined'
+      ? JSON.parse(ncuOutput.stdout.replace(/Using yarn(.*package\.json)?/gi, '').trim()) ?? {}
+      : {};
   if (jsonUpgraded) {
     writeUpdateSummary(updatablePackages);
   } else {
@@ -148,54 +138,113 @@ function checkForUpdates(jsonUpgraded = false): TUpdatablePackages {
 }
 
 /**
+ * Reads migrations.json, and executes migrations if file exists.
+ */
+function executeMigrations(): Observable<SpawnSyncReturns<string> | null> {
+  const result = new Observable(function (this, subscriber: Subscriber<SpawnSyncReturns<string> | null>) {
+    fs.readFile(`${root}/migrations.json`, 'utf8', (error, data) => {
+      if (error !== null) {
+        console.log(`\n${COLORS.GREEN}%s${COLORS.DEFAULT}\n`, '<< NO MIGRATIONS >>');
+        subscriber.next(null);
+      } else {
+        console.log(`\n${COLORS.YELLOW}%s${COLORS.DEFAULT}\n`, '<< EXECUTING MIGRATIONS >>');
+        console.log(data);
+
+        const migrationProcessOutput = spawnCommandSync(`yarn nx migrate --run-migrations=${root}/migrations.json`);
+        if (migrationProcessOutput.error) {
+          subscriber.error(migrationProcessOutput);
+          process.exit(1);
+        } else {
+          const deleteMigrationsFile = spawnCommandSync(`rm ${root}/migrations.json`);
+          if (deleteMigrationsFile.error) {
+            subscriber.next(deleteMigrationsFile);
+            process.exit(1);
+          } else {
+            subscriber.next(migrationProcessOutput);
+          }
+        }
+      }
+
+      subscriber.complete();
+      subscriber.unsubscribe();
+    });
+  });
+  return result;
+}
+
+const newQuestion = (
+  question: string,
+  config: {
+    limit: readlineSync.OptionType[];
+    trueValue: readlineSync.OptionType[];
+    falseValue: readlineSync.OptionType[];
+  } = {
+    limit: ['yes', 'no', 'y', 'n', 'Y', 'N'],
+    trueValue: ['yes', 'y', 'Y'],
+    falseValue: ['no', 'n', 'N'],
+  },
+) => {
+  readlineSync.setDefaultOptions({ limit: config.limit });
+  const answer = Boolean(
+    readlineSync.question(`${question} (y/N)? `, {
+      trueValue: config.trueValue,
+      falseValue: config.falseValue,
+    }),
+  );
+  return answer;
+};
+
+/**
  * Executes packages migration procedure recursively.
  * @param config migration configuration
  */
-function migratePackagesRecursively(config: { packageNames: string[]; packageNameIndex: number }) {
-  const packageName = config.packageNames[config.packageNameIndex];
-  if (typeof packageName !== 'undefined') {
-    readlineSync.setDefaultOptions({
-      limit: ['yes', 'no', 'y', 'n', 'Y', 'N'],
-    });
-    const question = `> Migrate ${packageName} to the latest version`;
-    /**
-     * @note explicit boolean cast
-     * The question returns boolean, respective types library is outdated (it's always string).
-     */
-    const answer = Boolean(
-      readlineSync.question(`${question} (y/N)? `, {
-        trueValue: ['yes', 'y', 'Y'],
-        falseValue: ['no', 'n', 'N'],
-      }),
-    );
-
-    if (answer) {
-      const migratePackageOutput = spawnCommandSync(`yarn nx migrate ${packageName}`);
-      if (migratePackageOutput.error) {
-        process.exit(1);
-      }
-    }
-
+function migratePackagesRecursively(config: { packageNames: string[]; packageIndex: number }) {
+  const processNextPackage = () => {
     const timeout = 150;
     void timer(timeout)
       .pipe(
         tap(() => {
-          if (config.packageNameIndex < config.packageNames.length) {
+          if (config.packageIndex < config.packageNames.length) {
             migratePackagesRecursively({
               packageNames: config.packageNames,
-              packageNameIndex: config.packageNameIndex + 1,
+              packageIndex: config.packageIndex + 1,
             });
           }
         }),
       )
       .subscribe();
+  };
+  const packageName = config.packageNames[config.packageIndex];
+  if (typeof packageName !== 'undefined') {
+    const answer = newQuestion(`> Migrate ${packageName} to the latest version`, {
+      limit: ['yes', 'no', 'y', 'n', 'Y', 'N'],
+      trueValue: ['yes', 'y', 'Y'],
+      falseValue: ['no', 'n', 'N'],
+    });
+
+    if (answer) {
+      const command = `yarn nx migrate ${packageName}`;
+      const migratePackageOutput = spawnCommandSync(command);
+      if (migratePackageOutput.error) {
+        process.exit(1);
+      }
+      void executeMigrations()
+        .pipe(
+          finalize(() => {
+            processNextPackage();
+          }),
+        )
+        .subscribe();
+    } else {
+      processNextPackage();
+    }
   }
 }
 
 /**
- * Starts migration for all packages defined in the migrations-packages.json that should have been creaed previously.
+ * Starts migration for all packages defined in the migrations-packages.json.
  */
-function migratePackages() {
+function updateAndMigratePackages() {
   const path = `${root}/migrations-packages.json`;
   fs.readFile(path, (error: NodeJS.ErrnoException | null, data?: Buffer) => {
     if (error !== null) {
@@ -213,13 +262,89 @@ function migratePackages() {
       );
 
       /**
-       * Do live update check to veryfy that json is not outdated.
+       * Do live update check to verify that json is not outdated.
        */
       checkForUpdates(false);
 
       const packageNames = Object.keys(updatablePackages);
 
-      migratePackagesRecursively({ packageNames, packageNameIndex: 0 });
+      migratePackagesRecursively({ packageNames, packageIndex: 0 });
+    }
+  });
+}
+
+/**
+ * Executes packages migration procedure recursively.
+ * @param config migration configuration
+ */
+function executeMigrationsRecursively(config: { packageNames: string[]; packageVersions: string[]; packageIndex: number }) {
+  const processNextPackage = () => {
+    const timeout = 150;
+    void timer(timeout)
+      .pipe(
+        tap(() => {
+          if (config.packageIndex < config.packageNames.length) {
+            executeMigrationsRecursively({
+              packageNames: config.packageNames,
+              packageVersions: config.packageVersions,
+              packageIndex: config.packageIndex + 1,
+            });
+          }
+        }),
+      )
+      .subscribe();
+  };
+  const packageName = config.packageNames[config.packageIndex];
+  const packageVersion = config.packageVersions[config.packageIndex];
+  const parsedVersion = typeof packageVersion !== 'undefined' ? packageVersion.match(/^\d+/) : null;
+  const previousVersion = parsedVersion === null ? parsedVersion : Number(parsedVersion[0]) > 0 ? Number(parsedVersion[0]) - 1 : 0;
+  if (typeof packageName !== 'undefined' && previousVersion !== null) {
+    const answer = newQuestion(`> Execute migration of ${packageName} from the version ${previousVersion} to the latest version`, {
+      limit: ['yes', 'no', 'y', 'n', 'Y', 'N'],
+      trueValue: ['yes', 'y', 'Y'],
+      falseValue: ['no', 'n', 'N'],
+    });
+
+    if (answer) {
+      const command = `yarn nx migrate ${packageName} --migrate-only --from="${packageName}@${previousVersion}"`;
+      const migratePackageOutput = spawnCommandSync(command);
+      if (migratePackageOutput.error) {
+        process.exit(1);
+      }
+      void executeMigrations()
+        .pipe(
+          finalize(() => {
+            processNextPackage();
+          }),
+        )
+        .subscribe();
+    } else {
+      processNextPackage();
+    }
+  }
+}
+
+/**
+ * Migrates packages (without updating any) from the previous version.
+ */
+function migratePackagesOnly() {
+  const path = `${root}/package.json`;
+  fs.readFile(path, (error: NodeJS.ErrnoException | null, data?: Buffer) => {
+    if (error !== null) {
+      console.log(`\n${COLORS.RED}%s${COLORS.DEFAULT}\n%s\n`, 'ERROR', error);
+      process.exit(1);
+    }
+
+    if (typeof data !== 'undefined') {
+      const parsedPackageJson: IPackageJson = JSON.parse(data.toString());
+      const dependencies = parsedPackageJson['dependencies'];
+
+      console.log(`\n${COLORS.CYAN}%s${COLORS.DEFAULT}\n%s\n`, `Parsed dependencies`, dependencies);
+
+      const packageNames = Object.keys(dependencies);
+      const packageVersions = Object.values(dependencies);
+
+      executeMigrationsRecursively({ packageNames, packageVersions, packageIndex: 0 });
     }
   });
 }
@@ -233,10 +358,10 @@ function readInputAndRun(): void {
   if (Boolean(check)) {
     const jsonUpgraded = Boolean(argv.jsonUpgraded);
     checkForUpdates(jsonUpgraded);
-  } else if (migrate === 'start') {
-    migratePackages();
-  } else if (migrate === 'execute') {
-    void executeMigrations().subscribe();
+  } else if (migrate === 'update') {
+    updateAndMigratePackages();
+  } else if (migrate === 'only') {
+    migratePackagesOnly();
   } else {
     printUsageInstructions();
   }

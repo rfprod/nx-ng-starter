@@ -1,34 +1,35 @@
+@use '~@angular/material' as mat;
 @import 'node_modules/@angular/material/_theming.scss';
 
 /* Extended palette variables */
 
 /* Tight theme */
-$primary: mat-color($candy-app-primary);
-$primary-mild: mat-color($mat-cyan, 400);
-$primary-extra-mild: mat-color($mat-cyan, 200);
-$accent: mat-color($candy-app-accent);
-$warn: mat-color($candy-app-warn);
+$primary: mat.get-color-from-palette($candy-app-primary);
+$primary-mild: mat.get-color-from-palette(mat.$cyan-palette, 400);
+$primary-extra-mild: mat.get-color-from-palette(mat.$cyan-palette, 200);
+$accent: mat.get-color-from-palette($candy-app-accent);
+$warn: mat.get-color-from-palette($candy-app-warn);
 
-$success: mat-color($mat-green, 900);
-$error: mat-color($mat-red, 900);
+$success: mat.get-color-from-palette(mat.$green-palette, 900);
+$error: mat.get-color-from-palette(mat.$red-palette, 900);
 
 /* Dark theme */
-$dark-primary: mat-color($unicorn-dark-primary);
-$dark-primary-mild: mat-color($mat-deep-orange, 300);
-$dark-primary-extra-mild: mat-color($mat-brown, 100);
-$dark-accent: mat-color($unicorn-dark-accent);
-$dark-warn: mat-color($unicorn-dark-warn);
+$dark-primary: mat.get-color-from-palette($unicorn-dark-primary);
+$dark-primary-mild: mat.get-color-from-palette(mat.$deep-orange-palette, 300);
+$dark-primary-extra-mild: mat.get-color-from-palette(mat.$brown-palette, 100);
+$dark-accent: mat.get-color-from-palette($unicorn-dark-accent);
+$dark-warn: mat.get-color-from-palette($unicorn-dark-warn);
 
-$dark-success: mat-color($mat-green, 500);
-$dark-error: mat-color($mat-red, 500);
+$dark-success: mat.get-color-from-palette(mat.$green-palette, 500);
+$dark-error: mat.get-color-from-palette(mat.$red-palette, 500);
 
 /* General purpose */
 $black: #000000;
 $white: #ffffff;
-$darkgrey: mat-color($mat-grey, 900);
-$grey: mat-color($mat-grey, 400);
-$lightgrey: mat-color($mat-grey, 200);
-$extralightgrey: mat-color($mat-grey, 100);
+$darkgrey: mat.get-color-from-palette(mat.$grey-palette, 900);
+$grey: mat.get-color-from-palette(mat.$grey-palette, 400);
+$lightgrey: mat.get-color-from-palette(mat.$grey-palette, 200);
+$extralightgrey: mat.get-color-from-palette(mat.$grey-palette, 100);
 
 /* Extended palette maps */
 
@@ -61,7 +62,7 @@ $extended-bg-palette: (
 $extended-text-palette: (
   light: (
     '.primary': $primary,
-    '.primary-bg-text': map-get($mat-dark-theme-foreground, text),
+    '.primary-bg-text': map-get(mat.$dark-theme-foreground-palette, text),
     '.accent': $accent,
     '.warn': $warn,
     '.success': $success,
@@ -72,7 +73,7 @@ $extended-text-palette: (
   ),
   dark: (
     '.primary': $dark-primary,
-    '.primary-bg-text': map-get($mat-dark-theme-foreground, text),
+    '.primary-bg-text': map-get(mat.$dark-theme-foreground-palette, text),
     '.accent': $dark-accent,
     '.warn': $dark-warn,
     '.success': $dark-success,

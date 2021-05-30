@@ -99,7 +99,8 @@
     "workspace:schematic": "nx workspace-schematic",
     "workspace:update": "nx migrate latest",
     "workspace:update:check": "ng run tools:update-check",
-    "workspace:update:migrate": "ng run tools:update-migrate"
+    "workspace:update:migrate": "ng run tools:update-migrate",
+    "workspace:update:migrate:only": "ng run tools:update-migrate-only"
   },
   "dependencies": {
     "@angular/animations": "12.0.2",

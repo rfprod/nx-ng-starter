@@ -230,38 +230,29 @@
           "builder": "@angular-devkit/build-angular:browser",
           "configurations": {
             "analyze-bundle": {
-              "aot": true,
               "buildOptimizer": true,
-              "extractLicenses": true,
               "fileReplacements": [
                 {
                   "replace": "apps/client/src/environments/environment.ts",
                   "with": "apps/client/src/environments/environment.prod.ts"
                 }
               ],
-              "namedChunks": true,
               "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": true,
-              "vendorChunk": true
+              "outputHashing": "all"
             },
             "production": {
-              "aot": true,
               "buildOptimizer": true,
-              "extractLicenses": true,
               "fileReplacements": [
                 {
                   "replace": "apps/client/src/environments/environment.ts",
                   "with": "apps/client/src/environments/environment.prod.ts"
                 }
               ],
-              "namedChunks": true,
               "ngswConfigPath": "apps/client/ngsw-config.json",
               "optimization": true,
               "outputHashing": "all",
               "serviceWorker": true,
-              "sourceMap": false,
-              "vendorChunk": true
+              "sourceMap": false
             }
           },
           "options": {
@@ -276,7 +267,6 @@
               "graphql-tag",
               "subscriptions-transport-ws"
             ],
-            "aot": true,
             "assets": [
               "apps/client/src/favicon.ico",
               "apps/client/src/assets",
@@ -300,8 +290,8 @@
                 "type": "anyComponentStyle"
               }
             ],
+            "aot": true,
             "buildOptimizer": false,
-            "extractLicenses": true,
             "index": "apps/client/src/index.html",
             "main": "apps/client/src/main.ts",
             "namedChunks": true,
@@ -841,24 +831,18 @@
           "builder": "@angular-devkit/build-angular:browser",
           "configurations": {
             "analyze-bundle": {
-              "aot": true,
               "buildOptimizer": true,
-              "extractLicenses": true,
               "fileReplacements": [
                 {
                   "replace": "apps/documentation/src/environments/environment.ts",
                   "with": "apps/documentation/src/environments/environment.prod.ts"
                 }
               ],
-              "namedChunks": true,
               "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": true,
-              "vendorChunk": true
+              "outputHashing": "all"
             },
             "production": {
               "buildOptimizer": true,
-              "extractLicenses": true,
               "fileReplacements": [
                 {
                   "replace": "apps/documentation/src/environments/environment.ts",
@@ -882,7 +866,6 @@
               "extract-files/public/isExtractableFile",
               "extract-files/public/extractFiles"
             ],
-            "aot": true,
             "assets": [
               "apps/documentation/src/favicon.ico",
               "apps/documentation/src/assets",
@@ -925,8 +908,8 @@
                 "type": "anyComponentStyle"
               }
             ],
+            "aot": true,
             "buildOptimizer": false,
-            "extractLicenses": true,
             "index": "apps/documentation/src/index.html",
             "main": "apps/documentation/src/main.ts",
             "namedChunks": true,
@@ -1049,10 +1032,8 @@
           "builder": "@angular-devkit/build-angular:browser",
           "configurations": {
             "production": {
-              "aot": true,
               "buildOptimizer": true,
               "deployUrl": "https://nx-ng-starter-elements.web.app/",
-              "extractLicenses": true,
               "fileReplacements": [
                 {
                   "replace": "apps/elements/src/environments/environment.ts",
@@ -1079,7 +1060,6 @@
               "graphql-tag",
               "subscriptions-transport-ws"
             ],
-            "aot": true,
             "assets": [
               "apps/elements/src/favicon.ico",
               "apps/elements/src/assets",
@@ -1103,11 +1083,12 @@
                 "type": "anyComponentStyle"
               }
             ],
+            "aot": true,
             "buildOptimizer": false,
-            "extractLicenses": true,
             "index": "apps/elements/src/index.html",
             "main": "apps/elements/src/main.ts",
             "namedChunks": true,
+            "vendorChunk": true,
             "optimization": false,
             "outputHashing": "none",
             "outputPath": "dist/apps/elements",
@@ -1120,8 +1101,7 @@
               "apps/elements/src/styles.scss",
               "libs/client-core/src/lib/styles/styles.scss"
             ],
-            "tsConfig": "apps/elements/tsconfig.app.json",
-            "vendorChunk": true
+            "tsConfig": "apps/elements/tsconfig.app.json"
           }
         },
         "extract-i18n": {
@@ -1387,7 +1367,17 @@
           "options": {
             "commands": [
               {
-                "command": "npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --check --jsonUpgraded; npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --migrate=start; yarn install && yarn ngcc && npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --migrate=execute; rm -rf migrations.json migrations-packages.json"
+                "command": "npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --check --jsonUpgraded; npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --migrate=update; rm -rf migrations.json migrations-packages.json"
+              }
+            ]
+          }
+        },
+        "update-migrate-only": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --check --jsonUpgraded; yarn install && yarn ngcc && npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --migrate=only; rm -rf migrations.json migrations-packages.json"
               }
             ]
           }
