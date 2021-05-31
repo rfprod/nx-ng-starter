@@ -67,5 +67,11 @@ module.exports = {
         '@angular-eslint/use-injectable-provided-in': 'off',
       },
     },
+    {
+      files: ['**/*.html'],
+      excludedFiles: ['*inline-template-*.component.html'],
+      extends: ['plugin:prettier/recommended', 'plugin:@angular-eslint/template/recommended'],
+      rules: {},
+    },
   ],
 };
