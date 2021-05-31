@@ -1,9 +1,10 @@
+import { spawnSync, SpawnSyncOptionsWithStringEncoding, SpawnSyncReturns } from 'child_process';
+import * as fs from 'fs';
+import { env } from 'process';
+import readlineSync from 'readline-sync';
 import { Observable, Subscriber, timer } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
-import * as fs from 'fs';
 import { argv } from 'yargs';
-import { spawnSync, SpawnSyncOptionsWithStringEncoding, SpawnSyncReturns } from 'child_process';
-import readlineSync from 'readline-sync';
 
 import { COLORS } from './colors';
 
@@ -66,7 +67,7 @@ function spawnCommandSync(
   command: string,
   args: string[] = [],
   options: SpawnSyncOptionsWithStringEncoding = {
-    env: { FORCE_COLOR: 'true' },
+    env: { ...env, FORCE_COLOR: 'true' },
     encoding: 'utf8',
     shell: true,
   },
@@ -150,7 +151,7 @@ function executeMigrations(): Observable<SpawnSyncReturns<string> | null> {
         console.log(`\n${COLORS.YELLOW}%s${COLORS.DEFAULT}\n`, '<< EXECUTING MIGRATIONS >>');
         console.log(data);
 
-        const migrationProcessOutput = spawnCommandSync(`yarn nx migrate --run-migrations=${root}/migrations.json`);
+        const migrationProcessOutput = spawnCommandSync('npx nx migrate', ['--run-migrations']);
         if (migrationProcessOutput.error) {
           subscriber.error(migrationProcessOutput);
           process.exit(1);
@@ -162,6 +163,7 @@ function executeMigrations(): Observable<SpawnSyncReturns<string> | null> {
           } else {
             subscriber.next(migrationProcessOutput);
           }
+          subscriber.next(migrationProcessOutput);
         }
       }
 
@@ -223,7 +225,7 @@ function migratePackagesRecursively(config: { packageNames: string[]; packageInd
     });
 
     if (answer) {
-      const command = `yarn nx migrate ${packageName}`;
+      const command = `npx nx migrate ${packageName}`;
       const migratePackageOutput = spawnCommandSync(command);
       if (migratePackageOutput.error) {
         process.exit(1);
@@ -306,7 +308,7 @@ function executeMigrationsRecursively(config: { packageNames: string[]; packageV
     });
 
     if (answer) {
-      const command = `yarn nx migrate ${packageName} --migrate-only --from="${packageName}@${previousVersion}"`;
+      const command = `npx nx migrate ${packageName} --migrate-only --from="${packageName}@${previousVersion}"`;
       const migratePackageOutput = spawnCommandSync(command);
       if (migratePackageOutput.error) {
         process.exit(1);
@@ -337,7 +339,7 @@ function migratePackagesOnly() {
 
     if (typeof data !== 'undefined') {
       const parsedPackageJson: IPackageJson = JSON.parse(data.toString());
-      const dependencies = parsedPackageJson['dependencies'];
+      const dependencies = parsedPackageJson.dependencies;
 
       console.log(`\n${COLORS.CYAN}%s${COLORS.DEFAULT}\n%s\n`, `Parsed dependencies`, dependencies);
 
