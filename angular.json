@@ -913,7 +913,14 @@
             "index": "apps/documentation/src/index.html",
             "main": "apps/documentation/src/main.ts",
             "namedChunks": true,
-            "optimization": false,
+            "optimization": {
+              "fonts": false,
+              "scripts": false,
+              "styles": {
+                "minify": false,
+                "inlineCritical": false
+              }
+            },
             "outputHashing": "none",
             "outputPath": "dist/apps/documentation",
             "polyfills": "apps/documentation/src/polyfills.ts",
