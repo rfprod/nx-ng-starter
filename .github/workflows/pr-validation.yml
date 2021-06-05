@@ -126,6 +126,6 @@ jobs:
         if: steps.changes.outputs.nx == 'true'
         run: npx nx affected --target=build --base=origin/master --head=HEAD
 
-      - name: Build storubook
+      - name: Build storybook
         if: steps.changes.outputs.nx == 'true'
         run: npx nx run documentation:build-storybook
