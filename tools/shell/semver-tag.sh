@@ -20,7 +20,7 @@ source tools/shell/module-aliases.sh ''
 ##
 reportUsageErrorAndExit() {
   printInfoTitle "<< ${0} USAGE >>"
-  printInfoMessage "version increment exits with error if latest commit is already tagged or if checked out branch is not dev"
+  printInfoMessage "version increment exits with error if latest commit is already tagged or if checked out branch is not master"
   printUsageTip "bash tools/shell/version-increment.sh" "tag latest comment with an appropriate version"
   printInfoMessage "Working versions ruleset (based on https://semver.org specification):"
   printNameAndValue "MAJOR" "changes in one of the applications or a core application library"
@@ -208,7 +208,7 @@ semverTag() {
 
     setTag $TAG
 
-    printf "\n\n"
+    printGap
   fi
 }
 
@@ -257,7 +257,7 @@ setVersioningFormatAndProceed() {
   ##
   # Check which branch is checked out to choose versioning format
   ##
-  if [ "$1" = "dev" ]; then
+  if [ "$1" = "master" ]; then
     checkCommitTagAndProceed "$COMMIT_HASH"
   else
     reportUsageErrorAndExit "setVersioningFormatAndProceed"
@@ -280,7 +280,7 @@ versionTagCommit() {
   printNameAndValue "checked out branch" "$BRANCH_NAME"
   printGap
 
-  if [ "${BRANCH_NAME}" = "dev" ]; then
+  if [ "${BRANCH_NAME}" = "master" ]; then
     setVersioningFormatAndProceed "$BRANCH_NAME"
   else
     reportUsageErrorAndExit "versionTagCommit"
@@ -291,6 +291,6 @@ versionTagCommit() {
 # Version increment control flow.
 #
 # Commits are tagged with version in semver format only for the following branches:
-# - dev
+# - master
 ##
 versionTagCommit
