@@ -7,4 +7,5 @@ module.exports = {
     },
   },
   displayName: 'api',
+  testEnvironment: 'node',
 };
