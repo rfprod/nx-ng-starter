@@ -29,7 +29,7 @@ describe('AppMarkdownService', () => {
 
   it('should exist', () => {
     expect(service).toBeTruthy();
-    expect(service.process).toEqual(jasmine.any(Function));
+    expect(service.process).toEqual(expect.any(Function));
   });
 
   it('process should process marked input', () => {
