@@ -18,12 +18,21 @@ module.exports = {
   coverageReporters: ['html-spa', 'json-summary'],
   coverageThreshold: {
     global: {
-      branches: 0,
-      functions: 0,
-      lines: 0,
-      statements: 0,
+      branches: 100,
+      functions: 100,
+      lines: 100,
+      statements: 100,
     },
   },
+  collectCoverageFrom: [
+    "**/*.ts",
+    "!**/node_modules/**",
+    "!**/coverage/**",
+    "!**/generated/**",
+    "!**/grpc/**",
+    "!**/ts/**",
+    "!**/*.js"
+  ],
   collectCoverage: true,
   cacheDirectory: '/tmp/jest_rs/nx-ng-starter',
 };
