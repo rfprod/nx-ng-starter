@@ -1379,6 +1379,16 @@
             ]
           }
         },
+        "update-migrate-bulk-confirm": {
+          "builder": "@nrwl/workspace:run-commands",
+          "options": {
+            "commands": [
+              {
+                "command": "npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --check --jsonUpgraded; npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --migrate=update --bulkUserChoice=true; rm -rf migrations.json migrations-packages.json"
+              }
+            ]
+          }
+        },
         "update-migrate-only": {
           "builder": "@nrwl/workspace:run-commands",
           "options": {
