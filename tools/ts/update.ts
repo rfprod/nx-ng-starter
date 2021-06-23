@@ -174,16 +174,20 @@ function executeMigrations(): Observable<SpawnSyncReturns<string> | null> {
   return result;
 }
 
+const newQuestionConfig: {
+  limit: readlineSync.OptionType[];
+  trueValue: readlineSync.OptionType[];
+  falseValue: readlineSync.OptionType[];
+} = {
+  limit: ['yes', 'no', 'y', 'n', 'Y', 'N'],
+  trueValue: ['yes', 'y', 'Y'],
+  falseValue: ['no', 'n', 'N'],
+};
+
 const newQuestion = (
   question: string,
-  config: {
-    limit: readlineSync.OptionType[];
-    trueValue: readlineSync.OptionType[];
-    falseValue: readlineSync.OptionType[];
-  } = {
-    limit: ['yes', 'no', 'y', 'n', 'Y', 'N'],
-    trueValue: ['yes', 'y', 'Y'],
-    falseValue: ['no', 'n', 'N'],
+  config: typeof newQuestionConfig = {
+    ...newQuestionConfig,
   },
 ) => {
   readlineSync.setDefaultOptions({ limit: config.limit });
@@ -200,17 +204,20 @@ const newQuestion = (
  * Executes packages migration procedure recursively.
  * @param config migration configuration
  */
-function migratePackagesRecursively(config: { packageNames: string[]; packageIndex: number }) {
+function migratePackagesRecursively(config: { packageNames: string[]; packageIndex: number }, bulkUserChoice?: boolean) {
   const processNextPackage = () => {
     const timeout = 150;
     void timer(timeout)
       .pipe(
         tap(() => {
           if (config.packageIndex < config.packageNames.length) {
-            migratePackagesRecursively({
-              packageNames: config.packageNames,
-              packageIndex: config.packageIndex + 1,
-            });
+            migratePackagesRecursively(
+              {
+                packageNames: config.packageNames,
+                packageIndex: config.packageIndex + 1,
+              },
+              bulkUserChoice,
+            );
           }
         }),
       )
@@ -218,11 +225,12 @@ function migratePackagesRecursively(config: { packageNames: string[]; packageInd
   };
   const packageName = config.packageNames[config.packageIndex];
   if (typeof packageName !== 'undefined') {
-    const answer = newQuestion(`> Migrate ${packageName} to the latest version`, {
-      limit: ['yes', 'no', 'y', 'n', 'Y', 'N'],
-      trueValue: ['yes', 'y', 'Y'],
-      falseValue: ['no', 'n', 'N'],
-    });
+    const answer =
+      typeof bulkUserChoice === 'undefined'
+        ? newQuestion(`> Migrate ${packageName} to the latest version`, {
+            ...newQuestionConfig,
+          })
+        : bulkUserChoice;
 
     if (answer) {
       const command = `npx nx migrate ${packageName}`;
@@ -246,7 +254,7 @@ function migratePackagesRecursively(config: { packageNames: string[]; packageInd
 /**
  * Starts migration for all packages defined in the migrations-packages.json.
  */
-function updateAndMigratePackages() {
+function updateAndMigratePackages(bulkUserChoice?: boolean) {
   const path = `${root}/migrations-packages.json`;
   fs.readFile(path, (error: NodeJS.ErrnoException | null, data?: Buffer) => {
     if (error !== null) {
@@ -270,7 +278,7 @@ function updateAndMigratePackages() {
 
       const packageNames = Object.keys(updatablePackages);
 
-      migratePackagesRecursively({ packageNames, packageIndex: 0 });
+      migratePackagesRecursively({ packageNames, packageIndex: 0 }, bulkUserChoice);
     }
   });
 }
@@ -302,9 +310,7 @@ function executeMigrationsRecursively(config: { packageNames: string[]; packageV
   const previousVersion = parsedVersion === null ? parsedVersion : Number(parsedVersion[0]) > 0 ? Number(parsedVersion[0]) - 1 : 0;
   if (typeof packageName !== 'undefined' && previousVersion !== null) {
     const answer = newQuestion(`> Execute migration of ${packageName} from the version ${previousVersion} to the latest version`, {
-      limit: ['yes', 'no', 'y', 'n', 'Y', 'N'],
-      trueValue: ['yes', 'y', 'Y'],
-      falseValue: ['no', 'n', 'N'],
+      ...newQuestionConfig,
     });
 
     if (answer) {
@@ -357,11 +363,12 @@ function migratePackagesOnly() {
 function readInputAndRun(): void {
   const check = argv.check;
   const migrate = argv.migrate;
+  const bulkUserChoice = <boolean | undefined>argv.bulkUserChoice;
   if (Boolean(check)) {
     const jsonUpgraded = Boolean(argv.jsonUpgraded);
     checkForUpdates(jsonUpgraded);
   } else if (migrate === 'update') {
-    updateAndMigratePackages();
+    updateAndMigratePackages(bulkUserChoice);
   } else if (migrate === 'only') {
     migratePackagesOnly();
   } else {
