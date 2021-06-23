@@ -1,83 +1,89 @@
 {
   "extends": "../../.eslintrc.js",
-  "rules": {
-    "@typescript-eslint/naming-convention": [
-      "error",
-      {
-        "selector": "default",
-        "format": ["camelCase"],
-        "leadingUnderscore": "forbid",
-        "trailingUnderscore": "forbid"
-      },
-      {
-        "selector": "variable",
-        "format": ["camelCase", "UPPER_CASE", "PascalCase"],
-        "leadingUnderscore": "forbid",
-        "trailingUnderscore": "forbid"
-      },
-      {
-        "selector": "parameter",
-        "format": ["camelCase"],
-        "leadingUnderscore": "forbid",
-        "trailingUnderscore": "forbid"
-      },
-      {
-        "selector": "property",
-        "format": ["camelCase"],
-        "leadingUnderscore": "forbid",
-        "trailingUnderscore": "forbid"
-      },
-      {
-        "selector": "function",
-        "format": ["camelCase"],
-        "leadingUnderscore": "forbid",
-        "trailingUnderscore": "forbid"
-      },
-      {
-        "selector": "enum",
-        "format": ["UPPER_CASE"],
-        "leadingUnderscore": "forbid",
-        "trailingUnderscore": "forbid"
-      },
-      {
-        "selector": "enumMember",
-        "format": ["UPPER_CASE"],
-        "leadingUnderscore": "forbid",
-        "trailingUnderscore": "forbid"
-      },
-      {
-        "selector": "memberLike",
-        "modifiers": ["private"],
-        "format": ["camelCase"],
-        "leadingUnderscore": "forbid",
-        "trailingUnderscore": "forbid"
-      },
-      {
-        "selector": "typeAlias",
-        "prefix": ["T"],
-        "format": ["StrictPascalCase"],
-        "leadingUnderscore": "forbid",
-        "trailingUnderscore": "forbid"
-      },
-      {
-        "selector": "typeParameter",
-        "format": ["StrictPascalCase"],
-        "leadingUnderscore": "forbid",
-        "trailingUnderscore": "forbid"
-      },
-      {
-        "selector": "interface",
-        "prefix": ["I"],
-        "format": ["StrictPascalCase"],
-        "leadingUnderscore": "forbid",
-        "trailingUnderscore": "forbid"
-      },
-      {
-        "selector": "class",
-        "format": ["StrictPascalCase"],
-        "leadingUnderscore": "forbid",
-        "trailingUnderscore": "forbid"
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["*"],
+      "rules": {
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "default",
+            "format": ["camelCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "variable",
+            "format": ["camelCase", "UPPER_CASE", "PascalCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "parameter",
+            "format": ["camelCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "property",
+            "format": ["camelCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "function",
+            "format": ["camelCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "enum",
+            "format": ["UPPER_CASE"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "enumMember",
+            "format": ["UPPER_CASE"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "memberLike",
+            "modifiers": ["private"],
+            "format": ["camelCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "typeAlias",
+            "prefix": ["T"],
+            "format": ["StrictPascalCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "typeParameter",
+            "format": ["StrictPascalCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "interface",
+            "prefix": ["I"],
+            "format": ["StrictPascalCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "class",
+            "format": ["StrictPascalCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          }
+        ]
       }
-    ]
-  }
+    }
+  ]
 }
