@@ -17,6 +17,7 @@
     },
     "tsconfig.base.json": "*"
   },
+  "newProjectRoot": "",
   "npmScope": "nx-ng-starter",
   "projects": {
     "api": {
@@ -118,6 +119,14 @@
     "tools": {
       "tags": ["scope:tools", "type:workspace"]
     }
+  },
+  "targetDependencies": {
+    "build": [
+      {
+        "projects": "dependencies",
+        "target": "build"
+      }
+    ]
   },
   "tasksRunnerOptions": {
     "default": {

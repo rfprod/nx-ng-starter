@@ -267,6 +267,7 @@
               "graphql-tag",
               "subscriptions-transport-ws"
             ],
+            "aot": true,
             "assets": [
               "apps/client/src/favicon.ico",
               "apps/client/src/assets",
@@ -290,7 +291,6 @@
                 "type": "anyComponentStyle"
               }
             ],
-            "aot": true,
             "buildOptimizer": false,
             "index": "apps/client/src/index.html",
             "main": "apps/client/src/main.ts",
@@ -866,6 +866,7 @@
               "extract-files/public/isExtractableFile",
               "extract-files/public/extractFiles"
             ],
+            "aot": true,
             "assets": [
               "apps/documentation/src/favicon.ico",
               "apps/documentation/src/assets",
@@ -908,7 +909,6 @@
                 "type": "anyComponentStyle"
               }
             ],
-            "aot": true,
             "buildOptimizer": false,
             "index": "apps/documentation/src/index.html",
             "main": "apps/documentation/src/main.ts",
@@ -917,8 +917,8 @@
               "fonts": false,
               "scripts": false,
               "styles": {
-                "minify": false,
-                "inlineCritical": false
+                "inlineCritical": false,
+                "minify": false
               }
             },
             "outputHashing": "none",
@@ -986,6 +986,22 @@
           },
           "options": {
             "browserTarget": "documentation:build"
+          }
+        },
+        "storybook": {
+          "builder": "@nrwl/storybook:storybook",
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          },
+          "options": {
+            "config": {
+              "configFolder": "apps/documentation/.storybook"
+            },
+            "port": 4400,
+            "projectBuildConfig": "documentation",
+            "uiFramework": "@storybook/angular"
           }
         },
         "test": {
@@ -1067,6 +1083,7 @@
               "graphql-tag",
               "subscriptions-transport-ws"
             ],
+            "aot": true,
             "assets": [
               "apps/elements/src/favicon.ico",
               "apps/elements/src/assets",
@@ -1090,12 +1107,10 @@
                 "type": "anyComponentStyle"
               }
             ],
-            "aot": true,
             "buildOptimizer": false,
             "index": "apps/elements/src/index.html",
             "main": "apps/elements/src/main.ts",
             "namedChunks": true,
-            "vendorChunk": true,
             "optimization": false,
             "outputHashing": "none",
             "outputPath": "dist/apps/elements",
@@ -1108,7 +1123,8 @@
               "apps/elements/src/styles.scss",
               "libs/client-core/src/lib/styles/styles.scss"
             ],
-            "tsConfig": "apps/elements/tsconfig.app.json"
+            "tsConfig": "apps/elements/tsconfig.app.json",
+            "vendorChunk": true
           }
         },
         "extract-i18n": {
