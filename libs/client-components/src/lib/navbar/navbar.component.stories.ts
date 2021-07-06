@@ -7,16 +7,17 @@ import { Args, Story } from '@storybook/angular/types-6-0';
 
 import { AppNavbarComponent } from './navbar.component';
 
-export default {
-  title: 'AppNavbarComponent',
-};
-
 const testingEnvironment = {
   production: false,
   platform: '',
   appName: 'Nx Ng Starter Client',
   api: 'http://localhost:8080/api',
   envoyUrl: 'http://localhost:8081',
+};
+
+export default {
+  title: 'AppNavbarComponent',
+  component: AppNavbarComponent,
 };
 
 const story: Story<AppNavbarComponent> = (args: Args) => ({
@@ -35,8 +36,8 @@ const story: Story<AppNavbarComponent> = (args: Args) => ({
         useValue: testingEnvironment,
       },
     ],
+    declarations: [AppNavbarComponent],
   },
-  component: AppNavbarComponent,
   props: {
     ...args,
   },
@@ -62,4 +63,11 @@ primary.args = {
       title: 'Material Icons',
     },
   ],
+};
+primary.parameters = {
+  /**
+   * Use legacy Angular renderer.
+   * See docs https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-angular-renderer
+   */
+  angularLegacyRendering: true,
 };

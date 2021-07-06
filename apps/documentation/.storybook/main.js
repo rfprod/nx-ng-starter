@@ -12,7 +12,7 @@ module.exports = {
         "actions": true,
         "backgrounds": true,
         "controls": true,
-        "docs": true,
+        "docs": false,
         "viewport": true,
         "toolbars": true,
       }

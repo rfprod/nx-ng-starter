@@ -7,16 +7,17 @@ import { Args, Story } from '@storybook/angular/types-6-0';
 
 import { AppDiagnosticsInfoPage } from './diagnostics-info-page.component';
 
-export default {
-  title: 'AppDiagnosticsInfoPage',
-};
-
 const testingEnvironment = {
   production: false,
   platform: '',
   appName: 'Nx Ng Starter Client',
   api: 'http://localhost:8080/api',
   envoyUrl: 'http://localhost:8081',
+};
+
+export default {
+  title: 'AppDiagnosticsInfoPage',
+  component: AppDiagnosticsInfoPage,
 };
 
 const story: Story<AppDiagnosticsInfoPage> = (args: Args) => ({
@@ -34,8 +35,8 @@ const story: Story<AppDiagnosticsInfoPage> = (args: Args) => ({
         useValue: testingEnvironment,
       },
     ],
+    declarations: [AppDiagnosticsInfoPage],
   },
-  component: AppDiagnosticsInfoPage,
   props: {
     ...args,
   },
@@ -45,4 +46,11 @@ export const primary = story.bind({});
 primary.args = {
   ping: 'ping result',
   markedInstructions: 'Marked instructions',
+};
+primary.parameters = {
+  /**
+   * Use legacy Angular renderer.
+   * See docs https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-angular-renderer
+   */
+  angularLegacyRendering: true,
 };
