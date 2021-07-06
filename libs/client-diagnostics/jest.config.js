@@ -10,8 +10,8 @@ module.exports = {
     global: {
       branches: 0,
       functions: 36.36,
-      lines: 48.89,
-      statements: 49.54,
+      lines: 46.81,
+      statements: 48.65,
     },
   },
 };
