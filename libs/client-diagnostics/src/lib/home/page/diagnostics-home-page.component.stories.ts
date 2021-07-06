@@ -3,7 +3,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
 import { documentFactory, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@nx-ng-starter/client-util';
-import { text } from '@storybook/addon-knobs';
+import { Args, Story } from '@storybook/angular/types-6-0';
 
 import { AppDiagnosticsHomePage } from './diagnostics-home-page.component';
 
@@ -19,7 +19,7 @@ const testingEnvironment = {
   envoyUrl: 'http://localhost:8081',
 };
 
-export const primary = () => ({
+const story: Story<AppDiagnosticsHomePage> = (args: Args) => ({
   moduleMetadata: {
     imports: [BrowserAnimationsModule, FlexLayoutModule, AppClientMaterialModule.forRoot()],
     providers: [
@@ -37,7 +37,12 @@ export const primary = () => ({
   },
   component: AppDiagnosticsHomePage,
   props: {
-    timer: text('Timer', '1'),
-    markedInstructions: text('Marked Instructions', 'Marked instructions'),
+    ...args,
   },
 });
+
+export const primary = story.bind({});
+primary.args = {
+  timer: '1',
+  markedInstructions: 'Marked instructions',
+};
