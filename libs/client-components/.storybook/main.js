@@ -2,7 +2,22 @@ module.exports = {
   core: {
     builder: 'webpack5',
   },
-  addons: ['@storybook/addon-docs', '@storybook/addon-controls', '@storybook/addon-actions'],
+  addons: [
+    {
+      name: '@storybook/addon-links',
+    },
+    {
+      name: '@storybook/addon-essentials',
+      options: {
+        "actions": true,
+        "backgrounds": true,
+        "controls": true,
+        "docs": false,
+        "viewport": true,
+        "toolbars": true,
+      }
+    }
+  ],
   features: {
     postcss: true,
   },
@@ -12,4 +27,5 @@ module.exports = {
       flexbox: 'no-2009',
     }),
   ],
+  stories: ['../src/lib/**/*.stories.ts']
 };

@@ -3,13 +3,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
 import { documentFactory, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@nx-ng-starter/client-util';
-import { text } from '@storybook/addon-knobs';
+import { Args, Story } from '@storybook/angular/types-6-0';
 
 import { AppNavbarComponent } from './navbar.component';
-
-export default {
-  title: 'AppNavbarComponent',
-};
 
 const testingEnvironment = {
   production: false,
@@ -19,7 +15,12 @@ const testingEnvironment = {
   envoyUrl: 'http://localhost:8081',
 };
 
-export const primary = () => ({
+export default {
+  title: 'AppNavbarComponent',
+  component: AppNavbarComponent,
+};
+
+const story: Story<AppNavbarComponent> = (args: Args) => ({
   moduleMetadata: {
     imports: [BrowserAnimationsModule, FlexLayoutModule, AppClientMaterialModule.forRoot()],
     providers: [
@@ -35,10 +36,38 @@ export const primary = () => ({
         useValue: testingEnvironment,
       },
     ],
+    declarations: [AppNavbarComponent],
   },
-  component: AppNavbarComponent,
   props: {
-    ping: text('ping', 'ping result'),
-    markedInstructions: text('Marked Instructions', 'Marked instructions'),
+    ...args,
   },
 });
+
+export const primary = story.bind({});
+primary.args = {
+  logoSrc: 'assets/icons/icon-72x72.png',
+  anchors: [
+    {
+      href: 'https://cli.angular.io/reference.pdf',
+      icon: 'build',
+      title: 'CLI Reference',
+    },
+    {
+      href: 'https://material.angular.io/',
+      icon: 'change_history',
+      title: 'Angular Material',
+    },
+    {
+      href: 'https://material.io/icons/',
+      icon: 'info_outline',
+      title: 'Material Icons',
+    },
+  ],
+};
+primary.parameters = {
+  /**
+   * Use legacy Angular renderer.
+   * See docs https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-angular-renderer
+   */
+  angularLegacyRendering: true,
+};

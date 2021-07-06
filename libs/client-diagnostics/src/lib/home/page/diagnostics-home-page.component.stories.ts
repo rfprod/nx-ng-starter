@@ -3,13 +3,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
 import { documentFactory, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@nx-ng-starter/client-util';
-import { text } from '@storybook/addon-knobs';
+import { Args, Story } from '@storybook/angular/types-6-0';
 
 import { AppDiagnosticsHomePage } from './diagnostics-home-page.component';
-
-export default {
-  title: 'AppDiagnosticsHomePage',
-};
 
 const testingEnvironment = {
   production: false,
@@ -19,7 +15,12 @@ const testingEnvironment = {
   envoyUrl: 'http://localhost:8081',
 };
 
-export const primary = () => ({
+export default {
+  title: 'AppDiagnosticsHomePage',
+  component: AppDiagnosticsHomePage,
+};
+
+const story: Story<AppDiagnosticsHomePage> = (args: Args) => ({
   moduleMetadata: {
     imports: [BrowserAnimationsModule, FlexLayoutModule, AppClientMaterialModule.forRoot()],
     providers: [
@@ -34,10 +35,22 @@ export const primary = () => ({
         useValue: testingEnvironment,
       },
     ],
+    declarations: [AppDiagnosticsHomePage],
   },
-  component: AppDiagnosticsHomePage,
   props: {
-    timer: text('Timer', '1'),
-    markedInstructions: text('Marked Instructions', 'Marked instructions'),
+    ...args,
   },
 });
+
+export const primary = story.bind({});
+primary.args = {
+  timer: '1',
+  markedInstructions: 'Marked instructions',
+};
+primary.parameters = {
+  /**
+   * Use legacy Angular renderer.
+   * See docs https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-angular-renderer
+   */
+  angularLegacyRendering: true,
+};

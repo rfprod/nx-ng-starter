@@ -27,5 +27,5 @@ module.exports = {
       flexbox: 'no-2009',
     }),
   ],
-  stories: ['../../../libs/**/src/lib/**/*.stories.ts']
+  stories: []
 };
