@@ -44,7 +44,7 @@ async function bootstrap(expressInstance: e.Express): Promise<unknown> {
   if (!Boolean(environment.firebase)) {
     const grpcClientOptions = backendGrpcClientOptions(environment);
     app.connectMicroservice<MicroserviceOptions>(grpcClientOptions);
-    await app.startAllMicroservicesAsync();
+    await app.startAllMicroservices();
   }
 
   const port = typeof process.env.port !== 'undefined' ? process.env.port : defaultPort;
