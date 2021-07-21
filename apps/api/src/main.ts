@@ -75,11 +75,15 @@ const firebaseConfig = process.env.FIREBASE_CONFIG;
  */
 if (Boolean(firebaseConfig)) {
   admin.initializeApp();
-  (exports as Record<string, unknown>).ping = functions.https.onRequest(server);
-  (exports as Record<string, unknown>).login = functions.https.onRequest(server);
-  (exports as Record<string, unknown>).logout = functions.https.onRequest(server);
-  (exports as Record<string, unknown>).signup = functions.https.onRequest(server);
-  (exports as Record<string, unknown>).graphql = functions.https.onRequest(server);
-  // TODO: handle websocket events (exports as Record<string, unknown>).events = functions.https.onRequest(server);
-  // TODO: (exports as Record<string, unknown>).grpc = functions.https.onRequest(server);
+  /**
+   * Explicit type casting is needed due types mismatch introduced recently.
+   */
+  const handler = <(req: functions.https.Request, resp: functions.Response) => void | Promise<void>>server;
+  (exports as Record<string, unknown>).ping = functions.https.onRequest(handler);
+  (exports as Record<string, unknown>).login = functions.https.onRequest(handler);
+  (exports as Record<string, unknown>).logout = functions.https.onRequest(handler);
+  (exports as Record<string, unknown>).signup = functions.https.onRequest(handler);
+  (exports as Record<string, unknown>).graphql = functions.https.onRequest(handler);
+  // TODO: handle websocket events (exports as Record<string, unknown>).events = functions.https.onRequest(handler);
+  // TODO: (exports as Record<string, unknown>).grpc = functions.https.onRequest(handler);
 }
