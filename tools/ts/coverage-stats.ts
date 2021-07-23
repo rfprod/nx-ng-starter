@@ -8,6 +8,11 @@ import { COLORS } from './colors';
  */
 const cwd = __dirname;
 
+/**
+ * Jest projects array.
+ */
+const jestProjects = <string[]>[...projects];
+
 interface ICoverageSummary {
   total: number;
   covered: number;
@@ -143,13 +148,13 @@ const readFileCallback = (error: NodeJS.ErrnoException | null, data?: Buffer) =>
 
   readFiles += 1;
 
-  if (readFiles === projects.length) {
+  if (readFiles === jestProjects.length) {
     recalculateStats();
     writeAverageStats();
   }
 };
 
-for (const project of projects) {
+for (const project of jestProjects) {
   const path = project.replace(/<rootDir>/, '');
 
   fs.readFile(`${cwd}/../../coverage${path}/coverage-summary.json`, readFileCallback);
