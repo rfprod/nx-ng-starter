@@ -13,6 +13,7 @@
     "affected:libs": "nx affected:libs",
     "affected:lint": "nx affected:lint",
     "affected:test": "nx affected:test",
+    "audit:fix": "npm i --package-lock-only; rm yarn.lock; npm audit fix; yarn import; rm package-lock.json",
     "analyze:circular-deps": "madge --circular --extensions ts ./apps ./libs ./tools --ts-config ./tsconfig.base.json",
     "analyze:client": "yarn build:client:stats; npx webpack-bundle-analyzer ./dist/apps/client/stats.json",
     "analyze:documentation": "yarn build:documentation:stats; npx webpack-bundle-analyzer ./dist/apps/documentation/stats.json",
@@ -103,8 +104,7 @@
     "workspace:update:check": "ng run tools:update-check",
     "workspace:update:migrate": "ng run tools:update-migrate",
     "workspace:update:migrate:bulk-confirm": "ng run tools:update-migrate-bulk-confirm",
-    "workspace:update:migrate:only": "ng run tools:update-migrate-only",
-    "audit:fix": "npm i --package-lock-only; rm yarn.lock; npm audit fix; yarn import; rm package-lock.json"
+    "workspace:update:migrate:only": "ng run tools:update-migrate-only"
   },
   "dependencies": {
     "@angular/animations": "12.1.3",
