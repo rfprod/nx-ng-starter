@@ -166,7 +166,7 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:client-translate',
-    onlyDependOnLibsWithTags: [],
+    onlyDependOnLibsWithTags: ['scope:client-material', 'scope:client-util'],
   },
   {
     sourceTag: 'scope:client',
