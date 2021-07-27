@@ -1,1 +1,1 @@
-export * from './dummy/dummy.component.mock';
+export * from './testing/testing.component.mock';
