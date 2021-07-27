@@ -15,14 +15,14 @@ export class AppHttpProgressService {
       start: () => this.startProgress(),
       stop: () => this.stopProgress(),
       tapStopperObservable: <T>() => {
-        return tap<T>(
-          () => {
+        return tap<T>({
+          next: () => {
             this.handlers.mainView.stop();
           },
-          () => {
+          error: () => {
             this.handlers.mainView.stop();
           },
-        );
+        });
       },
     },
     sidebar: {
