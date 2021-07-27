@@ -438,9 +438,12 @@ module.exports = {
       },
     },
     {
-      files: ['**/generated/**', '**/grpc/**', '**/ts/**'], // generated gql definitions, and protobuf
+      files: ['**/generated/**', '**/grpc/**', '**/ts/**'], // generated gql and protobug definitions for client apps
       rules: {
         'max-lines': 'off',
+        'no-dupe-class-members': 'off',
+        '@typescript-eslint/explicit-member-accessibility': 'off',
+        '@typescript-eslint/member-ordering': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-unused-vars': 'off',
         '@typescript-eslint/naming-convention': 'off',
