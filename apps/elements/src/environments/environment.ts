@@ -22,5 +22,9 @@ export const environment: IWebClientAppEnvironment = {
   appName: 'Nx Ng Starter Elements',
   api: window.location.origin.includes('localhost') ? 'http://localhost:8080/api' : `${window.location.origin}/api`,
   envoyUrl: 'http://localhost:8082',
-  sentryEnv: 'development',
+  sentry: {
+    env: 'development',
+    dsn: 'https://3e5206aab4034899ab5abce655e35ff6@o551250.ingest.sentry.io/5674503',
+    tracingOrigins: ['localhost:4200', 'https://nx-ng-starter-elements.web.app', 'https://nx-ng-starter-elements.firebaseapp.com'],
+  },
 };
