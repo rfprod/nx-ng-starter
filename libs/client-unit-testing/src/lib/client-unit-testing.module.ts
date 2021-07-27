@@ -12,7 +12,7 @@ import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsModule } from '@ngxs/store';
 import { HttpLink } from 'apollo-angular/http';
 
-import { AppDummyComponent } from './components/dummy/dummy.component.mock';
+import { AppTestingComponent } from './components/testing/testing.component.mock';
 import { dialogRefMockProvider } from './refs/dialog-ref.mock';
 import { overlayRefMockProvider } from './refs/overlay-ref.mock';
 import { matSnackbarRefMockProvider } from './refs/snackbar-ref.mock';
@@ -65,7 +65,7 @@ export const mocksCoreModuleProviders: Provider[] = [
     NgxsModule.forRoot([], { developmentMode: true }),
     NgxsFormPluginModule.forRoot(),
   ],
-  declarations: [AppDummyComponent],
+  declarations: [AppTestingComponent],
   exports: [
     BrowserDynamicTestingModule,
     NoopAnimationsModule,
@@ -76,7 +76,7 @@ export const mocksCoreModuleProviders: Provider[] = [
     AppClientMaterialModule,
     HttpClientTestingModule,
     RouterTestingModule,
-    AppDummyComponent,
+    AppTestingComponent,
   ],
 })
 export class AppMocksCoreModule {
