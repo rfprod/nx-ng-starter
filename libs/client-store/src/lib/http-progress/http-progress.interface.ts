@@ -1,9 +1,13 @@
+import { IActionPayload, TToastType } from '@app/client-util';
 import { StateToken } from '@ngxs/store';
-import { IActionPayload, TToastType } from '@nx-ng-starter/client-util';
-import { MonoTypeOperatorFunction, Observable } from 'rxjs';
+import { MonoTypeOperatorFunction } from 'rxjs';
 
 export interface IAppHttpProgressState {
   mainView: {
+    counter: number;
+    loading: boolean;
+  };
+  sidebar: {
     counter: number;
     loading: boolean;
   };
@@ -11,10 +15,15 @@ export interface IAppHttpProgressState {
 
 export interface IAppHttpProgressStatePayload {
   mainView?: boolean;
+  sidebar?: boolean;
 }
 
 export const httpProgressInitialState = {
   mainView: {
+    counter: 0,
+    loading: false,
+  },
+  sidebar: {
     counter: 0,
     loading: false,
   },
@@ -32,11 +41,6 @@ export interface IShowToastPayload {
 
 export type TShowToastPayload = IActionPayload<IShowToastPayload>;
 
-export interface IHttpProgressObservableOutput {
-  all$: Observable<IAppHttpProgressState>;
-  mainView$: Observable<boolean>;
-}
-
 export interface IHttpProgressHandlersActions {
   start(): void;
   stop(): void;
@@ -45,4 +49,5 @@ export interface IHttpProgressHandlersActions {
 
 export interface IHttpProgressHandlers {
   mainView: IHttpProgressHandlersActions;
+  sidebar: IHttpProgressHandlersActions;
 }

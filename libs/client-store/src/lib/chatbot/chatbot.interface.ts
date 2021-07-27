@@ -1,5 +1,5 @@
+import { IActionPayload } from '@app/client-util';
 import { StateToken } from '@ngxs/store';
-import { IActionPayload } from '@nx-ng-starter/client-util';
 
 export interface IChatbotState {
   chatbotOpened: boolean;

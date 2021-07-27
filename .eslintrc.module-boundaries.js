@@ -4,13 +4,7 @@
 const typeConstraints = [
   {
     sourceTag: 'type:application',
-    onlyDependOnLibsWithTags: [
-      'type:feature',
-      'type:data-access',
-      'type:ui',
-      'type:util',
-      'type:unit-testing',
-    ],
+    onlyDependOnLibsWithTags: ['type:feature', 'type:data-access', 'type:ui', 'type:util', 'type:unit-testing'],
   },
   {
     sourceTag: 'type:feature',
@@ -112,12 +106,7 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:client-store',
-    onlyDependOnLibsWithTags: [
-      'scope:client-unit-testing',
-      'scope:proto',
-      'scope:client-util',
-      'scope:client-translate',
-    ],
+    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:proto', 'scope:client-util', 'scope:client-translate'],
   },
   {
     sourceTag: 'scope:client-services',
@@ -202,10 +191,5 @@ const clientConstraints = [
 exports.nxModuleBoundaryRules = {
   enforceBuildableLibDependency: true,
   allow: [],
-  depConstraints: [
-    ...sharedConstraints,
-    ...clientConstraints,
-    ...backendConstraints,
-    ...typeConstraints,
-  ],
+  depConstraints: [...sharedConstraints, ...clientConstraints, ...backendConstraints, ...typeConstraints],
 };

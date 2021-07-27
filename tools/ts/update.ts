@@ -364,7 +364,7 @@ function readInputAndRun(): void {
   const check = argv.check;
   const migrate = argv.migrate;
   const bulkUserChoice = <boolean | undefined>argv.bulkUserChoice;
-  if (Boolean(check)) {
+  if (check === true) {
     const jsonUpgraded = Boolean(argv.jsonUpgraded);
     checkForUpdates(jsonUpgraded);
   } else if (migrate === 'update') {

@@ -1,4 +1,4 @@
-import { actionPayloadConstructor } from '@nx-ng-starter/client-util';
+import { actionPayloadConstructor } from '@app/client-util';
 
 import { TUserPayload, USER_STATE_TOKEN } from './user.interface';
 

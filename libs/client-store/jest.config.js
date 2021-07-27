@@ -6,12 +6,13 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   snapshotSerializers: jestPresetAngularSerializers,
   displayName: 'client-store',
-  coverageThreshold: { // TODO: bump unit test coverage and remove this override
+  coverageThreshold: {
+    // TODO: bump unit test coverage and remove this override
     global: {
-      branches: 26.73,
-      functions: 33.01,
-      lines: 46.01,
-      statements: 47.26,
+      branches: 26.53,
+      functions: 30.77,
+      lines: 34.74,
+      statements: 35.2,
     },
   },
 };

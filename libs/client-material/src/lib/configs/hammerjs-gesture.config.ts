@@ -11,23 +11,23 @@ export class AppHammerGestureConfig extends HammerGestureConfig {
     [key: string]: Record<string, unknown>;
   } = {
     pan: {
-      enable: true,
+      enable: false,
       pointers: 0, // Required pointers. 0 for all pointers.
       threshold: 10, // Minimal pan distance required before recognizing.
     },
     pinch: {
-      enable: true,
+      enable: false,
       pointers: 2, // Required pointers, with a minimal of 2.
       threshold: 0, // Minimal scale before recognizing.
     },
     press: {
-      enable: true,
+      enable: false,
       pointers: 1, // Required pointers.
       threshold: 9, // Minimal movement that is allowed while pressing.
       time: 251, // Minimal press time in ms.
     },
     tap: {
-      enable: true,
+      enable: false,
       pointers: 1, // Required pointers.
       taps: 1, // Amount of taps required.
       interval: 300, // Maximum time in ms between multiple taps.
@@ -36,7 +36,7 @@ export class AppHammerGestureConfig extends HammerGestureConfig {
       posThreshold: 10, // The maximum position difference between multiple taps.
     },
     rotate: {
-      enable: true,
+      enable: false,
       pointers: 2, // Required pointers, with a minimal of 2.
       threshold: 0, // Minimal rotation before recognizing.
     },

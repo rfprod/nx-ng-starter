@@ -1,14 +1,13 @@
 import { HttpRequest } from '@angular/common/http';
 import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
-import { getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/client-unit-testing';
+import { AppClientTranslateModule } from '@app/client-translate';
+import { getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
 import { Apollo } from 'apollo-angular';
 import { of } from 'rxjs';
 
 import { AppHttpProgressStoreModule, httpProgressModuleProviders } from '../http-progress/http-progress.module';
 import { AppToasterService, toasterServiceProvider } from '../http-progress/services/toaster/toaster.service';
-import { AppUserService } from '../user/user.service';
 import { AppHttpApiService } from './http-api.service';
 import { AppHttpHandlersService } from './http-handlers.service';
 
@@ -23,7 +22,6 @@ describe('AppHttpApiService', () => {
   let apollo: Apollo;
   let httpHandlers: AppHttpHandlersService;
   let toaster: AppToasterService;
-  let user: AppUserService;
   let spy: {
     httpHandlers: {
       pipeHttpResponse: jest.SpyInstance;
@@ -42,7 +40,6 @@ describe('AppHttpApiService', () => {
           toaster = TestBed.inject(AppToasterService);
           httpHandlers = TestBed.inject(AppHttpHandlersService);
           apollo = TestBed.inject(Apollo);
-          user = TestBed.inject(AppUserService);
           spy = {
             httpHandlers: {
               pipeHttpResponse: jest.spyOn(httpHandlers, 'pipeHttpResponse').mockReturnValue(of({})),
@@ -65,6 +62,5 @@ describe('AppHttpApiService', () => {
     expect(service).toBeTruthy();
     expect(apollo).toBeDefined();
     expect(toaster).toBeDefined();
-    expect(user).toBeDefined();
   });
 });

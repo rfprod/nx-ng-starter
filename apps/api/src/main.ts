@@ -1,11 +1,11 @@
+import { backendGrpcClientOptions } from '@app/backend-grpc';
+import { defaultWsPort } from '@app/backend-interfaces';
 import { ValidationPipe } from '@nestjs/common';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions } from '@nestjs/microservices';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { WsAdapter } from '@nestjs/platform-ws';
-import { backendGrpcClientOptions } from '@nx-ng-starter/backend-grpc';
-import { defaultWsPort } from '@nx-ng-starter/backend-interfaces';
 import e from 'express';
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
@@ -41,7 +41,7 @@ async function bootstrap(expressInstance: e.Express): Promise<unknown> {
   app.enableCors(corsOptions);
 
   // TODO: debug grpc in firebase, currently it causes all functions deployment failure
-  if (!Boolean(environment.firebase)) {
+  if (environment.firebase !== true) {
     const grpcClientOptions = backendGrpcClientOptions(environment);
     app.connectMicroservice<MicroserviceOptions>(grpcClientOptions);
     await app.startAllMicroservices();
@@ -73,7 +73,7 @@ const firebaseConfig = process.env.FIREBASE_CONFIG;
 /**
  * Initialize admin and export firebase functions only in cloud environment.
  */
-if (Boolean(firebaseConfig)) {
+if (typeof firebaseConfig !== 'undefined') {
   admin.initializeApp();
   /**
    * Explicit type casting is needed due types mismatch introduced recently.

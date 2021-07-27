@@ -1,5 +1,5 @@
+import { nxngstarter } from '@app/proto';
 import { Test, TestingModule } from '@nestjs/testing';
-import { nxngstarter } from '@nx-ng-starter/proto';
 import { first, tap } from 'rxjs/operators';
 
 import { NXNGSTARTER_PACKAGE } from '../grpc-client.options';

@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppWebsocketStoreModule } from '@nx-ng-starter/client-store';
+import { AppWebsocketStoreModule } from '@app/client-store';
 import {
   getTestBedConfig,
   newTestBedMetadata,
   setupJestSpiesFor,
   TClassMemberSpiesObject,
   testingEnvironment,
-} from '@nx-ng-starter/client-unit-testing';
+} from '@app/client-unit-testing';
 
 import { AppDiagnosticsIndexComponent } from './diagnostics-index.component';
 

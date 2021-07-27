@@ -1,5 +1,5 @@
+import { IMatcompMutation, IMatcompQuery, Matcomp, MatcompArgs, NewMatcompInput } from '@app/backend-interfaces';
 import { Injectable } from '@nestjs/common';
-import { IMatcompMutation, IMatcompQuery, Matcomp, MatcompArgs, NewMatcompInput } from '@nx-ng-starter/backend-interfaces';
 
 @Injectable()
 export class BackendMatcompService implements IMatcompQuery, IMatcompMutation {

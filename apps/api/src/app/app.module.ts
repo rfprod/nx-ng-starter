@@ -1,10 +1,10 @@
+import { BackendAuthModule } from '@app/backend-auth';
+import { BackendGqlModule } from '@app/backend-gql';
+import { BackendGrpcModule } from '@app/backend-grpc';
+import { API_ENV } from '@app/backend-interfaces';
+import { BackendLoggerModule } from '@app/backend-logger';
+import { BackendWebsocketModule } from '@app/backend-websocket';
 import { Module } from '@nestjs/common';
-import { BackendAuthModule } from '@nx-ng-starter/backend-auth';
-import { BackendGqlModule } from '@nx-ng-starter/backend-gql';
-import { BackendGrpcModule } from '@nx-ng-starter/backend-grpc';
-import { API_ENV } from '@nx-ng-starter/backend-interfaces';
-import { BackendLoggerModule } from '@nx-ng-starter/backend-logger';
-import { BackendWebsocketModule } from '@nx-ng-starter/backend-websocket';
 
 import { environment } from '../environments/environment';
 

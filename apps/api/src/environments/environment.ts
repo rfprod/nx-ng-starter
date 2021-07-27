@@ -1,4 +1,4 @@
-import { ApiEnvironment } from '@nx-ng-starter/backend-interfaces';
+import { ApiEnvironment } from '@app/backend-interfaces';
 
 /**
  * Development environment variables.
@@ -8,6 +8,7 @@ import { ApiEnvironment } from '@nx-ng-starter/backend-interfaces';
  */
 export const environment: ApiEnvironment = {
   production: false,
+  firebase: false,
   appName: 'Nx Ng Starter API',
   wsPort: 8081,
 };

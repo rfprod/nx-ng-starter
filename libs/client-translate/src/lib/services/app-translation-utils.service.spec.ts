@@ -1,8 +1,8 @@
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { DateAdapter } from '@angular/material/core';
+import { AppClientMaterialModule } from '@app/client-material';
+import { documentProvider, WINDOW, windowProvider } from '@app/client-util';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
-import { documentProvider, WINDOW, windowProvider } from '@nx-ng-starter/client-util';
 
 import { AppClientTranslateModule } from '../client-translate.module';
 import { ISupportedLanguage, IUiLanguagesInterface, TLangCode } from '../interfaces/ui-languages.interface';

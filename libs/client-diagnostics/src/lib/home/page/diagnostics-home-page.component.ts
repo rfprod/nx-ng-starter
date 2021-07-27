@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
-import { trackChanges } from '@nx-ng-starter/client-util';
+import { trackChanges } from '@app/client-util';
 
 interface IAppHomePageChanges extends SimpleChanges {
   timer: SimpleChange;

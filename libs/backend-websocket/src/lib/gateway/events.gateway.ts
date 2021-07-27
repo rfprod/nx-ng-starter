@@ -1,3 +1,4 @@
+import { defaultWsPort } from '@app/backend-interfaces';
 import {
   OnGatewayConnection,
   OnGatewayDisconnect,
@@ -6,7 +7,6 @@ import {
   WebSocketServer,
   WsResponse,
 } from '@nestjs/websockets';
-import { defaultWsPort } from '@nx-ng-starter/backend-interfaces';
 import { BehaviorSubject, Observable, timer } from 'rxjs';
 import { map, takeWhile } from 'rxjs/operators';
 import { Server } from 'ws';

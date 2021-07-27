@@ -1,4 +1,4 @@
-import { ApiEnvironment } from '@nx-ng-starter/backend-interfaces';
+import { ApiEnvironment } from '@app/backend-interfaces';
 
 /**
  * Production environment variables.

@@ -32,10 +32,15 @@ export class AppHttpProgressState {
     return state.mainView;
   }
 
+  @Selector()
+  public static sidebarProgress(state: IAppHttpProgressState) {
+    return state.sidebar;
+  }
+
   @Action(httpProgressActions.startProgress)
   public startProgress(ctx: StateContext<IAppHttpProgressState>, { payload }: THttpProgressPayload) {
-    const newState = { mainView: { ...ctx.getState().mainView } };
-    const keys = Object.keys(payload);
+    const newState = { mainView: { ...ctx.getState().mainView }, sidebar: { ...ctx.getState().sidebar } };
+    const keys = Object.keys(payload).length === 0 ? ['mainView'] : Object.keys(payload);
     for (const key of keys) {
       if (key in newState) {
         const k = key as keyof IAppHttpProgressState;
@@ -51,8 +56,8 @@ export class AppHttpProgressState {
 
   @Action(httpProgressActions.stopProgress)
   public stopProgress(ctx: StateContext<IAppHttpProgressState>, { payload }: THttpProgressPayload) {
-    const newState = { mainView: { ...ctx.getState().mainView } };
-    const keys = Object.keys(payload);
+    const newState = { mainView: { ...ctx.getState().mainView }, sidebar: { ...ctx.getState().sidebar } };
+    const keys = Object.keys(payload).length === 0 ? ['mainView'] : Object.keys(payload);
     for (const key of keys) {
       if (key in newState) {
         const k = key as keyof IAppHttpProgressState;

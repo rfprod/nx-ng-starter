@@ -1,6 +1,6 @@
+import { MatcompArgs, MatcompModel, MatcompSubscription, NewMatcompInputDto } from '@app/backend-interfaces';
 import { Inject, NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
-import { MatcompArgs, MatcompModel, MatcompSubscription, NewMatcompInputDto } from '@nx-ng-starter/backend-interfaces';
 import { PubSub } from 'graphql-subscriptions';
 
 import { BackendMatcompGuard } from './matcomp.guard';
@@ -23,7 +23,7 @@ export class BackendMatcompResolver {
     id: string,
   ) {
     const matcomp = this.service.findOneById(id);
-    if (!Boolean(matcomp)) {
+    if (typeof matcomp === 'undefined') {
       throw new NotFoundException(id);
     }
     return matcomp;
