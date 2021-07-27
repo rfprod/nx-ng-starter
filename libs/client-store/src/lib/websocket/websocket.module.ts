@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { IWebClientAppEnvironment } from '@app/client-util';
 import { NgxsModule } from '@ngxs/store';
-import { IWebClientAppEnvironment } from '@nx-ng-starter/client-util';
 
 import { WS_CONFIG } from './websocket.interface';
 import { AppWebsocketState } from './websocket.store';

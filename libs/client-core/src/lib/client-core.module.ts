@@ -2,8 +2,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AppClientStoreModule } from '@nx-ng-starter/client-store';
-import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@nx-ng-starter/client-util';
+import { AppClientStoreModule } from '@app/client-store';
+import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
 
 import { appClientCoreModuleProviders } from './providers/client-core-module.providers';
 

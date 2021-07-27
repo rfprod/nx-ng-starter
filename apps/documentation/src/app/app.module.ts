@@ -3,12 +3,12 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppClientMaterialModule } from '@app/client-material';
+import { documentFactory, WINDOW, windowFactory } from '@app/client-util';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsModule } from '@ngxs/store';
-import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
-import { documentFactory, WINDOW, windowFactory } from '@nx-ng-starter/client-util';
 import { MarkdownModule, MarkdownModuleConfig, MarkedOptions } from 'ngx-markdown';
 
 import { environment } from '../environments/environment';

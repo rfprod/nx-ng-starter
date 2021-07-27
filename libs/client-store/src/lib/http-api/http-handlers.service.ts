@@ -3,9 +3,9 @@ import { Inject, Injectable } from '@angular/core';
 import { ApolloLink, split } from '@apollo/client/core';
 import { ErrorResponse, onError } from '@apollo/client/link/error';
 import { getMainDefinition } from '@apollo/client/utilities';
+import { HTTP_STATUS, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV, WINDOW } from '@app/client-util';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngxs/store';
-import { HTTP_STATUS, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV, WINDOW } from '@nx-ng-starter/client-util';
 import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
 import { createUploadLink } from 'apollo-upload-client';
 import { ExecutionResult, GraphQLError } from 'graphql';
@@ -83,6 +83,7 @@ export class AppHttpHandlersService {
     void this.store.dispatch(new httpProgressActions.startProgress({ mainView: true }));
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
+      this.tapError<T>(),
       catchError(err => this.handleError(err)),
       finalize(() => {
         void this.store.dispatch(new httpProgressActions.stopProgress({ mainView: true }));
@@ -120,7 +121,7 @@ export class AppHttpHandlersService {
         return split(
           ({ query }) => {
             const { name } = getMainDefinition(query);
-            return !Boolean(name);
+            return !name;
           },
           httpLinkHandler,
           createUploadLink({
@@ -152,7 +153,7 @@ export class AppHttpHandlersService {
               });
             }
 
-            if (Boolean(networkError)) {
+            if (typeof networkError !== 'undefined') {
               console.error('Apollo linkHandler [Network error]: ', networkError);
 
               if (networkError instanceof HttpErrorResponse) {
@@ -204,8 +205,8 @@ export class AppHttpHandlersService {
    * @param res Execution result
    */
   public extractGraphQLData(res: ExecutionResult): Observable<{ [key: string]: unknown }> {
-    if (Boolean(res.errors)) {
-      return throwError(new Error(res.errors?.join(', ')));
+    if (res.errors) {
+      return throwError(() => new Error(res.errors?.join(', ')));
     }
     return of(res.data ?? res);
   }
@@ -226,7 +227,7 @@ export class AppHttpHandlersService {
    */
   public checkErrorStatusAndRedirect(status: HTTP_STATUS): void {
     if (status === HTTP_STATUS.UNAUTHORIZED) {
-      void this.store.dispatch(new userActions.setState({ token: '' })).subscribe();
+      void this.store.dispatch(new userActions.setState({ token: '' }));
     }
   }
 
@@ -243,7 +244,7 @@ export class AppHttpHandlersService {
   public handleError(error: HttpErrorResponse): Observable<never> {
     const errorMessage = this.getErrorMessage(error);
     this.toaster.showToaster(errorMessage, 'error');
-    return throwError(new Error(errorMessage));
+    return throwError(() => new Error(errorMessage));
   }
 
   /**
@@ -251,21 +252,18 @@ export class AppHttpHandlersService {
    * @param error error message
    */
   public handleGraphQLError(error: string): Observable<never> {
-    return throwError(new Error(error));
+    return throwError(() => new Error(error));
   }
 
   /**
    * Taps errors.
    */
   public tapError<T>(): MonoTypeOperatorFunction<T> {
-    return tap(
-      (): void => void 0,
-      (error: { networkError: HttpErrorResponse }) => {
-        const unauthorized: boolean = Boolean(error.networkError) && error.networkError.status === HTTP_STATUS.BAD_REQUEST;
-        if (unauthorized) {
-          this.checkErrorStatusAndRedirect(HTTP_STATUS.UNAUTHORIZED);
-        }
+    return tap({
+      next: (): void => void 0,
+      error: (error: HttpErrorResponse) => {
+        this.checkErrorStatusAndRedirect(error.status);
       },
-    );
+    });
   }
 }

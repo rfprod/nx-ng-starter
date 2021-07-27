@@ -1,6 +1,6 @@
+import { ApiEnvironment, DateScalar } from '@app/backend-interfaces';
 import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { GqlModuleOptions, GraphQLModule } from '@nestjs/graphql';
-import { ApiEnvironment, DateScalar } from '@nx-ng-starter/backend-interfaces';
 
 import { BackendGqlMatcompModule } from './matcomp/matcomp.module';
 

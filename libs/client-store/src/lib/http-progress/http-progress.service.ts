@@ -25,6 +25,20 @@ export class AppHttpProgressService {
         );
       },
     },
+    sidebar: {
+      start: () => void 0,
+      stop: () => void 0,
+      tapStopperObservable: <T>() => {
+        return tap<T>({
+          next: () => {
+            this.handlers.sidebar.stop();
+          },
+          error: () => {
+            this.handlers.sidebar.stop();
+          },
+        });
+      },
+    },
   };
 
   constructor(private readonly progressRef: OverlayRef) {}
@@ -58,7 +72,7 @@ export const httpProgressServiceProvider: Provider = {
   useFactory: (overlay: Overlay) => {
     const progressRef: OverlayRef = overlay.create({
       hasBackdrop: true,
-      backdropClass: 'global-spinner-backdrop-dark',
+      backdropClass: '',
       positionStrategy: overlay.position().global().top(),
     });
     return new AppHttpProgressService(progressRef);

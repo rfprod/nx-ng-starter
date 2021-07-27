@@ -1,6 +1,6 @@
 import { APP_INITIALIZER, ErrorHandler, Injectable, Provider } from '@angular/core';
 import { Router } from '@angular/router';
-import { IWebClientAppEnvironment, TSentryEnvironment } from '@nx-ng-starter/client-util';
+import { IWebClientAppEnvironment, TSentryEnvironment } from '@app/client-util';
 import * as Sentry from '@sentry/angular';
 import { Integrations } from '@sentry/tracing';
 
@@ -13,10 +13,10 @@ const sentryDisabledEnvironments: TSentryEnvironment[] = ['unit-testing', 'devel
  * This method must be used only in main.ts on client.
  */
 export const initializeSentry = (env: IWebClientAppEnvironment) => {
-  if (!sentryDisabledEnvironments.includes(env.sentryEnv)) {
+  if (!sentryDisabledEnvironments.includes(env.sentry.env)) {
     Sentry.init({
-      environment: env.sentryEnv,
-      dsn: 'https://3e5206aab4034899ab5abce655e35ff6@o551250.ingest.sentry.io/5674503',
+      environment: env.sentry.env,
+      dsn: env.sentry.dsn,
       integrations: [
         /**
          * Registers and configures the Tracing integration,
@@ -24,7 +24,7 @@ export const initializeSentry = (env: IWebClientAppEnvironment) => {
          * performance, including custom Angular routing instrumentation.
          */
         new Integrations.BrowserTracing({
-          tracingOrigins: ['localhost:4200', 'https://nx-ng-starter.web.app', 'https://nx-ng-starter.firebaseapp.com'],
+          tracingOrigins: [...env.sentry.tracingOrigins],
           routingInstrumentation: Sentry.routingInstrumentation,
         }),
       ],
@@ -40,7 +40,7 @@ export const initializeSentry = (env: IWebClientAppEnvironment) => {
 };
 
 export const sentryProviders: (env: IWebClientAppEnvironment) => Provider[] = env => {
-  return sentryDisabledEnvironments.includes(env.sentryEnv)
+  return sentryDisabledEnvironments.includes(env.sentry.env)
     ? []
     : [
         {

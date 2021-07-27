@@ -1,17 +1,18 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, Provider } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { AppClientComponentsModule } from '@app/client-components';
+import { AppClientCoreModule } from '@app/client-core';
+import { AppClientGqlModule } from '@app/client-gql';
+import { AppClientMaterialModule } from '@app/client-material';
+import { AppUserState, AppWebsocketStoreModule } from '@app/client-store';
+import { AppClientTranslateModule } from '@app/client-translate';
+import { EntityServiceClient } from '@app/proto';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
-import { AppClientComponentsModule } from '@nx-ng-starter/client-components';
-import { AppClientCoreModule } from '@nx-ng-starter/client-core';
-import { AppClientGqlModule } from '@nx-ng-starter/client-gql';
-import { AppClientMaterialModule } from '@nx-ng-starter/client-material';
-import { AppWebsocketStoreModule } from '@nx-ng-starter/client-store';
-import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
-import { EntityServiceClient } from '@nx-ng-starter/proto';
 
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -31,6 +32,9 @@ export const grpcProviders: Provider[] = [
   imports: [
     BrowserAnimationsModule,
     NgxsModule.forRoot([], { developmentMode: !environment.production }),
+    NgxsStoragePluginModule.forRoot({
+      key: [AppUserState],
+    }),
     NgxsLoggerPluginModule.forRoot({ disabled: environment.production, collapsed: true }),
     NgxsRouterPluginModule.forRoot(),
     NgxsFormPluginModule.forRoot(),

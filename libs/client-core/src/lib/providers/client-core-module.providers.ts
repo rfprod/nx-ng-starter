@@ -1,6 +1,6 @@
 import { APP_BASE_HREF, DOCUMENT, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Provider } from '@angular/core';
-import { documentFactory, WINDOW, windowFactory } from '@nx-ng-starter/client-util';
+import { documentFactory, WINDOW, windowFactory } from '@app/client-util';
 import { HttpLink } from 'apollo-angular/http';
 
 /**

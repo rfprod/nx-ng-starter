@@ -12,7 +12,6 @@ import memo from 'memo-decorator';
 export class AppMarkdownService {
   /**
    * Processes markdown input.
-   * @param input marked input
    */
   @memo()
   public process(input: string): string {

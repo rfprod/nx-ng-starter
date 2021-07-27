@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { websocketActions } from '@app/client-store';
 import { Store } from '@ngxs/store';
-import { websocketActions } from '@nx-ng-starter/client-store';
 
 @Component({
   selector: 'app-diagnostics-index',

@@ -7,7 +7,14 @@
 
   <span fxFlex="1 1 auto"></span>
 
-  <button mat-button *ngFor="let button of buttons" [routerLink]="button.routerLink" [fxHide.xs]="true" [fxHide.sm]="true">
+  <button
+    mat-button
+    *ngFor="let button of buttons"
+    [routerLink]="button.routerLink"
+    (click)="sidebarCloseHandler()"
+    [fxHide.xs]="true"
+    [fxHide.sm]="true"
+  >
     <mat-icon>{{ button.icon }}</mat-icon> {{ button.title }}
   </button>
 
@@ -20,7 +27,7 @@
   <button mat-button (click)="toggleChatbot()" [fxHide.xs]="true" [fxHide.sm]="true"><mat-icon>touch_app</mat-icon> Chat widget</button>
 
   <mat-menu #mobileMenuBottom="matMenu" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
-    <a mat-menu-item *ngFor="let button of buttons" [routerLink]="button.routerLink">
+    <a mat-menu-item *ngFor="let button of buttons" [routerLink]="button.routerLink" (click)="sidebarCloseHandler()">
       <mat-icon>{{ button.icon }}</mat-icon> {{ button.title }}
     </a>
     <mat-divider></mat-divider>

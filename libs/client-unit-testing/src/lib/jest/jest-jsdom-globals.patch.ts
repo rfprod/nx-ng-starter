@@ -1,6 +1,6 @@
 import 'node_modules/jsdom/lib/jsdom/living/custom-elements/CustomElementRegistry-impl.js';
 
-import { TIMEOUT } from '@nx-ng-starter/client-util';
+import { TIMEOUT } from '@app/client-util';
 
 import { setupJsdomDocumentMocks } from './document/document.mock';
 import { setupJsdomGlobalMocks } from './globals/globals.mock';

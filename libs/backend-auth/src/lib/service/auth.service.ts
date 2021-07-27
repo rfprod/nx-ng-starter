@@ -1,13 +1,6 @@
+import { Message, UserContacts, UserLoginCredentials, UserLogoutCredentials, UserName, UserProfile } from '@app/backend-interfaces';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import {
-  Message,
-  UserContacts,
-  UserLoginCredentials,
-  UserLogoutCredentials,
-  UserName,
-  UserProfile,
-} from '@nx-ng-starter/backend-interfaces';
 
 export interface IAuthPayload {
   email: string;

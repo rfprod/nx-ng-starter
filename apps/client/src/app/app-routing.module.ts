@@ -4,21 +4,21 @@ import { Route, RouterModule } from '@angular/router';
 export const APP_ROUTES: Route[] = [
   {
     path: '',
-    loadChildren: () => import('@nx-ng-starter/client-diagnostics').then(mod => mod.AppClientDiagnosticsModule),
+    loadChildren: () => import('@app/client-diagnostics').then(mod => mod.AppClientDiagnosticsModule),
   },
   {
     path: 'chatbot',
-    loadChildren: () => import('@nx-ng-starter/client-chatbot').then(mod => mod.AppClientChatbotModule),
+    loadChildren: () => import('@app/client-chatbot').then(mod => mod.AppClientChatbotModule),
   },
   {
     path: '',
     outlet: 'sidebar',
-    loadChildren: () => import('@nx-ng-starter/client-sidebar').then(mod => mod.AppClientSidebarModule),
+    loadChildren: () => import('@app/client-sidebar').then(mod => mod.AppClientSidebarModule),
   },
   {
     path: '',
     outlet: 'chatbot',
-    loadChildren: () => import('@nx-ng-starter/client-chatbot').then(mod => mod.AppClientChatbotWidgetModule),
+    loadChildren: () => import('@app/client-chatbot').then(mod => mod.AppClientChatbotWidgetModule),
   },
   { path: '**', redirectTo: '' },
 ];

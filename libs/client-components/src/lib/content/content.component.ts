@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AppSidebarState, sidebarActions } from '@app/client-store';
 import { Store } from '@ngxs/store';
-import { AppSidebarState, sidebarActions } from '@nx-ng-starter/client-store';
 import { map } from 'rxjs/operators';
 
 @Component({

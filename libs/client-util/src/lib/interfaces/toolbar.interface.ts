@@ -1,5 +1,5 @@
 export interface IToolbarButton {
-  routerLink: string[];
+  routerLink: { outlets: { [key: string]: string[] } }[];
   icon: string;
   title: string;
 }

@@ -64,71 +64,6 @@ $unicorn-dark-theme: mat.define-dark-theme($unicorn-dark-primary, $unicorn-dark-
  */
 @import 'libs/client-core/src/lib/styles/theming/theming-extension.scss';
 
-/**
- * Classes for font-awesome icons
- * Note: free plan includes only fab (font-awesome-brands) and fas (font-awesome-solid) groups
- */
-
-/* Font awesome bold icons */
-.material-icons-fab {
-  display: inline-block;
-  font-weight: normal;
-  font-size: 24px; /* Preferred icon size */
-  font-style: normal;
-  line-height: 1;
-  direction: ltr;
-  letter-spacing: normal;
-  white-space: nowrap;
-  text-align: center;
-  text-transform: none;
-  word-wrap: normal;
-
-  /* Support for all WebKit browsers. */
-  -webkit-font-smoothing: antialiased;
-
-  /* Support for Safari and Chrome. */
-  text-rendering: optimizeLegibility;
-
-  /* Support for Firefox. */
-  -moz-osx-font-smoothing: grayscale;
-
-  /* Support for IE. */
-  font-feature-settings: 'liga';
-
-  &:hover {
-    cursor: default;
-  }
-}
-
-/* Font awesome solid icons */
-.material-icons-fas {
-  display: inline-block;
-  font-size: 19px; /* Preferred icon size */
-  line-height: 1;
-  direction: ltr;
-  letter-spacing: normal;
-  white-space: nowrap;
-  text-align: center;
-  text-transform: none;
-  word-wrap: normal;
-
-  /* Support for all WebKit browsers. */
-  -webkit-font-smoothing: antialiased;
-
-  /* Support for Safari and Chrome. */
-  text-rendering: optimizeLegibility;
-
-  /* Support for Firefox. */
-  -moz-osx-font-smoothing: grayscale;
-
-  /* Support for IE. */
-  font-feature-settings: 'liga';
-
-  &:hover {
-    cursor: default;
-  }
-}
-
 /* Class for custom svg icons */
 .material-icons-svg {
   display: inline-block;
@@ -190,4 +125,38 @@ mat-menu-content,
       cursor: pointer;
     }
   }
+}
+
+/* Column progress class usage example. Container must be a block element. */
+// <ng-container *ngIf="loading$ | async">
+//     <div class="column-progress">
+//         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+//     </div>
+// </ng-container>
+.column-progress {
+  position: absolute;
+  z-index: 99999;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}
+
+/* Clamping for fixed width text block. */
+.clamp {
+  width: 90%;
+  overflow: hidden; // Needed to make it work
+  white-space: nowrap;
+  text-align: left;
+  text-overflow: ellipsis;
+}
+
+/* Clamping for flexible width text block. */
+.clamp-flex {
+  width: 100%;
+  overflow: hidden; // Needed to make it work
+  white-space: nowrap;
+  text-align: left;
+  text-overflow: ellipsis;
 }

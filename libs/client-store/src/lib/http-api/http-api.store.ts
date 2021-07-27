@@ -1,23 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { actionPayloadConstructor } from '@nx-ng-starter/client-util';
 import { tap } from 'rxjs/operators';
 
-import {
-  HTTP_API_STATE_TOKEN,
-  httpApiInitialState,
-  IAppHttpApiState,
-  IAppHttpApiStatePayload,
-  THttpApiPayload,
-} from './http-api.interface';
+import { httpApiActions } from './http-api.actions';
+import { HTTP_API_STATE_TOKEN, httpApiInitialState, IAppHttpApiState, IPingPayload } from './http-api.interface';
 import { AppHttpApiService } from './http-api.service';
-
-const createAction = actionPayloadConstructor(HTTP_API_STATE_TOKEN.getName());
-const ping = createAction<THttpApiPayload>('ping');
-
-export const httpApiActions = {
-  ping,
-};
 
 @State<IAppHttpApiState>({
   name: HTTP_API_STATE_TOKEN,
@@ -39,11 +26,11 @@ export class AppHttpApiState {
     return state.ping;
   }
 
-  @Action(ping)
-  public ping(ctx: StateContext<IAppHttpApiState>, { payload }: THttpApiPayload) {
+  @Action(httpApiActions.ping)
+  public ping(ctx: StateContext<IAppHttpApiState>) {
     return this.api.ping().pipe(
       tap(result => {
-        const pingPayload: IAppHttpApiStatePayload = {
+        const pingPayload: IPingPayload = {
           ping: result.message,
         };
         ctx.patchState(pingPayload);

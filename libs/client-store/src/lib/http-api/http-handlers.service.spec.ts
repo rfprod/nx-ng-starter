@@ -1,10 +1,10 @@
 import { HttpErrorResponse, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { AppClientTranslateModule } from '@app/client-translate';
+import { AppLocalStorageMock, getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
+import { HTTP_STATUS } from '@app/client-util';
 import { Store } from '@ngxs/store';
-import { AppClientTranslateModule } from '@nx-ng-starter/client-translate';
-import { AppLocalStorageMock, getTestBedConfig, newTestBedMetadata } from '@nx-ng-starter/client-unit-testing';
-import { HTTP_STATUS } from '@nx-ng-starter/client-util';
 import { Apollo } from 'apollo-angular';
 import { ExecutionResult, GraphQLError } from 'graphql';
 import { Observable, of } from 'rxjs';

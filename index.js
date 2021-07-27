@@ -32,10 +32,11 @@ function handleSquirrelEvent() {
     exeName = path.basename(process.execPath);
 
   const spawn = function (command, args) {
-    let spawnedProcess;
+    let spawnedProcess = void 0;
     try {
       spawnedProcess = ChildProcess.spawn(command, args, { detached: true });
     } catch (e) {
+      // eslint-disable-next-line no-console -- needed here for debugging
       console.log(`error spawning process ${e}`);
     }
     return spawnedProcess;
@@ -95,6 +96,7 @@ app.server = require(__dirname + '/server.prod.js');
  * Catch uncaught exceptions
  */
 process.on('uncaughtException', error => {
+  // eslint-disable-next-line no-console -- needed here for debugging
   console.log('UNCAUGHT EXCEPTION', error);
 });
 
