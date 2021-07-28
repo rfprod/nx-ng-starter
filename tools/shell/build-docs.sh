@@ -4,7 +4,6 @@
 # Colors.
 ##
 source tools/shell/colors.sh ''
-
 ##
 # Printing utils.
 ##
