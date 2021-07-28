@@ -16,7 +16,6 @@ reportUsageError() {
   printInfoTitle "<< ${0} USAGE >>"
   printWarningMessage "one argument expected"
   printUsageTip "bash tools/shell/docker-task.sh install-docker-ci" "install dependencies for CI docker container image (should be used from inside of docker only)"
-  printUsageTip "bash tools/shell/docker-task.sh build-cleanup" "remove unneeded dependencies to make docker image lighter (should be used from inside of docker only)"
   printUsageTip "bash tools/shell/docker-task.sh cleanup-container-images" "utility task, removes stopped containers and cleans up untagged images (should be used on runners which use CI container images)"
   printGap
 
@@ -42,20 +41,6 @@ elif [ "$1" = "install-docker-ci" ]; then
   yarn install:proto:linux:ci || exit 1
   yarn install:shellcheck:linux:ci || exit 1
   yarn install:s3cmd:ci || exit 1
-elif [ "$1" = "build-cleanup" ]; then
-  ##
-  # Removes unneeded files, sources, configs etc after building CI docker container image.
-  ##
-  printInfoTitle "Removing junky files"
-  printGap
-
-  find ./* -not -path "./node_modules/*" -type f -name "*.sh" -exec rm {} + &&
-    find ./* -not -path "./node_modules/*" -type f -name "*.Dockerfile" -exec rm {} + &&
-    find ./* -not -path "./node_modules/*" -not -path "./dist/*" -type f -name "*.md" -exec rm {} + &&
-    find ./* -not -path "./node_modules/*" -not -path "./dist/*" -type f -name "*.json" -exec rm {} + &&
-    rm ./.dockerignore ./.gitignore
-  yarn cache clean
-  npm cache clean --force
 elif [ "$1" = "cleanup-container-images" ]; then
   ##
   # Removes stopped containers and cleans up untagged images.

@@ -35,7 +35,7 @@ reportUsage() {
   printGap
 
   for IMAGE_KEY in "${!IMAGES[@]}"; do
-    printf "${DEFAULT} - ${YELLOW}%s${DEFAULT}" "${IMAGE_KEY}"
+    printf "${DEFAULT} - ${YELLOW}%s${DEFAULT}\\n" "${IMAGE_KEY}"
   done
 
   exit 1

@@ -40,14 +40,14 @@ declare -A IMAGES=(
 reportUsageError() {
   printInfoTitle "<< ${0} USAGE >>"
   printWarningMessage "three arguments are expected, see examples below"
-  printUsageTip "bash ./tools/shell/docker-push.sh USERNAME PASSWORD APPLICATION_NAME_WITH_ENVIRONMENT" "push docker image to the repository"
+  printUsageTip "bash tools/shell/docker-push.sh USERNAME PASSWORD APPLICATION_NAME_WITH_ENVIRONMENT" "push docker image to the repository"
   printGap
 
   printInfoMessage "Supported application names"
   printGap
 
   for IMAGE_KEY in "${!IMAGES[@]}"; do
-    printf "${DEFAULT} - ${YELLOW}%s${DEFAULT}" "${IMAGE_KEY}"
+    printf "${DEFAULT} - ${YELLOW}%s${DEFAULT}\\n" "${IMAGE_KEY}"
   done
 
   exit 1

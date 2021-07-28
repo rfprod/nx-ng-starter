@@ -37,23 +37,22 @@ declare -A ENVIRONMENTS=(
 ##
 reportUsage() {
   printInfoTitle "<< ${0} USAGE >>"
-  printWarningMessage "at least one argument is expected depending on the application: \$APPLICATION \$ENVIRONMENT"
-  printUsageTip "tools/shell/docker-build-app.sh ?" "print script usage"
+  printWarningMessage "two argument are expected: \$APPLICATION \$ENVIRONMENT"
+  printUsageTip "bash tools/shell/docker-build-app.sh ?" "print script usage"
   printUsageTip "bash tools/shell/docker-app.sh APPLICATION ENVIRONMENT" "build APPLICATION docker container image for a specific ENVIRONMENT"
   printGap
   printInfoMessage "Supported container names"
   printGap
 
   for APPLICATION_KEY in "${!APPLICATIONS[@]}"; do
-    printf "${DEFAULT} - ${YELLOW}%s${DEFAULT}" "${APPLICATION_KEY}"
+    printf "${DEFAULT} - ${YELLOW}%s${DEFAULT}\\n" "${APPLICATION_KEY}"
   done
 
-  printGap
   printInfoMessage "Supported environments"
   printGap
 
   for ENVIRONMENT_KEY in "${!ENVIRONMENTS[@]}"; do
-    printf "${DEFAULT} - ${YELLOW}%s${DEFAULT}" "${ENVIRONMENT_KEY}"
+    printf "${DEFAULT} - ${YELLOW}%s${DEFAULT}\\n" "${ENVIRONMENT_KEY}"
   done
 
   exit 1
@@ -124,17 +123,20 @@ buildApplicationImage() {
     printGap
 
     reportUsage
-  elif [ -z "$ENV_NAME" ]; then
+  fi
+
+  if [ -z "$ENV_NAME" ]; then
     printWarningMessage "Environment name was not provided."
     printGap
 
     reportUsage
-  else
-    checkApplicationSupport "$APP_NAME"
-    checkEnvironmentSupport "$ENV_NAME"
-
-    docker build -t $CONTAINER_REGISTRY/"$APP_NAME""$ENV_NAME" -f .docker/"$APP_NAME".Dockerfile .
   fi
+
+  checkApplicationSupport "$APP_NAME"
+  checkEnvironmentSupport "$ENV_NAME"
+
+  docker build -t $CONTAINER_REGISTRY/"$APP_NAME""$ENV_NAME" -f .docker/"$APP_NAME".Dockerfile .
+
 }
 
 if [ "$1" = "?" ]; then
