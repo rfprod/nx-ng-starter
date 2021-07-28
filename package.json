@@ -2,7 +2,7 @@
   "name": "nx-ng-starter",
   "version": "1.0.0",
   "private": true,
-  "description": "NX Angular Starter",
+  "description": "NX + Angular + NestJS starter project",
   "license": "MIT",
   "scripts": {
     "affected": "nx affected",
@@ -93,7 +93,7 @@
     "start:api": "ng serve api",
     "start:client": "ng serve client",
     "start:electron": "electron .",
-    "start:envoy": "sudo docker-compose -f .devops/docker-compose.envoy.yml up",
+    "start:envoy": "sudo docker-compose -f .envoy/docker-compose.envoy.yml up",
     "start:envoy:api": "yarn start:envoy & ng serve api",
     "test": "bash tools/shell/test.sh single-run all",
     "test:changed": "bash tools/shell/test.sh single-run changed",
@@ -289,7 +289,7 @@
     "webpack-sources": "2.3.1"
   },
   "engines": {
-    "node": ">=14.8.0",
+    "node": ">=14.17.0",
     "npm": ">=6.14.8"
   }
 }
