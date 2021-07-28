@@ -8,6 +8,10 @@ This folder contains utility shell scripts.
 - `changelog.sh` - apps/libs changelog generation script
 - `colors.sh` - color definitions for usage with `printf` command for comprehensiveness
 - `diagrams.sh` - generates images from mermaid diagrams
+- `docker-build-app.sh` - applications dockerization script
+- `docker-build-ci.sh` - CI container image building script
+- `docker-push.sh` - script for pushing docker images to the registry
+- `docker-task.sh` - docker utility tasks script
 - `e2e.sh` - apps e2e testing script
 - `firebase-deploy.sh` - firebase deployment script
 - `generate-proto.sh` - grpc and ts definitions generation script
