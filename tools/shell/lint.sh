@@ -4,17 +4,14 @@
 # Colors.
 ##
 source tools/shell/colors.sh ''
-
 ##
 # Printing utils.
 ##
 source tools/shell/print-utils.sh ''
-
 ##
 # Project aliases.
 ##
 source tools/shell/module-aliases.sh ''
-
 ##
 # Import Git helpers.
 ##

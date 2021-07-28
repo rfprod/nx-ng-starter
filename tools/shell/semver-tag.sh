@@ -4,12 +4,10 @@
 # Colors.
 ##
 source tools/shell/colors.sh ''
-
 ##
 # Printing utilities.
 ##
 source tools/shell/print-utils.sh ''
-
 ##
 # Project aliases.
 ##

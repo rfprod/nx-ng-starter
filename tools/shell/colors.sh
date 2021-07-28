@@ -33,6 +33,9 @@ LIGHT_CYAN='\033[1;36m'
 LIGHT_GRAY='\033[0;37m'
 WHITE='\033[1;37m'
 
+##
+# Available color names.
+##
 REGISTERED_COLOR_NAMES=(
   DEFAULT
   BLACK
@@ -53,6 +56,9 @@ REGISTERED_COLOR_NAMES=(
   WHITE
 )
 
+##
+# Available color values.
+##
 REGISTERED_COLOR_VARS=(
   "$DEFAULT"
   "$BLACK"
@@ -73,6 +79,9 @@ REGISTERED_COLOR_VARS=(
   "$WHITE"
 )
 
+##
+# Reports supported colors to the terminal.
+##
 reportSupportedColors() {
   local TITLE="<< COLORS >>"
   printf "
