@@ -136,7 +136,6 @@ buildApplicationImage() {
   checkEnvironmentSupport "$ENV_NAME"
 
   docker build -t $CONTAINER_REGISTRY/"$APP_NAME""$ENV_NAME" -f .docker/"$APP_NAME".Dockerfile .
-
 }
 
 if [ "$1" = "?" ]; then

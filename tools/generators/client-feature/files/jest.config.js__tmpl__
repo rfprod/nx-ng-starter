@@ -1,11 +1,18 @@
+const jestPresetAngularSerializers = require('jest-preset-angular/build/serializers');
+
 module.exports = {
   preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/libs/<%= name %>',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  snapshotSerializers: [
-    'jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer.js',
-    'jest-preset-angular/build/AngularSnapshotSerializer.js',
-    'jest-preset-angular/build/HTMLCommentSerializer.js',
-  ],
+  snapshotSerializers: jestPresetAngularSerializers,
   displayName: '<%= name %>',
+  coverageThreshold: {
+    // TODO: bump unit test and remove this override
+    global: {
+      branches: 0,
+      functions: 0,
+      lines: 0,
+      statements: 0,
+    },
+  },
 };
