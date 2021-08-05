@@ -123,7 +123,6 @@ jobs:
       - name: Build documentation (compodoc, unit coverage, e2e coverage)
         if: steps.changes.outputs.nx == 'true'
         run: |
-          npx cypress install
           yarn generate:env:documentation
           yarn test:reports
           ng run tools:compodoc-build
