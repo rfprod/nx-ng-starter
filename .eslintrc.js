@@ -144,7 +144,6 @@ module.exports = {
       extends: ['eslint:recommended', 'plugin:prettier/recommended', 'plugin:eslint-comments/recommended', 'plugin:@nrwl/nx/javascript'],
       plugins: [
         'prettier',
-        '@angular-eslint', // https://github.com/angular-eslint/angular-eslint
         'simple-import-sort', // https://github.com/lydell/eslint-plugin-simple-import-sort
         'eslint-comments', // https://mysticatea.github.io/eslint-plugin-eslint-comments/rules/
       ],
@@ -450,6 +449,13 @@ module.exports = {
       },
     },
     {
+      files: ['**/src/support/index.ts'],
+      rules: {
+        'no-console': 'off',
+        '@typescript-eslint/triple-slash-reference': 'off', // needed for Cypress types import via reference
+      },
+    },
+    {
       files: ['**/generated/**', '**/grpc/**', '**/ts/**'], // generated gql and protobug definitions for client apps
       rules: {
         'max-lines': 'off',
@@ -461,13 +467,6 @@ module.exports = {
         '@typescript-eslint/naming-convention': 'off',
         'simple-import-sort/imports': 'off',
         'simple-import-sort/exports': 'off',
-      },
-    },
-    {
-      files: ['**/src/support/index.ts'],
-      rules: {
-        'no-console': 'off',
-        '@typescript-eslint/triple-slash-reference': 'off',
       },
     },
   ],
