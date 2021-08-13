@@ -110,6 +110,16 @@
     "workspace:update:migrate:bulk-confirm": "ng run tools:update-migrate-bulk-confirm",
     "workspace:update:migrate:only": "ng run tools:update-migrate-only"
   },
+  "config": {
+    "commitizen": {
+      "maxHeaderWidth": 80,
+      "maxLineWidth": 100,
+      "minHeaderWidth": 16,
+      "path": "./node_modules/cz-conventional-changelog"
+    },
+    "puppeteer_skip_chromium_download": true,
+    "puppeteer_skip_download": true
+  },
   "dependencies": {
     "@angular/animations": "12.2.0",
     "@angular/cdk": "12.2.0",
@@ -143,6 +153,7 @@
     "apollo-upload-client": "16.0.0",
     "class-transformer": "0.4.0",
     "class-validator": "0.13.1",
+    "commitizen": "4.2.4",
     "compression": "1.7.4",
     "core-js": "3.16.0",
     "dotenv": "10.0.0",
