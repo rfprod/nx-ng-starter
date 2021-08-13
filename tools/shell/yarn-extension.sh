@@ -13,8 +13,8 @@ source tools/shell/print-utils.sh ''
 # Reports usage.
 ##
 reportUsage() {
-  printInfoTitle "<< ${0} USAGE >>"
-  printUsageTip "tools/shell/yarn-extension.sh ?" "print script usage"
+  printInfoTitle "<< ${0} usage >>"
+  printUsageTip "tools/shell/yarn-extension.sh ?" "print help"
   printUsageTip "tools/shell/yarn-extension.sh integrity-check" "performs an integrity check, and cleans up workspace if the is no integrity."
   printGap
 }

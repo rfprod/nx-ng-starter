@@ -36,9 +36,9 @@ declare -A ENVIRONMENTS=(
 # Reports usage.
 ##
 reportUsage() {
-  printInfoTitle "<< ${0} USAGE >>"
-  printWarningMessage "two argument are expected: \$APPLICATION \$ENVIRONMENT"
-  printUsageTip "bash tools/shell/docker-build-app.sh ?" "print script usage"
+  printInfoTitle "<< ${0} usage >>"
+  printWarningMessage "two argument are expected, see examples below"
+  printUsageTip "bash tools/shell/docker-build-app.sh ?" "print help"
   printUsageTip "bash tools/shell/docker-app.sh APPLICATION ENVIRONMENT" "build APPLICATION docker container image for a specific ENVIRONMENT"
   printGap
   printInfoMessage "Supported container names"

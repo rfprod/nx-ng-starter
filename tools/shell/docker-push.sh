@@ -38,7 +38,7 @@ declare -A IMAGES=(
 # Reports usage error.
 ##
 reportUsageError() {
-  printInfoTitle "<< ${0} USAGE >>"
+  printInfoTitle "<< ${0} usage >>"
   printWarningMessage "three arguments are expected, see examples below"
   printUsageTip "bash tools/shell/docker-push.sh USERNAME PASSWORD APPLICATION_NAME_WITH_ENVIRONMENT" "push docker image to the repository"
   printGap

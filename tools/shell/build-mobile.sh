@@ -7,7 +7,7 @@ source tools/shell/build-utils.sh
 # Reports usage error.
 ##
 reportUsage() {
-  local TITLE="<< USAGE >>"
+  local TITLE="<< ${0} usage >>"
   printf "
     ${LIGHT_BLUE}%s\n
     ${DEFAULT} - ${YELLOW}$0${DEFAULT} - print usage

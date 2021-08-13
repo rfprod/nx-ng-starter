@@ -22,7 +22,8 @@ declare -A DIAGRAMS=(
 # Reports usage.
 ##
 reportUsage() {
-  printInfoTitle "<< ${0} USAGE >>"
+  printInfoTitle "<< ${0} usage >>"
+  printUsageTip "bash tools/shell/diagrams.sh ?" "print help"
   printUsageTip "bash tools/shell/diagrams.sh" "generate all diagrams"
   printGap
 }

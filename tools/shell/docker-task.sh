@@ -13,10 +13,10 @@ source tools/shell/print-utils.sh ''
 # Reports usage error.
 ##
 reportUsageError() {
-  printInfoTitle "<< ${0} USAGE >>"
-  printWarningMessage "one argument expected"
+  printInfoTitle "<< ${0} usage >>"
+  printWarningMessage "one argument is expected, see examples below"
   printUsageTip "bash tools/shell/docker-task.sh install-docker-ci" "install dependencies for CI docker container image (should be used from inside of docker only)"
-  printUsageTip "bash tools/shell/docker-task.sh cleanup-container-images" "utility task, removes stopped containers and cleans up untagged images (should be used on runners which use CI container images)"
+  printUsageTip "bash tools/shell/docker-task.sh cleanup" "utility task, removes stopped containers and cleans up untagged images (should be used on runners which use CI container images)"
   printGap
 
   exit 1
@@ -41,7 +41,7 @@ elif [ "$1" = "install-docker-ci" ]; then
   yarn install:proto:linux:ci || exit 1
   yarn install:shellcheck:linux:ci || exit 1
   yarn install:s3cmd:ci || exit 1
-elif [ "$1" = "cleanup-container-images" ]; then
+elif [ "$1" = "cleanup" ]; then
   ##
   # Removes stopped containers and cleans up untagged images.
   ##
