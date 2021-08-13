@@ -22,7 +22,7 @@ PROJECT_ROOT=.
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  printInfoTitle "<< ${0} USAGE >>"
+  printInfoTitle "<< ${0} usage >>"
   printUsageTip "bash tools/shell/e2e.sh reports" "copy e2e reports to dist"
   printUsageTip "bash tools/shell/e2e.sh all" "run all e2e apps"
   printUsageTip "bash tools/shell/e2e.sh all headless" "run all e2e apps in the headless mode"

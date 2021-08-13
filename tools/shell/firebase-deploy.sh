@@ -17,7 +17,7 @@ source tools/shell/print-utils.sh ''
 # Reports usage error.
 ##
 reportUsageError() {
-  printInfoTitle "<< USAGE >>"
+  printInfoTitle "<< ${0} usage >>"
   printWarningMessage "firebase deploy token must be provided as a first argument"
   printInfoMessage "Client app"
   printUsageTip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN app:client" "CI environment"

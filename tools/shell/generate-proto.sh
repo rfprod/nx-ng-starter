@@ -30,7 +30,7 @@ OUT_DIR_TS=$PROJECT_ROOT/libs/proto/src/lib/ts
 # Reports script usage.
 ##
 reportUsage() {
-  printInfoTitle "<< USAGE >>"
+  printInfoTitle "<< ${0} usage >>"
   printUsageTip "bash tools/shell/generate-proto.sh" "print generate-proto.sh usage"
   printUsageTip "bash tools/shell/generate-proto.sh protoc" "generate grpc"
   printUsageTip "bash tools/shell/generate-proto.sh protobufjs" "generate ts definitions"

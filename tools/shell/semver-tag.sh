@@ -17,7 +17,7 @@ source tools/shell/module-aliases.sh ''
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  printInfoTitle "<< ${0} USAGE >>"
+  printInfoTitle "<< ${0} usage >>"
   printInfoMessage "version increment exits with error if latest commit is already tagged or if checked out branch is not master"
   printUsageTip "bash tools/shell/version-increment.sh" "tag latest comment with an appropriate version"
   printInfoMessage "Working versions ruleset (based on https://semver.org specification):"

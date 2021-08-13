@@ -26,7 +26,7 @@ PROJECT_ROOT=.
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  printInfoTitle "<< ${0} USAGE >>"
+  printInfoTitle "<< ${0} usage >>"
   printUsageTip "bash tools/shell/lint.sh all" "lint all module sources: ts, scss, html"
   printUsageTip "bash tools/shell/lint.sh all fix" "lint all module sources: ts, scss, html; and apply autofixes"
   printUsageTip "bash tools/shell/lint.sh all:1-by-1" "lint all module sources sequentially one by one using custom shell based on Nx commands: ts, scss, html"

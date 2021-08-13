@@ -26,8 +26,8 @@ declare -A IMAGES=(
 # Reports usage.
 ##
 reportUsage() {
-  printInfoTitle "<< ${0} USAGE >>"
-  printUsageTip "bash tools/shell/docker-build-ci.sh ?" "print script usage"
+  printInfoTitle "<< ${0} usage >>"
+  printUsageTip "bash tools/shell/docker-build-ci.sh ?" "print help"
   printUsageTip "bash tools/shell/docker-build-ci.sh IMAGE" "build CI docker container image"
   printGap
 

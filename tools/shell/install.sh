@@ -13,8 +13,8 @@ source tools/shell/print-utils.sh ''
 # Reports usage error and exits.
 ##
 reportUsage() {
-  printInfoTitle "<< ${0} USAGE >>"
-  printUsageTip "bash tools/shell/install.sh" "print install.sh usage"
+  printInfoTitle "<< ${0} usage >>"
+  printUsageTip "bash tools/shell/install.sh" "print help"
   printUsageTip "bash tools/shell/install.sh local" "install project dependencies only"
   printUsageTip "bash tools/shell/install.sh global" "install global dependencies only"
   printUsageTip "bash tools/shell/install.sh all" "install projects dependencies, global dependencies, brew (linux), protolint (linux), shellcheck (linux)"
@@ -28,8 +28,6 @@ reportUsage() {
   printUsageTip "bash tools/shell/install.sh shellcheck linux ci" "install shellcheck on linux in ci environment"
   printUsageTip "bash tools/shell/install.sh s3cmd any ci" "install s3cmd on linux in ci environment"
   printGap
-
-  exit 1
 }
 
 ##
@@ -266,7 +264,7 @@ installS3cmd() {
 ##
 # Dependencies installation control flow.
 ##
-if [ $# -lt 1 ]; then
+if [ "$1" = "?" ]; then
   reportUsage
 elif [ "$1" = "all" ]; then
   installProjectDependencies
@@ -285,4 +283,5 @@ elif [ "$1" = "s3cmd" ]; then
   installS3cmd "$3"
 else
   reportUsage
+  exit 1
 fi

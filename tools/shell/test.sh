@@ -26,7 +26,7 @@ PROJECT_ROOT=.
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  printInfoTitle "<< ${0} USAGE >>"
+  printInfoTitle "<< ${0} usage >>"
   printUsageTip "bash tools/shell/test.sh single-run all" "test all modules"
   printUsageTip "bash tools/shell/test.sh single-run changed" "test changed modules"
   printUsageTip "bash tools/shell/test.sh single-run-and-report changed" "test changed modules and collect coverage"

@@ -34,7 +34,7 @@ CHANGELOG_LIBS=${PROJECT_ROOT}/changelog/libs
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  printInfoTitle "<< USAGE >>"
+  printInfoTitle "<< ${0} usage >>"
   printUsageTip "bash tools/shell/changelog.sh all" "generate all changelogs"
   printUsageTip "bash tools/shell/changelog.sh <APP_ALIAS_FROM_TSCONFIG>" "generate changelog for a specific application/library"
 

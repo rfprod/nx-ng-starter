@@ -13,7 +13,7 @@ source tools/shell/print-utils.sh ''
 # Reports usage error and exits.
 ##
 reportUsageErrorAndExit() {
-  printInfoTitle "<< ${0} USAGE >>"
+  printInfoTitle "<< ${0} usage >>"
   printUsageTip "bash tools/shell/generate-elements-bootstrap-script.sh ELEMENTS_APP_DIST_PATH ELEMENTS_APP_PROJECT_NAME" "generates elements app bootstrap script"
   printGap
 

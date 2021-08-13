@@ -22,8 +22,8 @@ CHANGED_ALIASES=()
 # Reports usage error and exits.
 ##
 reportUsage() {
-  printInfoTitle "<< USAGE >>"
-  printUsageTip "bash tools/shell/git-extension.sh ?" "print usage"
+  printInfoTitle "<< ${0} usage >>"
+  printUsageTip "bash tools/shell/git-extension.sh ?" "print help"
   printUsageTip "bash tools/shell/git-extension.sh print" "get and print changed apps/libs aliases"
   printUsageTip "bash tools/shell/git-extension.sh" "get changed apps/libs aliases"
   printGap
