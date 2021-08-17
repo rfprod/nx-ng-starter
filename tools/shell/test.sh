@@ -131,17 +131,17 @@ performModuleTesting() {
   if [ "$3" = "report" ]; then
     # use additional flags in CI environment
     if [ "$4" = "ci" ]; then
-      npx nx test "$1" --watch=false --silent --passWithNoTests --run-in-band --ci || exit 1
+      npx nx test "$1" --watch=false --silent --pass-with-no-tests --run-in-band --ci || exit 1
     else
-      npx nx test "$1" --watch=false --silent --passWithNoTests --run-in-band || exit 1
+      npx nx test "$1" --watch=false --silent --pass-with-no-tests --run-in-band || exit 1
     fi
     copyReportToDist "$2" "$3"
   else
     # use additional flags in CI environment
     if [ "$4" = "ci" ]; then
-      npx nx test --project="$1" --watch=false --silent --passWithNoTests --run-in-band --ci --code-coverage=true || exit 1
+      npx nx test --project="$1" --watch=false --silent --pass-with-no-tests --run-in-band --ci --code-coverage=true || exit 1
     else
-      npx nx test --project="$1" --watch=false --silent --passWithNoTests --run-in-band --code-coverage=true || exit 1
+      npx nx test --project="$1" --watch=false --silent --pass-with-no-tests --run-in-band --code-coverage=true || exit 1
     fi
   fi
 }
@@ -150,14 +150,14 @@ performModuleTesting() {
 # Tests affected using NX.
 ##
 testAffected() {
-  npx nx affected --target=test --base=origin/dev --head=HEAD --passWithNoTests --watch=false --run-in-band --ci --code-coverage=true || exit 1
+  npx nx affected --target=test --base=origin/dev --head=HEAD --pass-with-no-tests --watch=false --run-in-band --ci --code-coverage=true || exit 1
 }
 
 ##
 # Tests all using NX.
 ##
 testAll() {
-  npx nx run-many --target=test --all --passWithNoTests --watch=false --run-in-band --ci --code-coverage=true || exit 1
+  npx nx run-many --target=test --all --pass-with-no-tests --watch=false --run-in-band --ci --code-coverage=true || exit 1
 }
 
 ##
