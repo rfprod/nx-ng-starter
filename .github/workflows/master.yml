@@ -107,12 +107,12 @@ jobs:
 
       - name: Lint all
         if: steps.changes.outputs.nx == 'true'
-        run: npx nx run-many --target=lint --all --parallel --maxParallel=2
+        run: npx nx run-many --target=lint --all --parallel --max-parallel=2
 
       - name: Unit test all (with code coverage)
         if: steps.changes.outputs.nx == 'true'
         run: |
-          npx nx run-many --target=test --all --passWithNoTests --code-coverage=true --watch=false --run-in-band --ci --updateSnapshot
+          npx nx run-many --target=test --all --pass-with-no-tests --code-coverage=true --watch=false --run-in-band --ci
           ng run tools:coverage-stats
           cat ./tools/ts/UNIT_COVERAGE.md
 

@@ -117,11 +117,11 @@ jobs:
 
       - name: Lint affected
         if: steps.changes.outputs.nx == 'true'
-        run: npx nx affected --target=lint --base=origin/master --head=HEAD --parallel --maxParallel=2
+        run: npx nx affected --target=lint --base=origin/master --head=HEAD --parallel --max-parallel=2
 
       - name: Unit test affected (without code coverage)
         if: steps.changes.outputs.nx == 'true'
-        run: npx nx affected --target=test --base=origin/master --head=HEAD --passWithNoTests --code-coverage=false --watch=false --run-in-band --ci
+        run: npx nx affected --target=test --base=origin/master --head=HEAD --pass-with-no-tests --code-coverage=false --watch=false --run-in-band --ci
 
       - name: Build all (development)
         if: steps.changes.outputs.nx == 'true'
