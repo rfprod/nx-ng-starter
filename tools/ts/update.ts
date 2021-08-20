@@ -47,13 +47,13 @@ ${COLORS.CYAN}%s${COLORS.DEFAULT} ${COLORS.YELLOW}%s${COLORS.DEFAULT}
 ${COLORS.CYAN}%s${COLORS.DEFAULT} ${COLORS.YELLOW}%s${COLORS.DEFAULT}
 ${COLORS.CYAN}%s${COLORS.DEFAULT} ${COLORS.YELLOW}%s${COLORS.DEFAULT}\n`,
     'Use --check flag to check for updates, e.g.',
-    'yarn workspace:update:check',
+    'npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --check',
     'Use --check --jsonUpgraded flags to check for updates and save updated packages as json in the project root, e.g.',
-    'yarn workspace:update:start',
-    'Use --migrate=start flag to start migration process, e.g.',
-    'yarn workspace:update:process',
-    'Use --migrate=execute flag to execute migrations, e.g.',
-    'yarn workspace:update:execute',
+    'npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --check --jsonUpgraded',
+    'Use --migrate=update flag to start migration process, e.g.',
+    'npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --migrate=update',
+    'Use --migrate=only flag to execute existing migrations only, e.g.',
+    'npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --migrate=only',
   );
 }
 
