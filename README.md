@@ -28,45 +28,11 @@ In order to run own copy of the project one must fulfill the following requireme
 - [Yarn](https://www.npmjs.com/package/yarn) is a preferred package manager for dependencies installation in the project root.
 - [npm](https://www.npmjs.com/) is a preferred package manager for dependencies installation in the `functions` folder.
 
-### Dependencies audit
+## Dependencies audit
 
 From time to time it's reasonable to audit dependencies for security issues and fix present issues.
 
-Follow the described procedure to accomplish this.
-
-Use `npm` to create a temporary `package-lock.json`
-
-```bash
-npm i --package-lock-only
-```
-
-Remove `yarn.lock`
-
-```bash
-rm yarn.lock
-```
-
-Run audit and fix
-
-```bash
-npm audit fix
-```
-
-Next import `package-lock.json` using `yarn`
-
-```bash
-yarn import
-```
-
-Remove temporary `package-lock.json`
-
-```bash
-rm package-lock.json
-```
-
-That's it.
-
-All this commands are executed in sequence if the following command from `package.json` is invoked
+Use the following command to perform audit chheck and apply automatic fixes if possible.
 
 ```bash
 yarn audit:fix

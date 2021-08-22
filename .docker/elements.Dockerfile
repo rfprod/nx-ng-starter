@@ -14,7 +14,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /app
 # Copy dist.
 COPY /package.json .
-COPY /dist/apps/client ./dist/apps/client
+COPY /dist/apps/elements ./dist/apps/elements
 COPY /server.prod.js .
 # Install dependencies for minimal nodejs server.
 RUN npm i express compression; \
@@ -33,4 +33,4 @@ COPY --from=builder /app .
 # Configure exposed port.
 EXPOSE 8080
 # Define startup command.
-CMD [ "node", "server.prod.js", "client" ]
+CMD [ "node", "server.prod.js", "elements" ]

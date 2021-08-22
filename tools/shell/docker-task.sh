@@ -40,7 +40,6 @@ elif [ "$1" = "install-docker-ci" ]; then
   yarn config set cache-folder ~/.yarn || exit 1
   yarn install:proto:linux:ci || exit 1
   yarn install:shellcheck:linux:ci || exit 1
-  yarn install:s3cmd:ci || exit 1
 elif [ "$1" = "cleanup" ]; then
   ##
   # Removes stopped containers and cleans up untagged images.

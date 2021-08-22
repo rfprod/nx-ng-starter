@@ -14,7 +14,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /app
 # Copy sources.
 COPY /package.json .
-COPY /dist ./dist
+COPY /dist/apps/api ./dist/apps/api
 # Run tasks:
 # - install production dependencies required for NestJS server;
 RUN yarn install --production=true --ignore-optional --frozen-lockfile --ignore-scripts; \

@@ -12,7 +12,7 @@ source tools/shell/print-utils.sh ''
 ##
 # Container registry.
 ##
-CONTAINER_REGISTRY=rfprod/nx-ng-starter
+CONTAINER_REGISTRY=rfprod/nx-ng-starter/
 
 ##
 # Supported applications.
@@ -20,8 +20,8 @@ CONTAINER_REGISTRY=rfprod/nx-ng-starter
 declare -A APPLICATIONS=(
   ["api"]="api"
   ["client"]="client"
-  ["elements"]="elements"
   ["documentation"]="documentation"
+  ["elements"]="elements"
 )
 
 ##
@@ -116,26 +116,35 @@ buildApplicationImage() {
   local APP_NAME
   APP_NAME=$1
   local ENV_NAME
-  ENV_NAME=$1
+  ENV_NAME=$2
 
-  if [ -z "$APP_NAME" ]; then
-    printWarningMessage "Application name was not provided."
-    printGap
-
-    reportUsage
-  fi
-
-  if [ -z "$ENV_NAME" ]; then
+  # if application name has suffix -e2e or equals documentation, it does not have a specific environment
+  if [[ "${APP_NAME##*"-e2e"*}" && "$APP_NAME" != "documentation" && -z "$ENV_NAME" ]]; then
     printWarningMessage "Environment name was not provided."
     printGap
 
     reportUsage
+    exit 1
   fi
 
   checkApplicationSupport "$APP_NAME"
-  checkEnvironmentSupport "$ENV_NAME"
 
-  docker build -t $CONTAINER_REGISTRY/"$APP_NAME""$ENV_NAME" -f .docker/"$APP_NAME".Dockerfile .
+  # if application name has suffix -e2e or equals documentation, it does not have a specific environment
+  if [[ "${APP_NAME##*"-e2e"*}" && "$APP_NAME" != "documentation" ]]; then
+    checkEnvironmentSupport "$ENV_NAME"
+  fi
+
+  local IMAGE_NAME
+
+  # if application name has suffix -e2e or equals documentation, it does not have a specific environment
+  if [[ "${APP_NAME##*"-e2e"*}" && "$APP_NAME" != "documentation" ]]; then
+    checkEnvironmentSupport "$ENV_NAME"
+    IMAGE_NAME="$CONTAINER_REGISTRY""$APP_NAME"-"$ENV_NAME"
+  else
+    IMAGE_NAME="$CONTAINER_REGISTRY""$APP_NAME"
+  fi
+
+  docker build -t "$IMAGE_NAME":latest -f .docker/"$APP_NAME".Dockerfile .
 }
 
 if [ "$1" = "?" ]; then

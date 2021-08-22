@@ -14,7 +14,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /app
 # Copy dist.
 COPY /package.json .
-COPY /dist ./dist
+COPY /dist/apps/documentation ./dist/apps/documentation
 COPY /server.prod.js .
 # Install dependencies for minimal nodejs server.
 RUN npm i express compression; \
