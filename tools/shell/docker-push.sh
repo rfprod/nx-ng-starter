@@ -26,10 +26,9 @@ declare -A IMAGES=(
   ["api-production"]="$CONTAINER_REGISTRY""api-production:latest"
   ["client-development"]="$CONTAINER_REGISTRY""client-development:latest"
   ["client-production"]="$CONTAINER_REGISTRY""client-production:latest"
+  ["documentation"]="$CONTAINER_REGISTRY""documentation:latest"
   ["elements-development"]="$CONTAINER_REGISTRY""elements-development:latest"
   ["elements-production"]="$CONTAINER_REGISTRY""elements-production:latest"
-  ["documentation-development"]="$CONTAINER_REGISTRY""documentation-development:latest"
-  ["documentation-production"]="$CONTAINER_REGISTRY""documentation-production:latest"
   ["mono-ci"]="$CONTAINER_REGISTRY""mono-ci:latest"
   ["mono-ci-slim"]="$CONTAINER_REGISTRY""mono-ci-slim:latest"
 )

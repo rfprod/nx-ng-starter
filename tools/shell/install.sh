@@ -26,7 +26,6 @@ reportUsage() {
   printUsageTip "bash tools/shell/install.sh shellcheck" "install shellcheck on linux"
   printUsageTip "bash tools/shell/install.sh shellcheck osx" "install shellcheck on osx"
   printUsageTip "bash tools/shell/install.sh shellcheck linux ci" "install shellcheck on linux in ci environment"
-  printUsageTip "bash tools/shell/install.sh s3cmd any ci" "install s3cmd on linux in ci environment"
   printGap
 }
 
@@ -242,26 +241,6 @@ installShellcheck() {
 }
 
 ##
-# Installs S3cmd.
-# TODO: verify that it works
-##
-installS3cmd() {
-  if [ "$1" = "ci" ]; then
-    # runuser -l linuxbrew -c "brew install s3cmd"
-    wget -qO - http://s3tools.org/repo/deb-all/stable/s3tools.key | apt-key add -
-    wget -O /etc/apt/sources.list.d/s3tools.list http://s3tools.org/repo/deb-all/stable/s3tools.list
-    apt-get update
-    apt-get -y install s3cmd
-  else
-    #brew install s3cmd
-    wget -qO - http://s3tools.org/repo/deb-all/stable/s3tools.key | apt-key add -
-    wget -O /etc/apt/sources.list.d/s3tools.list http://s3tools.org/repo/deb-all/stable/s3tools.list
-    sudo apt update
-    sudo apt -y install s3cmd
-  fi
-}
-
-##
 # Dependencies installation control flow.
 ##
 if [ "$1" = "?" ]; then
@@ -279,8 +258,6 @@ elif [ "$1" = "proto" ]; then
   installProtobuf "$2" "$3"
 elif [ "$1" = "shellcheck" ]; then
   installShellcheck "$2" "$3"
-elif [ "$1" = "s3cmd" ]; then
-  installS3cmd "$3"
 else
   reportUsage
   exit 1

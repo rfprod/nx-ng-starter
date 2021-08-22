@@ -30,6 +30,10 @@ const usageExamples = `
 # SERVE DOCUMENTATION APP
 # - command: node server.prod.js documentation
 # - description: starts server serving documentation app dist.
+#
+# SERVE ELEMENTS APP
+# - command: node server.prod.js elements
+# - description: starts server serving elements app dist.
 ##
 `;
 
