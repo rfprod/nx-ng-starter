@@ -72,7 +72,8 @@ const writeAverageStats = () => {
 
   fs.writeFile(readmePath, coverageSummary, (error: NodeJS.ErrnoException | null) => {
     if (error !== null) {
-      return console.log(error);
+      // eslint-disable-next-line no-console -- needed here to print output in the terminal
+      console.log(error);
     }
   });
 };
@@ -132,12 +133,14 @@ const recalculateStats = () => {
 
 const readFileCallback = (error: NodeJS.ErrnoException | null, data?: Buffer) => {
   if (error !== null) {
+    // eslint-disable-next-line no-console -- needed here to print output in the terminal
     console.log(`❗ ${COLORS.LIGHT_RED}%s${COLORS.DEFAULT}`, 'No coverage summary for the project');
   }
 
   if (typeof data !== 'undefined') {
     const json: ICoverageSummaryJson = JSON.parse(data.toString());
 
+    // eslint-disable-next-line no-console -- needed here to print output in the terminal
     console.log(`✅ ${COLORS.YELLOW}%s %o${COLORS.DEFAULT}`, `Total:\n`, json.total);
 
     const summary = json.total;

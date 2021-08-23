@@ -41,6 +41,7 @@ interface IPackageJson {
  * Prints script usage instructions.
  */
 function printUsageInstructions() {
+  // eslint-disable-next-line no-console -- needed here to print output in the terminal
   console.log(
     `\n${COLORS.CYAN}%s${COLORS.DEFAULT} ${COLORS.YELLOW}%s${COLORS.DEFAULT}
 ${COLORS.CYAN}%s${COLORS.DEFAULT} ${COLORS.YELLOW}%s${COLORS.DEFAULT}
@@ -75,6 +76,7 @@ function spawnCommandSync(
   const spawnSyncOutput = spawnSync(command, args, options);
 
   if (spawnSyncOutput.error) {
+    // eslint-disable-next-line no-console -- needed here to print output in the terminal
     console.log(
       `${COLORS.CYAN}%s${COLORS.DEFAULT}
 ${COLORS.RED}%s:${COLORS.DEFAULT}\n%s
@@ -89,6 +91,7 @@ ${COLORS.CYAN}%s:${COLORS.DEFAULT}\n%s\n`,
       spawnSyncOutput.status,
     );
   } else {
+    // eslint-disable-next-line no-console -- needed here to print output in the terminal
     console.log(
       `${COLORS.CYAN}%s${COLORS.DEFAULT}
 ${COLORS.CYAN}%s:${COLORS.DEFAULT}\n%s
@@ -108,9 +111,11 @@ function writeUpdateSummary(packages: TUpdatablePackages) {
   const path = `${root}/migrations-packages.json`;
   fs.writeFile(path, JSON.stringify(packages), (error: NodeJS.ErrnoException | null) => {
     if (error !== null) {
+      // eslint-disable-next-line no-console -- needed here to print output in the terminal
       console.log(`\n${COLORS.RED}%s${COLORS.DEFAULT}\n%s\n`, 'ERROR', error);
       process.exit(1);
     }
+    // eslint-disable-next-line no-console -- needed here to print output in the terminal
     console.log(`\n${COLORS.GREEN}%s${COLORS.DEFAULT}%s\n`, 'Update summary saved: ', path);
   });
 }
@@ -121,6 +126,7 @@ function writeUpdateSummary(packages: TUpdatablePackages) {
  */
 function checkForUpdates(jsonUpgraded = false): TUpdatablePackages {
   const args = jsonUpgraded ? ['--jsonUpgraded'] : [];
+  // eslint-disable-next-line no-console -- needed here to print output in the terminal
   console.log(`\n${COLORS.YELLOW}%s${COLORS.DEFAULT}\n`, 'Checking for updates. Wait for it...');
   const ncuOutput = spawnCommandSync('ncu', args);
   const updatablePackages: TUpdatablePackages =
@@ -130,6 +136,7 @@ function checkForUpdates(jsonUpgraded = false): TUpdatablePackages {
   if (jsonUpgraded) {
     writeUpdateSummary(updatablePackages);
   } else {
+    // eslint-disable-next-line no-console -- needed here to print output in the terminal
     console.log(
       `\n${COLORS.YELLOW}%s${COLORS.DEFAULT}\n`,
       'Verify output above. Dependencies highlighted with red may have breaking changes but not necessarily.',
@@ -145,11 +152,12 @@ function executeMigrations(): Observable<SpawnSyncReturns<string> | null> {
   const result = new Observable(function (this, subscriber: Subscriber<SpawnSyncReturns<string> | null>) {
     fs.readFile(`${root}/migrations.json`, 'utf8', (error, data) => {
       if (error !== null) {
+        // eslint-disable-next-line no-console -- needed here to print output in the terminal
         console.log(`\n${COLORS.GREEN}%s${COLORS.DEFAULT}\n`, '<< NO MIGRATIONS >>');
         subscriber.next(null);
       } else {
-        console.log(`\n${COLORS.YELLOW}%s${COLORS.DEFAULT}\n`, '<< EXECUTING MIGRATIONS >>');
-        console.log(data);
+        // eslint-disable-next-line no-console -- needed here to print output in the terminal
+        console.log(`\n${COLORS.YELLOW}%s${COLORS.DEFAULT}\n`, '<< EXECUTING MIGRATIONS >>', data);
 
         const migrationProcessOutput = spawnCommandSync('npx nx migrate', ['--run-migrations']);
         if (migrationProcessOutput.error) {
@@ -258,6 +266,7 @@ function updateAndMigratePackages(bulkUserChoice?: boolean) {
   const path = `${root}/migrations-packages.json`;
   fs.readFile(path, (error: NodeJS.ErrnoException | null, data?: Buffer) => {
     if (error !== null) {
+      // eslint-disable-next-line no-console -- needed here to print output in the terminal
       console.log(`\n${COLORS.RED}%s${COLORS.DEFAULT}\n%s\n`, 'ERROR', error);
       process.exit(1);
     }
@@ -265,6 +274,7 @@ function updateAndMigratePackages(bulkUserChoice?: boolean) {
     if (typeof data !== 'undefined') {
       const updatablePackages: TUpdatablePackages = JSON.parse(data.toString());
 
+      // eslint-disable-next-line no-console -- needed here to print output in the terminal
       console.log(
         `\n${COLORS.CYAN}%s${COLORS.DEFAULT}\n%s\n`,
         `Updatable packages (local cache, rerun --check --jsonUpgraded to regenerate if output differs from the subsequent live check)`,
@@ -339,6 +349,7 @@ function migratePackagesOnly() {
   const path = `${root}/package.json`;
   fs.readFile(path, (error: NodeJS.ErrnoException | null, data?: Buffer) => {
     if (error !== null) {
+      // eslint-disable-next-line no-console -- needed here to print output in the terminal
       console.log(`\n${COLORS.RED}%s${COLORS.DEFAULT}\n%s\n`, 'ERROR', error);
       process.exit(1);
     }
@@ -347,6 +358,7 @@ function migratePackagesOnly() {
       const parsedPackageJson: IPackageJson = JSON.parse(data.toString());
       const dependencies = parsedPackageJson.dependencies;
 
+      // eslint-disable-next-line no-console -- needed here to print output in the terminal
       console.log(`\n${COLORS.CYAN}%s${COLORS.DEFAULT}\n%s\n`, `Parsed dependencies`, dependencies);
 
       const packageNames = Object.keys(dependencies);

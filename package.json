@@ -15,7 +15,7 @@
     "affected:test": "nx affected:test",
     "analyze:circular-deps": "madge --circular --extensions ts ./apps ./libs ./tools --ts-config ./tsconfig.base.json",
     "analyze:client": "yarn build:client:stats; npx webpack-bundle-analyzer ./dist/apps/client/stats.json",
-    "analyze:documentation": "yarn build:documentation:stats; npx webpack-bundle-analyzer ./dist/apps/documentation/stats.json",
+    "analyze:documentation": "yarn build:documentatiosn:stats; npx webpack-bundle-analyzer ./dist/apps/documentation/stats.json",
     "audit:fix": "rm -rf node_module && yarn install --ignore-scripts; npm i --package-lock-only; rm yarn.lock; npm audit fix; yarn import; rm -rf package-lock.json node_modules; yarn install",
     "build:all": "npx nx run-many --target=build --projects=api,client && yarn build:documentation",
     "build:client": "npx nx build client --configuration production",
