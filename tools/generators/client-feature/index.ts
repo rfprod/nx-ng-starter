@@ -104,6 +104,7 @@ const cleanup =
           const rslintRcPath = `${projectRoot}/.eslintrc.json`;
           fs.stat(rslintRcPath, (err: NodeJS.ErrnoException | null, stats: fs.Stats) => {
             if (err !== null) {
+              // eslint-disable-next-line no-console -- needed here for debugging
               console.log(`${rslintRcPath} does not exist`);
             } else {
               fs.unlinkSync(rslintRcPath);
@@ -118,7 +119,6 @@ const cleanup =
 
 export default function (schema: ISchematicContext) {
   return (tree: Tree, context: SchematicContext) => {
-    console.log('schema', schema);
     const name = schema.name;
     const tags = schema.tags;
 
