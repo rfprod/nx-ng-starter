@@ -1,3 +1,5 @@
+const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+
 module.exports = {
   core: {
     builder: 'webpack5',
@@ -27,5 +29,21 @@ module.exports = {
       flexbox: 'no-2009',
     }),
   ],
-  stories: []
+  stories: [],
+  webpackFinal: async (config) => {
+    // for backwards compatibility call the `rootWebpackConfig`
+    // this can be removed once that one is migrated fully to
+    // use the `webpackFinal` property in the `main.js` file
+    const tsPaths = new TsconfigPathsPlugin({
+      configFile: './tsconfig.base.json',
+    });
+
+    config.resolve.plugins
+      ? config.resolve.plugins.push(tsPaths)
+      : (config.resolve.plugins = [tsPaths]);
+
+    // add your own webpack tweaks if needed
+
+    return config;
+  },
 };
