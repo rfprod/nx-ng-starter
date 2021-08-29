@@ -20,7 +20,12 @@ export class BackendGqlModule {
       installSubscriptionHandlers: true,
       autoSchemaFile: 'libs/backend-gql/schema.gql',
       subscriptions: {
-        path: '/api/graphql',
+        'graphql-ws': {
+          path: '/api/graphql',
+        },
+        'subscriptions-transport-ws': {
+          path: '/api/graphql',
+        },
       },
       cors: {
         credentials: true,

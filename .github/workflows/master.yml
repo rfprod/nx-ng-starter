@@ -118,12 +118,13 @@ jobs:
 
       - name: Build all (production)
         if: steps.changes.outputs.nx == 'true'
-        run: npx nx run-many --target=build --all --configuration production
+        run: |
+          yarn generate:env:documentation
+          npx nx run-many --target=build --all --configuration production
 
       - name: Build documentation (compodoc, unit coverage, e2e coverage)
         if: steps.changes.outputs.nx == 'true'
         run: |
-          yarn generate:env:documentation
           yarn test:reports
           ng run tools:compodoc-build
           yarn generate:changelog
