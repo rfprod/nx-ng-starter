@@ -7,7 +7,7 @@
 ##
 
 # Define image.
-FROM node:14.17.0-slim as builder
+FROM node:14.17.6-slim as builder
 # Set environment variables.
 ENV DEBIAN_FRONTEND=noninteractive
 # Create app directory.
@@ -25,7 +25,7 @@ RUN npm i express compression; \
 ##
 
 # Define image.
-FROM node:14.17.0-alpine
+FROM node:14.17.6-alpine
 # Create app directory.
 WORKDIR /app
 # Copy dist.

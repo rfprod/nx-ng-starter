@@ -64,9 +64,10 @@ jobs:
 
       - name: Use Node.js ${{ matrix.node-version }}
         if: steps.changes.outputs.nx == 'true'
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+          check-latest: true
 
       - name: Configure kernel (increase watchers)
         if: steps.changes.outputs.nx == 'true'
