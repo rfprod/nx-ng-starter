@@ -1,7 +1,6 @@
 /* Angular Material Theme, and Typography customization */
 @use '~@angular/material' as mat;
 @import 'node_modules/@angular/material/_theming.scss';
-@import 'libs/client-core/src/lib/styles/theming/material-colors.scss';
 
 /**
  * Define a custom typography config that overrides font-family, and all levels.
@@ -62,7 +61,7 @@ $unicorn-dark-theme: mat.define-dark-theme($unicorn-dark-primary, $unicorn-dark-
  * Imports and includes variables, and mixins:
  * custom-selectors-colouring, custom-colouring-classes
  */
-@import 'libs/client-core/src/lib/styles/theming/theming-extension.scss';
+@import 'libs/client-core/src/lib/styles/theming-extension.scss';
 
 /* Class for custom svg icons */
 .material-icons-svg {
