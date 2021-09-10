@@ -42,57 +42,6 @@ import { appClientMaterialModuleProviders } from './providers/client-material-mo
  * Shared application material module.
  */
 @NgModule({
-  imports: [
-    // Form controls
-    MatAutocompleteModule,
-    MatCheckboxModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
-    MatMomentDateModule,
-    MatInputModule,
-    MatSelectModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatRadioModule,
-    // Navigation
-    MatMenuModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    // Layout
-    MatListModule,
-    MatGridListModule,
-    MatCardModule,
-    MatStepperModule,
-    MatTabsModule,
-    MatExpansionModule,
-    // Buttons and indicators
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatChipsModule,
-    MatIconModule,
-    MatProgressSpinnerModule,
-    MatProgressBarModule,
-    // Popups and modals
-    MatDialogModule,
-    MatSnackBarModule,
-    MatTooltipModule,
-    // Data table
-    MatTableModule,
-    MatSortModule,
-    MatPaginatorModule,
-    // Misc
-    MatOptionModule,
-    MatRippleModule,
-    // Divider
-    MatDividerModule,
-    // Tree
-    MatTreeModule,
-    // Badge
-    MatBadgeModule,
-    // Cdk
-    OverlayModule,
-    HammerModule,
-  ],
   exports: [
     // Form controls
     MatAutocompleteModule,
