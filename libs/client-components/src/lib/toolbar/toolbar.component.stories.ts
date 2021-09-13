@@ -8,7 +8,7 @@ import { documentFactory, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@app
 import { NgxsModule } from '@ngxs/store';
 import { Args, Story } from '@storybook/angular/types-6-0';
 
-import { AppNavbarComponent } from './navbar.component';
+import { AppToolbarComponent } from './toolbar.component';
 
 const testingEnvironment = {
   production: false,
@@ -19,11 +19,11 @@ const testingEnvironment = {
 };
 
 export default {
-  title: 'AppNavbarComponent',
-  component: AppNavbarComponent,
+  title: 'AppToolbarComponent',
+  component: AppToolbarComponent,
 };
 
-const story: Story<AppNavbarComponent> = (args: Args) => ({
+const story: Story<AppToolbarComponent> = (args: Args) => ({
   moduleMetadata: {
     imports: [
       BrowserAnimationsModule,
@@ -45,7 +45,7 @@ const story: Story<AppNavbarComponent> = (args: Args) => ({
         useValue: testingEnvironment,
       },
     ],
-    declarations: [AppNavbarComponent],
+    declarations: [AppToolbarComponent],
   },
   props: {
     ...args,
@@ -54,25 +54,21 @@ const story: Story<AppNavbarComponent> = (args: Args) => ({
 
 export const primary = story.bind({});
 primary.args = {
-  logoSrc: 'assets/icons/icon-72x72.png',
-  buttons: [
+  anchors: [
     {
-      routerLink: [{ outlets: { primary: [''], sidebar: [] } }],
-      routeActive: () => false,
-      icon: 'home',
-      title: 'Home',
+      href: 'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=bug_report.md&title=',
+      icon: 'bug_report',
+      title: 'Report a bug',
     },
     {
-      routerLink: [{ outlets: { primary: ['info'], sidebar: [] } }],
-      routeActive: () => false,
-      icon: 'touch_app',
-      title: 'API info',
+      href: 'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=feature_request.md&title=',
+      icon: 'lightbulb',
+      title: 'Request a feature',
     },
     {
-      routerLink: [{ outlets: { primary: ['chatbot'], sidebar: [] } }],
-      routeActive: () => false,
-      icon: 'chat',
-      title: 'Chat',
+      href: 'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=maintenance.md&title=',
+      icon: 'engineering',
+      title: 'Request maintenance',
     },
   ],
 };
