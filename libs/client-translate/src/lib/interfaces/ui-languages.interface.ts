@@ -1,10 +1,20 @@
+export enum LANG_CODE {
+  RU = 'ru',
+  EN = 'en',
+}
+
 /**
  * UI languages interface.
  */
 export interface IUiLanguagesInterface {
-  ru: 'ru';
-  en: 'en';
+  ru: LANG_CODE.RU;
+  en: LANG_CODE.EN;
 }
+
+export const uiLanguages: IUiLanguagesInterface = {
+  ru: LANG_CODE.RU,
+  en: LANG_CODE.EN,
+};
 
 /**
  * Laguage codes type.

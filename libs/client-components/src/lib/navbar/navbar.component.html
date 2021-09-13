@@ -3,21 +3,24 @@
 
   <span fxFlex="1 1 auto"></span>
 
-  <button mat-button [fxHide.xs]="true" [fxHide.sm]="true"><mat-icon>help_outline</mat-icon> Help</button>
-
-  <a mat-button *ngFor="let anchor of anchors" [fxHide.xs]="true" [fxHide.sm]="true" [href]="anchor.href" target="_blank">
-    <mat-icon>{{ anchor.icon }}</mat-icon> {{ anchor.title }}
-  </a>
+  <button
+    mat-button
+    *ngFor="let button of buttons"
+    [routerLink]="button.routerLink"
+    (click)="sidebarCloseHandler()"
+    [fxHide.xs]="true"
+    [fxHide.sm]="true"
+  >
+    <mat-icon>{{ button.icon }}</mat-icon> {{ button.title }}
+  </button>
 
   <button mat-icon-button [matMenuTriggerFor]="mobileMenuTop" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
     <mat-icon>menu</mat-icon>
   </button>
 
   <mat-menu #mobileMenuTop="matMenu" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
-    <button mat-menu-item><mat-icon>help_outline</mat-icon> Help</button>
-
-    <a mat-menu-item *ngFor="let anchor of anchors" [href]="anchor.href" target="_blank">
-      <mat-icon>{{ anchor.icon }}</mat-icon> {{ anchor.title }}
+    <a mat-menu-item *ngFor="let button of buttons" [routerLink]="button.routerLink" (click)="sidebarCloseHandler()">
+      <mat-icon>{{ button.icon }}</mat-icon> {{ button.title }}
     </a>
   </mat-menu>
 </mat-toolbar>

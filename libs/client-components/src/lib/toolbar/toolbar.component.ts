@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { AppSidebarState, chatbotActions, sidebarActions } from '@app/client-store';
-import { IToolbarButton } from '@app/client-util';
+import { IToolbarAnchor } from '@app/client-util';
 import { Store } from '@ngxs/store';
 import { map } from 'rxjs/operators';
 
@@ -11,21 +11,21 @@ import { map } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppToolbarComponent {
-  @Input() public buttons: IToolbarButton[] = [
+  @Input() public anchors: IToolbarAnchor[] = [
     {
-      routerLink: [{ outlets: { primary: [''], sidebar: [] } }],
-      icon: 'home',
-      title: 'Home',
+      href: 'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=bug_report.md&title=',
+      icon: 'bug_report',
+      title: 'Report a bug',
     },
     {
-      routerLink: [{ outlets: { primary: ['info'], sidebar: [] } }],
-      icon: 'touch_app',
-      title: 'API info',
+      href: 'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=feature_request.md&title=',
+      icon: 'lightbulb',
+      title: 'Request a feature',
     },
     {
-      routerLink: [{ outlets: { primary: ['chatbot'], sidebar: [] } }],
-      icon: 'chat',
-      title: 'Chat',
+      href: 'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=maintenance.md&title=',
+      icon: 'engineering',
+      title: 'Request maintenance',
     },
   ];
 
@@ -39,9 +39,5 @@ export class AppToolbarComponent {
 
   public toggleChatbot(): void {
     void this.store.dispatch(new chatbotActions.toggle());
-  }
-
-  public sidebarCloseHandler(): void {
-    void this.store.dispatch(new sidebarActions.setState({ sidebarOpened: false }));
   }
 }

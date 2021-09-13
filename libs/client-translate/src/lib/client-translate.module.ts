@@ -1,7 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { appSharedUiTranslateModuleProviders } from './providers/client-translate-module.providers';
+import { appClientTranslateModuleProviders } from './providers/client-translate-module.providers';
 import { AppTranslationUtilsService } from './services/app-translation-utils.service';
 
 /**
@@ -10,7 +10,7 @@ import { AppTranslationUtilsService } from './services/app-translation-utils.ser
 @NgModule({
   imports: [TranslateModule.forRoot()],
   exports: [TranslateModule],
-  providers: [...appSharedUiTranslateModuleProviders],
+  providers: [...appClientTranslateModuleProviders],
 })
 export class AppClientTranslateModule {
   constructor(private readonly utils: AppTranslationUtilsService) {
@@ -20,7 +20,7 @@ export class AppClientTranslateModule {
   public static forRoot(): ModuleWithProviders<AppClientTranslateModule> {
     return {
       ngModule: AppClientTranslateModule,
-      providers: [...appSharedUiTranslateModuleProviders],
+      providers: [...appClientTranslateModuleProviders],
     };
   }
 }

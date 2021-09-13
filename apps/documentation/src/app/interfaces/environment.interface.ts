@@ -3,6 +3,7 @@ import { InjectionToken } from '@angular/core';
 export interface IDocAppEnvironment {
   production: boolean;
   appName: string;
+  description: string;
   mdFilePaths: string[];
 }
 

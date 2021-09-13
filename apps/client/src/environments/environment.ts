@@ -20,6 +20,7 @@ export const environment: IWebClientAppEnvironment = {
   production: false,
   platform,
   appName: 'Nx Ng Starter Client',
+  description: 'Nx Ng Starter client application',
   api: window.location.origin.includes('localhost') ? 'http://localhost:8080/api' : `${window.location.origin}/api`,
   envoyUrl: 'http://localhost:8082',
   sentry: {

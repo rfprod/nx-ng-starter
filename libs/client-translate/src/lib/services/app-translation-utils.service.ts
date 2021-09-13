@@ -4,9 +4,10 @@ import { WINDOW } from '@app/client-util';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subject } from 'rxjs';
 
+import { EN_DICTIONARY } from '../dictionaries/en';
 import { RU_DICTIONARY } from '../dictionaries/ru';
 import { IUiDictionary } from '../interfaces/ui-dictionary.interface';
-import { ISupportedLanguage, IUiLanguagesInterface, TLangCode } from '../interfaces/ui-languages.interface';
+import { ISupportedLanguage, IUiLanguagesInterface, TLangCode, uiLanguages } from '../interfaces/ui-languages.interface';
 import { IUiTranslations } from '../interfaces/ui-translations.interface';
 
 /**
@@ -26,10 +27,7 @@ export class AppTranslationUtilsService {
   /**
    * Available UI language codes.
    */
-  private readonly langs: IUiLanguagesInterface = {
-    ru: 'ru',
-    en: 'en',
-  };
+  private readonly langs = { ...uiLanguages };
 
   /**
    * Supported UI languages.
@@ -44,9 +42,7 @@ export class AppTranslationUtilsService {
    */
   private readonly translations: IUiTranslations = {
     ru: { ...this.ruDictionary },
-    en: {
-      /*, SHARED_EN*/
-    },
+    en: { ...this.enDictionary },
   };
 
   constructor(
@@ -54,6 +50,7 @@ export class AppTranslationUtilsService {
     private readonly dateAdapter: DateAdapter<unknown>,
     @Inject(WINDOW) private readonly win: Window,
     @Inject(RU_DICTIONARY) private readonly ruDictionary: IUiDictionary,
+    @Inject(EN_DICTIONARY) private readonly enDictionary: IUiDictionary,
   ) {
     this.languageChangeSubscription();
   }
