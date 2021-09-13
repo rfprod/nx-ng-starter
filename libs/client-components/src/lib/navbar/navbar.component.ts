@@ -1,5 +1,8 @@
 import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
-import { IToolbarAnchor, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
+import { Router } from '@angular/router';
+import { sidebarActions } from '@app/client-store';
+import { IToolbarButton, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
+import { Store } from '@ngxs/store';
 
 @Component({
   selector: 'app-navbar',
@@ -10,25 +13,54 @@ import { IToolbarAnchor, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@a
 export class AppNavbarComponent {
   @Input() public logoSrc = 'assets/icons/icon-72x72.png';
 
-  @Input() public anchors: IToolbarAnchor[] = [
+  @Input() public buttons: IToolbarButton[] = [
     {
-      href: 'https://cli.angular.io/reference.pdf',
-      icon: 'build',
-      title: 'CLI Reference',
+      routerLink: [{ outlets: { primary: [''], sidebar: [] } }],
+      routeActive: () =>
+        this.router.isActive('', {
+          matrixParams: 'ignored',
+          queryParams: 'ignored',
+          paths: 'exact',
+          fragment: 'ignored',
+        }),
+      icon: 'home',
+      title: 'Home',
     },
     {
-      href: 'https://material.angular.io/',
-      icon: 'change_history',
-      title: 'Angular Material',
+      routerLink: [{ outlets: { primary: ['info'], sidebar: [] } }],
+      routeActive: () =>
+        this.router.isActive('info', {
+          matrixParams: 'ignored',
+          queryParams: 'ignored',
+          paths: 'exact',
+          fragment: 'ignored',
+        }),
+      icon: 'api',
+      title: 'API info',
     },
     {
-      href: 'https://material.io/icons/',
-      icon: 'info_outline',
-      title: 'Material Icons',
+      routerLink: [{ outlets: { primary: ['chatbot'], sidebar: [] } }],
+      routeActive: () =>
+        this.router.isActive('chatbot', {
+          matrixParams: 'ignored',
+          queryParams: 'ignored',
+          paths: 'exact',
+          fragment: 'ignored',
+        }),
+      icon: 'chat',
+      title: 'Chat',
     },
   ];
 
   public readonly appName = this.env.appName;
 
-  constructor(@Inject(WEB_CLIENT_APP_ENV) private readonly env: IWebClientAppEnvironment) {}
+  constructor(
+    private readonly store: Store,
+    private readonly router: Router,
+    @Inject(WEB_CLIENT_APP_ENV) private readonly env: IWebClientAppEnvironment,
+  ) {}
+
+  public sidebarCloseHandler(): void {
+    void this.store.dispatch(new sidebarActions.setState({ sidebarOpened: false }));
+  }
 }

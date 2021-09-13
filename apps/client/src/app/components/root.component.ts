@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Inject, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
 
 @Component({
@@ -20,13 +20,24 @@ export class AppRootComponent implements OnInit {
    */
   @HostBinding('class.mat-body-1') public matBody = true;
 
-  constructor(private readonly title: Title, @Inject(WEB_CLIENT_APP_ENV) private readonly env: IWebClientAppEnvironment) {}
+  constructor(
+    private readonly title: Title,
+    private readonly meta: Meta,
+    @Inject(WEB_CLIENT_APP_ENV) private readonly env: IWebClientAppEnvironment,
+  ) {}
 
   public toggleMaterialTheme(darkThemeEnabled: boolean): void {
     this.darkTheme = darkThemeEnabled;
   }
 
+  /**
+   * Lifecycle hook called on component initialization.
+   * When called does the following:
+   * - sets document title;
+   * - sets document description;
+   */
   public ngOnInit(): void {
     this.title.setTitle(this.env.appName);
+    this.meta.updateTag({ description: this.env.description });
   }
 }

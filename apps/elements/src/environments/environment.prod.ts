@@ -10,6 +10,7 @@ export const environment: IWebClientAppEnvironment = {
   production: true,
   platform,
   appName: 'Nx Ng Starter Elements',
+  description: 'Nx Ng Starter Elements: wigdets based on Angular Elements',
   api:
     platform !== 'web'
       ? 'https://nx-ng-starter.web.app/api'

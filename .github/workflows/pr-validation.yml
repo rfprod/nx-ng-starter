@@ -110,7 +110,7 @@ jobs:
 
       - name: Install project dependencies
         if: steps.changes.outputs.nx == 'true'
-        run: yarn install --frozen-lockfile --ignore-scripts
+        run: yarn install --frozen-lockfile
 
       - name: Process dependencies with ngcc
         if: steps.changes.outputs.nx == 'true'

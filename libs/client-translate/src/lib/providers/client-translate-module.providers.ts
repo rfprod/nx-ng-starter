@@ -7,7 +7,7 @@ import { RU, RU_DICTIONARY } from '../dictionaries/ru';
 /**
  * Module providers.
  */
-export const appSharedUiTranslateModuleProviders: Provider[] = [
+export const appClientTranslateModuleProviders: Provider[] = [
   TranslateService,
   { provide: RU_DICTIONARY, useValue: RU },
   { provide: EN_DICTIONARY, useValue: EN },

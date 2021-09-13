@@ -46,21 +46,24 @@ const story: Story<AppNavbarComponent> = (args: Args) => ({
 export const primary = story.bind({});
 primary.args = {
   logoSrc: 'assets/icons/icon-72x72.png',
-  anchors: [
+  buttons: [
     {
-      href: 'https://cli.angular.io/reference.pdf',
-      icon: 'build',
-      title: 'CLI Reference',
+      routerLink: [{ outlets: { primary: [''], sidebar: [] } }],
+      routeActive: () => false,
+      icon: 'home',
+      title: 'Home',
     },
     {
-      href: 'https://material.angular.io/',
-      icon: 'change_history',
-      title: 'Angular Material',
+      routerLink: [{ outlets: { primary: ['info'], sidebar: [] } }],
+      routeActive: () => false,
+      icon: 'touch_app',
+      title: 'API info',
     },
     {
-      href: 'https://material.io/icons/',
-      icon: 'info_outline',
-      title: 'Material Icons',
+      routerLink: [{ outlets: { primary: ['chatbot'], sidebar: [] } }],
+      routeActive: () => false,
+      icon: 'chat',
+      title: 'Chat',
     },
   ],
 };

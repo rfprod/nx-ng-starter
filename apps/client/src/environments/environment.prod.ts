@@ -10,6 +10,7 @@ export const environment: IWebClientAppEnvironment = {
   production: true,
   platform,
   appName: 'Nx Ng Starter Client',
+  description: 'Nx Ng Starter client application',
   api:
     platform !== 'web'
       ? 'https://nx-ng-starter.web.app/api'

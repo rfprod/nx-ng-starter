@@ -4,7 +4,7 @@ import { documentProvider, WINDOW, windowProvider } from '@app/client-util';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
 import { AppClientTranslateModule } from '../client-translate.module';
-import { ISupportedLanguage, IUiLanguagesInterface, TLangCode } from '../interfaces/ui-languages.interface';
+import { ISupportedLanguage, TLangCode, uiLanguages } from '../interfaces/ui-languages.interface';
 import { AppTranslationUtilsService } from './app-translation-utils.service';
 
 describe('AppTranslationUtilsService', () => {
@@ -65,11 +65,7 @@ describe('AppTranslationUtilsService', () => {
     expect(service['languageChangeSubscription']).toEqual(expect.any(Function));
     expect(service.initialize).toEqual(expect.any(Function));
     expect(service.getUserLanguagePreference).toEqual(expect.any(Function));
-    const langs: IUiLanguagesInterface = {
-      ru: 'ru',
-      en: 'en',
-    };
-    expect(service['langs']).toEqual(expect.objectContaining(langs));
+    expect(service['langs']).toEqual(expect.objectContaining(uiLanguages));
     expect(service.languages).toEqual(expect.any(Function));
     const supportedLangs: ISupportedLanguage[] = [
       { key: 'en', name: 'English' },
