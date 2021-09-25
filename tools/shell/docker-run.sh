@@ -36,7 +36,6 @@ declare -A SUPPORTED_IMAGES=(
 ##
 reportUsage() {
   printInfoTitle "<< ${0} usage >>"
-  printWarningMessage "at least one argument is expected, see examples below"
   printUsageTip "bash tools/shell/docker-run.sh ?" "print help"
   printUsageTip "bash tools/shell/docker-run.sh APPLICATION" "run APPLICATION docker container"
   printUsageTip "bash tools/shell/docker-run.sh APPLICATION debug" "run APPLICATION docker container in debug mode"

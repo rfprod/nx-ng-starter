@@ -12,7 +12,7 @@ source tools/shell/print-utils.sh ''
 ##
 # Container registry.
 ##
-CONTAINER_REGISTRY=rfprod/nx-ng-starter/
+CONTAINER_REGISTRY=rfprod/nx-ng-starter
 
 ##
 # Supported applications.
@@ -37,7 +37,6 @@ declare -A ENVIRONMENTS=(
 ##
 reportUsage() {
   printInfoTitle "<< ${0} usage >>"
-  printWarningMessage "two argument are expected, see examples below"
   printUsageTip "bash tools/shell/docker-build-app.sh ?" "print help"
   printUsageTip "bash tools/shell/docker-app.sh APPLICATION ENVIRONMENT" "build APPLICATION docker container image for a specific ENVIRONMENT"
   printGap
@@ -55,7 +54,7 @@ reportUsage() {
     printf "${DEFAULT} - ${YELLOW}%s${DEFAULT}\\n" "${ENVIRONMENT_KEY}"
   done
 
-  exit 1
+  printGap
 }
 
 ##
@@ -69,11 +68,18 @@ checkApplicationSupport() {
   local KEY
   KEY="$1"
 
-  if [ -z "${APPLICATIONS[$KEY]}" ]; then
+  if [ -z "$KEY" ]; then
+    printErrorTitle "Application was not provided"
+    printGap
+
+    reportUsage
+    exit 1
+  elif [ -z "${APPLICATIONS[$KEY]}" ]; then
     printErrorTitle "Application does not exist"
     printNameAndValue "application key" "$KEY"
     printGap
 
+    reportUsage
     exit 1
   else
     printSuccessTitle "Application exists, proceeding"
@@ -97,6 +103,7 @@ checkEnvironmentSupport() {
     printNameAndValue "environment key" "$KEY"
     printGap
 
+    reportUsage
     exit 1
   else
     printSuccessTitle "Environment exists, proceeding"
@@ -129,22 +136,17 @@ buildApplicationImage() {
 
   checkApplicationSupport "$APP_NAME"
 
-  # if application name has suffix -e2e or equals documentation, it does not have a specific environment
-  if [[ "${APP_NAME##*"-e2e"*}" && "$APP_NAME" != "documentation" ]]; then
-    checkEnvironmentSupport "$ENV_NAME"
-  fi
-
   local IMAGE_NAME
 
   # if application name has suffix -e2e or equals documentation, it does not have a specific environment
   if [[ "${APP_NAME##*"-e2e"*}" && "$APP_NAME" != "documentation" ]]; then
     checkEnvironmentSupport "$ENV_NAME"
-    IMAGE_NAME="$CONTAINER_REGISTRY""$APP_NAME"-"$ENV_NAME"
+    IMAGE_NAME="$CONTAINER_REGISTRY":"$APP_NAME"-"$ENV_NAME""-latest"
   else
-    IMAGE_NAME="$CONTAINER_REGISTRY""$APP_NAME"
+    IMAGE_NAME="$CONTAINER_REGISTRY":"$APP_NAME""-latest"
   fi
 
-  docker build -t "$IMAGE_NAME":latest -f .docker/"$APP_NAME".Dockerfile .
+  docker build -t "$IMAGE_NAME" -f .docker/"$APP_NAME".Dockerfile .
 }
 
 if [ "$1" = "?" ]; then
