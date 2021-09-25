@@ -13,12 +13,14 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Create app directory.
 WORKDIR /app
 # Copy sources.
-COPY /package.json .
+COPY /functions/package.json .
+COPY /functions/package-lock.json .
+COPY /tools/proto ./tools/proto
 COPY /dist/apps/api ./dist/apps/api
 # Run tasks:
 # - install production dependencies required for NestJS server;
-RUN yarn install --production=true --ignore-optional --frozen-lockfile --ignore-scripts; \
-  yarn cache clean
+RUN npm i ; \
+  npm cache clean --force
 
 ##
 # Stage 2.

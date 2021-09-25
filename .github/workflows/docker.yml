@@ -1,25 +1,22 @@
-# This workflow will do a clean install of node dependencies, and will run all Nx e2e apps using Cypress
+# This workflow will do a clean install of node dependencies, build the source code and run tests
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Nx E2E
+name: Docker
 
 on:
   workflow_dispatch:
     inputs:
-      deploymentEnv:
-        description: 'Deployment Environment'
+      docker:
+        description: 'Dry run'
         required: true
-        default: 'dev'
-      tags:
-        description: 'Test scenario tags'
-        required: true
+        default: 'false'
 
 defaults:
   run:
     shell: bash
 
 jobs:
-  e2e:
+  docker-build:
     runs-on: ubuntu-latest
 
     strategy:
@@ -27,30 +24,46 @@ jobs:
         node-version: [14.x]
 
     steps:
-      - name: Print inputs
-        run: |
-          echo "Deployment Environment: ${{ github.event.inputs.deploymentEnv }}"
-          echo "Tags: ${{ github.event.inputs.tags }}"
-
       - name: Checkout sources
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
 
+      - name: Detect changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            src:
+              - 'apps/**'
+              - 'libs/**'
+              - 'tools/**'
+              - 'tsconfig*'
+              - 'nx.json'
+              - 'angular.json'
+              - 'package.json'
+              - '.docker/**'
+              - '.github/**'
+              - '.dockerignore'
+
       - name: Use Node.js ${{ matrix.node-version }}
+        if: steps.changes.outputs.src == 'true'
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
           check-latest: true
 
       - name: Configure kernel (increase watchers)
+        if: steps.changes.outputs.src == 'true'
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
-      - name: Get variables (yarn cache directory path, commit hash)
+      - name: Get variables (yarn cache directory, commit hash)
+        if: steps.changes.outputs.src == 'true'
         id: get-variables
         run: echo "::set-output name=yarncachedir::$(yarn cache dir)"; echo "::set-output name=commitsha::$(echo ${GITHUB_SHA})"
 
       - name: Workspace cache (npm, yarn, nx, jest)
+        if: steps.changes.outputs.src == 'true'
         uses: actions/cache@v2
         id: workspace-cache # use this to check for `cache-hit` (`steps.workspace-cache.outputs.cache-hit != 'true'`)
         env:
@@ -69,19 +82,39 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install global dependencies
-        run: npm i -g typescript @angular/cli @nrwl/cli
+        if: steps.changes.outputs.src == 'true'
+        run: npm i -g typescript @angular/cli @nrwl/cli firebase-tools @compodoc/compodoc
 
       - name: Workspace integrity check
+        if: steps.changes.outputs.src == 'true'
         run: yarn workspace:integrity-check
 
       - name: Install project dependencies
-        run: yarn install --frozen-lockfile --ignore-scripts
+        if: steps.changes.outputs.src == 'true'
+        run: yarn install --frozen-lockfile
 
       - name: Process dependencies with ngcc
+        if: steps.changes.outputs.src == 'true'
         run: yarn ngcc
 
-      - name: Install Cypress
-        run: npx cypress install
+      - name: Build all (production)
+        if: steps.changes.outputs.src == 'true'
+        run: |
+          yarn generate:env:documentation
+          npx nx run-many --target=build --all --configuration production
 
-      - name: E2E all
-        run: npx nx run-many --target=e2e --all --headless
+      - name: Build documentation (compodoc, unit coverage, e2e coverage)
+        if: steps.changes.outputs.src == 'true'
+        run: |
+          yarn test:reports
+          ng run tools:compodoc-build
+          yarn generate:changelog
+          yarn e2e:headless:report
+
+      - name: Docker build apps
+        if: steps.changes.outputs.src == 'true'
+        run: |
+          yarn docker:build api development
+          yarn docker:build client development
+          yarn docker:build elements development
+          yarn docker:build documentation

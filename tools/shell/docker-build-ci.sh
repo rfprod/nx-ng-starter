@@ -83,8 +83,8 @@ buildDockerImage() {
   else
     checkImageSupport "$IMAGE_NAME"
 
-    docker rmi $CONTAINER_REGISTRY/"$IMAGE_NAME":latest
-    docker build --force-rm -t $CONTAINER_REGISTRY/"$IMAGE_NAME":latest -f .docker/"$IMAGE_NAME".Dockerfile .
+    docker rmi "$CONTAINER_REGISTRY":"$IMAGE_NAME""-latest"
+    docker build --force-rm -t "$CONTAINER_REGISTRY":"$IMAGE_NAME""-latest" -f .docker/"$IMAGE_NAME".Dockerfile .
   fi
 }
 

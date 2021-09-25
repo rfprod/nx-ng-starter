@@ -14,7 +14,6 @@ source tools/shell/print-utils.sh ''
 ##
 reportUsageError() {
   printInfoTitle "<< ${0} usage >>"
-  printWarningMessage "one argument is expected, see examples below"
   printUsageTip "bash tools/shell/docker-task.sh install-docker-ci" "install dependencies for CI docker container image (should be used from inside of docker only)"
   printUsageTip "bash tools/shell/docker-task.sh cleanup" "utility task, removes stopped containers and cleans up untagged images (should be used on runners which use CI container images)"
   printGap
