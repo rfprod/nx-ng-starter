@@ -124,7 +124,7 @@ jobs:
         if: steps.changes.outputs.nx == 'true'
         run: npx nx affected --target=test --base=origin/master --head=HEAD --pass-with-no-tests --code-coverage=false --watch=false --run-in-band --ci
 
-      - name: Build all (development)
+      - name: Build affected (development)
         if: steps.changes.outputs.nx == 'true'
         run: npx nx affected --target=build --base=origin/master --head=HEAD
 
