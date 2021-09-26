@@ -16,9 +16,9 @@ module.exports = {
     // TODO: bump unit test coverage and remove this override
     global: {
       branches: 100,
-      functions: 30.77,
-      lines: 38.1,
-      statements: 41.67,
+      functions: 30.76,
+      lines: 38,
+      statements: 41.66,
     },
   },
 };
