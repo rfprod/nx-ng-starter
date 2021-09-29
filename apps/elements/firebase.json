@@ -38,19 +38,19 @@
             "value": "no-cache"
           }
         ],
-        "source": "/elements"
+        "source": "/api/**"
       }
     ],
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "**/src/**"],
     "public": "./dist/apps/elements",
     "rewrites": [
       {
-        "destination": "/index.html",
-        "source": "/elements"
+        "function": "api",
+        "source": "/api/**"
       },
       {
         "destination": "/index.html",
-        "source": "**/!(*.*|elements)"
+        "source": "**/!(*.*|api*)"
       }
     ],
     "site": "nx-ng-starter-elements"

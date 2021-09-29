@@ -23,6 +23,11 @@ const server: e.Express = e();
 const defaultPort = 8080;
 
 /**
+ * Firebase configuration.
+ */
+const firebaseConfig = process.env.FIREBASE_CONFIG;
+
+/**
  * Bootstraps server.
  */
 async function bootstrap(expressInstance: e.Express): Promise<unknown> {
@@ -40,25 +45,24 @@ async function bootstrap(expressInstance: e.Express): Promise<unknown> {
   };
   app.enableCors(corsOptions);
 
-  // TODO: debug grpc in firebase, currently it causes all functions deployment failure
-  if (environment.firebase !== true) {
-    const grpcClientOptions = backendGrpcClientOptions(environment);
-    app.connectMicroservice<MicroserviceOptions>(grpcClientOptions);
-    await app.startAllMicroservices();
-  }
+  const grpcClientOptions = backendGrpcClientOptions(environment);
+  app.connectMicroservice<MicroserviceOptions>(grpcClientOptions);
+  await app.startAllMicroservices();
 
-  const port = typeof process.env.port !== 'undefined' ? process.env.port : defaultPort;
-  await app.listen(port, () => {
-    console.warn(`Listening at:
-    - http://localhost:${port}/${globalPrefix}/ping
-    - http://localhost:${port}/${globalPrefix}/signup
-    - http://localhost:${port}/${globalPrefix}/login
-    - http://localhost:${port}/${globalPrefix}/logout
+  if (typeof firebaseConfig === 'undefined' || firebaseConfig === '') {
+    const port = typeof process.env.port !== 'undefined' ? process.env.port : defaultPort;
+    await app.listen(port, () => {
+      console.warn(`Listening at:
+    - http://localhost:${port}/${globalPrefix}/auth
+    - http://localhost:${port}/${globalPrefix}/auth/signup
+    - http://localhost:${port}/${globalPrefix}/auth/login
+    - http://localhost:${port}/${globalPrefix}/auth/logout
     - http://localhost:${port}/${globalPrefix}/graphql
     - http://localhost:${port}/${globalPrefix}/grpc
     - http://localhost:${port}/${globalPrefix}/grpc/:id
     - ws://localhost:${defaultWsPort}/api/events`);
-  });
+    });
+  }
 
   return app.init();
 }
@@ -66,24 +70,13 @@ async function bootstrap(expressInstance: e.Express): Promise<unknown> {
 void bootstrap(server);
 
 /**
- * Firebase configuration.
- */
-const firebaseConfig = process.env.FIREBASE_CONFIG;
-
-/**
  * Initialize admin and export firebase functions only in cloud environment.
  */
-if (typeof firebaseConfig !== 'undefined') {
+if (environment.firebase === true && typeof firebaseConfig !== 'undefined') {
   admin.initializeApp();
-  /**
-   * Explicit type casting is needed due types mismatch introduced recently.
-   */
-  const handler = <(req: functions.https.Request, resp: functions.Response) => void | Promise<void>>server;
-  (exports as Record<string, unknown>).ping = functions.https.onRequest(handler);
-  (exports as Record<string, unknown>).login = functions.https.onRequest(handler);
-  (exports as Record<string, unknown>).logout = functions.https.onRequest(handler);
-  (exports as Record<string, unknown>).signup = functions.https.onRequest(handler);
-  (exports as Record<string, unknown>).graphql = functions.https.onRequest(handler);
-  // TODO: handle websocket events (exports as Record<string, unknown>).events = functions.https.onRequest(handler);
-  // TODO: (exports as Record<string, unknown>).grpc = functions.https.onRequest(handler);
 }
+/**
+ * @note TODO: handle websocket events
+ * export const events = functions.https.onRequest(server);
+ */
+export const api = functions.https.onRequest(server);

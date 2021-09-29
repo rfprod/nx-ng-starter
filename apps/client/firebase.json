@@ -41,47 +41,19 @@
             "value": "no-cache"
           }
         ],
-        "source": "/(client|documentation|api)"
+        "source": "/api/**"
       }
     ],
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "**/src/**"],
     "public": "./dist/apps/client",
     "rewrites": [
       {
-        "function": "ping",
-        "source": "/api/ping"
-      },
-      {
-        "function": "login",
-        "source": "/api/login"
-      },
-      {
-        "function": "logout",
-        "source": "/api/logout"
-      },
-      {
-        "function": "signup",
-        "source": "/api/signup"
-      },
-      {
-        "function": "graphql",
-        "source": "/api/graphql"
-      },
-      {
-        "function": "grpc",
-        "source": "/api/grpc"
+        "function": "api",
+        "source": "/api/**"
       },
       {
         "destination": "/index.html",
-        "source": "/client"
-      },
-      {
-        "destination": "/documentation/index.html",
-        "source": "/documentation"
-      },
-      {
-        "destination": "/index.html",
-        "source": "**/!(*.*|api|documentation|client)"
+        "source": "**/!(*.*|api*)"
       }
     ]
   }

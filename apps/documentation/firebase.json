@@ -22,14 +22,35 @@
           }
         ],
         "source": "**/*.@(jpg|jpeg|gif|png|svg)"
+      },
+      {
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "public, no-cache, no-store, must-ravalidate, max-age=0"
+          },
+          {
+            "key": "Expires",
+            "value": "-1"
+          },
+          {
+            "key": "Pragma",
+            "value": "no-cache"
+          }
+        ],
+        "source": "/api/**"
       }
     ],
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**", "**/src/**"],
     "public": "./dist/apps/documentation",
     "rewrites": [
       {
+        "function": "api",
+        "source": "/api/**"
+      },
+      {
         "destination": "/index.html",
-        "source": "**/!(*.*)"
+        "source": "**/!(*.*|api*)"
       }
     ],
     "site": "nx-ng-starter-documentation"

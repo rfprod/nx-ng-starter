@@ -3,11 +3,13 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 
 import { BackendAuthService } from '../service/auth.service';
 
-@Controller()
+@Controller({
+  path: 'auth',
+})
 export class BackendAuthController {
   constructor(private readonly authService: BackendAuthService) {}
 
-  @Get('ping')
+  @Get('')
   public ping(): Message {
     return this.authService.ping();
   }
