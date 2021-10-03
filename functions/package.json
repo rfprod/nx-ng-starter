@@ -6,7 +6,7 @@
   "scripts": {
     "deploy": "firebase deploy --only functions",
     "dist:clean": "rm -f ./main.js ./main.js.map ./*.txt; rm -rf ./proto",
-    "dist:get": "cp -r ../dist/apps/api/* ./; mkdir ./proto; cp -r ../tools/proto/* ./proto",
+    "dist:get": "npm run dist:clear; cp -r ../dist/apps/api/* ./; mkdir ./proto; cp -r ../tools/proto/* ./proto",
     "logs": "firebase functions:log",
     "serve": "firebase serve --only functions",
     "shell": "firebase experimental:functions:shell",
