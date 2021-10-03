@@ -1,7 +1,7 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: PR validation
+name: pr-validation
 
 on:
   pull_request:
@@ -32,6 +32,7 @@ jobs:
         with:
           filters: |
             nx:
+              - '.storybook/**'
               - 'apps/**'
               - 'libs/**'
               - 'tools/**'
@@ -39,6 +40,14 @@ jobs:
               - 'nx.json'
               - 'angular.json'
               - 'package.json'
+              - 'yarn.lock'
+              - 'babel.config.json'
+              - 'functions/package.json'
+              - 'functions/package-lock.json'
+              - 'tools/generators/**'
+              - 'tools/proto/**'
+              - 'tools/ts/**'
+              - 'tools/*.*'
               - 'jest*'
               - '.eslint*'
               - '.prettier*'
@@ -111,10 +120,6 @@ jobs:
       - name: Install project dependencies
         if: steps.changes.outputs.nx == 'true'
         run: yarn install --frozen-lockfile
-
-      - name: Process dependencies with ngcc
-        if: steps.changes.outputs.nx == 'true'
-        run: yarn ngcc
 
       - name: Lint affected
         if: steps.changes.outputs.nx == 'true'

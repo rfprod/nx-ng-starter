@@ -54,12 +54,12 @@ async function bootstrap(expressInstance: e.Express): Promise<unknown> {
     await app.listen(port, () => {
       console.warn(`Listening at:
     - http://localhost:${port}/${globalPrefix}/auth
-    - http://localhost:${port}/${globalPrefix}/auth/signup
-    - http://localhost:${port}/${globalPrefix}/auth/login
-    - http://localhost:${port}/${globalPrefix}/auth/logout
+      - http://localhost:${port}/${globalPrefix}/auth/signup
+      - http://localhost:${port}/${globalPrefix}/auth/login
+      - http://localhost:${port}/${globalPrefix}/auth/logout
     - http://localhost:${port}/${globalPrefix}/graphql
     - http://localhost:${port}/${globalPrefix}/grpc
-    - http://localhost:${port}/${globalPrefix}/grpc/:id
+      - http://localhost:${port}/${globalPrefix}/grpc/:id
     - ws://localhost:${defaultWsPort}/api/events`);
     });
   }
@@ -75,8 +75,8 @@ void bootstrap(server);
 if (environment.firebase === true && typeof firebaseConfig !== 'undefined') {
   admin.initializeApp();
 }
+
 /**
- * @note TODO: handle websocket events
- * export const events = functions.https.onRequest(server);
+ * Expose api.
  */
 export const api = functions.https.onRequest(server);
