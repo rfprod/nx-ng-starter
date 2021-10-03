@@ -4,6 +4,7 @@ import { BackendGrpcModule } from '@app/backend-grpc';
 import { API_ENV } from '@app/backend-interfaces';
 import { BackendLoggerModule } from '@app/backend-logger';
 import { BackendWebsocketModule } from '@app/backend-websocket';
+import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 
 import { environment } from '../environments/environment';
@@ -13,6 +14,12 @@ import { environment } from '../environments/environment';
  */
 @Module({
   imports: [
+    HttpModule.registerAsync({
+      useFactory: () => ({
+        timeout: 10000,
+        maxRedirects: 5,
+      }),
+    }),
     BackendAuthModule,
     BackendWebsocketModule,
     BackendGqlModule.forRoot(environment),

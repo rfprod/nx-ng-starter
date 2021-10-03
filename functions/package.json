@@ -6,7 +6,7 @@
   "scripts": {
     "deploy": "firebase deploy --only functions",
     "dist:clean": "rm -f ./main.js ./main.js.map ./*.txt; rm -rf ./proto",
-    "dist:get": "npm run dist:clear; cp -r ../dist/apps/api/* ./; cp -r ../tools/proto ./proto",
+    "dist:get": "cp -r ../dist/apps/api/* ./; mkdir ./proto; cp -r ../tools/proto/* ./proto",
     "logs": "firebase functions:log",
     "serve": "firebase serve --only functions",
     "shell": "firebase experimental:functions:shell",
@@ -16,6 +16,7 @@
   "dependencies": {
     "@grpc/grpc-js": "1.3.7",
     "@grpc/proto-loader": "0.6.5",
+    "@nestjs/axios": "0.0.2",
     "@nestjs/common": "8.0.7",
     "@nestjs/core": "8.0.7",
     "@nestjs/graphql": "9.0.4",
