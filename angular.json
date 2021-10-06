@@ -108,6 +108,27 @@
       "root": "libs/backend-auth",
       "sourceRoot": "libs/backend-auth/src"
     },
+    "backend-diagnostics": {
+      "root": "libs/backend-diagnostics",
+      "sourceRoot": "libs/backend-diagnostics/src",
+      "projectType": "library",
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/backend-diagnostics/.eslintrc.json",
+            "lintFilePatterns": ["libs/backend-diagnostics/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/backend-diagnostics/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "backend-gql": {
       "architect": {
         "lint": {

@@ -1,4 +1,5 @@
 import { BackendAuthModule } from '@app/backend-auth';
+import { BackendDiagnosticsModule } from '@app/backend-diagnostics';
 import { BackendGqlModule } from '@app/backend-gql';
 import { BackendGrpcModule } from '@app/backend-grpc';
 import { API_ENV } from '@app/backend-interfaces';
@@ -20,6 +21,7 @@ import { environment } from '../environments/environment';
         maxRedirects: 5,
       }),
     }),
+    BackendDiagnosticsModule.forRoot(),
     BackendAuthModule,
     BackendWebsocketModule,
     BackendGqlModule.forRoot(environment),

@@ -52,11 +52,16 @@ const backendConstraints = [
       'scope:backend-interfaces',
       'scope:backend-logger',
       'scope:backend-websocket',
+      'scope:backend-diagnostics',
     ],
   },
   {
     sourceTag: 'scope:backend-auth',
     onlyDependOnLibsWithTags: ['scope:proto', 'scope:backend-interfaces'],
+  },
+  {
+    sourceTag: 'scope:backend-diagnostics',
+    onlyDependOnLibsWithTags: ['scope:backend-interfaces'],
   },
   {
     sourceTag: 'scope:backend-grpc',
