@@ -14,10 +14,10 @@ describe('BackendDiagnosticsController', () => {
   });
 
   describe('ping', () => {
-    it('should return "Diagnostics service is online. Routes: diagnostics, diagnostics/static."', () => {
+    it('should return "Diagnostics service is online. Routes: /, /static."', () => {
       const appController = app.get<BackendDiagnosticsController>(BackendDiagnosticsController);
       expect(appController.ping()).toEqual({
-        message: 'Diagnostics service is online. Routes: diagnostics, diagnostics/static.',
+        message: 'Diagnostics service is online. Routes: /, /static.',
       });
     });
   });
