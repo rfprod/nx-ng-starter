@@ -53,6 +53,8 @@ async function bootstrap(expressInstance: e.Express): Promise<unknown> {
     const port = typeof process.env.port !== 'undefined' ? process.env.port : defaultPort;
     await app.listen(port, () => {
       console.warn(`Listening at:
+    - http://localhost:${port}/${globalPrefix}/
+    - http://localhost:${port}/${globalPrefix}/static
     - http://localhost:${port}/${globalPrefix}/auth
       - http://localhost:${port}/${globalPrefix}/auth/signup
       - http://localhost:${port}/${globalPrefix}/auth/login
