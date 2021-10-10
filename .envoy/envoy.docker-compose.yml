@@ -1,0 +1,10 @@
+version: '3.5'
+
+services:
+  envoy:
+    container_name: envoy
+    image: envoyproxy/envoy-alpine:v1.20.0
+    volumes:
+      - ./envoy.yml:/etc/envoy/envoy.yml
+    ports:
+      - 8090:8090

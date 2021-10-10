@@ -18,6 +18,7 @@ CONTAINER_REGISTRY=rfprod/nx-ng-starter
 # Supported applications.
 ##
 declare -A APPLICATIONS=(
+  ["envoy"]="envoy"
   ["api"]="api"
   ["client"]="client"
   ["documentation"]="documentation"
@@ -126,7 +127,7 @@ buildApplicationImage() {
   ENV_NAME=$2
 
   # if application name has suffix -e2e or equals documentation, it does not have a specific environment
-  if [[ "${APP_NAME##*"-e2e"*}" && "$APP_NAME" != "documentation" && -z "$ENV_NAME" ]]; then
+  if [[ "${APP_NAME##*"-e2e"*}" && "$APP_NAME" != "documentation" && "$APP_NAME" != "envoy" && -z "$ENV_NAME" ]]; then
     printWarningMessage "Environment name was not provided."
     printGap
 
@@ -139,7 +140,7 @@ buildApplicationImage() {
   local IMAGE_NAME
 
   # if application name has suffix -e2e or equals documentation, it does not have a specific environment
-  if [[ "${APP_NAME##*"-e2e"*}" && "$APP_NAME" != "documentation" ]]; then
+  if [[ "${APP_NAME##*"-e2e"*}" && "$APP_NAME" != "documentation" && "$APP_NAME" != "envoy" ]]; then
     checkEnvironmentSupport "$ENV_NAME"
     IMAGE_NAME="$CONTAINER_REGISTRY":"$APP_NAME"-"$ENV_NAME""-latest"
   else

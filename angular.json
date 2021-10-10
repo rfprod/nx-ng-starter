@@ -663,6 +663,28 @@
       },
       "sourceRoot": "libs/client-gql/src"
     },
+    "client-grpc": {
+      "projectType": "library",
+      "root": "libs/client-grpc",
+      "sourceRoot": "libs/client-grpc/src",
+      "prefix": "app",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-grpc/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-gql/.eslintrc.json",
+            "lintFilePatterns": ["libs/client-grpc/**/*.ts"]
+          }
+        }
+      }
+    },
     "client-material": {
       "architect": {
         "lint": {
@@ -1453,20 +1475,20 @@
   },
   "schematics": {
     "@nrwl/angular:application": {
-      "e2eTestRunner": "cypress",
-      "linter": "eslint",
       "style": "scss",
-      "unitTestRunner": "jest"
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
     },
     "@nrwl/angular:component": {
+      "style": "scss",
       "changeDetection": "OnPush",
       "inlineStyle": false,
-      "inlineTemplate": false,
-      "style": "scss"
+      "inlineTemplate": false
     },
     "@nrwl/angular:library": {
-      "linter": "eslint",
       "style": "scss",
+      "linter": "eslint",
       "unitTestRunner": "jest"
     },
     "@nrwl/schematics:application": {

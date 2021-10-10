@@ -5,7 +5,7 @@ syntax = "proto3";
 package nxngstarter;
 
 // debug command (server should be started beforehand)
-// npx grpcc -i --proto tools/proto/root.proto --address localhost:8080
+// npx grpcc -i --proto tools/proto/root.proto --address localhost:8082
 // for this to work proto files need to have relative paths
 // import "tools/proto/common.proto";
 import "common.proto";

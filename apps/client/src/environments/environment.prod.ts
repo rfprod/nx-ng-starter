@@ -17,7 +17,7 @@ export const environment: IWebClientAppEnvironment = {
       : window.location.origin.includes('localhost')
       ? 'http://localhost:8080/api'
       : `${window.location.origin}/api`,
-  envoyUrl: 'http://localhost:8082', // TODO
+  envoyUrl: 'http://localhost:8090',
   sentry: {
     env: 'production',
     dsn: 'https://3e5206aab4034899ab5abce655e35ff6@o551250.ingest.sentry.io/5674503',

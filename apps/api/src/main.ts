@@ -37,7 +37,6 @@ async function bootstrap(expressInstance: e.Express): Promise<unknown> {
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   app.useGlobalPipes(new ValidationPipe());
-
   const corsOptions: CorsOptions = {
     origin: [/localhost/, /firebase\.app/, /web\.app/],
     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
