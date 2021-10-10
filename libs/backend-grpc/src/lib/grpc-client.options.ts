@@ -14,16 +14,21 @@ const protoPaths: (env: ApiEnvironment) => string[] = (env: ApiEnvironment) => {
   return typeof env.firebase === 'undefined' || !env.firebase ? [...localProtoPath] : [...functionsProtoPath];
 };
 
-const rpcUrl = '0.0.0.0:15001';
-
 /**
  * Grpc client options.
  */
 export const backendGrpcClientOptions: (env: ApiEnvironment) => ClientOptions = (env: ApiEnvironment) => ({
   transport: Transport.GRPC,
   options: {
-    url: rpcUrl,
-    package: ['nxngstarter'],
+    url: '0.0.0.0:8082',
+    package: 'nxngstarter',
     protoPath: protoPaths(env),
+    loader: {
+      keepCase: true,
+      oneofs: true,
+      defaults: true,
+      objects: true,
+      arrays: true,
+    },
   },
 });

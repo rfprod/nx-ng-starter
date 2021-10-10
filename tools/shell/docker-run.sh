@@ -13,22 +13,23 @@ source tools/shell/print-utils.sh ''
 ##
 # Container registry.
 ##
-CONTAINER_REGISTRY=rfprod/nx-ng-starter/
+CONTAINER_REGISTRY=rfprod/nx-ng-starter
 
 ##
 # Supported images.
 # Associative array mapping: <app name | docker file name> - <docker image name>
 ##
 declare -A SUPPORTED_IMAGES=(
-  ["api-development"]="$CONTAINER_REGISTRY""api-development:latest"
-  ["api-production"]="$CONTAINER_REGISTRY""api-production:latest"
-  ["client-development"]="$CONTAINER_REGISTRY""client-development:latest"
-  ["client-production"]="$CONTAINER_REGISTRY""client-production:latest"
-  ["documentation"]="$CONTAINER_REGISTRY""documentation:latest"
-  ["elements-development"]="$CONTAINER_REGISTRY""elements-development:latest"
-  ["elements-production"]="$CONTAINER_REGISTRY""elements-production:latest"
-  ["mono-ci"]="$CONTAINER_REGISTRY""mono-ci:latest"
-  ["mono-ci-slim"]="$CONTAINER_REGISTRY""mono-ci-slim:latest"
+  ["api-development"]="$CONTAINER_REGISTRY"":api-development-latest"
+  ["api-production"]="$CONTAINER_REGISTRY"":api-production-latest"
+  ["client-development"]="$CONTAINER_REGISTRY"":client-development-latest"
+  ["client-production"]="$CONTAINER_REGISTRY"":client-production-latest"
+  ["documentation"]="$CONTAINER_REGISTRY"":documentation-latest"
+  ["elements-development"]="$CONTAINER_REGISTRY"":elements-development-latest"
+  ["elements-production"]="$CONTAINER_REGISTRY"":elements-production-latest"
+  ["envoy"]="$CONTAINER_REGISTRY"":envoy-latest"
+  ["mono-ci"]="$CONTAINER_REGISTRY"":mono-ci-latest"
+  ["mono-ci-slim"]="$CONTAINER_REGISTRY"":mono-ci-slim-latest"
 )
 
 ##
@@ -75,7 +76,7 @@ runContainer() {
   printSuccessTitle "Application $APP_NAME is supported, proceeding"
   printGap
 
-  echo $CONTAINER_REGISTRY/"$IMAGE_NAME"
+  echo "$IMAGE_NAME"
 
   if [ "$2" = "debug" ]; then
     docker run --rm --name "$APP_NAME" -it -p 127.0.0.1:8080:8080 "$IMAGE_NAME" /bin/sh

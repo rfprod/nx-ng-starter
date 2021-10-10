@@ -145,6 +145,10 @@ const clientConstraints = [
     onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:proto', 'scope:client-util'],
   },
   {
+    sourceTag: 'scope:client-grpc',
+    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:proto', 'scope:client-util'],
+  },
+  {
     sourceTag: 'scope:client-chatbot',
     onlyDependOnLibsWithTags: [
       'scope:client-unit-testing',
@@ -168,6 +172,7 @@ const clientConstraints = [
       'scope:client-unit-testing',
       'scope:proto',
       'scope:client-gql',
+      'scope:client-grpc',
       'scope:client-store',
       'scope:client-services',
       'scope:client-chatbot',

@@ -25,6 +25,7 @@ declare -A IMAGES=(
   ["documentation"]="$CONTAINER_REGISTRY"":documentation-latest"
   ["elements-development"]="$CONTAINER_REGISTRY"":elements-development-latest"
   ["elements-production"]="$CONTAINER_REGISTRY"":elements-production-latest"
+  ["envoy"]="$CONTAINER_REGISTRY"":envoy-latest"
   ["mono-ci"]="$CONTAINER_REGISTRY"":mono-ci-latest"
   ["mono-ci-slim"]="$CONTAINER_REGISTRY"":mono-ci-slim-latest"
 )

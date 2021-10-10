@@ -33,6 +33,6 @@ WORKDIR /app
 # Copy sources.
 COPY --from=builder /app .
 # Configure exposed port.
-EXPOSE 8080
+EXPOSE 8080 8082
 # Define startup command.
 CMD [ "node", "./dist/apps/api/main.js" ]
