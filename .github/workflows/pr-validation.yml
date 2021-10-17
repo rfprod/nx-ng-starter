@@ -71,6 +71,9 @@ jobs:
           checks: 'files,duppatterns'
           experimental_checks: 'notowned'
 
+      - name: Don't save Bash session history
+        run: unset HISTFILE
+
       - name: Use Node.js ${{ matrix.node-version }}
         if: steps.changes.outputs.nx == 'true'
         uses: actions/setup-node@v2

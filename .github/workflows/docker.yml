@@ -6,8 +6,8 @@ name: docker
 on:
   workflow_dispatch:
     inputs:
-      docker:
-        description: 'Dry run'
+      dryRun:
+        description: 'Dry run (do not push the container)'
         required: true
         default: 'false'
 
@@ -24,10 +24,17 @@ jobs:
         node-version: [14.x]
 
     steps:
+      - name: Print inputs
+        run: |
+          echo "Deployment Environment: ${{ github.event.inputs.dryRun }}"
+
       - name: Checkout sources
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
+      - name: Don't save Bash session history
+        run: unset HISTFILE
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
@@ -38,7 +45,7 @@ jobs:
       - name: Configure kernel (increase watchers)
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
-      - name: Get variables (yarn cache directory, commit hash)
+      - name: Get variables (yarn cache directory path, commit hash)
         id: get-variables
         run: echo "::set-output name=yarncachedir::$(yarn cache dir)"; echo "::set-output name=commitsha::$(echo ${GITHUB_SHA})"
 
@@ -61,7 +68,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install global dependencies
-        run: npm i -g typescript @angular/cli @nrwl/cli firebase-tools @compodoc/compodoc
+        run: npm i -g typescript @angular/cli @nrwl/cli @compodoc/compodoc
 
       - name: Workspace integrity check
         run: yarn workspace:integrity-check

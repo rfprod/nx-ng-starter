@@ -6,6 +6,7 @@ import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions } from '@nestjs/microservices';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { WsAdapter } from '@nestjs/platform-ws';
+import dotenv from 'dotenv';
 import e from 'express';
 import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
@@ -26,6 +27,11 @@ const defaultPort = 8080;
  * Firebase configuration.
  */
 const firebaseConfig = process.env.FIREBASE_CONFIG;
+
+/**
+ * Load environment variables.
+ */
+dotenv.config();
 
 /**
  * Bootstraps server.
@@ -71,10 +77,21 @@ async function bootstrap(expressInstance: e.Express): Promise<unknown> {
 void bootstrap(server);
 
 /**
+ * @note Depending on use case explicit credential definition may or may not be needed. For example, for local setup it's absolutely needed while deployment may not need it because there is already a global context available in Firebase itself. The value is a credential with a private key. It is generated via Firebase UI and should be stored in GitHub secrets as a string value with name FIREBASE_API_CREDENTIAL.
+ */
+const credential = process.env.FIREBASE_API_CREDENTIAL;
+const databaseURL = process.env.FIREBASE_DATABASE_URL;
+
+/**
  * Initialize admin and export firebase functions only in cloud environment.
  */
-if (environment.firebase === true && typeof firebaseConfig !== 'undefined') {
-  admin.initializeApp();
+if (environment.firebase === true && typeof firebaseConfig !== 'undefined' && typeof databaseURL !== 'undefined') {
+  const cert = typeof credential !== 'undefined' && credential !== '' ? JSON.parse(credential) : void 0;
+
+  admin.initializeApp({
+    credential: typeof cert === 'undefined' ? admin.credential.applicationDefault() : admin.credential.cert(cert),
+    databaseURL,
+  });
 }
 
 /**
