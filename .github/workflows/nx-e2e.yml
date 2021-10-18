@@ -6,7 +6,7 @@ name: nx-e2e
 on:
   workflow_dispatch:
     inputs:
-      deploymentEnv:
+      environment:
         description: 'Environment'
         required: true
         default: 'local'
@@ -26,13 +26,15 @@ jobs:
     steps:
       - name: Print inputs
         run: |
-          echo "Deployment Environment: ${{ github.event.inputs.deploymentEnv }}"
-          echo "Tags: ${{ github.event.inputs.tags }}"
+          echo "Deployment Environment: ${{ github.event.inputs.environment }}"
 
       - name: Checkout sources
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+
+      - name: Don't save Bash session history
+        run: unset HISTFILE
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
