@@ -25,6 +25,7 @@ interface ICoverageSummaryObj {
   statements: ICoverageSummary;
   functions: ICoverageSummary;
   branches: ICoverageSummary;
+  branchesTrue: ICoverageSummary;
 }
 
 interface ICoverageSummaryJson {
@@ -37,6 +38,7 @@ const totalCoverage: ICoverageSummaryObj = {
   statements: { total: 0, covered: 0, skipped: 0, pct: 0 },
   functions: { total: 0, covered: 0, skipped: 0, pct: 0 },
   branches: { total: 0, covered: 0, skipped: 0, pct: 0 },
+  branchesTrue: { total: 0, covered: 0, skipped: 0, pct: 0 },
 };
 
 let readFiles = 0;
@@ -86,6 +88,7 @@ const projectsCount: Record<keyof ICoverageSummaryObj, number> = {
   functions: 0,
   lines: 0,
   statements: 0,
+  branchesTrue: 0,
 };
 const projectsCountKeys = Object.keys(projectsCount) as Array<keyof ICoverageSummaryObj>;
 
@@ -95,20 +98,23 @@ const parseSummary = (summary: ICoverageSummaryObj, summaryKeys: (keyof ICoverag
     functions: 0,
     lines: 0,
     statements: 0,
+    branchesTrue: 0,
   };
 
   for (const summaryKey of summaryKeys) {
-    const total = summary[summaryKey];
-    const totalKeys = Object.keys(total) as (keyof ICoverageSummary)[];
-    for (const totalKey of totalKeys) {
-      const value = total[totalKey];
-      const currentValue = totalCoverage[summaryKey][totalKey];
+    const summarySection = summary[summaryKey];
+    const summarySectionKeys = Object.keys(summarySection) as (keyof ICoverageSummary)[];
+    for (const summarySectionKey of summarySectionKeys) {
+      const value = summarySection[summarySectionKey];
+      const currentValue = totalCoverage[summaryKey][summarySectionKey];
       if (typeof value === 'number' && typeof currentValue === 'number') {
-        if (totalKey === 'pct' && value > 0) {
+        if (summarySectionKey === 'pct' && value > 0) {
           zeroCoverage[summaryKey] = zeroCoverage[summaryKey] + 1;
         }
         const digits = 2;
-        totalCoverage[summaryKey][totalKey] = Number((currentValue + (totalKey === 'pct' ? value : value)).toFixed(digits));
+        totalCoverage[summaryKey][summarySectionKey] = Number(
+          (currentValue + (summarySectionKey === 'pct' ? value : value)).toFixed(digits),
+        );
       }
     }
   }
