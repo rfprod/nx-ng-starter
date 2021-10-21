@@ -10,7 +10,11 @@ const { join } = require('path');
 module.exports = {
   root: true,
   extends: ['eslint:recommended', 'prettier'],
-  plugins: ['prettier', '@nrwl/eslint-plugin-nx'],
+  plugins: [
+    'prettier',
+    '@nrwl/eslint-plugin-nx',
+    'filenames', // https://www.npmjs.com/package/eslint-plugin-filenames
+  ],
   ignorePatterns: ['*.min.js', 'node_modules/'],
 
   settings: {
@@ -131,6 +135,9 @@ module.exports = {
       },
     ],
     yoda: ['error', 'never'],
+    'filenames/match-regex': [2, '^[a-z0-9.-]+$', true],
+    'filenames/match-exported': 'off',
+    'filenames/no-index': 'off',
   },
 
   overrides: [
@@ -146,6 +153,7 @@ module.exports = {
         'prettier',
         'simple-import-sort', // https://github.com/lydell/eslint-plugin-simple-import-sort
         'eslint-comments', // https://mysticatea.github.io/eslint-plugin-eslint-comments/rules/
+        'filenames', // https://www.npmjs.com/package/eslint-plugin-filenames
       ],
     },
     {
@@ -171,6 +179,7 @@ module.exports = {
         'rxjs', // https://github.com/cartant/eslint-plugin-rxjs
         'compat', // https://www.npmjs.com/package/eslint-plugin-compat
         'eslint-comments', // https://mysticatea.github.io/eslint-plugin-eslint-comments/rules/
+        'filenames', // https://www.npmjs.com/package/eslint-plugin-filenames
         '@nrwl/eslint-plugin-nx',
       ],
       files: '**/*.ts',
