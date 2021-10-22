@@ -1,12 +1,5 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "cli": {
-    "defaultCollection": "@nrwl/angular",
-    "warnings": {
-      "versionMismatch": false
-    }
-  },
-  "defaultProject": "client",
   "newProjectRoot": "",
   "projects": {
     "api": {
@@ -85,7 +78,8 @@
       "projectType": "application",
       "root": "apps/api",
       "schematics": {},
-      "sourceRoot": "apps/api/src"
+      "sourceRoot": "apps/api/src",
+      "tags": ["scope:api", "type:application"]
     },
     "backend-auth": {
       "architect": {
@@ -106,12 +100,10 @@
       },
       "projectType": "library",
       "root": "libs/backend-auth",
-      "sourceRoot": "libs/backend-auth/src"
+      "sourceRoot": "libs/backend-auth/src",
+      "tags": ["scope:backend-auth", "type:feature"]
     },
     "backend-diagnostics": {
-      "root": "libs/backend-diagnostics",
-      "sourceRoot": "libs/backend-diagnostics/src",
-      "projectType": "library",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -127,7 +119,11 @@
             "passWithNoTests": true
           }
         }
-      }
+      },
+      "projectType": "library",
+      "root": "libs/backend-diagnostics",
+      "sourceRoot": "libs/backend-diagnostics/src",
+      "tags": ["scope:backend-diagnostics", "type:feature"]
     },
     "backend-gql": {
       "architect": {
@@ -148,7 +144,8 @@
       },
       "projectType": "library",
       "root": "libs/backend-gql",
-      "sourceRoot": "libs/backend-gql/src"
+      "sourceRoot": "libs/backend-gql/src",
+      "tags": ["scope:backend-gql", "type:feature"]
     },
     "backend-grpc": {
       "architect": {
@@ -169,7 +166,8 @@
       },
       "projectType": "library",
       "root": "libs/backend-grpc",
-      "sourceRoot": "libs/backend-grpc/src"
+      "sourceRoot": "libs/backend-grpc/src",
+      "tags": ["scope:backend-grpc", "type:feature"]
     },
     "backend-interfaces": {
       "architect": {
@@ -202,7 +200,8 @@
       "projectType": "library",
       "root": "libs/backend-interfaces",
       "schematics": {},
-      "sourceRoot": "libs/backend-interfaces/src"
+      "sourceRoot": "libs/backend-interfaces/src",
+      "tags": ["scope:backend-interfaces", "type:data-access"]
     },
     "backend-logger": {
       "architect": {
@@ -223,7 +222,8 @@
       },
       "projectType": "library",
       "root": "libs/backend-logger",
-      "sourceRoot": "libs/backend-logger/src"
+      "sourceRoot": "libs/backend-logger/src",
+      "tags": ["scope:backend-logger", "type:feature"]
     },
     "backend-websocket": {
       "architect": {
@@ -244,7 +244,8 @@
       },
       "projectType": "library",
       "root": "libs/backend-websocket",
-      "sourceRoot": "libs/backend-websocket/src"
+      "sourceRoot": "libs/backend-websocket/src",
+      "tags": ["scope:backend-websocket", "type:feature"]
     },
     "client": {
       "architect": {
@@ -390,7 +391,8 @@
           "style": "scss"
         }
       },
-      "sourceRoot": "apps/client/src"
+      "sourceRoot": "apps/client/src",
+      "tags": ["scope:client", "type:application"]
     },
     "client-chatbot": {
       "architect": {
@@ -412,7 +414,8 @@
       "prefix": "app",
       "projectType": "library",
       "root": "libs/client-chatbot",
-      "sourceRoot": "libs/client-chatbot/src"
+      "sourceRoot": "libs/client-chatbot/src",
+      "tags": ["scope:client-chatbot", "type:feature"]
     },
     "client-components": {
       "architect": {
@@ -469,7 +472,8 @@
           "style": "scss"
         }
       },
-      "sourceRoot": "libs/client-components/src"
+      "sourceRoot": "libs/client-components/src",
+      "tags": ["scope:client-components", "type:feature"]
     },
     "client-components-e2e": {
       "architect": {
@@ -494,9 +498,11 @@
           }
         }
       },
+      "implicitDependencies": ["client-components"],
       "projectType": "application",
       "root": "apps/client-components-e2e",
-      "sourceRoot": "apps/client-components-e2e/src"
+      "sourceRoot": "apps/client-components-e2e/src",
+      "tags": ["scope:client-components-e2e", "type:e2e"]
     },
     "client-core": {
       "architect": {
@@ -523,7 +529,8 @@
           "styleext": "scss"
         }
       },
-      "sourceRoot": "libs/client-core/src"
+      "sourceRoot": "libs/client-core/src",
+      "tags": ["scope:client-core", "type:ui"]
     },
     "client-diagnostics": {
       "architect": {
@@ -580,7 +587,8 @@
           "style": "scss"
         }
       },
-      "sourceRoot": "libs/client-diagnostics/src"
+      "sourceRoot": "libs/client-diagnostics/src",
+      "tags": ["scope:client-diagnostics", "type:feature"]
     },
     "client-diagnostics-e2e": {
       "architect": {
@@ -605,9 +613,11 @@
           }
         }
       },
+      "implicitDependencies": ["client-diagnostics"],
       "projectType": "application",
       "root": "apps/client-diagnostics-e2e",
-      "sourceRoot": "apps/client-diagnostics-e2e/src"
+      "sourceRoot": "apps/client-diagnostics-e2e/src",
+      "tags": ["scope:client-diagnostics-e2e", "type:e2e"]
     },
     "client-e2e": {
       "architect": {
@@ -632,9 +642,11 @@
           }
         }
       },
+      "implicitDependencies": ["client"],
       "projectType": "application",
       "root": "apps/client-e2e",
-      "sourceRoot": "apps/client-e2e/src"
+      "sourceRoot": "apps/client-e2e/src",
+      "tags": ["scope:client-e2e", "type:e2e"]
     },
     "client-gql": {
       "architect": {
@@ -661,29 +673,31 @@
           "style": "scss"
         }
       },
-      "sourceRoot": "libs/client-gql/src"
+      "sourceRoot": "libs/client-gql/src",
+      "tags": ["scope:client-gql", "type:data-access"]
     },
     "client-grpc": {
-      "projectType": "library",
-      "root": "libs/client-grpc",
-      "sourceRoot": "libs/client-grpc/src",
-      "prefix": "app",
       "architect": {
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/client-grpc/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/client-gql/.eslintrc.json",
             "lintFilePatterns": ["libs/client-grpc/**/*.ts"]
           }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-grpc/jest.config.js",
+            "passWithNoTests": true
+          }
         }
-      }
+      },
+      "prefix": "app",
+      "projectType": "library",
+      "root": "libs/client-grpc",
+      "sourceRoot": "libs/client-grpc/src",
+      "tags": ["scope:client-grpc", "type:data-access"]
     },
     "client-material": {
       "architect": {
@@ -710,7 +724,8 @@
           "style": "scss"
         }
       },
-      "sourceRoot": "libs/client-material/src"
+      "sourceRoot": "libs/client-material/src",
+      "tags": ["scope:client-material", "type:ui"]
     },
     "client-services": {
       "architect": {
@@ -737,7 +752,8 @@
           "style": "scss"
         }
       },
-      "sourceRoot": "libs/client-services/src"
+      "sourceRoot": "libs/client-services/src",
+      "tags": ["scope:client-services", "type:ui"]
     },
     "client-sidebar": {
       "architect": {
@@ -759,7 +775,8 @@
       "prefix": "app",
       "projectType": "library",
       "root": "libs/client-sidebar",
-      "sourceRoot": "libs/client-sidebar/src"
+      "sourceRoot": "libs/client-sidebar/src",
+      "tags": ["scope:client-sidebar", "type:feature"]
     },
     "client-store": {
       "architect": {
@@ -786,7 +803,8 @@
           "style": "scss"
         }
       },
-      "sourceRoot": "libs/client-store/src"
+      "sourceRoot": "libs/client-store/src",
+      "tags": ["scope:client-store", "type:data-access"]
     },
     "client-translate": {
       "architect": {
@@ -813,7 +831,8 @@
           "style": "scss"
         }
       },
-      "sourceRoot": "libs/client-translate/src"
+      "sourceRoot": "libs/client-translate/src",
+      "tags": ["scope:client-translate", "type:ui"]
     },
     "client-unit-testing": {
       "architect": {
@@ -840,7 +859,8 @@
           "styleext": "scss"
         }
       },
-      "sourceRoot": "libs/client-unit-testing/src"
+      "sourceRoot": "libs/client-unit-testing/src",
+      "tags": ["scope:client-unit-testing", "type:unit-testing"]
     },
     "client-util": {
       "architect": {
@@ -867,7 +887,8 @@
           "style": "scss"
         }
       },
-      "sourceRoot": "libs/client-util/src"
+      "sourceRoot": "libs/client-util/src",
+      "tags": ["scope:client-util", "type:util"]
     },
     "documentation": {
       "architect": {
@@ -1064,7 +1085,8 @@
           "style": "scss"
         }
       },
-      "sourceRoot": "apps/documentation/src"
+      "sourceRoot": "apps/documentation/src",
+      "tags": ["scope:documentation", "type:application"]
     },
     "documentation-e2e": {
       "architect": {
@@ -1089,9 +1111,11 @@
           }
         }
       },
+      "implicitDependencies": ["documentation"],
       "projectType": "application",
       "root": "apps/documentation-e2e",
-      "sourceRoot": "apps/documentation-e2e/src"
+      "sourceRoot": "apps/documentation-e2e/src",
+      "tags": ["scope:documentation-e2e", "type:e2e"]
     },
     "elements": {
       "architect": {
@@ -1207,7 +1231,8 @@
       "prefix": "app",
       "projectType": "application",
       "root": "apps/elements",
-      "sourceRoot": "apps/elements/src"
+      "sourceRoot": "apps/elements/src",
+      "tags": ["scope:elements", "type:application"]
     },
     "elements-e2e": {
       "architect": {
@@ -1232,9 +1257,11 @@
           }
         }
       },
+      "implicitDependencies": ["elements"],
       "projectType": "application",
       "root": "apps/elements-e2e",
-      "sourceRoot": "apps/elements-e2e/src"
+      "sourceRoot": "apps/elements-e2e/src",
+      "tags": ["scope:elements-e2e", "type:e2e"]
     },
     "elements-testing": {
       "architect": {
@@ -1304,7 +1331,8 @@
       },
       "projectType": "application",
       "root": "apps/elements-testing",
-      "sourceRoot": "apps/elements-testing/src"
+      "sourceRoot": "apps/elements-testing/src",
+      "tags": ["scope:elements-testing", "type:application"]
     },
     "elements-testing-e2e": {
       "architect": {
@@ -1329,9 +1357,11 @@
           }
         }
       },
+      "implicitDependencies": ["elements-testing"],
       "projectType": "application",
       "root": "apps/elements-testing-e2e",
-      "sourceRoot": "apps/elements-testing-e2e/src"
+      "sourceRoot": "apps/elements-testing-e2e/src",
+      "tags": ["scope:elements-testing-e2e", "type:e2e"]
     },
     "proto": {
       "architect": {
@@ -1358,7 +1388,8 @@
           "styleext": "scss"
         }
       },
-      "sourceRoot": "libs/proto/src"
+      "sourceRoot": "libs/proto/src",
+      "tags": ["scope:proto", "type:data-access"]
     },
     "tools": {
       "architect": {
@@ -1470,35 +1501,8 @@
       },
       "projectType": "application",
       "root": "tools",
-      "sourceRoot": "tools/src"
-    }
-  },
-  "schematics": {
-    "@nrwl/angular:application": {
-      "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nrwl/angular:component": {
-      "style": "scss",
-      "changeDetection": "OnPush",
-      "inlineStyle": false,
-      "inlineTemplate": false
-    },
-    "@nrwl/angular:library": {
-      "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "jest"
-    },
-    "@nrwl/schematics:application": {
-      "framework": "angular",
-      "style": "scss",
-      "unitTestRunner": "jest"
-    },
-    "@nrwl/schematics:library": {
-      "style": "scss",
-      "unitTestRunner": "jest"
+      "sourceRoot": "tools/src",
+      "tags": ["scope:tools", "type:workspace"]
     }
   },
   "version": 1
