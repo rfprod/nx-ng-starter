@@ -86,7 +86,7 @@ checkConfigPathAndProceed() {
       npx nx lint "$1" "--${3}" --parallel --max-parallel=2
       # scss formatting with stylelint
       if [ -n "${MODULE_HAS_SCSS_FILES}" ]; then
-        npx stylelint "$STYLELINT_PATHS" "--${3}"
+        npx stylelint "$STYLELINT_PATHS" --customSyntax=postcss-scss "--${3}"
       else
         printInfoTitle "<< Stylelint >>"
         printInfoMessage "module does not contain scss files and will not be checked with stylelint"
@@ -106,7 +106,7 @@ checkConfigPathAndProceed() {
       # scss formatting with stylelint
       if [ -n "${MODULE_HAS_SCSS_FILES}" ]; then
         # catch stylelint exit code; it returns 2 in case of errors
-        if ! npx stylelint "$STYLELINT_PATHS"; then
+        if ! npx stylelint "$STYLELINT_PATHS" --customSyntax=postcss-scss; then
           exit 1
         fi
       else
