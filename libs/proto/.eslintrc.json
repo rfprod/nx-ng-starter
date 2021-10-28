@@ -5,7 +5,13 @@
     {
       "files": "*",
       "rules": {
-        "filenames/match-regex": [2, "^[a-z0-9_.-]+$", true]
+        "unicorn/filename-case": [
+          "error",
+          {
+            "case": "kebabCase",
+            "ignore": ["pb\\.js$", "pb\\.d\\.ts$", "proto\\.js$", "proto\\.d\\.ts$"]
+          }
+        ]
       }
     }
   ]

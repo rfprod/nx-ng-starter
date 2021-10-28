@@ -13,7 +13,7 @@ module.exports = {
   plugins: [
     'prettier',
     '@nrwl/eslint-plugin-nx',
-    'filenames', // https://www.npmjs.com/package/eslint-plugin-filenames
+    'unicorn', // https://www.npmjs.com/package/eslint-plugin-unicorn
   ],
   ignorePatterns: ['*.min.js', 'node_modules/'],
 
@@ -135,9 +135,7 @@ module.exports = {
       },
     ],
     yoda: ['error', 'never'],
-    'filenames/match-regex': [2, '^[a-z0-9.-]+$', true],
-    'filenames/match-exported': 'off',
-    'filenames/no-index': 'off',
+    'unicorn/filename-case': 'error',
   },
 
   overrides: [
@@ -153,7 +151,7 @@ module.exports = {
         'prettier',
         'simple-import-sort', // https://github.com/lydell/eslint-plugin-simple-import-sort
         'eslint-comments', // https://mysticatea.github.io/eslint-plugin-eslint-comments/rules/
-        'filenames', // https://www.npmjs.com/package/eslint-plugin-filenames
+        'unicorn', // https://www.npmjs.com/package/eslint-plugin-unicorn
       ],
     },
     {
@@ -179,7 +177,7 @@ module.exports = {
         'rxjs', // https://github.com/cartant/eslint-plugin-rxjs
         'compat', // https://www.npmjs.com/package/eslint-plugin-compat
         'eslint-comments', // https://mysticatea.github.io/eslint-plugin-eslint-comments/rules/
-        'filenames', // https://www.npmjs.com/package/eslint-plugin-filenames
+        'unicorn', // https://www.npmjs.com/package/eslint-plugin-unicorn
         '@nrwl/eslint-plugin-nx',
       ],
       files: '**/*.ts',
