@@ -111,10 +111,20 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:client-store',
-    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:proto', 'scope:client-util', 'scope:client-translate'],
+    onlyDependOnLibsWithTags: [
+      'scope:client-store-chatbot',
+      'scope:client-unit-testing',
+      'scope:proto',
+      'scope:client-util',
+      'scope:client-translate',
+    ],
   },
   {
     sourceTag: 'scope:client-store-websocket',
+    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util'],
+  },
+  {
+    sourceTag: 'scope:client-store-chatbot',
     onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util'],
   },
   {
@@ -128,6 +138,7 @@ const clientConstraints = [
       'scope:client-core',
       'scope:client-material',
       'scope:client-store',
+      'scope:client-store-chatbot',
       'scope:client-util',
     ],
   },

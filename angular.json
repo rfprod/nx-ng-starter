@@ -806,6 +806,30 @@
       "sourceRoot": "libs/client-store/src",
       "tags": ["scope:client-store", "type:data-access"]
     },
+    "client-store-chatbot": {
+      "projectType": "library",
+      "root": "libs/client-store-chatbot",
+      "sourceRoot": "libs/client-store-chatbot/src",
+      "prefix": "app",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/client-store-chatbot"],
+          "options": {
+            "jestConfig": "libs/client-store-chatbot/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-store-chatbot/.eslintrc.json",
+            "lintFilePatterns": ["libs/client-store-chatbot/**/*.ts"]
+          }
+        }
+      },
+      "tags": ["scope:client-store-chatbot", "type:data-access"]
+    },
     "client-store-websocket": {
       "architect": {
         "lint": {

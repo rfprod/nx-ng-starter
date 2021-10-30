@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
+import { AppChatbotStoreModule } from '@app/client-store-chatbot';
 
-import { AppChatbotStoreModule } from './chatbot/chatbot.module';
 import { AppHttpApStoreModule } from './http-api/http-api.module';
 import { AppHttpProgressStoreModule } from './http-progress/http-progress.module';
 import { AppSidebarStoreModule } from './sidebar/sidebar.module';

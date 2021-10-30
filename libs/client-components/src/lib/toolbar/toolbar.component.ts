@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { AppSidebarState, chatbotActions, sidebarActions } from '@app/client-store';
+import { AppSidebarState, sidebarActions } from '@app/client-store';
+import { chatbotActions } from '@app/client-store-chatbot';
 import { IToolbarAnchor } from '@app/client-util';
 import { Store } from '@ngxs/store';
 import { map } from 'rxjs/operators';
