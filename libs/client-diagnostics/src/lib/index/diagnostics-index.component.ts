@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { websocketActions } from '@app/client-store';
+import { websocketActions } from '@app/client-store-websocket';
 import { Store } from '@ngxs/store';
 
 @Component({

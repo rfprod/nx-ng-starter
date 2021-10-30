@@ -4,10 +4,10 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { WebSocketSubject } from 'rxjs/webSocket';
 
-import { IWebsocketConfig, IWebsocketRequestEvent, IWebsocketResponseEvent, WS_CONFIG } from './websocket.interface';
+import { IWebsocketConfig, IWebsocketRequestEvent, IWebsocketResponseEvent, WS_CONFIG } from '../websocket.interface';
 
 /**
- * Websocket Service.
+ * Websocket API Service.
  */
 @UntilDestroy()
 @Injectable({

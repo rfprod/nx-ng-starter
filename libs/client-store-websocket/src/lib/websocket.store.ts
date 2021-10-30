@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { tap } from 'rxjs/operators';
 
+import { AppWebsocketApiService } from './services/websocket-api.service';
 import { websocketActions } from './websocket.actions';
 import { IAppWebsocketStateModel, TWebsocketPayload, WEBSOCKET_STATE_TOKEN, websocketInitialState } from './websocket.interface';
-import { AppWebsocketApiService } from './websocket-api.service';
 
 @State<IAppWebsocketStateModel>({
   name: WEBSOCKET_STATE_TOKEN,

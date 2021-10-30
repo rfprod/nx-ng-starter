@@ -114,6 +114,10 @@ const clientConstraints = [
     onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:proto', 'scope:client-util', 'scope:client-translate'],
   },
   {
+    sourceTag: 'scope:client-store-websocket',
+    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util'],
+  },
+  {
     sourceTag: 'scope:client-services',
     onlyDependOnLibsWithTags: ['scope:client-util', 'scope:client-unit-testing', 'scope:proto'],
   },
@@ -135,6 +139,7 @@ const clientConstraints = [
       'scope:client-core',
       'scope:client-material',
       'scope:client-store',
+      'scope:client-store-websocket',
       'scope:client-services',
       'scope:client-util',
       'scope:client-translate',
@@ -174,6 +179,7 @@ const clientConstraints = [
       'scope:client-gql',
       'scope:client-grpc',
       'scope:client-store',
+      'scope:client-store-websocket',
       'scope:client-services',
       'scope:client-chatbot',
       'scope:client-components',
@@ -191,6 +197,24 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:client-components-e2e',
+    onlyDependOnLibsWithTags: ['scope:client-util'],
+  },
+  {
+    sourceTag: 'scope:elements',
+    onlyDependOnLibsWithTags: [
+      'scope:client-unit-testing',
+      'scope:proto',
+      'scope:client-gql',
+      'scope:client-store-websocket',
+      'scope:client-chatbot',
+      'scope:client-core',
+      'scope:client-material',
+      'scope:client-translate',
+      'scope:client-util',
+    ],
+  },
+  {
+    sourceTag: 'scope:elements-e2e',
     onlyDependOnLibsWithTags: ['scope:client-util'],
   },
 ];

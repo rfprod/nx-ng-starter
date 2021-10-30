@@ -7,7 +7,7 @@ import { AppChatbotRootComponent, AppClientChatbotModule } from '@app/client-cha
 import { AppClientCoreModule } from '@app/client-core';
 import { AppClientGqlModule } from '@app/client-gql';
 import { AppClientMaterialModule } from '@app/client-material';
-import { AppWebsocketStoreModule } from '@app/client-store';
+import { AppWebsocketStoreModule } from '@app/client-store-websocket';
 import { AppClientTranslateModule } from '@app/client-translate';
 import { WINDOW } from '@app/client-util';
 import { EntityServiceClient } from '@app/proto';

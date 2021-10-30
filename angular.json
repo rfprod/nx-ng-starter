@@ -806,6 +806,30 @@
       "sourceRoot": "libs/client-store/src",
       "tags": ["scope:client-store", "type:data-access"]
     },
+    "client-store-websocket": {
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-store-websocket/.eslintrc.json",
+            "lintFilePatterns": ["libs/client-store-websocket/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-store-websocket/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/client-store-websocket"]
+        }
+      },
+      "prefix": "app",
+      "projectType": "library",
+      "root": "libs/client-store-websocket",
+      "sourceRoot": "libs/client-store-websocket/src",
+      "tags": ["scope:client-store-websocket", "type:data-access"]
+    },
     "client-translate": {
       "architect": {
         "lint": {
