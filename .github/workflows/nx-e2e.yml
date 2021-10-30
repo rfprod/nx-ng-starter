@@ -5,11 +5,6 @@ name: nx-e2e
 
 on:
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment'
-        required: true
-        default: 'local'
 
 defaults:
   run:
@@ -24,10 +19,6 @@ jobs:
         node-version: [14.x]
 
     steps:
-      - name: Print inputs
-        run: |
-          echo "Deployment Environment: ${{ github.event.inputs.environment }}"
-
       - name: Checkout sources
         uses: actions/checkout@v2
         with:
@@ -66,9 +57,6 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}-workspace-
             ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-
             ${{ runner.os }}-
-
-      - name: Install global dependencies
-        run: npm i -g typescript @angular/cli @nrwl/cli
 
       - name: Workspace integrity check
         run: yarn workspace:integrity-check
