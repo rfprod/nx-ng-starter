@@ -112,10 +112,6 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-
             ${{ runner.os }}-
 
-      - name: Install global dependencies
-        if: steps.changes.outputs.nx == 'true'
-        run: npm i -g typescript @angular/cli @nrwl/cli
-
       - name: Workspace integrity check
         if: steps.changes.outputs.nx == 'true'
         run: yarn workspace:integrity-check

@@ -806,6 +806,126 @@
       "sourceRoot": "libs/client-store/src",
       "tags": ["scope:client-store", "type:data-access"]
     },
+    "client-store-chatbot": {
+      "projectType": "library",
+      "root": "libs/client-store-chatbot",
+      "sourceRoot": "libs/client-store-chatbot/src",
+      "prefix": "app",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/client-store-chatbot"],
+          "options": {
+            "jestConfig": "libs/client-store-chatbot/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-store-chatbot/.eslintrc.json",
+            "lintFilePatterns": ["libs/client-store-chatbot/**/*.ts"]
+          }
+        }
+      },
+      "tags": ["scope:client-store-chatbot", "type:data-access"]
+    },
+    "client-store-sidebar": {
+      "projectType": "library",
+      "root": "libs/client-store-sidebar",
+      "sourceRoot": "libs/client-store-sidebar/src",
+      "prefix": "app",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/client-store-sidebar"],
+          "options": {
+            "jestConfig": "libs/client-store-sidebar/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-store-sidebar/.eslintrc.json",
+            "lintFilePatterns": ["libs/client-store-sidebar/**/*.ts"]
+          }
+        }
+      },
+      "tags": ["scope:client-store-sidebar", "type:ui"]
+    },
+    "client-store-theme": {
+      "projectType": "library",
+      "root": "libs/client-store-theme",
+      "sourceRoot": "libs/client-store-theme/src",
+      "prefix": "app",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/client-store-theme"],
+          "options": {
+            "jestConfig": "libs/client-store-theme/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-store-theme/.eslintrc.json",
+            "lintFilePatterns": ["libs/client-store-theme/**/*.ts"]
+          }
+        }
+      },
+      "tags": ["scope:client-store-theme", "type:ui"]
+    },
+    "client-store-user": {
+      "projectType": "library",
+      "root": "libs/client-store-user",
+      "sourceRoot": "libs/client-store-user/src",
+      "prefix": "app",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/client-store-user"],
+          "options": {
+            "jestConfig": "libs/client-store-user/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-store-user/.eslintrc.json",
+            "lintFilePatterns": ["libs/client-store-user/**/*.ts"]
+          }
+        }
+      },
+      "tags": ["scope:client-store-user", "type:data-access"]
+    },
+    "client-store-websocket": {
+      "architect": {
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-store-websocket/.eslintrc.json",
+            "lintFilePatterns": ["libs/client-store-websocket/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-store-websocket/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/client-store-websocket"]
+        }
+      },
+      "prefix": "app",
+      "projectType": "library",
+      "root": "libs/client-store-websocket",
+      "sourceRoot": "libs/client-store-websocket/src",
+      "tags": ["scope:client-store-websocket", "type:data-access"]
+    },
     "client-translate": {
       "architect": {
         "lint": {

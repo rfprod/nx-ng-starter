@@ -104,7 +104,7 @@ jobs:
 
       - name: Install global dependencies
         if: steps.changes.outputs.nx == 'true'
-        run: npm i -g typescript @angular/cli @nrwl/cli firebase-tools @compodoc/compodoc
+        run: npm i -g firebase-tools @compodoc/compodoc
 
       - name: Workspace integrity check
         if: steps.changes.outputs.nx == 'true'

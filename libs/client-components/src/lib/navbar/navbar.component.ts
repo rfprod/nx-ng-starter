@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { sidebarActions } from '@app/client-store';
+import { sidebarActions } from '@app/client-store-sidebar';
 import { IToolbarButton, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngxs/store';
 

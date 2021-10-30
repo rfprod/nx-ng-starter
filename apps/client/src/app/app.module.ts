@@ -6,7 +6,9 @@ import { AppClientCoreModule } from '@app/client-core';
 import { AppClientGqlModule } from '@app/client-gql';
 import { AppClientGrpcModule, AppClientGrpcService } from '@app/client-grpc';
 import { AppClientMaterialModule } from '@app/client-material';
-import { AppUserState, AppWebsocketStoreModule } from '@app/client-store';
+import { AppThemeState } from '@app/client-store-theme';
+import { AppUserState } from '@app/client-store-user';
+import { AppWebsocketStoreModule } from '@app/client-store-websocket';
 import { AppClientTranslateModule } from '@app/client-translate';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
@@ -26,7 +28,7 @@ import { AppRootComponent } from './components/root.component';
     BrowserAnimationsModule,
     NgxsModule.forRoot([], { developmentMode: !environment.production }),
     NgxsStoragePluginModule.forRoot({
-      key: [AppUserState],
+      key: [AppUserState, AppThemeState],
     }),
     NgxsLoggerPluginModule.forRoot({ disabled: environment.production, collapsed: true }),
     NgxsRouterPluginModule.forRoot(),

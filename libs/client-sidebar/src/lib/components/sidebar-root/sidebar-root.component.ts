@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AppHttpProgressState, sidebarActions } from '@app/client-store';
+import { AppHttpProgressState } from '@app/client-store';
+import { sidebarActions } from '@app/client-store-sidebar';
 import { Navigate } from '@ngxs/router-plugin';
 import { Store } from '@ngxs/store';
 import { map } from 'rxjs';

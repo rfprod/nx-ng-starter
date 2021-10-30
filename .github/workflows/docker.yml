@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       dryRun:
-        description: 'Dry run (do not push the container)'
+        description: 'Dry run (do not push the container): true / false'
         required: true
         default: 'false'
 
@@ -68,7 +68,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install global dependencies
-        run: npm i -g typescript @angular/cli @nrwl/cli @compodoc/compodoc
+        run: npm i -g @compodoc/compodoc
 
       - name: Workspace integrity check
         run: yarn workspace:integrity-check
@@ -100,3 +100,7 @@ jobs:
           yarn docker:build client development
           yarn docker:build elements development
           yarn docker:build documentation
+
+      - name: Docker push apps
+        if: github.event.inputs.dryRun == 'false'
+        run: echo "TODO - Push docker images to the regitry"
