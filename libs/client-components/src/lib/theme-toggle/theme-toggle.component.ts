@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
-import { AppThemeState, themeActions } from '@app/client-store';
+import { AppThemeState, themeActions } from '@app/client-store-theme';
 import { Store } from '@ngxs/store';
 import { tap } from 'rxjs';
 
