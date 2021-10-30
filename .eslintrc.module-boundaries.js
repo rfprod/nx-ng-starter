@@ -113,6 +113,7 @@ const clientConstraints = [
     sourceTag: 'scope:client-store',
     onlyDependOnLibsWithTags: [
       'scope:client-store-chatbot',
+      'scope:client-store-user',
       'scope:client-unit-testing',
       'scope:proto',
       'scope:client-util',
@@ -128,6 +129,10 @@ const clientConstraints = [
     onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util'],
   },
   {
+    sourceTag: 'scope:client-store-user',
+    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util'],
+  },
+  {
     sourceTag: 'scope:client-services',
     onlyDependOnLibsWithTags: ['scope:client-util', 'scope:client-unit-testing', 'scope:proto'],
   },
@@ -139,6 +144,7 @@ const clientConstraints = [
       'scope:client-material',
       'scope:client-store',
       'scope:client-store-chatbot',
+      'scope:client-store-user',
       'scope:client-util',
     ],
   },
@@ -191,6 +197,7 @@ const clientConstraints = [
       'scope:client-grpc',
       'scope:client-store',
       'scope:client-store-websocket',
+      'scope:client-store-user',
       'scope:client-services',
       'scope:client-chatbot',
       'scope:client-components',

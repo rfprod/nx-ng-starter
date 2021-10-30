@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { ApolloLink, split } from '@apollo/client/core';
 import { ErrorResponse, onError } from '@apollo/client/link/error';
 import { getMainDefinition } from '@apollo/client/utilities';
+import { AppUserState, userActions } from '@app/client-store-user';
 import { HTTP_STATUS, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV, WINDOW } from '@app/client-util';
 import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngxs/store';
@@ -16,8 +17,6 @@ import { catchError, finalize, first, map, tap, timeout } from 'rxjs/operators';
 import { httpProgressActions } from '../http-progress/http-progress.actions';
 import { AppHttpProgressService } from '../http-progress/http-progress.service';
 import { AppToasterService } from '../http-progress/services/toaster/toaster.service';
-import { userActions } from '../user/user.actions';
-import { AppUserState } from '../user/user.store';
 
 /**
  * Handlers to work with http requests.

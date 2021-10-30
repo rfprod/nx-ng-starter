@@ -6,7 +6,7 @@ import { AppClientCoreModule } from '@app/client-core';
 import { AppClientGqlModule } from '@app/client-gql';
 import { AppClientGrpcModule, AppClientGrpcService } from '@app/client-grpc';
 import { AppClientMaterialModule } from '@app/client-material';
-import { AppUserState } from '@app/client-store';
+import { AppUserState } from '@app/client-store-user';
 import { AppWebsocketStoreModule } from '@app/client-store-websocket';
 import { AppClientTranslateModule } from '@app/client-translate';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';

@@ -2,17 +2,17 @@ const jestPresetAngularSerializers = require('jest-preset-angular/build/serializ
 
 module.exports = {
   preset: '../../jest.preset.js',
-  coverageDirectory: '../../coverage/libs/client-diagnostics',
+  coverageDirectory: '../../coverage/libs/client-store-user',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   snapshotSerializers: jestPresetAngularSerializers,
-  displayName: 'client-diagnostics',
+  displayName: 'client-store-user',
   coverageThreshold: {
     // TODO: bump unit test coverage and remove this override
     global: {
       branches: 0,
-      functions: 27,
-      lines: 31,
-      statements: 34,
+      functions: 0,
+      lines: 0,
+      statements: 0,
     },
   },
 };
