@@ -830,6 +830,30 @@
       },
       "tags": ["scope:client-store-chatbot", "type:data-access"]
     },
+    "client-store-sidebar": {
+      "projectType": "library",
+      "root": "libs/client-store-sidebar",
+      "sourceRoot": "libs/client-store-sidebar/src",
+      "prefix": "app",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/client-store-sidebar"],
+          "options": {
+            "jestConfig": "libs/client-store-sidebar/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-store-sidebar/.eslintrc.json",
+            "lintFilePatterns": ["libs/client-store-sidebar/**/*.ts"]
+          }
+        }
+      },
+      "tags": ["scope:client-store-sidebar", "type:ui"]
+    },
     "client-store-theme": {
       "projectType": "library",
       "root": "libs/client-store-theme",
