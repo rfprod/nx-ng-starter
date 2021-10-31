@@ -9,7 +9,7 @@ import {
   THttpProgressPayload,
   TShowToastPayload,
 } from './http-progress.interface';
-import { AppHttpProgressService } from './http-progress.service';
+import { AppHttpProgressService } from './services/http-progress/http-progress.service';
 import { AppToasterService } from './services/toaster/toaster.service';
 
 @State<IAppHttpProgressState>({

@@ -113,6 +113,8 @@ const clientConstraints = [
     sourceTag: 'scope:client-store',
     onlyDependOnLibsWithTags: [
       'scope:client-store-chatbot',
+      'scope:client-store-http-progress',
+      'scope:client-store-http-api',
       'scope:client-store-theme',
       'scope:client-store-sidebar',
       'scope:client-store-user',
@@ -123,8 +125,17 @@ const clientConstraints = [
     ],
   },
   {
-    sourceTag: 'scope:client-store-websocket',
-    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util'],
+    sourceTag: 'scope:client-store-http-api',
+    onlyDependOnLibsWithTags: [
+      'scope:client-store-http-progress',
+      'scope:client-translate',
+      'scope:client-unit-testing',
+      'scope:client-util',
+    ],
+  },
+  {
+    sourceTag: 'scope:client-store-http-progress',
+    onlyDependOnLibsWithTags: ['scope:client-store-user', 'scope:client-translate', 'scope:client-unit-testing', 'scope:client-util'],
   },
   {
     sourceTag: 'scope:client-store-chatbot',
@@ -140,6 +151,10 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:client-store-user',
+    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util'],
+  },
+  {
+    sourceTag: 'scope:client-store-websocket',
     onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util'],
   },
   {
@@ -167,6 +182,7 @@ const clientConstraints = [
       'scope:client-core',
       'scope:client-material',
       'scope:client-store',
+      'scope:client-store-http-api',
       'scope:client-store-websocket',
       'scope:client-services',
       'scope:client-util',
@@ -193,7 +209,13 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:client-sidebar',
-    onlyDependOnLibsWithTags: ['scope:client-material', 'scope:client-store', 'scope:client-store-sidebar', 'scope:client-unit-testing'],
+    onlyDependOnLibsWithTags: [
+      'scope:client-material',
+      'scope:client-store',
+      'scope:client-store-http-progress',
+      'scope:client-store-sidebar',
+      'scope:client-unit-testing',
+    ],
   },
   {
     sourceTag: 'scope:client-util',

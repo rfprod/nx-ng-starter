@@ -14,9 +14,9 @@ import memo from 'memo-decorator';
 import { MonoTypeOperatorFunction, Observable, of, throwError } from 'rxjs';
 import { catchError, finalize, first, map, tap, timeout } from 'rxjs/operators';
 
-import { httpProgressActions } from '../http-progress/http-progress.actions';
+import { httpProgressActions } from '../../http-progress.actions';
 import { AppHttpProgressService } from '../http-progress/http-progress.service';
-import { AppToasterService } from '../http-progress/services/toaster/toaster.service';
+import { AppToasterService } from '../toaster/toaster.service';
 
 /**
  * Handlers to work with http requests.

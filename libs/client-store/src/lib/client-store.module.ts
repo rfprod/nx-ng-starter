@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
 import { AppChatbotStoreModule } from '@app/client-store-chatbot';
+import { AppHttpApiStoreModule } from '@app/client-store-http-api';
+import { AppHttpProgressStoreModule } from '@app/client-store-http-progress';
 import { AppSidebarStoreModule } from '@app/client-store-sidebar';
 import { AppThemeStoreModule } from '@app/client-store-theme';
 import { AppUserStoreModule } from '@app/client-store-user';
 
-import { AppHttpApStoreModule } from './http-api/http-api.module';
-import { AppHttpProgressStoreModule } from './http-progress/http-progress.module';
-
 @NgModule({
   imports: [
     AppChatbotStoreModule,
-    AppHttpApStoreModule,
+    AppHttpApiStoreModule,
     AppHttpProgressStoreModule.forRoot(),
     AppSidebarStoreModule,
     AppThemeStoreModule,
@@ -18,7 +17,7 @@ import { AppHttpProgressStoreModule } from './http-progress/http-progress.module
   ],
   exports: [
     AppChatbotStoreModule,
-    AppHttpApStoreModule,
+    AppHttpApiStoreModule,
     AppHttpProgressStoreModule,
     AppSidebarStoreModule,
     AppThemeStoreModule,

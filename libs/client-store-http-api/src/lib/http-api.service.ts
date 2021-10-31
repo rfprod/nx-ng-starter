@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AppHttpHandlersService } from '@app/client-store-http-progress';
 
 import { IPingResponse } from './http-api.interface';
-import { AppHttpHandlersService } from './http-handlers.service';
 
 /**
  * Http API service.

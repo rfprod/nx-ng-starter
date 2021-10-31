@@ -1,15 +1,19 @@
 import { HttpRequest } from '@angular/common/http';
 import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import {
+  AppHttpHandlersService,
+  AppHttpProgressStoreModule,
+  AppToasterService,
+  httpProgressModuleProviders,
+  toasterServiceProvider,
+} from '@app/client-store-http-progress';
 import { AppClientTranslateModule } from '@app/client-translate';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
 import { Apollo } from 'apollo-angular';
 import { of } from 'rxjs';
 
-import { AppHttpProgressStoreModule, httpProgressModuleProviders } from '../http-progress/http-progress.module';
-import { AppToasterService, toasterServiceProvider } from '../http-progress/services/toaster/toaster.service';
 import { AppHttpApiService } from './http-api.service';
-import { AppHttpHandlersService } from './http-handlers.service';
 
 describe('AppHttpApiService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
