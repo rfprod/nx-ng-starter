@@ -3,8 +3,8 @@ import { ComponentPortal } from '@angular/cdk/portal';
 import { Injectable, Provider } from '@angular/core';
 import { tap } from 'rxjs/operators';
 
-import { AppGlobalProgressBarComponent } from './components/global-progress-bar/global-progress-bar.component';
-import { IHttpProgressHandlers } from './http-progress.interface';
+import { AppGlobalProgressBarComponent } from '../../components/global-progress-bar/global-progress-bar.component';
+import { IHttpProgressHandlers } from '../../http-progress.interface';
 
 @Injectable({
   providedIn: 'root',

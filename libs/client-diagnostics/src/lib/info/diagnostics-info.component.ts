@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { AppMarkdownService } from '@app/client-services';
-import { AppHttpApiState, httpApiActions } from '@app/client-store';
+import { AppHttpApiState, httpApiActions } from '@app/client-store-http-api';
 import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngxs/store';
 import { of } from 'rxjs';

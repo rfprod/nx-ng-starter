@@ -830,6 +830,54 @@
       },
       "tags": ["scope:client-store-chatbot", "type:data-access"]
     },
+    "client-store-http-api": {
+      "projectType": "library",
+      "root": "libs/client-store-http-api",
+      "sourceRoot": "libs/client-store-http-api/src",
+      "prefix": "app",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/client-store-http-api"],
+          "options": {
+            "jestConfig": "libs/client-store-http-api/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-store-http-api/.eslintrc.json",
+            "lintFilePatterns": ["libs/client-store-http-api/**/*.ts"]
+          }
+        }
+      },
+      "tags": ["scope:client-store-http-api", "type:data-access"]
+    },
+    "client-store-http-progress": {
+      "projectType": "library",
+      "root": "libs/client-store-http-progress",
+      "sourceRoot": "libs/client-store-http-progress/src",
+      "prefix": "app",
+      "architect": {
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/client-store-http-progress"],
+          "options": {
+            "jestConfig": "libs/client-store-http-progress/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-store-http-progress/.eslintrc.json",
+            "lintFilePatterns": ["libs/client-store-http-progress/**/*.ts"]
+          }
+        }
+      },
+      "tags": ["scope:client-store-http-progress", "type:data-access"]
+    },
     "client-store-sidebar": {
       "projectType": "library",
       "root": "libs/client-store-sidebar",

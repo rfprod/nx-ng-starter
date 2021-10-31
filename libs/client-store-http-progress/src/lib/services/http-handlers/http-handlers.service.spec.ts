@@ -10,8 +10,8 @@ import { ExecutionResult, GraphQLError } from 'graphql';
 import { Observable, of } from 'rxjs';
 import { catchError, concatMap, map, tap } from 'rxjs/operators';
 
-import { AppHttpProgressStoreModule } from '../http-progress/http-progress.module';
-import { AppToasterService, toasterServiceProvider } from '../http-progress/services/toaster/toaster.service';
+import { AppHttpProgressStoreModule } from '../../http-progress.module';
+import { AppToasterService, toasterServiceProvider } from '../toaster/toaster.service';
 import { AppHttpHandlersService } from './http-handlers.service';
 
 describe('AppHttpHandlersService', () => {
