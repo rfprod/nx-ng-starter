@@ -122,7 +122,7 @@ jobs:
         if: steps.changes.outputs.nx == 'true'
         run: |
           npx nx run-many --target=test --all --pass-with-no-tests --code-coverage=true --watch=false --run-in-band --ci
-          ng run tools:coverage-stats
+          npx ng run tools:coverage-stats
           cat ./tools/ts/UNIT_COVERAGE.md
 
       - name: Build all (production)
@@ -135,7 +135,7 @@ jobs:
         if: steps.changes.outputs.nx == 'true'
         run: |
           yarn test:reports
-          ng run tools:compodoc-build
+          npx ng run tools:compodoc-build
           yarn generate:changelog
           yarn e2e:headless:report
 
