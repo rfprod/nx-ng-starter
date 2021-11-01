@@ -93,7 +93,7 @@ describe('AppHttpHandlersService', () => {
     it(
       'should return an Array',
       waitForAsync(() => {
-        const executionResult: ExecutionResult = {
+        const executionResult: ExecutionResult<{ [key: string]: string }[]> = {
           data: [{ x: 'x' }, { y: 'y' }],
         };
         void service.extractGraphQLData(executionResult).pipe(

@@ -5,12 +5,12 @@ import { ASTNode, Kind } from 'graphql';
 export class DateScalar implements CustomScalar<number, Date> {
   public description = 'Date custom scalar type';
 
-  public parseValue(value: number): Date {
-    return new Date(value);
+  public parseValue(value: number | unknown): Date {
+    return typeof value === 'number' ? new Date(value) : new Date();
   }
 
-  public serialize(value: Date): number {
-    return value.getTime();
+  public serialize(value: Date | unknown): number {
+    return value instanceof Date ? value.getTime() : 0;
   }
 
   public parseLiteral(ast: ASTNode): Date {
