@@ -203,7 +203,7 @@ export class AppHttpHandlersService {
    * Returns data only, excluding meta information located in response object root.
    * @param res Execution result
    */
-  public extractGraphQLData(res: ExecutionResult) {
+  public extractGraphQLData<T>(res: ExecutionResult<T>) {
     if (res.errors) {
       return throwError(() => new Error(res.errors?.join(', ')));
     }
