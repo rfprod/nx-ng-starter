@@ -148,7 +148,7 @@ export class AppHttpHandlersService {
               console.error('Apollo linkHandler [GraphQL error]: ', graphQLErrors);
               graphQLErrors.map(({ message, extensions }) => {
                 resultMessage += `[GraphQL]: ${message}`;
-                errorCode = extensions?.code;
+                errorCode = <string>extensions?.code;
               });
             }
 
@@ -167,7 +167,7 @@ export class AppHttpHandlersService {
                 ).error.errors;
                 errors.map(({ message, extensions }) => {
                   resultMessage += `[Network]: ${message}`;
-                  errorCode = extensions?.code;
+                  errorCode = <string>extensions?.code;
                 });
               }
             }
@@ -203,7 +203,7 @@ export class AppHttpHandlersService {
    * Returns data only, excluding meta information located in response object root.
    * @param res Execution result
    */
-  public extractGraphQLData(res: ExecutionResult): Observable<{ [key: string]: unknown }> {
+  public extractGraphQLData(res: ExecutionResult) {
     if (res.errors) {
       return throwError(() => new Error(res.errors?.join(', ')));
     }
