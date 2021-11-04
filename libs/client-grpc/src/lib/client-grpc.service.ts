@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
 import { Entity, EntityById, EntityServiceClient, nxngstarter } from '@app/proto';
-import { Error } from 'grpc-web';
 import { Observable } from 'rxjs';
 
 import { AppClientGrpcModule, GRPC_ENTITY_SERVICE_CLIENT } from './client-grpc.module';

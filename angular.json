@@ -1,5 +1,12 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "cache": {
+      "enabled": true,
+      "path": ".angular/cache",
+      "environment": "all"
+    }
+  },
   "newProjectRoot": "",
   "projects": {
     "api": {
@@ -1566,7 +1573,7 @@
           "options": {
             "commands": [
               {
-                "command": "rm -rf documentation/* dist/* coverage/* changelog/* /tmp/nx/nx-ng-starter",
+                "command": "rm -rf .angular/* documentation/* dist/* coverage/* changelog/* /tmp/nx/nx-ng-starter",
                 "forwardAllArgs": false
               }
             ]

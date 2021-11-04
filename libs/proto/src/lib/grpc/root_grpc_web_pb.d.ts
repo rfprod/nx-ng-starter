@@ -11,7 +11,7 @@ export class EntityServiceClient {
   findOne(
     request: common_pb.EntityById,
     metadata: grpcWeb.Metadata | undefined,
-    callback: (err: grpcWeb.Error,
+    callback: (err: grpcWeb.RpcError,
                response: common_pb.Entity) => void
   ): grpcWeb.ClientReadableStream<common_pb.Entity>;
 
