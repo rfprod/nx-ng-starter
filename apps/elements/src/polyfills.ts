@@ -19,7 +19,9 @@
  */
 
 /**
- * IE9, IE10 and IE11 requires all of the following polyfills.
+ * Googlebot bot renderer based on Chrome 41.
+ * https://developers.google.com/search/docs/guides/rendering
+ * Also support for IE9, IE10 and IE11 requires all of the following polyfills.
  */
 import 'core-js/es/array';
 import 'core-js/es/date';
@@ -30,33 +32,17 @@ import 'core-js/es/number';
 import 'core-js/es/object';
 import 'core-js/es/parse-float';
 import 'core-js/es/parse-int';
-import 'core-js/es/reflect'; // IE10 and IE11 requires the following for the Reflect API.
 import 'core-js/es/regexp';
 import 'core-js/es/set';
 import 'core-js/es/string';
 import 'core-js/es/symbol';
 import 'core-js/es/weak-map';
-import 'isomorphic-fetch';
-
+import 'core-js/es/reflect';
 /**
- * If the application will be indexed by Google Search, the following is required.
- * Googlebot uses a renderer based on Chrome 41.
- * https://developers.google.com/search/docs/guides/rendering
- *
- * import 'core-js/es6/array';
- */
-
-/**
- * IE10 and IE11 requires the following for NgClass support on SVG elements
- */
-// Import 'classlist.js';  // Run `npm install --save classlist.js`.
-
-/**
- * Web Animations `@angular/platform-browser/animations`
- * Only required if AnimationBuilder is used within the application and using IE/Edge or Safari.
- * Standard animation support in Angular DOES NOT require any polyfills (as of Angular 6.0).
- */
-// Run `npm install --save web-animations-js`, then import 'web-animations-js';
+ * Required to support Web Animations `@angular/platform-browser/animations`.
+ * Needed for: All but Chrome, Firefox and Opera. https://caniuse.com/web-animation
+ **/
+import 'web-animations-js'; // Run `npm install --save web-animations-js`.
 
 /**
  * By default, zone.js will patch all possible macroTask and DomEvents
