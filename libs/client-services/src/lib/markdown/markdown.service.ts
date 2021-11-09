@@ -1,5 +1,5 @@
 import { Injectable, Provider } from '@angular/core';
-import marked from 'marked';
+import { marked } from 'marked';
 import memo from 'memo-decorator';
 
 /**
