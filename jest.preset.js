@@ -10,11 +10,12 @@ module.exports = {
     },
   },
   transform: {
-    '^.+\\.(ts|js|html)$': 'jest-preset-angular',
+    '^.+\\.(ts|js|mjs|html|svg)$': 'jest-preset-angular',
   },
-  transformIgnorePatterns: ['node_modules/(?!@ngxs|simple-git)'],
-  moduleFileExtensions: ['ts', 'html', 'js', 'json'],
+  transformIgnorePatterns: ['node_modules/(?!@ngxs|simple-git|@angular)'],
+  moduleFileExtensions: ['ts', 'html', 'js', 'mjs', 'json'],
   resolver: '@nrwl/jest/plugins/resolver',
+  // resolver: 'jest-preset-angular/build/resolvers/ng-jest-resolver.js',
   coverageReporters: ['html-spa', 'json-summary'],
   coverageThreshold: {
     global: {
