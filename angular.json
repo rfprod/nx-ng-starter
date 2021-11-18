@@ -1599,7 +1599,7 @@
           "options": {
             "commands": [
               {
-                "command": "npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/coverage-stats.ts",
+                "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/coverage-stats.ts",
                 "forwardAllArgs": false
               }
             ]
@@ -1610,7 +1610,7 @@
           "options": {
             "commands": [
               {
-                "command": "npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/package-commands.ts"
+                "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/package-commands.ts"
               }
             ]
           }
@@ -1627,7 +1627,7 @@
           "options": {
             "commands": [
               {
-                "command": "npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --check",
+                "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/update.ts --check",
                 "forwardAllArgs": false
               }
             ]
@@ -1638,7 +1638,7 @@
           "options": {
             "commands": [
               {
-                "command": "npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --check --jsonUpgraded; npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --migrate=update; rm -rf migrations.json migrations-packages.json",
+                "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/update.ts --check --jsonUpgraded; npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/update.ts --migrate=update; rm -rf migrations.json migrations-packages.json",
                 "forwardAllArgs": false
               }
             ]
@@ -1649,7 +1649,7 @@
           "options": {
             "commands": [
               {
-                "command": "npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --check --jsonUpgraded; npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --migrate=update --bulkUserChoice=true; rm -rf migrations.json migrations-packages.json",
+                "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/update.ts --check --jsonUpgraded; npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/update.ts --migrate=update --bulkUserChoice=true; rm -rf migrations.json migrations-packages.json",
                 "forwardAllArgs": false
               }
             ]
@@ -1660,7 +1660,7 @@
           "options": {
             "commands": [
               {
-                "command": "yarn install && yarn ngcc && npx ts-node -P ./tools/tsconfig.tools.json ./tools/ts/update.ts --migrate=only; rm -rf migrations.json migrations-packages.json",
+                "command": "yarn install && yarn ngcc && npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/update.ts --migrate=only; rm -rf migrations.json migrations-packages.json",
                 "forwardAllArgs": false
               }
             ]

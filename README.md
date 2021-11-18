@@ -148,6 +148,14 @@ Applications as well as generated documentation, testing reports, and a custom c
 - [Elements Testing E2E](https://nx-ng-starter-documentation.web.app/assets/changelog/apps/elements-testing-e2e-CHANGELOG.html)
 - [Proto](https://nx-ng-starter-documentation.web.app/assets/changelog/libs/proto-CHANGELOG.html)
 
+## Workspace generators
+
+### Generate a feature library
+
+```bash
+yarn workspace:schematic client-feature client-<feature-name> --tags=scope:client-<feature-name>,type:feature
+```
+
 ## General Tooling
 
 This project was generated using [Nx](https://nx.dev).

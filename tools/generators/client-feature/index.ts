@@ -12,11 +12,9 @@ import {
   Tree,
   url,
 } from '@angular-devkit/schematics';
-import { formatFiles, getProjectConfig } from '@nrwl/workspace';
+import { createOrUpdate, deleteFile, formatFiles, getProjectConfig } from '@nrwl/workspace';
 import * as fs from 'fs';
 import * as path from 'path';
-import { timer } from 'rxjs';
-import { tap } from 'rxjs/operators';
 
 import { ISchematicContext } from './schema.interface';
 
@@ -76,45 +74,19 @@ const updateProjectConfig =
 
     const angularJson: Record<string, Record<string, unknown>> = JSON.parse(fs.readFileSync(angularJsonPath)?.toString() ?? '{}');
     angularJson.projects[schema.name] = projectConfig;
-    fs.writeFileSync(angularJsonPath, Buffer.from(JSON.stringify(angularJson)));
 
-    return chain([formatFiles({ skipFormat: false }, angularJsonPath)])(tree, context);
+    createOrUpdate(tree, './angular.json', JSON.stringify(angularJson));
+
+    return chain([formatFiles({ skipFormat: false }, './angular.json')])(tree, context);
   };
 
 /**
  * Removes unneeded files.
- * @note TODO: revise and debug it.
  */
 const cleanup =
   (schema: ISchematicContext): Rule =>
   (tree: Tree, context: SchematicContext) => {
-    const projectRoot = `${process.cwd()}`;
-
-    /**
-     * @note workaround to wait until all files are created.
-     * @note TODO: improve solution
-     */
-    const timeout = 3000;
-    void timer(timeout)
-      .pipe(
-        tap(() => {
-          /**
-           * @note this file is not needed, and is removed.
-           */
-          const rslintRcPath = `${projectRoot}/.eslintrc.json`;
-          fs.stat(rslintRcPath, (err: NodeJS.ErrnoException | null, stats: fs.Stats) => {
-            if (err !== null) {
-              // eslint-disable-next-line no-console -- needed here for debugging
-              console.log(`${rslintRcPath} does not exist`);
-            } else {
-              fs.unlinkSync(rslintRcPath);
-            }
-          });
-        }),
-      )
-      .subscribe();
-
-    return chain([])(tree, context);
+    return chain([deleteFile('./.eslintrc.json')])(tree, context);
   };
 
 export default function (schema: ISchematicContext) {
@@ -129,7 +101,6 @@ export default function (schema: ISchematicContext) {
           tags,
           style: 'scss',
         }),
-        updateProjectConfig(schema),
         addFiles(schema),
         externalSchematic('@schematics/angular', 'component', {
           project: name,
@@ -151,6 +122,7 @@ export default function (schema: ISchematicContext) {
           skipImport: true,
         }),
       ]),
+      updateProjectConfig(schema),
       cleanup(schema),
     ])(tree, context);
   };
