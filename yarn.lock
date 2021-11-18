@@ -2989,35 +2989,36 @@
     "@graphql-tools/utils" "^8.1.1"
     tslib "~2.3.0"
 
-"@graphql-codegen/typescript-apollo-angular@3.3.0":
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-apollo-angular/-/typescript-apollo-angular-3.3.0.tgz#eed4694fdb9ba5422359100f3dbe61d59d505c2b"
-  integrity sha512-nQb9hO+AS4GcikQ0Ndq3ujlrKLPzzf0o2HuZRlFkQdDGYP+vDSS+JPh/huaq1vJywF71IgIEST1zjjymJ8H7nQ==
+"@graphql-codegen/typescript-apollo-angular@latest":
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-apollo-angular/-/typescript-apollo-angular-3.3.1.tgz#e2fe929301c07605725bffe109b3fbc4036b602a"
+  integrity sha512-FwfKqj3y2+Z2pIkbmOLlDhazv0E/kou2NEeyO3S8yHsMyKdZRQ9lGGeFO+jm656aCfG+SDArTcQPwoYw6EqIDA==
   dependencies:
     "@graphql-codegen/plugin-helpers" "^2.3.0"
-    "@graphql-codegen/visitor-plugin-common" "2.5.0"
+    "@graphql-codegen/visitor-plugin-common" "2.5.1"
     auto-bind "~4.0.0"
     change-case-all "1.0.14"
     tslib "~2.3.0"
 
-"@graphql-codegen/typescript-operations@2.2.0":
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-operations/-/typescript-operations-2.2.0.tgz#73bf9261a9e28708952aa74c3a0c659fb8005483"
-  integrity sha512-AffhdHoJC2Wh95/LjOWF3vziZRurQ4JhAn3Odjd2AIBJsGx6TL41GYh9hX9GuBQYrBPjf4x+mXrmQ/vsFWH0ng==
+"@graphql-codegen/typescript-operations@latest":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript-operations/-/typescript-operations-2.2.1.tgz#78a4ca25fa7d82ef259791f7b8a5a146f9e89830"
+  integrity sha512-f1Y/qhn6yCGGVE8cAL2xzFryW4UQjnYS+vHYEKvr2X0DeMoMhp/5QCJ07HGWbjHYGBy4L5FhND/6lCbsJxG2EQ==
   dependencies:
     "@graphql-codegen/plugin-helpers" "^2.3.0"
-    "@graphql-codegen/typescript" "^2.3.0"
-    "@graphql-codegen/visitor-plugin-common" "2.5.0"
+    "@graphql-codegen/typescript" "^2.4.1"
+    "@graphql-codegen/visitor-plugin-common" "2.5.1"
     auto-bind "~4.0.0"
     tslib "~2.3.0"
 
-"@graphql-codegen/typescript@^2.3.0":
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript/-/typescript-2.3.0.tgz#af7614558f911996ced63dbe8a22ee20974e429c"
-  integrity sha512-bsq+y0cyrltVfpK5/JVz90lMBFby/Q+4oxiFGpjVdAjv/dbS9Bu476tQlN0Es76fc88Ce25wD40JXKfgWQDqKw==
+"@graphql-codegen/typescript@^2.4.1":
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript/-/typescript-2.4.1.tgz#96d427993982edc27c50c4cd8841bdbbe26689d9"
+  integrity sha512-1+dZ0Qar+jGISXTdm7nWpv7Agt5uRj3q2GtpTJ92aA/AEHh+MTharanYcExEbdqNQm7b859MusI+Jo1Hlqsfmw==
   dependencies:
     "@graphql-codegen/plugin-helpers" "^2.3.0"
-    "@graphql-codegen/visitor-plugin-common" "2.5.0"
+    "@graphql-codegen/schema-ast" "^2.4.0"
+    "@graphql-codegen/visitor-plugin-common" "2.5.1"
     auto-bind "~4.0.0"
     tslib "~2.3.0"
 
@@ -3036,6 +3037,22 @@
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/visitor-plugin-common/-/visitor-plugin-common-2.5.0.tgz#e412fade4ca3178a19e7ea122a4cb3463f2bf585"
   integrity sha512-a1kJ/5YBivCj9X20YuhNU2mPY9xjUVmJO0VjHBu06PyvC27GsR1PmvgRALIXrb6QwV+9DDUda3ewKzgne2Qc+A==
+  dependencies:
+    "@graphql-codegen/plugin-helpers" "^2.3.0"
+    "@graphql-tools/optimize" "^1.0.1"
+    "@graphql-tools/relay-operation-optimizer" "^6.3.7"
+    "@graphql-tools/utils" "^8.3.0"
+    auto-bind "~4.0.0"
+    change-case-all "1.0.14"
+    dependency-graph "^0.11.0"
+    graphql-tag "^2.11.0"
+    parse-filepath "^1.0.2"
+    tslib "~2.3.0"
+
+"@graphql-codegen/visitor-plugin-common@2.5.1":
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/visitor-plugin-common/-/visitor-plugin-common-2.5.1.tgz#4401bc401ff501b9b9330d1681e64685f519b327"
+  integrity sha512-hLnVB6u7qB1rIh9oJnGVWQmrUsXw3nEUMF+LGdf4b5qEWh5f9HSzciWMS6M47h4fSqpLyW4qgk2glH/DKwFgRA==
   dependencies:
     "@graphql-codegen/plugin-helpers" "^2.3.0"
     "@graphql-tools/optimize" "^1.0.1"
@@ -3841,10 +3858,10 @@
   dependencies:
     axios "0.23.0"
 
-"@nestjs/common@8.2.1":
-  version "8.2.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-8.2.1.tgz#2067d7dda6d1741f0dbffbef7a771851704fd2eb"
-  integrity sha512-xtcvRm46hyLVacMEfGJq4byFVkkP/xo255Em1T6BISyqJe2Cf2eCHSVOwxElDCIlonpGwrJhWosGgyOUgWk1iw==
+"@nestjs/common@8.2.2":
+  version "8.2.2"
+  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-8.2.2.tgz#44bbdd85ce7918083b04b00e2e88204cb655587a"
+  integrity sha512-Qy8GUFwV34YCw34fbFkyBi9bhDPPBacVhZMUxVUmnoqBL8GEdSpPDzW6epbl+IF1Q6TACK5L8WvTkd5V3/Eifw==
   dependencies:
     axios "0.24.0"
     iterare "1.2.1"
@@ -3911,10 +3928,10 @@
   resolved "https://registry.yarnpkg.com/@nestjs/passport/-/passport-8.0.1.tgz#f1ed39a19489f794d1fe3fef592b4523bc48da68"
   integrity sha512-vn/ZJLXQKvSf9D0BvEoNFJLfzl9AVqfGtDyQMfWDLbaNpoEB2FyeaHGxdiX6H71oLSrQV78c/yuhfantzwdjdg==
 
-"@nestjs/platform-express@8.2.1":
-  version "8.2.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/platform-express/-/platform-express-8.2.1.tgz#e9d6bbc6a07487a45fecc9711019c56962bf4b1d"
-  integrity sha512-/pvmrQq71xkUAta9ThQPPSgNv3VEuWYgonVuNFMsdZpFp/tVrrwoTuXVk8Y/7Wf3DQnxeDL9Wy2L0d/3CqBSBQ==
+"@nestjs/platform-express@8.2.2":
+  version "8.2.2"
+  resolved "https://registry.yarnpkg.com/@nestjs/platform-express/-/platform-express-8.2.2.tgz#08d732c6fbcc38adbea0f0722321c460a73aab10"
+  integrity sha512-oguwjj5nZ0StC8ZakMy+lAPp8Fxnq/mmH6QXamYdMIo37UX4AsNUshaOYGTfEgO0Hp2rH0pPpkRo3/b5n59M7w==
   dependencies:
     body-parser "1.19.0"
     cors "2.8.5"
@@ -3922,10 +3939,10 @@
     multer "1.4.3"
     tslib "2.3.1"
 
-"@nestjs/platform-ws@8.2.1":
-  version "8.2.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/platform-ws/-/platform-ws-8.2.1.tgz#419cbbb73aaf2e036318f94d0c2000c50c6be570"
-  integrity sha512-W1H9XZBOWBLWbojyWamTqA3rSBBO/K884FUBGsaUZuK6xCj5QPc61DLFU7sY0PVY+LdYif1i1AAJm9B8cc9jbg==
+"@nestjs/platform-ws@8.2.2":
+  version "8.2.2"
+  resolved "https://registry.yarnpkg.com/@nestjs/platform-ws/-/platform-ws-8.2.2.tgz#f3f50bb8e583208057423fd15bab471ad31b0ca2"
+  integrity sha512-Ikx8U/tW2NtDWDMUUK4pfQQ4h9yd1nt4AAaUcJyqpQgAwzsLeXgziFTIYd5O5FKqvmVDJ488Kcu/OK3gDs8Jrw==
   dependencies:
     tslib "2.3.1"
     ws "7.5.5"
@@ -3952,18 +3969,18 @@
     jsonc-parser "3.0.0"
     pluralize "8.0.0"
 
-"@nestjs/testing@8.2.1":
-  version "8.2.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-8.2.1.tgz#405a56ddcfd6eee13a03952f3ef0806867f834f6"
-  integrity sha512-nUxsFVwUdagSQSWhnyqZVOeq32Lzzy1bOcJ0Ot0E12pcg8hZenKTQAwLcjbpFIVKKxYgl9P340csSjPN80uI8A==
+"@nestjs/testing@8.2.2":
+  version "8.2.2"
+  resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-8.2.2.tgz#329d91fa9236c218e7ca9d6bf80711490ecac39a"
+  integrity sha512-TeNdmjSMKKCw6Z4duu5h4FuGtBV0SXqM4qxLytFJ6ZobaODjqh85u9fWqJlthH+XuHslVYsmNBkCeNrgzyrL8A==
   dependencies:
     optional "0.1.4"
     tslib "2.3.1"
 
-"@nestjs/websockets@8.2.1":
-  version "8.2.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/websockets/-/websockets-8.2.1.tgz#55b6ab3c0acb3583667a59dfbebcd12199d1e165"
-  integrity sha512-kRaQeRunta0sk5I2aaSLZOGlKAo2ekw5pLRcfz3//jMxWQfJCR5nX5m0uAGEP+CHlxeo+zAk1n41Mk5e0BcRkQ==
+"@nestjs/websockets@8.2.2":
+  version "8.2.2"
+  resolved "https://registry.yarnpkg.com/@nestjs/websockets/-/websockets-8.2.2.tgz#0154f1339d5851446f9685fede3c20466cc6d00b"
+  integrity sha512-bbmKETPF61HYQ3o1oI1XUnVnbXpAIsaAx6VuHrPQL4sVjfKR8LkaJOZDLUzM1tN0HTxEiHWIdcXAQNtbUCdh5g==
   dependencies:
     iterare "1.2.1"
     object-hash "2.2.0"
