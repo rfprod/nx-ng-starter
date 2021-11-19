@@ -1,5 +1,7 @@
 import { AppElement } from './app.element';
 
+jest.mock('./app.element.scss', jest.fn());
+
 describe('AppElement', () => {
   let app: AppElement;
 
