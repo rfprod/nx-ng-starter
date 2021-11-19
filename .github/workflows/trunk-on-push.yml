@@ -11,6 +11,10 @@ defaults:
   run:
     shell: bash
 
+concurrency:
+  group: ${{ github.head_ref }}.${{ github.sha }}
+  cancel-in-progress: true
+
 jobs:
   test-build-deploy:
     runs-on: ubuntu-latest
