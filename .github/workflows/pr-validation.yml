@@ -97,25 +97,25 @@ jobs:
         id: get-variables
         run: echo "::set-output name=yarncachedir::$(yarn cache dir)"; echo "::set-output name=commitsha::$(echo ${GITHUB_SHA})"
 
-      # - name: Workspace cache (npm, yarn, nx, jest)
-      #   if: steps.changes.outputs.nx == 'true'
-      #   uses: actions/cache@v2
-      #   id: workspace-cache # use this to check for `cache-hit` (`steps.workspace-cache.outputs.cache-hit != 'true'`)
-      #   env:
-      #     cache-name: workspace-cache
-      #   with:
-      #     path: |
-      #       ~/.npm
-      #       ${{ steps.get-variables.outputs.yarncachedir }}
-      #       **/node_modules
-      #       /tmp/nx
-      #       /tmp/jest_rs
-      #       ./angular
-      #     key: ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}-workspace-${{ steps.get-variables.outputs.commitsha }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}-workspace-
-      #       ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-
-      #       ${{ runner.os }}-
+      - name: Workspace cache (npm, yarn, nx, jest)
+        if: steps.changes.outputs.nx == 'true'
+        uses: actions/cache@v2
+        id: workspace-cache # use this to check for `cache-hit` (`steps.workspace-cache.outputs.cache-hit != 'true'`)
+        env:
+          cache-name: workspace-cache
+        with:
+          path: |
+            ~/.npm
+            ${{ steps.get-variables.outputs.yarncachedir }}
+            **/node_modules
+            /tmp/nx
+            /tmp/jest_rs
+            ./angular
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}-workspace-${{ steps.get-variables.outputs.commitsha }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}-workspace-
+            ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-
+            ${{ runner.os }}-
 
       - name: Workspace integrity check
         if: steps.changes.outputs.nx == 'true'
