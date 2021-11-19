@@ -1,4 +1,6 @@
 const nxPreset = require('@nrwl/jest/preset');
+const { pathsToModuleNameMapper } = require('ts-jest/utils');
+const { paths } = require('./tsconfig.base.json').compilerOptions;
 
 module.exports = {
   ...nxPreset,
@@ -9,13 +11,14 @@ module.exports = {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
+  moduleFileExtensions: ['ts', 'html', 'js', 'mjs', 'json'],
+  transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
   transform: {
     '^.+\\.(ts|js|mjs|html|svg)$': 'jest-preset-angular',
   },
-  transformIgnorePatterns: ['node_modules/(?!@ngxs|simple-git|@angular)'],
-  moduleFileExtensions: ['ts', 'html', 'js', 'mjs', 'json'],
-  resolver: '@nrwl/jest/plugins/resolver',
-  // resolver: 'jest-preset-angular/build/resolvers/ng-jest-resolver.js',
+  // resolver: '@nrwl/jest/plugins/resolver',
+  resolver: 'jest-preset-angular/build/resolvers/ng-jest-resolver.js',
+  moduleNameMapper: pathsToModuleNameMapper(paths, { prefix: '<rootDir>/../../' }),
   coverageReporters: ['html-spa', 'json-summary'],
   coverageThreshold: {
     global: {
