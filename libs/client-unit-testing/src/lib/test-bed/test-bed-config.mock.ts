@@ -22,6 +22,7 @@ export const newTestBedMetadata: TNewTestBedMetadata = (metadata?: TestModuleMet
     declarations,
     providers,
     schemas,
+    teardown: { destroyAfterEach: true },
   };
 };
 
@@ -39,4 +40,5 @@ export const getTestBedConfig: TTestBedConfigGetter = (metadata: TestModuleMetad
     imports: [AppMocksCoreModule.forRoot(), ...(metadata?.imports ?? [])],
     providers: [...(metadata?.providers ?? [])],
     schemas: [CUSTOM_ELEMENTS_SCHEMA, ...(metadata?.schemas ?? [])],
+    teardown: { ...(metadata.teardown ?? {}) },
   });

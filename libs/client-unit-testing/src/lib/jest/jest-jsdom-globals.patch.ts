@@ -1,4 +1,4 @@
-import 'node_modules/jsdom/lib/jsdom/living/custom-elements/CustomElementRegistry-impl.js';
+// import 'node_modules/jsdom/lib/jsdom/living/custom-elements/CustomElementRegistry-impl.js';
 
 import { TIMEOUT } from '@app/client-util';
 

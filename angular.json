@@ -1,5 +1,12 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "cache": {
+      "enabled": true,
+      "path": ".angular/cache",
+      "environment": "all"
+    }
+  },
   "newProjectRoot": "",
   "projects": {
     "api": {
@@ -1158,7 +1165,7 @@
             "outputPath": "dist/apps/documentation",
             "polyfills": "apps/documentation/src/polyfills.ts",
             "scripts": [
-              "node_modules/marked/lib/marked.js",
+              "node_modules/marked/lib/marked.umd.js",
               "node_modules/prismjs/prism.js",
               "node_modules/prismjs/components/prism-csharp.min.js",
               "node_modules/prismjs/components/prism-css.min.js",
@@ -1566,7 +1573,7 @@
           "options": {
             "commands": [
               {
-                "command": "rm -rf documentation/* dist/* coverage/* changelog/* /tmp/nx/nx-ng-starter",
+                "command": "rm -rf .angular/* documentation/* dist/* coverage/* changelog/* /tmp/nx/nx-ng-starter",
                 "forwardAllArgs": false
               }
             ]
