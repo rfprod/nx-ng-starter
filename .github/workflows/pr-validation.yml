@@ -89,32 +89,33 @@ jobs:
         if: steps.changes.outputs.nx == 'true'
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
-      - name: Use yarn 1.22.1 (required for integrity check)
-        run: yarn set version 1.22.1 # this is mandatory, yarn v2 does not have integrity check which is needed for the pipeline
+      - name: Use yarn 1.22.17 (required for integrity check)
+        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.devops == 'true' }}
+        run: yarn set version 1.22.17 # this is mandatory, yarn v2 does not have integrity check which is needed for the pipeline
 
       - name: Get variables (yarn cache directory, commit hash)
         if: steps.changes.outputs.nx == 'true'
         id: get-variables
         run: echo "::set-output name=yarncachedir::$(yarn cache dir)"; echo "::set-output name=commitsha::$(echo ${GITHUB_SHA})"
 
-      - name: Workspace cache (npm, yarn, nx, jest)
-        if: steps.changes.outputs.nx == 'true'
-        uses: actions/cache@v2
-        id: workspace-cache # use this to check for `cache-hit` (`steps.workspace-cache.outputs.cache-hit != 'true'`)
-        env:
-          cache-name: workspace-cache
-        with:
-          path: |
-            ~/.npm
-            ${{ steps.get-variables.outputs.yarncachedir }}
-            **/node_modules
-            /tmp/nx
-            /tmp/jest_rs
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}-workspace-${{ steps.get-variables.outputs.commitsha }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}-workspace-
-            ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-
-            ${{ runner.os }}-
+      # - name: Workspace cache (npm, yarn, nx, jest)
+      #   if: steps.changes.outputs.nx == 'true'
+      #   uses: actions/cache@v2
+      #   id: workspace-cache # use this to check for `cache-hit` (`steps.workspace-cache.outputs.cache-hit != 'true'`)
+      #   env:
+      #     cache-name: workspace-cache
+      #   with:
+      #     path: |
+      #       ~/.npm
+      #       ${{ steps.get-variables.outputs.yarncachedir }}
+      #       **/node_modules
+      #       /tmp/nx
+      #       /tmp/jest_rs
+      #     key: ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}-workspace-${{ steps.get-variables.outputs.commitsha }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}-workspace-
+      #       ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-
+      #       ${{ runner.os }}-
 
       - name: Workspace integrity check
         if: steps.changes.outputs.nx == 'true'
