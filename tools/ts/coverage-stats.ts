@@ -1,6 +1,6 @@
+import { getJestProjects } from '@nrwl/jest';
 import * as fs from 'fs';
 
-import { projects } from '../../jest.config';
 import { COLORS } from './colors';
 
 /**
@@ -11,7 +11,7 @@ const cwd = __dirname;
 /**
  * Jest projects array.
  */
-const jestProjects = <string[]>[...projects];
+const jestProjects = <string[]>[...getJestProjects()];
 
 interface ICoverageSummary {
   total: number;
