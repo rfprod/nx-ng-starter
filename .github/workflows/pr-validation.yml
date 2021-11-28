@@ -68,12 +68,6 @@ jobs:
               - '.github/**'
               - '.dockerignore'
 
-      - name: GitHub CODEOWNERS Validator
-        uses: mszostok/codeowners-validator@v0.5.1
-        with:
-          checks: 'files,duppatterns'
-          experimental_checks: 'notowned'
-
       - name: Don't save Bash session history
         run: unset HISTFILE
 

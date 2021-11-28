@@ -1,10 +1,20 @@
-# NxNgStarter
+# nx-ng-starter
 
-Angular NestJS Nx starter project with workflow automation.
+Nx + Angular + NestJS starter project with workflow automation.
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
-[![pr-validation](https://github.com/rfprod/nx-ng-starter/actions/workflows/pr-validation.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/pr-validation.yml) [![trunk-on-push](https://github.com/rfprod/nx-ng-starter/actions/workflows/trunk-on-push.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/trunk-on-push.yml)
+## Workflows
+
+### [![pr-validation](https://github.com/rfprod/nx-ng-starter/actions/workflows/pr-validation.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/pr-validation.yml)
+
+### [![trunk-on-push](https://github.com/rfprod/nx-ng-starter/actions/workflows/trunk-on-push.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/trunk-on-push.yml)
+
+### [![e2e-test](https://github.com/rfprod/nx-ng-starter/actions/workflows/e2e-test.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/e2e-test.yml)
+
+### [![docker](https://github.com/rfprod/nx-ng-starter/actions/workflows/docker.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/docker.yml)
+
+### [![codeowners-validator](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeowners-validator.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeowners-validator.yml)
 
 ## Requirements
 
