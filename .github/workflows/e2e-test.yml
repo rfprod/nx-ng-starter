@@ -1,6 +1,6 @@
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: nx-e2e
+name: e2e-test
 
 on:
   workflow_dispatch:
@@ -10,11 +10,11 @@ defaults:
     shell: bash
 
 concurrency:
-  group: ${{ github.head_ref }}.${{ github.sha }}
+  group: ${{ github.head_ref }}.${{ github.sha }}.e2e
   cancel-in-progress: true
 
 jobs:
-  e2e:
+  e2e-test:
     runs-on: ubuntu-latest
 
     strategy:
