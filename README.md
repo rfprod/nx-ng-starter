@@ -24,7 +24,7 @@ In order to run own copy of the project one must fulfill the following requireme
 
 - [Debian based Linux](https://en.wikipedia.org/wiki/List_of_Linux_distributions#Debian-based)
 - [OSX](https://en.wikipedia.org/wiki/MacOS)
-- ~~`Windows`~~ - poorly supported
+- [~~Windows~~](https://en.wikipedia.org/wiki/Microsoft_Windows) - `poorly supported`
 
 ### Core dependencies
 
