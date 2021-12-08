@@ -12,15 +12,15 @@ const typeConstraints = [
   },
   {
     sourceTag: 'type:data-access',
-    onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util', 'type:unit-testing'],
+    onlyDependOnLibsWithTags: ['type:data-access', 'type:util', 'type:unit-testing'],
   },
   {
     sourceTag: 'type:ui',
-    onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util', 'type:unit-testing'],
+    onlyDependOnLibsWithTags: ['type:ui', 'type:util', 'type:unit-testing'],
   },
   {
     sourceTag: 'type:util',
-    onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util'],
+    onlyDependOnLibsWithTags: ['type:util'],
   },
   {
     sourceTag: 'type:e2e',
@@ -210,7 +210,6 @@ const clientConstraints = [
   {
     sourceTag: 'scope:client-sidebar',
     onlyDependOnLibsWithTags: [
-      'scope:client-material',
       'scope:client-store',
       'scope:client-store-http-progress',
       'scope:client-store-sidebar',
