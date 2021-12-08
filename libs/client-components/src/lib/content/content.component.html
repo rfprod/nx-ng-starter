@@ -3,7 +3,7 @@
     <router-outlet name="sidebar"></router-outlet>
   </mat-sidenav>
 
-  <mat-sidenav-content (swiperight)="sidebarOpenHandler()">
+  <mat-sidenav-content #content (swiperight)="sidebarOpenHandler()">
     <router-outlet></router-outlet>
 
     <router-outlet name="chatbot"></router-outlet>
