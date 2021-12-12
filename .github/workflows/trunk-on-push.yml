@@ -120,7 +120,7 @@ jobs:
 
       - name: Install project dependencies
         if: steps.changes.outputs.nx == 'true'
-        run: yarn install --frozen-lockfile
+        run: yarn install:ci
 
       - name: Lint all
         if: steps.changes.outputs.nx == 'true'

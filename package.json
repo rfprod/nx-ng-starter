@@ -58,6 +58,7 @@
     "postinstall": "husky install && npx sort-package-json && yarn ngcc && node ./decorate-angular-cli.js",
     "install:all:linux": "bash ./tools/shell/install.sh all",
     "install:all:osx": "bash ./tools/shell/install.sh all osx",
+    "install:ci": "yarn install --frozen-lockfile",
     "install:global": "bash ./tools/shell/install.sh global",
     "install:project": "bash tools/shell/install.sh project",
     "install:proto:linux": "bash ./tools/shell/install.sh proto",
