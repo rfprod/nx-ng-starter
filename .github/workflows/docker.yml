@@ -81,7 +81,7 @@ jobs:
         run: yarn workspace:integrity-check
 
       - name: Install project dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install:ci
 
       - name: Unit test all (with code coverage)
         run: |

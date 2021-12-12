@@ -3,7 +3,7 @@ import { IWebClientAppEnvironment } from '@app/client-util';
 import { NgxsModule } from '@ngxs/store';
 
 import { WS_CONFIG } from './websocket.interface';
-import { AppWebsocketState } from './websocket.store';
+import { AppWebsocketState } from './websocket.state';
 
 @NgModule({
   imports: [NgxsModule.forFeature([AppWebsocketState])],

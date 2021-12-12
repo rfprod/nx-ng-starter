@@ -40,7 +40,7 @@ jobs:
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
       - name: Install project dependencies
-        run: yarn install --frozen-lockfile
+        run: yarn install:ci
 
       - name: Install Cypress
         run: npx cypress install

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { NgxsModule } from '@ngxs/store';
 
-import { AppThemeState } from './theme.store';
+import { AppThemeState } from './theme.state';
 
 @NgModule({
   imports: [MatSidenavModule, OverlayModule, NgxsModule.forFeature([AppThemeState])],

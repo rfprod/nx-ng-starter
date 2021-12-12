@@ -3,7 +3,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { NgxsModule } from '@ngxs/store';
 
 import { AppGlobalProgressBarComponent } from './components/global-progress-bar/global-progress-bar.component';
-import { AppHttpProgressState } from './http-progress.store';
+import { AppHttpProgressState } from './http-progress.state';
 import { httpProgressServiceProvider } from './services/http-progress/http-progress.service';
 
 export const httpProgressModuleProviders: Provider[] = [httpProgressServiceProvider];

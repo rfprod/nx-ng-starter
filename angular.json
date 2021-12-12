@@ -3,8 +3,8 @@
   "cli": {
     "cache": {
       "enabled": true,
-      "path": ".angular/cache",
-      "environment": "all"
+      "environment": "all",
+      "path": ".angular/cache"
     }
   },
   "newProjectRoot": "",
@@ -208,7 +208,7 @@
       "root": "libs/backend-interfaces",
       "schematics": {},
       "sourceRoot": "libs/backend-interfaces/src",
-      "tags": ["scope:backend-interfaces", "type:data-access"]
+      "tags": ["scope:backend-interfaces", "type:util"]
     },
     "backend-logger": {
       "architect": {
@@ -424,93 +424,6 @@
       "sourceRoot": "libs/client-chatbot/src",
       "tags": ["scope:client-chatbot", "type:feature"]
     },
-    "client-components": {
-      "architect": {
-        "build-storybook": {
-          "builder": "@nrwl/storybook:build",
-          "configurations": {
-            "ci": {
-              "quiet": true
-            }
-          },
-          "options": {
-            "config": {
-              "configFolder": "libs/client-components/.storybook"
-            },
-            "outputPath": "dist/storybook/client-components",
-            "uiFramework": "@storybook/angular"
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "eslintConfig": "libs/client-components/.eslintrc.json",
-            "lintFilePatterns": ["libs/client-components/**/*.ts"]
-          }
-        },
-        "storybook": {
-          "builder": "@nrwl/storybook:storybook",
-          "configurations": {
-            "ci": {
-              "quiet": true
-            }
-          },
-          "options": {
-            "config": {
-              "configFolder": "libs/client-components/.storybook"
-            },
-            "port": 4400,
-            "uiFramework": "@storybook/angular"
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/client-components/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      },
-      "prefix": "app",
-      "projectType": "library",
-      "root": "libs/client-components",
-      "schematics": {
-        "@nrwl/angular:component": {
-          "style": "scss"
-        }
-      },
-      "sourceRoot": "libs/client-components/src",
-      "tags": ["scope:client-components", "type:feature"]
-    },
-    "client-components-e2e": {
-      "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
-          "configurations": {
-            "ci": {
-              "devServerTarget": "client-components:storybook:ci"
-            }
-          },
-          "options": {
-            "cypressConfig": "apps/client-components-e2e/cypress.json",
-            "devServerTarget": "client-components:storybook",
-            "tsConfig": "apps/client-components-e2e/tsconfig.e2e.json"
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "eslintConfig": "apps/client-components-e2e/.eslintrc.json",
-            "lintFilePatterns": ["apps/client-components-e2e/**/*.ts"]
-          }
-        }
-      },
-      "implicitDependencies": ["client-components"],
-      "projectType": "application",
-      "root": "apps/client-components-e2e",
-      "sourceRoot": "apps/client-components-e2e/src",
-      "tags": ["scope:client-components-e2e", "type:e2e"]
-    },
     "client-core": {
       "architect": {
         "lint": {
@@ -538,6 +451,93 @@
       },
       "sourceRoot": "libs/client-core/src",
       "tags": ["scope:client-core", "type:feature"]
+    },
+    "client-core-components": {
+      "architect": {
+        "build-storybook": {
+          "builder": "@nrwl/storybook:build",
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          },
+          "options": {
+            "config": {
+              "configFolder": "libs/client-core-components/.storybook"
+            },
+            "outputPath": "dist/storybook/client-core-components",
+            "uiFramework": "@storybook/angular"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-core-components/.eslintrc.json",
+            "lintFilePatterns": ["libs/client-core-components/**/*.ts"]
+          }
+        },
+        "storybook": {
+          "builder": "@nrwl/storybook:storybook",
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          },
+          "options": {
+            "config": {
+              "configFolder": "libs/client-core-components/.storybook"
+            },
+            "port": 4400,
+            "uiFramework": "@storybook/angular"
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-core-components/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "prefix": "app",
+      "projectType": "library",
+      "root": "libs/client-core-components",
+      "schematics": {
+        "@nrwl/angular:component": {
+          "style": "scss"
+        }
+      },
+      "sourceRoot": "libs/client-core-components/src",
+      "tags": ["scope:client-core-components", "type:feature"]
+    },
+    "client-core-components-e2e": {
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "configurations": {
+            "ci": {
+              "devServerTarget": "client-core-components:storybook:ci"
+            }
+          },
+          "options": {
+            "cypressConfig": "apps/client-core-components-e2e/cypress.json",
+            "devServerTarget": "client-core-components:storybook",
+            "tsConfig": "apps/client-core-components-e2e/tsconfig.e2e.json"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "apps/client-core-components-e2e/.eslintrc.json",
+            "lintFilePatterns": ["apps/client-core-components-e2e/**/*.ts"]
+          }
+        }
+      },
+      "implicitDependencies": ["client-core-components"],
+      "projectType": "application",
+      "root": "apps/client-core-components-e2e",
+      "sourceRoot": "apps/client-core-components-e2e/src",
+      "tags": ["scope:client-core-components-e2e", "type:e2e"]
     },
     "client-diagnostics": {
       "architect": {
@@ -760,7 +760,7 @@
         }
       },
       "sourceRoot": "libs/client-services/src",
-      "tags": ["scope:client-services", "type:ui"]
+      "tags": ["scope:client-services", "type:util"]
     },
     "client-sidebar": {
       "architect": {
@@ -814,147 +814,147 @@
       "tags": ["scope:client-store", "type:data-access"]
     },
     "client-store-chatbot": {
-      "projectType": "library",
-      "root": "libs/client-store-chatbot",
-      "sourceRoot": "libs/client-store-chatbot/src",
-      "prefix": "app",
       "architect": {
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/client-store-chatbot"],
-          "options": {
-            "jestConfig": "libs/client-store-chatbot/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/client-store-chatbot/.eslintrc.json",
             "lintFilePatterns": ["libs/client-store-chatbot/**/*.ts"]
           }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-store-chatbot/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/client-store-chatbot"]
         }
       },
+      "prefix": "app",
+      "projectType": "library",
+      "root": "libs/client-store-chatbot",
+      "sourceRoot": "libs/client-store-chatbot/src",
       "tags": ["scope:client-store-chatbot", "type:data-access"]
     },
     "client-store-http-api": {
-      "projectType": "library",
-      "root": "libs/client-store-http-api",
-      "sourceRoot": "libs/client-store-http-api/src",
-      "prefix": "app",
       "architect": {
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/client-store-http-api"],
-          "options": {
-            "jestConfig": "libs/client-store-http-api/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/client-store-http-api/.eslintrc.json",
             "lintFilePatterns": ["libs/client-store-http-api/**/*.ts"]
           }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-store-http-api/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/client-store-http-api"]
         }
       },
+      "prefix": "app",
+      "projectType": "library",
+      "root": "libs/client-store-http-api",
+      "sourceRoot": "libs/client-store-http-api/src",
       "tags": ["scope:client-store-http-api", "type:data-access"]
     },
     "client-store-http-progress": {
-      "projectType": "library",
-      "root": "libs/client-store-http-progress",
-      "sourceRoot": "libs/client-store-http-progress/src",
-      "prefix": "app",
       "architect": {
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/client-store-http-progress"],
-          "options": {
-            "jestConfig": "libs/client-store-http-progress/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/client-store-http-progress/.eslintrc.json",
             "lintFilePatterns": ["libs/client-store-http-progress/**/*.ts"]
           }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-store-http-progress/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/client-store-http-progress"]
         }
       },
+      "prefix": "app",
+      "projectType": "library",
+      "root": "libs/client-store-http-progress",
+      "sourceRoot": "libs/client-store-http-progress/src",
       "tags": ["scope:client-store-http-progress", "type:data-access"]
     },
     "client-store-sidebar": {
-      "projectType": "library",
-      "root": "libs/client-store-sidebar",
-      "sourceRoot": "libs/client-store-sidebar/src",
-      "prefix": "app",
       "architect": {
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/client-store-sidebar"],
-          "options": {
-            "jestConfig": "libs/client-store-sidebar/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/client-store-sidebar/.eslintrc.json",
             "lintFilePatterns": ["libs/client-store-sidebar/**/*.ts"]
           }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-store-sidebar/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/client-store-sidebar"]
         }
       },
+      "prefix": "app",
+      "projectType": "library",
+      "root": "libs/client-store-sidebar",
+      "sourceRoot": "libs/client-store-sidebar/src",
       "tags": ["scope:client-store-sidebar", "type:data-access"]
     },
     "client-store-theme": {
-      "projectType": "library",
-      "root": "libs/client-store-theme",
-      "sourceRoot": "libs/client-store-theme/src",
-      "prefix": "app",
       "architect": {
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/client-store-theme"],
-          "options": {
-            "jestConfig": "libs/client-store-theme/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/client-store-theme/.eslintrc.json",
             "lintFilePatterns": ["libs/client-store-theme/**/*.ts"]
           }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-store-theme/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/client-store-theme"]
         }
       },
+      "prefix": "app",
+      "projectType": "library",
+      "root": "libs/client-store-theme",
+      "sourceRoot": "libs/client-store-theme/src",
       "tags": ["scope:client-store-theme", "type:data-access"]
     },
     "client-store-user": {
-      "projectType": "library",
-      "root": "libs/client-store-user",
-      "sourceRoot": "libs/client-store-user/src",
-      "prefix": "app",
       "architect": {
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/client-store-user"],
-          "options": {
-            "jestConfig": "libs/client-store-user/jest.config.js",
-            "passWithNoTests": true
-          }
-        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
             "eslintConfig": "libs/client-store-user/.eslintrc.json",
             "lintFilePatterns": ["libs/client-store-user/**/*.ts"]
           }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-store-user/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/client-store-user"]
         }
       },
+      "prefix": "app",
+      "projectType": "library",
+      "root": "libs/client-store-user",
+      "sourceRoot": "libs/client-store-user/src",
       "tags": ["scope:client-store-user", "type:data-access"]
     },
     "client-store-websocket": {
@@ -1441,7 +1441,7 @@
     "elements-testing": {
       "architect": {
         "build": {
-          "builder": "@nrwl/web:build",
+          "builder": "@nrwl/web:webpack",
           "configurations": {
             "production": {
               "extractLicenses": true,

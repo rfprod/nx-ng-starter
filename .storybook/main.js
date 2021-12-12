@@ -31,9 +31,6 @@ module.exports = {
   ],
   stories: [],
   webpackFinal: async (config) => {
-    // for backwards compatibility call the `rootWebpackConfig`
-    // this can be removed once that one is migrated fully to
-    // use the `webpackFinal` property in the `main.js` file
     const tsPaths = new TsconfigPathsPlugin({
       configFile: './tsconfig.base.json',
     });
