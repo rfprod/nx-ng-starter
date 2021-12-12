@@ -14,4 +14,4 @@ import { AppToolbarComponent } from './toolbar/toolbar.component';
   declarations: [AppContentComponent, AppNavbarComponent, AppToolbarComponent, AppThemeToggleComponent],
   exports: [AppContentComponent, AppNavbarComponent, AppToolbarComponent, AppThemeToggleComponent],
 })
-export class AppClientComponentsModule {}
+export class AppClientCoreComponentsModule {}

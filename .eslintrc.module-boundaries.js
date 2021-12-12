@@ -237,7 +237,7 @@ const clientConstraints = [
       'scope:client-store-user',
       'scope:client-services',
       'scope:client-chatbot',
-      'scope:client-components',
+      'scope:client-core-components',
       'scope:client-core',
       'scope:client-diagnostics',
       'scope:client-material',
@@ -247,7 +247,7 @@ const clientConstraints = [
     ],
   },
   {
-    sourceTag: 'scope:client-components',
+    sourceTag: 'scope:client-core-components',
     onlyDependOnLibsWithTags: [
       'scope:client-material',
       'scope:client-store-chatbot',
@@ -263,7 +263,7 @@ const clientConstraints = [
     onlyDependOnLibsWithTags: ['scope:client-util'],
   },
   {
-    sourceTag: 'scope:client-components-e2e',
+    sourceTag: 'scope:client-core-components-e2e',
     onlyDependOnLibsWithTags: ['scope:client-util'],
   },
   {
