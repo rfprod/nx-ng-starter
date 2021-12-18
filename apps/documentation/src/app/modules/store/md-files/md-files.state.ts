@@ -14,9 +14,7 @@ const setState = createAction<TSelectMdFilePayload>('set state');
     filePath: 'md/README.md',
   },
 })
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AppMdFilesState {
   @Selector()
   public static state(state: IMdFilesState) {
