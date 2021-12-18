@@ -4,7 +4,7 @@ import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { Store } from '@ngxs/store';
 
 import { DOC_APP_ENV, IDocAppEnvironment } from '../../interfaces/environment.interface';
-import { mdFilesActions } from '../../modules/store/md-files/md-files.store';
+import { mdFilesActions } from '../../modules/store/md-files/md-files.state';
 
 /**
  * Nodes data with nested structure.
