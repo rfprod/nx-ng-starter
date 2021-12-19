@@ -1,0 +1,16 @@
+{
+  "$id": "client-store",
+  "$schema": "http://json-schema.org/schema",
+  "properties": {
+    "name": {
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "description": "Library name",
+      "type": "string"
+    }
+  },
+  "required": ["name"],
+  "type": "object"
+}

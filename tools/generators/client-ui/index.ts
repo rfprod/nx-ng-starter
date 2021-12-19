@@ -107,16 +107,6 @@ export default function (schema: ISchematicContext) {
           path: path.join('libs', name, 'src', 'lib', 'components'),
           style: 'scss',
         }),
-        externalSchematic('@schematics/angular', 'service', {
-          project: name,
-          name,
-          path: path.join('libs', name, 'src', 'lib', 'services'),
-        }),
-        externalSchematic('@schematics/angular', 'guard', {
-          project: name,
-          name,
-          path: path.join('libs', name, 'src', 'lib', 'guards'),
-        }),
       ]),
       updateProjectConfig(schema),
       cleanup(schema),

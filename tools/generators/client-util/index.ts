@@ -14,7 +14,6 @@ import {
 } from '@angular-devkit/schematics';
 import { createOrUpdate, deleteFile, formatFiles, getProjectConfig } from '@nrwl/workspace';
 import * as fs from 'fs';
-import * as path from 'path';
 
 import { ISchematicContext } from './schema.interface';
 
@@ -101,22 +100,6 @@ export default function (schema: ISchematicContext) {
           tags,
         }),
         addFiles(schema),
-        externalSchematic('@schematics/angular', 'component', {
-          project: name,
-          name,
-          path: path.join('libs', name, 'src', 'lib', 'components'),
-          style: 'scss',
-        }),
-        externalSchematic('@schematics/angular', 'service', {
-          project: name,
-          name,
-          path: path.join('libs', name, 'src', 'lib', 'services'),
-        }),
-        externalSchematic('@schematics/angular', 'guard', {
-          project: name,
-          name,
-          path: path.join('libs', name, 'src', 'lib', 'guards'),
-        }),
       ]),
       updateProjectConfig(schema),
       cleanup(schema),
