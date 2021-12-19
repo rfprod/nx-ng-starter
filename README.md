@@ -160,10 +160,30 @@ Applications as well as generated documentation, testing reports, and a custom c
 
 ## Workspace generators
 
-### Generate a feature library
+### Generate a library
+
+#### `feature` library
 
 ```bash
 yarn workspace:schematic client-feature client-<feature-name> --tags=scope:client-<feature-name>,type:feature
+```
+
+#### `ui` library
+
+```bash
+yarn workspace:schematic client-ui client-ui-<feature-name> --tags=scope:client-ui-<feature-name>,type:ui
+```
+
+#### `data-access` library
+
+```bash
+yarn workspace:schematic client-store client-store-<feature-name> --tags=scope:client-store-<feature-name>,type:data-access
+```
+
+#### `util` library
+
+```bash
+yarn workspace:schematic client-util client-util-<feature-name> --tags=scope:client-util-<feature-name>,type:util
 ```
 
 ## General Tooling
