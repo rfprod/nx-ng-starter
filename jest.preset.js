@@ -28,7 +28,17 @@ module.exports = {
       statements: 100,
     },
   },
-  collectCoverageFrom: ['**/*.ts', '!**/node_modules/**', '!**/coverage/**', '!**/generated/**', '!**/grpc/**', '!**/ts/**', '!**/*.js'],
+  collectCoverageFrom: [
+    '**/*.ts',
+    '!**/node_modules/**',
+    '!**/coverage/**',
+    '!**/generated/**',
+    '!**/grpc/**',
+    '!**/ts/**',
+    '!**/*.js',
+    '!**/*.stories.ts',
+    '!**/*.module.ts',
+  ],
   collectCoverage: true,
   cacheDirectory: '/tmp/jest_rs/nx-ng-starter',
 };
