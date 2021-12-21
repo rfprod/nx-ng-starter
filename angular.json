@@ -1546,13 +1546,6 @@
             "eslintConfig": "libs/proto/.eslintrc.json",
             "lintFilePatterns": ["libs/proto/**/*.ts"]
           }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/proto/jest.config.js",
-            "passWithNoTests": true
-          }
         }
       },
       "prefix": "app",
