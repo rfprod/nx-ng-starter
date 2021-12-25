@@ -1,6 +1,6 @@
 # nx-ng-starter
 
-Nx + Angular + NestJS starter project with workflow automation.
+[Nx](https://nx.dev/) + [Angular](https://angular.io/) + [NestJS](https://nestjs.com/) starter project with workflow automation.
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
@@ -20,7 +20,7 @@ In order to run own copy of the project one must fulfill the following requireme
 
 ### Supported operating systems
 
-- [Debian based Linux](https://en.wikipedia.org/wiki/List_of_Linux_distributions#Debian-based)
+- [Debian based Linux](https://en.wikipedia.org/wiki/List_of_Linux_distributions#Debian-based) - recommended, check out this [dev setup instructions](https://github.com/rfprod/wdsdu) to facilitate getting started
 - [OSX](https://en.wikipedia.org/wiki/MacOS)
 - [~~Windows~~](https://en.wikipedia.org/wiki/Microsoft_Windows) - `poorly supported`
 
