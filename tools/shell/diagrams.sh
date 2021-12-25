@@ -14,7 +14,7 @@ source tools/shell/print-utils.sh ''
 ##
 declare -A DIAGRAMS=(
   ["BRANCHING"]="branching"
-  ["MASTER_ON_PUSH"]="master-on-push-pipeline"
+  ["TRUNK_ON_PUSH"]="trunk-on-push-pipeline"
   ["PR_VALIDATION"]="pr-validation-pipeline"
 )
 
