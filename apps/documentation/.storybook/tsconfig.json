@@ -1,5 +1,9 @@
 {
   "extends": "../tsconfig.json",
   "exclude": ["../**/*.spec.ts"],
-  "include": ["../../../libs/client-components/src/lib/**/*.stories.ts", "../../../libs/client-diagnostics/src/lib/**/*.stories..ts"]
+  "include": [
+    "../../../libs/client-core-components/src/lib/**/*.ts",
+    "../../../libs/client-diagnostics/src/lib/**/*.ts",
+    "../src/polyfills.ts"
+  ]
 }
