@@ -1,4 +1,4 @@
-import { Message, UserContacts, UserLoginCredentials, UserLogoutCredentials, UserName, UserProfile } from '@app/backend-interfaces';
+import { Message, UserLoginCredentials, UserLogoutCredentials, UserName, UserProfile } from '@app/backend-interfaces';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
@@ -51,20 +51,22 @@ export class BackendAuthService {
   }
 
   private authenticateAndReturnProfile(credentials: UserLoginCredentials): UserProfile {
-    const id = '0';
     const name: UserName = {
       first: '',
       last: '',
     };
-    const contacts: UserContacts = {
-      email: credentials.email,
-      phone: '',
-    };
-    const token = this.generateJWToken({
-      email: contacts.email,
-      name: `${name.first} ${name.last}`,
+    const profile: UserProfile = new UserProfile({
+      id: '0',
+      name,
+      contacts: {
+        email: credentials.email,
+        phone: '',
+      },
+      token: this.generateJWToken({
+        email: credentials.email,
+        name: `${name.first} ${name.last}`,
+      }),
     });
-    const profile: UserProfile = new UserProfile({ id, name, contacts, token });
     return profile;
   }
 }

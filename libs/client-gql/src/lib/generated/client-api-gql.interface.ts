@@ -1,5 +1,6 @@
 import { gql } from 'apollo-angular';
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
@@ -14,15 +15,12 @@ export type IScalars = {
   Date: any;
 };
 
-
-
-
 export interface IMatcompModel {
   __typename?: 'MatcompModel';
+  creationDate: IScalars['Date'];
+  description: IScalars['String'];
   id: IScalars['ID'];
   name: IScalars['String'];
-  description: IScalars['String'];
-  creationDate: IScalars['Date'];
 }
 
 export interface IMutation {
@@ -42,25 +40,25 @@ export type IMutationRemoveArgs = {
 };
 
 export interface INewMatcompInputDto {
-  name?: Maybe<IScalars['String']>;
-  description?: Maybe<IScalars['String']>;
+  description?: InputMaybe<IScalars['String']>;
+  name?: InputMaybe<IScalars['String']>;
 }
 
 export interface IQuery {
   __typename?: 'Query';
-  matcomps: Array<IMatcompModel>;
   matcomp: IMatcompModel;
+  matcomps: Array<IMatcompModel>;
 }
-
-
-export type IQueryMatcompsArgs = {
-  skip?: Maybe<IScalars['Int']>;
-  take?: Maybe<IScalars['Int']>;
-};
 
 
 export type IQueryMatcompArgs = {
   id: IScalars['String'];
+};
+
+
+export type IQueryMatcompsArgs = {
+  skip?: InputMaybe<IScalars['Int']>;
+  take?: InputMaybe<IScalars['Int']>;
 };
 
 export interface ISubscription {
