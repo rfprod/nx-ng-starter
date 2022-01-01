@@ -2,20 +2,15 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Query {
-  matcomps(skip: Int = 0, take: Int = 25): [MatcompModel!]!
-  matcomp(id: String!): MatcompModel!
-}
-
-type MatcompModel {
-  id: ID!
-  name: String!
-  description: String!
-  creationDate: Date!
-}
-
 """Date custom scalar type"""
 scalar Date
+
+type MatcompModel {
+  creationDate: Date!
+  description: String!
+  id: ID!
+  name: String!
+}
 
 type Mutation {
   create(input: NewMatcompInputDto!): MatcompModel!
@@ -23,8 +18,13 @@ type Mutation {
 }
 
 input NewMatcompInputDto {
-  name: String = ""
   description: String = ""
+  name: String = ""
+}
+
+type Query {
+  matcomp(id: String!): MatcompModel!
+  matcomps(skip: Int = 0, take: Int = 25): [MatcompModel!]!
 }
 
 type Subscription {

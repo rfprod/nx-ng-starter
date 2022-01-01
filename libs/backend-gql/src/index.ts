@@ -1,1 +1,1 @@
-export * from './lib/backend-graphql.module';
+export * from './lib/backend-gql.module';

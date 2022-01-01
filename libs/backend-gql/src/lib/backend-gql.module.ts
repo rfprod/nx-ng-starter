@@ -1,6 +1,7 @@
 import { ApiEnvironment, DateScalar } from '@app/backend-interfaces';
 import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { GqlModuleOptions, GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path';
 
 import { BackendGqlMatcompModule } from './matcomp/matcomp.module';
 
@@ -18,7 +19,8 @@ export class BackendGqlModule {
       debug: environment.production ? false : true,
       playground: environment.production ? false : true,
       installSubscriptionHandlers: true,
-      autoSchemaFile: 'libs/backend-gql/schema.gql',
+      autoSchemaFile: join(process.cwd(), 'libs/backend-gql/schema.gql'),
+      sortSchema: true,
       subscriptions: {
         'graphql-ws': {
           path: '/api/graphql',
