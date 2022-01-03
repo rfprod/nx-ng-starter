@@ -4,6 +4,13 @@ import { execSync } from 'child_process';
 import * as dotenv from 'dotenv';
 import * as os from 'os';
 
+export interface IDiagDataItem {
+  name: string;
+  value: string | number;
+}
+
+export type TDiagData = IDiagDataItem[];
+
 @Injectable()
 export class BackendDiagnosticsService {
   constructor() {
@@ -30,7 +37,7 @@ export class BackendDiagnosticsService {
   }
 
   public static() {
-    return [
+    return <TDiagData>[
       {
         name: 'Node.js Version',
         value: process.version.replace('v', ''),
@@ -64,7 +71,7 @@ export class BackendDiagnosticsService {
 
   public dynamic() {
     const divider = 1048576;
-    return [
+    return <TDiagData>[
       {
         name: 'Free Memory',
         value: `${Math.round(os.freemem() / divider)}MB`,

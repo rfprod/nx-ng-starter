@@ -6,7 +6,7 @@ import { BackendAuthService } from '../service/auth.service';
 import { BackendAuthController } from './auth.controller';
 
 describe('BackendAuthController', () => {
-  let app: TestingModule;
+  let testingModule: TestingModule;
   let authController: BackendAuthController;
   let authService: BackendAuthService;
   let authServiceSpy: {
@@ -26,10 +26,10 @@ describe('BackendAuthController', () => {
       providers: [BackendAuthService],
     })
       .compile()
-      .then(testingModule => {
-        app = testingModule;
-        authController = app.get<BackendAuthController>(BackendAuthController);
-        authService = app.get<BackendAuthService>(BackendAuthService);
+      .then(module => {
+        testingModule = module;
+        authController = testingModule.get<BackendAuthController>(BackendAuthController);
+        authService = testingModule.get<BackendAuthService>(BackendAuthService);
         authServiceSpy = {
           login: jest.spyOn(authService, 'login').mockImplementation(
             (credentials: UserLoginCredentials) =>

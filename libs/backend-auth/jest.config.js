@@ -13,12 +13,11 @@ module.exports = {
   coverageDirectory: '../../coverage/libs/backend-auth',
   displayName: 'backend-auth',
   coverageThreshold: {
-    // TODO: bump unit test coverage and remove this override
     global: {
       branches: 100,
-      functions: 30.76,
-      lines: 38,
-      statements: 41.66,
+      functions: 100,
+      lines: 100,
+      statements: 100,
     },
   },
 };
