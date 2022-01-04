@@ -39,7 +39,24 @@ module.exports = {
       ? config.resolve.plugins.push(tsPaths)
       : (config.resolve.plugins = [tsPaths]);
 
-    // add your own webpack tweaks if needed
+    // add your own webpack tweaks below if needed
+
+    /**
+     * Remove html raw loader that breaks Jit compilation as suggested here https://github.com/storybookjs/storybook/issues/16977#issuecomment-1004059631.
+     * The issue references:
+     * - https://github.com/storybookjs/storybook/issues/16977#issuecomment-1003399336
+     * - https://github.com/storybookjs/storybook/issues/16977#issuecomment-1004180729
+     * Here's what should be removed:
+     * {
+     *   test: /\.html$/,
+     *   loader: '/media/suser/DATA/git/rfprod/nx-ng-starter/node_modules/raw-loader/dist/cjs.js',
+     *   exclude: /\.async\.html$/
+     * },
+     */
+    const rules = (config.module.rules ?? []).filter(rule => rule.test !== /\.html$/ && rule.exclude !== /\.async\.html$/ && !rule.loader?.includes('raw-loader'));
+    config.module.rules = [...rules];
+
+    // add your own webpack tweaks above if needed
 
     return config;
   },
