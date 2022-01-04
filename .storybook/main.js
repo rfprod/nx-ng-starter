@@ -49,7 +49,7 @@ module.exports = {
      * Here's what should be removed:
      * {
      *   test: /\.html$/,
-     *   loader: '/media/suser/DATA/git/rfprod/nx-ng-starter/node_modules/raw-loader/dist/cjs.js',
+     *   loader: './node_modules/raw-loader/dist/cjs.js',
      *   exclude: /\.async\.html$/
      * },
      */
