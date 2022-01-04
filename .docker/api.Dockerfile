@@ -7,7 +7,7 @@
 ##
 
 # Define image.
-FROM node:14.17.6-slim as builder
+FROM node:16.13.1-slim as builder
 # Set environment variables.
 ENV DEBIAN_FRONTEND=noninteractive
 # Create app directory.
@@ -27,7 +27,7 @@ RUN npm i ; \
 ##
 
 # Define image.
-FROM node:14.17.6-alpine
+FROM node:16.13.1-alpine
 # Create app directory.
 WORKDIR /app
 # Copy sources.

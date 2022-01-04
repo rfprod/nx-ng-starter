@@ -1,6 +1,6 @@
-# nx-ng-starter
+# Nx Ng Starter
 
-[Nx](https://nx.dev/) + [Angular](https://angular.io/) + [NestJS](https://nestjs.com/) starter project with workflow automation.
+[Nx](https://nx.dev/) + [Angular](https://angular.io/) + [NestJS](https://nestjs.com/) mono-repository starter with workflow automation.
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
@@ -33,8 +33,8 @@ In order to run own copy of the project one must fulfill the following requireme
 
 ### Preferred package manager
 
-- [Yarn](https://www.npmjs.com/package/yarn) is a preferred package manager for dependencies installation in the project root.
-- [npm](https://www.npmjs.com/) is a preferred package manager for dependencies installation in the `functions` folder.
+- [Yarn](https://www.npmjs.com/package/yarn) - preferred package manager for dependencies installation in the project root.
+- [npm](https://www.npmjs.com/) - preferred package manager for dependencies installation in the `functions` folder.
 
 ## Dependencies audit
 
@@ -50,7 +50,7 @@ yarn audit:fix
 
 The project has lots of package scripts, check it in the `package.json` located in the project root, or use the following command (see terminal output for usage tips)
 
-```
+```bash
 yarn workspace:help
 ```
 
@@ -74,18 +74,16 @@ Is generated based on GitHub repo.
 
 Applications as well as generated documentation, testing reports, and a custom changelog are deployed to Firebase.
 
-### Webapp
+### Webapps
 
-- [Nx Ng Starter](https://nx-ng-starter.web.app)
-
-### Elements webapp
-
-- [Nx Ng Starter Elements](https://nx-ng-starter-elements.web.app)
+- [Client](https://nx-ng-starter.web.app)
+- [Elements](https://nx-ng-starter-elements.web.app)
 
 ### Documentation
 
-- [Nx Ng Starter Documentation](https://nx-ng-starter-documentation.web.app)
-- [Nx Ng Starter Compodoc](https://nx-ng-starter-documentation.web.app/assets/compodoc/index.html)
+- [Documentation](https://nx-ng-starter-documentation.web.app)
+- [Compodoc](https://nx-ng-starter-documentation.web.app/assets/compodoc/index.html)
+- [Storybook](https://nx-ng-starter-documentation.web.app/assets/storybook/index.html)
 
 #### Unit coverage
 
@@ -318,7 +316,7 @@ npx nx g @nrwl/angular:storybook-configuration project-name
 
 ### Tools help
 
-```
+```bash
 ng run tools:help
 ```
 
