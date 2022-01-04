@@ -20,7 +20,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [16.x]
 
     steps:
       - name: Checkout sources
@@ -133,6 +133,4 @@ jobs:
 
       - name: Build storybook
         if: steps.changes.outputs.nx == 'true'
-        run: |
-          echo "Broken. Update the package when it's patched. See https://github.com/storybookjs/storybook/issues/16977"
-          npx nx run documentation:build-storybook || true
+        run: npx nx run documentation:build-storybook
