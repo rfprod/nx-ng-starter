@@ -9,7 +9,7 @@ import {
 } from '@nestjs/websockets';
 import { BehaviorSubject, Observable, timer } from 'rxjs';
 import { map, takeWhile } from 'rxjs/operators';
-import { Server } from 'ws';
+import { Server, WebSocket } from 'ws';
 
 @WebSocketGateway(defaultWsPort, {
   path: '/api/events',
@@ -23,40 +23,53 @@ export class BackendEventsGateway implements OnGatewayConnection, OnGatewayDisco
   protected server?: Server;
 
   /**
-   * Currently coonected users count.
+   * Currently connected users count.
    */
   private readonly users$ = new BehaviorSubject<number>(0);
 
-  private sendClientChangeEvent(data: number): void {
+  /**
+   * Sends an event to a client.
+   * @param client web socket client
+   * @param data stringified event data
+   */
+  public sendEvent(client: WebSocket, data: string) {
+    client.send(data);
+  }
+
+  /**
+   * Sends an event with connected users count to all connected users.
+   */
+  public broadcastConnectedUsersCount(usersCount?: number): void {
     if (typeof this.server !== 'undefined') {
       const clients = this.server.clients.values();
       for (const client of clients) {
-        client.send(JSON.stringify({ event: 'users', data }));
+        const data = usersCount ?? this.users$.value;
+        const stringifiedData = JSON.stringify({ event: 'users', data });
+        this.sendEvent(client, stringifiedData);
       }
     }
   }
 
+  /**
+   * User connection handler.
+   */
   public async handleConnection() {
-    // client disconnected
     const usersCount = this.users$.value + 1;
     this.users$.next(usersCount);
-
-    // Notify connected clients of current users
-    this.sendClientChangeEvent(usersCount);
-  }
-
-  public async handleDisconnect() {
-    // client disconnected
-    const usersCount = this.users$.value - 1;
-    this.users$.next(usersCount);
-
-    // Notify connected clients of current users
-    this.sendClientChangeEvent(usersCount);
+    this.broadcastConnectedUsersCount(usersCount);
   }
 
   /**
-   * Events subscription.
-   * @param data
+   * User disconnection handler.
+   */
+  public async handleDisconnect() {
+    const usersCount = this.users$.value - 1;
+    this.users$.next(usersCount);
+    this.broadcastConnectedUsersCount(usersCount);
+  }
+
+  /**
+   * Events handler.
    */
   @SubscribeMessage('events')
   public handleEvents(): Observable<WsResponse<number>> {

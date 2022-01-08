@@ -1,4 +1,3 @@
-import { Message } from '@app/backend-interfaces';
 import { Controller, Get } from '@nestjs/common';
 
 import { BackendDiagnosticsService } from '../service/diagnostics.service';
@@ -8,7 +7,7 @@ export class BackendDiagnosticsController {
   constructor(private readonly diagnosticsService: BackendDiagnosticsService) {}
 
   @Get('')
-  public ping(): Message {
+  public ping() {
     return this.diagnosticsService.ping();
   }
 
