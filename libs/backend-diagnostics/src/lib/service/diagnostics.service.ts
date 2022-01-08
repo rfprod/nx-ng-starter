@@ -36,7 +36,7 @@ export class BackendDiagnosticsService {
     });
   }
 
-  public static() {
+  public static(): TDiagData {
     return <TDiagData>[
       {
         name: 'Node.js Version',
@@ -69,7 +69,7 @@ export class BackendDiagnosticsService {
     ];
   }
 
-  public dynamic() {
+  public dynamic(): TDiagData {
     const divider = 1048576;
     return <TDiagData>[
       {
