@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 
-import { AppDiagnosticsHomeComponent } from './home/diagnostics-home.component';
-import { AppDiagnosticsIndexComponent } from './index/diagnostics-index.component';
-import { AppDiagnosticsInfoComponent } from './info/diagnostics-info.component';
+import { AppDiagnosticsHomeComponent } from './components/home/diagnostics-home.component';
+import { AppDiagnosticsIndexComponent } from './components/index/diagnostics-index.component';
+import { AppDiagnosticsInfoComponent } from './components/info/diagnostics-info.component';
 
 const routes: Route[] = [
   {

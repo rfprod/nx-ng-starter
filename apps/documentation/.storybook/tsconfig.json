@@ -1,9 +1,9 @@
 {
+  "exclude": ["../**/*.spec.ts", "../**/*.mock.ts"],
   "extends": "../tsconfig.json",
-  "exclude": ["../**/*.spec.ts"],
   "include": [
-    "../../../libs/client-core-components/src/lib/**/*.stories.ts",
-    "../../../libs/client-diagnostics/src/lib/**/*.stories.ts",
+    "../../../libs/client-core-components/src/lib/components/**/*.stories.ts",
+    "../../../libs/client-diagnostics/src/lib/components/**/*.stories.ts",
     "../src/polyfills.ts"
   ]
 }
