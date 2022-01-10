@@ -1,6 +1,6 @@
 {
   "name": "nx-ng-starter",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "private": true,
   "description": "Monorepo starter: Nx, Angular, Angular Elements, Electron, NodeJS, NestJS, Firebase.",
   "license": "MIT",
@@ -125,6 +125,9 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
+  "resolutions": {
+    "colors": "1.4.0"
+  },
   "dependencies": {
     "@angular/animations": "13.1.1",
     "@angular/cdk": "13.1.1",
@@ -224,13 +227,13 @@
     "@nrwl/workspace": "13.4.3",
     "@sentry/angular": "6.16.1",
     "@sentry/tracing": "6.16.1",
-    "@storybook/addon-essentials": "v6.5.0-alpha.6",
-    "@storybook/addon-links": "v6.5.0-alpha.6",
-    "@storybook/addons": "v6.5.0-alpha.6",
-    "@storybook/angular": "v6.5.0-alpha.6",
-    "@storybook/builder-webpack5": "v6.5.0-alpha.6",
-    "@storybook/manager-webpack5": "v6.5.0-alpha.6",
-    "@storybook/theming": "v6.5.0-alpha.6",
+    "@storybook/addon-essentials": "6.5.0-alpha.7",
+    "@storybook/addon-links": "6.5.0-alpha.7",
+    "@storybook/addons": "6.5.0-alpha.7",
+    "@storybook/angular": "6.5.0-alpha.7",
+    "@storybook/builder-webpack5": "6.5.0-alpha.7",
+    "@storybook/manager-webpack5": "6.5.0-alpha.7",
+    "@storybook/theming": "6.5.0-alpha.6",
     "@types/apollo-upload-client": "17.0.0",
     "@types/express": "4.17.13",
     "@types/google-protobuf": "3.15.5",
