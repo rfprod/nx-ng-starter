@@ -60,6 +60,21 @@ describe('AppToasterService', () => {
     expect(service.hideToaster).toBeDefined();
   });
 
+  it('showToaster should call snackBar.open with the default options if only message is provided as a parameter', () => {
+    const defaultDuration = 7000;
+    service.showToaster('message');
+    const spyCalls = spy.snackBar.open.mock.calls.length - 1;
+    expect(spy.snackBar.open.mock.calls[spyCalls]).toEqual([
+      'message',
+      void 0,
+      {
+        panelClass: ['primary-bg'],
+        verticalPosition: 'bottom',
+        duration: defaultDuration,
+      },
+    ]);
+  });
+
   it('showToaster should call snackBar.open with proper options depending on supplied arguments', () => {
     const defaultDuration = 7000;
     const duration = 2000;

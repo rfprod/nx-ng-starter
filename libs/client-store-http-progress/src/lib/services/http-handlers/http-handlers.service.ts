@@ -243,7 +243,7 @@ export class AppHttpHandlersService {
   public handleError(error: HttpErrorResponse): Observable<never> {
     const errorMessage = this.getErrorMessage(error);
     this.toaster.showToaster(errorMessage, 'error');
-    return throwError(() => new Error(errorMessage));
+    return of();
   }
 
   /**
@@ -251,7 +251,8 @@ export class AppHttpHandlersService {
    * @param error error message
    */
   public handleGraphQLError(error: string): Observable<never> {
-    return throwError(() => new Error(error));
+    this.toaster.showToaster(error, 'error');
+    return of();
   }
 
   /**

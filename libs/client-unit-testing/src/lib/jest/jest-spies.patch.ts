@@ -1,72 +1,52 @@
-import { DebugElement } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
 
-/**
- * Debug element instance type.
- */
-export type TDebugElementComponentInstance = DebugElement['componentInstance'];
+export type TClassMemberFunctionSpiesObject<T> = {
+  [K in keyof T]: jest.SpyInstance;
+};
 
-/**
- * Setup spies function type.
- */
-export type TSetupJestSpiesFor<T> = (component: TDebugElementComponentInstance) => TClassMemberSpiesObject<T>;
-
-/**
- * Function member spy.
- */
-export type TFunctionSpy = jest.SpyInstance;
-
-/**
- * Streamable member spy object.
- */
-export interface IStreamableMemberSpy {
-  pipe: jest.SpyInstance;
-  subscribe: jest.SpyInstance;
-}
-
-/**
- * Component spy.
- */
-export type TClassMemberSpy = TFunctionSpy | IStreamableMemberSpy;
-
-/**
- * Component spies object.
- */
-export type TClassMemberSpiesObject<T> = {
-  [K in keyof T]: TClassMemberSpy;
+export type TClassMemberObservableSpiesObject<T> = {
+  [K in keyof T]: {
+    pipe: jest.SpyInstance;
+    subscribe: jest.SpyInstance;
+  };
 };
 
 /**
- * Sets up Jest spies for component class members.
- * Scans class for functions, sets up jest spies, and returns an object with class keys and respective spies.
- * Sets spy if component member is:
- * - a function, then function is being spied on;
- * - an observable, then observable's pipe method is being spied on;
- * - a subject or behavior subject, then subject's pipe and subscribe methods are being spied on.
- * @param component debug element component instance
+ * Sets up Jest spies for a class member functions.
+ * @param classInstance a class instance
  */
-export function setupJestSpiesFor<T>(component: TDebugElementComponentInstance): TClassMemberSpiesObject<T> {
-  const spiesObject: TClassMemberSpiesObject<T> = Object.keys(component).reduce((accumulator: TClassMemberSpiesObject<T>, key: string) => {
-    let spy: TClassMemberSpy | null = null;
-    const classMember = (component as T)[key];
-    /**
-     * Spy on component functions.
-     */
+export function spyOnFunctions<T>(classInstance: T): TClassMemberFunctionSpiesObject<T> {
+  const spiesObject = <TClassMemberFunctionSpiesObject<T>>{};
+  const classProto = Object.getPrototypeOf(classInstance);
+  const keys = Object.getOwnPropertyNames(classProto);
+
+  for (const key of keys) {
+    const classMember = classInstance[key];
     if (classMember instanceof Function) {
-      spy = jest.spyOn(component, key);
+      spiesObject[key] = jest.spyOn(classInstance, <never>key);
     }
-    /**
-     * Spy on pipe and subscribe methods of observables, subjects, and behavior subjects.
-     */
-    if (classMember instanceof Observable || classMember instanceof Subject || classMember instanceof BehaviorSubject) {
-      spy = {
+  }
+
+  return spiesObject;
+}
+
+/**
+ * Sets up Jest spies for a class member observables.
+ * @param classInstance a class instance
+ */
+export function spyOnObservables<T>(classInstance: T): TClassMemberObservableSpiesObject<T> {
+  const spiesObject = <TClassMemberObservableSpiesObject<T>>{};
+  const keys = Object.getOwnPropertyNames(classInstance);
+
+  for (const key of keys) {
+    const classMember = classInstance[key];
+    if (classMember instanceof Observable) {
+      spiesObject[key] = {
         pipe: jest.spyOn(classMember, 'pipe'),
         subscribe: jest.spyOn(classMember, 'subscribe'),
       };
     }
-    accumulator[key] = spy;
-    return accumulator;
-  }, {} as TClassMemberSpiesObject<T>);
+  }
 
   return spiesObject;
 }

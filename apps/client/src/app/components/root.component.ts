@@ -33,8 +33,8 @@ export class AppRootComponent implements OnInit {
   /**
    * Lifecycle hook called on component initialization.
    * When called does the following:
-   * - sets document title;
-   * - sets document description;
+   * - sets the document title;
+   * - sets the document description;
    */
   public ngOnInit(): void {
     this.title.setTitle(this.env.appName);

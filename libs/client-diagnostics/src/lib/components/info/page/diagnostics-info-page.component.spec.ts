@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { getTestBedConfig, newTestBedMetadata, setupJestSpiesFor, TClassMemberSpiesObject } from '@app/client-unit-testing';
+import { getTestBedConfig, newTestBedMetadata, spyOnFunctions, TClassMemberFunctionSpiesObject } from '@app/client-unit-testing';
 
 import { AppDiagnosticsInfoPage } from './diagnostics-info-page.component';
 
@@ -19,9 +19,7 @@ describe('AppDiagnosticsInfoPage', () => {
 
   let fixture: ComponentFixture<AppDiagnosticsInfoPage>;
   let component: AppDiagnosticsInfoPage;
-  let spy: {
-    component: TClassMemberSpiesObject<AppDiagnosticsInfoPage>;
-  };
+  let componentSpy: TClassMemberFunctionSpiesObject<AppDiagnosticsInfoPage>;
 
   beforeEach(
     waitForAsync(() => {
@@ -29,16 +27,14 @@ describe('AppDiagnosticsInfoPage', () => {
         .compileComponents()
         .then(() => {
           fixture = TestBed.createComponent(AppDiagnosticsInfoPage);
-          component = fixture.debugElement.componentInstance;
-          spy = {
-            component: setupJestSpiesFor<AppDiagnosticsInfoPage>(component),
-          };
-          expect(spy.component).toBeDefined();
+          component = fixture.componentInstance;
+          componentSpy = spyOnFunctions<AppDiagnosticsInfoPage>(component);
         });
     }),
   );
 
   it('should be defined', () => {
     expect(component).toBeDefined();
+    expect(componentSpy).toBeDefined();
   });
 });

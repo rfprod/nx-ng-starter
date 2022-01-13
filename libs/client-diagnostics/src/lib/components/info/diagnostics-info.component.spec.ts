@@ -6,8 +6,8 @@ import {
   flushHttpRequests,
   getTestBedConfig,
   newTestBedMetadata,
-  setupJestSpiesFor,
-  TClassMemberSpiesObject,
+  spyOnFunctions,
+  TClassMemberFunctionSpiesObject,
 } from '@app/client-unit-testing';
 
 import { AppDiagnosticsInfoComponent } from './diagnostics-info.component';
@@ -28,9 +28,7 @@ describe('AppDiagnosticsInfoComponent', () => {
 
   let fixture: ComponentFixture<AppDiagnosticsInfoComponent>;
   let component: AppDiagnosticsInfoComponent;
-  let spy: {
-    component: TClassMemberSpiesObject<AppDiagnosticsInfoComponent>;
-  };
+  let componentSpy: TClassMemberFunctionSpiesObject<AppDiagnosticsInfoComponent>;
 
   let httpController: HttpTestingController;
 
@@ -41,11 +39,8 @@ describe('AppDiagnosticsInfoComponent', () => {
         .then(() => {
           httpController = TestBed.inject(HttpTestingController);
           fixture = TestBed.createComponent(AppDiagnosticsInfoComponent);
-          component = fixture.debugElement.componentInstance;
-          spy = {
-            component: setupJestSpiesFor<AppDiagnosticsInfoComponent>(component),
-          };
-          expect(spy.component).toBeDefined();
+          component = fixture.componentInstance;
+          componentSpy = spyOnFunctions<AppDiagnosticsInfoComponent>(component);
           flushHttpRequests(httpController);
         });
     }),
@@ -57,5 +52,6 @@ describe('AppDiagnosticsInfoComponent', () => {
 
   it('should be defined', () => {
     expect(component).toBeDefined();
+    expect(componentSpy).toBeDefined();
   });
 });
