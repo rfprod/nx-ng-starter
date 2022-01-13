@@ -4,8 +4,8 @@ import { AppWebsocketStoreModule } from '@app/client-store-websocket';
 import {
   getTestBedConfig,
   newTestBedMetadata,
-  setupJestSpiesFor,
-  TClassMemberSpiesObject,
+  spyOnFunctions,
+  TClassMemberFunctionSpiesObject,
   testingEnvironment,
 } from '@app/client-unit-testing';
 
@@ -27,9 +27,7 @@ describe('AppDiagnosticsIndexComponent', () => {
 
   let fixture: ComponentFixture<AppDiagnosticsIndexComponent>;
   let component: AppDiagnosticsIndexComponent;
-  let spy: {
-    component: TClassMemberSpiesObject<AppDiagnosticsIndexComponent>;
-  };
+  let componentSpy: TClassMemberFunctionSpiesObject<AppDiagnosticsIndexComponent>;
 
   beforeEach(
     waitForAsync(() => {
@@ -37,11 +35,8 @@ describe('AppDiagnosticsIndexComponent', () => {
         .compileComponents()
         .then(() => {
           fixture = TestBed.createComponent(AppDiagnosticsIndexComponent);
-          component = fixture.debugElement.componentInstance;
-          spy = {
-            component: setupJestSpiesFor<AppDiagnosticsIndexComponent>(component),
-          };
-          expect(spy.component).toBeDefined();
+          component = fixture.componentInstance;
+          componentSpy = spyOnFunctions<AppDiagnosticsIndexComponent>(component);
           fixture.detectChanges();
         });
     }),
@@ -49,5 +44,6 @@ describe('AppDiagnosticsIndexComponent', () => {
 
   it('should be defined', () => {
     expect(component).toBeDefined();
+    expect(componentSpy).toBeDefined();
   });
 });

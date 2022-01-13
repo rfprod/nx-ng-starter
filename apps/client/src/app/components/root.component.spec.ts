@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { Meta, Title } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { getTestBedConfig, newTestBedMetadata, setupJestSpiesFor, TClassMemberSpiesObject } from '@app/client-unit-testing';
+import { getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
 
 import { AppRootComponent } from './root.component';
 
@@ -13,9 +14,10 @@ describe('AppRootComponent', () => {
 
   let fixture: ComponentFixture<AppRootComponent>;
   let component: AppRootComponent;
-  let spy: {
-    component: TClassMemberSpiesObject<AppRootComponent>;
-  };
+  let title: Title;
+  let setTitleSpy: jest.SpyInstance;
+  let meta: Meta;
+  let updateTagSpy: jest.SpyInstance;
 
   beforeEach(
     waitForAsync(() => {
@@ -24,10 +26,10 @@ describe('AppRootComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(AppRootComponent);
           component = fixture.componentInstance;
-          spy = {
-            component: setupJestSpiesFor<AppRootComponent>(component),
-          };
-          expect(spy.component).toBeDefined();
+          title = TestBed.inject(Title);
+          setTitleSpy = jest.spyOn(title, 'setTitle');
+          meta = TestBed.inject(Meta);
+          updateTagSpy = jest.spyOn(meta, 'updateTag');
           fixture.detectChanges();
         });
     }),
@@ -35,5 +37,15 @@ describe('AppRootComponent', () => {
 
   it('should be defined', () => {
     expect(component).toBeDefined();
+    expect(setTitleSpy).toHaveBeenCalled();
+    expect(updateTagSpy).toHaveBeenCalled();
+  });
+
+  it('toggleMaterialTheme should set the darkTheme value', () => {
+    expect(component.darkTheme).toBeFalsy();
+    component.toggleMaterialTheme(true);
+    expect(component.darkTheme).toBeTruthy();
+    component.toggleMaterialTheme(false);
+    expect(component.darkTheme).toBeFalsy();
   });
 });
