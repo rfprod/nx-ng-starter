@@ -373,11 +373,11 @@ function migratePackagesOnly() {
  * Reads input, and follows control flow.
  */
 function readInputAndRun(): void {
-  const check = argv.check;
-  const migrate = argv.migrate;
-  const bulkUserChoice = <boolean | undefined>argv.bulkUserChoice;
+  const check = (<{ [key: string]: boolean | undefined }>argv).check;
+  const migrate = (<{ [key: string]: string | undefined }>argv).migrate;
+  const bulkUserChoice = (<{ [key: string]: boolean | undefined }>argv).bulkUserChoice;
   if (check === true) {
-    const jsonUpgraded = Boolean(argv.jsonUpgraded);
+    const jsonUpgraded = (<{ [key: string]: boolean | undefined }>argv).jsonUpgraded;
     checkForUpdates(jsonUpgraded);
   } else if (migrate === 'update') {
     updateAndMigratePackages(bulkUserChoice);
