@@ -7,6 +7,10 @@
 
   <span fxFlex="1 1 auto"></span>
 
+  <app-theme-toggle (themeToggled)="toggleMaterialTheme($event)"></app-theme-toggle>
+
+  <span fxFlex="1 1 auto"></span>
+
   <a mat-button *ngFor="let anchor of anchors" [fxHide.xs]="true" [fxHide.sm]="true" [href]="anchor.href" target="_blank">
     <mat-icon>{{ anchor.icon }}</mat-icon> {{ anchor.title }}
   </a>
