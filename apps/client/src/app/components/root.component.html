@@ -3,7 +3,5 @@
 
   <app-content fxFlex="1 1 auto"></app-content>
 
-  <app-toolbar fxFlex="0 0 auto"></app-toolbar>
+  <app-toolbar fxFlex="0 0 auto" (darkThemeEnabled)="toggleMaterialTheme($event)"></app-toolbar>
 </span>
-
-<app-theme-toggle class="theme-toggle" (themeToggled)="toggleMaterialTheme($event)"></app-theme-toggle>
