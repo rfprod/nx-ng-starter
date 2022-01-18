@@ -36,16 +36,6 @@ In order to run own copy of the project one must fulfill the following requireme
 - [Yarn](https://www.npmjs.com/package/yarn) - preferred package manager for dependencies installation in the project root.
 - [npm](https://www.npmjs.com/) - preferred package manager for dependencies installation in the `functions` folder.
 
-## Dependencies audit
-
-From time to time it's reasonable to audit dependencies for security issues and fix present issues.
-
-Use the following command to perform audit chheck and apply automatic fixes if possible.
-
-```bash
-yarn audit:fix
-```
-
 ## Package scripts reference
 
 The project has lots of package scripts, check it in the `package.json` located in the project root, or use the following command (see terminal output for usage tips)
@@ -359,3 +349,7 @@ Visit the [Nx Documentation](https://nx.dev) to learn more.
 ### CI
 
 - [GitHub Actions](https://github.com/features/actions)
+
+### Development methodology
+
+- [Trunk based development](https://trunkbaseddevelopment.com/)

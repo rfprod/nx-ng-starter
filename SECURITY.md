@@ -1,8 +1,11 @@
 # Secutiry
 
-TODO
+## Dependencies audit
 
-```plaintext
-Support file contents.
-Fur supported files see https://docs.github.com/en/communities/setting-up-your-project-for-healthy-contributions/creating-a-default-community-health-file#about-default-community-health-files
+From time to time it's reasonable to audit dependencies for security issues and fix present issues.
+
+Use the following command to perform audit chheck and apply automatic fixes if possible.
+
+```bash
+yarn audit:fix
 ```

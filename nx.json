@@ -83,6 +83,7 @@
       "options": {
         "cacheDirectory": "/tmp/nx/nx-ng-starter",
         "cacheableOperations": ["build", "lint", "test", "e2e", "build-storybook"],
+        "parallel": 1,
         "runtimeCacheInputs": ["node -v", "echo $IMPORTANT_ENV_VAR"]
       },
       "runner": "@nrwl/workspace/tasks-runners/default"
