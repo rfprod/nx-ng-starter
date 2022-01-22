@@ -15,6 +15,7 @@ CHANGED_ALIASES=()
 reportUsage() {
   printInfoTitle "<< ${0} usage >>"
   printUsageTip "bash tools/shell/git-extension.sh ?" "print help"
+  printUsageTip "bash tools/shell/git-extension.sh detect-yarn-lock-change" "detects if yarn lock was changed"
   printUsageTip "bash tools/shell/git-extension.sh print" "get and print changed apps/libs aliases"
   printUsageTip "bash tools/shell/git-extension.sh" "get changed apps/libs aliases"
   printGap
@@ -57,11 +58,30 @@ printChangedAliases() {
   fi
 }
 
+YARN_LOCK_CHANGED=0
+
+checkYarnLockChanges() {
+  printInfoTitle "<< Detecting yarn.lock changes between two latest commits >>"
+  printGap
+
+  local CHANGED
+  CHANGED="$(git diff --name-only HEAD HEAD-1 | grep "yarn.lock")"
+
+  if [ "$CHANGED" = "yarn.lock" ]; then
+    YARN_LOCK_CHANGED=1
+  fi
+
+  printNameAndValue "yarn.lock changed (0 - unchanged, 1 - changed)" "$YARN_LOCK_CHANGED"
+  printGap
+}
+
 if [ "$1" = "?" ]; then
   reportUsage
 elif [ "$1" = "print" ]; then
   getChangedProjectAliases
   printChangedAliases
+elif [ "$1" = "detect-yarn-lock-change" ]; then
+  checkYarnLockChanges
 else
   getChangedProjectAliases
 fi

@@ -2,6 +2,7 @@
 
 source tools/shell/colors.sh ''
 source tools/shell/print-utils.sh ''
+source tools/shell/git-extension.sh ''
 
 ##
 # Reports usage.
@@ -22,12 +23,14 @@ checkIntegrity() {
   printInfoTitle "<< Checking package integrity >>"
   printGap
 
-  if ! yarn check --integrity; then
+  checkYarnLockChanges
+
+  if ! yarn check --integrity || [ "$YARN_LOCK_CHANGED" -eq 1 ]; then
     printInfoTitle "<< Cleaning up workspace, and caches >>"
     printGap
 
     yarn workspace:cleanup
-    rm -rf /tmp/nx/nx-ng-starter /tmp/jest_rs/nx-ng-starter ./node_modules
+    rm -rf ./node_modules
     npm cache clean --force
     yarn cache clean
   else
