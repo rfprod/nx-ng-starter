@@ -1,33 +1,15 @@
 #!/bin/bash
 
-##
-# Colors.
-##
 source tools/shell/colors.sh ''
-##
-# Project aliases.
-##
 source tools/shell/module-aliases.sh ''
-##
-# Printing utility functions.
-##
 source tools/shell/print-utils.sh ''
 
 ##
-# Project root.
+# Constants.
 ##
 PROJECT_ROOT=.
-##
-# Changelog root path.
-##
 CHANGELOG_ROOT=${PROJECT_ROOT}/changelog
-##
-# Apps changelog path.
-##
 CHANGELOG_APPS=${PROJECT_ROOT}/changelog/apps
-##
-# Libs changelog path.
-##
 CHANGELOG_LIBS=${PROJECT_ROOT}/changelog/libs
 
 ##

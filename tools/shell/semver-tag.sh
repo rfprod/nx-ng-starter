@@ -1,16 +1,7 @@
 #!/bin/bash
 
-##
-# Colors.
-##
 source tools/shell/colors.sh ''
-##
-# Printing utilities.
-##
 source tools/shell/print-utils.sh ''
-##
-# Project aliases.
-##
 source tools/shell/module-aliases.sh ''
 
 ##
