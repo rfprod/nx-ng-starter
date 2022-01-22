@@ -1,12 +1,6 @@
 #!/bin/bash
 
-##
-# Colors.
-##
 source tools/shell/colors.sh ''
-##
-# Printing utility functions.
-##
 source tools/shell/print-utils.sh ''
 
 ##
@@ -28,7 +22,7 @@ checkIntegrity() {
   printInfoTitle "<< Checking package integrity >>"
   printGap
 
-  if ! yarn check --verify-tree; then
+  if ! yarn check --integrity; then
     printInfoTitle "<< Cleaning up workspace, and caches >>"
     printGap
 
@@ -38,7 +32,10 @@ checkIntegrity() {
     yarn cache clean
   else
     printSuccessTitle "<< Package integrity verified >>"
+    printInfoMessage ">> will verify tree additionally without erroring"
     printGap
+
+    yarn check --verify-tree || true
   fi
 }
 

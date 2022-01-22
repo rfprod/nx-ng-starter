@@ -1,8 +1,5 @@
 #!/bin/bash
 
-##
-# Colors.
-##
 source tools/shell/colors.sh ''
 
 set -uo pipefail

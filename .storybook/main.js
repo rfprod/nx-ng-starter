@@ -23,6 +23,7 @@ module.exports = {
   features: {
     postcss: true,
   },
+  framework: '@storybook/angular',
   plugins: [
     require('postcss-flexbugs-fixes'),
     require('autoprefixer')({

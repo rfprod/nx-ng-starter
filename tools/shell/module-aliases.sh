@@ -1,12 +1,6 @@
 #!/bin/bash
 
-##
-# Colors.
-##
 source tools/shell/colors.sh ''
-##
-# Printing utility functions.
-##
 source tools/shell/print-utils.sh ''
 
 declare -A EXISTING_MODULE_ALIASES
