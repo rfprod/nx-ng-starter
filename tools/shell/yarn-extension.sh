@@ -32,7 +32,10 @@ checkIntegrity() {
     yarn cache clean
   else
     printSuccessTitle "<< Package integrity verified >>"
+    printInfoMessage ">> will verify tree additionally without erroring"
     printGap
+
+    yarn check --verify-tree || true
   fi
 }
 
