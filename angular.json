@@ -1565,17 +1565,6 @@
     },
     "tools": {
       "architect": {
-        "cleanup": {
-          "builder": "@nrwl/workspace:run-commands",
-          "options": {
-            "commands": [
-              {
-                "command": "rm -rf .angular/* documentation/* dist/* coverage/* changelog/* /tmp/nx/nx-ng-starter /tmp/jest_rs/nx-ng-starter",
-                "forwardAllArgs": false
-              }
-            ]
-          }
-        },
         "compodoc-build": {
           "builder": "@nrwl/workspace:run-commands",
           "options": {
