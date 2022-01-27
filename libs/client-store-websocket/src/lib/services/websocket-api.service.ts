@@ -14,12 +14,12 @@ import { IWebsocketConfig, IWebsocketRequestEvent, IWebsocketResponseEvent, WS_C
   providedIn: 'root',
 })
 export class AppWebsocketApiService {
-  private readonly websocket$: WebSocketSubject<IWebsocketRequestEvent> = new WebSocketSubject(this.wsConfig);
+  private readonly websocketSubject$: WebSocketSubject<IWebsocketRequestEvent> = new WebSocketSubject(this.wsConfig);
 
   constructor(@Inject(WS_CONFIG) private readonly wsConfig: IWebsocketConfig) {}
 
   public connect() {
-    return this.websocket$.pipe(
+    return this.websocketSubject$.pipe(
       untilDestroyed(this),
       catchError((error: Event, caught: Observable<IWebsocketRequestEvent>) => {
         // eslint-disable-next-line no-console -- this is needed so that websocket erros are reported to console
@@ -31,6 +31,6 @@ export class AppWebsocketApiService {
 
   public sendEvent(eventType: 'events') {
     const event = { event: eventType };
-    this.websocket$.next(event);
+    this.websocketSubject$.next(event);
   }
 }
