@@ -25,7 +25,7 @@ export class BackendEventsGateway implements OnGatewayConnection, OnGatewayDisco
   /**
    * Currently connected users count.
    */
-  private readonly users$ = new BehaviorSubject<number>(0);
+  private readonly usersSubject$ = new BehaviorSubject<number>(0);
 
   /**
    * Sends an event to a client.
@@ -43,7 +43,7 @@ export class BackendEventsGateway implements OnGatewayConnection, OnGatewayDisco
     if (typeof this.server !== 'undefined') {
       const clients = this.server.clients.values();
       for (const client of clients) {
-        const data = usersCount ?? this.users$.value;
+        const data = usersCount ?? this.usersSubject$.value;
         const stringifiedData = JSON.stringify({ event: 'users', data });
         this.sendEvent(client, stringifiedData);
       }
@@ -54,8 +54,8 @@ export class BackendEventsGateway implements OnGatewayConnection, OnGatewayDisco
    * User connection handler.
    */
   public async handleConnection() {
-    const usersCount = this.users$.value + 1;
-    this.users$.next(usersCount);
+    const usersCount = this.usersSubject$.value + 1;
+    this.usersSubject$.next(usersCount);
     this.broadcastConnectedUsersCount(usersCount);
   }
 
@@ -63,8 +63,8 @@ export class BackendEventsGateway implements OnGatewayConnection, OnGatewayDisco
    * User disconnection handler.
    */
   public async handleDisconnect() {
-    const usersCount = this.users$.value - 1;
-    this.users$.next(usersCount);
+    const usersCount = this.usersSubject$.value - 1;
+    this.usersSubject$.next(usersCount);
     this.broadcastConnectedUsersCount(usersCount);
   }
 
