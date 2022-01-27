@@ -31,6 +31,10 @@ module.exports = {
   collectCoverageFrom: [
     '**/*.ts',
     '!**/index.ts',
+    '!**/main.ts',
+    '!**/polyfills.ts',
+    '!**/test-setup.ts',
+    '!**/environments/**',
     '!**/node_modules/**',
     '!**/coverage/**',
     '!**/generated/**',
