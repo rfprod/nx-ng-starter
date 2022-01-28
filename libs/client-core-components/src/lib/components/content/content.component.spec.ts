@@ -60,6 +60,14 @@ describe('AppContentComponent', () => {
     expect(storeSpy.dispatch).toHaveBeenCalledWith(new sidebarActions.closeSidebar());
   });
 
+  it(
+    'sidebarOpenHandler should call store dispatch',
+    waitForAsync(() => {
+      component.sidebarOpenHandler();
+      expect(storeSpy.dispatch).toHaveBeenCalledWith(new sidebarActions.openSidebar());
+    }),
+  );
+
   it('should scroll content on router events', async () => {
     expect(component.content).toBeDefined();
     if (typeof component.content !== 'undefined') {
