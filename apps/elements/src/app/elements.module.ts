@@ -1,15 +1,13 @@
-import { CUSTOM_ELEMENTS_SCHEMA, DoBootstrap, Inject, Injector, NgModule, Provider } from '@angular/core';
-import { createCustomElement } from '@angular/elements';
+import { CUSTOM_ELEMENTS_SCHEMA, DoBootstrap, NgModule, Provider } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { AppChatbotRootComponent, AppClientChatbotModule } from '@app/client-chatbot';
+import { AppClientChatbotModule } from '@app/client-chatbot';
 import { AppClientCoreModule } from '@app/client-core';
 import { AppClientGqlModule } from '@app/client-gql';
 import { AppClientMaterialModule } from '@app/client-material';
 import { AppWebsocketStoreModule } from '@app/client-store-websocket';
 import { AppClientTranslateModule } from '@app/client-translate';
-import { WINDOW } from '@app/client-util';
 import { EntityServiceClient } from '@app/proto';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
@@ -17,6 +15,7 @@ import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsModule } from '@ngxs/store';
 
 import { environment } from '../environments/environment';
+import { AppElementsService } from './services/elements.service';
 
 export const grpcProviders: Provider[] = [
   {
@@ -48,18 +47,9 @@ export const grpcProviders: Provider[] = [
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppElementsModule implements DoBootstrap {
-  constructor(private readonly injector: Injector, @Inject(WINDOW) private readonly window: Window) {}
+  constructor(private readonly service: AppElementsService) {}
 
   public ngDoBootstrap() {
-    this.registerChatbotWidget();
-  }
-
-  private registerChatbotWidget(): void {
-    const chatbotWidget = createCustomElement<AppChatbotRootComponent>(AppChatbotRootComponent, {
-      injector: this.injector,
-    });
-    if (typeof this.window.customElements.get('app-chatbot-root') === 'undefined') {
-      this.window.customElements.define('app-chatbot-root', chatbotWidget);
-    }
+    this.service.registerElements();
   }
 }
