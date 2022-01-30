@@ -22,12 +22,12 @@ export class AppMdFilesState {
   }
 
   @Selector()
-  public static getMdFiles(state: IMdFilesState) {
+  public static mdFilePaths(state: IMdFilesState) {
     return state.mdFilePaths;
   }
 
   @Selector()
-  public static getSelectedFilePath(state: IMdFilesState) {
+  public static filePath(state: IMdFilesState) {
     return state.filePath;
   }
 

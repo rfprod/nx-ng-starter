@@ -91,7 +91,7 @@ const backendConstraints = [
 const clientConstraints = [
   {
     sourceTag: 'scope:documentation',
-    onlyDependOnLibsWithTags: ['scope:client-material', 'scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-material', 'scope:client-unit-testing', 'scope:client-util'],
   },
   {
     sourceTag: 'scope:documentation-e2e',

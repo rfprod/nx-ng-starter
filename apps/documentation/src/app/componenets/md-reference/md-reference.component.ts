@@ -13,7 +13,7 @@ export class AppDocMarkdownReferenceComponent {
   /**
    * Selected markdown file path.
    */
-  public readonly filePath$ = this.store.select(AppMdFilesState.getSelectedFilePath);
+  public readonly filePath$ = this.store.select(AppMdFilesState.filePath);
 
   constructor(private readonly store: Store) {}
 }

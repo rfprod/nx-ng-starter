@@ -1,8 +1,9 @@
 import { Message } from '@app/backend-interfaces';
-import { Injectable } from '@nestjs/common';
-import { execSync } from 'child_process';
+import { Inject, Injectable } from '@nestjs/common';
+import { exec, ExecException } from 'child_process';
 import * as dotenv from 'dotenv';
 import * as os from 'os';
+import { catchError, map, Observable, of } from 'rxjs';
 
 export interface IDiagDataItem {
   name: string;
@@ -11,23 +12,31 @@ export interface IDiagDataItem {
 
 export type TDiagData = IDiagDataItem[];
 
+export const CHILD_PROCESS_EXEC = 'CHILD_PROCESS_EXEC';
+
 @Injectable()
 export class BackendDiagnosticsService {
-  constructor() {
+  constructor(@Inject(CHILD_PROCESS_EXEC) private readonly childProcessExec: typeof exec) {
     dotenv.config();
   }
 
   private npmVersion() {
-    if (typeof process.env.ELECTRON !== 'undefined') {
-      return 'N/A';
-    }
-    let version;
-    try {
-      version = execSync('npm --version').toString().replace(os.EOL, '');
-    } catch (e) {
-      version = 'N/A';
-    }
-    return version;
+    const observable = new Observable<string>(subscriber => {
+      let version = 'N/A';
+      if (typeof process.env.ELECTRON !== 'undefined') {
+        subscriber.next(version);
+        subscriber.complete();
+      }
+      this.childProcessExec('npm --version', (error: ExecException | null, stdout: string, stderr: string) => {
+        if (error !== null) {
+          subscriber.error(version);
+        }
+        version = stdout.toString().replace(os.EOL, '');
+        subscriber.next(version);
+        subscriber.complete();
+      });
+    });
+    return observable.pipe(catchError(error => of(error)));
   }
 
   public ping(): Message {
@@ -36,37 +45,42 @@ export class BackendDiagnosticsService {
     });
   }
 
-  public static(): TDiagData {
-    return <TDiagData>[
-      {
-        name: 'Node.js Version',
-        value: process.version.replace('v', ''),
-      },
-      {
-        name: 'NPM Version',
-        value: this.npmVersion(),
-      },
-      {
-        name: 'OS Type',
-        value: os.type(),
-      },
-      {
-        name: 'OS Platform',
-        value: os.platform(),
-      },
-      {
-        name: 'OS Architecture',
-        value: os.arch(),
-      },
-      {
-        name: 'OS Release',
-        value: os.release(),
-      },
-      {
-        name: 'CPU Cores',
-        value: os.cpus().length,
-      },
-    ];
+  public static(): Observable<TDiagData> {
+    return this.npmVersion().pipe(
+      map(
+        npmVersion =>
+          <TDiagData>[
+            {
+              name: 'Node.js Version',
+              value: process.version.replace('v', ''),
+            },
+            {
+              name: 'NPM Version',
+              value: npmVersion,
+            },
+            {
+              name: 'OS Type',
+              value: os.type(),
+            },
+            {
+              name: 'OS Platform',
+              value: os.platform(),
+            },
+            {
+              name: 'OS Architecture',
+              value: os.arch(),
+            },
+            {
+              name: 'OS Release',
+              value: os.release(),
+            },
+            {
+              name: 'CPU Cores',
+              value: os.cpus().length,
+            },
+          ],
+      ),
+    );
   }
 
   public dynamic(): TDiagData {
