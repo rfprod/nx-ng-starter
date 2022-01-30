@@ -3,11 +3,11 @@ import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@an
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppClientMaterialModule } from '@app/client-material';
-import { NgxsModule } from '@ngxs/store';
+import { NgxsModule, Store } from '@ngxs/store';
 import { MarkdownModule, MarkdownModuleConfig, MarkedOptions } from 'ngx-markdown';
 
 import { testingEnvironment, testingProviders } from '../../../testing/testing-providers.mock';
-import { AppMdFilesState } from '../../modules/store/md-files/md-files.state';
+import { AppMdFilesState, mdFilesActions } from '../../modules/store/md-files/md-files.state';
 import { AppDocMarkdownReferenceTreeComponent } from './md-reference-tree.component';
 
 describe('AppDocMarkdownReferenceTreeComponent', () => {
@@ -40,6 +40,9 @@ describe('AppDocMarkdownReferenceTreeComponent', () => {
   let fixture: ComponentFixture<AppDocMarkdownReferenceTreeComponent>;
   let component: AppDocMarkdownReferenceTreeComponent;
 
+  let store: Store;
+  let storeDispatchSpy: jest.SpyInstance;
+
   beforeEach(
     waitForAsync(() => {
       void TestBed.configureTestingModule(testBedConfig)
@@ -47,11 +50,22 @@ describe('AppDocMarkdownReferenceTreeComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(AppDocMarkdownReferenceTreeComponent);
           component = fixture.debugElement.componentInstance;
+
+          store = TestBed.inject(Store);
+          storeDispatchSpy = jest.spyOn(store, 'dispatch');
+
+          fixture.detectChanges();
         });
     }),
   );
 
   it('should be defined', () => {
     expect(component).toBeDefined();
+  });
+
+  it('showReadme should call store.dispatch', () => {
+    const filePath = '/README.md';
+    component.showReadme(filePath);
+    expect(storeDispatchSpy).toHaveBeenCalledWith(new mdFilesActions.setState({ filePath }));
   });
 });

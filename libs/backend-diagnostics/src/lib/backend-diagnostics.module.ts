@@ -1,9 +1,16 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
+import { exec } from 'child_process';
 
 import { BackendDiagnosticsController } from './controller/diagnostics.controller';
-import { BackendDiagnosticsService } from './service/diagnostics.service';
+import { BackendDiagnosticsService, CHILD_PROCESS_EXEC } from './service/diagnostics.service';
 
-export const diagnosticsModuleProviders: Provider[] = [BackendDiagnosticsService];
+export const diagnosticsModuleProviders: Provider[] = [
+  BackendDiagnosticsService,
+  {
+    provide: CHILD_PROCESS_EXEC,
+    useValue: exec,
+  },
+];
 
 @Module({
   controllers: [BackendDiagnosticsController],
