@@ -1,8 +1,4 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AppClientMaterialModule } from '@app/client-material';
 import { NgxsModule, Store } from '@ngxs/store';
 import { switchMapTo, tap } from 'rxjs';
 
@@ -11,13 +7,7 @@ import { AppMdFilesState, mdFilesActions } from './md-files.state';
 
 describe('AppMdFilesState', () => {
   const testBedConfig: TestModuleMetadata = {
-    imports: [
-      NoopAnimationsModule,
-      HttpClientTestingModule,
-      RouterTestingModule,
-      AppClientMaterialModule.forRoot(),
-      NgxsModule.forRoot([AppMdFilesState], { developmentMode: !testingEnvironment.production }),
-    ],
+    imports: [NgxsModule.forRoot([AppMdFilesState], { developmentMode: !testingEnvironment.production })],
     providers: [...testingProviders],
   };
 
