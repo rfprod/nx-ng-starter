@@ -34,10 +34,14 @@ jobs:
         with:
           filters: |
             nx:
+              - '.github/workflows/trunk-on-push.yml'
               - '.storybook/**'
               - 'apps/**'
               - 'libs/**'
-              - 'tools/**'
+              - 'tools/generators/**'
+              - 'tools/shell/**'
+              - 'tools/ts/**'
+              - 'tools/*.json'
               - 'tsconfig*'
               - 'nx.json'
               - 'angular.json'
@@ -46,10 +50,6 @@ jobs:
               - 'babel.config.json'
               - 'functions/package.json'
               - 'functions/package-lock.json'
-              - 'tools/generators/**'
-              - 'tools/proto/**'
-              - 'tools/ts/**'
-              - 'tools/*.*'
               - 'jest*'
               - '.eslint*'
               - '.prettier*'
@@ -61,11 +61,6 @@ jobs:
             mobile:
               - 'android/**'
               - 'capacitor.config.json'
-            devops:
-              - '.docker/**'
-              - '.envoy/**'
-              - '.github/**'
-              - '.dockerignore'
 
       - name: Don't save Bash session history
         run: unset HISTFILE
@@ -171,7 +166,7 @@ jobs:
 
       # This job works only with a paid plan like Blaze
       # - name: Deploy api
-      #   if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.devops == 'true' }}
+      #   if: steps.changes.outputs.nx == 'true'
       #   run: |
       #     npx nx build api --configuration firebase
       #     yarn firebase:deploy:ci:api || exit 1
