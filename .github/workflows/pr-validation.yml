@@ -35,10 +35,13 @@ jobs:
         with:
           filters: |
             nx:
+              - '.github/workflows/pr-validation.yml'
               - '.storybook/**'
               - 'apps/**'
               - 'libs/**'
-              - 'tools/**'
+              - 'tools/generators/**'
+              - 'tools/ts/**'
+              - 'tools/*.json'
               - 'tsconfig*'
               - 'nx.json'
               - 'angular.json'
@@ -47,10 +50,6 @@ jobs:
               - 'babel.config.json'
               - 'functions/package.json'
               - 'functions/package-lock.json'
-              - 'tools/generators/**'
-              - 'tools/proto/**'
-              - 'tools/ts/**'
-              - 'tools/*.*'
               - 'jest*'
               - '.eslint*'
               - '.prettier*'
@@ -62,11 +61,8 @@ jobs:
             mobile:
               - 'android/**'
               - 'capacitor.config.json'
-            devops:
-              - '.docker/**'
-              - '.envoy/**'
-              - '.github/**'
-              - '.dockerignore'
+            shelltools:
+              - 'tools/shell/**'
 
       - name: Don't save Bash session history
         run: unset HISTFILE
@@ -122,6 +118,12 @@ jobs:
       - name: Lint affected
         if: steps.changes.outputs.nx == 'true'
         run: npx nx affected --target=lint --base=origin/main --head=HEAD --parallel --max-parallel=2
+
+      - name: Lint shell
+        if: steps.changes.outputs.shelltools == 'true'
+        run: |
+          apt install shellcheck
+          yarn lint:shell
 
       - name: Unit test affected (with code coverage)
         if: steps.changes.outputs.nx == 'true'
