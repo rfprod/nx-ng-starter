@@ -7,12 +7,11 @@ module.exports = {
   snapshotSerializers: jestPresetAngularSerializers,
   displayName: 'client-chatbot',
   coverageThreshold: {
-    // TODO: bump unit test coverage and remove this override
     global: {
       branches: 100,
-      functions: 0,
-      lines: 0,
-      statements: 0,
+      functions: 100,
+      lines: 100,
+      statements: 100,
     },
   },
 };

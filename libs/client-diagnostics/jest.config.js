@@ -7,12 +7,11 @@ module.exports = {
   snapshotSerializers: jestPresetAngularSerializers,
   displayName: 'client-diagnostics',
   coverageThreshold: {
-    // TODO: bump unit test coverage and remove this override
     global: {
-      branches: 0,
-      functions: 27,
-      lines: 31,
-      statements: 34,
+      branches: 100,
+      functions: 100,
+      lines: 100,
+      statements: 100,
     },
   },
 };

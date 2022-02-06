@@ -22,9 +22,9 @@ export class AppDiagnosticsHomePage implements OnChanges {
     return changes;
   }
 
-  public timerChanges(value: string): void {
-    const index = parseInt((value ?? '').replace(/[a-z\s]/gi, ''), 10);
+  public timerChanges(value?: string): void {
+    const index = parseInt(value?.replace(/[a-zA-Z\s]/gi, '') ?? '', 10);
     const divisor = 2;
-    this.timer = index % divisor ? `The timer is freaking out ${Math.pow(divisor, index)}` : value;
+    this.timer = index % divisor ? `The timer is freaking out ${Math.pow(divisor, index)}` : value ?? '';
   }
 }

@@ -16,7 +16,7 @@ export class AppDiagnosticsInfoComponent {
   /**
    * Ping result.
    */
-  public readonly ping$ = this.store.select(AppHttpApiState.allData).pipe(map(ping => ping.ping));
+  public readonly ping$ = this.store.select(AppHttpApiState.state).pipe(map(state => state.ping));
 
   /**
    * Sample processed markdown.

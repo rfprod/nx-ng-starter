@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AppMarkdownService } from '@app/client-services';
 import { TIMEOUT } from '@app/client-util';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { of, timer } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { first, map, take } from 'rxjs/operators';
 
-@UntilDestroy()
+const counter = 5;
+
 @Component({
   selector: 'app-diagnostics-home',
   templateUrl: './diagnostics-home.component.html',
@@ -14,8 +14,8 @@ import { first, map } from 'rxjs/operators';
 })
 export class AppDiagnosticsHomeComponent {
   public readonly timer$ = timer(TIMEOUT.INSTANT, TIMEOUT.MEDIUM).pipe(
+    take(counter),
     map(num => `Until destroyed ${num}`),
-    untilDestroyed(this),
   );
 
   public readonly markedInstructions$ = of('').pipe(

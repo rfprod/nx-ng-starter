@@ -17,7 +17,7 @@ export class AppHttpApiState {
   constructor(private readonly api: AppHttpApiService) {}
 
   @Selector()
-  public static allData(state: IAppHttpApiState) {
+  public static state(state: IAppHttpApiState) {
     return state;
   }
 
