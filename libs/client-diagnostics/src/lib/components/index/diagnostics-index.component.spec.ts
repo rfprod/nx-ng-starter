@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppWebsocketStoreModule } from '@app/client-store-websocket';
+import { AppWebsocketStoreModule, websocketActions } from '@app/client-store-websocket';
 import {
   getTestBedConfig,
   newTestBedMetadata,
@@ -8,6 +8,7 @@ import {
   TClassMemberFunctionSpiesObject,
   testingEnvironment,
 } from '@app/client-unit-testing';
+import { Store } from '@ngxs/store';
 
 import { AppDiagnosticsIndexComponent } from './diagnostics-index.component';
 
@@ -28,12 +29,16 @@ describe('AppDiagnosticsIndexComponent', () => {
   let fixture: ComponentFixture<AppDiagnosticsIndexComponent>;
   let component: AppDiagnosticsIndexComponent;
   let componentSpy: TClassMemberFunctionSpiesObject<AppDiagnosticsIndexComponent>;
+  let store: Store;
+  let storeDispatchSpy: jest.SpyInstance;
 
   beforeEach(
     waitForAsync(() => {
       void TestBed.configureTestingModule(testBedConfig)
         .compileComponents()
         .then(() => {
+          store = TestBed.inject(Store);
+          storeDispatchSpy = jest.spyOn(store, 'dispatch');
           fixture = TestBed.createComponent(AppDiagnosticsIndexComponent);
           component = fixture.componentInstance;
           componentSpy = spyOnFunctions<AppDiagnosticsIndexComponent>(component);
@@ -45,5 +50,10 @@ describe('AppDiagnosticsIndexComponent', () => {
   it('should be defined', () => {
     expect(component).toBeDefined();
     expect(componentSpy).toBeDefined();
+  });
+
+  it('should call store dispatch on init', () => {
+    expect(storeDispatchSpy).toHaveBeenCalledWith(new websocketActions.connect());
+    expect(storeDispatchSpy).toHaveBeenCalledWith(new websocketActions.getEvents());
   });
 });

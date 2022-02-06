@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { of } from 'rxjs';
+import { FormBuilder, Validators } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
+
+import { minMessageLength } from '../../interfaces/form.interface';
+import { IChatMessage } from '../../interfaces/message.interface';
 
 @Component({
   selector: 'app-chatbot-widget-root',
@@ -9,7 +12,7 @@ import { of } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppChatbotWidgetRootComponent {
-  public readonly messages$ = of([
+  private readonly messagesSubject = new BehaviorSubject<IChatMessage[]>([
     { bot: true, text: 'message 1' },
     { bot: false, text: 'message 2' },
     { bot: true, text: 'message 3' },
@@ -24,13 +27,17 @@ export class AppChatbotWidgetRootComponent {
     { bot: true, text: 'message 12' },
   ]);
 
+  public readonly messages$ = this.messagesSubject.asObservable();
+
   constructor(private readonly fb: FormBuilder) {}
 
   public readonly form = this.fb.group({
-    message: [''],
+    message: ['', Validators.compose([Validators.required, Validators.minLength(minMessageLength)])],
   });
 
   public sendMessage() {
-    // TODO: send message
+    const message: IChatMessage = { bot: false, text: this.form.controls.message.value };
+    const nextValue = [...this.messagesSubject.value, message];
+    this.messagesSubject.next(nextValue);
   }
 }

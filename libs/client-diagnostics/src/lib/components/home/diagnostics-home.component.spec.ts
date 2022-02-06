@@ -1,7 +1,8 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppMarkdownService } from '@app/client-services';
-import { getTestBedConfig, newTestBedMetadata, spyOnFunctions, TClassMemberFunctionSpiesObject } from '@app/client-unit-testing';
+import { getTestBedConfig, newTestBedMetadata, spyOnObservables, TClassMemberObservableSpiesObject } from '@app/client-unit-testing';
+import { of, tap } from 'rxjs';
 
 import { AppDiagnosticsHomeComponent } from './diagnostics-home.component';
 
@@ -20,9 +21,8 @@ describe('AppDiagnosticsHomeComponent', () => {
 
   let fixture: ComponentFixture<AppDiagnosticsHomeComponent>;
   let component: AppDiagnosticsHomeComponent;
-  let componentSpy: TClassMemberFunctionSpiesObject<AppDiagnosticsHomeComponent>;
+  let componentSpy: TClassMemberObservableSpiesObject<AppDiagnosticsHomeComponent>;
   let service: AppMarkdownService;
-  let serviceSpy: TClassMemberFunctionSpiesObject<AppMarkdownService>;
 
   beforeEach(
     waitForAsync(() => {
@@ -31,10 +31,8 @@ describe('AppDiagnosticsHomeComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(AppDiagnosticsHomeComponent);
           component = fixture.componentInstance;
-          componentSpy = spyOnFunctions<AppDiagnosticsHomeComponent>(component);
+          componentSpy = spyOnObservables<AppDiagnosticsHomeComponent>(component);
           service = TestBed.inject(AppMarkdownService);
-          serviceSpy = spyOnFunctions<AppMarkdownService>(service);
-          (component as any).timer$ = null;
           fixture.detectChanges();
         });
     }),
@@ -42,7 +40,26 @@ describe('AppDiagnosticsHomeComponent', () => {
 
   it('should be defined', () => {
     expect(component).toBeDefined();
-    expect(componentSpy).toBeDefined();
-    expect(serviceSpy).toBeDefined();
   });
+
+  it(
+    'markedInstructions should return processed markdown',
+    waitForAsync(() => {
+      const sub = of().subscribe();
+      componentSpy.timer$.pipe.mockReturnValue(of(null));
+      componentSpy.timer$.subscribe.mockReturnValue(sub);
+
+      const sidenavInstruction =
+        'Open **sidenav** by clicking the **icon** button in the left corner of the browser window, and select an item.';
+      const markdownInstructions = '# You can use Markdown \n\n via AppMarkdownService, just like in this example.';
+      const expected = service.process(`${sidenavInstruction}\n${markdownInstructions}`);
+      void component.markedInstructions$
+        .pipe(
+          tap(instructions => {
+            expect(instructions).toEqual(expected);
+          }),
+        )
+        .subscribe();
+    }),
+  );
 });
