@@ -1,6 +1,7 @@
 import { ApiEnvironment, DateScalar } from '@app/backend-interfaces';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { DynamicModule, Module, Provider } from '@nestjs/common';
-import { GqlModuleOptions, GraphQLModule } from '@nestjs/graphql';
+import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 
 import { BackendGqlMatcompModule } from './matcomp/matcomp.module';
@@ -12,7 +13,8 @@ export const backendGqlModuleProviders: Provider[] = [DateScalar];
 })
 export class BackendGqlModule {
   public static forRoot(environment: ApiEnvironment): DynamicModule {
-    const gqlOptions: GqlModuleOptions = {
+    const gqlOptions: ApolloDriverConfig = {
+      driver: ApolloDriver,
       useGlobalPrefix: true,
       path: '/graphql',
       include: [BackendGqlMatcompModule],

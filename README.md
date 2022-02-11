@@ -100,7 +100,6 @@ Applications as well as generated documentation, testing reports, and a custom c
 - [Documentation](https://nx-ng-starter-documentation.web.app/assets/coverage/apps/documentation/index.html)
 - [Elements](https://nx-ng-starter-documentation.web.app/assets/coverage/apps/elements/index.html)
 - [Elements Testing](https://nx-ng-starter-documentation.web.app/assets/coverage/apps/elements-testing/index.html)
-- [Proto](https://nx-ng-starter-documentation.web.app/assets/coverage/libs/proto/index.html)
 
 #### E2E report
 
