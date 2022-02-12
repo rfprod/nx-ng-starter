@@ -29,9 +29,9 @@ if [[ -z ${ANDROID_HOME:-} ]]; then
 fi
 
 if [[ -z ${ANDROID_BUILD_TOOLS:-} ]]; then
-  dir="$(ls "${ANDROID_HOME}/build-tools" | head -n 1)"
+  dir="$(find "${ANDROID_HOME}/build-tools" -maxdepth 1 -name "*.*.*" | head -n 1)"
   if [[ -n $dir ]]; then
-    ANDROID_BUILD_TOOLS="${ANDROID_HOME}/build-tools/${dir}"
+    ANDROID_BUILD_TOOLS="${dir}"
   else
     error "ANDROID_BUILD_TOOLS is not set and ${ANDROID_HOME}/build-tools/<version> does not exist"
   fi
