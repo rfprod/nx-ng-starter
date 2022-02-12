@@ -120,14 +120,11 @@ export class AppTranslationUtilsService {
    * Translate service language change subscription.
    */
   private languageChangeSubscription(): void {
-    void this.translate.onLangChange.subscribe(
-      (langChangeEvent: LangChangeEvent) => {
-        this.languageChangesSubject.next(langChangeEvent);
-        const langCode: TLangCode = langChangeEvent.lang as TLangCode;
-        this.setDatepickersLocale(langCode);
-      },
-      (): void => void 0,
-    );
+    void this.translate.onLangChange.subscribe((langChangeEvent: LangChangeEvent) => {
+      this.languageChangesSubject.next(langChangeEvent);
+      const langCode: TLangCode = langChangeEvent.lang as TLangCode;
+      this.setDatepickersLocale(langCode);
+    });
   }
 
   /**
