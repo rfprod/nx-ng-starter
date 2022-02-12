@@ -132,10 +132,27 @@ describe('AppTranslationUtilsService', () => {
     expect(callsAfter.translate.use - callsBefore.translate.use).toEqual(1);
   });
 
-  it('getUserLanguagePreference should work correctly', () => {
-    const navLang: string = win.navigator.language;
-    const userPreference: TLangCode = Boolean(navLang.match(/(ru-RU|ru)/gi)) || Boolean(navLang[0].match(/(ru)/gi)) ? 'ru' : 'en';
-    expect(service.getUserLanguagePreference()).toEqual(userPreference);
+  describe('getUserLanguagePreference', () => {
+    afterEach(() => {
+      Object.defineProperty(win.navigator, 'language', {
+        value: 'en',
+      });
+    });
+
+    it('should work correctly (ru)', () => {
+      Object.defineProperty(win.navigator, 'language', {
+        value: 'ru',
+      });
+      const navLang: string = win.navigator.language;
+      const userPreference: TLangCode = Boolean(navLang.match(/(ru-RU|ru)/gi)) || Boolean(navLang[0].match(/(ru)/gi)) ? 'ru' : 'en';
+      expect(service.getUserLanguagePreference()).toEqual(userPreference);
+    });
+
+    it('should work correctly (en)', () => {
+      const navLang: string = win.navigator.language;
+      const userPreference: TLangCode = Boolean(navLang.match(/(ru-RU|ru)/gi)) || Boolean(navLang[0].match(/(ru)/gi)) ? 'ru' : 'en';
+      expect(service.getUserLanguagePreference()).toEqual(userPreference);
+    });
   });
 
   it('languages should return available UI language codes', () => {
