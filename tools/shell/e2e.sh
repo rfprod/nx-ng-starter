@@ -86,7 +86,7 @@ copyReportToDist() {
 
         mkdir -p "$E2E_DISTR_ROOT"
       fi
-      # proceed only if report exists
+
       if [ -d "$REPORT_DIR" ]; then
         printSuccessMessage "e2e directory $REPORT_DIR exists, proceeding"
 
