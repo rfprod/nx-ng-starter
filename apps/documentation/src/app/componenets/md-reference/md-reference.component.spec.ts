@@ -47,6 +47,8 @@ describe('AppDocMarkdownReferenceComponent', () => {
         .then(() => {
           fixture = TestBed.createComponent(AppDocMarkdownReferenceComponent);
           component = fixture.debugElement.componentInstance;
+
+          fixture.detectChanges();
         });
     }),
   );
