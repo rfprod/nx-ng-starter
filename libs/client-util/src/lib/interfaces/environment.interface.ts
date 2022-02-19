@@ -19,5 +19,6 @@ export interface IWebClientAppEnvironment {
     env: TSentryEnvironment;
     dsn: string;
     tracingOrigins: string[];
+    tracesSampleRate: number;
   };
 }

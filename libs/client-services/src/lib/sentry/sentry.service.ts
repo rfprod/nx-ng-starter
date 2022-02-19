@@ -34,7 +34,7 @@ export const initializeSentry = (env: IWebClientAppEnvironment) => {
        * of transactions for performance monitoring.
        * We recommend adjusting this value in production.
        */
-      tracesSampleRate: 1.0,
+      tracesSampleRate: env.sentry.tracesSampleRate,
     });
   }
 };

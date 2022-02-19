@@ -1,6 +1,8 @@
 import { IWebClientAppEnvironment } from '@app/client-util';
 import { Capacitor } from '@capacitor/core';
 
+import { sentryEnvFactory } from './environment.config';
+
 const platform: string = Capacitor.getPlatform();
 
 /**
@@ -18,9 +20,5 @@ export const environment: IWebClientAppEnvironment = {
       ? 'http://localhost:8080/api'
       : `${window.location.origin}/api`,
   envoyUrl: 'http://localhost:8090',
-  sentry: {
-    env: 'production',
-    dsn: 'https://3e5206aab4034899ab5abce655e35ff6@o551250.ingest.sentry.io/5674503',
-    tracingOrigins: ['localhost:4200', 'https://nx-ng-starter.web.app', 'https://nx-ng-starter.firebaseapp.com'],
-  },
+  sentry: sentryEnvFactory({ production: true }),
 };
