@@ -20,7 +20,7 @@ const typeConstraints = [
   },
   {
     sourceTag: 'type:util',
-    onlyDependOnLibsWithTags: ['type:util'],
+    onlyDependOnLibsWithTags: ['type:util', 'type:unit-testing'],
   },
   {
     sourceTag: 'type:e2e',
@@ -159,7 +159,7 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:client-services',
-    onlyDependOnLibsWithTags: ['scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util'],
   },
   {
     sourceTag: 'scope:client-componnents',

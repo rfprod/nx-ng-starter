@@ -17,13 +17,6 @@ function setupGlobalUrlMock() {
   });
 }
 
-function setupGlobalMarkedMock() {
-  Object.defineProperty(global, 'marked', {
-    value: jest.fn((input: string) => `# mocked marked output ${input}`),
-    writable: false,
-  });
-}
-
 function setupGlobalMutationObserverMock() {
   function mutationObserver(...args: any[]) {
     return {
@@ -42,6 +35,5 @@ function setupGlobalMutationObserverMock() {
 export function setupJsdomGlobalMocks() {
   setupGlobalFetchMock();
   setupGlobalUrlMock();
-  setupGlobalMarkedMock();
   setupGlobalMutationObserverMock();
 }

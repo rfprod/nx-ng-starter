@@ -20,7 +20,7 @@ describe('AppMarkdownService', () => {
           service = TestBed.inject(AppMarkdownService);
           spy = {
             service: {
-              process: jest.spyOn(service, 'process').mockImplementation((input: string) => `marked ${input}`),
+              process: jest.spyOn(service, 'process'),
             },
           };
         });
@@ -33,7 +33,7 @@ describe('AppMarkdownService', () => {
   });
 
   it('process should process marked input', () => {
-    expect(service.process('input')).toEqual('marked input');
+    expect(service.process('input')).toEqual('<p>input</p>\n');
     expect(spy.service.process.mock.calls.length).toBeGreaterThan(0);
   });
 });

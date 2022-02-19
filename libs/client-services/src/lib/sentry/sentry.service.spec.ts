@@ -1,7 +1,9 @@
+import { FactoryProvider } from '@angular/core';
 import { TestBed, waitForAsync } from '@angular/core/testing';
+import { testingEnvironment } from '@app/client-unit-testing';
 import * as Sentry from '@sentry/angular';
 
-import { AppSentryService } from './sentry.service';
+import { AppSentryService, initializeSentry, sentryProviders } from './sentry.service';
 
 describe('AppSentryService', () => {
   let service: AppSentryService;
@@ -30,5 +32,64 @@ describe('AppSentryService', () => {
 
   it('should exist', () => {
     expect(service).toBeTruthy();
+  });
+
+  describe('initializeSentry', () => {
+    let env: typeof testingEnvironment;
+
+    beforeEach(() => {
+      env = { ...testingEnvironment, sentry: { ...testingEnvironment.sentry } };
+    });
+
+    it('should not initialize Sentry for unit testing and development environments', () => {
+      const sentry = Sentry;
+      const initSpy = jest.spyOn(sentry, 'init');
+      // const env = { ...testingEnvironment, sentry: { ...testingEnvironment.sentry } };
+      expect(env.sentry.env).toEqual('unit-testing');
+      initializeSentry(env);
+      expect(initSpy).not.toHaveBeenCalled();
+
+      env.sentry.env = 'development';
+      initializeSentry(env);
+      expect(initSpy).not.toHaveBeenCalled();
+    });
+
+    it('should initialize Sentry for the production environment', () => {
+      const sentry = Sentry;
+      const initSpy = jest.spyOn(sentry, 'init');
+      // const env = { ...testingEnvironment };
+      env.sentry.env = 'production';
+      initializeSentry(env);
+      expect(initSpy).toHaveBeenCalled();
+    });
+  });
+
+  describe('sentryProviders', () => {
+    let env: typeof testingEnvironment;
+
+    beforeEach(() => {
+      env = { ...testingEnvironment, sentry: { ...testingEnvironment.sentry } };
+    });
+
+    it('should return an empty array for disabled environments', () => {
+      expect(env.sentry.env).toEqual('unit-testing');
+      let providers = sentryProviders(env);
+      expect(providers.length).toEqual(0);
+
+      env.sentry.env = 'development';
+      providers = sentryProviders(env);
+      expect(providers.length).toEqual(0);
+    });
+
+    it('should return 3 providers for the production environment', () => {
+      env.sentry.env = 'production';
+      const providers = sentryProviders(env);
+      const expectedLength = 3;
+      expect(providers.length).toEqual(expectedLength);
+      const initializerIndex = 2;
+      const initializer = <FactoryProvider>providers[initializerIndex];
+      const factory = initializer.useFactory();
+      expect(factory()).toEqual({});
+    });
   });
 });

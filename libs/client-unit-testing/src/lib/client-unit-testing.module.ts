@@ -28,6 +28,7 @@ export const testingEnvironment: IWebClientAppEnvironment = {
     env: 'unit-testing',
     dsn: '',
     tracingOrigins: [],
+    tracesSampleRate: 0.0,
   },
 };
 
