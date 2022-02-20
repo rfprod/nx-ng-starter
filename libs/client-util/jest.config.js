@@ -9,10 +9,10 @@ module.exports = {
   coverageThreshold: {
     // TODO: bump unit test coverage and remove this override
     global: {
-      branches: 29,
-      functions: 7,
-      lines: 7,
-      statements: 9,
+      branches: 31,
+      functions: 8,
+      lines: 9,
+      statements: 10,
     },
   },
 };
