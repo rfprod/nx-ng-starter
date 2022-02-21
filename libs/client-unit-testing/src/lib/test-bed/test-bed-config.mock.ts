@@ -17,28 +17,28 @@ export const newTestBedMetadata: TNewTestBedMetadata = (metadata?: TestModuleMet
   const declarations = [...(metadata?.declarations ?? [])];
   const providers = [...(metadata?.providers ?? [])];
   const schemas = [...(metadata?.schemas ?? [])];
+  const teardown = { ...(metadata?.teardown ?? { destroyAfterEach: true }) };
   return {
     imports,
     declarations,
     providers,
     schemas,
-    teardown: { destroyAfterEach: true },
+    teardown,
   };
 };
 
 /**
  * TestBed config getter type.
  */
-export type TTestBedConfigGetter = (metadata: TestModuleMetadata) => TestModuleMetadata;
+export type TTestBedConfigGetter = (metadata?: TestModuleMetadata) => TestModuleMetadata;
 /**
  * TestBed configuration getter.
  * @param metadata additional test bed metadata
  */
-export const getTestBedConfig: TTestBedConfigGetter = (metadata: TestModuleMetadata = newTestBedMetadata()) =>
-  new Object({
-    declarations: [...(metadata?.declarations ?? [])],
-    imports: [AppMocksCoreModule.forRoot(), ...(metadata?.imports ?? [])],
-    providers: [...(metadata?.providers ?? [])],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA, ...(metadata?.schemas ?? [])],
-    teardown: { ...(metadata.teardown ?? {}) },
-  });
+export const getTestBedConfig: TTestBedConfigGetter = (metadata: TestModuleMetadata = newTestBedMetadata()) => ({
+  declarations: [...(metadata.declarations ?? [])],
+  imports: [AppMocksCoreModule.forRoot(), ...(metadata.imports ?? [])],
+  providers: [...(metadata.providers ?? [])],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, ...(metadata.schemas ?? [])],
+  teardown: { ...(metadata.teardown ?? { destroyAfterEach: true }) },
+});

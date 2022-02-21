@@ -442,7 +442,7 @@ module.exports = {
       },
     },
     {
-      files: '**/*.mock.ts',
+      files: ['**/*.mock.ts'],
       rules: {
         'compat/compat': 'off',
         'rxjs/no-exposed-subjects': 'off',
@@ -456,6 +456,7 @@ module.exports = {
         'compat/compat': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-unsafe-member-access': 'off',
+        'rxjs/no-exposed-subjects': 'off',
       },
     },
     {

@@ -44,7 +44,7 @@ function setupWindowGetComputedStyleMock() {
 
 function setupWindowCreateObjectUrlMock() {
   Object.defineProperty(window.URL, 'createObjectURL', {
-    value: jest.fn(),
+    value: jest.fn().mockImplementation(() => 'this is mock'),
     writable: true,
   });
 }

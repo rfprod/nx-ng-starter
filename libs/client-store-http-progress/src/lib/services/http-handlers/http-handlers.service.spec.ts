@@ -2,13 +2,7 @@ import { HttpErrorResponse, HttpHeaders, HttpRequest } from '@angular/common/htt
 import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { AppClientTranslateModule } from '@app/client-translate';
-import {
-  AppLocalStorageMock,
-  getTestBedConfig,
-  newTestBedMetadata,
-  spyOnFunctions,
-  TClassMemberFunctionSpiesObject,
-} from '@app/client-unit-testing';
+import { getTestBedConfig, newTestBedMetadata, spyOnFunctions, TClassMemberFunctionSpiesObject } from '@app/client-unit-testing';
 import { HTTP_STATUS } from '@app/client-util';
 import { Store } from '@ngxs/store';
 import { Apollo } from 'apollo-angular';
@@ -32,16 +26,12 @@ describe('AppHttpHandlersService', () => {
   let serviceSpies: TClassMemberFunctionSpiesObject<AppHttpHandlersService>;
   let apollo: Apollo;
   let httpTestingController: HttpTestingController;
-  let localStorage: AppLocalStorageMock;
   let toaster: AppToasterService;
   let store: Store;
   let storeDispatchSpy: jest.SpyInstance;
 
   beforeEach(
     waitForAsync(() => {
-      localStorage = window.localStorage;
-      jest.spyOn(localStorage, 'setItem');
-
       void TestBed.configureTestingModule(testBedConfig)
         .compileComponents()
         .then(() => {
