@@ -18,10 +18,14 @@ export function flushHttpRequests<T>(
     | Blob
     | (string | number | Record<string, unknown> | null)[]
     | null = {},
-  produceError = false,
+  produceError?: boolean,
 ): void {
   httpController.match(matcher).forEach((req: TestRequest) => {
-    return !req.cancelled ? (produceError ? req.error(new ErrorEvent('error', { error: responseData })) : req.flush(responseData)) : null;
+    return produceError === true
+      ? req.error(new ProgressEvent('error', { total: 1, loaded: 1, cancelable: true }))
+      : !req.cancelled
+      ? req.flush(responseData)
+      : null;
   });
   if (verify) {
     httpController.verify();
