@@ -42,4 +42,7 @@ RUN echo "Mono CI: default"; \
   bash ./tools/shell/docker-task.sh install-docker-ci; \
   sleep 1; \
   echo "Setting /tmp directory permissions..."; \
-  find /tmp -type f -exec chmod 644 {} \; && find /tmp -type d -exec chmod 755 {} \; && chmod -R o+rw /tmp
+  find /tmp -type f -exec chmod 644 {} \; && find /tmp -type d -exec chmod 755 {} \; && chmod -R o+rw /tmp; \
+  useradd -d /home/user -m -s /bin/bash user
+# Set user
+USER user
