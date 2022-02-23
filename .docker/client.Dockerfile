@@ -30,6 +30,10 @@ FROM node:16.13.1-alpine
 WORKDIR /app
 # Copy dist.
 COPY --from=builder /app .
+# Add user.
+RUN useradd -d /home/user -m -s /bin/bash user
+# Set user.
+USER user
 # Configure exposed port.
 EXPOSE 8080
 # Define startup command.
