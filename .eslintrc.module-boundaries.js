@@ -43,6 +43,10 @@ const sharedConstraints = [
  */
 const backendConstraints = [
   {
+    sourceTag: 'scope:server-prod',
+    onlyDependOnLibsWithTags: [],
+  },
+  {
     sourceTag: 'scope:api',
     onlyDependOnLibsWithTags: [
       'scope:proto',
