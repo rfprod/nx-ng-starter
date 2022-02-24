@@ -6,6 +6,7 @@ import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions } from '@nestjs/microservices';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { WsAdapter } from '@nestjs/platform-ws';
+import * as compression from 'compression';
 import dotenv from 'dotenv';
 import e from 'express';
 import * as admin from 'firebase-admin';
@@ -49,6 +50,13 @@ async function bootstrap(expressInstance: e.Express): Promise<unknown> {
     credentials: true,
   };
   app.enableCors(corsOptions);
+
+  app.use(
+    compression.default({
+      threshold: 0,
+      level: -1,
+    }),
+  );
 
   const grpcClientOptions = backendGrpcClientOptions(environment);
   app.connectMicroservice<MicroserviceOptions>(grpcClientOptions);

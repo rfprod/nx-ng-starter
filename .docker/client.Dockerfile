@@ -1,40 +1,25 @@
-##
 # Client app image based on NodeJS.
-##
-
-##
-# Stage 1.
-##
 
 # Define image.
-FROM node:16.13.1-slim as builder
+FROM node:16.14.0-alpine
 # Set environment variables.
 ENV DEBIAN_FRONTEND=noninteractive
 # Create app directory.
 WORKDIR /app
 # Copy dist.
 COPY /package.json .
-COPY /dist/apps/client ./dist/apps/client
-COPY /server.prod.js .
-# Install dependencies for minimal nodejs server.
-RUN npm i express compression; \
-  npm cache clean --force
-
-##
-# Stage 2.
-##
-
-# Define image.
-FROM node:16.13.1-alpine
-# Create app directory.
-WORKDIR /app
-# Copy dist.
-COPY --from=builder /app .
-# Add user.
-RUN useradd -d /home/user -m -s /bin/bash user
+COPY /yarn.lock .
+COPY /dist/apps/server-prod ./dist
+COPY /dist/apps/client ./dist/assets
+# Install dependencies.
+RUN npm i -g npm ; \
+  npm i --production --ignore-scripts --legacy-peer-deps ; \
+  npm cache clean --force; \
+  addgroup -S appgroup && \
+  adduser -S appuser -G appgroup
 # Set user.
-USER user
+USER appuser
 # Configure exposed port.
 EXPOSE 8080
 # Define startup command.
-CMD [ "node", "server.prod.js", "client" ]
+CMD [ "node", "./dist/main.js" ]

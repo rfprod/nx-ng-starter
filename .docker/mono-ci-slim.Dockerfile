@@ -5,7 +5,7 @@
 ##
 
 # Define image.
-FROM node:16.13.1-slim
+FROM node:16.14.0-slim
 # Set environment variables.
 ENV DEBIAN_FRONTEND=noninteractive
 # Create app directory.
