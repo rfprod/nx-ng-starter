@@ -12,6 +12,7 @@ CONTAINER_REGISTRY=rfprod/nx-ng-starter
 # Supported images.
 ##
 declare -A IMAGES=(
+  ["base"]="$CONTAINER_REGISTRY"":base-latest"
   ["api-development"]="$CONTAINER_REGISTRY"":api-development-latest"
   ["api-production"]="$CONTAINER_REGISTRY"":api-production-latest"
   ["client-development"]="$CONTAINER_REGISTRY"":client-development-latest"

@@ -10,9 +10,19 @@ reportUsageError() {
   printInfoTitle "<< ${0} usage >>"
   printUsageTip "bash tools/shell/docker-task.sh install-docker-ci" "install dependencies for CI docker container image (should be used from inside of docker only)"
   printUsageTip "bash tools/shell/docker-task.sh cleanup" "utility task, removes stopped containers and cleans up untagged images (should be used on runners which use CI container images)"
+  printUsageTip "bash tools/shell/docker-task.sh login USERNAME PASSWORD" "docker login, requires a user name and a password"
   printGap
 
   exit 1
+}
+
+dockerLogin() {
+  local DOCKER_REGISTRY_USER
+  DOCKER_REGISTRY_USER="$1"
+  local DOCKER_REGISTRY_PASS
+  DOCKER_REGISTRY_PASS="$2"
+
+  echo "${DOCKER_REGISTRY_PASS}" | docker login -u "$DOCKER_REGISTRY_USER" "$LOGIN_URL" --password-stdin
 }
 
 if [ 1 -gt $# ]; then
@@ -63,6 +73,8 @@ elif [ "$1" = "cleanup" ]; then
     printInfoMessage "docker is not installed, nothing to clean up"
     printGap
   fi
+elif [ "$1" = "login" ]; then
+  dockerLogin "$2" "$3"
 else
   reportUsageError
 fi

@@ -101,13 +101,28 @@ jobs:
           yarn generate:changelog
           yarn e2e:headless:report
 
+      - name: Docker login
+        run: yarn docker:login "$DOCKER_REGISTRY_USER" "$DOCKER_REGISTRY_ACCESS_TOKEN"
+        env:
+          DOCKER_REGISTRY_USER: ${{ secrets.DOCKER_REGISTRY_USER }}
+          DOCKER_REGISTRY_ACCESS_TOKEN: ${{ secrets.DOCKER_REGISTRY_ACCESS_TOKEN }}
+
       - name: Docker build apps
         run: |
-          yarn docker:build api development
-          yarn docker:build client development
-          yarn docker:build elements development
+          yarn docker:build base
+          yarn docker:build api production
+          yarn docker:build client production
+          yarn docker:build elements production
           yarn docker:build documentation
 
       - name: Docker push apps
         if: github.event.inputs.dryRun == 'false'
-        run: echo "TODO - Push docker images to the regitry"
+        run: |
+          yarn docker:push base
+          echo "TODO - Push docker images to the regitry"
+
+      - name: Docker cleanup
+        if: always()
+        run: |
+          yarn docker:cleanup
+          docker logout

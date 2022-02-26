@@ -1,5 +1,3 @@
-import { IServerProdEnvironment } from '../app/providers/environment.provider';
-
-export const environment: IServerProdEnvironment = {
+export const environment = {
   production: false,
 };
