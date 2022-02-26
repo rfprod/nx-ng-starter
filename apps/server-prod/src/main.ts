@@ -15,7 +15,7 @@ async function bootstrap() {
   app.setGlobalPrefix(globalPrefix);
 
   const corsOptions: CorsOptions = {
-    origin: [/localhost/, /.*/],
+    origin: [/localhost/, /nx-ng-starter\.web\.app/, /nx-ng-starter\.firebaseap\.com/, /nx-ng-starter-documentation\.firebaseap\.com/],
     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
     credentials: true,
   };

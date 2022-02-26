@@ -28,7 +28,7 @@ export interface IToasterExtraClassesObj {
  * Returns extra classes for toaster depending on provided toaster type.
  * @param toasterType toaster type
  */
-export const toasterExtraClasses = (toasterType: TToastType): TToasterExtraClasses => {
+export const toasterExtraClasses = (toasterType: TToastType | string): TToasterExtraClasses => {
   const extraClasses: IToasterExtraClassesObj = {
     error: ['error-bg'],
     success: ['success-bg'],
