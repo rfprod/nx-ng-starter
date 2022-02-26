@@ -24,9 +24,9 @@ import { environment } from '../environments/environment';
     BackendDiagnosticsModule.forRoot(),
     BackendAuthModule,
     BackendWebsocketModule,
+    BackendLoggerModule,
     BackendGqlModule.forRoot(environment),
     BackendGrpcModule.forRoot(environment),
-    BackendLoggerModule,
   ],
   providers: [
     {
