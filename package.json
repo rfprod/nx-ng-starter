@@ -60,7 +60,7 @@
     "generate:proto": "yarn generate:protobufjs; yarn generate:protoc",
     "generate:protobufjs": "bash tools/shell/generate-proto.sh protobufjs",
     "generate:protoc": "bash tools/shell/generate-proto.sh protoc",
-    "generate:unit-test-coverage-index": "bash tools/shell/generate-unit-test-coverage.sh",
+    "generate:unit-test-coverage-index": "bash tools/shell/generate-unit-test-coverage-index.sh",
     "postinstall": "husky install && npx sort-package-json && yarn ngcc && node ./decorate-angular-cli.js",
     "install:all:linux": "bash ./tools/shell/install.sh all",
     "install:all:osx": "bash ./tools/shell/install.sh all osx",
