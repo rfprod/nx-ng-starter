@@ -36,6 +36,7 @@
     "docker:build:elements": "npx nx build server-prod --configuration production; npx nx build elements --configuration production; yarn docker:build elements production",
     "docker:build:envoy": "bash ./tools/shell/docker-build-app.sh envoy",
     "docker:cleanup": "bash ./tools/shell/docker-task.sh cleanup",
+    "docker:login": "bash ./tools/shell/docker-task.sh login",
     "docker:push": "bash ./tools/shell/docker-push.sh",
     "docker:push:envoy": "bash ./tools/shell/docker-push.sh envoy",
     "docker:run": "bash ./tools/shell/docker-run.sh",
