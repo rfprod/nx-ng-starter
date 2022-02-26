@@ -10,6 +10,7 @@ import { AppThemeState } from '@app/client-store-theme';
 import { AppUserState } from '@app/client-store-user';
 import { AppWebsocketStoreModule } from '@app/client-store-websocket';
 import { AppClientTranslateModule } from '@app/client-translate';
+import { sentryProviders } from '@app/client-util-sentry';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
@@ -43,6 +44,7 @@ import { AppRootComponent } from './components/root.component';
     AppClientGrpcModule.forRoot(environment),
     AppRoutingModule,
   ],
+  providers: [...sentryProviders(environment)],
   declarations: [AppRootComponent],
   bootstrap: [AppRootComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
