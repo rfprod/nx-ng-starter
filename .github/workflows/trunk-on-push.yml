@@ -45,16 +45,17 @@ jobs:
               - 'tsconfig*'
               - 'nx.json'
               - 'angular.json'
-              - 'package.json'
-              - 'yarn.lock'
               - 'babel.config.json'
-              - 'functions/package.json'
-              - 'functions/package-lock.json'
               - 'jest*'
               - '.eslint*'
               - '.prettier*'
               - '.protolint.yaml'
               - '.stylelint*'
+            dependencies:
+              - 'package.json'
+              - 'yarn.lock'
+              - 'functions/package.json'
+              - 'functions/package-lock.json'
             electron:
               - '.electron/**'
               - 'index.js'
@@ -66,27 +67,24 @@ jobs:
         run: unset HISTFILE
 
       - name: Use Node.js ${{ matrix.node-version }}
-        if: steps.changes.outputs.nx == 'true'
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
           check-latest: true
 
       - name: Configure kernel (increase watchers)
-        if: steps.changes.outputs.nx == 'true'
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
       - name: Use yarn 1.22.17 (required for integrity check)
-        if: steps.changes.outputs.nx == 'true'
         run: yarn set version 1.22.17 # this is mandatory, yarn v2 does not have integrity check which is needed for the pipeline
 
       - name: Get variables (yarn cache directory, commit hash)
-        if: steps.changes.outputs.nx == 'true'
+        if: steps.changes.outputs.dependencies == 'false'
         id: get-variables
         run: echo "::set-output name=yarncachedir::$(yarn cache dir)"; echo "::set-output name=commitsha::$(echo ${GITHUB_SHA})"
 
       - name: Workspace cache (npm, yarn, nx, jest)
-        if: steps.changes.outputs.nx == 'true'
+        if: steps.changes.outputs.dependencies == 'false'
         uses: actions/cache@v2
         id: workspace-cache # use this to check for `cache-hit` (`steps.workspace-cache.outputs.cache-hit != 'true'`)
         env:
@@ -110,32 +108,31 @@ jobs:
         run: npm i -g firebase-tools @compodoc/compodoc
 
       - name: Workspace integrity check
-        if: steps.changes.outputs.nx == 'true'
+        if: steps.changes.outputs.dependencies == 'false'
         run: yarn workspace:integrity-check
 
       - name: Install project dependencies
-        if: steps.changes.outputs.nx == 'true'
         run: yarn install:ci
 
       - name: Lint all
-        if: steps.changes.outputs.nx == 'true'
+        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
         run: npx nx run-many --target=lint --all --parallel --max-parallel=2
 
       - name: Unit test all (with code coverage)
-        if: steps.changes.outputs.nx == 'true'
+        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
         run: |
           npx nx run-many --target=test --all --pass-with-no-tests --code-coverage=true --watch=false --run-in-band --ci
           npx nx run tools:coverage-stats
           cat ./tools/ts/UNIT_COVERAGE.md
 
       - name: Build all (production)
-        if: steps.changes.outputs.nx == 'true'
+        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
         run: |
           yarn generate:env:documentation
           npx nx run-many --target=build --all --configuration production
 
       - name: Build documentation (compodoc, unit coverage, e2e coverage)
-        if: steps.changes.outputs.nx == 'true'
+        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
         run: |
           yarn test:reports
           yarn generate:unit-test-coverage-index
@@ -147,13 +144,13 @@ jobs:
           cp -r ./dist/storybook/documentation ./dist/apps/documentation/assets/storybook
 
       - name: Deploy client
-        if: steps.changes.outputs.nx == 'true'
+        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
         run: yarn firebase:deploy:ci:client || exit 1
         env:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
 
       - name: Deploy elements
-        if: steps.changes.outputs.nx == 'true'
+        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
         run: |
           bash tools/shell/generate-elements-bootstrap-script.sh ./dist/apps elements
           yarn firebase:deploy:ci:elements || exit 1
@@ -161,7 +158,7 @@ jobs:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
 
       - name: Deploy documentation
-        if: steps.changes.outputs.nx == 'true'
+        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
         run: yarn firebase:deploy:ci:documentation || exit 1
         env:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}

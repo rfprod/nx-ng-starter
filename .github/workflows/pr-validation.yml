@@ -36,7 +36,6 @@ jobs:
           filters: |
             nx:
               - '.github/workflows/pr-validation.yml'
-              - '.storybook/**'
               - 'apps/**'
               - 'libs/**'
               - 'tools/generators/**'
@@ -45,16 +44,17 @@ jobs:
               - 'tsconfig*'
               - 'nx.json'
               - 'angular.json'
-              - 'package.json'
-              - 'yarn.lock'
               - 'babel.config.json'
-              - 'functions/package.json'
-              - 'functions/package-lock.json'
               - 'jest*'
               - '.eslint*'
               - '.prettier*'
               - '.protolint.yaml'
               - '.stylelint*'
+            dependencies:
+              - 'package.json'
+              - 'yarn.lock'
+              - 'functions/package.json'
+              - 'functions/package-lock.json'
             electron:
               - '.electron/**'
               - 'index.js'
@@ -63,32 +63,32 @@ jobs:
               - 'capacitor.config.json'
             shelltools:
               - 'tools/shell/**'
+            storybook:
+              - '.storybook/**'
+              - '*.stories.ts'
 
       - name: Don't save Bash session history
         run: unset HISTFILE
 
       - name: Use Node.js ${{ matrix.node-version }}
-        if: steps.changes.outputs.nx == 'true'
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
           check-latest: true
 
       - name: Configure kernel (increase watchers)
-        if: steps.changes.outputs.nx == 'true'
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
       - name: Use yarn 1.22.17 (required for integrity check)
-        if: steps.changes.outputs.nx == 'true'
         run: yarn set version 1.22.17 # this is mandatory, yarn v2 does not have integrity check which is needed for the pipeline
 
       - name: Get variables (yarn cache directory, commit hash)
-        if: steps.changes.outputs.nx == 'true'
+        if: steps.changes.outputs.dependencies == 'false'
         id: get-variables
         run: echo "::set-output name=yarncachedir::$(yarn cache dir)"; echo "::set-output name=commitsha::$(echo ${GITHUB_SHA})"
 
       - name: Workspace cache (npm, yarn, nx, jest)
-        if: steps.changes.outputs.nx == 'true'
+        if: steps.changes.outputs.dependencies == 'false'
         uses: actions/cache@v2
         id: workspace-cache # use this to check for `cache-hit` (`steps.workspace-cache.outputs.cache-hit != 'true'`)
         env:
@@ -108,15 +108,14 @@ jobs:
             ${{ runner.os }}-
 
       - name: Workspace integrity check
-        if: steps.changes.outputs.nx == 'true'
+        if: steps.changes.outputs.dependencies == 'false'
         run: yarn workspace:integrity-check
 
       - name: Install project dependencies
-        if: steps.changes.outputs.nx == 'true'
         run: yarn install:ci
 
       - name: Lint affected
-        if: steps.changes.outputs.nx == 'true'
+        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
         run: npx nx affected --target=lint --base=origin/main --head=HEAD --parallel --max-parallel=2
 
       - name: Lint shell
@@ -126,13 +125,13 @@ jobs:
           yarn lint:shell
 
       - name: Unit test affected (with code coverage)
-        if: steps.changes.outputs.nx == 'true'
+        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
         run: npx nx affected --target=test --base=origin/main --head=HEAD --pass-with-no-tests --code-coverage=true --watch=false --run-in-band --ci
 
       - name: Build affected (development)
-        if: steps.changes.outputs.nx == 'true'
+        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
         run: npx nx affected --target=build --base=origin/main --head=HEAD
 
       - name: Build storybook
-        if: steps.changes.outputs.nx == 'true'
+        if: ${{ steps.changes.outputs.storybook == 'true' || steps.changes.outputs.dependencies == 'true' }}
         run: npx nx run documentation:build-storybook
