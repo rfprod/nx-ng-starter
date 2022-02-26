@@ -13,6 +13,7 @@ CONTAINER_REGISTRY=rfprod/nx-ng-starter
 # Associative array mapping: <app name | docker file name> - <docker image name>
 ##
 declare -A SUPPORTED_IMAGES=(
+  ["base"]="$CONTAINER_REGISTRY"":base-latest"
   ["api-development"]="$CONTAINER_REGISTRY"":api-development-latest"
   ["api-production"]="$CONTAINER_REGISTRY"":api-production-latest"
   ["client-development"]="$CONTAINER_REGISTRY"":client-development-latest"

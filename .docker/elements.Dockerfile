@@ -1,22 +1,14 @@
-# Client app image based on NodeJS.
+# Elements app image.
 
 # Define image.
-FROM node:16.14.0-alpine
+FROM rfprod/nx-ng-starter:base-latest
 # Set environment variables.
 ENV DEBIAN_FRONTEND=noninteractive
 # Create app directory.
 WORKDIR /app
 # Copy dist.
-COPY /package.json .
-COPY /yarn.lock .
 COPY /dist/apps/server-prod ./dist
 COPY /dist/apps/elements ./dist/assets
-# Install dependencies.
-RUN npm i -g npm ; \
-  npm i --production --ignore-scripts --legacy-peer-deps ; \
-  npm cache clean --force; \
-  addgroup -S appgroup && \
-  adduser -S appuser -G appgroup
 # Set user.
 USER appuser
 # Configure exposed port.

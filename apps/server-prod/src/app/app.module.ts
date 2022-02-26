@@ -4,9 +4,6 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import path from 'path';
 
 import { environment } from '../environments/environment';
-import { AppController } from './controllers/app.controller';
-import { environmentProvider } from './providers/environment.provider';
-import { AppService } from './services/app.service';
 
 @Module({
   imports: [
@@ -28,13 +25,12 @@ import { AppService } from './services/app.service';
         cacheControl: false,
         maxAge: 0,
       },
+      serveRoot: '',
       rootPath: environment.production
-        ? path.join(__dirname, 'dist/', 'assets')
+        ? path.join(__dirname, 'assets')
         : path.join(__dirname, '../', '../', '../', 'dist/', 'apps/', 'client'),
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService, environmentProvider],
 })
 export class AppModule implements OnModuleDestroy {
   public onModuleDestroy() {
