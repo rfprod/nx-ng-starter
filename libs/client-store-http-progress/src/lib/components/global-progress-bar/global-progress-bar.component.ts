@@ -11,6 +11,8 @@ export class AppGlobalProgressBarComponent implements AfterViewInit {
   @ViewChild(MatProgressBar) public progressBar?: MatProgressBar;
 
   public ngAfterViewInit() {
-    (this.progressBar?._elementRef.nativeElement as HTMLElement).style.width = `${document.body.clientWidth}px`;
+    if (typeof this.progressBar !== 'undefined') {
+      (this.progressBar._elementRef.nativeElement as HTMLElement).style.width = `${document.body.clientWidth}px`;
+    }
   }
 }
