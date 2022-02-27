@@ -132,7 +132,7 @@ export class AppHttpHandlersService {
     );
   }
 
-  private getErroLinkHandler(errorLinkHandler?: ApolloLink) {
+  private getErrorLinkHandler(errorLinkHandler?: ApolloLink) {
     const linkHandler =
       typeof errorLinkHandler !== 'undefined'
         ? errorLinkHandler
@@ -193,7 +193,7 @@ export class AppHttpHandlersService {
   public createApolloLinkFor(errorLinkHandler?: ApolloLink) {
     const uri = this.graphQlEndpoint();
     const httpLinkHandler = this.httpLink.create({ uri });
-    const linkHandler: ApolloLink = this.getErroLinkHandler(errorLinkHandler);
+    const linkHandler: ApolloLink = this.getErrorLinkHandler(errorLinkHandler);
     const networkLinkObs = this.getGraphqlNetworkLink(httpLinkHandler, uri);
     return networkLinkObs.pipe(map(networkLink => linkHandler.concat(networkLink)));
   }
