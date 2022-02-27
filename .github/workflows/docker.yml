@@ -97,7 +97,7 @@ jobs:
       - name: Build documentation (compodoc, unit coverage, e2e coverage)
         run: |
           yarn test:reports
-          ng run tools:compodoc-build
+          npx nx run tools:compodoc-build
           yarn generate:changelog
           yarn e2e:headless:report
 
