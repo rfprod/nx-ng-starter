@@ -86,7 +86,7 @@ jobs:
       - name: Unit test all (with code coverage)
         run: |
           npx nx run-many --target=test --all --pass-with-no-tests --code-coverage=true --watch=false --run-in-band --ci
-          ng run tools:coverage-stats
+          npx nx run tools:coverage-stats
           cat ./tools/ts/UNIT_COVERAGE.md
 
       - name: Build all (production)
