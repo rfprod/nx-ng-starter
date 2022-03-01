@@ -70,7 +70,8 @@
           "options": {
             "jestConfig": "apps/api/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/apps/api"]
         }
       },
       "prefix": "app",
@@ -94,7 +95,8 @@
           "options": {
             "jestConfig": "libs/backend-auth/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/backend-auth"]
         }
       },
       "projectType": "library",
@@ -116,7 +118,8 @@
           "options": {
             "jestConfig": "libs/backend-diagnostics/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/backend-diagnostics"]
         }
       },
       "projectType": "library",
@@ -138,7 +141,8 @@
           "options": {
             "jestConfig": "libs/backend-gql/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/backend-gql"]
         }
       },
       "projectType": "library",
@@ -160,7 +164,8 @@
           "options": {
             "jestConfig": "libs/backend-grpc/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/backend-grpc"]
         }
       },
       "projectType": "library",
@@ -193,7 +198,8 @@
           "options": {
             "jestConfig": "libs/backend-interfaces/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/backend-interfaces"]
         }
       },
       "projectType": "library",
@@ -216,7 +222,8 @@
           "options": {
             "jestConfig": "libs/backend-logger/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/backend-logger"]
         }
       },
       "projectType": "library",
@@ -238,7 +245,8 @@
           "options": {
             "jestConfig": "libs/backend-websocket/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/backend-websocket"]
         }
       },
       "projectType": "library",
@@ -379,7 +387,8 @@
               "apps/client/src/styles.scss",
               "libs/client-core/src/lib/styles/styles.scss"
             ]
-          }
+          },
+          "outputs": ["coverage/libs/client"]
         }
       },
       "prefix": "app",
@@ -407,7 +416,8 @@
           "options": {
             "jestConfig": "libs/client-chatbot/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/client-chatbot"]
         }
       },
       "prefix": "app",
@@ -430,7 +440,8 @@
           "options": {
             "jestConfig": "libs/client-core/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/client-core"]
         }
       },
       "prefix": "app",
@@ -490,7 +501,8 @@
           "options": {
             "jestConfig": "libs/client-core-components/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/client-core-components"]
         }
       },
       "prefix": "app",
@@ -579,7 +591,8 @@
           "options": {
             "jestConfig": "libs/client-diagnostics/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/client-diagnostics"]
         }
       },
       "prefix": "app",
@@ -665,7 +678,8 @@
           "options": {
             "jestConfig": "libs/client-gql/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/client-gql"]
         }
       },
       "prefix": "app",
@@ -693,7 +707,8 @@
           "options": {
             "jestConfig": "libs/client-grpc/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/client-grpc"]
         }
       },
       "prefix": "app",
@@ -716,7 +731,8 @@
           "options": {
             "jestConfig": "libs/client-material/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/client-material"]
         }
       },
       "prefix": "app",
@@ -744,7 +760,8 @@
           "options": {
             "jestConfig": "libs/client-services/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/client-services"]
         }
       },
       "prefix": "app",
@@ -772,7 +789,8 @@
           "options": {
             "jestConfig": "libs/client-sidebar/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/client-sidebar"]
         }
       },
       "prefix": "app",
@@ -795,7 +813,8 @@
           "options": {
             "jestConfig": "libs/client-store/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/client-store"]
         }
       },
       "prefix": "app",
@@ -991,7 +1010,8 @@
           "options": {
             "jestConfig": "libs/client-translate/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/client-translate"]
         }
       },
       "prefix": "app",
@@ -1019,7 +1039,8 @@
           "options": {
             "jestConfig": "libs/client-unit-testing/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/client-unit-testing"]
         }
       },
       "prefix": "app",
@@ -1047,7 +1068,8 @@
           "options": {
             "jestConfig": "libs/client-util/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/libs/client-util"]
         }
       },
       "prefix": "app",
@@ -1269,7 +1291,8 @@
           "options": {
             "jestConfig": "apps/documentation/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/apps/documentation"]
         }
       },
       "prefix": "app",
@@ -1419,7 +1442,8 @@
           "options": {
             "jestConfig": "apps/elements/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/apps/elements"]
         }
       },
       "prefix": "app",
@@ -1520,7 +1544,8 @@
           "options": {
             "jestConfig": "apps/elements-testing/jest.config.js",
             "passWithNoTests": true
-          }
+          },
+          "outputs": ["coverage/apps/elements-testing"]
         }
       },
       "projectType": "application",

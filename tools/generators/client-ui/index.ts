@@ -67,7 +67,8 @@ const updateProjectConfig =
   (tree: Tree, context: SchematicContext) => {
     const projectConfig: IProjectConfig = getProjectConfig(tree, schema.name);
     projectConfig.architect.lint.builder = '@angular-eslint/builder:lint';
-    projectConfig.architect.lint.options.lintFilePatterns = [`libs/${schema.name}/src/**/*.ts`];
+    projectConfig.architect.lint.options.eslintConfig = `libs/${schema.name}/.eslintrc.json`;
+    projectConfig.architect.lint.options.lintFilePatterns = [`libs/${schema.name}/**/*.ts`];
 
     const projectRoot = `${process.cwd()}`;
     const angularJsonPath = `${projectRoot}/angular.json`;
