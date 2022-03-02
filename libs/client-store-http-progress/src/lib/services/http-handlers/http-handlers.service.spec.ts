@@ -5,7 +5,7 @@ import { AppClientTranslateModule } from '@app/client-translate';
 import { getTestBedConfig, newTestBedMetadata, spyOnFunctions, TClassMemberFunctionSpiesObject } from '@app/client-unit-testing';
 import { HTTP_STATUS } from '@app/client-util';
 import { Store } from '@ngxs/store';
-import { Apollo } from 'apollo-angular';
+import { Apollo, ApolloModule } from 'apollo-angular';
 import { ExecutionResult, GraphQLError } from 'graphql';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, concatMap, map, tap } from 'rxjs/operators';
@@ -17,7 +17,7 @@ import { AppHttpHandlersService } from './http-handlers.service';
 
 describe('AppHttpHandlersService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [AppClientTranslateModule.forRoot(), AppHttpProgressStoreModule.forRoot()],
+    imports: [ApolloModule, AppClientTranslateModule.forRoot(), AppHttpProgressStoreModule.forRoot()],
     providers: [toasterServiceProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
