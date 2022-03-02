@@ -9,14 +9,14 @@ import {
 } from '@app/client-store-http-progress';
 import { AppClientTranslateModule } from '@app/client-translate';
 import { flushHttpRequests, getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
-import { Apollo } from 'apollo-angular';
+import { Apollo, ApolloModule } from 'apollo-angular';
 import { of } from 'rxjs';
 
 import { AppHttpApiService } from './http-api.service';
 
 describe('AppHttpApiService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [AppClientTranslateModule, AppHttpProgressStoreModule.forRoot()],
+    imports: [ApolloModule, AppClientTranslateModule, AppHttpProgressStoreModule.forRoot()],
     providers: [...httpProgressModuleProviders, toasterServiceProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
