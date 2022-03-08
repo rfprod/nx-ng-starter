@@ -4,7 +4,7 @@
     "api": {
       "architect": {
         "build": {
-          "builder": "@nrwl/node:build",
+          "builder": "@nrwl/node:webpack",
           "configurations": {
             "firebase": {
               "extractLicenses": true,
@@ -52,7 +52,7 @@
           }
         },
         "serve": {
-          "builder": "@nrwl/node:execute",
+          "builder": "@nrwl/node:node",
           "configurations": {
             "firebase": {
               "buildTarget": "api:build:firebase"
@@ -1606,7 +1606,7 @@
     "server-prod": {
       "architect": {
         "build": {
-          "builder": "@nrwl/node:build",
+          "builder": "@nrwl/node:webpack",
           "configurations": {
             "production": {
               "extractLicenses": true,
@@ -1637,7 +1637,7 @@
           "outputs": ["{options.outputFile}"]
         },
         "serve": {
-          "builder": "@nrwl/node:execute",
+          "builder": "@nrwl/node:node",
           "options": {
             "buildTarget": "server-prod:build"
           }
