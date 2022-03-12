@@ -1,21 +1,18 @@
+const jestPresetAngularSerializers = require('jest-preset-angular/build/serializers');
+
 module.exports = {
-  displayName: 'client-d3-charts',
   preset: '../../jest.preset.js',
+  coverageDirectory: '../../coverage/libs/client-d3-charts',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  globals: {
-    'ts-jest': {
-      tsconfig: '<rootDir>/tsconfig.spec.json',
-      stringifyContentPathRegex: '\\.(html|svg)$',
+  snapshotSerializers: jestPresetAngularSerializers,
+  displayName: 'client-d3-charts',
+  coverageThreshold: {
+    // TODO: bump coverage thresholds
+    global: {
+      branches: 0,
+      functions: 0,
+      lines: 0,
+      statements: 0,
     },
   },
-  coverageDirectory: '../../coverage/libs/client-d3-charts',
-  transform: {
-    '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
-  },
-  transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
-  snapshotSerializers: [
-    'jest-preset-angular/build/serializers/no-ng-attributes',
-    'jest-preset-angular/build/serializers/ng-snapshot',
-    'jest-preset-angular/build/serializers/html-comment',
-  ],
 };
