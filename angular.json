@@ -1663,7 +1663,7 @@
           "options": {
             "commands": [
               {
-                "command": "npx compodoc -p tsconfig.compodoc.json -d ./dist/compodoc; cp -r ./dist/compodoc ./dist/apps/documentation/assets",
+                "command": "compodoc -p tsconfig.compodoc.json -d ./dist/compodoc; cp -r ./dist/compodoc ./dist/apps/documentation/assets",
                 "forwardAllArgs": false
               }
             ]
@@ -1674,7 +1674,7 @@
           "options": {
             "commands": [
               {
-                "command": "npx compodoc -p tsconfig.compodoc.json -s",
+                "command": "compodoc -p tsconfig.compodoc.json -s",
                 "forwardAllArgs": false
               }
             ]
