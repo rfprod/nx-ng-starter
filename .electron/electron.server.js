@@ -12,32 +12,6 @@
 process.title = 'electron-server';
 
 /**
- * Server usage examples.
- */
-const usageExamples = `
-##
-# SIMPLE PRODUCTION SERVER FOR CLIENT APPS
-# USAGE EXAMPLES
-#
-# SERVE A SPECIFIC APP
-# - command: node server.prod.js <APP_ALIAS>
-# - description: to start a specific app by it's alias provide an argument with application name as in ./apps/ directory relative to project root.
-#
-# SERVE THE DEFAULT APP
-# - command: node server.prod.js
-# - description: starts server serving default application - client dist.
-#
-# SERVE DOCUMENTATION APP
-# - command: node server.prod.js documentation
-# - description: starts server serving documentation app dist.
-#
-# SERVE ELEMENTS APP
-# - command: node server.prod.js elements
-# - description: starts server serving elements app dist.
-##
-`;
-
-/**
  * @name cwd
  * @constant
  * @summary Current directory of the main Server script - simple-production-server.js
@@ -167,8 +141,7 @@ const port = process.env.PORT || config.defaultPort;
  */
 const serverStartedMessage = `
 ##
-# SIMPLE PRODUCTION SERVER
-# SERVEED
+# ELECTRON SERVER
 #
 # - serving dist: ${appDistPath}
 # - listening on port: ${port}
@@ -177,7 +150,7 @@ const serverStartedMessage = `
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console -- needed here for debugging
-  console.log(usageExamples, '\n', serverStartedMessage);
+  console.log(serverStartedMessage);
 });
 
 /**
