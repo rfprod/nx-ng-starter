@@ -9,7 +9,7 @@ This library was generated with [Nx](https://nx.dev).
 Install the package
 
 ```bash
-yarn add @nx-ng-starter/d3-charts
+yarn add @nx-ng-starter/d3-charts d3 @types/d3 @types/d3-shape
 ```
 
 Import the charts module
