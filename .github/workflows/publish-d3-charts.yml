@@ -60,7 +60,7 @@ jobs:
         if: steps.changes.outputs.d3charts == 'true'
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTOMATION_TOKEN }}" > ~/.npmrc
-          cd ./libs/client-d3-charts
+          cd ./dist/libs/client-d3-charts
           npm publish --access public
           find ~/.npmrc -exec shred -fuz {} +
         env:
