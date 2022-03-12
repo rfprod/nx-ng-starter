@@ -12,14 +12,6 @@
 process.title = 'electron-server';
 
 /**
- * @name cwd
- * @constant
- * @summary Current directory of the main Server script - simple-production-server.js
- * @description Correct root path for all setups, it should be used for all file references for the server and its modules like filePath: cwd + '/actual/file.extension'. Built Electron app contains actual app in resources/app(.asar) subdirectory, so it is essential to prefer __dirname usage over process.cwd() to get the value.
- */
-const cwd = __dirname;
-
-/**
  * @name express
  * @constant
  * @summary Express server
@@ -72,7 +64,7 @@ const config = {
   httpSuccessStatus: 200,
 };
 
-const appDistPath = `${cwd}/dist/apps/client`;
+const appDistPath = `${__dirname}/../dist/apps/client`;
 
 /**
  * Application distributive existence condition.
