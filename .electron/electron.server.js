@@ -141,7 +141,7 @@ const serverStartedMessage = `
 `;
 
 app.listen(port, () => {
-  // eslint-disable-next-line no-console -- needed here for debugging
+  // eslint-disable-next-line no-console -- print debug output
   console.log(serverStartedMessage);
 });
 
@@ -152,7 +152,7 @@ app.listen(port, () => {
  */
 function terminator(sig) {
   if (typeof sig === 'string') {
-    // eslint-disable-next-line no-console -- needed here for debugging
+    // eslint-disable-next-line no-console -- print debug output
     console.log(`\n${Date(Date.now())}: Received signal ${sig} - terminating app...\n`);
     process.exit(0);
   }
