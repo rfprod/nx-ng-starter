@@ -95,9 +95,7 @@ jobs:
           cache-name: workspace-cache
         with:
           path: |
-            ~/.npm
-            ${{ steps.get-variables.outputs.yarncachedir }}
-            **/node_modules
+            ./node_modules
             /tmp/nx
             /tmp/jest_rs
             ./angular
