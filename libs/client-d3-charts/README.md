@@ -4,8 +4,6 @@ This library was generated with [Nx](https://nx.dev).
 
 ## Usage
 
-### As a package
-
 Install the package
 
 ```bash
@@ -40,12 +38,6 @@ import {
   AppForceDirectedChartComponent,
   AppBarChartComponent,
 } from '@nx-ng-starter/d3-charts';
-```
-
-### As a library within the project
-
-```typescript
-import { AppClientD3ChartsModule } from '@app/client-d3-charts';
 ```
 
 ## Commands reference
