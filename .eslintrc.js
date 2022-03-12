@@ -168,6 +168,7 @@ module.exports = {
         'plugin:@typescript-eslint/recommended',
         'prettier',
         'plugin:eslint-comments/recommended',
+        'plugin:@angular-eslint/template/process-inline-templates',
       ],
       plugins: [
         'prettier',
@@ -322,7 +323,7 @@ module.exports = {
           {
             ignoreNumericLiteralTypes: true,
             ignoreReadonlyClassProperties: true,
-            ignore: [-1, 0, 1], // ignore -1, and binary
+            ignore: [-1, 0, 1], // ignore -1, binary
             ignoreEnums: true, // ignore enumerators so that numeric values can be grouped via enums instead of constants,
           },
         ],

@@ -1,0 +1,106 @@
+{
+  "extends": ["../../.eslintrc.js", "../../.eslintrc.angular.js"],
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    { "files": ["*.html"], "extends": ["plugin:@nrwl/nx/angular-template"], "rules": {} },
+    {
+      "files": ["**/*chart.util.ts"],
+      "rules": {
+        "@typescript-eslint/no-magic-numbers": [
+          "error",
+          {
+            "ignoreNumericLiteralTypes": true,
+            "ignoreReadonlyClassProperties": true,
+            "ignore": [-1, 0, 1, 2], // ignore -1, binary, and 2 as a common divider/multiplier
+            "ignoreEnums": true // ignore enumerators so that numeric values can be grouped via enums instead of constants,
+          }
+        ],
+        "max-lines-per-function": ["error", { "max": 70, "skipBlankLines": true, "skipComments": true }],
+        "@typescript-eslint/naming-convention": [
+          "error", // rule reference https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/naming-convention.md
+          {
+            "selector": "default",
+            "format": ["camelCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "variable",
+            "format": ["camelCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "parameter",
+            "format": ["camelCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "objectLiteralProperty",
+            "format": ["camelCase", "StrictPascalCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "property",
+            "format": ["camelCase", "StrictPascalCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "function",
+            "format": ["camelCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "enum",
+            "format": ["UPPER_CASE"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "enumMember",
+            "format": ["UPPER_CASE"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "memberLike",
+            "modifiers": ["private"],
+            "format": ["camelCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "typeAlias",
+            "prefix": ["T"],
+            "format": ["StrictPascalCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "typeParameter",
+            "format": ["StrictPascalCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "interface",
+            "prefix": ["I"],
+            "format": ["StrictPascalCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          },
+          {
+            "selector": "class",
+            "format": ["StrictPascalCase"],
+            "leadingUnderscore": "forbid",
+            "trailingUnderscore": "forbid"
+          }
+        ]
+      }
+    }
+  ]
+}

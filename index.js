@@ -90,7 +90,7 @@ if (handleSquirrelEvent()) {
 /**
  * Instantiate Express App
  */
-app.server = require(__dirname + '/server.prod.js');
+app.server = require(__dirname + '/.electron/electron.server.js');
 
 /**
  * Catch uncaught exceptions

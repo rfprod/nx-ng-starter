@@ -212,6 +212,10 @@ const clientConstraints = [
     ],
   },
   {
+    sourceTag: 'scope:client-d3-charts',
+    onlyDependOnLibsWithTags: [],
+  },
+  {
     sourceTag: 'scope:client-sidebar',
     onlyDependOnLibsWithTags: [
       'scope:client-store',
