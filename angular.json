@@ -545,6 +545,46 @@
       "sourceRoot": "apps/client-core-components-e2e/src",
       "tags": ["scope:client-core-components-e2e", "type:e2e"]
     },
+    "client-d3-charts": {
+      "architect": {
+        "build": {
+          "builder": "@nrwl/angular:package",
+          "configurations": {
+            "development": {
+              "tsConfig": "libs/client-d3-charts/tsconfig.lib.json"
+            },
+            "production": {
+              "tsConfig": "libs/client-d3-charts/tsconfig.lib.prod.json"
+            }
+          },
+          "defaultConfiguration": "production",
+          "options": {
+            "project": "libs/client-d3-charts/ng-package.json"
+          },
+          "outputs": ["dist/libs/client-d3-charts"]
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "eslintConfig": "libs/client-d3-charts/.eslintrc.json",
+            "lintFilePatterns": ["libs/client-d3-charts/src/**/*.ts"]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "options": {
+            "jestConfig": "libs/client-d3-charts/jest.config.js",
+            "passWithNoTests": true
+          },
+          "outputs": ["coverage/libs/client-d3-charts"]
+        }
+      },
+      "prefix": "app",
+      "projectType": "library",
+      "root": "libs/client-d3-charts",
+      "sourceRoot": "libs/client-d3-charts/src",
+      "tags": ["scope:client-d3-charts", "type:ui"]
+    },
     "client-diagnostics": {
       "architect": {
         "build-storybook": {

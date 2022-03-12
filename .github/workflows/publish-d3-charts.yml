@@ -1,0 +1,67 @@
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: publish-d3-charts
+
+on:
+  push:
+    branches: [main]
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.head_ref }}.${{ github.sha }}.publish-d3-charts
+  cancel-in-progress: true
+
+jobs:
+  publish-d3-charts:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - name: Don't save Bash session history
+        run: unset HISTFILE
+
+      - name: Checkout sources
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Detect changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            d3charts:
+              - 'libs/client-d3-charts/package.json'
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        if: steps.changes.outputs.d3charts == 'true'
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        if: steps.changes.outputs.d3charts == 'true'
+        run: |
+          yarn install
+          sudo apt update
+          sudo apt install secure-delete
+
+      - name: Build the library
+        if: steps.changes.outputs.d3charts == 'true'
+        run: npx nx build client-d3-charts
+
+      - name: Publish the package (npmjs.org)
+        if: steps.changes.outputs.d3charts == 'true'
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTOMATION_TOKEN }}" > ~/.npmrc
+          cd ./libs/client-d3-charts
+          npm publish --access public
+          find ~/.npmrc -exec shred -fuz {} +
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTOMATION_TOKEN }}
