@@ -9,7 +9,7 @@ This library was generated with [Nx](https://nx.dev).
 Install the package
 
 ```bash
-yarn add @nx-ng-starter/d3-charts d3 @types/d3 @types/d3-shape
+yarn add @rfprodz/d3-charts d3 @types/d3 @types/d3-shape
 ```
 
 Import the charts module
@@ -42,12 +42,7 @@ Use chart components in templates
 Use chart components in classes
 
 ```typescript
-import {
-  AppPieChartComponent,
-  AppRadarChartComponent,
-  AppForceDirectedChartComponent,
-  AppBarChartComponent,
-} from '@nx-ng-starter/d3-charts';
+import { AppPieChartComponent, AppRadarChartComponent, AppForceDirectedChartComponent, AppBarChartComponent } from '@rfprodz/d3-charts';
 ```
 
 ## Commands reference
