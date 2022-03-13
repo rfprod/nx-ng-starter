@@ -25,12 +25,14 @@ interface IInputChanges {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppPieChartComponent implements AfterViewInit, OnChanges {
+  @Input() public chartId = 'pie-0';
+
   @Input() public data: IPieChartDataNode[] = [];
 
   /**
    * D3 chart view child reference.
    */
-  @ViewChild('canvas') private readonly canvas?: ElementRef<HTMLCanvasElement>;
+  @ViewChild('container') private readonly container?: ElementRef<HTMLCanvasElement>;
 
   constructor(@Inject(DOCUMENT) private readonly doc: Document, @Inject(D3_CHART_FACTORY) private readonly d3Factory: ID3ChartFactory) {}
 
@@ -52,9 +54,9 @@ export class AppPieChartComponent implements AfterViewInit, OnChanges {
   }
 
   private drawChart() {
-    if (typeof this.canvas !== 'undefined') {
+    if (typeof this.container !== 'undefined') {
       const options = this.chartOptions();
-      this.d3Factory.drawPieChart(this.canvas, this.data, options);
+      this.d3Factory.drawPieChart(this.container, this.data, options);
     }
   }
 

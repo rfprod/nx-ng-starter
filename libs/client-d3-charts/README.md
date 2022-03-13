@@ -2,7 +2,23 @@
 
 This library was generated with [Nx](https://nx.dev).
 
+## Development commands reference
+
+Run `nx test client-d3-charts` to execute the unit tests.
+
+Run `nx lint client-d3-charts` to lint the library.
+
+Run `nx build client-d3-charts` to build the library.
+
 ## Usage
+
+### Within the development workspace
+
+Import the charts module
+
+```typescript
+import { AppClientD3ChartsModule } from '@app/client-d3-charts';
+```
 
 ### As an external package
 
@@ -18,15 +34,9 @@ Import the charts module
 import { AppClientD3ChartsModule } from '@rfprodz/d3-charts';
 ```
 
-### Within the development workspace
+### Use chart components
 
-Import the charts module
-
-```typescript
-import { AppClientD3ChartsModule } from '@app/client-d3-charts';
-```
-
-Use chart components in templates
+#### in templates
 
 ```html
 <!-- bar chart -->
@@ -39,16 +49,14 @@ Use chart components in templates
 <app-force-directed-chart></app-force-directed-chart>
 ```
 
-Use chart components in classes
+#### in classes
 
 ```typescript
 import { AppPieChartComponent, AppRadarChartComponent, AppForceDirectedChartComponent, AppBarChartComponent } from '@rfprodz/d3-charts';
 ```
 
-## Commands reference
+### See the chart examples component
 
-Run `nx test client-d3-charts` to execute the unit tests.
-
-Run `nx lint client-d3-charts` to lint the library.
-
-Run `nx build client-d3-charts` to build the library.
+```typescript
+import { AppChartExamplesComponent } from '@rfprodz/d3-charts';
+```

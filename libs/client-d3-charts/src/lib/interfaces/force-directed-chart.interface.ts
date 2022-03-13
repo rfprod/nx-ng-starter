@@ -2,13 +2,14 @@ import * as d3 from 'd3';
 
 export interface IForceDirectedGraphDomain {
   index: number;
-  domain: string;
+  name: string;
   value: number;
 }
 
 export interface IForceDirectedGraphEntity {
   index: number;
   name: string;
+  domain: string;
   img: string;
   linksCount: number;
 }

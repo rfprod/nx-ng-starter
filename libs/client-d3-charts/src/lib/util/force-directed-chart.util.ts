@@ -104,7 +104,7 @@ const applyChartData = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unkno
       const baseValue = 30;
       return baseValue + val.linksCount * 2;
     })
-    .attr('xlink:href', function (val) {
+    .attr('xlink:href', val => {
       return val.img;
     });
 };

@@ -25,10 +25,18 @@ export class AppSidebarRootComponent {
   }
 
   /**
-   * Closes sidebar, and navigate to info page.
+   * Closes the sidebar, and navigates to the info view.
    */
   public navigateToInfoPage(): void {
     this.sidebarCloseHandler();
     void this.store.dispatch(new Navigate([{ outlets: { primary: 'info' } }]));
+  }
+
+  /**
+   * Closes the sidebar, and navigates to the chart examples view.
+   */
+  public navigateToChartExamples(): void {
+    this.sidebarCloseHandler();
+    void this.store.dispatch(new Navigate([{ outlets: { primary: 'charts' } }]));
   }
 }

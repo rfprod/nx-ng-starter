@@ -6,3 +6,14 @@
     height: 150px;
   }
 }
+
+:host {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+
+  .container {
+    flex: 0 1 auto;
+  }
+}

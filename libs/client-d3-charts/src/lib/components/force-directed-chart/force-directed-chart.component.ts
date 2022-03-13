@@ -25,7 +25,7 @@ interface IInputChanges {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppForceDirectedChartComponent implements AfterViewInit, OnChanges {
-  @Input() public chartId = '0';
+  @Input() public chartId = 'force-0';
 
   @Input() public data: IForceDirectedChartData = {
     domains: [],
