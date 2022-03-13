@@ -32,8 +32,7 @@ export const drawPieChart = (canvas: ElementRef<HTMLCanvasElement>, data: IPieCh
   if (context !== null && typeof context !== 'undefined' && typeof canvas !== 'undefined') {
     const width = canvas.nativeElement.width;
     const height = canvas.nativeElement.height;
-    const divisor = 2;
-    const radius = Math.min(width, height) / divisor;
+    const radius = Math.min(width, height) / 2;
 
     context.clearRect(0, 0, width, height);
 
@@ -49,9 +48,9 @@ export const drawPieChart = (canvas: ElementRef<HTMLCanvasElement>, data: IPieCh
 
     const createPieChart = pie<IPieChartDataNode>().value(datum => datum.y);
 
-    const scale = 1.25;
-    context.translate((width / divisor - radius) / scale, (height / divisor - radius / divisor) / scale);
+    context.translate(width / 2, height / 2);
 
+    const scale = 2;
     context.transform(scale, 0, 0, scale, 0, 0);
 
     const arcs = createPieChart(data);

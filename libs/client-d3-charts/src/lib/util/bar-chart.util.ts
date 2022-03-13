@@ -15,7 +15,7 @@ const defaultChartConfig: IBarChartOptions = Object.freeze({
   xAxisPadding: 0.4,
   xAxisTitle: 'x',
   yAxisTitle: 'y',
-  labelTextWrapWidth: 20, // the number of pixels after which a label needs to be given a new line
+  labelTextWrapWidth: 25, // the number of pixels after which a label needs to be given a new line
   color: d3.scaleOrdinal(d3.schemeCategory10),
 });
 

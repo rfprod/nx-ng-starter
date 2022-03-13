@@ -184,6 +184,7 @@ const clientConstraints = [
       'scope:client-unit-testing',
       'scope:proto',
       'scope:client-core',
+      'scope:client-d3-charts',
       'scope:client-material',
       'scope:client-store',
       'scope:client-store-http-api',

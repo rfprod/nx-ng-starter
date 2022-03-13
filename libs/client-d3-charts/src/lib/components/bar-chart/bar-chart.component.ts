@@ -25,7 +25,7 @@ interface IInputChanges {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppBarChartComponent implements AfterViewInit, OnChanges {
-  @Input() public chartId = '0';
+  @Input() public chartId = 'bar-0';
 
   @Input() public data: TBarChartData = [];
 
