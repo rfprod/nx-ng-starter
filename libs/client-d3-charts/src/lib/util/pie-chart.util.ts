@@ -38,19 +38,19 @@ export const drawPieChart = (canvas: ElementRef<HTMLCanvasElement>, data: IPieCh
 
     const createArc = arc<PieArcDatum<IPieChartDataNode>>()
       .outerRadius(radius - PIE_CHART_ARC_CONFIG.ARC_INNER_RADIUS)
-      .innerRadius(PIE_CHART_ARC_CONFIG.ARC_OUTER_RADIUS)
+      .innerRadius(PIE_CHART_ARC_CONFIG.ARC_INNER_RADIUS)
       .context(context);
 
     const createLabel = arc<PieArcDatum<IPieChartDataNode>>()
       .outerRadius(radius - PIE_CHART_ARC_CONFIG.LABEL_INNER_RADIUS)
-      .innerRadius(radius - PIE_CHART_ARC_CONFIG.LABEL_OUTER_RADIUS)
+      .innerRadius(PIE_CHART_ARC_CONFIG.LABEL_INNER_RADIUS)
       .context(context);
 
     const createPieChart = pie<IPieChartDataNode>().value(datum => datum.y);
 
     context.translate(width / 2, height / 2);
 
-    const scale = 2;
+    const scale = 1.5;
     context.transform(scale, 0, 0, scale, 0, 0);
 
     const arcs = createPieChart(data);

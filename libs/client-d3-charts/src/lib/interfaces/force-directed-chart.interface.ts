@@ -9,17 +9,17 @@ export interface IForceDirectedGraphDomain {
 export interface IForceDirectedGraphEntity {
   index: number;
   name: string;
-  domain: string;
+  domains: string[];
   img: string;
   linksCount: number;
 }
 
 export interface IForceDirectedChartDataNode extends d3.SimulationNodeDatum {
   index: number;
-  domain?: string;
+  domains?: string[];
   value?: number;
   name?: string;
-  pic?: string;
+  img?: string;
   linksCount?: number;
 }
 

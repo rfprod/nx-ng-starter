@@ -62,34 +62,41 @@ export class AppChartExamplesComponent {
     const input = {
       domains: ['first', 'second', 'third'],
       entities: [
-        { name: 'one', domain: 'first', img: '' },
-        { name: 'two', domain: 'second', img: '' },
-        { name: 'three', domain: 'third', img: '' },
-        { name: 'four', domain: 'first', img: '' },
-        { name: 'five', domain: 'second', img: '' },
-        { name: 'six', domain: 'third', img: '' },
+        { name: 'one', domains: ['first'], img: '' },
+        { name: 'two', domains: ['second'], img: '' },
+        { name: 'three', domains: ['third'], img: '' },
+        { name: 'four', domains: ['first', 'second'], img: '' },
+        { name: 'five', domains: ['second'], img: '' },
+        { name: 'six', domains: ['third', 'second'], img: '' },
+        { name: 'seven', domains: ['second'], img: '' },
+        { name: 'eight', domains: ['third'], img: '' },
       ],
     };
     const domains: IForceDirectedChartData['domains'] = input.domains.map((name, index) => ({ index, name, value: 1 }));
     const entities: IForceDirectedChartData['entities'] = input.entities.map((app, index) => ({
       index: index,
       name: app.name,
-      domain: app.domain,
+      domains: [...app.domains],
       img: app.img,
       linksCount: 0,
     }));
-    const nodes: IForceDirectedChartDataNode[] = [...domains, ...entities];
+    const nodes: IForceDirectedChartDataNode[] = [...entities];
     const links: IForceDirectedChartData['links'] = entities
       .map(entity => {
-        const source = domains.find(value => value.name === entity.domain)?.index ?? -1;
-        const target = entity.index;
-        const link = { source, target };
-        return link;
+        return entity.domains.map(domain => {
+          const source = domains.find(value => domain === value.name)?.index ?? -1;
+          const target = entity.index;
+          return { source, target };
+        });
       })
+      .reduce((accumulator, item) => (Array.isArray(item) ? [...accumulator, ...item] : [...accumulator, item]), [])
       .filter(link => link.source !== -1 && link.target !== -1 && typeof link.target !== 'undefined');
     const chartData: IForceDirectedChartData = {
       domains,
-      entities,
+      entities: entities.map(item => ({
+        ...item,
+        linksCount: links.reduce((acc, link) => (link.target === item.index ? acc + 1 : acc), 0),
+      })),
       links,
       nodes,
     };

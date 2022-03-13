@@ -169,9 +169,7 @@ const createNodes = (
       const linksCountMultiplier = 1.001;
       return typeof val.value !== 'undefined' ? 2 + val.value * valueMultiplier : 2 + (val.linksCount ?? 0) * linksCountMultiplier;
     })
-    .style('fill', val => {
-      return typeof val.value !== 'undefined' ? '#f00000' : `url(#img-${val.index})`;
-    })
+    .style('fill', val => (typeof val.value !== 'undefined' ? '#f00000' : `url(#img-${val.index})`))
     .call(
       d3
         .drag<SVGCircleElement, IForceDirectedChartDataNode>()
@@ -225,7 +223,7 @@ const createText = (svg: d3.Selection<SVGSVGElement, unknown, HTMLElement, unkno
     .data(data.nodes)
     .enter()
     .append('text')
-    .text(val => val.domain ?? val.name ?? '');
+    .text(val => val.name ?? `N/A (id. ${val.index})`);
 };
 
 export const drawForceDirectedChart = (

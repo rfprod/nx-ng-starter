@@ -29,6 +29,8 @@ describe('AppSidebarRootComponent', () => {
   let store: Store;
   let storeDispatchSpy: jest.SpyInstance;
 
+  let sidebarCloseHandlerSpy: jest.SpyInstance;
+
   beforeEach(
     waitForAsync(() => {
       void TestBed.configureTestingModule(testBedConfig)
@@ -38,6 +40,7 @@ describe('AppSidebarRootComponent', () => {
           component = fixture.componentInstance;
           store = TestBed.inject(Store);
           storeDispatchSpy = jest.spyOn(store, 'dispatch');
+          sidebarCloseHandlerSpy = jest.spyOn(component, 'sidebarCloseHandler');
           fixture.detectChanges();
         });
     }),
@@ -54,6 +57,13 @@ describe('AppSidebarRootComponent', () => {
 
   it('navigateToInfoPage should call store dispatch', () => {
     component.navigateToInfoPage();
+    expect(sidebarCloseHandlerSpy).toHaveBeenCalled();
     expect(storeDispatchSpy).toHaveBeenCalledWith(new Navigate([{ outlets: { primary: 'info' } }]));
+  });
+
+  it('navigateToChartExamples should call store dispatch', () => {
+    component.navigateToChartExamples();
+    expect(sidebarCloseHandlerSpy).toHaveBeenCalled();
+    expect(storeDispatchSpy).toHaveBeenCalledWith(new Navigate([{ outlets: { primary: 'charts' } }]));
   });
 });
