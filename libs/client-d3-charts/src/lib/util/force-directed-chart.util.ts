@@ -37,10 +37,10 @@ const ticked = (
 ) => {
   if (typeof link !== 'undefined') {
     link
-      .attr('x1', d => (d.source as IForceDirectedChartDataNode).x ?? 0)
-      .attr('y1', d => (d.source as IForceDirectedChartDataNode).y ?? 0)
-      .attr('x2', d => (d.target as IForceDirectedChartDataNode).x ?? 0)
-      .attr('y2', d => (d.target as IForceDirectedChartDataNode).y ?? 0);
+      .attr('x1', d => (d.source as { x: number; y: number }).x ?? 0)
+      .attr('y1', d => (d.source as { x: number; y: number }).y ?? 0)
+      .attr('x2', d => (d.target as { x: number; y: number }).x ?? 0)
+      .attr('y2', d => (d.target as { x: number; y: number }).y ?? 0);
   }
 
   if (typeof node !== 'undefined') {
@@ -159,17 +159,14 @@ const createNodes = (
     .append('circle')
     .attr('class', 'node')
     .attr('r', val => {
-      const baseValue = 25;
-      const valueMultiplier = 3;
-      const linksCountMultiplier = 1.001;
-      return typeof val.value !== 'undefined' ? 2 + val.value * valueMultiplier : baseValue + (val.linksCount ?? 0) * linksCountMultiplier;
+      const base = 5;
+      return base + (val.value ?? 0) + (val.linksCount ?? 0) * 2;
     })
     .style('stroke-width', val => {
-      const valueMultiplier = 3;
-      const linksCountMultiplier = 1.001;
-      return typeof val.value !== 'undefined' ? 2 + val.value * valueMultiplier : 2 + (val.linksCount ?? 0) * linksCountMultiplier;
+      const base = 5;
+      return base + (val.value ?? 0) + (val.linksCount ?? 0) * 2;
     })
-    .style('fill', val => (typeof val.value !== 'undefined' ? '#f00000' : `url(#img-${val.index})`))
+    .style('fill', val => (typeof val.img === 'undefined' || val.img === '' ? '#f00000' : `url(${val.img})`))
     .call(
       d3
         .drag<SVGCircleElement, IForceDirectedChartDataNode>()
@@ -184,8 +181,8 @@ const createNodes = (
               const alphaTarget = 0.3;
               force.alphaTarget(alphaTarget).restart();
             }
-            datum.fx = datum.x;
-            datum.fy = datum.y;
+            datum.fx = event.x;
+            datum.fy = event.y;
           },
         )
         .on(
