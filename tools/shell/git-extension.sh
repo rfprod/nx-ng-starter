@@ -65,7 +65,7 @@ checkYarnLockChanges() {
   printGap
 
   local CHANGED
-  CHANGED="$(git diff --name-only HEAD HEAD-1 | grep "yarn.lock")"
+  CHANGED="$(git diff --name-only HEAD HEAD~1 | grep "yarn.lock")"
 
   if [ "$CHANGED" = "yarn.lock" ]; then
     YARN_LOCK_CHANGED=1
