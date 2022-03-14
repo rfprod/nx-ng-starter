@@ -13,6 +13,7 @@ import {
 
 import { IBarChartDataNode, IBarChartOptions, TBarChartData } from '../../interfaces/bar-chart.interface';
 import { D3_CHART_FACTORY, ID3ChartFactory } from '../../providers/d3-chart-factory.provider';
+import { defaultBarChartConfig } from '../../util/bar-chart.util';
 
 interface IInputChanges {
   data?: SimpleChange | null;
@@ -48,7 +49,23 @@ export class AppBarChartComponent implements AfterViewInit, OnChanges {
     };
     const width = Math.min(minWidth, this.doc.body.clientWidth - modifiers.width) - margin.left - margin.right;
     const height = Math.min(width, this.doc.body.clientHeight - margin.top - margin.bottom - modifiers.height);
-    const options: Partial<IBarChartOptions> = { width, height, margin, ...this.options };
+    const yAxisTicks = Math.max(...this.data.map(item => item.value));
+    const pixelsPerCharacter = 4;
+    const options: Partial<IBarChartOptions> = {
+      width,
+      height,
+      margin,
+      yAxisTicks,
+      shift: {
+        xAxisLabelX:
+          defaultBarChartConfig.shift.xAxisLabelX +
+          ((this.options.xAxisTitle ?? defaultBarChartConfig.xAxisTitle).length - 1) * pixelsPerCharacter,
+        xAxisLabelY: 188,
+        yAxisLabelX: -10,
+        yAxisLabelY: -10,
+      },
+      ...this.options,
+    };
     return options;
   }
 

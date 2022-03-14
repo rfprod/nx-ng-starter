@@ -20,6 +20,13 @@ export interface IBarChartOptions {
   xAxisPadding: number;
   xAxisTitle: string;
   yAxisTitle: string;
+  yAxisTicks: number;
+  shift: {
+    xAxisLabelX: number;
+    xAxisLabelY: number;
+    yAxisLabelX: number;
+    yAxisLabelY: number;
+  };
   labelTextWrapWidth: number;
   color: d3.ScaleOrdinal<string, string>;
 }
