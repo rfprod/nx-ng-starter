@@ -26,5 +26,6 @@ export interface IRadarChartOptions {
   opacityCircles: number;
   strokeWidth: number;
   roundStrokes: boolean;
+  transitionDuration: number;
   color: d3.ScaleOrdinal<string, string>;
 }

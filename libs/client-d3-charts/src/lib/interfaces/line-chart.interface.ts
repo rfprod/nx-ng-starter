@@ -1,13 +1,13 @@
 import * as d3 from 'd3';
 
-export interface IBarChartDataNode {
-  title: string;
+export interface ILineChartDataNode {
+  timestamp: number;
   value: number;
 }
 
-export type TBarChartData = IBarChartDataNode[];
+export type TLineChartData = ILineChartDataNode[];
 
-export interface IBarChartOptions {
+export interface ILineChartOptions {
   chartTitle: string;
   width: number;
   height: number;
@@ -18,7 +18,7 @@ export interface IBarChartOptions {
     left: number;
   };
   transitionDuration: number;
-  xAxisPadding: number;
+  dotRadius: number;
   xAxisTitle: string;
   yAxisTitle: string;
   yAxisTicks: number;

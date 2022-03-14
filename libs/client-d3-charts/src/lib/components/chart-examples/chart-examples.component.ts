@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { TBarChartData } from '../../interfaces/bar-chart.interface';
 import { IForceDirectedChartData, IForceDirectedChartDataNode } from '../../interfaces/force-directed-chart.interface';
+import { TLineChartData } from '../../interfaces/line-chart.interface';
 import { IPieChartDataNode } from '../../interfaces/pie-chart.interface';
 import { IRadarChartDataNode } from '../../interfaces/radar-chart.interface';
 
@@ -22,6 +23,26 @@ export class AppChartExamplesComponent {
       { title: 'three', value: 3 },
       { title: 'four', value: 4 },
       { title: 'five', value: 5 },
+    ];
+  }
+
+  /**
+   * Sample line chart data.
+   */
+  public get lineChartData() {
+    const increment = 5000;
+    const multiplier = 2;
+    return <TLineChartData>[
+      { timestamp: new Date().getTime(), value: 1 },
+      { timestamp: new Date().getTime() + increment, value: 10 },
+      { timestamp: new Date().getTime() + increment * multiplier, value: 3 },
+      { timestamp: new Date().getTime() + increment * Math.pow(multiplier, multiplier), value: 5 },
+      { timestamp: new Date().getTime() + increment * Math.pow(multiplier, multiplier) * multiplier, value: 4 },
+      { timestamp: new Date().getTime() + increment * Math.pow(multiplier, multiplier) * Math.pow(multiplier, multiplier), value: 7 },
+      {
+        timestamp: new Date().getTime() + increment * Math.pow(multiplier, multiplier) * Math.pow(multiplier, multiplier) * multiplier,
+        value: 8,
+      },
     ];
   }
 

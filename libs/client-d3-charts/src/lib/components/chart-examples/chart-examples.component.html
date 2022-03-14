@@ -6,6 +6,14 @@
   ></app-bar-chart>
 </div>
 
+<hr [ngStyle]="{ width: '100%' }" />
+
+<div class="container">
+  <app-line-chart [chartId]="'line-example-1'" [data]="lineChartData" [options]="{ chartTitle: 'Example line chart' }"></app-line-chart>
+</div>
+
+<hr [ngStyle]="{ width: '100%' }" />
+
 <div class="container">
   <app-radar-chart
     [chartId]="'radar-example-1'"
@@ -14,9 +22,13 @@
   ></app-radar-chart>
 </div>
 
+<hr [ngStyle]="{ width: '100%' }" />
+
 <div class="container">
   <app-pie-chart [chartId]="'pie-example-1'" [data]="pieChartData" [options]="{ chartTitle: 'Example pie chart' }"></app-pie-chart>
 </div>
+
+<hr [ngStyle]="{ width: '100%' }" />
 
 <div class="container">
   <app-force-directed-chart

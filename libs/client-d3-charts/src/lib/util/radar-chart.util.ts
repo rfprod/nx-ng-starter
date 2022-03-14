@@ -22,6 +22,7 @@ export const defaultRadarChartConfig: IRadarChartOptions = Object.freeze({
   opacityCircles: 0.1, // the opacity of the circles of each blob
   strokeWidth: 2, // the width of the stroke around each blob
   roundStrokes: false, // if true the area and stroke will follow a round path (cardinal-closed)
+  transitionDuration: 200,
   color: d3.scaleOrdinal(d3.schemeCategory10),
 });
 
@@ -51,7 +52,7 @@ const drawCircularGrid = (
   // background circles
   axisGrid
     .selectAll('.levels')
-    .data(d3.range(1, config.levels + 1).reverse())
+    .data(d3.range(1, config.levels + 2).reverse())
     .enter()
     .append('circle')
     .attr('class', 'gridCircle')
@@ -166,7 +167,6 @@ const drawRadarChartBlobs = (
   angleSlice: number,
   g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>,
   data: TRadarChartData,
-  transitionDuration: number,
   config: IRadarChartOptions,
 ) => {
   // the radial line function
@@ -194,14 +194,14 @@ const drawRadarChartBlobs = (
     .on('mouseover', function (d, i) {
       // dim all blobs
       const radarAreaFillOpacity = 0.1;
-      d3.selectAll('.radarArea').transition().duration(transitionDuration).style('fill-opacity', radarAreaFillOpacity);
+      d3.selectAll('.radarArea').transition().duration(config.transitionDuration).style('fill-opacity', radarAreaFillOpacity);
       // bring back the hovered over blob
       const fillOpacity = 0.7;
-      d3.select(this).transition().duration(transitionDuration).style('fill-opacity', fillOpacity);
+      d3.select(this).transition().duration(config.transitionDuration).style('fill-opacity', fillOpacity);
     })
     .on('mouseout', function () {
       // bring back all blobs
-      d3.selectAll('.radarArea').transition().duration(transitionDuration).style('fill-opacity', config.opacityArea);
+      d3.selectAll('.radarArea').transition().duration(config.transitionDuration).style('fill-opacity', config.opacityArea);
     });
   // create the outlines
   blobWrapper
@@ -244,7 +244,6 @@ const appendInvisibleTooltipCircles = (
   data: TRadarChartData,
   radiusScale: d3.ScaleLinear<number, number>,
   angleSlice: number,
-  transitionDuration: number,
   config: IRadarChartOptions,
 ) => {
   // wrapper for the invisible circles on top
@@ -277,16 +276,14 @@ const appendInvisibleTooltipCircles = (
 
       const nodeData = (event.target as unknown as Record<string, IRadarChartDataNode>)['__data__'];
       const tooltipText = `${nodeData.value} events`;
-      tooltip.attr('x', newX).attr('y', newY).text(tooltipText).transition().duration(transitionDuration).style('opacity', 1);
+      tooltip.attr('x', newX).attr('y', newY).text(tooltipText).transition().duration(config.transitionDuration).style('opacity', 1);
     })
     .on('mouseout', function () {
-      tooltip.transition().duration(transitionDuration).style('opacity', 0);
+      tooltip.transition().duration(config.transitionDuration).style('opacity', 0);
     });
 };
 
 export const drawRadarChart = (container: ElementRef<HTMLDivElement>, data: TRadarChartData, options?: Partial<IRadarChartOptions>) => {
-  const transitionDuration = 200;
-
   const config: IRadarChartOptions = { ...defaultRadarChartConfig };
   if (typeof options !== 'undefined') {
     for (const i in options) {
@@ -320,9 +317,9 @@ export const drawRadarChart = (container: ElementRef<HTMLDivElement>, data: TRad
 
   drawAxis(axisGrid, axisNames, radiusScale, maxValue, angleSlice, config);
 
-  drawRadarChartBlobs(radiusScale, angleSlice, g, data, transitionDuration, config);
+  drawRadarChartBlobs(radiusScale, angleSlice, g, data, config);
 
-  appendInvisibleTooltipCircles(g, data, radiusScale, angleSlice, transitionDuration, config);
+  appendInvisibleTooltipCircles(g, data, radiusScale, angleSlice, config);
 
   return config;
 };
