@@ -8,6 +8,7 @@ export interface IRadarChartDataNode {
 export type TRadarChartData = IRadarChartDataNode[][];
 
 export interface IRadarChartOptions {
+  chartTitle: string;
   width: number;
   height: number;
   margin: {

@@ -1,15 +1,23 @@
 <div class="container">
-  <app-bar-chart [chartId]="'bar-example-1'" [data]="barChartData"></app-bar-chart>
+  <app-bar-chart [chartId]="'bar-example-1'" [data]="barChartData" [options]="{ chartTitle: 'Example bar chart' }"></app-bar-chart>
 </div>
 
 <div class="container">
-  <app-radar-chart [chartId]="'radar-example-1'" [data]="radarChartData"></app-radar-chart>
+  <app-radar-chart
+    [chartId]="'radar-example-1'"
+    [data]="radarChartData"
+    [options]="{ chartTitle: 'Example radar chart' }"
+  ></app-radar-chart>
 </div>
 
 <div class="container">
-  <app-pie-chart [chartId]="'pie-example-1'" [data]="pieChartData"></app-pie-chart>
+  <app-pie-chart [chartId]="'pie-example-1'" [data]="pieChartData" [options]="{ chartTitle: 'Example pie chart' }"></app-pie-chart>
 </div>
 
 <div class="container">
-  <app-force-directed-chart [chartId]="'force-directed-example-1'" [data]="forceDirectedChartData"></app-force-directed-chart>
+  <app-force-directed-chart
+    [chartId]="'force-directed-example-1'"
+    [data]="forceDirectedChartData"
+    [options]="{ chartTitle: 'Example force directed chart' }"
+  ></app-force-directed-chart>
 </div>

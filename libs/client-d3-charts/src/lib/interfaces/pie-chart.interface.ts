@@ -9,6 +9,7 @@ export enum PIE_CHART_ARC_CONFIG {
 }
 
 export interface IPieChartOptions {
+  chartTitle: string;
   width: number;
   height: number;
   margin: {
