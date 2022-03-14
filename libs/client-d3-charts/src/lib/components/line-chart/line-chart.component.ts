@@ -11,9 +11,9 @@ import {
   ViewChild,
 } from '@angular/core';
 
-import { IBarChartDataNode, IBarChartOptions, TBarChartData } from '../../interfaces/bar-chart.interface';
+import { ILineChartDataNode, ILineChartOptions, TLineChartData } from '../../interfaces/line-chart.interface';
 import { D3_CHART_FACTORY, ID3ChartFactory } from '../../providers/d3-chart-factory.provider';
-import { defaultBarChartConfig } from '../../util/bar-chart.util';
+import { defaultLineChartConfig } from '../../util/line-chart.util';
 
 interface IInputChanges {
   data?: SimpleChange | null;
@@ -21,17 +21,17 @@ interface IInputChanges {
 }
 
 @Component({
-  selector: 'app-bar-chart',
-  templateUrl: './bar-chart.component.html',
-  styleUrls: ['./bar-chart.component.scss'],
+  selector: 'app-line-chart',
+  templateUrl: './line-chart.component.html',
+  styleUrls: ['./line-chart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppBarChartComponent implements AfterViewInit, OnChanges {
+export class AppLineChartComponent implements AfterViewInit, OnChanges {
   @Input() public chartId = 'bar-0';
 
-  @Input() public data: TBarChartData = [];
+  @Input() public data: TLineChartData = [];
 
-  @Input() public options: Partial<IBarChartOptions> = {};
+  @Input() public options: Partial<ILineChartOptions> = {};
 
   /**
    * D3 chart view child reference.
@@ -51,15 +51,15 @@ export class AppBarChartComponent implements AfterViewInit, OnChanges {
     const height = Math.min(width, this.doc.body.clientHeight - margin.top - margin.bottom - modifiers.height);
     const yAxisTicks = Math.max(...this.data.map(item => item.value));
     const pixelsPerCharacter = 4;
-    const options: Partial<IBarChartOptions> = {
+    const options: Partial<ILineChartOptions> = {
       width,
       height,
       margin,
       yAxisTicks,
       shift: {
         xAxisLabelX:
-          defaultBarChartConfig.shift.xAxisLabelX +
-          ((this.options.xAxisTitle ?? defaultBarChartConfig.xAxisTitle).length - 1) * pixelsPerCharacter,
+          defaultLineChartConfig.shift.xAxisLabelX +
+          ((this.options.xAxisTitle ?? defaultLineChartConfig.xAxisTitle).length - 1) * pixelsPerCharacter,
         xAxisLabelY: 228,
         yAxisLabelX: -10,
         yAxisLabelY: -10,
@@ -72,7 +72,7 @@ export class AppBarChartComponent implements AfterViewInit, OnChanges {
   private drawChart() {
     if (typeof this.container !== 'undefined') {
       const options = this.chartOptions();
-      this.d3Factory.drawBarChart(this.container, this.data, options);
+      this.d3Factory.drawLineChart(this.container, this.data, options);
     }
   }
 
@@ -87,8 +87,8 @@ export class AppBarChartComponent implements AfterViewInit, OnChanges {
    * Redraws chart on changes.
    */
   public ngOnChanges(changes: IInputChanges): void {
-    const data: IBarChartDataNode[][] = changes.data?.currentValue;
-    const options: Partial<IBarChartOptions> = changes.options?.currentValue;
+    const data: ILineChartDataNode[][] = changes.data?.currentValue;
+    const options: Partial<ILineChartOptions> = changes.options?.currentValue;
     if ((typeof data !== 'undefined' && data !== null) || (typeof options !== 'undefined' && options !== null)) {
       this.drawChart();
     }

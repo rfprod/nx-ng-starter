@@ -1,9 +1,9 @@
 import { ElementRef } from '@angular/core';
 import * as d3 from 'd3';
 
-import { IBarChartDataNode, IBarChartOptions, TBarChartData } from '../interfaces/bar-chart.interface';
+import { ILineChartDataNode, ILineChartOptions, TLineChartData } from '../interfaces/line-chart.interface';
 
-export const defaultBarChartConfig: IBarChartOptions = Object.freeze({
+export const defaultLineChartConfig: ILineChartOptions = Object.freeze({
   chartTitle: '',
   width: 600,
   height: 600,
@@ -14,7 +14,7 @@ export const defaultBarChartConfig: IBarChartOptions = Object.freeze({
     left: 60,
   },
   transitionDuration: 400,
-  xAxisPadding: 0.4,
+  dotRadius: 2.5,
   xAxisTitle: 'x',
   yAxisTitle: 'y',
   yAxisTicks: 10,
@@ -24,12 +24,12 @@ export const defaultBarChartConfig: IBarChartOptions = Object.freeze({
     yAxisLabelX: -10,
     yAxisLabelY: -10,
   },
-  labelTextWrapWidth: 60, // the number of pixels after which a label needs to be given a new line
+  labelTextWrapWidth: 20, // the number of pixels after which a label needs to be given a new line
   color: d3.scaleOrdinal(d3.schemeCategory10),
 });
 
-const createContainer = (container: ElementRef<HTMLDivElement>, config: IBarChartOptions) => {
-  const id = container.nativeElement.id ?? 'bar-0';
+const createContainer = (container: ElementRef<HTMLDivElement>, config: ILineChartOptions) => {
+  const id = container.nativeElement.id ?? 'line-0';
 
   d3.select(`#${id}`).select('svg').remove();
   const svg = d3
@@ -79,16 +79,30 @@ const wrapSvgText = (svgText: d3.Selection<d3.BaseType, unknown, SVGGElement, un
   });
 };
 
-const createAxisX = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>, x: d3.ScaleBand<string>, config: IBarChartOptions) => {
+const createAxisX = (
+  g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>,
+  x: d3.ScaleLinear<number, number>,
+  config: ILineChartOptions,
+) => {
   g.append('g')
     .attr('transform', `translate(0, ${config.height})`)
-    .call(d3.axisBottom(x))
+    .call(
+      d3.axisBottom(x).tickFormat(d => {
+        const date = new Date(d.valueOf());
+        const day = date.getDay();
+        const month = date.getMonth();
+        const year = date.getFullYear().toString().slice(2);
+        const hour = date.getHours();
+        const minute = date.getMinutes();
+        return `${day}/${month}/${year} ${hour}:${minute}`;
+      }),
+    )
     .append('text')
-    .attr('y', config.height - config.shift.xAxisLabelY)
-    .attr('x', config.width + config.shift.xAxisLabelX)
     .attr('text-anchor', 'end')
     .attr('class', 'legend')
     .attr('dy', '0.35em')
+    .attr('y', config.height - config.shift.xAxisLabelY)
+    .attr('x', config.width + config.shift.xAxisLabelX)
     .text(config.xAxisTitle);
 
   g.selectAll('text').call(wrapSvgText, config.labelTextWrapWidth);
@@ -97,111 +111,99 @@ const createAxisX = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>
 const createAxisY = (
   g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>,
   y: d3.ScaleLinear<number, number>,
-  config: IBarChartOptions,
+  config: ILineChartOptions,
 ) => {
   g.append('g')
     .call(
       d3
         .axisLeft(y)
-        .tickFormat(function (d) {
-          return `${d}`;
-        })
+        .tickFormat(d => `${d}`)
         .ticks(config.yAxisTicks),
     )
     .append('text')
-    .attr('y', config.shift.yAxisLabelY)
-    .attr('x', config.shift.yAxisLabelX)
     .attr('text-anchor', 'end')
     .attr('class', 'legend')
+    .attr('y', config.shift.yAxisLabelY)
+    .attr('x', config.shift.yAxisLabelX)
     .text(config.yAxisTitle);
 };
 
 const onMouseOver = (
-  self: SVGRectElement,
-  d: IBarChartDataNode,
+  self: SVGCircleElement,
+  d: ILineChartDataNode,
   g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>,
-  x: d3.ScaleBand<string>,
+  x: d3.ScaleLinear<number, number>,
   y: d3.ScaleLinear<number, number>,
-  config: IBarChartOptions,
+  config: ILineChartOptions,
 ) => {
-  const widthModifier = 5;
+  const duration = 400;
   d3.select(self)
     .transition()
-    .duration(config.transitionDuration)
-    .attr('width', x.bandwidth() + widthModifier)
-    .attr('y', function () {
-      const modifier = 10;
-      return y(d.value) - modifier;
-    })
-    .attr('height', function () {
-      const modifier = 10;
-      return config.height - y(d.value) + modifier;
-    });
+    .duration(duration)
+    .attr('r', config.dotRadius * 2);
 
+  const tooltipShift = 4;
   g.append('text')
     .attr('class', 'val')
     .style('font-size', '11px')
-    .attr('x', () => x(d.title) ?? '')
-    .attr('y', function () {
-      const modifier = 15;
-      return y(d.value) - modifier;
-    })
-    .text(() => `${d.value}`);
+    .attr('dx', () => (config.width - config.margin.left - config.margin.right) / tooltipShift)
+    .text(() => `${d.value} (${new Date(d.timestamp).toUTCString()})`);
 };
 
-const onMouseOut = (
-  self: SVGRectElement,
-  d: IBarChartDataNode,
-  x: d3.ScaleBand<string>,
-  y: d3.ScaleLinear<number, number>,
-  config: IBarChartOptions,
-) => {
-  d3.select(self).attr('class', 'bar');
-  d3.select(self)
-    .transition()
-    .duration(config.transitionDuration)
-    .attr('width', x.bandwidth())
-    .attr('y', () => y(d.value) ?? 0)
-    .attr('height', () => config.height - (y(d.value) ?? 0));
+const onMouseOut = (self: SVGCircleElement, config: ILineChartOptions) => {
+  const duration = 400;
+  d3.select(self).attr('class', 'dot');
+  d3.select(self).transition().duration(duration).attr('r', config.dotRadius);
 
   d3.selectAll('.val').remove();
 };
 
-const drawBarsAndSetPointerEvents = (
+const drawLinesDotsAndSetPointerEvents = (
   g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>,
-  x: d3.ScaleBand<string>,
+  x: d3.ScaleLinear<number, number>,
   y: d3.ScaleLinear<number, number>,
-  config: IBarChartOptions,
-  data: TBarChartData,
+  config: ILineChartOptions,
+  data: TLineChartData,
 ) => {
-  const duration = 400;
-  g.selectAll('.bar')
+  const line = d3
+    .line<ILineChartDataNode>()
+    .x(d => x(d.timestamp))
+    .y(d => y(d.value))
+    .curve(d3.curveMonotoneX);
+
+  g.append('path').attr('id', 'line').style('fill', 'none').style('stroke', 'red').style('stroke-width', '2px').attr('d', line(data));
+
+  g.selectAll('.dot')
     .data(data)
     .enter()
-    .append('rect')
-    .attr('class', 'bar')
-    .style('fill', (d, i) => config.color(i.toString()))
+    .append('circle')
+    .attr('class', 'dot')
+    .style('pointer-events', 'all')
     .on('mouseover', function (this, event, d) {
       return onMouseOver(this, d, g, x, y, config);
     })
-    .on('mouseout', function (this, event, d) {
-      return onMouseOut(this, d, x, y, config);
+    .on('mouseout', function (this) {
+      return onMouseOut(this, config);
     })
-    .attr('x', d => x(d.title) ?? '')
-    .attr('y', d => y(d.value))
-    .attr('width', x.bandwidth())
+    .attr('cx', function (this, d) {
+      return x(d.timestamp);
+    })
+    .attr('cy', function (this, d) {
+      return y(d.value);
+    })
+    .attr('r', 0)
     .transition()
     .ease(d3.easeLinear)
-    .duration(duration)
-    .delay(function (d, i) {
+    .duration(config.transitionDuration)
+    .delay((d, i) => {
       const multiplier = 50;
       return i * multiplier;
     })
-    .attr('height', d => config.height - y(d.value));
+    .attr('r', config.dotRadius);
 };
 
-export const drawBarChart = (container: ElementRef<HTMLDivElement>, data: TBarChartData, options?: Partial<IBarChartOptions>) => {
-  const config: IBarChartOptions = { ...defaultBarChartConfig };
+export const drawLineChart = (container: ElementRef<HTMLDivElement>, data: TLineChartData, options?: Partial<ILineChartOptions>) => {
+  const config: ILineChartOptions = { ...defaultLineChartConfig };
   if (typeof options !== 'undefined') {
     for (const i in options) {
       if (typeof options[i] !== 'undefined') {
@@ -212,17 +214,14 @@ export const drawBarChart = (container: ElementRef<HTMLDivElement>, data: TBarCh
 
   const { g } = createContainer(container, config);
 
-  const x = d3
-    .scaleBand([0, config.width])
-    .padding(config.xAxisPadding)
-    .domain(data.map(d => d.title));
+  const x = d3.scaleLinear([0, config.width]).domain([Math.min(...data.map(d => d.timestamp)), Math.max(...data.map(d => d.timestamp))]);
   const y = d3.scaleLinear([config.height, 0]).domain([0, d3.max(data, d => d.value) ?? 1]);
 
   createAxisX(g, x, config);
 
   createAxisY(g, y, config);
 
-  drawBarsAndSetPointerEvents(g, x, y, config, data);
+  drawLinesDotsAndSetPointerEvents(g, x, y, config, data);
 
   return config;
 };

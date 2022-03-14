@@ -41,6 +41,8 @@ import { AppClientD3ChartsModule } from '@rfprodz/d3-charts';
 ```html
 <!-- bar chart -->
 <app-bar-chart></app-bar-chart>
+<!-- line chart -->
+<app-line-chart></app-line-chart>
 <!-- pie chart -->
 <app-pie-chart></app-pie-chart>
 <!-- radar chart -->
@@ -52,7 +54,13 @@ import { AppClientD3ChartsModule } from '@rfprodz/d3-charts';
 #### in classes
 
 ```typescript
-import { AppPieChartComponent, AppRadarChartComponent, AppForceDirectedChartComponent, AppBarChartComponent } from '@rfprodz/d3-charts';
+import {
+  AppPieChartComponent,
+  AppRadarChartComponent,
+  AppForceDirectedChartComponent,
+  AppBarChartComponent,
+  AppLineChartComponent,
+} from '@rfprodz/d3-charts';
 ```
 
 ### See the chart examples component
