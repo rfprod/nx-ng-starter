@@ -84,7 +84,8 @@ const createAxisX = (
   x: d3.ScaleLinear<number, number>,
   config: ILineChartOptions,
 ) => {
-  g.append('g')
+  const xLabels = g
+    .append('g')
     .attr('transform', `translate(0, ${config.height})`)
     .call(
       d3.axisBottom(x).tickFormat(d => {
@@ -97,15 +98,17 @@ const createAxisX = (
         return `${day}/${month}/${year} ${hour}:${minute}`;
       }),
     )
-    .append('text')
+    .append('text');
+
+  g.selectAll('text').call(wrapSvgText, config.labelTextWrapWidth);
+
+  xLabels
     .attr('text-anchor', 'end')
     .attr('class', 'legend')
     .attr('dy', '0.35em')
     .attr('y', config.height - config.shift.xAxisLabelY)
     .attr('x', config.width + config.shift.xAxisLabelX)
     .text(config.xAxisTitle);
-
-  g.selectAll('text').call(wrapSvgText, config.labelTextWrapWidth);
 };
 
 const createAxisY = (

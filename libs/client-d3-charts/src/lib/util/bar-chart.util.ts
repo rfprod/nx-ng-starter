@@ -80,18 +80,17 @@ const wrapSvgText = (svgText: d3.Selection<d3.BaseType, unknown, SVGGElement, un
 };
 
 const createAxisX = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>, x: d3.ScaleBand<string>, config: IBarChartOptions) => {
-  g.append('g')
-    .attr('transform', `translate(0, ${config.height})`)
-    .call(d3.axisBottom(x))
-    .append('text')
+  const xLabels = g.append('g').attr('transform', `translate(0, ${config.height})`).call(d3.axisBottom(x)).append('text');
+
+  g.selectAll('text').call(wrapSvgText, config.labelTextWrapWidth);
+
+  xLabels
     .attr('y', config.height - config.shift.xAxisLabelY)
     .attr('x', config.width + config.shift.xAxisLabelX)
     .attr('text-anchor', 'end')
     .attr('class', 'legend')
     .attr('dy', '0.35em')
     .text(config.xAxisTitle);
-
-  g.selectAll('text').call(wrapSvgText, config.labelTextWrapWidth);
 };
 
 const createAxisY = (
