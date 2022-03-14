@@ -14,7 +14,7 @@ export const defaultLineChartConfig: ILineChartOptions = Object.freeze({
     left: 60,
   },
   transitionDuration: 400,
-  dotRadius: 2.5,
+  dotRadius: 3.5,
   xAxisTitle: 'x',
   yAxisTitle: 'y',
   ticks: {
@@ -188,6 +188,7 @@ const drawLinesDotsAndSetPointerEvents = (
     .append('circle')
     .attr('class', 'dot')
     .style('pointer-events', 'all')
+    .style('fill', (d, i) => config.color(i.toString()))
     .on('mouseover', function (this, event, d) {
       return onMouseOver(this, d, g, x, y, config);
     })
