@@ -52,7 +52,7 @@ const drawCircularGrid = (
   // background circles
   axisGrid
     .selectAll('.levels')
-    .data(d3.range(1, config.levels + 2).reverse())
+    .data(d3.range(1, config.levels + 1).reverse())
     .enter()
     .append('circle')
     .attr('class', 'gridCircle')
