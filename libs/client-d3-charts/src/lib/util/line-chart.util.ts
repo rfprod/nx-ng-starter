@@ -17,7 +17,10 @@ export const defaultLineChartConfig: ILineChartOptions = Object.freeze({
   dotRadius: 2.5,
   xAxisTitle: 'x',
   yAxisTitle: 'y',
-  yAxisTicks: 10,
+  ticks: {
+    x: 5,
+    y: 10,
+  },
   shift: {
     xAxisLabelX: 10,
     xAxisLabelY: 184,
@@ -88,15 +91,18 @@ const createAxisX = (
     .append('g')
     .attr('transform', `translate(0, ${config.height})`)
     .call(
-      d3.axisBottom(x).tickFormat(d => {
-        const date = new Date(d.valueOf());
-        const day = date.getDay();
-        const month = date.getMonth();
-        const year = date.getFullYear().toString().slice(2);
-        const hour = date.getHours();
-        const minute = date.getMinutes();
-        return `${day}/${month}/${year} ${hour}:${minute}`;
-      }),
+      d3
+        .axisBottom(x)
+        .ticks(config.ticks.x)
+        .tickFormat(d => {
+          const date = new Date(d.valueOf());
+          const day = date.getDay();
+          const month = date.getMonth();
+          const year = date.getFullYear().toString().slice(2);
+          const hour = date.getHours();
+          const minute = date.getMinutes();
+          return `${day}/${month}/${year} ${hour}:${minute}`;
+        }),
     )
     .append('text');
 
@@ -120,8 +126,8 @@ const createAxisY = (
     .call(
       d3
         .axisLeft(y)
-        .tickFormat(d => `${d}`)
-        .ticks(config.yAxisTicks),
+        .ticks(config.ticks.y)
+        .tickFormat(d => `${d}`),
     )
     .append('text')
     .attr('text-anchor', 'end')

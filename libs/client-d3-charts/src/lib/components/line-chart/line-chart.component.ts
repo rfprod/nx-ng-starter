@@ -49,13 +49,15 @@ export class AppLineChartComponent implements AfterViewInit, OnChanges {
     };
     const width = Math.min(minWidth, this.doc.body.clientWidth - modifiers.width) - margin.left - margin.right;
     const height = Math.min(width, this.doc.body.clientHeight - margin.top - margin.bottom - modifiers.height);
-    const yAxisTicks = Math.max(...this.data.map(item => item.value));
     const pixelsPerCharacter = 4;
     const options: Partial<ILineChartOptions> = {
       width,
       height,
       margin,
-      yAxisTicks,
+      ticks: {
+        x: 5,
+        y: Math.max(...this.data.map(item => item.value)),
+      },
       shift: {
         xAxisLabelX:
           defaultLineChartConfig.shift.xAxisLabelX +
