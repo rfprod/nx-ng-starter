@@ -16,6 +16,7 @@ import { D3_CHART_FACTORY, ID3ChartFactory } from '../../providers/d3-chart-fact
 
 interface IInputChanges {
   data?: SimpleChange | null;
+  options?: SimpleChange | null;
 }
 
 @Component({
@@ -28,6 +29,8 @@ export class AppPieChartComponent implements AfterViewInit, OnChanges {
   @Input() public chartId = 'pie-0';
 
   @Input() public data: IPieChartDataNode[] = [];
+
+  @Input() public options: Partial<IPieChartOptions> = {};
 
   /**
    * D3 chart view child reference.
@@ -49,6 +52,7 @@ export class AppPieChartComponent implements AfterViewInit, OnChanges {
       width,
       height,
       margin,
+      ...this.options,
     };
     return options;
   }
@@ -71,8 +75,9 @@ export class AppPieChartComponent implements AfterViewInit, OnChanges {
    * Redraws chart on changes.
    */
   public ngOnChanges(changes: IInputChanges): void {
-    const currentValue: IPieChartDataNode[] | undefined = changes.data?.currentValue;
-    if (typeof currentValue !== 'undefined' && currentValue !== null) {
+    const data: IPieChartDataNode[] | undefined = changes.data?.currentValue;
+    const options: Partial<IPieChartOptions> = changes.options?.currentValue;
+    if ((typeof data !== 'undefined' && data !== null) || (typeof options !== 'undefined' && options !== null)) {
       this.drawChart();
     }
   }

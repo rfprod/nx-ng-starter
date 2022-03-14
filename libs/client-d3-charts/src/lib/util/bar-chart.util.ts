@@ -4,6 +4,7 @@ import * as d3 from 'd3';
 import { IBarChartDataNode, IBarChartOptions, TBarChartData } from '../interfaces/bar-chart.interface';
 
 const defaultChartConfig: IBarChartOptions = Object.freeze({
+  chartTitle: '',
   width: 600,
   height: 600,
   margin: {

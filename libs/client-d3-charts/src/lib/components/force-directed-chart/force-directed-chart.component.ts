@@ -16,6 +16,7 @@ import { D3_CHART_FACTORY, ID3ChartFactory } from '../../providers/d3-chart-fact
 
 interface IInputChanges {
   data?: SimpleChange | null;
+  options?: SimpleChange | null;
 }
 
 @Component({
@@ -34,6 +35,8 @@ export class AppForceDirectedChartComponent implements AfterViewInit, OnChanges 
     nodes: [],
   };
 
+  @Input() public options: Partial<IForceDirectedChartOptions> = {};
+
   /**
    * D3 chart view child reference.
    */
@@ -50,7 +53,7 @@ export class AppForceDirectedChartComponent implements AfterViewInit, OnChanges 
     };
     const width = Math.min(minWidth, this.doc.body.clientWidth - modifiers.width) - margin.left - margin.right;
     const height = Math.min(width, this.doc.body.clientHeight - margin.top - margin.bottom - modifiers.height);
-    const options: Partial<IForceDirectedChartOptions> = { width, height, margin };
+    const options: Partial<IForceDirectedChartOptions> = { width, height, margin, ...this.options };
     return options;
   }
 
@@ -74,7 +77,11 @@ export class AppForceDirectedChartComponent implements AfterViewInit, OnChanges 
   public ngOnChanges(changes: IInputChanges): void {
     const prevData: IForceDirectedChartData | undefined = changes.data?.previousValue;
     const nextData: IForceDirectedChartData | undefined = changes.data?.currentValue;
-    if (Boolean(changes.data?.currentValue) && (prevData?.nodes ?? []).length !== (nextData?.nodes ?? []).length) {
+    const options: Partial<IForceDirectedChartOptions> = changes.options?.currentValue;
+    if (
+      (Boolean(changes.data?.currentValue) && (prevData?.nodes ?? []).length !== (nextData?.nodes ?? []).length) ||
+      (typeof options !== 'undefined' && options !== null)
+    ) {
       this.drawChart();
     }
   }

@@ -4,6 +4,7 @@ import * as d3 from 'd3';
 import { IRadarChartDataNode, IRadarChartOptions, TRadarChartData } from '../interfaces/radar-chart.interface';
 
 export const defaultRadarChartConfig: IRadarChartOptions = Object.freeze({
+  chartTitle: '',
   width: 600,
   height: 600,
   margin: {

@@ -8,6 +8,7 @@ import {
 } from '../interfaces/force-directed-chart.interface';
 
 export const defaultForceDirectedChartConfig: IForceDirectedChartOptions = Object.freeze({
+  chartTitle: '',
   width: 600,
   height: 600,
   centerCalcMod: 1.6,

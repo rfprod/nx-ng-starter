@@ -16,6 +16,7 @@ import { D3_CHART_FACTORY, ID3ChartFactory } from '../../providers/d3-chart-fact
 
 interface IInputChanges {
   data?: SimpleChange | null;
+  options?: SimpleChange | null;
 }
 
 @Component({
@@ -28,6 +29,8 @@ export class AppBarChartComponent implements AfterViewInit, OnChanges {
   @Input() public chartId = 'bar-0';
 
   @Input() public data: TBarChartData = [];
+
+  @Input() public options: Partial<IBarChartOptions> = {};
 
   /**
    * D3 chart view child reference.
@@ -45,7 +48,7 @@ export class AppBarChartComponent implements AfterViewInit, OnChanges {
     };
     const width = Math.min(minWidth, this.doc.body.clientWidth - modifiers.width) - margin.left - margin.right;
     const height = Math.min(width, this.doc.body.clientHeight - margin.top - margin.bottom - modifiers.height);
-    const options: Partial<IBarChartOptions> = { width, height, margin };
+    const options: Partial<IBarChartOptions> = { width, height, margin, ...this.options };
     return options;
   }
 
@@ -67,8 +70,9 @@ export class AppBarChartComponent implements AfterViewInit, OnChanges {
    * Redraws chart on changes.
    */
   public ngOnChanges(changes: IInputChanges): void {
-    const currentValue: IBarChartDataNode[][] = changes.data?.currentValue;
-    if (typeof currentValue !== 'undefined' && currentValue !== null) {
+    const data: IBarChartDataNode[][] = changes.data?.currentValue;
+    const options: Partial<IBarChartOptions> = changes.options?.currentValue;
+    if ((typeof data !== 'undefined' && data !== null) || (typeof options !== 'undefined' && options !== null)) {
       this.drawChart();
     }
   }

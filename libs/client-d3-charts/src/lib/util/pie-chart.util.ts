@@ -5,6 +5,7 @@ import { arc, pie, PieArcDatum } from 'd3-shape';
 import { IPieChartDataNode, IPieChartOptions, PIE_CHART_ARC_CONFIG } from '../interfaces/pie-chart.interface';
 
 const defaultPieChartConfig: IPieChartOptions = Object.freeze({
+  chartTitle: '',
   width: 600,
   height: 600,
   margin: {

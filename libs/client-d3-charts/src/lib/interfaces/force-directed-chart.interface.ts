@@ -31,6 +31,7 @@ export interface IForceDirectedChartData {
 }
 
 export interface IForceDirectedChartOptions {
+  chartTitle: string;
   width: number;
   height: number;
   centerCalcMod: number;

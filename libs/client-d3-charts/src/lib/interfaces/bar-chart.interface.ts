@@ -8,6 +8,7 @@ export interface IBarChartDataNode {
 export type TBarChartData = IBarChartDataNode[];
 
 export interface IBarChartOptions {
+  chartTitle: string;
   width: number;
   height: number;
   margin: {
