@@ -275,7 +275,7 @@ const appendInvisibleTooltipCircles = (
       const newY = parseFloat(d3.select(this).attr('cy')) - modifier;
 
       const nodeData = (event.target as unknown as Record<string, IRadarChartDataNode>)['__data__'];
-      const tooltipText = `${nodeData.value} events`;
+      const tooltipText = `${nodeData.value} ${nodeData.unit}`;
       tooltip.attr('x', newX).attr('y', newY).text(tooltipText).transition().duration(config.transitionDuration).style('opacity', 1);
     })
     .on('mouseout', function () {

@@ -52,15 +52,26 @@ export class AppChartExamplesComponent {
   public get radarChartData() {
     return <IRadarChartDataNode[][]>[
       [
-        { axis: 'one', value: 1 },
-        { axis: 'two', value: 2 },
-        { axis: 'three', value: 3 },
-        { axis: 'four', value: 4 },
-        { axis: 'five', value: 5 },
-        { axis: 'six', value: 6 },
-        { axis: 'seven', value: 7 },
-        { axis: 'eight', value: 8 },
-        { axis: 'nine', value: 9 },
+        { axis: 'one', value: 1, unit: 'x' },
+        { axis: 'two', value: 2, unit: 'x' },
+        { axis: 'three', value: 3, unit: 'x' },
+        { axis: 'four', value: 4, unit: 'x' },
+        { axis: 'five', value: 5, unit: 'x' },
+        { axis: 'six', value: 6, unit: 'x' },
+        { axis: 'seven', value: 7, unit: 'x' },
+        { axis: 'eight', value: 8, unit: 'x' },
+        { axis: 'nine', value: 9, unit: 'x' },
+      ],
+      [
+        { axis: 'one', value: 9, unit: 'y' },
+        { axis: 'two', value: 8, unit: 'y' },
+        { axis: 'three', value: 7, unit: 'y' },
+        { axis: 'four', value: 6, unit: 'y' },
+        { axis: 'five', value: 5, unit: 'y' },
+        { axis: 'six', value: 4, unit: 'y' },
+        { axis: 'seven', value: 3, unit: 'y' },
+        { axis: 'eight', value: 2, unit: 'y' },
+        { axis: 'nine', value: 1, unit: 'y' },
       ],
     ];
   }
