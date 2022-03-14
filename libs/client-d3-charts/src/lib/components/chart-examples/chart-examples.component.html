@@ -9,7 +9,11 @@
 <hr [ngStyle]="{ width: '100%' }" />
 
 <div class="container">
-  <app-line-chart [chartId]="'line-example-1'" [data]="lineChartData" [options]="{ chartTitle: 'Example line chart' }"></app-line-chart>
+  <app-line-chart
+    [chartId]="'line-example-1'"
+    [data]="lineChartData"
+    [options]="{ chartTitle: 'Example line chart', xAxisTitle: 'Date', yAxisTitle: 'Value' }"
+  ></app-line-chart>
 </div>
 
 <hr [ngStyle]="{ width: '100%' }" />
