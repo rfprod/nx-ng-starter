@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 
 import { IBarChartDataNode, IBarChartOptions, TBarChartData } from '../interfaces/bar-chart.interface';
 
-const defaultChartConfig: IBarChartOptions = Object.freeze({
+export const defaultBarChartConfig: IBarChartOptions = Object.freeze({
   chartTitle: '',
   width: 600,
   height: 600,
@@ -16,7 +16,14 @@ const defaultChartConfig: IBarChartOptions = Object.freeze({
   xAxisPadding: 0.4,
   xAxisTitle: 'x',
   yAxisTitle: 'y',
-  labelTextWrapWidth: 25, // the number of pixels after which a label needs to be given a new line
+  yAxisTicks: 10,
+  shift: {
+    xAxisLabelX: 10,
+    xAxisLabelY: 184,
+    yAxisLabelX: -10,
+    yAxisLabelY: -10,
+  },
+  labelTextWrapWidth: 60, // the number of pixels after which a label needs to be given a new line
   color: d3.scaleOrdinal(d3.schemeCategory10),
 });
 
@@ -72,14 +79,12 @@ const wrapSvgText = (svgText: d3.Selection<d3.BaseType, unknown, HTMLElement, un
 };
 
 const createAxisX = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>, x: d3.ScaleBand<string>, config: IBarChartOptions) => {
-  const heightModifier = 196;
-  const widthModifier = 15;
   g.append('g')
     .attr('transform', `translate(0, ${config.height})`)
     .call(d3.axisBottom(x))
     .append('text')
-    .attr('y', config.height - heightModifier)
-    .attr('x', config.width + widthModifier)
+    .attr('y', config.height - config.shift.xAxisLabelY)
+    .attr('x', config.width + config.shift.xAxisLabelX)
     .attr('text-anchor', 'end')
     .attr('class', 'legend')
     .attr('dy', '0.35em')
@@ -93,9 +98,6 @@ const createAxisY = (
   y: d3.ScaleLinear<number, number>,
   config: IBarChartOptions,
 ) => {
-  const ticks = 10;
-  const yAttr = -10;
-  const xAttr = 3;
   g.append('g')
     .call(
       d3
@@ -103,11 +105,11 @@ const createAxisY = (
         .tickFormat(function (d) {
           return `${d}`;
         })
-        .ticks(ticks),
+        .ticks(config.yAxisTicks),
     )
     .append('text')
-    .attr('y', yAttr)
-    .attr('x', xAttr)
+    .attr('y', config.shift.yAxisLabelY)
+    .attr('x', config.shift.yAxisLabelX)
     .attr('text-anchor', 'end')
     .attr('class', 'legend')
     .text(config.yAxisTitle);
@@ -216,7 +218,7 @@ const drawBarsAndSetPointerEvents = (
 };
 
 export const drawBarChart = (container: ElementRef<HTMLDivElement>, data: TBarChartData, options?: Partial<IBarChartOptions>) => {
-  const config: IBarChartOptions = { ...defaultChartConfig };
+  const config: IBarChartOptions = { ...defaultBarChartConfig };
   if (typeof options !== 'undefined') {
     for (const i in options) {
       if (typeof options[i] !== 'undefined') {
