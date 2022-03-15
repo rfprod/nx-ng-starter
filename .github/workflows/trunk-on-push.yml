@@ -76,7 +76,7 @@ jobs:
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
       - name: Use yarn 1.22.17 (required for integrity check)
-        run: yarn set version 1.22.17 # this is mandatory, yarn v2 does not have integrity check which is needed for the pipeline
+        run: npm i -g yarn@1.22.17 # this is mandatory, yarn v2 does not have integrity check which is needed for the pipeline
 
       - name: Get variables (yarn cache directory, commit hash)
         if: steps.changes.outputs.dependencies == 'false'
