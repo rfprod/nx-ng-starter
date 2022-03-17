@@ -8,27 +8,25 @@ import { AppSentryService, initializeSentry, sentryProviders } from './sentry.se
 describe('AppSentryService', () => {
   let service: AppSentryService;
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule({
-        providers: [
-          {
-            provide: Sentry.TraceService,
-            useValue: {},
-          },
-          {
-            provide: AppSentryService,
-            useFactory: (trace: Sentry.TraceService) => new AppSentryService(trace),
-            deps: [Sentry.TraceService],
-          },
-        ],
-      })
-        .compileComponents()
-        .then(() => {
-          service = TestBed.inject(AppSentryService);
-        });
-    }),
-  );
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule({
+      providers: [
+        {
+          provide: Sentry.TraceService,
+          useValue: {},
+        },
+        {
+          provide: AppSentryService,
+          useFactory: (trace: Sentry.TraceService) => new AppSentryService(trace),
+          deps: [Sentry.TraceService],
+        },
+      ],
+    })
+      .compileComponents()
+      .then(() => {
+        service = TestBed.inject(AppSentryService);
+      });
+  }));
 
   it('should exist', () => {
     expect(service).toBeTruthy();

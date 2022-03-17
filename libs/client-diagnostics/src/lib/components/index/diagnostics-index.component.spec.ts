@@ -32,20 +32,18 @@ describe('AppDiagnosticsIndexComponent', () => {
   let store: Store;
   let storeDispatchSpy: jest.SpyInstance;
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          store = TestBed.inject(Store);
-          storeDispatchSpy = jest.spyOn(store, 'dispatch');
-          fixture = TestBed.createComponent(AppDiagnosticsIndexComponent);
-          component = fixture.componentInstance;
-          componentSpy = spyOnFunctions<AppDiagnosticsIndexComponent>(component);
-          fixture.detectChanges();
-        });
-    }),
-  );
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        store = TestBed.inject(Store);
+        storeDispatchSpy = jest.spyOn(store, 'dispatch');
+        fixture = TestBed.createComponent(AppDiagnosticsIndexComponent);
+        component = fixture.componentInstance;
+        componentSpy = spyOnFunctions<AppDiagnosticsIndexComponent>(component);
+        fixture.detectChanges();
+      });
+  }));
 
   it('should be defined', () => {
     expect(component).toBeDefined();

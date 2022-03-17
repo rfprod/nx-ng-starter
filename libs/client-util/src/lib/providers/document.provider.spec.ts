@@ -10,15 +10,13 @@ describe('documentProvider', () => {
 
   let provider: Document;
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          provider = TestBed.inject(DOCUMENT);
-        });
-    }),
-  );
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        provider = TestBed.inject(DOCUMENT);
+      });
+  }));
 
   it('should be defined', () => {
     expect(provider).toBeDefined();

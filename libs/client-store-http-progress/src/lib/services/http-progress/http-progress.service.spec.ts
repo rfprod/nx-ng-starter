@@ -14,16 +14,14 @@ describe('AppHttpProgressService', () => {
   let service: AppHttpProgressService;
   let overlayRef: OverlayRef;
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          service = TestBed.inject(AppHttpProgressService);
-          overlayRef = service['progressRef'];
-        });
-    }),
-  );
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        service = TestBed.inject(AppHttpProgressService);
+        overlayRef = service['progressRef'];
+      });
+  }));
 
   it('should be defined', () => {
     expect(service).toBeDefined();
@@ -42,49 +40,37 @@ describe('AppHttpProgressService', () => {
     expect(spy).toHaveBeenCalled();
   });
 
-  it(
-    'handlers.mainView.tapStopperObservable should call handers.mainView.stop on success',
-    waitForAsync(() => {
-      const spy = jest.spyOn(service.handlers.mainView, 'stop');
-      void of(null).pipe(service.handlers.mainView.tapStopperObservable()).subscribe();
-      expect(spy).toHaveBeenCalled();
-    }),
-  );
+  it('handlers.mainView.tapStopperObservable should call handers.mainView.stop on success', waitForAsync(() => {
+    const spy = jest.spyOn(service.handlers.mainView, 'stop');
+    void of(null).pipe(service.handlers.mainView.tapStopperObservable()).subscribe();
+    expect(spy).toHaveBeenCalled();
+  }));
 
-  it(
-    'handlers.sidebar.tapStopperObservable should call handers.sidebar.stop on success',
-    waitForAsync(() => {
-      const spy = jest.spyOn(service.handlers.sidebar, 'stop');
-      void of(null).pipe(service.handlers.sidebar.tapStopperObservable()).subscribe();
-      expect(spy).toHaveBeenCalled();
-    }),
-  );
+  it('handlers.sidebar.tapStopperObservable should call handers.sidebar.stop on success', waitForAsync(() => {
+    const spy = jest.spyOn(service.handlers.sidebar, 'stop');
+    void of(null).pipe(service.handlers.sidebar.tapStopperObservable()).subscribe();
+    expect(spy).toHaveBeenCalled();
+  }));
 
-  it(
-    'handlers.mainView.tapStopperObservable should call handers.mainView.stop on error',
-    waitForAsync(() => {
-      const spy = jest.spyOn(service.handlers.mainView, 'stop');
-      void throwError(() => new Error(''))
-        .pipe(
-          service.handlers.mainView.tapStopperObservable(),
-          catchError(() => of(null)),
-        )
-        .subscribe();
-      expect(spy).toHaveBeenCalled();
-    }),
-  );
+  it('handlers.mainView.tapStopperObservable should call handers.mainView.stop on error', waitForAsync(() => {
+    const spy = jest.spyOn(service.handlers.mainView, 'stop');
+    void throwError(() => new Error(''))
+      .pipe(
+        service.handlers.mainView.tapStopperObservable(),
+        catchError(() => of(null)),
+      )
+      .subscribe();
+    expect(spy).toHaveBeenCalled();
+  }));
 
-  it(
-    'handlers.sidebar.tapStopperObservable should call handers.sidebar.stop on error',
-    waitForAsync(() => {
-      const spy = jest.spyOn(service.handlers.sidebar, 'stop');
-      void throwError(() => new Error(''))
-        .pipe(
-          service.handlers.sidebar.tapStopperObservable(),
-          catchError(() => of(null)),
-        )
-        .subscribe();
-      expect(spy).toHaveBeenCalled();
-    }),
-  );
+  it('handlers.sidebar.tapStopperObservable should call handers.sidebar.stop on error', waitForAsync(() => {
+    const spy = jest.spyOn(service.handlers.sidebar, 'stop');
+    void throwError(() => new Error(''))
+      .pipe(
+        service.handlers.sidebar.tapStopperObservable(),
+        catchError(() => of(null)),
+      )
+      .subscribe();
+    expect(spy).toHaveBeenCalled();
+  }));
 });

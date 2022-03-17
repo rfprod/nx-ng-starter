@@ -15,27 +15,25 @@ describe('flushHttpRequests', () => {
   let controller: HttpTestingController;
   let verifySpy: jest.SpyInstance;
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          http = TestBed.inject(HttpClient);
-          controller = TestBed.inject(HttpTestingController);
-          verifySpy = jest.spyOn(controller, 'verify');
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        http = TestBed.inject(HttpClient);
+        controller = TestBed.inject(HttpTestingController);
+        verifySpy = jest.spyOn(controller, 'verify');
 
-          void http
-            .get('test-req')
-            .pipe(
-              catchError((error, caught) => {
-                expect(caught).toBeInstanceOf(Observable);
-                return of(null);
-              }),
-            )
-            .subscribe();
-        });
-    }),
-  );
+        void http
+          .get('test-req')
+          .pipe(
+            catchError((error, caught) => {
+              expect(caught).toBeInstanceOf(Observable);
+              return of(null);
+            }),
+          )
+          .subscribe();
+      });
+  }));
 
   afterEach(() => {
     flushHttpRequests(controller, true);
@@ -55,39 +53,33 @@ describe('flushHttpRequests', () => {
     expect(verifySpy).toHaveBeenCalled();
   });
 
-  it(
-    'should call process actual http requests correctly',
-    waitForAsync(() => {
-      void http
-        .get('test')
-        .pipe(
-          catchError((error, caught) => {
-            expect(caught).toBeInstanceOf(Observable);
-            return of(null);
-          }),
-        )
-        .subscribe();
-      flushHttpRequests(controller, true);
-      expect(verifySpy).toHaveBeenCalled();
-    }),
-  );
+  it('should call process actual http requests correctly', waitForAsync(() => {
+    void http
+      .get('test')
+      .pipe(
+        catchError((error, caught) => {
+          expect(caught).toBeInstanceOf(Observable);
+          return of(null);
+        }),
+      )
+      .subscribe();
+    flushHttpRequests(controller, true);
+    expect(verifySpy).toHaveBeenCalled();
+  }));
 
-  it(
-    'should produce error on demand',
-    waitForAsync(() => {
-      void http
-        .get('test')
-        .pipe(
-          catchError((error, caught) => {
-            expect(caught).toBeInstanceOf(Observable);
-            return of(null);
-          }),
-        )
-        .subscribe();
-      flushHttpRequests(controller, true, req => true, {}, true);
-      expect(verifySpy).toHaveBeenCalled();
-    }),
-  );
+  it('should produce error on demand', waitForAsync(() => {
+    void http
+      .get('test')
+      .pipe(
+        catchError((error, caught) => {
+          expect(caught).toBeInstanceOf(Observable);
+          return of(null);
+        }),
+      )
+      .subscribe();
+    flushHttpRequests(controller, true, req => true, {}, true);
+    expect(verifySpy).toHaveBeenCalled();
+  }));
 
   it('should process calcelled requests correctly', fakeAsync(() => {
     const timeoutValue = 100;

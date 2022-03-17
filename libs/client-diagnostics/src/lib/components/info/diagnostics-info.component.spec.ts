@@ -42,22 +42,20 @@ describe('AppDiagnosticsInfoComponent', () => {
 
   let httpController: HttpTestingController;
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          httpController = TestBed.inject(HttpTestingController);
-          fixture = TestBed.createComponent(AppDiagnosticsInfoComponent);
-          component = fixture.componentInstance;
-          componentSpy = spyOnFunctions<AppDiagnosticsInfoComponent>(component);
-          service = TestBed.inject(AppMarkdownService);
-          store = TestBed.inject(Store);
-          env = TestBed.inject(WEB_CLIENT_APP_ENV);
-          flushHttpRequests(httpController);
-        });
-    }),
-  );
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        httpController = TestBed.inject(HttpTestingController);
+        fixture = TestBed.createComponent(AppDiagnosticsInfoComponent);
+        component = fixture.componentInstance;
+        componentSpy = spyOnFunctions<AppDiagnosticsInfoComponent>(component);
+        service = TestBed.inject(AppMarkdownService);
+        store = TestBed.inject(Store);
+        env = TestBed.inject(WEB_CLIENT_APP_ENV);
+        flushHttpRequests(httpController);
+      });
+  }));
 
   afterEach(() => {
     flushHttpRequests(httpController, true);
@@ -68,10 +66,8 @@ describe('AppDiagnosticsInfoComponent', () => {
     expect(componentSpy).toBeDefined();
   });
 
-  it(
-    'markedInstructions should return processed markdown',
-    waitForAsync(() => {
-      const apiInstructions = `# API endpoints:\n
+  it('markedInstructions should return processed markdown', waitForAsync(() => {
+    const apiInstructions = `# API endpoints:\n
     - ${env.api}/auth
     - ${env.api}/signup
     - ${env.api}/login
@@ -80,27 +76,23 @@ describe('AppDiagnosticsInfoComponent', () => {
     - ${env.api}/mail
     - ${env.api}/grpc
     - ${env.api}/grpc/:id`;
-      const expected = service.process(apiInstructions);
-      void component.markedInstructions$
-        .pipe(
-          tap(instructions => {
-            expect(instructions).toEqual(expected);
-          }),
-        )
-        .subscribe();
-    }),
-  );
+    const expected = service.process(apiInstructions);
+    void component.markedInstructions$
+      .pipe(
+        tap(instructions => {
+          expect(instructions).toEqual(expected);
+        }),
+      )
+      .subscribe();
+  }));
 
-  it(
-    'state should return the whole ping state',
-    waitForAsync(() => {
-      void combineLatest([component.ping$.pipe(first()), store.selectOnce(AppHttpApiState.state)])
-        .pipe(
-          tap(([ping, pingState]) => {
-            expect(ping).toEqual(pingState.ping);
-          }),
-        )
-        .subscribe();
-    }),
-  );
+  it('state should return the whole ping state', waitForAsync(() => {
+    void combineLatest([component.ping$.pipe(first()), store.selectOnce(AppHttpApiState.state)])
+      .pipe(
+        tap(([ping, pingState]) => {
+          expect(ping).toEqual(pingState.ping);
+        }),
+      )
+      .subscribe();
+  }));
 });

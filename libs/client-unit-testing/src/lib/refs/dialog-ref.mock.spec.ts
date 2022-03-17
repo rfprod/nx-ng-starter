@@ -10,15 +10,13 @@ describe('AppDialogRefMock', () => {
 
   let mock: AppDialogRefMock;
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          mock = TestBed.inject(MatDialogRef) as unknown as AppDialogRefMock;
-        });
-    }),
-  );
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        mock = TestBed.inject(MatDialogRef) as unknown as AppDialogRefMock;
+      });
+  }));
 
   it('should be defined', () => {
     expect(mock).toBeDefined();

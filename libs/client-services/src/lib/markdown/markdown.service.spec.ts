@@ -10,22 +10,20 @@ describe('AppMarkdownService', () => {
     };
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule({
-        providers: [markdownServiceProvider],
-      })
-        .compileComponents()
-        .then(() => {
-          service = TestBed.inject(AppMarkdownService);
-          spy = {
-            service: {
-              process: jest.spyOn(service, 'process'),
-            },
-          };
-        });
-    }),
-  );
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule({
+      providers: [markdownServiceProvider],
+    })
+      .compileComponents()
+      .then(() => {
+        service = TestBed.inject(AppMarkdownService);
+        spy = {
+          service: {
+            process: jest.spyOn(service, 'process'),
+          },
+        };
+      });
+  }));
 
   it('should exist', () => {
     expect(service).toBeTruthy();

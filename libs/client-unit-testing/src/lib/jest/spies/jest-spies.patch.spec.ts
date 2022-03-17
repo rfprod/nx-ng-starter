@@ -68,17 +68,14 @@ describe('spyOnObservables', () => {
     expect(observableSpy.test$.subscribe).toBeDefined();
   });
 
-  it(
-    'spies should work as expected',
-    waitForAsync(() => {
-      void mock.test$
-        .pipe(
-          tap(() => {
-            expect(observableSpy.test$.pipe).toHaveBeenCalled();
-            expect(observableSpy.test$.subscribe).toHaveBeenCalled();
-          }),
-        )
-        .subscribe();
-    }),
-  );
+  it('spies should work as expected', waitForAsync(() => {
+    void mock.test$
+      .pipe(
+        tap(() => {
+          expect(observableSpy.test$.pipe).toHaveBeenCalled();
+          expect(observableSpy.test$.subscribe).toHaveBeenCalled();
+        }),
+      )
+      .subscribe();
+  }));
 });

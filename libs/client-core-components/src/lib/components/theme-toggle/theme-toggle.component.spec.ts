@@ -19,23 +19,21 @@ describe('AppThemeToggleComponent', () => {
     dispatch: jest.SpyInstance;
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(AppThemeToggleComponent);
-          component = fixture.debugElement.componentInstance;
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(AppThemeToggleComponent);
+        component = fixture.debugElement.componentInstance;
 
-          store = TestBed.inject(Store);
-          storeSpy = {
-            dispatch: jest.spyOn(store, 'dispatch'),
-          };
+        store = TestBed.inject(Store);
+        storeSpy = {
+          dispatch: jest.spyOn(store, 'dispatch'),
+        };
 
-          fixture.detectChanges();
-        });
-    }),
-  );
+        fixture.detectChanges();
+      });
+  }));
 
   it('should be defined', () => {
     expect(component).toBeDefined();
