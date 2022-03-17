@@ -15,16 +15,14 @@ describe('AppElementsService', () => {
 
   let win: Window;
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          service = TestBed.inject(AppElementsService);
-          win = TestBed.inject(WINDOW);
-        });
-    }),
-  );
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        service = TestBed.inject(AppElementsService);
+        win = TestBed.inject(WINDOW);
+      });
+  }));
 
   it('should be defined', () => {
     expect(service).toBeDefined();

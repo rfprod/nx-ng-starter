@@ -40,18 +40,16 @@ describe('AppDocMarkdownReferenceComponent', () => {
   let fixture: ComponentFixture<AppDocMarkdownReferenceComponent>;
   let component: AppDocMarkdownReferenceComponent;
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(AppDocMarkdownReferenceComponent);
-          component = fixture.debugElement.componentInstance;
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(AppDocMarkdownReferenceComponent);
+        component = fixture.debugElement.componentInstance;
 
-          fixture.detectChanges();
-        });
-    }),
-  );
+        fixture.detectChanges();
+      });
+  }));
 
   it('should be defined', () => {
     expect(component).toBeDefined();

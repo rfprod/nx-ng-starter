@@ -20,17 +20,15 @@ describe('AppDiagnosticsHomePage', () => {
   let fixture: ComponentFixture<AppDiagnosticsHomePage>;
   let component: AppDiagnosticsHomePage;
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(AppDiagnosticsHomePage);
-          component = fixture.debugElement.componentInstance;
-          fixture.detectChanges();
-        });
-    }),
-  );
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(AppDiagnosticsHomePage);
+        component = fixture.debugElement.componentInstance;
+        fixture.detectChanges();
+      });
+  }));
 
   it('should be defined', () => {
     expect(component).toBeDefined();

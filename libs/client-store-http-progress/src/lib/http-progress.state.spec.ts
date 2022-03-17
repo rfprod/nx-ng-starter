@@ -35,81 +35,67 @@ describe('AppHttpProgressState', () => {
   let store: Store;
   let toaster: AppToasterService;
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          store = TestBed.inject(Store);
-          toaster = TestBed.inject(AppToasterService);
-        });
-    }),
-  );
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        store = TestBed.inject(Store);
+        toaster = TestBed.inject(AppToasterService);
+      });
+  }));
 
-  it(
-    'state selector should return the whole state',
-    waitForAsync(() => {
-      const expectedState = {
-        mainView: { counter: 1, loading: true },
-        sidebar: { counter: 0, loading: false },
-      };
-      void store
-        .dispatch(new httpProgressActions.startProgress({}))
-        .pipe(
-          switchMapTo(store.selectOnce(AppHttpProgressState.state)),
-          tap(state => {
-            expect(state).toEqual(expectedState);
-          }),
-        )
-        .subscribe();
-    }),
-  );
+  it('state selector should return the whole state', waitForAsync(() => {
+    const expectedState = {
+      mainView: { counter: 1, loading: true },
+      sidebar: { counter: 0, loading: false },
+    };
+    void store
+      .dispatch(new httpProgressActions.startProgress({}))
+      .pipe(
+        switchMapTo(store.selectOnce(AppHttpProgressState.state)),
+        tap(state => {
+          expect(state).toEqual(expectedState);
+        }),
+      )
+      .subscribe();
+  }));
 
-  it(
-    'mainView selector should return partial state',
-    waitForAsync(() => {
-      void store
-        .dispatch(new httpProgressActions.stopProgress({}))
-        .pipe(
-          switchMapTo(store.selectOnce(AppHttpProgressState.mainView)),
-          tap(state => {
-            expect(state).toEqual({ counter: 0, loading: false });
-          }),
-        )
-        .subscribe();
-    }),
-  );
+  it('mainView selector should return partial state', waitForAsync(() => {
+    void store
+      .dispatch(new httpProgressActions.stopProgress({}))
+      .pipe(
+        switchMapTo(store.selectOnce(AppHttpProgressState.mainView)),
+        tap(state => {
+          expect(state).toEqual({ counter: 0, loading: false });
+        }),
+      )
+      .subscribe();
+  }));
 
-  it(
-    'sidebar selector should return partial state',
-    waitForAsync(() => {
-      void store
-        .dispatch(new httpProgressActions.stopProgress({}))
-        .pipe(
-          switchMapTo(store.selectOnce(AppHttpProgressState.sidebar)),
-          tap(state => {
-            expect(state).toEqual({ counter: 0, loading: false });
-          }),
-        )
-        .subscribe();
-    }),
-  );
+  it('sidebar selector should return partial state', waitForAsync(() => {
+    void store
+      .dispatch(new httpProgressActions.stopProgress({}))
+      .pipe(
+        switchMapTo(store.selectOnce(AppHttpProgressState.sidebar)),
+        tap(state => {
+          expect(state).toEqual({ counter: 0, loading: false });
+        }),
+      )
+      .subscribe();
+  }));
 
-  it(
-    'displayToast should show toaster',
-    waitForAsync(() => {
-      const toasterSpy = jest.spyOn(toaster, 'showToaster');
-      const message = 'test';
-      const type: TToastType = 'accent';
-      const duration = 1500;
-      void store
-        .dispatch(new httpProgressActions.displayToast({ message, type, duration }))
-        .pipe(
-          tap(() => {
-            expect(toasterSpy).toHaveBeenCalledWith(message, type, duration);
-          }),
-        )
-        .subscribe();
-    }),
-  );
+  it('displayToast should show toaster', waitForAsync(() => {
+    const toasterSpy = jest.spyOn(toaster, 'showToaster');
+    const message = 'test';
+    const type: TToastType = 'accent';
+    const duration = 1500;
+    void store
+      .dispatch(new httpProgressActions.displayToast({ message, type, duration }))
+      .pipe(
+        tap(() => {
+          expect(toasterSpy).toHaveBeenCalledWith(message, type, duration);
+        }),
+      )
+      .subscribe();
+  }));
 });

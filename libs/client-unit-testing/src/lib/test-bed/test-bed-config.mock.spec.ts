@@ -56,30 +56,27 @@ describe('newTestBedMetadata', () => {
     expect(testBedConfig.teardown).toEqual(testTeardown);
   });
 
-  it(
-    'should create a default empty configuration passing additional parameters',
-    waitForAsync(() => {
-      const testValue = 'test';
-      const testBedConfig = newTestBedMetadata({
-        providers: [
-          {
-            provide: TEST_TOKEN,
-            useValue: testValue,
-          },
-        ],
+  it('should create a default empty configuration passing additional parameters', waitForAsync(() => {
+    const testValue = 'test';
+    const testBedConfig = newTestBedMetadata({
+      providers: [
+        {
+          provide: TEST_TOKEN,
+          useValue: testValue,
+        },
+      ],
+    });
+    expect(testBedConfig.declarations).toEqual([]);
+    expect(testBedConfig.imports).toEqual([]);
+    expect(testBedConfig.schemas).toEqual([]);
+    expect(testBedConfig.teardown).toEqual({ destroyAfterEach: true });
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        provider = TestBed.inject(TEST_TOKEN);
+        expect(provider).toEqual(testValue);
       });
-      expect(testBedConfig.declarations).toEqual([]);
-      expect(testBedConfig.imports).toEqual([]);
-      expect(testBedConfig.schemas).toEqual([]);
-      expect(testBedConfig.teardown).toEqual({ destroyAfterEach: true });
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          provider = TestBed.inject(TEST_TOKEN);
-          expect(provider).toEqual(testValue);
-        });
-    }),
-  );
+  }));
 });
 
 describe('getTestBedConfig', () => {

@@ -25,15 +25,13 @@ describe('environmentProvider', () => {
 
   let provider: IWebClientAppEnvironment;
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          provider = TestBed.inject(WEB_CLIENT_APP_ENV);
-        });
-    }),
-  );
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        provider = TestBed.inject(WEB_CLIENT_APP_ENV);
+      });
+  }));
 
   it('should be defined', () => {
     expect(provider).toBeDefined();
