@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { TBarChartData } from '../../interfaces/bar-chart.interface';
-import { IForceDirectedChartData, IForceDirectedChartDataNode } from '../../interfaces/force-directed-chart.interface';
+import { IForceDirectedChartData, IForceDirectedGraphEntity } from '../../interfaces/force-directed-chart.interface';
 import { TLineChartData } from '../../interfaces/line-chart.interface';
 import { IPieChartDataNode } from '../../interfaces/pie-chart.interface';
 import { IRadarChartDataNode } from '../../interfaces/radar-chart.interface';
@@ -112,7 +112,7 @@ export class AppChartExamplesComponent {
       img: app.img,
       linksCount: 0,
     }));
-    const nodes: IForceDirectedChartDataNode[] = [...entities];
+    const nodes: IForceDirectedGraphEntity[] = [...entities];
     const links: IForceDirectedChartData['links'] = entities
       .map(entity => {
         return entity.domains.map(domain => {
