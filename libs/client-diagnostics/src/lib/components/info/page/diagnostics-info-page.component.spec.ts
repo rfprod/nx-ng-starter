@@ -21,17 +21,15 @@ describe('AppDiagnosticsInfoPage', () => {
   let component: AppDiagnosticsInfoPage;
   let componentSpy: TClassMemberFunctionSpiesObject<AppDiagnosticsInfoPage>;
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(AppDiagnosticsInfoPage);
-          component = fixture.componentInstance;
-          componentSpy = spyOnFunctions<AppDiagnosticsInfoPage>(component);
-        });
-    }),
-  );
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(AppDiagnosticsInfoPage);
+        component = fixture.componentInstance;
+        componentSpy = spyOnFunctions<AppDiagnosticsInfoPage>(component);
+      });
+  }));
 
   it('should be defined', () => {
     expect(component).toBeDefined();

@@ -31,25 +31,23 @@ describe('AppContentComponent', () => {
   };
   let router: Router;
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(AppContentComponent);
-          component = fixture.debugElement.componentInstance;
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(AppContentComponent);
+        component = fixture.debugElement.componentInstance;
 
-          store = TestBed.inject(Store);
-          storeSpy = {
-            dispatch: jest.spyOn(store, 'dispatch').mockImplementation((action: unknown) => of(null)),
-          };
+        store = TestBed.inject(Store);
+        storeSpy = {
+          dispatch: jest.spyOn(store, 'dispatch').mockImplementation((action: unknown) => of(null)),
+        };
 
-          router = TestBed.inject(Router);
+        router = TestBed.inject(Router);
 
-          fixture.detectChanges();
-        });
-    }),
-  );
+        fixture.detectChanges();
+      });
+  }));
 
   it('should be defined', () => {
     expect(component).toBeDefined();
@@ -60,13 +58,10 @@ describe('AppContentComponent', () => {
     expect(storeSpy.dispatch).toHaveBeenCalledWith(new sidebarActions.closeSidebar());
   });
 
-  it(
-    'sidebarOpenHandler should call store dispatch',
-    waitForAsync(() => {
-      component.sidebarOpenHandler();
-      expect(storeSpy.dispatch).toHaveBeenCalledWith(new sidebarActions.openSidebar());
-    }),
-  );
+  it('sidebarOpenHandler should call store dispatch', waitForAsync(() => {
+    component.sidebarOpenHandler();
+    expect(storeSpy.dispatch).toHaveBeenCalledWith(new sidebarActions.openSidebar());
+  }));
 
   it('should scroll content on router events', async () => {
     expect(component.content).toBeDefined();

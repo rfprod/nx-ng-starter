@@ -32,33 +32,31 @@ describe('AppTranslationUtilsService', () => {
     };
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          service = TestBed.inject(AppTranslationUtilsService);
-          translate = TestBed.inject(TranslateService);
-          dateAdapter = TestBed.inject(DateAdapter);
-          win = TestBed.inject(WINDOW);
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        service = TestBed.inject(AppTranslationUtilsService);
+        translate = TestBed.inject(TranslateService);
+        dateAdapter = TestBed.inject(DateAdapter);
+        win = TestBed.inject(WINDOW);
 
-          spy = {
-            service: {
-              languageChanges: jest.spyOn((service as any).languageChangesSubject, 'next'),
-            },
-            translate: {
-              onLangChange: jest.spyOn(translate.onLangChange, 'subscribe'),
-              setDefaultLang: jest.spyOn(translate, 'setDefaultLang'),
-              setTranslation: jest.spyOn(translate, 'setTranslation'),
-              use: jest.spyOn(translate, 'use'),
-            },
-            dateAdapter: {
-              setLocale: jest.spyOn(dateAdapter, 'setLocale'),
-            },
-          };
-        });
-    }),
-  );
+        spy = {
+          service: {
+            languageChanges: jest.spyOn((service as any).languageChangesSubject, 'next'),
+          },
+          translate: {
+            onLangChange: jest.spyOn(translate.onLangChange, 'subscribe'),
+            setDefaultLang: jest.spyOn(translate, 'setDefaultLang'),
+            setTranslation: jest.spyOn(translate, 'setTranslation'),
+            use: jest.spyOn(translate, 'use'),
+          },
+          dateAdapter: {
+            setLocale: jest.spyOn(dateAdapter, 'setLocale'),
+          },
+        };
+      });
+  }));
 
   it('should exist and have variables and methods defined', () => {
     expect(service).toBeDefined();
@@ -85,20 +83,17 @@ describe('AppTranslationUtilsService', () => {
     expect(service['setDatepickersLocale']).toEqual(expect.any(Function));
   });
 
-  it(
-    'languageChangeSubscription should work correctly',
-    waitForAsync(() => {
-      service['languageChangeSubscription']();
-      expect(spy.translate.onLangChange).toHaveBeenCalled();
-      void translate.onLangChange.subscribe(
-        (langChangeEvent: LangChangeEvent) => {
-          expect(spy.service.languageChanges).toHaveBeenCalledWith(langChangeEvent);
-          expect(dateAdapter.setLocale).toHaveBeenCalledWith(langChangeEvent.lang);
-        },
-        (): void => void 0,
-      );
-    }),
-  );
+  it('languageChangeSubscription should work correctly', waitForAsync(() => {
+    service['languageChangeSubscription']();
+    expect(spy.translate.onLangChange).toHaveBeenCalled();
+    void translate.onLangChange.subscribe(
+      (langChangeEvent: LangChangeEvent) => {
+        expect(spy.service.languageChanges).toHaveBeenCalledWith(langChangeEvent);
+        expect(dateAdapter.setLocale).toHaveBeenCalledWith(langChangeEvent.lang);
+      },
+      (): void => void 0,
+    );
+  }));
 
   it('initialize should work correctly', () => {
     const callsBefore = {

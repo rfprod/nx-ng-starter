@@ -21,43 +21,35 @@ describe('AppToolbarComponent', () => {
     dispatch: jest.SpyInstance;
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(AppToolbarComponent);
-          component = fixture.debugElement.componentInstance;
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(AppToolbarComponent);
+        component = fixture.debugElement.componentInstance;
 
-          store = TestBed.inject(Store);
-          storeSpy = {
-            dispatch: jest.spyOn(store, 'dispatch').mockImplementation((action: unknown) => of(null)),
-          };
+        store = TestBed.inject(Store);
+        storeSpy = {
+          dispatch: jest.spyOn(store, 'dispatch').mockImplementation((action: unknown) => of(null)),
+        };
 
-          fixture.detectChanges();
-        });
-    }),
-  );
+        fixture.detectChanges();
+      });
+  }));
 
   it('should be defined', () => {
     expect(component).toBeDefined();
   });
 
-  it(
-    'toggleSidebar should call store dispatch',
-    waitForAsync(() => {
-      component.toggleSidebar();
-      expect(storeSpy.dispatch).toHaveBeenCalledWith(new sidebarActions.toggleSidebar());
-    }),
-  );
+  it('toggleSidebar should call store dispatch', waitForAsync(() => {
+    component.toggleSidebar();
+    expect(storeSpy.dispatch).toHaveBeenCalledWith(new sidebarActions.toggleSidebar());
+  }));
 
-  it(
-    'toggleChatbot should call store dispatch',
-    waitForAsync(() => {
-      component.toggleChatbot();
-      expect(storeSpy.dispatch).toHaveBeenCalledWith(new chatbotActions.toggle());
-    }),
-  );
+  it('toggleChatbot should call store dispatch', waitForAsync(() => {
+    component.toggleChatbot();
+    expect(storeSpy.dispatch).toHaveBeenCalledWith(new chatbotActions.toggle());
+  }));
 
   it('toggleMaterialTheme should emit an output event', () => {
     const outputSpy = jest.spyOn(component.darkThemeEnabled, 'emit');

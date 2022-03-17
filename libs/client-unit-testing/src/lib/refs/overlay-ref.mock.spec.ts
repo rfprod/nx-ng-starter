@@ -10,15 +10,13 @@ describe('AppOverlayRefMock', () => {
 
   let mock: AppOverlayRefMock;
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          mock = TestBed.inject(OverlayRef) as unknown as AppOverlayRefMock;
-        });
-    }),
-  );
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        mock = TestBed.inject(OverlayRef) as unknown as AppOverlayRefMock;
+      });
+  }));
 
   it('should be defined', () => {
     expect(mock).toBeDefined();

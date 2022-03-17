@@ -19,21 +19,19 @@ describe('AppRootComponent', () => {
   let meta: Meta;
   let updateTagSpy: jest.SpyInstance;
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(AppRootComponent);
-          component = fixture.componentInstance;
-          title = TestBed.inject(Title);
-          setTitleSpy = jest.spyOn(title, 'setTitle');
-          meta = TestBed.inject(Meta);
-          updateTagSpy = jest.spyOn(meta, 'updateTag');
-          fixture.detectChanges();
-        });
-    }),
-  );
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(AppRootComponent);
+        component = fixture.componentInstance;
+        title = TestBed.inject(Title);
+        setTitleSpy = jest.spyOn(title, 'setTitle');
+        meta = TestBed.inject(Meta);
+        updateTagSpy = jest.spyOn(meta, 'updateTag');
+        fixture.detectChanges();
+      });
+  }));
 
   it('should be defined', () => {
     expect(component).toBeDefined();

@@ -33,26 +33,24 @@ describe('AppHttpApiService', () => {
 
   let httpController: HttpTestingController;
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          httpController = TestBed.inject(HttpTestingController);
-          service = TestBed.inject(AppHttpApiService);
-          toaster = TestBed.inject(AppToasterService);
-          httpHandlers = TestBed.inject(AppHttpHandlersService);
-          apollo = TestBed.inject(Apollo);
-          spy = {
-            httpHandlers: {
-              pipeHttpResponse: jest.spyOn(httpHandlers, 'pipeHttpResponse').mockReturnValue(of({})),
-            },
-          };
-          expect(spy.httpHandlers.pipeHttpResponse).toBeDefined();
-          flushHttpRequests(httpController);
-        });
-    }),
-  );
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        httpController = TestBed.inject(HttpTestingController);
+        service = TestBed.inject(AppHttpApiService);
+        toaster = TestBed.inject(AppToasterService);
+        httpHandlers = TestBed.inject(AppHttpHandlersService);
+        apollo = TestBed.inject(Apollo);
+        spy = {
+          httpHandlers: {
+            pipeHttpResponse: jest.spyOn(httpHandlers, 'pipeHttpResponse').mockReturnValue(of({})),
+          },
+        };
+        expect(spy.httpHandlers.pipeHttpResponse).toBeDefined();
+        flushHttpRequests(httpController);
+      });
+  }));
 
   afterEach(() => {
     flushHttpRequests(httpController, true);

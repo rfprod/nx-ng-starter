@@ -43,21 +43,19 @@ describe('AppDocMarkdownReferenceTreeComponent', () => {
   let store: Store;
   let storeDispatchSpy: jest.SpyInstance;
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(AppDocMarkdownReferenceTreeComponent);
-          component = fixture.debugElement.componentInstance;
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(AppDocMarkdownReferenceTreeComponent);
+        component = fixture.debugElement.componentInstance;
 
-          store = TestBed.inject(Store);
-          storeDispatchSpy = jest.spyOn(store, 'dispatch');
+        store = TestBed.inject(Store);
+        storeDispatchSpy = jest.spyOn(store, 'dispatch');
 
-          fixture.detectChanges();
-        });
-    }),
-  );
+        fixture.detectChanges();
+      });
+  }));
 
   it('should be defined', () => {
     expect(component).toBeDefined();

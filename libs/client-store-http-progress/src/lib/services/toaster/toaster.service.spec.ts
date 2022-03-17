@@ -29,22 +29,20 @@ describe('AppToasterService', () => {
     };
   };
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          service = TestBed.inject(AppToasterService);
-          snackBar = TestBed.inject(MatSnackBar);
-          spy = {
-            snackBar: {
-              open: jest.spyOn(snackBar, 'open'),
-              dismiss: jest.spyOn(snackBar, 'dismiss'),
-            },
-          };
-        });
-    }),
-  );
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        service = TestBed.inject(AppToasterService);
+        snackBar = TestBed.inject(MatSnackBar);
+        spy = {
+          snackBar: {
+            open: jest.spyOn(snackBar, 'open'),
+            dismiss: jest.spyOn(snackBar, 'dismiss'),
+          },
+        };
+      });
+  }));
 
   afterEach(() => {
     TestBed.resetTestingModule();

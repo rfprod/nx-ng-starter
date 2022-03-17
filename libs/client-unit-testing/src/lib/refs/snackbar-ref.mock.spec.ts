@@ -10,15 +10,13 @@ describe('AppMatSnackbarRefMock', () => {
 
   let mock: AppMatSnackbarRefMock;
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          mock = TestBed.inject(MatSnackBar) as unknown as AppMatSnackbarRefMock;
-        });
-    }),
-  );
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        mock = TestBed.inject(MatSnackBar) as unknown as AppMatSnackbarRefMock;
+      });
+  }));
 
   it('should be defined', () => {
     expect(mock).toBeDefined();

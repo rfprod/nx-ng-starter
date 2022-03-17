@@ -54,26 +54,24 @@ describe('AppDocRootComponent', () => {
 
   let env: IDocAppEnvironment;
 
-  beforeEach(
-    waitForAsync(() => {
-      void TestBed.configureTestingModule(testBedConfig)
-        .compileComponents()
-        .then(() => {
-          title = TestBed.inject(Title);
-          meta = TestBed.inject(Meta);
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        title = TestBed.inject(Title);
+        meta = TestBed.inject(Meta);
 
-          setTitleSpy = jest.spyOn(title, 'setTitle');
-          updateTagSpy = jest.spyOn(meta, 'updateTag');
+        setTitleSpy = jest.spyOn(title, 'setTitle');
+        updateTagSpy = jest.spyOn(meta, 'updateTag');
 
-          fixture = TestBed.createComponent(AppDocRootComponent);
-          component = fixture.debugElement.componentInstance;
+        fixture = TestBed.createComponent(AppDocRootComponent);
+        component = fixture.debugElement.componentInstance;
 
-          env = TestBed.inject(DOC_APP_ENV);
+        env = TestBed.inject(DOC_APP_ENV);
 
-          fixture.detectChanges();
-        });
-    }),
-  );
+        fixture.detectChanges();
+      });
+  }));
 
   it('should be defined', () => {
     expect(component).toBeDefined();
