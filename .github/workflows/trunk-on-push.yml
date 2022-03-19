@@ -102,7 +102,7 @@ jobs:
             ${{ runner.os }}-
 
       - name: Install global dependencies
-        if: steps.changes.outputs.nx == 'true'
+        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
         run: npm i -g firebase-tools @compodoc/compodoc
 
       - name: Workspace integrity check

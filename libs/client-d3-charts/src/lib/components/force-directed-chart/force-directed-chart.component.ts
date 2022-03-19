@@ -26,8 +26,14 @@ interface IInputChanges {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppForceDirectedChartComponent implements AfterViewInit, OnChanges {
+  /**
+   * The chart identifier.
+   */
   @Input() public chartId = 'force-0';
 
+  /**
+   * The chart data.
+   */
   @Input() public data: IForceDirectedChartData = {
     domains: [],
     entities: [],
@@ -35,15 +41,22 @@ export class AppForceDirectedChartComponent implements AfterViewInit, OnChanges 
     nodes: [],
   };
 
+  /**
+   * The chart options.
+   */
   @Input() public options: Partial<IForceDirectedChartOptions> = {};
 
   /**
-   * D3 chart view child reference.
+   * The chart container view child reference.
    */
   @ViewChild('container') private readonly container?: ElementRef<HTMLDivElement>;
 
   constructor(@Inject(DOCUMENT) private readonly doc: Document, @Inject(D3_CHART_FACTORY) private readonly d3Factory: ID3ChartFactory) {}
 
+  /**
+   * The chart options constructor.
+   * @returns chart options
+   */
   private chartOptions() {
     const margin = { top: 50, right: 50, bottom: 50, left: 50 };
     const minWidth = 600;
@@ -57,6 +70,9 @@ export class AppForceDirectedChartComponent implements AfterViewInit, OnChanges 
     return options;
   }
 
+  /**
+   * Draws the chart.
+   */
   private drawChart() {
     if (typeof this.container !== 'undefined') {
       const options = this.chartOptions();
@@ -65,14 +81,14 @@ export class AppForceDirectedChartComponent implements AfterViewInit, OnChanges 
   }
 
   /**
-   * Draws chart.
+   * Actually draws the chart after the component view is initialized.
    */
   public ngAfterViewInit(): void {
     this.drawChart();
   }
 
   /**
-   * Redraws chart on changes.
+   * Redraws the chart on changes.
    */
   public ngOnChanges(changes: IInputChanges): void {
     const prevData: IForceDirectedChartData | undefined = changes.data?.previousValue;
