@@ -36,10 +36,10 @@ elif [ "$1" = "install-docker-ci" ]; then
   printGap
 
   npm rebuild node-sass --unsafe-perm || exit 1
-  npm i --force -g yarn typescript@latest @angular/cli@latest @compodoc/compodoc@latest commitizen@latest cz-conventional-changelog@latest clang-format@latest --unsafe-perm || exit 1
+  # Installing yarn@1.22.18 is mandatory, yarn v2 does not have integrity check which is needed for pipelines.
+  npm i --force -g yarn@1.22.18 typescript@latest @angular/cli@latest @compodoc/compodoc@latest commitizen@latest cz-conventional-changelog@latest clang-format@latest --unsafe-perm || exit 1
   printInfoMessage "Setting yarn cache directory"
   printGap
-  yarn set version 1.22.1 # this is mandatory, yarn v2 does not have integrity check which is needed for pipeline
   yarn config set cache-folder ~/.yarn || exit 1
   yarn install:proto:linux:ci || exit 1
   yarn install:shellcheck:linux:ci || exit 1
