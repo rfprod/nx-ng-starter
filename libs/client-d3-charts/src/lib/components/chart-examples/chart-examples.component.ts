@@ -90,6 +90,9 @@ export class AppChartExamplesComponent {
     ];
   }
 
+  /**
+   * Sample force directed chart data.
+   */
   public get forceDirectedChartData() {
     const input = {
       domains: ['first', 'second', 'third'],

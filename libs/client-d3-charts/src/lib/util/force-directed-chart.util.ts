@@ -7,6 +7,9 @@ import {
   IForceDirectedChartOptions,
 } from '../interfaces/force-directed-chart.interface';
 
+/**
+ * Force directed chart default configuration.
+ */
 export const defaultForceDirectedChartConfig: IForceDirectedChartOptions = Object.freeze({
   chartTitle: '',
   width: 600,
@@ -31,6 +34,13 @@ export const defaultForceDirectedChartConfig: IForceDirectedChartOptions = Objec
   color: d3.scaleOrdinal(d3.schemeCategory10),
 });
 
+/**
+ * Force tick handler.
+ * @param link chart links
+ * @param node chart nodes
+ * @param text chart text
+ * @returns
+ */
 const ticked = (
   link?: d3.Selection<SVGLineElement, d3.SimulationLinkDatum<IForceDirectedChartDataNode>, SVGSVGElement, unknown>,
   node?: d3.Selection<SVGCircleElement, IForceDirectedChartDataNode, SVGSVGElement, unknown>,
@@ -57,6 +67,12 @@ const ticked = (
   return 'rotate(0)';
 };
 
+/**
+ * Creates force directed chart container.
+ * @param container chart container
+ * @param config chart ocnfiguration
+ * @returns references to svg and g elements
+ */
 const createContainer = (container: ElementRef<HTMLDivElement>, config: IForceDirectedChartOptions) => {
   const id = container.nativeElement.id ?? 'force-directed-0';
 
@@ -74,6 +90,11 @@ const createContainer = (container: ElementRef<HTMLDivElement>, config: IForceDi
   return { svg, g };
 };
 
+/**
+ * Applies force directed chart data.
+ * @param g svg g element
+ * @param data chart data
+ */
 const applyChartData = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>, data: IForceDirectedChartData) => {
   const imageXY = 10;
   g.append('defs')
@@ -110,6 +131,13 @@ const applyChartData = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unkno
     });
 };
 
+/**
+ * Creates force directed chart links.
+ * @param svg svg element reference
+ * @param config chart configuration
+ * @param data chart data
+ * @returns chart links
+ */
 const createLinks = (
   svg: d3.Selection<SVGSVGElement, unknown, HTMLElement, unknown>,
   config: IForceDirectedChartOptions,
@@ -125,6 +153,12 @@ const createLinks = (
     .style('stroke-width', config.strokeWidth);
 };
 
+/**
+ * Creates force directed chart forces.
+ * @param config chart configuration
+ * @param data chart data
+ * @returns chart forces
+ */
 const createForces = (config: IForceDirectedChartOptions, data: IForceDirectedChartData) => {
   return d3
     .forceSimulation(data.nodes)
@@ -148,10 +182,71 @@ const createForces = (config: IForceDirectedChartOptions, data: IForceDirectedCh
     );
 };
 
+/**
+ * Force directed chart node drag start handler.
+ * @param event drag event
+ * @param datum chart data
+ * @param force chart forces
+ */
+const nodeDragStartHandler = (
+  event: d3.D3DragEvent<SVGCircleElement, IForceDirectedChartDataNode, unknown>,
+  datum: IForceDirectedChartDataNode,
+  force: d3.Simulation<IForceDirectedChartDataNode, undefined>,
+) => {
+  if (!event.active && typeof force !== 'undefined') {
+    const alphaTarget = 0.3;
+    force.alphaTarget(alphaTarget).restart();
+  }
+  datum.fx = event.x;
+  datum.fy = event.y;
+};
+
+/**
+ * Force directed chart node drag handler.
+ * @param event drag event
+ * @param datum chart data
+ * @param config chart configuration
+ */
+const nodeDragHandler = (
+  event: d3.D3DragEvent<SVGCircleElement, IForceDirectedChartDataNode, unknown>,
+  datum: IForceDirectedChartDataNode,
+  config: IForceDirectedChartOptions,
+) => {
+  datum.fx = event.x > config.margin.left && event.x < config.width + config.margin.right ? event.x : datum.fx;
+  datum.fy = event.y > config.margin.top && event.y < config.width + config.margin.bottom ? event.y : datum.fy;
+};
+
+/**
+ * Force directed chart node drag end handler.
+ * @param event drag event
+ * @param datum chart data
+ * @param force chart forces
+ */
+const nodeDragEndHandler = (
+  event: d3.D3DragEvent<SVGCircleElement, IForceDirectedChartDataNode, unknown>,
+  datum: IForceDirectedChartDataNode,
+  force: d3.Simulation<IForceDirectedChartDataNode, undefined>,
+) => {
+  if (!event.active && typeof force !== 'undefined') {
+    force.alphaTarget(0);
+  }
+  datum.fx = null;
+  datum.fy = null;
+};
+
+/**
+ * Creates force directed chart nodes.
+ * @param svg svg element reference
+ * @param data chart data
+ * @param force chart forces
+ * @param config chart configuration
+ * @returns chart nodes
+ */
 const createNodes = (
   svg: d3.Selection<SVGSVGElement, unknown, HTMLElement, unknown>,
   data: IForceDirectedChartData,
   force: d3.Simulation<IForceDirectedChartDataNode, undefined>,
+  config: IForceDirectedChartOptions,
 ) => {
   return svg
     .selectAll('.node')
@@ -178,12 +273,7 @@ const createNodes = (
             event: d3.D3DragEvent<SVGCircleElement, IForceDirectedChartDataNode, unknown>,
             datum: IForceDirectedChartDataNode,
           ) {
-            if (!event.active && typeof force !== 'undefined') {
-              const alphaTarget = 0.3;
-              force.alphaTarget(alphaTarget).restart();
-            }
-            datum.fx = event.x;
-            datum.fy = event.y;
+            nodeDragStartHandler(event, datum, force);
           },
         )
         .on(
@@ -193,8 +283,7 @@ const createNodes = (
             event: d3.D3DragEvent<SVGCircleElement, IForceDirectedChartDataNode, unknown>,
             datum: IForceDirectedChartDataNode,
           ) {
-            datum.fx = event.x;
-            datum.fy = event.y;
+            nodeDragHandler(event, datum, config);
           },
         )
         .on(
@@ -204,16 +293,18 @@ const createNodes = (
             event: d3.D3DragEvent<SVGCircleElement, IForceDirectedChartDataNode, unknown>,
             datum: IForceDirectedChartDataNode,
           ) {
-            if (!event.active && typeof force !== 'undefined') {
-              force.alphaTarget(0);
-            }
-            datum.fx = null;
-            datum.fy = null;
+            nodeDragEndHandler(event, datum, force);
           },
         ),
     );
 };
 
+/**
+ * Creates force directed chart text labels.
+ * @param svg svg element reference
+ * @param data chart data
+ * @returns text labels
+ */
 const createText = (svg: d3.Selection<SVGSVGElement, unknown, HTMLElement, unknown>, data: IForceDirectedChartData) => {
   return svg
     .append('g')
@@ -221,9 +312,17 @@ const createText = (svg: d3.Selection<SVGSVGElement, unknown, HTMLElement, unkno
     .data(data.nodes)
     .enter()
     .append('text')
+    .attr('class', 'legend')
     .text(val => val.name ?? `N/A (id. ${val.index})`);
 };
 
+/**
+ * Draws force directed chart.
+ * @param container chart container
+ * @param data chart data
+ * @param options chart options
+ * @returns chart configuration
+ */
 export const drawForceDirectedChart = (
   container: ElementRef<HTMLDivElement>,
   data: IForceDirectedChartData,
@@ -246,7 +345,7 @@ export const drawForceDirectedChart = (
 
   const force = createForces(config, data);
 
-  const node = createNodes(svg, data, force);
+  const node = createNodes(svg, data, force, config);
 
   const text = createText(svg, data);
 
