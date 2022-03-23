@@ -25,7 +25,7 @@ import { AppClientD3ChartsModule } from '@app/client-d3-charts';
 Install the package
 
 ```bash
-yarn add @rfprodz/d3-charts d3 @types/d3 @types/d3-shape
+yarn add @rfprodz/d3-charts d3 @types/d3
 ```
 
 Import the charts module

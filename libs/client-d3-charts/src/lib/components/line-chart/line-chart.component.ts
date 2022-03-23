@@ -27,10 +27,19 @@ interface IInputChanges {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppLineChartComponent implements AfterViewInit, OnChanges {
+  /**
+   * The chart id.
+   */
   @Input() public chartId = 'bar-0';
 
+  /**
+   * The chart data.
+   */
   @Input() public data: TLineChartData = [];
 
+  /**
+   * The chart options.
+   */
   @Input() public options: Partial<ILineChartOptions> = {};
 
   /**
@@ -40,6 +49,10 @@ export class AppLineChartComponent implements AfterViewInit, OnChanges {
 
   constructor(@Inject(DOCUMENT) private readonly doc: Document, @Inject(D3_CHART_FACTORY) private readonly d3Factory: ID3ChartFactory) {}
 
+  /**
+   * The chart options constructor.
+   * @returns chart options
+   */
   private chartOptions() {
     const margin = { top: 70, right: 50, bottom: 50, left: 60 };
     const minWidth = 350;
@@ -71,6 +84,9 @@ export class AppLineChartComponent implements AfterViewInit, OnChanges {
     return options;
   }
 
+  /**
+   * Draws the chart.
+   */
   private drawChart() {
     if (typeof this.container !== 'undefined') {
       const options = this.chartOptions();
@@ -79,14 +95,14 @@ export class AppLineChartComponent implements AfterViewInit, OnChanges {
   }
 
   /**
-   * Draws chart.
+   * Actually draws the chart after the component view is initialized.
    */
   public ngAfterViewInit(): void {
     this.drawChart();
   }
 
   /**
-   * Redraws chart on changes.
+   * Redraws the chart on changes.
    */
   public ngOnChanges(changes: IInputChanges): void {
     const data: ILineChartDataNode[][] = changes.data?.currentValue;

@@ -55,10 +55,8 @@ const drawCircularGrid = (
     .data(d3.range(1, config.levels + 1).reverse())
     .enter()
     .append('circle')
-    .attr('class', 'gridCircle')
-    .attr('r', function (d, i) {
-      return (radius / config.levels) * d;
-    })
+    .attr('class', 'grid-circle')
+    .attr('r', (d, i) => (radius / config.levels) * d)
     .style('fill', '#CDCDCD')
     .style('stroke', '#CDCDCD')
     .style('fill-opacity', config.opacityCircles)
@@ -66,21 +64,17 @@ const drawCircularGrid = (
   // text indicating at what % each level is
   const axisGridX = 4;
   axisGrid
-    .selectAll('.axisLabel')
+    .selectAll('.axis-label')
     .data(d3.range(1, config.levels + 1).reverse())
     .enter()
     .append('text')
-    .attr('class', 'axisLabel')
+    .attr('class', 'axis-label')
     .attr('x', axisGridX)
-    .attr('y', function (d) {
-      return (-d * radius) / config.levels;
-    })
+    .attr('y', d => (-d * radius) / config.levels)
     .attr('dy', '0.4em')
     .style('font-size', '10px')
     .attr('fill', '#737373')
-    .text(function (d, i) {
-      return (maxValue * d) / config.levels;
-    });
+    .text((d, i) => (maxValue * d) / config.levels);
 };
 
 const wrapSvgText = (svgText: d3.Selection<SVGTextElement, string, SVGGElement, unknown>, width: number) => {
@@ -179,11 +173,11 @@ const drawRadarChartBlobs = (
       return i * angleSlice;
     });
   // create a wrapper for the blobs
-  const blobWrapper = g.selectAll('.radarWrapper').data(data).enter().append('g').attr('class', 'radarWrapper');
+  const blobWrapper = g.selectAll('.radar-wrapper').data(data).enter().append('g').attr('class', 'radar-wrapper');
   // append the backgrounds
   blobWrapper
     .append('path')
-    .attr('class', 'radarArea')
+    .attr('class', 'radar-area')
     .attr('d', function (d, i) {
       return radarLine(d);
     })
@@ -194,19 +188,19 @@ const drawRadarChartBlobs = (
     .on('mouseover', function (d, i) {
       // dim all blobs
       const radarAreaFillOpacity = 0.1;
-      d3.selectAll('.radarArea').transition().duration(config.transitionDuration).style('fill-opacity', radarAreaFillOpacity);
+      d3.selectAll('.radar-area').transition().duration(config.transitionDuration).style('fill-opacity', radarAreaFillOpacity);
       // bring back the hovered over blob
       const fillOpacity = 0.7;
       d3.select(this).transition().duration(config.transitionDuration).style('fill-opacity', fillOpacity);
     })
     .on('mouseout', function () {
       // bring back all blobs
-      d3.selectAll('.radarArea').transition().duration(config.transitionDuration).style('fill-opacity', config.opacityArea);
+      d3.selectAll('.radar-area').transition().duration(config.transitionDuration).style('fill-opacity', config.opacityArea);
     });
   // create the outlines
   blobWrapper
     .append('path')
-    .attr('class', 'radarStroke')
+    .attr('class', 'radar-stroke')
     .attr('d', function (d, i) {
       return radarLine(d);
     })
@@ -219,13 +213,13 @@ const drawRadarChartBlobs = (
   // append the circles
   const blobWrapperFillOpacity = 0.8;
   blobWrapper
-    .selectAll('.radarCircle')
+    .selectAll('.radar-circle')
     .data(function (d, i) {
       return d;
     })
     .enter()
     .append('circle')
-    .attr('class', 'radarCircle')
+    .attr('class', 'radar-circle')
     .attr('r', config.dotRadius)
     .attr('cx', function (d, i) {
       return radiusScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2);
@@ -247,19 +241,19 @@ const appendInvisibleTooltipCircles = (
   config: IRadarChartOptions,
 ) => {
   // wrapper for the invisible circles on top
-  const blobCircleWrapper = g.selectAll('.radarCircleWrapper').data(data).enter().append('g').attr('class', 'radarCircleWrapper');
+  const blobCircleWrapper = g.selectAll('.radar-circle-wrapper').data(data).enter().append('g').attr('class', 'radar-circle-wrapper');
   // set up the small tooltip for when you hover over a circle
   const tooltip = g.append('text').attr('class', 'tooltip').style('opacity', 0);
   // append a set of invisible circles on top for the mouseover pop-up
   const blobCircleWrapperRadiusMultiplier = 1.5;
   blobCircleWrapper
-    .selectAll<SVGElement, IRadarChartDataNode>('.radarInvisibleCircle')
+    .selectAll<SVGElement, IRadarChartDataNode>('.radar-invisible-circle')
     .data(function (d, i) {
       return d;
     })
     .enter()
     .append('circle')
-    .attr('class', 'radarInvisibleCircle')
+    .attr('class', 'radar-invisible-circle')
     .attr('r', config.dotRadius * blobCircleWrapperRadiusMultiplier)
     .attr('cx', function (d, i) {
       return radiusScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2);
@@ -311,7 +305,7 @@ export const drawRadarChart = (container: ElementRef<HTMLDivElement>, data: TRad
   feMerge.append('feMergeNode').attr('in', 'coloredBlur');
   feMerge.append('feMergeNode').attr('in', 'SourceGraphic');
 
-  const axisGrid = g.append('g').attr('class', 'axisWrapper');
+  const axisGrid = g.append('g').attr('class', 'axis-wrapper');
 
   drawCircularGrid(axisGrid, radius, maxValue, config);
 

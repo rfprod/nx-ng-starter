@@ -152,10 +152,12 @@ const onMouseOver = (
     .attr('r', config.dotRadius * 2);
 
   const tooltipShift = 4;
+  const tooltipDy = -10;
   g.append('text')
     .attr('class', 'val')
     .style('font-size', '11px')
     .attr('dx', () => (config.width - config.margin.left - config.margin.right) / tooltipShift)
+    .attr('dy', () => tooltipDy)
     .text(() => `${d.value} (${new Date(d.timestamp).toUTCString()})`);
 };
 

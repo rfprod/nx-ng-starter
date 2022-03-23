@@ -1,2 +1,2 @@
-export * from './globals/jest-jsdom-globals.patch';
+export * from './patch/jest-jsdom-globals.patch';
 export * from './spies/jest-spies.patch';
