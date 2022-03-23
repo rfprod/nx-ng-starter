@@ -26,10 +26,19 @@ interface IInputChanges {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppRadarChartComponent implements AfterViewInit, OnChanges {
+  /**
+   * The chart id.
+   */
   @Input() public chartId = '0';
 
+  /**
+   * The chart data.
+   */
   @Input() public data: IRadarChartDataNode[][] = [[]];
 
+  /**
+   * The chart options.
+   */
   @Input() public options: Partial<IRadarChartOptions> = {};
 
   /**
@@ -39,8 +48,12 @@ export class AppRadarChartComponent implements AfterViewInit, OnChanges {
 
   constructor(@Inject(DOCUMENT) private readonly doc: Document, @Inject(D3_CHART_FACTORY) private readonly d3Factory: ID3ChartFactory) {}
 
+  /**
+   * The chart options constructor.
+   * @returns chart options
+   */
   private chartOptions() {
-    const margin = { top: 75, right: 100, bottom: 125, left: 100 };
+    const margin = { top: 90, right: 100, bottom: 90, left: 100 };
     const widthOffset = { min: 500, max: 700 };
     const halfWidth = this.doc.body.clientWidth;
     const xsOffset = 500;
@@ -84,6 +97,9 @@ export class AppRadarChartComponent implements AfterViewInit, OnChanges {
     return options;
   }
 
+  /**
+   * Draws the chart.
+   */
   private drawChart() {
     if (typeof this.container !== 'undefined') {
       const options = this.chartOptions();
@@ -92,14 +108,14 @@ export class AppRadarChartComponent implements AfterViewInit, OnChanges {
   }
 
   /**
-   * Draws chart.
+   * Actually draws the chart after the component view is initialized.
    */
   public ngAfterViewInit(): void {
     this.drawChart();
   }
 
   /**
-   * Redraws chart on changes.
+   * Redraws the chart on changes.
    */
   public ngOnChanges(changes: IInputChanges): void {
     const currentValue: IRadarChartDataNode[][] = changes.data?.currentValue;

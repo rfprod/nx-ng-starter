@@ -9,10 +9,10 @@ module.exports = {
   coverageThreshold: {
     // TODO: bump coverage thresholds
     global: {
-      branches: 0,
-      functions: 0,
-      lines: 0,
-      statements: 0,
+      branches: 3,
+      functions: 13,
+      lines: 21,
+      statements: 24,
     },
   },
 };
