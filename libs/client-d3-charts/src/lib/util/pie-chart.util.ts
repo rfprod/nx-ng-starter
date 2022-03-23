@@ -1,8 +1,7 @@
 import { ElementRef } from '@angular/core';
 import * as d3 from 'd3';
-import { arc, pie, PieArcDatum } from 'd3-shape';
 
-import { IPieChartDataNode, IPieChartOptions, PIE_CHART_ARC_CONFIG } from '../interfaces/pie-chart.interface';
+import { IPieChartDataNode, IPieChartOptions } from '../interfaces/pie-chart.interface';
 
 export const defaultPieChartConfig: IPieChartOptions = Object.freeze({
   chartTitle: '',
@@ -14,11 +13,30 @@ export const defaultPieChartConfig: IPieChartOptions = Object.freeze({
     bottom: 20,
     left: 20,
   },
+  innerRadius: 0, // increase inner radius to render a donut chart
+  labelRadiusModifier: 50,
   labelTextWrapWidth: 60,
   color: d3.scaleOrdinal(d3.schemeCategory10),
 });
 
-export const drawPieChart = (canvas: ElementRef<HTMLCanvasElement>, data: IPieChartDataNode[], options?: Partial<IPieChartOptions>) => {
+const createContainer = (container: ElementRef<HTMLDivElement>, config: IPieChartOptions) => {
+  const id = container.nativeElement.id ?? 'pie-0';
+
+  d3.select(`#${id}`).select('svg').remove();
+  const svg = d3
+    .select(`#${id}`)
+    .append('svg')
+    .attr('width', config.width + config.margin.left + config.margin.right)
+    .attr('height', config.height + config.margin.top + config.margin.bottom)
+    .attr('class', id);
+  const g = svg
+    .append('g')
+    .attr('transform', `translate(${config.width / 2 + config.margin.left},${config.height / 2 + config.margin.top})`);
+
+  return { svg, g };
+};
+
+export const drawPieChart = (container: ElementRef<HTMLDivElement>, data: IPieChartDataNode[], options?: Partial<IPieChartOptions>) => {
   const config: IPieChartOptions = { ...defaultPieChartConfig };
   if (typeof options !== 'undefined') {
     for (const i in options) {
@@ -28,48 +46,50 @@ export const drawPieChart = (canvas: ElementRef<HTMLCanvasElement>, data: IPieCh
     }
   }
 
-  const context = canvas.nativeElement.getContext('2d');
+  const { g } = createContainer(container, config);
 
-  if (context !== null && typeof context !== 'undefined' && typeof canvas !== 'undefined') {
-    const width = canvas.nativeElement.width;
-    const height = canvas.nativeElement.height;
-    const radius = Math.min(width, height) / 2;
+  const pie = d3.pie<IPieChartDataNode>().value(datum => datum.y);
 
-    context.clearRect(0, 0, width, height);
+  const radius = Math.min(config.width, config.height) / 2;
 
-    const createArc = arc<PieArcDatum<IPieChartDataNode>>()
-      .outerRadius(radius - PIE_CHART_ARC_CONFIG.ARC_INNER_RADIUS)
-      .innerRadius(PIE_CHART_ARC_CONFIG.ARC_INNER_RADIUS)
-      .context(context);
+  const arc = d3.arc<d3.PieArcDatum<IPieChartDataNode>>().innerRadius(config.innerRadius).outerRadius(radius);
 
-    const createLabel = arc<PieArcDatum<IPieChartDataNode>>()
-      .outerRadius(radius - PIE_CHART_ARC_CONFIG.LABEL_INNER_RADIUS)
-      .innerRadius(PIE_CHART_ARC_CONFIG.LABEL_INNER_RADIUS)
-      .context(context);
-
-    const createPieChart = pie<IPieChartDataNode>().value(datum => datum.y);
-
-    context.translate(width / 2, height / 2);
-
-    const scale = 1.5;
-    context.transform(scale, 0, 0, scale, 0, 0);
-
-    const arcs = createPieChart(data);
-
-    arcs.forEach((datum, i) => {
-      context.fillStyle = config.color(i.toString());
-      context.beginPath();
-      createArc(datum);
-      context.closePath();
-      context.fill();
+  const arcs = g
+    .selectAll('arc')
+    .data(pie(data))
+    .enter()
+    .append('g')
+    .attr('class', 'arc')
+    .on('mouseover', function (this, event: MouseEvent, d) {
+      d3.select('#tooltip')
+        .style('left', `${event.pageX}px`)
+        .style('top', `${event.pageY}px`)
+        .style('opacity', 1)
+        .select('#value')
+        .text(d.value);
+    })
+    .on('mouseout', function (this, event, d) {
+      d3.select('#tooltip').style('opacity', 0);
     });
 
-    arcs.forEach(datum => {
-      context.textAlign = 'center';
-      context.textBaseline = 'middle';
-      context.fillStyle = '#000';
-      const c = createLabel.centroid(datum);
-      context.fillText(datum.data.key, c[0], c[1]);
-    });
-  }
+  const label = d3
+    .arc<d3.PieArcDatum<IPieChartDataNode>>()
+    .innerRadius(radius)
+    .outerRadius(radius + config.labelRadiusModifier);
+
+  arcs
+    .append('path')
+    .attr('fill', (d, i) => {
+      return config.color(i.toString());
+    })
+    .attr('d', arc);
+
+  const textDy = 5;
+  arcs
+    .append('text')
+    .attr('class', 'legend')
+    .attr('text-anchor', 'middle')
+    .attr('dy', textDy)
+    .attr('transform', d => `translate(${label.centroid(d)})`)
+    .text(d => d.data.y);
 };

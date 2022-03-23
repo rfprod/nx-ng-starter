@@ -60,7 +60,7 @@ export class AppChartExamplesComponent {
         { axis: 'six', value: 6, unit: 'x' },
         { axis: 'seven', value: 7, unit: 'x' },
         { axis: 'eight', value: 8, unit: 'x' },
-        { axis: 'nine', value: 9, unit: 'x' },
+        { axis: 'nine (long labels are wrapped)', value: 9, unit: 'x' },
       ],
       [
         { axis: 'one', value: 9, unit: 'y' },
@@ -71,7 +71,7 @@ export class AppChartExamplesComponent {
         { axis: 'six', value: 4, unit: 'y' },
         { axis: 'seven', value: 3, unit: 'y' },
         { axis: 'eight', value: 2, unit: 'y' },
-        { axis: 'nine', value: 1, unit: 'y' },
+        { axis: 'nine (long labels are wrapped)', value: 1, unit: 'y' },
       ],
     ];
   }
