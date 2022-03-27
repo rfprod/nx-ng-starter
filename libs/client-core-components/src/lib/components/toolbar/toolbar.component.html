@@ -11,7 +11,7 @@
 
   <span fxFlex="1 1 auto"></span>
 
-  <a mat-button *ngFor="let anchor of anchors" [fxHide.xs]="true" [fxHide.sm]="true" [href]="anchor.href" target="_blank">
+  <a mat-button *ngFor="let anchor of anchors" [fxHide.xs]="true" [fxHide.sm]="true" [href]="anchor.href" target="_blank" rel="noreferrer">
     <mat-icon>{{ anchor.icon }}</mat-icon> {{ anchor.title }}
   </a>
 
@@ -26,7 +26,7 @@
   </button>
 
   <mat-menu #mobileMenuBottom="matMenu" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
-    <a mat-menu-item *ngFor="let anchor of anchors" [href]="anchor.href" target="_blank">
+    <a mat-menu-item *ngFor="let anchor of anchors" [href]="anchor.href" target="_blank" rel="noreferrer">
       <mat-icon>{{ anchor.icon }}</mat-icon> {{ anchor.title }}
     </a>
 
