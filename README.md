@@ -13,6 +13,7 @@
 | Manual                              | [![e2e-test](https://github.com/rfprod/nx-ng-starter/actions/workflows/e2e-test.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/e2e-test.yml)                                     |
 | Manual                              | [![docker](https://github.com/rfprod/nx-ng-starter/actions/workflows/docker.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/docker.yml)                                           |
 | Scheduled (weekly)                  | [![codeowners-validator](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeowners-validator.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeowners-validator.yml) |
+| Manual, Scheduled (weekly)          | [![codeql-analysis](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeql-analysis.yml)                |
 
 ## Requirements
 
