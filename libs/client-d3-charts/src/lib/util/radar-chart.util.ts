@@ -3,6 +3,9 @@ import * as d3 from 'd3';
 
 import { IRadarChartDataNode, IRadarChartOptions, TRadarChartData } from '../interfaces/radar-chart.interface';
 
+/**
+ * The default radar chart configuration.
+ */
 export const defaultRadarChartConfig: IRadarChartOptions = Object.freeze({
   chartTitle: '',
   width: 600,
@@ -26,6 +29,12 @@ export const defaultRadarChartConfig: IRadarChartOptions = Object.freeze({
   color: d3.scaleOrdinal(d3.schemeCategory10),
 });
 
+/**
+ * Creates a container for the radar chart.
+ * @param container the chart container
+ * @param config the chart configuration
+ * @returns the object with the svg element and the g element
+ */
 const createContainer = (container: ElementRef<HTMLDivElement>, config: IRadarChartOptions) => {
   const id = container.nativeElement.id ?? 'radar-0';
 
@@ -43,6 +52,13 @@ const createContainer = (container: ElementRef<HTMLDivElement>, config: IRadarCh
   return { svg, g };
 };
 
+/**
+ * Draws the radar chart circular grid.
+ * @param axisGrid the chart axis grid
+ * @param radius the chart radius value
+ * @param maxValue the maximum value of the chart axis
+ * @param config the chart configuration
+ */
 const drawCircularGrid = (
   axisGrid: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>,
   radius: number,
@@ -77,6 +93,11 @@ const drawCircularGrid = (
     .text((d, i) => (maxValue * d) / config.levels);
 };
 
+/**
+ * Wraps the chart axis labels text.
+ * @param svgText the svg text elements
+ * @param width the chart axis label width
+ */
 const wrapSvgText = (svgText: d3.Selection<SVGTextElement, string, SVGGElement, unknown>, width: number) => {
   svgText.each(function (this: SVGTextElement) {
     const text = d3.select<SVGElement, string>(this);
@@ -111,6 +132,15 @@ const wrapSvgText = (svgText: d3.Selection<SVGTextElement, string, SVGGElement, 
   });
 };
 
+/**
+ * Draws the radar chart axis.
+ * @param axisGrid the chart axis grid
+ * @param axisNames the chart axis names
+ * @param radiusScale the chart radius scale
+ * @param maxValue the maximum value of the chart axis
+ * @param angleSlice the chart angle slice value
+ * @param config the chart configuration
+ */
 const drawAxis = (
   axisGrid: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>,
   axisNames: string[],
@@ -156,6 +186,14 @@ const drawAxis = (
     .call(wrapSvgText, config.labelTextWrapWidth);
 };
 
+/**
+ * Draws the radar chart blobs.
+ * @param radiusScale the chart radius scale
+ * @param angleSlice the chart angle slice value
+ * @param g the svg g element
+ * @param data the chart data
+ * @param config the chart configuration
+ */
 const drawRadarChartBlobs = (
   radiusScale: d3.ScaleLinear<number, number>,
   angleSlice: number,
@@ -233,6 +271,14 @@ const drawRadarChartBlobs = (
     .style('fill-opacity', blobWrapperFillOpacity);
 };
 
+/**
+ * Appends the invisible tooltip circles.
+ * @param g the svg g element
+ * @param data the chart data
+ * @param radiusScale the chart radius scale
+ * @param angleSlice the chart angle slice value
+ * @param config the chart configuration
+ */
 const appendInvisibleTooltipCircles = (
   g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>,
   data: TRadarChartData,
@@ -277,6 +323,13 @@ const appendInvisibleTooltipCircles = (
     });
 };
 
+/**
+ * Draws the radar chart.
+ * @param container the chart container
+ * @param data the chart data
+ * @param options the chart options
+ * @returns the hart configuration
+ */
 export const drawRadarChart = (container: ElementRef<HTMLDivElement>, data: TRadarChartData, options?: Partial<IRadarChartOptions>) => {
   const config: IRadarChartOptions = { ...defaultRadarChartConfig };
   if (typeof options !== 'undefined') {
