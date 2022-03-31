@@ -30,7 +30,7 @@ export class AppChartExamplesComponent {
    * Sample line chart data.
    */
   public get lineChartData() {
-    const increment = 5000;
+    const increment = 10000;
     const multiplier = 2;
     return <TLineChartData>[
       { timestamp: new Date().getTime(), value: 1 },

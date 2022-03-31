@@ -3,6 +3,9 @@ import * as d3 from 'd3';
 
 import { ILineChartDataNode, ILineChartOptions, TLineChartData } from '../interfaces/line-chart.interface';
 
+/**
+ * The default line chart configuration.
+ */
 export const defaultLineChartConfig: ILineChartOptions = Object.freeze({
   chartTitle: '',
   width: 600,
@@ -31,6 +34,12 @@ export const defaultLineChartConfig: ILineChartOptions = Object.freeze({
   color: d3.scaleOrdinal(d3.schemeCategory10),
 });
 
+/**
+ * Creates a container for the line chart.
+ * @param container the chart container
+ * @param config the chart configuration
+ * @returns the object with the svg element and the g element
+ */
 const createContainer = (container: ElementRef<HTMLDivElement>, config: ILineChartOptions) => {
   const id = container.nativeElement.id ?? 'line-0';
 
@@ -48,6 +57,11 @@ const createContainer = (container: ElementRef<HTMLDivElement>, config: ILineCha
   return { svg, g };
 };
 
+/**
+ * Wraps the line chart axis labels text.
+ * @param svgText the svg text elements
+ * @param width the chart axis label width
+ */
 const wrapSvgText = (svgText: d3.Selection<d3.BaseType, unknown, SVGGElement, unknown>, width: number) => {
   svgText.each(function (this: d3.BaseType) {
     const text = d3.select<d3.BaseType, string>(this);
@@ -82,9 +96,15 @@ const wrapSvgText = (svgText: d3.Selection<d3.BaseType, unknown, SVGGElement, un
   });
 };
 
+/**
+ * Creates the x axis.
+ * @param g the svg g element
+ * @param x the x axis scale
+ * @param config the chart configuration
+ */
 const createAxisX = (
   g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>,
-  x: d3.ScaleLinear<number, number>,
+  x: d3.ScaleTime<number, number>,
   config: ILineChartOptions,
 ) => {
   const xLabels = g
@@ -96,7 +116,7 @@ const createAxisX = (
         .ticks(config.ticks.x)
         .tickFormat(d => {
           const date = new Date(d.valueOf());
-          const day = date.getDay();
+          const day = date.getDate();
           const month = date.getMonth();
           const year = date.getFullYear().toString().slice(2);
           const hour = date.getHours();
@@ -117,6 +137,12 @@ const createAxisX = (
     .text(config.xAxisTitle);
 };
 
+/**
+ * Creates the y axis.
+ * @param g the svg g element
+ * @param y the y axis scale
+ * @param config the chart configuration
+ */
 const createAxisY = (
   g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>,
   y: d3.ScaleLinear<number, number>,
@@ -137,12 +163,17 @@ const createAxisY = (
     .text(config.yAxisTitle);
 };
 
+/**
+ * The mouse over event handler.
+ * @param self an svg circle element
+ * @param d the chart data node
+ * @param g the svg g element
+ * @param config the chart configuration
+ */
 const onMouseOver = (
   self: SVGCircleElement,
   d: ILineChartDataNode,
   g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>,
-  x: d3.ScaleLinear<number, number>,
-  y: d3.ScaleLinear<number, number>,
   config: ILineChartOptions,
 ) => {
   const duration = 400;
@@ -161,6 +192,11 @@ const onMouseOver = (
     .text(() => `${d.value} (${new Date(d.timestamp).toUTCString()})`);
 };
 
+/**
+ * The mouse out event handler.
+ * @param self an svg circle element
+ * @param config the chart configuration
+ */
 const onMouseOut = (self: SVGCircleElement, config: ILineChartOptions) => {
   const duration = 400;
   d3.select(self).attr('class', 'dot');
@@ -169,9 +205,17 @@ const onMouseOut = (self: SVGCircleElement, config: ILineChartOptions) => {
   d3.selectAll('.val').remove();
 };
 
+/**
+ * Draws the chart lines, dots, and sets the mouse pointer events.
+ * @param g the svg g element
+ * @param x the x axis scale
+ * @param y the y axis scale
+ * @param config the chart configuration
+ * @param data the chart data
+ */
 const drawLinesDotsAndSetPointerEvents = (
   g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>,
-  x: d3.ScaleLinear<number, number>,
+  x: d3.ScaleTime<number, number>,
   y: d3.ScaleLinear<number, number>,
   config: ILineChartOptions,
   data: TLineChartData,
@@ -192,7 +236,7 @@ const drawLinesDotsAndSetPointerEvents = (
     .style('pointer-events', 'all')
     .style('fill', (d, i) => config.color(i.toString()))
     .on('mouseover', function (this, event, d) {
-      return onMouseOver(this, d, g, x, y, config);
+      return onMouseOver(this, d, g, config);
     })
     .on('mouseout', function (this) {
       return onMouseOut(this, config);
@@ -214,6 +258,13 @@ const drawLinesDotsAndSetPointerEvents = (
     .attr('r', config.dotRadius);
 };
 
+/**
+ * Draws the line chart.
+ * @param container the chart container
+ * @param data the chart data
+ * @param options the chart options
+ * @returns the chart configuration
+ */
 export const drawLineChart = (container: ElementRef<HTMLDivElement>, data: TLineChartData, options?: Partial<ILineChartOptions>) => {
   const config: ILineChartOptions = { ...defaultLineChartConfig };
   if (typeof options !== 'undefined') {
@@ -226,7 +277,7 @@ export const drawLineChart = (container: ElementRef<HTMLDivElement>, data: TLine
 
   const { g } = createContainer(container, config);
 
-  const x = d3.scaleLinear([0, config.width]).domain([Math.min(...data.map(d => d.timestamp)), Math.max(...data.map(d => d.timestamp))]);
+  const x = d3.scaleTime([0, config.width]).domain([Math.min(...data.map(d => d.timestamp)), Math.max(...data.map(d => d.timestamp))]);
   const y = d3.scaleLinear([config.height, 0]).domain([0, d3.max(data, d => d.value) ?? 1]);
 
   createAxisX(g, x, config);

@@ -8,7 +8,7 @@ import {
 } from '../interfaces/force-directed-chart.interface';
 
 /**
- * Force directed chart default configuration.
+ * The force directed chart default configuration.
  */
 export const defaultForceDirectedChartConfig: IForceDirectedChartOptions = Object.freeze({
   chartTitle: '',
@@ -35,11 +35,11 @@ export const defaultForceDirectedChartConfig: IForceDirectedChartOptions = Objec
 });
 
 /**
- * Force tick handler.
+ * The force durected chart tick handler.
  * @param link chart links
  * @param node chart nodes
  * @param text chart text
- * @returns
+ * @returns rotation angle
  */
 const ticked = (
   link?: d3.Selection<SVGLineElement, d3.SimulationLinkDatum<IForceDirectedChartDataNode>, SVGSVGElement, unknown>,
@@ -68,10 +68,10 @@ const ticked = (
 };
 
 /**
- * Creates force directed chart container.
- * @param container chart container
- * @param config chart ocnfiguration
- * @returns references to svg and g elements
+ * Creates a container for the force directed chart.
+ * @param container the chart container
+ * @param config the chart configuration
+ * @returns the object with the svg element and the g element
  */
 const createContainer = (container: ElementRef<HTMLDivElement>, config: IForceDirectedChartOptions) => {
   const id = container.nativeElement.id ?? 'force-directed-0';
@@ -91,9 +91,9 @@ const createContainer = (container: ElementRef<HTMLDivElement>, config: IForceDi
 };
 
 /**
- * Applies force directed chart data.
- * @param g svg g element
- * @param data chart data
+ * Applies the force directed chart data.
+ * @param g the svg g element
+ * @param data the chart data
  */
 const applyChartData = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>, data: IForceDirectedChartData) => {
   const imageXY = 10;
@@ -132,11 +132,11 @@ const applyChartData = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unkno
 };
 
 /**
- * Creates force directed chart links.
- * @param svg svg element reference
- * @param config chart configuration
- * @param data chart data
- * @returns chart links
+ * Creates the force directed chart links.
+ * @param svg the svg element
+ * @param config the chart configuration
+ * @param data the chart data
+ * @returns the chart links
  */
 const createLinks = (
   svg: d3.Selection<SVGSVGElement, unknown, HTMLElement, unknown>,
@@ -154,10 +154,10 @@ const createLinks = (
 };
 
 /**
- * Creates force directed chart forces.
- * @param config chart configuration
- * @param data chart data
- * @returns chart forces
+ * Creates the force directed chart forces.
+ * @param config the chart configuration
+ * @param data the chart data
+ * @returns the chart forces
  */
 const createForces = (config: IForceDirectedChartOptions, data: IForceDirectedChartData) => {
   return d3
@@ -183,10 +183,10 @@ const createForces = (config: IForceDirectedChartOptions, data: IForceDirectedCh
 };
 
 /**
- * Force directed chart node drag start handler.
- * @param event drag event
- * @param datum chart data
- * @param force chart forces
+ * The force directed chart node drag start handler.
+ * @param event a drag event
+ * @param datum the chart data
+ * @param force the chart forces
  */
 const nodeDragStartHandler = (
   event: d3.D3DragEvent<SVGCircleElement, IForceDirectedChartDataNode, unknown>,
@@ -202,10 +202,10 @@ const nodeDragStartHandler = (
 };
 
 /**
- * Force directed chart node drag handler.
- * @param event drag event
- * @param datum chart data
- * @param config chart configuration
+ * The force directed chart node drag handler.
+ * @param event a drag event
+ * @param datum the chart data
+ * @param config the chart configuration
  */
 const nodeDragHandler = (
   event: d3.D3DragEvent<SVGCircleElement, IForceDirectedChartDataNode, unknown>,
@@ -217,10 +217,10 @@ const nodeDragHandler = (
 };
 
 /**
- * Force directed chart node drag end handler.
- * @param event drag event
- * @param datum chart data
- * @param force chart forces
+ * The force directed chart node drag end handler.
+ * @param event a drag event
+ * @param datum the chart data
+ * @param force the chart forces
  */
 const nodeDragEndHandler = (
   event: d3.D3DragEvent<SVGCircleElement, IForceDirectedChartDataNode, unknown>,
@@ -235,12 +235,12 @@ const nodeDragEndHandler = (
 };
 
 /**
- * Creates force directed chart nodes.
- * @param svg svg element reference
- * @param data chart data
- * @param force chart forces
- * @param config chart configuration
- * @returns chart nodes
+ * Creates the force directed chart nodes.
+ * @param svg the svg element
+ * @param data the chart data
+ * @param force the chart forces
+ * @param config the chart configuration
+ * @returns the chart nodes
  */
 const createNodes = (
   svg: d3.Selection<SVGSVGElement, unknown, HTMLElement, unknown>,
@@ -300,10 +300,10 @@ const createNodes = (
 };
 
 /**
- * Creates force directed chart text labels.
- * @param svg svg element reference
- * @param data chart data
- * @returns text labels
+ * Creates the force directed chart text labels.
+ * @param svg the svg element
+ * @param data the chart data
+ * @returns the chart text labels
  */
 const createText = (svg: d3.Selection<SVGSVGElement, unknown, HTMLElement, unknown>, data: IForceDirectedChartData) => {
   return svg
@@ -317,11 +317,11 @@ const createText = (svg: d3.Selection<SVGSVGElement, unknown, HTMLElement, unkno
 };
 
 /**
- * Draws force directed chart.
- * @param container chart container
- * @param data chart data
- * @param options chart options
- * @returns chart configuration
+ * Draws the force directed chart.
+ * @param container the chart container
+ * @param data the chart data
+ * @param options the chart options
+ * @returns the chart configuration
  */
 export const drawForceDirectedChart = (
   container: ElementRef<HTMLDivElement>,

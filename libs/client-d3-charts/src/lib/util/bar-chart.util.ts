@@ -28,6 +28,12 @@ export const defaultBarChartConfig: IBarChartOptions = Object.freeze({
   color: d3.scaleOrdinal(d3.schemeCategory10),
 });
 
+/**
+ * Creates a container for the bar chart.
+ * @param container the chart container
+ * @param config the chart configuration
+ * @returns the object with the svg element and the g element
+ */
 const createContainer = (container: ElementRef<HTMLDivElement>, config: IBarChartOptions) => {
   const id = container.nativeElement.id ?? 'bar-0';
 
@@ -45,6 +51,11 @@ const createContainer = (container: ElementRef<HTMLDivElement>, config: IBarChar
   return { svg, g };
 };
 
+/**
+ * Wraps the bar chart axis labels text.
+ * @param svgText the svg text elements
+ * @param width the chart axis label width
+ */
 const wrapSvgText = (svgText: d3.Selection<d3.BaseType, unknown, SVGGElement, unknown>, width: number) => {
   svgText.each(function (this: d3.BaseType) {
     const text = d3.select<d3.BaseType, string>(this);
@@ -79,6 +90,12 @@ const wrapSvgText = (svgText: d3.Selection<d3.BaseType, unknown, SVGGElement, un
   });
 };
 
+/**
+ * Creates the x axis.
+ * @param g the svg g element
+ * @param x the x axis scale
+ * @param config the chart configuration
+ */
 const createAxisX = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>, x: d3.ScaleBand<string>, config: IBarChartOptions) => {
   const xLabels = g.append('g').attr('transform', `translate(0, ${config.height})`).call(d3.axisBottom(x)).append('text');
 
@@ -93,6 +110,12 @@ const createAxisX = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>
     .text(config.xAxisTitle);
 };
 
+/**
+ * Creates the y axis.
+ * @param g the svg g element
+ * @param y the y axis scale
+ * @param config the chart configuration
+ */
 const createAxisY = (
   g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>,
   y: d3.ScaleLinear<number, number>,
@@ -115,6 +138,15 @@ const createAxisY = (
     .text(config.yAxisTitle);
 };
 
+/**
+ * The mouse over event handler.
+ * @param self an svg rect element
+ * @param d the chart data node
+ * @param g the svg g element
+ * @param x the x axis scale
+ * @param y the y axis scale
+ * @param config the chart configuration
+ */
 const onMouseOver = (
   self: SVGRectElement,
   d: IBarChartDataNode,
@@ -148,6 +180,14 @@ const onMouseOver = (
     .text(() => `${d.value}`);
 };
 
+/**
+ * The mouse out event handler.
+ * @param self an svg rect element
+ * @param d the chart data node
+ * @param x the x axis scale
+ * @param y the y axis scale
+ * @param config the chart configuration
+ */
 const onMouseOut = (
   self: SVGRectElement,
   d: IBarChartDataNode,
@@ -166,6 +206,14 @@ const onMouseOut = (
   d3.selectAll('.val').remove();
 };
 
+/**
+ * Draws the chart bars, and sets the mouse pointer events.
+ * @param g the svg g element
+ * @param x the x axis scale
+ * @param y the y axis scale
+ * @param config the chart configuration
+ * @param data the chart data
+ */
 const drawBarsAndSetPointerEvents = (
   g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>,
   x: d3.ScaleBand<string>,
@@ -199,6 +247,13 @@ const drawBarsAndSetPointerEvents = (
     .attr('height', d => config.height - y(d.value));
 };
 
+/**
+ * Draws the bar chart.
+ * @param container the chart container
+ * @param data the chart data
+ * @param options the chart options
+ * @returns the chart configuration
+ */
 export const drawBarChart = (container: ElementRef<HTMLDivElement>, data: TBarChartData, options?: Partial<IBarChartOptions>) => {
   const config: IBarChartOptions = { ...defaultBarChartConfig };
   if (typeof options !== 'undefined') {

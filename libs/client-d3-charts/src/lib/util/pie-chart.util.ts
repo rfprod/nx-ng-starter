@@ -3,6 +3,9 @@ import * as d3 from 'd3';
 
 import { IPieChartDataNode, IPieChartOptions } from '../interfaces/pie-chart.interface';
 
+/**
+ * The default pie chart configuration.
+ */
 export const defaultPieChartConfig: IPieChartOptions = Object.freeze({
   chartTitle: '',
   width: 600,
@@ -19,6 +22,12 @@ export const defaultPieChartConfig: IPieChartOptions = Object.freeze({
   color: d3.scaleOrdinal(d3.schemeCategory10),
 });
 
+/**
+ * Creates a container for the pie chart.
+ * @param container the chart container
+ * @param config the chart configuration
+ * @returns the object with the svg element and the g element
+ */
 const createContainer = (container: ElementRef<HTMLDivElement>, config: IPieChartOptions) => {
   const id = container.nativeElement.id ?? 'pie-0';
 
@@ -36,6 +45,13 @@ const createContainer = (container: ElementRef<HTMLDivElement>, config: IPieChar
   return { svg, g };
 };
 
+/**
+ * Draws the pie chart.
+ * @param container the chart container
+ * @param data the chart data
+ * @param options the chart options
+ * @returns the chart configuration
+ */
 export const drawPieChart = (container: ElementRef<HTMLDivElement>, data: IPieChartDataNode[], options?: Partial<IPieChartOptions>) => {
   const config: IPieChartOptions = { ...defaultPieChartConfig };
   if (typeof options !== 'undefined') {
@@ -92,4 +108,6 @@ export const drawPieChart = (container: ElementRef<HTMLDivElement>, data: IPieCh
     .attr('dy', textDy)
     .attr('transform', d => `translate(${label.centroid(d)})`)
     .text(d => d.data.y);
+
+  return config;
 };
