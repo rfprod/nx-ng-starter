@@ -116,12 +116,18 @@ const createAxisX = (
         .ticks(config.ticks.x)
         .tickFormat(d => {
           const date = new Date(d.valueOf());
+          const formattingOffset = 10;
           const day = date.getDate();
-          const month = date.getMonth();
-          const year = date.getFullYear().toString().slice(2);
-          const hour = date.getHours();
-          const minute = date.getMinutes();
-          return `${day}/${month}/${year} ${hour}:${minute}`;
+          const dd = day < formattingOffset ? `0${day}` : day;
+          const month = date.getMonth() + 1;
+          const mm = month < formattingOffset ? `0${month}` : month;
+          const year = date.getFullYear().toString();
+          const yy = year.slice(2);
+          const hours = date.getHours();
+          const hour = hours < formattingOffset ? `0${hours}` : hours;
+          const minutes = date.getMinutes();
+          const minute = minutes < formattingOffset ? `0${minutes}` : minutes;
+          return `${dd}/${mm}/${yy} ${hour}:${minute}`;
         }),
     )
     .append('text');
