@@ -5,7 +5,7 @@ import { IPieChartDataNode, IPieChartOptions } from '../interfaces/pie-chart.int
 import { generateConfiguration } from './configuration.util';
 
 /**
- * The default pie chart configuration.
+ * The pie chart default configuration.
  */
 export const defaultPieChartConfig: IPieChartOptions = Object.freeze({
   chartTitle: '',

@@ -5,7 +5,7 @@ import { IRadarChartDataNode, IRadarChartOptions, TRadarChartData } from '../int
 import { generateConfiguration } from './configuration.util';
 
 /**
- * The default radar chart configuration.
+ * The radar chart default configuration.
  */
 export const defaultRadarChartConfig: IRadarChartOptions = Object.freeze({
   chartTitle: '',
