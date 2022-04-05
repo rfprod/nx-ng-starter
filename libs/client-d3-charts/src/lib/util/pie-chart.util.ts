@@ -2,6 +2,7 @@ import { ElementRef } from '@angular/core';
 import * as d3 from 'd3';
 
 import { IPieChartDataNode, IPieChartOptions } from '../interfaces/pie-chart.interface';
+import { generateConfiguration } from './configuration.util';
 
 /**
  * The default pie chart configuration.
@@ -53,14 +54,7 @@ const createContainer = (container: ElementRef<HTMLDivElement>, config: IPieChar
  * @returns the chart configuration
  */
 export const drawPieChart = (container: ElementRef<HTMLDivElement>, data: IPieChartDataNode[], options?: Partial<IPieChartOptions>) => {
-  const config: IPieChartOptions = { ...defaultPieChartConfig };
-  if (typeof options !== 'undefined') {
-    for (const i in options) {
-      if (typeof options[i] !== 'undefined') {
-        config[i] = options[i];
-      }
-    }
-  }
+  const config: IPieChartOptions = generateConfiguration<IPieChartOptions>(defaultPieChartConfig, options, {});
 
   const { g } = createContainer(container, config);
 

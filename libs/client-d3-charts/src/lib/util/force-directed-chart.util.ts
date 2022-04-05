@@ -6,6 +6,7 @@ import {
   IForceDirectedChartDataNode,
   IForceDirectedChartOptions,
 } from '../interfaces/force-directed-chart.interface';
+import { generateConfiguration } from './configuration.util';
 
 /**
  * The force directed chart default configuration.
@@ -328,14 +329,11 @@ export const drawForceDirectedChart = (
   data: IForceDirectedChartData,
   options?: Partial<IForceDirectedChartOptions>,
 ) => {
-  const config: IForceDirectedChartOptions = { ...defaultForceDirectedChartConfig };
-  if (typeof options !== 'undefined') {
-    for (const i in options) {
-      if (typeof options[i] !== 'undefined') {
-        config[i] = options[i];
-      }
-    }
-  }
+  const config: IForceDirectedChartOptions = generateConfiguration<IForceDirectedChartOptions>(
+    defaultForceDirectedChartConfig,
+    options,
+    {},
+  );
 
   const { svg, g } = createContainer(container, config);
 

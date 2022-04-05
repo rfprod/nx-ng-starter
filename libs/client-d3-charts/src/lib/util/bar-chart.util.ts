@@ -2,6 +2,7 @@ import { ElementRef } from '@angular/core';
 import * as d3 from 'd3';
 
 import { IBarChartDataNode, IBarChartOptions, TBarChartData } from '../interfaces/bar-chart.interface';
+import { generateConfiguration } from './configuration.util';
 
 export const defaultBarChartConfig: IBarChartOptions = Object.freeze({
   chartTitle: '',
@@ -255,14 +256,7 @@ const drawBarsAndSetPointerEvents = (
  * @returns the chart configuration
  */
 export const drawBarChart = (container: ElementRef<HTMLDivElement>, data: TBarChartData, options?: Partial<IBarChartOptions>) => {
-  const config: IBarChartOptions = { ...defaultBarChartConfig };
-  if (typeof options !== 'undefined') {
-    for (const i in options) {
-      if (typeof options[i] !== 'undefined') {
-        config[i] = options[i];
-      }
-    }
-  }
+  const config: IBarChartOptions = generateConfiguration<IBarChartOptions>(defaultBarChartConfig, options, {});
 
   const { g } = createContainer(container, config);
 
