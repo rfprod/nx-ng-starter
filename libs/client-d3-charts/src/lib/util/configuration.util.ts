@@ -17,6 +17,8 @@ export const generateConfiguration = <T>(config: T, options: Partial<T> | undefi
     const typedKey: keyof typeof defaultConfiguration = key;
     if (typeof defaultValue === 'string' || typeof defaultValue === 'number') {
       result[typedKey] = typeof value !== 'undefined' ? value : defaultValue;
+    } else if (defaultValue instanceof Function) {
+      result[typedKey] = defaultValue;
     } else if (typeof defaultValue === 'object' && defaultValue !== null) {
       const nestedDefaultObject = <Record<string, unknown>>defaultValue;
       const nestedObject = <Record<string, unknown>>value;
