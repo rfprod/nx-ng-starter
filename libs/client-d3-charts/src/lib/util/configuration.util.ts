@@ -1,5 +1,5 @@
 /**
- * Generates a configuration object based on a defaut configuration and a options object or input.
+ * Generates a configuration object based on a defaut configuration and an options object.
  * @param config the default object with all properties
  * @param options the input object
  * @param result the output object

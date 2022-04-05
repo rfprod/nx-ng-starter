@@ -5,17 +5,17 @@ import { ILineChartDataNode, ILineChartOptions, TLineChartData } from '../interf
 import { generateConfiguration } from './configuration.util';
 
 /**
- * The default line chart configuration.
+ * The line chart default configuration.
  */
 export const defaultLineChartConfig: ILineChartOptions = Object.freeze({
   chartTitle: '',
   width: 600,
   height: 600,
   margin: {
-    top: 70,
-    right: 50,
-    bottom: 50,
-    left: 60,
+    top: 20,
+    right: 20,
+    bottom: 20,
+    left: 20,
   },
   transitionDuration: 400,
   dotRadius: 3.5,

@@ -4,15 +4,18 @@ import * as d3 from 'd3';
 import { IBarChartDataNode, IBarChartOptions, TBarChartData } from '../interfaces/bar-chart.interface';
 import { generateConfiguration } from './configuration.util';
 
+/**
+ * The bar chart default configuration.
+ */
 export const defaultBarChartConfig: IBarChartOptions = Object.freeze({
   chartTitle: '',
   width: 600,
   height: 600,
   margin: {
-    top: 70,
-    right: 50,
-    bottom: 50,
-    left: 60,
+    top: 20,
+    right: 20,
+    bottom: 20,
+    left: 20,
   },
   transitionDuration: 400,
   xAxisPadding: 0.4,
