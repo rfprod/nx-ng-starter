@@ -2,6 +2,7 @@ import { ElementRef } from '@angular/core';
 import * as d3 from 'd3';
 
 import { ILineChartDataNode, ILineChartOptions, TLineChartData } from '../interfaces/line-chart.interface';
+import { generateConfiguration } from './configuration.util';
 
 /**
  * The default line chart configuration.
@@ -272,14 +273,7 @@ const drawLinesDotsAndSetPointerEvents = (
  * @returns the chart configuration
  */
 export const drawLineChart = (container: ElementRef<HTMLDivElement>, data: TLineChartData, options?: Partial<ILineChartOptions>) => {
-  const config: ILineChartOptions = { ...defaultLineChartConfig };
-  if (typeof options !== 'undefined') {
-    for (const i in options) {
-      if (typeof options[i] !== 'undefined') {
-        config[i] = options[i];
-      }
-    }
-  }
+  const config: ILineChartOptions = generateConfiguration<ILineChartOptions>(defaultLineChartConfig, options, {});
 
   const { g } = createContainer(container, config);
 

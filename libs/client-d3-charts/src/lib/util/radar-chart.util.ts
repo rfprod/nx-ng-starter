@@ -2,6 +2,7 @@ import { ElementRef } from '@angular/core';
 import * as d3 from 'd3';
 
 import { IRadarChartDataNode, IRadarChartOptions, TRadarChartData } from '../interfaces/radar-chart.interface';
+import { generateConfiguration } from './configuration.util';
 
 /**
  * The default radar chart configuration.
@@ -331,14 +332,7 @@ const appendInvisibleTooltipCircles = (
  * @returns the hart configuration
  */
 export const drawRadarChart = (container: ElementRef<HTMLDivElement>, data: TRadarChartData, options?: Partial<IRadarChartOptions>) => {
-  const config: IRadarChartOptions = { ...defaultRadarChartConfig };
-  if (typeof options !== 'undefined') {
-    for (const i in options) {
-      if (typeof options[i] !== 'undefined') {
-        config[i] = options[i];
-      }
-    }
-  }
+  const config: IRadarChartOptions = generateConfiguration<IRadarChartOptions>(defaultRadarChartConfig, options, {});
 
   const maxValue = Math.max(config.maxValue, d3.max(data, i => d3.max(i.map(o => o.value))) ?? 0);
   const axisNames = data[0].map(function (i, j) {
