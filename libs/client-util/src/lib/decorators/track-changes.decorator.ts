@@ -1,5 +1,11 @@
 import { OnChanges, SimpleChanges } from '@angular/core';
 
+/**
+ * The track changes decorator.
+ * @param key class member name
+ * @param methodName change handler
+ * @returns
+ */
 export function trackChanges<TargetClass, Value, Method = (value: Value) => void>(key: string, methodName: string) {
   return function (targetClass: TargetClass, functionName: 'ngOnChanges', descriptor: PropertyDescriptor) {
     const source: OnChanges[typeof functionName] = descriptor.value;
