@@ -1,7 +1,7 @@
 import { toasterExtraClasses } from './toaster.interface';
 
-describe('toaster.interface', () => {
-  it('toasterExtraClasses should return correct extra classes based on input', () => {
+describe('toasterExtraClasses', () => {
+  it('should return correct extra classes based on input', () => {
     expect(toasterExtraClasses('')).toEqual([]);
     expect(toasterExtraClasses('primary')).toEqual(['primary-bg']);
     expect(toasterExtraClasses('warn')).toEqual(['warn-bg']);

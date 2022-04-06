@@ -1,12 +1,15 @@
 import { ActionDef } from '@ngxs/store/src/actions/symbols';
 
 /**
- * Action payload interface.
+ * Ngxs action payload.
  */
 export interface IActionPayload<T = unknown> {
   payload: T;
 }
 
+/**
+ * Ngxs store action.
+ */
 export class AppStoreAction<T extends IActionPayload = { payload: void }> {
   public static readonly type: string;
 
