@@ -32,9 +32,7 @@ jobs:
           echo "Deployment Environment: ${{ github.event.inputs.dryRun }}"
 
       - name: Checkout sources
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v3
 
       - name: Don't save Bash session history
         run: unset HISTFILE
