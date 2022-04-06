@@ -27,9 +27,7 @@ jobs:
         run: unset HISTFILE
 
       - name: Checkout sources
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v3
 
       - name: Detect changes
         uses: dorny/paths-filter@v2
