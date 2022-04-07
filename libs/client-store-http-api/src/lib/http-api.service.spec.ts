@@ -1,35 +1,42 @@
-import { HttpTestingController } from '@angular/common/http/testing';
+import { HttpClient } from '@angular/common/http';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import {
-  AppHttpHandlersService,
-  AppHttpProgressStoreModule,
-  AppToasterService,
-  httpProgressModuleProviders,
-  toasterServiceProvider,
-} from '@app/client-store-http-progress';
-import { AppClientTranslateModule } from '@app/client-translate';
+import { AppHttpHandlersService } from '@app/client-store-http-progress';
 import { flushHttpRequests, getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
-import { Apollo, ApolloModule } from 'apollo-angular';
-import { of } from 'rxjs';
+import { of, tap } from 'rxjs';
 
 import { AppHttpApiService } from './http-api.service';
 
 describe('AppHttpApiService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [ApolloModule, AppClientTranslateModule, AppHttpProgressStoreModule.forRoot()],
-    providers: [...httpProgressModuleProviders, toasterServiceProvider],
+    imports: [HttpClientTestingModule],
+    providers: [
+      AppHttpApiService,
+      {
+        provide: AppHttpHandlersService,
+        useValue: {
+          getEndpoint: (endpoint: string) => {
+            const endpoints = {
+              ping: 'http://ping',
+            };
+            return endpoints[endpoint];
+          },
+          pipeHttpResponse: () => of(null),
+        },
+      },
+    ],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
   let service: AppHttpApiService;
-  let apollo: Apollo;
   let httpHandlers: AppHttpHandlersService;
-  let toaster: AppToasterService;
-  let spy: {
-    httpHandlers: {
-      pipeHttpResponse: jest.SpyInstance;
-    };
+  let httpHandlersSpy: {
+    getEndpoint: jest.SpyInstance;
+    pipeHttpResponse: jest.SpyInstance;
   };
+
+  let httpClient: HttpClient;
+  let httpClientGetSpy: jest.SpyInstance;
 
   let httpController: HttpTestingController;
 
@@ -39,16 +46,13 @@ describe('AppHttpApiService', () => {
       .then(() => {
         httpController = TestBed.inject(HttpTestingController);
         service = TestBed.inject(AppHttpApiService);
-        toaster = TestBed.inject(AppToasterService);
         httpHandlers = TestBed.inject(AppHttpHandlersService);
-        apollo = TestBed.inject(Apollo);
-        spy = {
-          httpHandlers: {
-            pipeHttpResponse: jest.spyOn(httpHandlers, 'pipeHttpResponse').mockReturnValue(of({})),
-          },
+        httpHandlersSpy = {
+          getEndpoint: jest.spyOn(httpHandlers, 'getEndpoint'),
+          pipeHttpResponse: jest.spyOn(httpHandlers, 'pipeHttpResponse'),
         };
-        expect(spy.httpHandlers.pipeHttpResponse).toBeDefined();
-        flushHttpRequests(httpController);
+        httpClient = TestBed.inject(HttpClient);
+        httpClientGetSpy = jest.spyOn(httpClient, 'get');
       });
   }));
 
@@ -56,9 +60,16 @@ describe('AppHttpApiService', () => {
     flushHttpRequests(httpController, true);
   });
 
-  it('should exist', () => {
-    expect(service).toBeTruthy();
-    expect(apollo).toBeDefined();
-    expect(toaster).toBeDefined();
-  });
+  it('the ping method should work as expected', waitForAsync(() => {
+    void service
+      .ping()
+      .pipe(
+        tap(() => {
+          expect(httpHandlersSpy.getEndpoint).toHaveBeenCalledWith('ping');
+          expect(httpClientGetSpy).toHaveBeenCalledWith('http://ping');
+          expect(httpHandlersSpy.pipeHttpResponse).toHaveBeenCalledTimes(1);
+        }),
+      )
+      .subscribe();
+  }));
 });

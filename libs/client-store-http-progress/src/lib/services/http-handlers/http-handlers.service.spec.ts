@@ -1,8 +1,14 @@
-import { HttpErrorResponse, HttpHeaders, HttpRequest } from '@angular/common/http';
-import { HttpTestingController, TestRequest } from '@angular/common/http/testing';
+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { AppClientTranslateModule } from '@app/client-translate';
-import { getTestBedConfig, newTestBedMetadata, spyOnFunctions, TClassMemberFunctionSpiesObject } from '@app/client-unit-testing';
+import {
+  flushHttpRequests,
+  getTestBedConfig,
+  newTestBedMetadata,
+  spyOnFunctions,
+  TClassMemberFunctionSpiesObject,
+} from '@app/client-unit-testing';
 import { HTTP_STATUS } from '@app/client-util';
 import { Store } from '@ngxs/store';
 import { Apollo, ApolloModule } from 'apollo-angular';
@@ -45,10 +51,7 @@ describe('AppHttpHandlersService', () => {
   }));
 
   afterEach(() => {
-    httpTestingController
-      .match((req: HttpRequest<unknown>): boolean => true)
-      .forEach((req: TestRequest) => (!req.cancelled ? req.flush({}) : null));
-    httpTestingController.verify();
+    flushHttpRequests(httpTestingController, true);
   });
 
   it('should be defined', () => {
@@ -107,7 +110,7 @@ describe('AppHttpHandlersService', () => {
   });
 
   it('extractGraphQLData should throw errors if get', () => {
-    const error: GraphQLError = new GraphQLError('message');
+    const error: GraphQLError = new GraphQLError('message', {});
     void service.extractGraphQLData({ errors: [error] }).pipe(
       tap({
         error: errors => {
