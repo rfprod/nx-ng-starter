@@ -1,7 +1,7 @@
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { TToastType } from '@app/client-util';
 import { NgxsModule, Store } from '@ngxs/store';
-import { switchMapTo, tap } from 'rxjs';
+import { switchMap, tap } from 'rxjs';
 
 import { httpProgressActions } from './http-progress.actions';
 import { AppHttpProgressState } from './http-progress.state';
@@ -52,7 +52,7 @@ describe('AppHttpProgressState', () => {
     void store
       .dispatch(new httpProgressActions.startProgress({}))
       .pipe(
-        switchMapTo(store.selectOnce(AppHttpProgressState.state)),
+        switchMap(() => store.selectOnce(AppHttpProgressState.state)),
         tap(state => {
           expect(state).toEqual(expectedState);
         }),
@@ -64,7 +64,7 @@ describe('AppHttpProgressState', () => {
     void store
       .dispatch(new httpProgressActions.stopProgress({}))
       .pipe(
-        switchMapTo(store.selectOnce(AppHttpProgressState.mainView)),
+        switchMap(() => store.selectOnce(AppHttpProgressState.mainView)),
         tap(state => {
           expect(state).toEqual({ counter: 0, loading: false });
         }),
@@ -76,7 +76,7 @@ describe('AppHttpProgressState', () => {
     void store
       .dispatch(new httpProgressActions.stopProgress({}))
       .pipe(
-        switchMapTo(store.selectOnce(AppHttpProgressState.sidebar)),
+        switchMap(() => store.selectOnce(AppHttpProgressState.sidebar)),
         tap(state => {
           expect(state).toEqual({ counter: 0, loading: false });
         }),
