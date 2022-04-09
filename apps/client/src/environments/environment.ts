@@ -1,9 +1,10 @@
-import { IWebClientAppEnvironment } from '@app/client-util';
+import { IWebClientAppEnvironment, TCapacitorPlatform } from '@app/client-util';
 import { Capacitor } from '@capacitor/core';
 
-import { sentryEnvFactory } from './environment.config';
+import { metaEnvFactory } from './environment.config';
+import { sentryEnvFactory } from './sentry.config';
 
-const platform: string = Capacitor.getPlatform();
+const platform: TCapacitorPlatform = Capacitor.getPlatform();
 
 /**
  * Development environment variables.
@@ -22,8 +23,14 @@ export const environment: IWebClientAppEnvironment = {
   production: false,
   platform,
   appName: 'Nx Ng Starter Client',
-  description: 'Nx Ng Starter client application',
-  api: window.location.origin.includes('localhost') ? 'http://localhost:8080/api' : `${window.location.origin}/api`,
+  description: 'The client application based on Angular.',
+  api:
+    platform !== 'web'
+      ? 'https://nx-ng-starter.web.app/api'
+      : window.location.origin.includes('localhost')
+      ? 'http://localhost:8080/api'
+      : `${window.location.origin}/api`,
   envoyUrl: 'http://localhost:8090',
   sentry: sentryEnvFactory({ production: false }),
+  meta: metaEnvFactory(),
 };

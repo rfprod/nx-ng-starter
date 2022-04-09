@@ -44,11 +44,11 @@ describe('AppSentryService', () => {
       const initSpy = jest.spyOn(sentry, 'init');
       // const env = { ...testingEnvironment, sentry: { ...testingEnvironment.sentry } };
       expect(env.sentry.env).toEqual('unit-testing');
-      initializeSentry(env);
+      initializeSentry(env, env.meta.version);
       expect(initSpy).not.toHaveBeenCalled();
 
       env.sentry.env = 'development';
-      initializeSentry(env);
+      initializeSentry(env, env.meta.version);
       expect(initSpy).not.toHaveBeenCalled();
     });
 
@@ -57,7 +57,7 @@ describe('AppSentryService', () => {
       const initSpy = jest.spyOn(sentry, 'init');
       // const env = { ...testingEnvironment };
       env.sentry.env = 'production';
-      initializeSentry(env);
+      initializeSentry(env, env.meta.version);
       expect(initSpy).toHaveBeenCalled();
     });
   });

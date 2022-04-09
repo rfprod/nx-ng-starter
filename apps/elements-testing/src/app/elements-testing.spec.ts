@@ -1,12 +1,12 @@
-import { AppElement } from './app.element';
+import { AppElementsTesting } from './elements-testing';
 
-jest.mock('./app.element.scss', jest.fn());
+jest.mock('./elements-testing.scss', jest.fn());
 
-describe('AppElement', () => {
-  let app: AppElement;
+describe('AppElementsTesting', () => {
+  let app: AppElementsTesting;
 
   beforeEach(() => {
-    app = new AppElement();
+    app = new AppElementsTesting();
   });
 
   it('should create successfully', () => {

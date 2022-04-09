@@ -4,9 +4,9 @@ import { Route, RouterModule } from '@angular/router';
 import { AppDocMarkdownReferenceComponent } from './componenets/md-reference/md-reference.component';
 
 /**
- * Application routes.
+ * The documentation application routes.
  */
-export const DOC_APP_ROUTES: Array<Route> = [
+export const routes: Array<Route> = [
   {
     path: '',
     component: AppDocMarkdownReferenceComponent,
@@ -15,11 +15,11 @@ export const DOC_APP_ROUTES: Array<Route> = [
 ];
 
 /**
- * Documentation application routing module.
+ * The documentation application routing module.
  */
 @NgModule({
   imports: [
-    RouterModule.forRoot(DOC_APP_ROUTES, {
+    RouterModule.forRoot(routes, {
       initialNavigation: 'enabled',
       onSameUrlNavigation: 'reload',
       relativeLinkResolution: 'legacy',

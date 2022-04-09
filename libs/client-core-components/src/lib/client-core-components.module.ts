@@ -8,10 +8,26 @@ import { AppContentComponent } from './components/content/content.component';
 import { AppNavbarComponent } from './components/navbar/navbar.component';
 import { AppThemeToggleComponent } from './components/theme-toggle/theme-toggle.component';
 import { AppToolbarComponent } from './components/toolbar/toolbar.component';
+import { AppTooltipComponent } from './components/tooltip/tooltip.component';
+import { AppTooltipDirective } from './components/tooltip/tooltip.directive';
 
 @NgModule({
   imports: [FlexLayoutModule, CommonModule, AppClientMaterialModule, RouterModule],
-  declarations: [AppContentComponent, AppNavbarComponent, AppToolbarComponent, AppThemeToggleComponent],
-  exports: [AppContentComponent, AppNavbarComponent, AppToolbarComponent, AppThemeToggleComponent],
+  declarations: [
+    AppContentComponent,
+    AppNavbarComponent,
+    AppToolbarComponent,
+    AppThemeToggleComponent,
+    AppTooltipComponent,
+    AppTooltipDirective,
+  ],
+  exports: [
+    AppContentComponent,
+    AppNavbarComponent,
+    AppToolbarComponent,
+    AppThemeToggleComponent,
+    AppTooltipComponent,
+    AppTooltipDirective,
+  ],
 })
 export class AppClientCoreComponentsModule {}

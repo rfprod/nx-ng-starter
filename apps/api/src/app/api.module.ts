@@ -11,7 +11,7 @@ import { Module } from '@nestjs/common';
 import { environment } from '../environments/environment';
 
 /**
- * Root API application module.
+ * The API application root module.
  */
 @Module({
   imports: [
@@ -35,4 +35,4 @@ import { environment } from '../environments/environment';
     },
   ],
 })
-export class ApiAppModule {}
+export class AppApiModule {}

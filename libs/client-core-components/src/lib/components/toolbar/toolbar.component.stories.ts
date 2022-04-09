@@ -56,6 +56,7 @@ const story: Story<AppToolbarComponent> = (args: Args) => ({
 
 export const primary = story.bind({});
 primary.args = {
+  version: '1.0.0',
   anchors: [
     {
       href: 'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=bug_report.md&title=',

@@ -6,11 +6,16 @@ import { TSentryEnvironment } from './sentry.interface';
 export type TAppName = 'Nx Ng Starter' | string;
 
 /**
- * Web Client Application environment.
+ * Capacitor platform.
+ */
+export type TCapacitorPlatform = 'android' | 'ios' | 'web' | string;
+
+/**
+ * Web client application environment.
  */
 export interface IWebClientAppEnvironment {
   production: boolean;
-  platform: string;
+  platform: TCapacitorPlatform;
   appName: TAppName;
   description: string;
   api: string;
@@ -20,5 +25,8 @@ export interface IWebClientAppEnvironment {
     dsn: string;
     tracingOrigins: string[];
     tracesSampleRate: number;
+  };
+  meta: {
+    version: string;
   };
 }

@@ -5,6 +5,9 @@ import path from 'path';
 
 import { environment } from '../environments/environment';
 
+/**
+ * The simple web client production server module.
+ */
 @Module({
   imports: [
     HttpModule.registerAsync({
@@ -32,7 +35,7 @@ import { environment } from '../environments/environment';
     }),
   ],
 })
-export class AppModule implements OnModuleDestroy {
+export class AppSeverProdModule implements OnModuleDestroy {
   public onModuleDestroy() {
     Logger.verbose(`\n${new Date(Date.now())}: Received exit signal - terminating app...\n`);
   }

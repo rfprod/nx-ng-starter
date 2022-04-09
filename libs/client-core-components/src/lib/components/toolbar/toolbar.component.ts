@@ -12,6 +12,8 @@ import { map } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppToolbarComponent {
+  @Input() public version = 'N/A';
+
   @Input() public anchors: IToolbarAnchor[] = [
     {
       href: 'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=bug_report.md&title=',

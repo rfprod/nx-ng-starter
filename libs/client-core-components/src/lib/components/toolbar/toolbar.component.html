@@ -1,8 +1,8 @@
 <mat-toolbar color="primary" fxFlex="0 1 auto">
   <button mat-icon-button (click)="toggleSidebar()">
-    <mat-icon title="open sidenav" *ngIf="(sidebarOpened$ | async) === false"> flip_to_front </mat-icon>
+    <mat-icon appTooltip="Open sidenav" *ngIf="(sidebarOpened$ | async) === false"> flip_to_front </mat-icon>
 
-    <mat-icon title="close sidenav" *ngIf="sidebarOpened$ | async"> flip_to_back </mat-icon>
+    <mat-icon appTooltip="Close sidenav" *ngIf="sidebarOpened$ | async"> flip_to_back </mat-icon>
   </button>
 
   <span fxFlex="1 1 auto"></span>
@@ -10,6 +10,10 @@
   <app-theme-toggle (themeToggled)="toggleMaterialTheme($event)"></app-theme-toggle>
 
   <span fxFlex="1 1 auto"></span>
+
+  <div appTooltip="Release version" *ngIf="version">
+    <small>{{ version }}</small>
+  </div>
 
   <a mat-button *ngFor="let anchor of anchors" [fxHide.xs]="true" [fxHide.sm]="true" [href]="anchor.href" target="_blank" rel="noreferrer">
     <mat-icon>{{ anchor.icon }}</mat-icon> {{ anchor.title }}

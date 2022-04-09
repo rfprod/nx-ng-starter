@@ -1,6 +1,6 @@
-import './app.element.scss';
+import './elements-testing.scss';
 
-export class AppElement extends HTMLElement {
+export class AppElementsTesting extends HTMLElement {
   public connectedCallback() {
     const title = 'elements-testing';
     this.innerHTML = `
@@ -31,4 +31,4 @@ ng serve elements-testing
     `;
   }
 }
-customElements.define('elements-testing-root', AppElement);
+customElements.define('elements-testing', AppElementsTesting);

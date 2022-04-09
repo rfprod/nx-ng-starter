@@ -5,7 +5,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { applicationIsFramed } from '@app/client-util';
 import { initializeSentry } from '@app/client-util-sentry';
 
-import { AppModule } from './app/app.module';
+import { AppClientModule } from './app/client.module';
 import { environment } from './environments/environment';
 
 if (applicationIsFramed()) {
@@ -15,10 +15,18 @@ if (applicationIsFramed()) {
     enableProdMode();
   }
 
-  initializeSentry(environment);
+  /**
+   * The client app release identifier.
+   */
+  const clientReleaseId = `${environment.appName
+    .split(' ')
+    .map(item => item.toLowerCase())
+    .join('-')}@${environment.meta.version}`;
+
+  initializeSentry(environment, clientReleaseId);
 
   platformBrowserDynamic()
-    .bootstrapModule(AppModule)
+    .bootstrapModule(AppClientModule)
     .catch(err => {
       console.error(err);
     });
