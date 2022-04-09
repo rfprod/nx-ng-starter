@@ -18,11 +18,11 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
 
 import { environment } from '../environments/environment';
-import { AppRoutingModule } from './app-routing.module';
+import { AppClientRoutingModule } from './client-routing.module';
 import { AppRootComponent } from './components/root.component';
 
 /**
- * Application root module.
+ * The client application root module.
  */
 @NgModule({
   imports: [
@@ -42,14 +42,14 @@ import { AppRootComponent } from './components/root.component';
     AppClientTranslateModule.forRoot(),
     AppClientGqlModule.forRoot(environment),
     AppClientGrpcModule.forRoot(environment),
-    AppRoutingModule,
+    AppClientRoutingModule,
   ],
   providers: [...sentryProviders(environment)],
   declarations: [AppRootComponent],
   bootstrap: [AppRootComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule {
+export class AppClientModule {
   constructor(private readonly grpc: AppClientGrpcService) {
     void this.grpc.getEntityById().subscribe();
   }

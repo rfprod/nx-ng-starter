@@ -43,6 +43,10 @@ const sharedConstraints = [
  */
 const backendConstraints = [
   {
+    sourceTag: 'scope:server-dev',
+    onlyDependOnLibsWithTags: [],
+  },
+  {
     sourceTag: 'scope:server-prod',
     onlyDependOnLibsWithTags: [],
   },
@@ -292,6 +296,7 @@ const clientConstraints = [
       'scope:client-material',
       'scope:client-translate',
       'scope:client-util',
+      'scope:client-util-sentry',
     ],
   },
   {

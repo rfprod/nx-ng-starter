@@ -3,13 +3,13 @@ import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.int
 import { NestFactory } from '@nestjs/core';
 import * as compression from 'compression';
 
-import { AppModule } from './app/app.module';
+import { AppSeverProdModule } from './app/server-prod.module';
 
 /**
- * Simple production server for web clients.
+ * Bootstraps the simple web client production server.
  */
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppSeverProdModule);
 
   const globalPrefix = '';
   app.setGlobalPrefix(globalPrefix);

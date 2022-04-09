@@ -12,13 +12,16 @@ import { NgxsModule } from '@ngxs/store';
 import { MarkdownModule, MarkdownModuleConfig, MarkedOptions } from 'ngx-markdown';
 
 import { environment } from '../environments/environment';
-import { AppDocRoutingModule } from './app-routing.module';
 import { AppDocMarkdownReferenceComponent } from './componenets/md-reference/md-reference.component';
 import { AppDocMarkdownReferenceTreeComponent } from './componenets/md-reference-tree/md-reference-tree.component';
 import { AppDocRootComponent } from './componenets/root/root.component';
+import { AppDocRoutingModule } from './doc-routing.module';
 import { DOC_APP_ENV } from './interfaces/environment.interface';
 import { AppDocStoreModule } from './modules/store/store.module';
 
+/**
+ * The markdown module configuration.
+ */
 const markdownModuleConfig: MarkdownModuleConfig = {
   loader: HttpClient,
   markedOptions: {
@@ -33,6 +36,9 @@ const markdownModuleConfig: MarkdownModuleConfig = {
   },
 };
 
+/**
+ * The documentation application root module.
+ */
 @NgModule({
   declarations: [AppDocRootComponent, AppDocMarkdownReferenceTreeComponent, AppDocMarkdownReferenceComponent],
   imports: [

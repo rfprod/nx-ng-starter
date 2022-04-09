@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
 
-export const APP_ROUTES: Route[] = [
+/**
+ * The client application routes.
+ */
+export const routes: Route[] = [
   {
     path: '',
     loadChildren: () => import('@app/client-diagnostics').then(mod => mod.AppClientDiagnosticsModule),
@@ -24,10 +27,10 @@ export const APP_ROUTES: Route[] = [
 ];
 
 /**
- * Application routing module.
+ * The client application routing module.
  */
 @NgModule({
-  imports: [RouterModule.forRoot(APP_ROUTES, { relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppClientRoutingModule {}

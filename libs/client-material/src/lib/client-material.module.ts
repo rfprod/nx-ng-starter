@@ -31,7 +31,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatTooltipModule } from '@angular/material/tooltip';
+// import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { HammerModule } from '@angular/platform-browser';
@@ -75,7 +75,7 @@ import { appClientMaterialModuleProviders } from './providers/client-material-mo
     // Popups and modals
     MatDialogModule,
     MatSnackBarModule,
-    MatTooltipModule,
+    // MatTooltipModule, // there is a custom light weight tooltip implemented instead of this one
     // Data table
     MatTableModule,
     MatSortModule,

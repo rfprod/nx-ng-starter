@@ -17,6 +17,9 @@ import { NgxsModule } from '@ngxs/store';
 import { environment } from '../environments/environment';
 import { AppElementsService } from './services/elements.service';
 
+/**
+ * The gRPC providers.
+ */
 export const grpcProviders: Provider[] = [
   {
     provide: EntityServiceClient,
@@ -25,7 +28,7 @@ export const grpcProviders: Provider[] = [
 ];
 
 /**
- * Application root module.
+ * The elements application root module.
  */
 @NgModule({
   imports: [

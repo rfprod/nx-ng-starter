@@ -17,6 +17,9 @@ describe('environmentProvider', () => {
       tracesSampleRate: 1.0,
       tracingOrigins: [],
     },
+    meta: {
+      version: 'N/A',
+    },
   };
 
   const testBedConfig: TestModuleMetadata = {

@@ -1,24 +1,23 @@
-import { OverlayConfig } from '@angular/cdk/overlay';
-import { Provider } from '@angular/core';
+import { OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
+import { InjectionToken, Provider } from '@angular/core';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatIconRegistry } from '@angular/material/icon';
-import { MAT_TOOLTIP_DEFAULT_OPTIONS } from '@angular/material/tooltip';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY } from '@angular/material-moment-adapter';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 import { AppHammerGestureConfig } from '../configs/hammerjs-gesture.config';
 import { CUSTOM_DATE_FORMATS, matMomentDateAdapterOptionsFactory } from '../configs/mat-date.config';
-import { matTooltipOptionsFactory } from '../configs/mat-tooltip.config';
+
+/**
+ * The overlay reference injection token.
+ */
+export const OVERLAY_REFERENCE = new InjectionToken<OverlayRef>('OverlayReference');
 
 /**
  * Shared application material module providers.
  */
 export const appClientMaterialModuleProviders: Provider[] = [
   MatIconRegistry,
-  {
-    provide: MAT_TOOLTIP_DEFAULT_OPTIONS,
-    useFactory: matTooltipOptionsFactory,
-  },
   {
     provide: MAT_DATE_LOCALE,
     useValue: 'en',

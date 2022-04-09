@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
  */
 @Component({
   selector: 'app-testing-component',
-  template: '<span>dummy component</span>',
+  template: '<span appTooltip>dummy component</span>',
 })
 export class AppTestingComponent {}

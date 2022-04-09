@@ -30,6 +30,9 @@ export const testingEnvironment: IWebClientAppEnvironment = {
     tracingOrigins: [],
     tracesSampleRate: 0.0,
   },
+  meta: {
+    version: 'N/A',
+  },
 };
 
 export const mocksCoreModuleProviders: Provider[] = [

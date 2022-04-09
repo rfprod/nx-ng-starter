@@ -5,6 +5,7 @@ Tools that should be used with `ts-node`.
 - `colors.ts` - coloring utility;
 - `coverage-stats.ts` - generates coverage stats from jest json reports, and outputs as `UNIT_COVERAGE.md` file;
 - `package-commands.ts` - outputs (optionally filters) commands defined in the `package.json`;
+- `set-client-env.ts` - sets the dynamic web client environment variables;
 - `update.ts` - partially automates dependencies update process, uses `ncu`, and `nx migrate`;
 
 ## Usage

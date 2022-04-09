@@ -20,6 +20,11 @@ export class AppRootComponent implements OnInit {
    */
   @HostBinding('class.mat-body-1') public matBody = true;
 
+  /**
+   * Application release version.
+   */
+  public readonly version = this.env.meta.version;
+
   constructor(
     private readonly title: Title,
     private readonly meta: Meta,
