@@ -125,7 +125,9 @@ jobs:
         if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
         run: |
           yarn generate:env:documentation
+          yarn tools:env:set:all
           npx nx run-many --target=build --all --configuration production
+          yarn tools:env:reset:all
 
       - name: Build documentation (compodoc, unit coverage, e2e coverage)
         if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
