@@ -1,9 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AppMarkdownService } from '@app/client-services';
 import { of, timer } from 'rxjs';
-import { first, map, take } from 'rxjs/operators';
-
-const counter = 5;
+import { first, map, takeWhile } from 'rxjs/operators';
 
 const timeout = {
   start: 0,
@@ -17,8 +15,10 @@ const timeout = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppDiagnosticsHomeComponent {
+  public take = Number(Infinity);
+
   public readonly timer$ = timer(timeout.start, timeout.interval).pipe(
-    take(counter),
+    takeWhile(i => i.valueOf() <= this.take),
     map(num => `Until destroyed ${num}`),
   );
 
