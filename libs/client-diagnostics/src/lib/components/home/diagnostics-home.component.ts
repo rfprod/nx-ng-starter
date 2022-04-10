@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AppMarkdownService } from '@app/client-services';
 import { of, timer } from 'rxjs';
-import { first, map, take } from 'rxjs/operators';
+import { first, map, takeWhile } from 'rxjs/operators';
 
 const timeout = {
   start: 0,
@@ -18,7 +18,7 @@ export class AppDiagnosticsHomeComponent {
   public take = Number(Infinity);
 
   public readonly timer$ = timer(timeout.start, timeout.interval).pipe(
-    take(this.take),
+    takeWhile(i => i.valueOf() <= this.take),
     map(num => `Until destroyed ${num}`),
   );
 
