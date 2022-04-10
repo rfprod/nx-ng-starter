@@ -3,8 +3,6 @@ import { AppMarkdownService } from '@app/client-services';
 import { of, timer } from 'rxjs';
 import { first, map, take } from 'rxjs/operators';
 
-const counter = 5;
-
 const timeout = {
   start: 0,
   interval: 2000,
@@ -17,8 +15,10 @@ const timeout = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppDiagnosticsHomeComponent {
+  public take = Number(Infinity);
+
   public readonly timer$ = timer(timeout.start, timeout.interval).pipe(
-    take(counter),
+    take(this.take),
     map(num => `Until destroyed ${num}`),
   );
 

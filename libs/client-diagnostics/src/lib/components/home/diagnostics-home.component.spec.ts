@@ -30,6 +30,7 @@ describe('AppDiagnosticsHomeComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(AppDiagnosticsHomeComponent);
         component = fixture.componentInstance;
+        component.take = 5;
         componentSpy = spyOnObservables<AppDiagnosticsHomeComponent>(component);
         service = TestBed.inject(AppMarkdownService);
         fixture.detectChanges();

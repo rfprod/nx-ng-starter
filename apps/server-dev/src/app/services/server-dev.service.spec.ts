@@ -15,16 +15,19 @@ describe('AppServerDevService', () => {
   });
 
   describe('resetEnvironments', () => {
-    it('should return call child process spawn', () => {
+    it('should invoke the child process spawn command', () => {
       const spy = jest.spyOn(service, 'spawn');
       const child = new ChildProcess();
       spy.mockImplementation(() => child);
       service.resetEnvironments();
       child.emit('close');
-      expect(spy).toHaveBeenCalled();
+      expect(spy).toHaveBeenCalledWith('yarn', ['tools:env:reset:all'], {
+        stdio: 'inherit',
+        detached: true,
+      });
     });
 
-    it('should return call child process spawn', () => {
+    it('should invoke the child process spawn command', () => {
       const spy = jest.spyOn(service, 'spawn');
       const child = new ChildProcess();
       spy.mockImplementation(() => child);
