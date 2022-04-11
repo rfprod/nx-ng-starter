@@ -4,14 +4,14 @@ about: Create a report to help us improve
 title: ''
 labels: ''
 assignees: ''
-
 ---
 
 **Describe the bug**
 A clear and concise description of what the bug is.
 
-**To Reproduce**
-Steps to reproduce the behavior:
+**Reproduction**
+Steps to reproduce the unwanted behavior:
+
 1. Go to '...'
 2. Click on '....'
 3. Scroll down to '....'
@@ -20,19 +20,19 @@ Steps to reproduce the behavior:
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+**User specification**
+Filling in the specification helps address the issue faster.
 
-**Desktop (please complete the following information):**
- - OS: [e.g. iOS]
- - Browser [e.g. chrome, safari]
- - Version [e.g. 22]
-
-**Smartphone (please complete the following information):**
- - Device: [e.g. iPhone6]
- - OS: [e.g. iOS8.1]
- - Browser [e.g. stock browser, safari]
- - Version [e.g. 22]
+- **Device**
+  - type: [e.g. desktop, laptop, tablet, smartphone]
+  - OS: [e.g. Ubuntu 20.04, Windows 10, Android 12, iOS 8.1]
+- **Browser**
+  - name: [e.g. Chromium, Chrome, Firefox]
+  - version: [e.g. Version 25.0.1364.126 (Official Build) snap (64-bit), Version 100.0.4896.75 (Official Build) (64-bit), 99.0 (64-bit)]
 
 **Additional context**
-Add any other context about the problem here.
+Add any extra context and/or screenshots about the feature request.
+
+**Preconditions for fixing**
+Add any preconditions for fixing the problem.
+This section is filled in by the maintainers in general case.
