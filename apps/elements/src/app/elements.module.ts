@@ -1,4 +1,4 @@
-import { CUSTOM_ELEMENTS_SCHEMA, DoBootstrap, NgModule, Provider } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, DoBootstrap, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -8,7 +8,7 @@ import { AppClientGqlModule } from '@app/client-gql';
 import { AppClientMaterialModule } from '@app/client-material';
 import { AppWebsocketStoreModule } from '@app/client-store-websocket';
 import { AppClientTranslateModule } from '@app/client-translate';
-import { EntityServiceClient } from '@app/proto';
+import { sentryProviders } from '@app/client-util-sentry';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
@@ -16,16 +16,6 @@ import { NgxsModule } from '@ngxs/store';
 
 import { environment } from '../environments/environment';
 import { AppElementsService } from './services/elements.service';
-
-/**
- * The gRPC providers.
- */
-export const grpcProviders: Provider[] = [
-  {
-    provide: EntityServiceClient,
-    useFactory: () => new EntityServiceClient(environment.envoyUrl ?? '', null, { withCredentials: 'true' }),
-  },
-];
 
 /**
  * The elements application root module.
@@ -46,7 +36,7 @@ export const grpcProviders: Provider[] = [
     RouterModule.forRoot([]),
     AppClientChatbotModule,
   ],
-  providers: [...grpcProviders],
+  providers: [...sentryProviders(environment)],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppElementsModule implements DoBootstrap {

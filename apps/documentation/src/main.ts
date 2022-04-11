@@ -16,5 +16,7 @@ if (applicationIsFramed()) {
 
   platformBrowserDynamic()
     .bootstrapModule(AppDocModule)
-    .catch(err => console.error(err));
+    .catch(err => {
+      console.error(err);
+    });
 }

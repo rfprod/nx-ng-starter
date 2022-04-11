@@ -10,7 +10,9 @@ import { BrowserTracing } from '@sentry/tracing';
 const sentryDisabledEnvironments: TSentryEnvironment[] = ['unit-testing', 'development'];
 
 /**
- * This method must be used only in main.ts on client.
+ * Initializes Sentry.
+ * @param env web client environment
+ * @param release release identifier
  */
 export const initializeSentry = (env: IWebClientAppEnvironment, release: string) => {
   if (!sentryDisabledEnvironments.includes(env.sentry.env)) {
@@ -40,6 +42,11 @@ export const initializeSentry = (env: IWebClientAppEnvironment, release: string)
   }
 };
 
+/**
+ * Sentry providers configuration.
+ * @param env web client environment
+ * @returns Sentry providers
+ */
 export const sentryProviders: (env: IWebClientAppEnvironment) => Provider[] = env => {
   return sentryDisabledEnvironments.includes(env.sentry.env)
     ? []
@@ -63,6 +70,9 @@ export const sentryProviders: (env: IWebClientAppEnvironment) => Provider[] = en
       ];
 };
 
+/**
+ * The Sentry tracing service.
+ */
 @Injectable({
   providedIn: 'root',
 })
