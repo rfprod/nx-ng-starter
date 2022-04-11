@@ -245,7 +245,6 @@ const clientConstraints = [
     sourceTag: 'scope:client',
     onlyDependOnLibsWithTags: [
       'scope:client-unit-testing',
-      'scope:proto',
       'scope:client-gql',
       'scope:client-grpc',
       'scope:client-store',
@@ -288,7 +287,6 @@ const clientConstraints = [
     sourceTag: 'scope:elements',
     onlyDependOnLibsWithTags: [
       'scope:client-unit-testing',
-      'scope:proto',
       'scope:client-gql',
       'scope:client-store-websocket',
       'scope:client-chatbot',

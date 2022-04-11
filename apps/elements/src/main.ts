@@ -16,7 +16,7 @@ if (applicationIsFramed()) {
   }
 
   /**
-   * The client app release identifier.
+   * The elements app release identifier.
    */
   const clientReleaseId = `${environment.appName
     .split(' ')
@@ -27,5 +27,7 @@ if (applicationIsFramed()) {
 
   platformBrowserDynamic()
     .bootstrapModule(AppElementsModule)
-    .catch(err => console.error(err));
+    .catch(err => {
+      console.error(err);
+    });
 }
