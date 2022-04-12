@@ -1,8 +1,8 @@
 #!/bin/bash
 
-source tools/shell/colors.sh ''
-source tools/shell/print-utils.sh ''
-source tools/shell/module-aliases.sh ''
+source tools/shell/utils/colors.sh ''
+source tools/shell/utils/print-utils.sh ''
+source tools/shell/utils/module-aliases.sh ''
 
 ##
 # Project root reference.

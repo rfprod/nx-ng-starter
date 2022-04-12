@@ -1,7 +1,7 @@
 #!/bin/bash
 
-source tools/shell/colors.sh ''
-source tools/shell/print-utils.sh ''
+source tools/shell/utils/colors.sh ''
+source tools/shell/utils/print-utils.sh ''
 
 declare -A EXISTING_MODULE_ALIASES
 declare -A EXISTING_MODULE_ALIASES_E2E
