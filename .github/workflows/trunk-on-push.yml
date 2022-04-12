@@ -129,7 +129,7 @@ jobs:
           npx nx run-many --target=build --all --configuration production
           yarn tools:env:reset:all
 
-      - name: Build documentation (compodoc, unit coverage, e2e coverage)
+      - name: Build documentation app assets
         if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
         run: |
           yarn test:reports
@@ -169,3 +169,6 @@ jobs:
       #     yarn firebase:deploy:ci:api || exit 1
       #   env:
       #     FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
+
+      - name: Cleanup
+        run: rm -rf ./.env ./functions/.env
