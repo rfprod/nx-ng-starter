@@ -6,14 +6,14 @@
 
 ## Workflows
 
-| Trigger                             | Badge                                                                                                                                                                                                       |
-| ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| PR open event (destination: trunk)  | [![pr-validation](https://github.com/rfprod/nx-ng-starter/actions/workflows/pr-validation.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/pr-validation.yml)                      |
-| PR merge event (destination: trunk) | [![trunk-on-push](https://github.com/rfprod/nx-ng-starter/actions/workflows/trunk-on-push.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/trunk-on-push.yml)                      |
-| Manual                              | [![e2e-test](https://github.com/rfprod/nx-ng-starter/actions/workflows/e2e-test.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/e2e-test.yml)                                     |
-| Manual                              | [![docker](https://github.com/rfprod/nx-ng-starter/actions/workflows/docker.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/docker.yml)                                           |
-| Scheduled (weekly)                  | [![codeowners-validator](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeowners-validator.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeowners-validator.yml) |
-| Manual, Scheduled (weekly)          | [![codeql-analysis](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeql-analysis.yml)                |
+| Info                                                                                     | Trigger                             | Badge                                                                                                                                                                                                       |
+| ---------------------------------------------------------------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [:information_source:](# 'Quality gates.')                                               | PR open event (destination: trunk)  | [![pr-validation](https://github.com/rfprod/nx-ng-starter/actions/workflows/pr-validation.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/pr-validation.yml)                      |
+| [:information_source:](# 'Full testing except user acceptance, and build + deployment.') | PR merge event (destination: trunk) | [![trunk-on-push](https://github.com/rfprod/nx-ng-starter/actions/workflows/trunk-on-push.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/trunk-on-push.yml)                      |
+| [:information_source:](# 'User acceptance testing.')                                     | Manual                              | [![e2e-test](https://github.com/rfprod/nx-ng-starter/actions/workflows/e2e-test.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/e2e-test.yml)                                     |
+| [:information_source:](# 'Containerization.')                                            | Manual                              | [![docker](https://github.com/rfprod/nx-ng-starter/actions/workflows/docker.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/docker.yml)                                           |
+| [:information_source:](# 'Code ownership validation.')                                   | Scheduled (weekly)                  | [![codeowners-validator](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeowners-validator.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeowners-validator.yml) |
+| [:information_source:](# 'Source code security scanning.')                               | Manual, Scheduled (weekly)          | [![codeql-analysis](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeql-analysis.yml)                |
 
 ## Requirements
 
@@ -21,9 +21,17 @@ In order to run own copy of the project one must fulfill the following requireme
 
 ### Supported operating systems
 
-- [Debian based Linux](https://en.wikipedia.org/wiki/List_of_Linux_distributions#Debian-based) - recommended, check out this [dev setup instructions](https://github.com/rfprod/wdsdu) to facilitate getting started
-- [OSX](https://en.wikipedia.org/wiki/MacOS)
-- [~~Windows~~](https://en.wikipedia.org/wiki/Microsoft_Windows) - `poorly supported`
+- :trophy: [Debian based Linux](https://en.wikipedia.org/wiki/List_of_Linux_distributions#Debian-based) - `recommended`
+  - check out [this dev setup instructions](https://github.com/rfprod/wdsdu) to facilitate setting up the dev environment;
+  - given that the dev environment is set up, the command `yarn install:all:linux` should install everything needed to work with the project;
+- :ok: [OSX](https://en.wikipedia.org/wiki/MacOS) - `should work due to the similarities with Linux`
+  - one will have to figure out oneself how to set up the dev environment;
+  - given that the dev environment is set up, the command `yarn install:all:osx` should install everything needed to work with the project;
+  - the automation scripts support the OS with relatively high probability, but it have not been tested;
+- :no_entry_sign: [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) - `not recommended`
+  - one will have to figure out oneself how to set up the dev environment;
+  - one will have to figure out oneself how to install required dependencies like `protolint` and `shellcheck` system wide;
+  - the automation scripts support the OS with relatively low probability, but it have not been tested.
 
 ### Core dependencies
 
@@ -57,27 +65,22 @@ git cz
 
 ## GitBook documentation
 
-Is generated based on GitHub repo.
+The GitBook documentation is generated based on this GitHub repo.
 
 - [GitBook documentation](https://rfprod.gitbook.io/nx-ng-starter/)
 
-## Firebase deployment
+## Firebase deployments
 
-Applications as well as generated documentation, testing reports, and a custom changelog are deployed to Firebase.
-
-### Webapps
+Application deployments and autogenerated engineering documentation.
 
 - [Client](https://nx-ng-starter.web.app)
 - [Elements](https://nx-ng-starter-elements.web.app)
-
-### Documentation
-
 - [Documentation](https://nx-ng-starter-documentation.web.app)
-- [Compodoc](https://nx-ng-starter-documentation.web.app/assets/compodoc/index.html)
-- [Storybook](https://nx-ng-starter-documentation.web.app/assets/storybook/index.html)
-- [Unit test reports](https://nx-ng-starter-documentation.web.app/assets/coverage/)
-- [E2E test reports](https://nx-ng-starter-documentation.web.app/assets/cypress/)
-- [Changelogs](https://nx-ng-starter-documentation.web.app/assets/changelog/)
+  - [Compodoc](https://nx-ng-starter-documentation.web.app/assets/compodoc/index.html)
+  - [Storybook](https://nx-ng-starter-documentation.web.app/assets/storybook/index.html)
+  - [Unit test reports](https://nx-ng-starter-documentation.web.app/assets/coverage/index.html)
+  - [E2E test reports](https://nx-ng-starter-documentation.web.app/assets/cypress/index.html)
+  - [Changelogs](https://nx-ng-starter-documentation.web.app/assets/changelog/index.html)
 
 ## Workspace generators
 
@@ -121,23 +124,24 @@ This project was generated using [Nx](https://nx.dev).
 - [30-minute video showing all Nx features](https://nx.dev/getting-started/what-is-nx)
 - [Interactive Tutorial](https://nx.dev/tutorial/01-create-application)
 
-### Adding capabilities to your workspace
+### Adding capabilities to the workspace
 
 Nx supports many plugins which add capabilities for developing different types of applications and different tools.
 
 These capabilities include generating applications, libraries, .etc as well as the devtools to test, and build projects as well.
 
-Below are some plugins which you can add to your workspace:
+Below are some plugins which can be added to the workspace:
 
-| Application type                       | Command                  |
-| -------------------------------------- | ------------------------ |
-| [Angular](https://angular.io)          | `ng add @nrwl/angular`   |
-| [React](https://reactjs.org)           | `ng add @nrwl/react`     |
-| Web (no framework frontends)           | `ng add @nrwl/web`       |
-| [Nest](https://nestjs.com)             | `ng add @nrwl/nest`      |
-| [Express](https://expressjs.com)       | `ng add @nrwl/express`   |
-| [Node](https://nodejs.org)             | `ng add @nrwl/node`      |
-| [Storybook](https://storybook.js.org/) | `ng add @nrwl/storybook` |
+| Application type                       | Command                  | Part of the workspace |
+| -------------------------------------- | ------------------------ | --------------------- |
+| [Angular](https://angular.io)          | `ng add @nrwl/angular`   | :heavy_check_mark:    |
+| [React](https://reactjs.org)           | `ng add @nrwl/react`     | :x:                   |
+| Web (no framework frontends)           | `ng add @nrwl/web`       | :heavy_check_mark:    |
+| [Nest](https://nestjs.com)             | `ng add @nrwl/nest`      | :heavy_check_mark:    |
+| [Express](https://expressjs.com)       | `ng add @nrwl/express`   | :x:                   |
+| [Node](https://nodejs.org)             | `ng add @nrwl/node`      | :heavy_check_mark:    |
+| [Storybook](https://storybook.js.org/) | `ng add @nrwl/storybook` | :heavy_check_mark:    |
+| [Cypress](https://www.cypress.io/)     | `ng add @nrwl/cypress`   | :heavy_check_mark:    |
 
 ### Generating an application
 
@@ -225,9 +229,9 @@ To execute the end-to-end tests affected by a change run:
 npm run affected:e2e
 ```
 
-### Understanding your workspace
+### Understanding the workspace
 
-To see a diagram of the dependencies of your projects run:
+To see a diagram of the dependencies of the projects run:
 
 ```bash
 npm run dep-graph
