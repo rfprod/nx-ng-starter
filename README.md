@@ -27,11 +27,11 @@ In order to run own copy of the project one must fulfill the following requireme
 - :ok: [OSX](https://en.wikipedia.org/wiki/MacOS) - `should work due to the similarities with Linux`
   - one will have to figure out oneself how to set up the dev environment;
   - given that the dev environment is set up, the command `yarn install:all:osx` should install everything needed to work with the project;
-  - the automation scripts support the OS with relatively high probability, but it have not been tested;
+  - the automation scripts support the OS with relatively high probability, but it has not been tested;
 - :no_entry_sign: [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) - `not recommended`
   - one will have to figure out oneself how to set up the dev environment;
   - one will have to figure out oneself how to install required dependencies like `protolint` and `shellcheck` system wide;
-  - the automation scripts support the OS with relatively low probability, but it have not been tested.
+  - the automation scripts support the OS with relatively low probability, but it has not been tested.
 
 ### Core dependencies
 
