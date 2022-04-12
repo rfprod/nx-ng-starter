@@ -2,12 +2,14 @@
 
 This folder contains utility shell scripts.
 
+- `utils/colors.sh` - color definitions for usage with `printf` command for comprehensiveness
+- `utils/module-aliases.sh` - supported module aliases script (used by other scripts to determine if module alias exists before performing action)
+- `utils/print-utils.sh` - printing utilities for usage in other shell scripts
 - `build-docs.sh` - documentation application build script
 - `build-android.sh` - android application building script
 - `build-mobile.sh` - mobile application building script
 - `build-utils.sh` - mobile application building utilities script
 - `changelog.sh` - apps/libs changelog generation script
-- `colors.sh` - color definitions for usage with `printf` command for comprehensiveness
 - `diagrams.sh` - generates images from mermaid diagrams
 - `docker-build-app.sh` - applications dockerization script
 - `docker-build-ci.sh` - CI container image building script
@@ -22,8 +24,6 @@ This folder contains utility shell scripts.
 - `git-extension.sh` - git-extension script (detects changed files so that linting/testing can be preformed for changed files only)
 - `install.sh` - dependencies installation script
 - `lint.sh` - apps/libs linting script
-- `module-aliases.sh` - supported module aliases script (used by other scripts to determine if module alias exists before performing action)
-- `print-utils.sh` - printing utilities for usage in other shell scripts
 - `semver-tag.sh` - commit tagging script for versioning (eventually should be used by CI only; commits should be tagged when code is merged into the main development branch - this will require scripm improvement)
 - `set-documentation-env.sh` - documentation app prebuild script, collects references to \*.md files across the repo
 - `test.sh` - apps/libs unit testing script

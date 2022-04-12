@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source tools/shell/colors.sh ''
+source tools/shell/utils/colors.sh ''
 
 printGap() {
   printf "\n\n"
