@@ -97,7 +97,7 @@
     "lint:scss:fix": "yarn lint:scss:apps:fix; yarn lint:scss:libs:fix",
     "lint:scss:libs": "npx stylelint \"./libs/**/*.scss\" --customSyntax=postcss-scss",
     "lint:scss:libs:fix": "npx stylelint \"./libs/**/*.scss\" --customSyntax=postcss-scss --fix",
-    "lint:shell": "shellcheck tools/shell/*.sh",
+    "lint:shell": "shellcheck tools/shell/*.sh tools/shell/utils/*.sh",
     "lint:ts": "./node_modules/.bin/nx workspace-lint && npx nx lint",
     "lint:ts:fix": "./node_modules/.bin/nx workspace-lint && npx nx lint --fix",
     "ng": "nx",
