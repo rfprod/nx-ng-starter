@@ -27,7 +27,7 @@ Now that you're a part of the community, you can keep participating in many ways
 - [Reviewing](#reviewing)
   - [Self review](#self-review)
   - [Suggested changes](#suggested-changes)
-- [Working in the repository](#working-in-the-repository)
+- [Working with the repository](#working-with-the-repository)
 
 ## Types of contributions
 
@@ -65,7 +65,7 @@ Fork using the command line:
 
 ### Make your update
 
-Make your changes to the file(s) you'd like to update. Here are some tips and tricks for [using the docs codebase](#working-in-the-repository).
+Make your changes to the file(s) you'd like to update. Here are some tips and tricks for [working with the repository](#working-with-the-repository).
 
 ### Open a pull request
 
