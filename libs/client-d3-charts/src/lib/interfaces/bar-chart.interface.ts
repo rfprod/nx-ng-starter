@@ -22,11 +22,13 @@ export interface IBarChartOptions {
   xAxisTitle: string;
   yAxisTitle: string;
   yAxisTicks: number;
-  shift: {
-    xAxisLabelX: number;
-    xAxisLabelY: number;
-    yAxisLabelX: number;
-    yAxisLabelY: number;
+  xAxisLabelShift: {
+    x: number;
+    y: number;
+  };
+  yAxisLabelShift: {
+    x: number;
+    y: number;
   };
   labelTextWrapWidth: number;
   color: d3.ScaleOrdinal<string, string>;

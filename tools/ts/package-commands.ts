@@ -45,7 +45,7 @@ interface IToolsProjectCommands {
  * Prints arguments usage tip if no applicable arguments were used.
  */
 function printSearchArgumentTip() {
-  const search = argv.search;
+  const search = (<{ [key: string]: string }>argv).search;
   if (typeof search !== 'string') {
     // eslint-disable-next-line no-console -- needed here to print output in the terminal
     console.log(
@@ -64,7 +64,7 @@ ${COLORS.CYAN}%s${COLORS.DEFAULT} ${COLORS.YELLOW}%s${COLORS.DEFAULT}\n`,
  * @param scripts package scripts object.
  */
 function printPackageScripts(scripts: IPackageJson['scripts'], cli: 'yarn' | 'ng') {
-  const search = argv.search;
+  const search = (<{ [key: string]: string }>argv).search;
   const scriptKeys = typeof search !== 'string' ? Object.keys(scripts) : Object.keys(scripts).filter(key => new RegExp(search).test(key));
   for (const key of scriptKeys) {
     // eslint-disable-next-line no-console -- needed here to print output in the terminal

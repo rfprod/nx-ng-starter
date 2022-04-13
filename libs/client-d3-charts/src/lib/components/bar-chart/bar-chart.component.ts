@@ -69,13 +69,15 @@ export class AppBarChartComponent implements AfterViewInit, OnChanges {
       height,
       margin,
       yAxisTicks,
-      shift: {
-        xAxisLabelX:
-          defaultBarChartConfig.shift.xAxisLabelX +
+      xAxisLabelShift: {
+        x:
+          defaultBarChartConfig.xAxisLabelShift.x +
           ((this.options.xAxisTitle ?? defaultBarChartConfig.xAxisTitle).length - 1) * pixelsPerCharacter,
-        xAxisLabelY: 228,
-        yAxisLabelX: -10,
-        yAxisLabelY: -10,
+        y: 228,
+      },
+      yAxisLabelShift: {
+        x: -10,
+        y: -10,
       },
       ...this.options,
     };

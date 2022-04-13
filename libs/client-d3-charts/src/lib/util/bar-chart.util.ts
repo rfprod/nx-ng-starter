@@ -22,11 +22,13 @@ export const defaultBarChartConfig: IBarChartOptions = Object.freeze({
   xAxisTitle: 'x',
   yAxisTitle: 'y',
   yAxisTicks: 10,
-  shift: {
-    xAxisLabelX: 10,
-    xAxisLabelY: 184,
-    yAxisLabelX: -10,
-    yAxisLabelY: -10,
+  xAxisLabelShift: {
+    x: 10,
+    y: 184,
+  },
+  yAxisLabelShift: {
+    x: -10,
+    y: -10,
   },
   labelTextWrapWidth: 60, // the number of pixels after which a label needs to be given a new line
   color: d3.scaleOrdinal(d3.schemeCategory10),
@@ -106,8 +108,8 @@ const createAxisX = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>
   g.selectAll('text').call(wrapSvgText, config.labelTextWrapWidth);
 
   xLabels
-    .attr('y', config.height - config.shift.xAxisLabelY)
-    .attr('x', config.width + config.shift.xAxisLabelX)
+    .attr('y', config.height - config.xAxisLabelShift.y)
+    .attr('x', config.width + config.xAxisLabelShift.x)
     .attr('text-anchor', 'end')
     .attr('class', 'legend')
     .attr('dy', '0.35em')
@@ -135,8 +137,8 @@ const createAxisY = (
         .ticks(config.yAxisTicks),
     )
     .append('text')
-    .attr('y', config.shift.yAxisLabelY)
-    .attr('x', config.shift.yAxisLabelX)
+    .attr('y', config.yAxisLabelShift.y)
+    .attr('x', config.yAxisLabelShift.x)
     .attr('text-anchor', 'end')
     .attr('class', 'legend')
     .text(config.yAxisTitle);
