@@ -4,7 +4,7 @@ const { join } = require('path');
 /**
  * This RegExp patter validates the allowed camelCase patterns that should be used for the object literal property names.
  */
-const camelCaseRegExpInput = '([a-z]+([A-Z])?[a-z]*)([A-Z][a-z]+|A11y|URL){0,}';
+const camelCaseRegExpInput = '([a-z]+([A-Z])?[a-z]*)([A-Z][a-z]+|A11y|URL){0,}([$])?';
 
 /**
  * Roadmap typescript-eslint
@@ -278,7 +278,7 @@ module.exports = {
             leadingUnderscore: 'forbid',
             trailingUnderscore: 'forbid',
             custom: {
-              regex: `^(${camelCaseRegExpInput}([$])?|Cypress)$`,
+              regex: `^(${camelCaseRegExpInput}|Cypress)$`,
               match: true,
             },
           },
