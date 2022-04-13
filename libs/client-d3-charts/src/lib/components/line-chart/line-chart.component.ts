@@ -71,13 +71,15 @@ export class AppLineChartComponent implements AfterViewInit, OnChanges {
         x: 5,
         y: Math.max(...this.data.map(item => item.value)),
       },
-      shift: {
-        xAxisLabelX:
-          defaultLineChartConfig.shift.xAxisLabelX +
+      xAxisLabelShift: {
+        x:
+          defaultLineChartConfig.xAxisLabelShift.x +
           ((this.options.xAxisTitle ?? defaultLineChartConfig.xAxisTitle).length - 1) * pixelsPerCharacter,
-        xAxisLabelY: 228,
-        yAxisLabelX: -10,
-        yAxisLabelY: -10,
+        y: 228,
+      },
+      yAxisLabelShift: {
+        x: -10,
+        y: -10,
       },
       ...this.options,
     };

@@ -25,11 +25,13 @@ export const defaultLineChartConfig: ILineChartOptions = Object.freeze({
     x: 5,
     y: 10,
   },
-  shift: {
-    xAxisLabelX: 10,
-    xAxisLabelY: 184,
-    yAxisLabelX: -10,
-    yAxisLabelY: -10,
+  xAxisLabelShift: {
+    x: 10,
+    y: 184,
+  },
+  yAxisLabelShift: {
+    x: -10,
+    y: -10,
   },
   labelTextWrapWidth: 20, // the number of pixels after which a label needs to be given a new line
   color: d3.scaleOrdinal(d3.schemeCategory10),
@@ -139,8 +141,8 @@ const createAxisX = (
     .attr('text-anchor', 'end')
     .attr('class', 'legend')
     .attr('dy', '0.35em')
-    .attr('y', config.height - config.shift.xAxisLabelY)
-    .attr('x', config.width + config.shift.xAxisLabelX)
+    .attr('y', config.height - config.xAxisLabelShift.y)
+    .attr('x', config.width + config.xAxisLabelShift.x)
     .text(config.xAxisTitle);
 };
 
@@ -165,8 +167,8 @@ const createAxisY = (
     .append('text')
     .attr('text-anchor', 'end')
     .attr('class', 'legend')
-    .attr('y', config.shift.yAxisLabelY)
-    .attr('x', config.shift.yAxisLabelX)
+    .attr('y', config.yAxisLabelShift.y)
+    .attr('x', config.yAxisLabelShift.x)
     .text(config.yAxisTitle);
 };
 

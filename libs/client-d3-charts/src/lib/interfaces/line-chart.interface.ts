@@ -21,15 +21,17 @@ export interface ILineChartOptions {
   dotRadius: number;
   xAxisTitle: string;
   yAxisTitle: string;
-  ticks: {
+  xAxisLabelShift: {
     x: number;
     y: number;
   };
-  shift: {
-    xAxisLabelX: number;
-    xAxisLabelY: number;
-    yAxisLabelX: number;
-    yAxisLabelY: number;
+  yAxisLabelShift: {
+    x: number;
+    y: number;
+  };
+  ticks: {
+    x: number;
+    y: number;
   };
   labelTextWrapWidth: number;
   color: d3.ScaleOrdinal<string, string>;
