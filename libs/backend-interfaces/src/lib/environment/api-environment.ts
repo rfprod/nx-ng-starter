@@ -2,14 +2,11 @@ import { Provider } from '@nestjs/common';
 
 import { initializeClassProperties } from '../utils/class.util';
 
-/**
- * Application environment constructor options interface.
- */
 export interface IApiEnvironment {
   production: boolean;
-  firebase?: boolean;
+  firebase: boolean;
   appName: string;
-  envoyUrl?: string;
+  envoyUrl: string;
   wsPort: number;
 }
 
@@ -26,16 +23,16 @@ export const defaultWsPort = 8081;
 export class ApiEnvironment implements IApiEnvironment {
   public production = false;
 
-  public firebase?: boolean;
+  public firebase = false;
 
   public appName: TApiAppName = 'Nx Ng Starter API';
 
-  public envoyUrl? = 'http://localhost:8081';
+  public envoyUrl = 'http://localhost:8081';
 
   public wsPort = defaultWsPort;
 
-  constructor(options?: Partial<ApiEnvironment>) {
-    initializeClassProperties<Partial<ApiEnvironment>>(this, options);
+  constructor(input?: Partial<ApiEnvironment>) {
+    initializeClassProperties<Partial<ApiEnvironment>>(this, input);
   }
 }
 

@@ -21,13 +21,12 @@ export class BackendGqlModule {
       debug: environment.production ? false : true,
       playground: environment.production ? false : true,
       installSubscriptionHandlers: true,
-      autoSchemaFile:
-        environment.firebase === true
-          ? false
-          : environment.production
-          ? join(process.cwd(), 'schema.gql')
-          : join(process.cwd(), 'libs/backend-gql/schema.gql'),
-      typePaths: environment.firebase === true ? [join(process.cwd(), 'schema.gql')] : void 0,
+      autoSchemaFile: environment.firebase
+        ? false
+        : environment.production
+        ? join(process.cwd(), 'schema.gql')
+        : join(process.cwd(), 'libs/backend-gql/schema.gql'),
+      typePaths: environment.firebase ? [join(process.cwd(), 'schema.gql')] : void 0,
       sortSchema: true,
       subscriptions: {
         'graphql-ws': {
