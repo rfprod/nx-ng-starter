@@ -1,4 +1,4 @@
-import { ApiEnvironment } from '@app/backend-interfaces';
+import { IApiEnvironment } from '@app/backend-interfaces';
 
 /**
  * Development environment variables.
@@ -6,7 +6,7 @@ import { ApiEnvironment } from '@app/backend-interfaces';
  * `ng build ---prod` replaces `environment.ts` with `environment.prod.ts`.
  * The list of file replacements can be found in `angular.json`.
  */
-export const environment: ApiEnvironment = {
+export const environment: IApiEnvironment = {
   production: false,
   firebase: false,
   appName: 'Nx Ng Starter API',
