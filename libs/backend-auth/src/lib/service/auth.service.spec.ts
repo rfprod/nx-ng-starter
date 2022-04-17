@@ -1,4 +1,4 @@
-import { Message, UserLoginCredentials, UserLogoutCredentials, UserProfile } from '@app/backend-interfaces';
+import { Message, User, UserLoginCredentials, UserLogoutCredentials } from '@app/backend-interfaces';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 
@@ -61,7 +61,7 @@ describe('BackendAuthService', () => {
 
   it('login should authenticate and return a user profile', () => {
     const credentials = new UserLoginCredentials();
-    expect(authService.login(credentials) instanceof UserProfile).toBeTruthy();
+    expect(authService.login(credentials) instanceof User).toBeTruthy();
   });
 
   it('logout should return a success message', () => {
@@ -75,6 +75,6 @@ describe('BackendAuthService', () => {
 
   it('signup should authenticate and return a user profile', () => {
     const credentials = new UserLoginCredentials();
-    expect(authService.signup(credentials) instanceof UserProfile).toBeTruthy();
+    expect(authService.signup(credentials) instanceof User).toBeTruthy();
   });
 });

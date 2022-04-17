@@ -1,4 +1,4 @@
-import { Message, UserLoginCredentials, UserLogoutCredentials, UserProfile } from '@app/backend-interfaces';
+import { Message, User, UserLoginCredentials, UserLogoutCredentials } from '@app/backend-interfaces';
 import { JwtModule } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 
@@ -33,15 +33,11 @@ describe('BackendAuthController', () => {
         authServiceSpy = {
           login: jest.spyOn(authService, 'login').mockImplementation(
             (credentials: UserLoginCredentials) =>
-              new UserProfile({
+              new User({
                 id: '0',
                 name: {
                   first: 'first',
                   last: 'last',
-                },
-                contacts: {
-                  email: credentials.email,
-                  phone: 'phone',
                 },
                 token: authService.generateJWToken({
                   email: credentials.email,
@@ -54,15 +50,11 @@ describe('BackendAuthController', () => {
             .mockImplementation((credentials: UserLogoutCredentials) => new Message({ message: `success for token ${credentials.token}` })),
           signup: jest.spyOn(authService, 'signup').mockImplementation(
             (credentials: UserLoginCredentials) =>
-              new UserProfile({
+              new User({
                 id: '0',
                 name: {
                   first: 'first',
                   last: 'last',
-                },
-                contacts: {
-                  email: credentials.email,
-                  phone: 'phone',
                 },
                 token: authService.generateJWToken({
                   email: credentials.email,

@@ -1,4 +1,4 @@
-import { Message, UserLoginCredentials, UserLogoutCredentials, UserProfile } from '@app/backend-interfaces';
+import { Message, User, UserLoginCredentials, UserLogoutCredentials } from '@app/backend-interfaces';
 import { Body, Controller, Get, Post } from '@nestjs/common';
 
 import { BackendAuthService } from '../service/auth.service';
@@ -15,7 +15,7 @@ export class BackendAuthController {
   }
 
   @Post('login')
-  public login(@Body() credentials: UserLoginCredentials): UserProfile {
+  public login(@Body() credentials: UserLoginCredentials): User {
     return this.authService.login(credentials);
   }
 
@@ -25,7 +25,7 @@ export class BackendAuthController {
   }
 
   @Post('signup')
-  public signup(@Body() credentials: UserLoginCredentials): UserProfile {
+  public signup(@Body() credentials: UserLoginCredentials): User {
     return this.authService.signup(credentials);
   }
 }
