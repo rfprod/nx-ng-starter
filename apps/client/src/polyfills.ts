@@ -65,9 +65,7 @@ import 'web-animations-js'; // Run `npm install --save web-animations-js`.
  * Zone JS is required by default for Angular itself.
  */
 import 'zone.js/dist/zone'; // Included with Angular CLI.
-/**
- * Custom Elements v1 aren’t fully supported by the browsers yet, so we need to install a polyfill.
+
+/***************************************************************************************************
+ * APPLICATION IMPORTS
  */
-import '@webcomponents/custom-elements';
-// Next one is required when compiling elements modules separately
-import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js';
