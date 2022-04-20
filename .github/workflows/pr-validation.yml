@@ -104,11 +104,10 @@ jobs:
             ${{ runner.os }}-
 
       - name: Workspace integrity check
-        if: ${{ (steps.changes.outputs.nx == 'true' || steps.changes.outputs.storybook == 'true' || steps.changes.outputs.electron == 'true') && steps.changes.outputs.dependencies == 'false' }}
+        if: steps.changes.outputs.dependencies == 'false'
         run: yarn workspace:integrity-check
 
       - name: Install project dependencies
-        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.storybook == 'true' || steps.changes.outputs.electron == 'true' }}
         run: yarn install:ci
 
       - name: Validate the commit messages
