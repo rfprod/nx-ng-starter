@@ -111,6 +111,12 @@ jobs:
         if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.storybook == 'true' || steps.changes.outputs.electron == 'true' }}
         run: yarn install:ci
 
+      - name: Validate the commit messages
+        run: |
+          git checkout -b premerge
+          git fetch origin main:main
+          npx --no-install commitlint --from main
+
       - name: Lint affected
         if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
         run: npx nx affected --target=lint --base=origin/main --head=HEAD --parallel --max-parallel=2
