@@ -51,10 +51,7 @@ jobs:
               - '.protolint.yaml'
               - '.stylelint*'
             dependencies:
-              - 'package.json'
               - 'yarn.lock'
-              - 'functions/package.json'
-              - 'functions/package-lock.json'
             electron:
               - '.electron/**'
               - 'index.js'
