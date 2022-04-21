@@ -37,14 +37,13 @@ In order to run own copy of the project one must fulfill the following requireme
 
 - [Bash 5](https://www.gnu.org/software/bash/)
 - [Node.js](https://nodejs.org/)
-- [NPM](https://nodejs.org/)
 - [Yarn](https://yarnpkg.com/)
 - [Git](https://git-scm.com/)
 
 ### Preferred package manager
 
 - [Yarn](https://www.npmjs.com/package/yarn) - preferred package manager for dependencies installation in the project root.
-- [npm](https://www.npmjs.com/) - preferred package manager for dependencies installation in the `functions` folder.
+- [npm](https://www.npmjs.com/package/npm) - preferred package manager for dependencies installation in the `functions` folder.
 
 ## Package scripts reference
 
