@@ -35,7 +35,9 @@ const namingConventionConfig = (options = { jestConfigs: false }) => ({
        * By default only camelCase is allowed.
        * Exceptions:
        * > FORCE_COLOR - nodejs environment property
-       * > Authorization, Content-Type - http headers
+       * > Authorization, Content-Type - client http headers
+       * > Cache-Control, Expires, Pragma - api http headers
+       * > graphql-ws, subscriptions-transport-ws - api graphql object properties
        * Valid examples:
        * > property
        * > propertyName
@@ -48,7 +50,7 @@ const namingConventionConfig = (options = { jestConfigs: false }) => ({
       custom: {
         regex: options.jestConfigs
           ? `^(${camelCaseRegExpInput}|ts-jest|[^0-9]+)$` // [^0-9]+ expression negates all numeric characters, allowing any other characters
-          : `^(${camelCaseRegExpInput}|FORCE_COLOR|Authorization|Content-Type|graphql-ws|subscriptions-transport-ws)$`,
+          : `^(${camelCaseRegExpInput}|FORCE_COLOR|Authorization|Content-Type|Cache-Control|Expires|Pragma|graphql-ws|subscriptions-transport-ws)$`,
         match: true,
       },
     },
