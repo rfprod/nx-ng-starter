@@ -2,17 +2,17 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { exec, ExecException } from 'child_process';
 import { firstValueFrom } from 'rxjs';
 
-import { BackendDiagnosticsService, CHILD_PROCESS_EXEC } from './diagnostics.service';
+import { AppDiagnosticsService, CHILD_PROCESS_EXEC } from './diagnostics.service';
 
-describe('BackendDiagnosticsService', () => {
+describe('AppDiagnosticsService', () => {
   let testingModule: TestingModule;
-  let diagService: BackendDiagnosticsService;
+  let diagService: AppDiagnosticsService;
 
   describe('success cases', () => {
     beforeAll(async () => {
       await Test.createTestingModule({
         providers: [
-          BackendDiagnosticsService,
+          AppDiagnosticsService,
           {
             provide: CHILD_PROCESS_EXEC,
             useValue: exec,
@@ -22,7 +22,7 @@ describe('BackendDiagnosticsService', () => {
         .compile()
         .then(module => {
           testingModule = module;
-          diagService = testingModule.get<BackendDiagnosticsService>(BackendDiagnosticsService);
+          diagService = testingModule.get<AppDiagnosticsService>(AppDiagnosticsService);
         });
     });
 
@@ -59,7 +59,7 @@ describe('BackendDiagnosticsService', () => {
     beforeAll(async () => {
       await Test.createTestingModule({
         providers: [
-          BackendDiagnosticsService,
+          AppDiagnosticsService,
           {
             provide: CHILD_PROCESS_EXEC,
             useValue: execMockImplementation,
@@ -69,7 +69,7 @@ describe('BackendDiagnosticsService', () => {
         .compile()
         .then(module => {
           testingModule = module;
-          diagService = testingModule.get<BackendDiagnosticsService>(BackendDiagnosticsService);
+          diagService = testingModule.get<AppDiagnosticsService>(AppDiagnosticsService);
         });
     });
 

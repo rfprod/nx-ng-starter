@@ -1,1 +1,1 @@
-export * from './dto/new-file-upload-input.dto';
+export * from './dto/file-upload-input.dto';

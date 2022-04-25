@@ -129,11 +129,10 @@ proto.nxngstarter.Entity.prototype.toObject = function(opt_includeInstance) {
 proto.nxngstarter.Entity.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    num1: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    num2: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    boolean1: jspb.Message.getBooleanFieldWithDefault(msg, 4, false),
-    float1: jspb.Message.getFloatingPointFieldWithDefault(msg, 5, 0.0),
-    any1: (f = msg.getAny1()) && google_protobuf_any_pb.Any.toObject(includeInstance, f),
+    integer: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    pb_boolean: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
+    pb_float: jspb.Message.getFloatingPointFieldWithDefault(msg, 4, 0.0),
+    any: (f = msg.getAny()) && google_protobuf_any_pb.Any.toObject(includeInstance, f),
     subentitiesList: jspb.Message.toObjectList(msg.getSubentitiesList(),
     proto.nxngstarter.SubEntity.toObject, includeInstance)
   };
@@ -178,24 +177,20 @@ proto.nxngstarter.Entity.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 2:
       var value = /** @type {number} */ (reader.readInt32());
-      msg.setNum1(value);
+      msg.setInteger(value);
       break;
     case 3:
-      var value = /** @type {number} */ (reader.readInt64());
-      msg.setNum2(value);
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setBoolean(value);
       break;
     case 4:
-      var value = /** @type {boolean} */ (reader.readBool());
-      msg.setBoolean1(value);
+      var value = /** @type {number} */ (reader.readFloat());
+      msg.setFloat(value);
       break;
     case 5:
-      var value = /** @type {number} */ (reader.readFloat());
-      msg.setFloat1(value);
-      break;
-    case 8:
       var value = new google_protobuf_any_pb.Any;
       reader.readMessage(value,google_protobuf_any_pb.Any.deserializeBinaryFromReader);
-      msg.setAny1(value);
+      msg.setAny(value);
       break;
     case 6:
       var value = new proto.nxngstarter.SubEntity;
@@ -238,38 +233,31 @@ proto.nxngstarter.Entity.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getNum1();
+  f = message.getInteger();
   if (f !== 0) {
     writer.writeInt32(
       2,
       f
     );
   }
-  f = message.getNum2();
-  if (f !== 0) {
-    writer.writeInt64(
+  f = message.getBoolean();
+  if (f) {
+    writer.writeBool(
       3,
       f
     );
   }
-  f = message.getBoolean1();
-  if (f) {
-    writer.writeBool(
+  f = message.getFloat();
+  if (f !== 0.0) {
+    writer.writeFloat(
       4,
       f
     );
   }
-  f = message.getFloat1();
-  if (f !== 0.0) {
-    writer.writeFloat(
-      5,
-      f
-    );
-  }
-  f = message.getAny1();
+  f = message.getAny();
   if (f != null) {
     writer.writeMessage(
-      8,
+      5,
       f,
       google_protobuf_any_pb.Any.serializeBinaryToWriter
     );
@@ -304,10 +292,10 @@ proto.nxngstarter.Entity.prototype.setId = function(value) {
 
 
 /**
- * optional int32 num1 = 2;
+ * optional int32 integer = 2;
  * @return {number}
  */
-proto.nxngstarter.Entity.prototype.getNum1 = function() {
+proto.nxngstarter.Entity.prototype.getInteger = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
@@ -316,35 +304,17 @@ proto.nxngstarter.Entity.prototype.getNum1 = function() {
  * @param {number} value
  * @return {!proto.nxngstarter.Entity} returns this
  */
-proto.nxngstarter.Entity.prototype.setNum1 = function(value) {
+proto.nxngstarter.Entity.prototype.setInteger = function(value) {
   return jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
 /**
- * optional int64 num2 = 3;
- * @return {number}
- */
-proto.nxngstarter.Entity.prototype.getNum2 = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
-};
-
-
-/**
- * @param {number} value
- * @return {!proto.nxngstarter.Entity} returns this
- */
-proto.nxngstarter.Entity.prototype.setNum2 = function(value) {
-  return jspb.Message.setProto3IntField(this, 3, value);
-};
-
-
-/**
- * optional bool boolean1 = 4;
+ * optional bool boolean = 3;
  * @return {boolean}
  */
-proto.nxngstarter.Entity.prototype.getBoolean1 = function() {
-  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 4, false));
+proto.nxngstarter.Entity.prototype.getBoolean = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 3, false));
 };
 
 
@@ -352,17 +322,17 @@ proto.nxngstarter.Entity.prototype.getBoolean1 = function() {
  * @param {boolean} value
  * @return {!proto.nxngstarter.Entity} returns this
  */
-proto.nxngstarter.Entity.prototype.setBoolean1 = function(value) {
-  return jspb.Message.setProto3BooleanField(this, 4, value);
+proto.nxngstarter.Entity.prototype.setBoolean = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 3, value);
 };
 
 
 /**
- * optional float float1 = 5;
+ * optional float float = 4;
  * @return {number}
  */
-proto.nxngstarter.Entity.prototype.getFloat1 = function() {
-  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 5, 0.0));
+proto.nxngstarter.Entity.prototype.getFloat = function() {
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 4, 0.0));
 };
 
 
@@ -370,18 +340,18 @@ proto.nxngstarter.Entity.prototype.getFloat1 = function() {
  * @param {number} value
  * @return {!proto.nxngstarter.Entity} returns this
  */
-proto.nxngstarter.Entity.prototype.setFloat1 = function(value) {
-  return jspb.Message.setProto3FloatField(this, 5, value);
+proto.nxngstarter.Entity.prototype.setFloat = function(value) {
+  return jspb.Message.setProto3FloatField(this, 4, value);
 };
 
 
 /**
- * optional google.protobuf.Any any1 = 8;
+ * optional google.protobuf.Any any = 5;
  * @return {?proto.google.protobuf.Any}
  */
-proto.nxngstarter.Entity.prototype.getAny1 = function() {
+proto.nxngstarter.Entity.prototype.getAny = function() {
   return /** @type{?proto.google.protobuf.Any} */ (
-    jspb.Message.getWrapperField(this, google_protobuf_any_pb.Any, 8));
+    jspb.Message.getWrapperField(this, google_protobuf_any_pb.Any, 5));
 };
 
 
@@ -389,8 +359,8 @@ proto.nxngstarter.Entity.prototype.getAny1 = function() {
  * @param {?proto.google.protobuf.Any|undefined} value
  * @return {!proto.nxngstarter.Entity} returns this
 */
-proto.nxngstarter.Entity.prototype.setAny1 = function(value) {
-  return jspb.Message.setWrapperField(this, 8, value);
+proto.nxngstarter.Entity.prototype.setAny = function(value) {
+  return jspb.Message.setWrapperField(this, 5, value);
 };
 
 
@@ -398,8 +368,8 @@ proto.nxngstarter.Entity.prototype.setAny1 = function(value) {
  * Clears the message field making it undefined.
  * @return {!proto.nxngstarter.Entity} returns this
  */
-proto.nxngstarter.Entity.prototype.clearAny1 = function() {
-  return this.setAny1(undefined);
+proto.nxngstarter.Entity.prototype.clearAny = function() {
+  return this.setAny(undefined);
 };
 
 
@@ -407,8 +377,8 @@ proto.nxngstarter.Entity.prototype.clearAny1 = function() {
  * Returns whether this field is set.
  * @return {boolean}
  */
-proto.nxngstarter.Entity.prototype.hasAny1 = function() {
-  return jspb.Message.getField(this, 8) != null;
+proto.nxngstarter.Entity.prototype.hasAny = function() {
+  return jspb.Message.getField(this, 5) != null;
 };
 
 

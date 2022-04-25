@@ -1,4 +1,4 @@
-import { Message } from '@app/backend-interfaces';
+import { AppMessage } from '@app/backend-interfaces';
 import { Inject, Injectable } from '@nestjs/common';
 import { exec, ExecException } from 'child_process';
 import * as dotenv from 'dotenv';
@@ -15,7 +15,7 @@ export type TDiagData = IDiagDataItem[];
 export const CHILD_PROCESS_EXEC = 'CHILD_PROCESS_EXEC';
 
 @Injectable()
-export class BackendDiagnosticsService {
+export class AppDiagnosticsService {
   constructor(@Inject(CHILD_PROCESS_EXEC) private readonly childProcessExec: typeof exec) {
     dotenv.config();
   }
@@ -39,8 +39,8 @@ export class BackendDiagnosticsService {
     return observable.pipe(catchError(error => of(error)));
   }
 
-  public ping(): Message {
-    return new Message({
+  public ping(): AppMessage {
+    return new AppMessage({
       message: 'Diagnostics service is online. Routes: /, /static.',
     });
   }

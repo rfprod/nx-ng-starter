@@ -3,9 +3,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { first, tap } from 'rxjs/operators';
 
 import { NXNGSTARTER_PACKAGE } from '../grpc-client.options';
-import { BackendGrpcController } from './grpc.controller';
+import { AppGrpcController } from './grpc.controller';
 
-describe('BackendGrpcController', () => {
+describe('AppGrpcController', () => {
   let app: TestingModule;
   const clientPackageMockData = {
     findOne: nxngstarter.Entity.toObject(new nxngstarter.Entity(), {
@@ -16,7 +16,7 @@ describe('BackendGrpcController', () => {
 
   beforeAll(async () => {
     app = await Test.createTestingModule({
-      controllers: [BackendGrpcController],
+      controllers: [AppGrpcController],
       providers: [
         {
           provide: NXNGSTARTER_PACKAGE,
@@ -30,7 +30,7 @@ describe('BackendGrpcController', () => {
   });
 
   it('getOne should return one item', async () => {
-    const appController = app.get<BackendGrpcController>(BackendGrpcController);
+    const appController = app.get<AppGrpcController>(AppGrpcController);
     const promise = new Promise<void>((resolve, reject) => {
       void appController
         .getById('id1')
@@ -47,7 +47,7 @@ describe('BackendGrpcController', () => {
   });
 
   it('getMany should return items length = 0', async () => {
-    const appController = app.get<BackendGrpcController>(BackendGrpcController);
+    const appController = app.get<AppGrpcController>(AppGrpcController);
     const promise = new Promise<void>((resolve, reject) => {
       void appController
         .getMany()

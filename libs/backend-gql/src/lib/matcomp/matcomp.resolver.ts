@@ -1,23 +1,23 @@
-import { MatcompArgs, MatcompModel, MatcompSubscription, NewMatcompInputDto } from '@app/backend-interfaces';
+import { AppMatcompArgs, AppMatcompInputDto, AppMatcompModel, AppMatcompSubscription } from '@app/backend-interfaces';
 import { Inject, NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
 
-import { BackendMatcompGuard } from './matcomp.guard';
-import { BackendMatcompService } from './matcomp.service';
+import { AppMatcompGuard } from './matcomp.guard';
+import { AppMatcompService } from './matcomp.service';
 
-@Resolver(() => MatcompModel)
-export class BackendMatcompResolver {
-  constructor(private readonly service: BackendMatcompService, @Inject('PUB_SUB') private readonly pubSub: PubSub) {}
+@Resolver(() => AppMatcompModel)
+export class AppMatcompResolver {
+  constructor(private readonly service: AppMatcompService, @Inject('PUB_SUB') private readonly pubSub: PubSub) {}
 
-  @Query(() => [MatcompModel])
-  @UseGuards(BackendMatcompGuard)
-  public async matcomps(@Args() matcompArgs: MatcompArgs) {
+  @Query(() => [AppMatcompModel])
+  @UseGuards(AppMatcompGuard)
+  public async matcomps(@Args() matcompArgs: AppMatcompArgs) {
     return this.service.findAll(matcompArgs);
   }
 
-  @Query(() => MatcompModel)
-  @UseGuards(BackendMatcompGuard)
+  @Query(() => AppMatcompModel)
+  @UseGuards(AppMatcompGuard)
   public async matcomp(
     @Args('id')
     id: string,
@@ -29,32 +29,32 @@ export class BackendMatcompResolver {
     return matcomp;
   }
 
-  @Mutation(() => MatcompModel)
-  @UseGuards(BackendMatcompGuard)
-  public async create(@Args('input') args: NewMatcompInputDto) {
+  @Mutation(() => AppMatcompModel)
+  @UseGuards(AppMatcompGuard)
+  public async create(@Args('input') args: AppMatcompInputDto) {
     const createdMatcomp = this.service.create(args);
-    const matcompSubscription: MatcompSubscription = new MatcompSubscription(createdMatcomp);
+    const matcompSubscription: AppMatcompSubscription = new AppMatcompSubscription(createdMatcomp);
     void this.pubSub.publish('matcompCreated', matcompSubscription);
     return createdMatcomp;
   }
 
-  @Subscription(() => MatcompModel)
-  @UseGuards(BackendMatcompGuard)
+  @Subscription(() => AppMatcompModel)
+  @UseGuards(AppMatcompGuard)
   public matcompCreated() {
     return this.pubSub.asyncIterator('matcompCreated');
   }
 
   @Mutation(() => Boolean)
-  @UseGuards(BackendMatcompGuard)
+  @UseGuards(AppMatcompGuard)
   public async remove(@Args('id') id: string) {
     const removedMatcomp = this.service.remove(id);
-    const matcompSubscription: MatcompSubscription = new MatcompSubscription(removedMatcomp);
+    const matcompSubscription: AppMatcompSubscription = new AppMatcompSubscription(removedMatcomp);
     void this.pubSub.publish('matcompRemoved', matcompSubscription);
     return Boolean(removedMatcomp);
   }
 
-  @Subscription(() => MatcompModel)
-  @UseGuards(BackendMatcompGuard)
+  @Subscription(() => AppMatcompModel)
+  @UseGuards(AppMatcompGuard)
   public matcompRemoved() {
     return this.pubSub.asyncIterator('matcompRemoved');
   }

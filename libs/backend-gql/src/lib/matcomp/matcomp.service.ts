@@ -1,19 +1,19 @@
-import { IMatcompMutation, IMatcompQuery, Matcomp, MatcompArgs, NewMatcompInput } from '@app/backend-interfaces';
+import { AppMatcomp, AppMatcompArgs, AppMatcompInput, IMatcompMutation, IMatcompQuery } from '@app/backend-interfaces';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class BackendMatcompService implements IMatcompQuery, IMatcompMutation {
-  private readonly matcomps: Matcomp[] = [];
+export class AppMatcompService implements IMatcompQuery, IMatcompMutation {
+  private readonly matcomps: AppMatcomp[] = [];
 
-  public create(input: NewMatcompInput) {
-    const matcomp = new Matcomp(input);
+  public create(input: AppMatcompInput) {
+    const matcomp = new AppMatcomp(input);
     this.matcomps.push(matcomp);
     return matcomp;
   }
 
   public remove(id: string) {
     let arrayId = 0;
-    this.matcomps.map((comp: Matcomp, index: number) => {
+    this.matcomps.map((comp: AppMatcomp, index: number) => {
       if (comp.id === id) {
         arrayId = index;
       }
@@ -22,7 +22,7 @@ export class BackendMatcompService implements IMatcompQuery, IMatcompMutation {
     return matcomp;
   }
 
-  public findAll(args: MatcompArgs) {
+  public findAll(args: AppMatcompArgs) {
     return this.matcomps.slice(args.skip, args.take);
   }
 

@@ -1,12 +1,12 @@
-import { Message, User, UserLoginCredentials, UserLogoutCredentials } from '@app/backend-interfaces';
+import { AppMessage, AppUser, AppUserLoginCredentials, AppUserLogoutCredentials } from '@app/backend-interfaces';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { BackendAuthService, IAuthPayload } from './auth.service';
+import { AppAuthService, IAuthPayload } from './auth.service';
 
-describe('BackendAuthService', () => {
+describe('AppAuthService', () => {
   let testingModule: TestingModule;
-  let authService: BackendAuthService;
+  let authService: AppAuthService;
   let jwtService: JwtService;
 
   beforeAll(async () => {
@@ -16,12 +16,12 @@ describe('BackendAuthService', () => {
           secret: 'jwtsecret',
         }),
       ],
-      providers: [BackendAuthService],
+      providers: [AppAuthService],
     })
       .compile()
       .then(module => {
         testingModule = module;
-        authService = testingModule.get<BackendAuthService>(BackendAuthService);
+        authService = testingModule.get<AppAuthService>(AppAuthService);
         jwtService = testingModule.get<JwtService>(JwtService);
       });
   });
@@ -60,21 +60,21 @@ describe('BackendAuthService', () => {
   });
 
   it('login should authenticate and return a user profile', () => {
-    const credentials = new UserLoginCredentials();
-    expect(authService.login(credentials) instanceof User).toBeTruthy();
+    const credentials = new AppUserLoginCredentials();
+    expect(authService.login(credentials) instanceof AppUser).toBeTruthy();
   });
 
   it('logout should return a success message', () => {
-    const credentials = new UserLogoutCredentials();
+    const credentials = new AppUserLogoutCredentials();
     expect(authService.logout(credentials)).toEqual(
-      new Message({
+      new AppMessage({
         message: `success for token ${credentials.token}`,
       }),
     );
   });
 
   it('signup should authenticate and return a user profile', () => {
-    const credentials = new UserLoginCredentials();
-    expect(authService.signup(credentials) instanceof User).toBeTruthy();
+    const credentials = new AppUserLoginCredentials();
+    expect(authService.signup(credentials) instanceof AppUser).toBeTruthy();
   });
 });

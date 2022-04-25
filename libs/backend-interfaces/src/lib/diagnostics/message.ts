@@ -7,10 +7,10 @@ export interface IMessage {
 /**
  * Mostly used for diagnostics, e.g. for the ping endpoints.
  */
-export class Message implements IMessage {
+export class AppMessage implements IMessage {
   public message = '';
 
-  constructor(input?: Message) {
-    initializeClassProperties<Message>(this, input);
+  constructor(input?: AppMessage) {
+    initializeClassProperties<AppMessage>(this, input);
   }
 }

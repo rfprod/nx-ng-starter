@@ -7,7 +7,8 @@ export const initializeClassProperties = <T>(self: T, input?: T) => {
   if (typeof input !== 'undefined') {
     const keys = Object.keys(input);
     for (const key of keys) {
-      self[key] = Boolean(input[key]) ? input[key] : self[key];
+      const inputValue = input[key];
+      self[key] = typeof inputValue !== 'undefined' && inputValue !== null ? inputValue : self[key];
     }
   }
 };

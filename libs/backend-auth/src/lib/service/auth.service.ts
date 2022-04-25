@@ -1,4 +1,4 @@
-import { Message, User, UserLoginCredentials, UserLogoutCredentials, UserName } from '@app/backend-interfaces';
+import { AppMessage, AppUser, AppUserLoginCredentials, AppUserLogoutCredentials, AppUserName } from '@app/backend-interfaces';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
@@ -8,7 +8,7 @@ export interface IAuthPayload {
 }
 
 @Injectable()
-export class BackendAuthService {
+export class AppAuthService {
   constructor(private readonly jwt: JwtService) {}
 
   public generateJWToken(payload: IAuthPayload) {
@@ -21,30 +21,30 @@ export class BackendAuthService {
     return result;
   }
 
-  public ping(): Message {
-    return new Message({
+  public ping(): AppMessage {
+    return new AppMessage({
       message: 'Auth service is online. Public methods: login, logout, signup.',
     });
   }
 
-  public login(credentials: UserLoginCredentials): User {
+  public login(credentials: AppUserLoginCredentials): AppUser {
     return this.authenticateAndReturnProfile(credentials);
   }
 
-  public logout(credentials: UserLogoutCredentials): Message {
-    return new Message({ message: `success for token ${credentials.token}` });
+  public logout(credentials: AppUserLogoutCredentials): AppMessage {
+    return new AppMessage({ message: `success for token ${credentials.token}` });
   }
 
-  public signup(credentials: UserLoginCredentials): User {
+  public signup(credentials: AppUserLoginCredentials): AppUser {
     return this.authenticateAndReturnProfile(credentials);
   }
 
-  private authenticateAndReturnProfile(credentials: UserLoginCredentials): User {
-    const name = new UserName({
+  private authenticateAndReturnProfile(credentials: AppUserLoginCredentials): AppUser {
+    const name = new AppUserName({
       first: '',
       last: '',
     });
-    const profile = new User({
+    const profile = new AppUser({
       id: '0',
       name,
       token: this.generateJWToken({

@@ -2,32 +2,32 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-"""Date custom scalar type"""
-scalar Date
+input AppMatcompInputDto {
+  description: String = ""
+  name: String = ""
+}
 
-type MatcompModel {
+type AppMatcompModel {
   creationDate: Date!
   description: String!
   id: ID!
   name: String!
 }
 
+"""Date custom scalar type"""
+scalar Date
+
 type Mutation {
-  create(input: NewMatcompInputDto!): MatcompModel!
+  create(input: AppMatcompInputDto!): AppMatcompModel!
   remove(id: String!): Boolean!
 }
 
-input NewMatcompInputDto {
-  description: String = ""
-  name: String = ""
-}
-
 type Query {
-  matcomp(id: String!): MatcompModel!
-  matcomps(skip: Int = 0, take: Int = 25): [MatcompModel!]!
+  matcomp(id: String!): AppMatcompModel!
+  matcomps(skip: Int = 0, take: Int = 25): [AppMatcompModel!]!
 }
 
 type Subscription {
-  matcompCreated: MatcompModel!
-  matcompRemoved: MatcompModel!
+  matcompCreated: AppMatcompModel!
+  matcompRemoved: AppMatcompModel!
 }

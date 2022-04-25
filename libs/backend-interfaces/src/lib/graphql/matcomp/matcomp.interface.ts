@@ -1,27 +1,28 @@
-import { MatcompArgs } from './dto/matcomp.args';
-import { MatcompModel } from './model/matcomp.model';
-import { NewMatcompInput } from './new-matcomp-input.interface';
+import { initializeClassProperties } from '../../utils/class.util';
+import { AppMatcompArgs } from './dto/matcomp.args';
+import { AppMatcompInput } from './matcomp-input.interface';
+import { AppMatcompModel } from './model/matcomp.model';
 
 /**
  * Matcomp query interface.
  */
 export interface IMatcompQuery {
-  findAll(args: MatcompArgs): Matcomp[];
-  findOneById(id: string): Matcomp | undefined;
+  findAll(args: AppMatcompArgs): AppMatcomp[];
+  findOneById(id: string): AppMatcomp | undefined;
 }
 
 /**
  * Matcomp mutation interface.
  */
 export interface IMatcompMutation {
-  create(id: NewMatcompInput): Matcomp;
-  remove(id: string): Matcomp;
+  create(id: AppMatcompInput): AppMatcomp;
+  remove(id: string): AppMatcomp;
 }
 
 /**
  * Matcomp interface with initialization.
  */
-export class Matcomp implements MatcompModel {
+export class AppMatcomp implements AppMatcompModel {
   public id = '';
 
   public name = '';
@@ -30,12 +31,7 @@ export class Matcomp implements MatcompModel {
 
   public creationDate = new Date().getTime();
 
-  constructor(input?: Matcomp | NewMatcompInput) {
-    if (typeof input !== 'undefined') {
-      const keys = Object.keys(input);
-      for (const key of keys) {
-        this[key] = Boolean(input[key]) ? input[key] : this[key];
-      }
-    }
+  constructor(input?: AppMatcomp | AppMatcompInput) {
+    initializeClassProperties<AppMatcomp | AppMatcompInput>(this, input);
   }
 }

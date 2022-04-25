@@ -1,14 +1,14 @@
-import { Message, User, UserLoginCredentials, UserLogoutCredentials } from '@app/backend-interfaces';
+import { AppMessage, AppUser, AppUserLoginCredentials, AppUserLogoutCredentials } from '@app/backend-interfaces';
 import { JwtModule } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { BackendAuthService } from '../service/auth.service';
-import { BackendAuthController } from './auth.controller';
+import { AppAuthService } from '../service/auth.service';
+import { AppAuthController } from './auth.controller';
 
-describe('BackendAuthController', () => {
+describe('AppAuthController', () => {
   let testingModule: TestingModule;
-  let authController: BackendAuthController;
-  let authService: BackendAuthService;
+  let authController: AppAuthController;
+  let authService: AppAuthService;
   let authServiceSpy: {
     login: jest.SpyInstance;
     logout: jest.SpyInstance;
@@ -22,18 +22,18 @@ describe('BackendAuthController', () => {
           secret: 'jwtsecret',
         }),
       ],
-      controllers: [BackendAuthController],
-      providers: [BackendAuthService],
+      controllers: [AppAuthController],
+      providers: [AppAuthService],
     })
       .compile()
       .then(module => {
         testingModule = module;
-        authController = testingModule.get<BackendAuthController>(BackendAuthController);
-        authService = testingModule.get<BackendAuthService>(BackendAuthService);
+        authController = testingModule.get<AppAuthController>(AppAuthController);
+        authService = testingModule.get<AppAuthService>(AppAuthService);
         authServiceSpy = {
           login: jest.spyOn(authService, 'login').mockImplementation(
-            (credentials: UserLoginCredentials) =>
-              new User({
+            (credentials: AppUserLoginCredentials) =>
+              new AppUser({
                 id: '0',
                 name: {
                   first: 'first',
@@ -47,10 +47,12 @@ describe('BackendAuthController', () => {
           ),
           logout: jest
             .spyOn(authService, 'logout')
-            .mockImplementation((credentials: UserLogoutCredentials) => new Message({ message: `success for token ${credentials.token}` })),
+            .mockImplementation(
+              (credentials: AppUserLogoutCredentials) => new AppMessage({ message: `success for token ${credentials.token}` }),
+            ),
           signup: jest.spyOn(authService, 'signup').mockImplementation(
-            (credentials: UserLoginCredentials) =>
-              new User({
+            (credentials: AppUserLoginCredentials) =>
+              new AppUser({
                 id: '0',
                 name: {
                   first: 'first',
@@ -73,19 +75,19 @@ describe('BackendAuthController', () => {
   });
 
   it('login method should call a respective auth service method with credentials', () => {
-    const credentials = new UserLoginCredentials();
+    const credentials = new AppUserLoginCredentials();
     authController.login(credentials);
     expect(authServiceSpy.login).toHaveBeenCalledWith(credentials);
   });
 
   it('logout method should call a respective auth service method with credentials', () => {
-    const credentials = new UserLogoutCredentials();
+    const credentials = new AppUserLogoutCredentials();
     authController.logout(credentials);
     expect(authServiceSpy.logout).toHaveBeenCalledWith(credentials);
   });
 
   it('signup method should call a respective auth service method with credentials', () => {
-    const credentials = new UserLoginCredentials();
+    const credentials = new AppUserLoginCredentials();
     authController.signup(credentials);
     expect(authServiceSpy.signup).toHaveBeenCalledWith(credentials);
   });

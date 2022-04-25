@@ -1,15 +1,15 @@
 import { initializeClassProperties } from '../utils/class.util';
 import { IUser } from './user.interface';
-import { UserName } from './user-name';
+import { AppUserName } from './user-name';
 
-export class User implements IUser {
+export class AppUser implements IUser {
   public id = '';
 
-  public name: UserName = new UserName();
+  public name: AppUserName = new AppUserName();
 
   public token = '';
 
-  constructor(input?: User) {
-    initializeClassProperties<User>(this, input);
+  constructor(input?: AppUser) {
+    initializeClassProperties<AppUser>(this, input);
   }
 }

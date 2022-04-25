@@ -1,10 +1,10 @@
 import { Module, Provider } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 
-import { BackendAuthController } from './controller/auth.controller';
-import { BackendAuthService } from './service/auth.service';
+import { AppAuthController } from './controller/auth.controller';
+import { AppAuthService } from './service/auth.service';
 
-export const authModuleProviders: Provider[] = [BackendAuthService];
+export const authModuleProviders: Provider[] = [AppAuthService];
 
 @Module({
   imports: [
@@ -13,7 +13,7 @@ export const authModuleProviders: Provider[] = [BackendAuthService];
     }),
   ],
   exports: [JwtModule],
-  controllers: [BackendAuthController],
+  controllers: [AppAuthController],
   providers: [...authModuleProviders],
 })
-export class BackendAuthModule {}
+export class AppAuthModule {}

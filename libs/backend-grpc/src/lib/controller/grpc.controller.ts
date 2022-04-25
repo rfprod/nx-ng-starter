@@ -12,24 +12,22 @@ export interface IEntityService {
 }
 
 @Controller('grpc')
-export class BackendGrpcController implements OnModuleInit {
+export class AppGrpcController implements OnModuleInit {
   private readonly items: nxngstarter.IEntity[] = [
     {
       id: 'id1',
-      num1: 1,
-      num2: 3,
-      boolean1: true,
-      float1: 0.5,
-      any1: null,
+      integer: 1,
+      boolean: true,
+      float: 0.5,
+      any: null,
       subEntities: [],
     },
     {
       id: 'id2',
-      num1: 2,
-      num2: 4,
-      boolean1: false,
-      float1: 1.5,
-      any1: null,
+      integer: 2,
+      boolean: false,
+      float: 1.5,
+      any: null,
       subEntities: [{ id: 'subid1' }],
     },
   ];
