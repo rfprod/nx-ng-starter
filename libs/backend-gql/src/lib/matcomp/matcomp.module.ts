@@ -1,17 +1,17 @@
-import { DateScalar } from '@app/backend-interfaces';
+import { AppDateScalar } from '@app/backend-interfaces';
 import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { PubSub } from 'graphql-subscriptions';
 
 // import { PubSub } from 'apollo-server-express';
-import { BackendMatcompGuard } from './matcomp.guard';
-import { BackendMatcompResolver } from './matcomp.resolver';
-import { BackendMatcompService } from './matcomp.service';
+import { AppMatcompGuard } from './matcomp.guard';
+import { AppMatcompResolver } from './matcomp.resolver';
+import { AppMatcompService } from './matcomp.service';
 
 const apiGqlMatcompModuleProviders: Provider[] = [
-  BackendMatcompService,
-  BackendMatcompResolver,
-  BackendMatcompGuard,
-  DateScalar,
+  AppMatcompService,
+  AppMatcompResolver,
+  AppMatcompGuard,
+  AppDateScalar,
   {
     provide: 'PUB_SUB',
     useFactory: () => new PubSub(),
@@ -21,10 +21,10 @@ const apiGqlMatcompModuleProviders: Provider[] = [
 @Module({
   providers: [...apiGqlMatcompModuleProviders],
 })
-export class BackendGqlMatcompModule {
+export class AppGqlMatcompModule {
   public static forRoot(): DynamicModule {
     return {
-      module: BackendGqlMatcompModule,
+      module: AppGqlMatcompModule,
       providers: [...apiGqlMatcompModuleProviders],
     };
   }

@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 
-import { BackendEventsGateway } from './gateway/events.gateway';
+import { AppEventsGateway } from './gateway/events.gateway';
 
 @Module({
-  providers: [BackendEventsGateway],
+  providers: [AppEventsGateway],
 })
-export class BackendWebsocketModule {}
+export class AppWebsocketModule {}

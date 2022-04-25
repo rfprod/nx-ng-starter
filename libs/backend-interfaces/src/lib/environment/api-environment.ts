@@ -20,7 +20,7 @@ export const defaultWsPort = 8081;
 /**
  * API application environment.
  */
-export class ApiEnvironment implements IApiEnvironment {
+export class AppApiEnvironment implements IApiEnvironment {
   public production = false;
 
   public firebase = false;
@@ -31,8 +31,8 @@ export class ApiEnvironment implements IApiEnvironment {
 
   public wsPort = defaultWsPort;
 
-  constructor(input?: Partial<ApiEnvironment>) {
-    initializeClassProperties<Partial<ApiEnvironment>>(this, input);
+  constructor(input?: Partial<AppApiEnvironment>) {
+    initializeClassProperties<Partial<AppApiEnvironment>>(this, input);
   }
 }
 
@@ -43,5 +43,5 @@ export const API_ENV = 'API_ENV';
 
 export const apiAppEnvProvider: Provider = {
   provide: API_ENV,
-  useFactory: () => new ApiEnvironment(),
+  useFactory: () => new AppApiEnvironment(),
 };

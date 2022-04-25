@@ -1,20 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Request, request, Response, response } from 'express';
 
-import { BackendLoggerMiddleware } from './logger.middleware';
+import { AppLoggerMiddleware } from './logger.middleware';
 
-describe('BackendLoggerMiddleware', () => {
+describe('AppLoggerMiddleware', () => {
   let testingModule: TestingModule;
-  let middleware: BackendLoggerMiddleware;
+  let middleware: AppLoggerMiddleware;
 
   beforeAll(async () => {
     await Test.createTestingModule({
-      providers: [BackendLoggerMiddleware],
+      providers: [AppLoggerMiddleware],
     })
       .compile()
       .then(module => {
         testingModule = module;
-        middleware = testingModule.get<BackendLoggerMiddleware>(BackendLoggerMiddleware);
+        middleware = testingModule.get<AppLoggerMiddleware>(AppLoggerMiddleware);
       });
   });
 

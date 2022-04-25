@@ -15,7 +15,7 @@ import { Server, WebSocket } from 'ws';
   path: '/api/events',
   transports: ['websocket'],
 })
-export class BackendEventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
+export class AppEventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   /**
    * Platform-specific server instance.
    */

@@ -68,7 +68,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/api/jest.config.js",
+            "jestConfig": "apps/api/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/apps/api"]
@@ -93,7 +93,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/backend-auth/jest.config.js",
+            "jestConfig": "libs/backend-auth/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/backend-auth"]
@@ -116,7 +116,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/backend-diagnostics/jest.config.js",
+            "jestConfig": "libs/backend-diagnostics/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/backend-diagnostics"]
@@ -139,7 +139,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/backend-gql/jest.config.js",
+            "jestConfig": "libs/backend-gql/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/backend-gql"]
@@ -162,7 +162,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/backend-grpc/jest.config.js",
+            "jestConfig": "libs/backend-grpc/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/backend-grpc"]
@@ -196,7 +196,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/backend-interfaces/jest.config.js",
+            "jestConfig": "libs/backend-interfaces/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/backend-interfaces"]
@@ -220,7 +220,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/backend-logger/jest.config.js",
+            "jestConfig": "libs/backend-logger/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/backend-logger"]
@@ -243,7 +243,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/backend-websocket/jest.config.js",
+            "jestConfig": "libs/backend-websocket/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/backend-websocket"]
@@ -378,7 +378,7 @@
                 "output": "./assets"
               }
             ],
-            "jestConfig": "apps/client/jest.config.js",
+            "jestConfig": "apps/client/jest.config.ts",
             "passWithNoTests": true,
             "scripts": [],
             "styles": [
@@ -414,7 +414,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-chatbot/jest.config.js",
+            "jestConfig": "libs/client-chatbot/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-chatbot"]
@@ -438,7 +438,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-core/jest.config.js",
+            "jestConfig": "libs/client-core/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-core"]
@@ -499,7 +499,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-core-components/jest.config.js",
+            "jestConfig": "libs/client-core-components/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-core-components"]
@@ -573,7 +573,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-d3-charts/jest.config.js",
+            "jestConfig": "libs/client-d3-charts/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-d3-charts"]
@@ -629,7 +629,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-diagnostics/jest.config.js",
+            "jestConfig": "libs/client-diagnostics/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-diagnostics"]
@@ -716,7 +716,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-gql/jest.config.js",
+            "jestConfig": "libs/client-gql/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-gql"]
@@ -745,7 +745,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-grpc/jest.config.js",
+            "jestConfig": "libs/client-grpc/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-grpc"]
@@ -769,7 +769,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-material/jest.config.js",
+            "jestConfig": "libs/client-material/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-material"]
@@ -798,7 +798,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-services/jest.config.js",
+            "jestConfig": "libs/client-services/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-services"]
@@ -827,7 +827,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-sidebar/jest.config.js",
+            "jestConfig": "libs/client-sidebar/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-sidebar"]
@@ -851,7 +851,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-store/jest.config.js",
+            "jestConfig": "libs/client-store/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-store"]
@@ -880,7 +880,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-store-chatbot/jest.config.js",
+            "jestConfig": "libs/client-store-chatbot/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-store-chatbot"]
@@ -904,7 +904,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-store-http-api/jest.config.js",
+            "jestConfig": "libs/client-store-http-api/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-store-http-api"]
@@ -928,7 +928,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-store-http-progress/jest.config.js",
+            "jestConfig": "libs/client-store-http-progress/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-store-http-progress"]
@@ -952,7 +952,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-store-sidebar/jest.config.js",
+            "jestConfig": "libs/client-store-sidebar/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-store-sidebar"]
@@ -976,7 +976,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-store-theme/jest.config.js",
+            "jestConfig": "libs/client-store-theme/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-store-theme"]
@@ -1000,7 +1000,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-store-user/jest.config.js",
+            "jestConfig": "libs/client-store-user/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-store-user"]
@@ -1024,7 +1024,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-store-websocket/jest.config.js",
+            "jestConfig": "libs/client-store-websocket/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-store-websocket"]
@@ -1048,7 +1048,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-translate/jest.config.js",
+            "jestConfig": "libs/client-translate/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-translate"]
@@ -1077,7 +1077,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-unit-testing/jest.config.js",
+            "jestConfig": "libs/client-unit-testing/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-unit-testing"]
@@ -1106,7 +1106,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-util/jest.config.js",
+            "jestConfig": "libs/client-util/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-util"]
@@ -1134,7 +1134,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/client-util-sentry/jest.config.js",
+            "jestConfig": "libs/client-util-sentry/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/libs/client-util-sentry"]
@@ -1329,7 +1329,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/documentation/jest.config.js",
+            "jestConfig": "apps/documentation/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/apps/documentation"]
@@ -1480,7 +1480,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/elements/jest.config.js",
+            "jestConfig": "apps/elements/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/apps/elements"]
@@ -1582,7 +1582,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/elements-testing/jest.config.js",
+            "jestConfig": "apps/elements-testing/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/apps/elements-testing"]
@@ -1690,7 +1690,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/server-dev/jest.config.js",
+            "jestConfig": "apps/server-dev/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/apps/server-dev"]
@@ -1743,7 +1743,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/server-prod/jest.config.js",
+            "jestConfig": "apps/server-prod/jest.config.ts",
             "passWithNoTests": true
           },
           "outputs": ["coverage/apps/server-prod"]

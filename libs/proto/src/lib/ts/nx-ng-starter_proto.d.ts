@@ -8,20 +8,17 @@ export namespace nxngstarter {
         /** Entity id */
         id?: (string|null);
 
-        /** Entity num1 */
-        num1?: (number|null);
+        /** Entity integer */
+        integer?: (number|null);
 
-        /** Entity num2 */
-        num2?: (number|null);
+        /** Entity boolean */
+        boolean?: (boolean|null);
 
-        /** Entity boolean1 */
-        boolean1?: (boolean|null);
+        /** Entity float */
+        float?: (number|null);
 
-        /** Entity float1 */
-        float1?: (number|null);
-
-        /** Entity any1 */
-        any1?: (google.protobuf.IAny|null);
+        /** Entity any */
+        any?: (google.protobuf.IAny|null);
 
         /** Entity subEntities */
         subEntities?: (nxngstarter.ISubEntity[]|null);
@@ -39,20 +36,17 @@ export namespace nxngstarter {
         /** Entity id. */
         public id: string;
 
-        /** Entity num1. */
-        public num1: number;
+        /** Entity integer. */
+        public integer: number;
 
-        /** Entity num2. */
-        public num2: number;
+        /** Entity boolean. */
+        public boolean: boolean;
 
-        /** Entity boolean1. */
-        public boolean1: boolean;
+        /** Entity float. */
+        public float: number;
 
-        /** Entity float1. */
-        public float1: number;
-
-        /** Entity any1. */
-        public any1?: (google.protobuf.IAny|null);
+        /** Entity any. */
+        public any?: (google.protobuf.IAny|null);
 
         /** Entity subEntities. */
         public subEntities: nxngstarter.ISubEntity[];

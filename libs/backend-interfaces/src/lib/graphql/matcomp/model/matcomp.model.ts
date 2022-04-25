@@ -1,7 +1,7 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
 
-@ObjectType('MatcompModel', { isAbstract: true })
-export class MatcompModel {
+@ObjectType('AppMatcompModel', { isAbstract: true })
+export class AppMatcompModel {
   @Field(() => ID)
   public id = '';
 

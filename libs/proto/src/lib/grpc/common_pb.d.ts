@@ -7,22 +7,19 @@ export class Entity extends jspb.Message {
   getId(): string;
   setId(value: string): Entity;
 
-  getNum1(): number;
-  setNum1(value: number): Entity;
+  getInteger(): number;
+  setInteger(value: number): Entity;
 
-  getNum2(): number;
-  setNum2(value: number): Entity;
+  getBoolean(): boolean;
+  setBoolean(value: boolean): Entity;
 
-  getBoolean1(): boolean;
-  setBoolean1(value: boolean): Entity;
+  getFloat(): number;
+  setFloat(value: number): Entity;
 
-  getFloat1(): number;
-  setFloat1(value: number): Entity;
-
-  getAny1(): google_protobuf_any_pb.Any | undefined;
-  setAny1(value?: google_protobuf_any_pb.Any): Entity;
-  hasAny1(): boolean;
-  clearAny1(): Entity;
+  getAny(): google_protobuf_any_pb.Any | undefined;
+  setAny(value?: google_protobuf_any_pb.Any): Entity;
+  hasAny(): boolean;
+  clearAny(): Entity;
 
   getSubentitiesList(): Array<SubEntity>;
   setSubentitiesList(value: Array<SubEntity>): Entity;
@@ -40,11 +37,10 @@ export class Entity extends jspb.Message {
 export namespace Entity {
   export type AsObject = {
     id: string,
-    num1: number,
-    num2: number,
-    boolean1: boolean,
-    float1: number,
-    any1?: google_protobuf_any_pb.Any.AsObject,
+    integer: number,
+    pb_boolean: boolean,
+    pb_float: number,
+    any?: google_protobuf_any_pb.Any.AsObject,
     subentitiesList: Array<SubEntity.AsObject>,
   }
 }

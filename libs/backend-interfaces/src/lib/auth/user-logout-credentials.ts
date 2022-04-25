@@ -1,10 +1,10 @@
 import { initializeClassProperties } from '../utils/class.util';
 import { IUserLogoutCredentials } from './user.interface';
 
-export class UserLogoutCredentials implements IUserLogoutCredentials {
+export class AppUserLogoutCredentials implements IUserLogoutCredentials {
   public token = '';
 
-  constructor(input?: UserLogoutCredentials) {
-    initializeClassProperties<UserLogoutCredentials>(this, input);
+  constructor(input?: AppUserLogoutCredentials) {
+    initializeClassProperties<AppUserLogoutCredentials>(this, input);
   }
 }

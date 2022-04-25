@@ -1,9 +1,9 @@
-import { Matcomp } from './matcomp.interface';
+import { AppMatcomp } from './matcomp.interface';
 
-export class MatcompSubscription {
-  public matcomp?: Matcomp;
+export class AppMatcompSubscription {
+  public matcomp?: AppMatcomp;
 
-  constructor(input?: Matcomp) {
+  constructor(input?: AppMatcomp) {
     if (typeof input !== 'undefined') {
       this.matcomp = input;
     }

@@ -7,7 +7,7 @@ export const minTakeValue = 1;
 export const maxTakeValue = 50;
 
 @ArgsType()
-export class MatcompArgs {
+export class AppMatcompArgs {
   @Field(() => Int)
   @Min(defaultSkipValue)
   public skip = defaultSkipValue;

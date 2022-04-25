@@ -1,10 +1,10 @@
 import { Controller, Get } from '@nestjs/common';
 
-import { BackendDiagnosticsService } from '../service/diagnostics.service';
+import { AppDiagnosticsService } from '../service/diagnostics.service';
 
 @Controller()
-export class BackendDiagnosticsController {
-  constructor(private readonly diagnosticsService: BackendDiagnosticsService) {}
+export class AppDiagnosticsController {
+  constructor(private readonly diagnosticsService: AppDiagnosticsService) {}
 
   @Get('')
   public ping() {

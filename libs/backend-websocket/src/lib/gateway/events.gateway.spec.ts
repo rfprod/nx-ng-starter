@@ -4,7 +4,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { lastValueFrom } from 'rxjs';
 import { Server, WebSocket } from 'ws';
 
-import { BackendEventsGateway } from './events.gateway';
+import { AppEventsGateway } from './events.gateway';
 
 const addWsClient = (server: Server, wsClient?: WebSocket) => {
   if (typeof wsClient !== 'undefined') {
@@ -18,9 +18,9 @@ const removeWsClient = (server: Server, wsClient?: WebSocket) => {
   }
 };
 
-describe('BackendEventsGateway', () => {
+describe('AppEventsGateway', () => {
   let testingModule: TestingModule;
-  let gateway: BackendEventsGateway;
+  let gateway: AppEventsGateway;
   let gatewaySpy: {
     sendEvent: jest.SpyInstance;
     broadcastConnectedUsersCount: jest.SpyInstance;
@@ -32,12 +32,12 @@ describe('BackendEventsGateway', () => {
 
   beforeAll(async () => {
     await Test.createTestingModule({
-      providers: [BackendEventsGateway],
+      providers: [AppEventsGateway],
     })
       .compile()
       .then(module => {
         testingModule = module;
-        gateway = testingModule.get<BackendEventsGateway>(BackendEventsGateway);
+        gateway = testingModule.get<AppEventsGateway>(AppEventsGateway);
         gatewaySpy = {
           sendEvent: jest.spyOn(gateway, 'sendEvent'),
           broadcastConnectedUsersCount: jest.spyOn(gateway, 'broadcastConnectedUsersCount'),

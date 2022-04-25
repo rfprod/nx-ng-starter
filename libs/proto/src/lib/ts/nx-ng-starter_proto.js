@@ -20,11 +20,10 @@ export const nxngstarter = $root.nxngstarter = (() => {
         }
 
         Entity.prototype.id = "";
-        Entity.prototype.num1 = 0;
-        Entity.prototype.num2 = $util.Long ? $util.Long.fromBits(0,0,false) : 0;
-        Entity.prototype.boolean1 = false;
-        Entity.prototype.float1 = 0;
-        Entity.prototype.any1 = null;
+        Entity.prototype.integer = 0;
+        Entity.prototype.boolean = false;
+        Entity.prototype.float = 0;
+        Entity.prototype.any = null;
         Entity.prototype.subEntities = $util.emptyArray;
 
         Entity.fromObject = function fromObject(d) {
@@ -34,29 +33,19 @@ export const nxngstarter = $root.nxngstarter = (() => {
             if (d.id != null) {
                 m.id = String(d.id);
             }
-            if (d.num1 != null) {
-                m.num1 = d.num1 | 0;
+            if (d.integer != null) {
+                m.integer = d.integer | 0;
             }
-            if (d.num2 != null) {
-                if ($util.Long)
-                    (m.num2 = $util.Long.fromValue(d.num2)).unsigned = false;
-                else if (typeof d.num2 === "string")
-                    m.num2 = parseInt(d.num2, 10);
-                else if (typeof d.num2 === "number")
-                    m.num2 = d.num2;
-                else if (typeof d.num2 === "object")
-                    m.num2 = new $util.LongBits(d.num2.low >>> 0, d.num2.high >>> 0).toNumber();
+            if (d.boolean != null) {
+                m.boolean = Boolean(d.boolean);
             }
-            if (d.boolean1 != null) {
-                m.boolean1 = Boolean(d.boolean1);
+            if (d.float != null) {
+                m.float = Number(d.float);
             }
-            if (d.float1 != null) {
-                m.float1 = Number(d.float1);
-            }
-            if (d.any1 != null) {
-                if (typeof d.any1 !== "object")
-                    throw TypeError(".nxngstarter.Entity.any1: object expected");
-                m.any1 = $root.google.protobuf.Any.fromObject(d.any1);
+            if (d.any != null) {
+                if (typeof d.any !== "object")
+                    throw TypeError(".nxngstarter.Entity.any: object expected");
+                m.any = $root.google.protobuf.Any.fromObject(d.any);
             }
             if (d.subEntities) {
                 if (!Array.isArray(d.subEntities))
@@ -80,42 +69,31 @@ export const nxngstarter = $root.nxngstarter = (() => {
             }
             if (o.defaults) {
                 d.id = "";
-                d.num1 = 0;
-                if ($util.Long) {
-                    var n = new $util.Long(0, 0, false);
-                    d.num2 = o.longs === String ? n.toString() : o.longs === Number ? n.toNumber() : n;
-                } else
-                    d.num2 = o.longs === String ? "0" : 0;
-                d.boolean1 = false;
-                d.float1 = 0;
-                d.any1 = null;
+                d.integer = 0;
+                d.boolean = false;
+                d.float = 0;
+                d.any = null;
             }
             if (m.id != null && m.hasOwnProperty("id")) {
                 d.id = m.id;
             }
-            if (m.num1 != null && m.hasOwnProperty("num1")) {
-                d.num1 = m.num1;
+            if (m.integer != null && m.hasOwnProperty("integer")) {
+                d.integer = m.integer;
             }
-            if (m.num2 != null && m.hasOwnProperty("num2")) {
-                if (typeof m.num2 === "number")
-                    d.num2 = o.longs === String ? String(m.num2) : m.num2;
-                else
-                    d.num2 = o.longs === String ? $util.Long.prototype.toString.call(m.num2) : o.longs === Number ? new $util.LongBits(m.num2.low >>> 0, m.num2.high >>> 0).toNumber() : m.num2;
+            if (m.boolean != null && m.hasOwnProperty("boolean")) {
+                d.boolean = m.boolean;
             }
-            if (m.boolean1 != null && m.hasOwnProperty("boolean1")) {
-                d.boolean1 = m.boolean1;
+            if (m.float != null && m.hasOwnProperty("float")) {
+                d.float = o.json && !isFinite(m.float) ? String(m.float) : m.float;
             }
-            if (m.float1 != null && m.hasOwnProperty("float1")) {
-                d.float1 = o.json && !isFinite(m.float1) ? String(m.float1) : m.float1;
+            if (m.any != null && m.hasOwnProperty("any")) {
+                d.any = $root.google.protobuf.Any.toObject(m.any, o);
             }
             if (m.subEntities && m.subEntities.length) {
                 d.subEntities = [];
                 for (var j = 0; j < m.subEntities.length; ++j) {
                     d.subEntities[j] = $root.nxngstarter.SubEntity.toObject(m.subEntities[j], o);
                 }
-            }
-            if (m.any1 != null && m.hasOwnProperty("any1")) {
-                d.any1 = $root.google.protobuf.Any.toObject(m.any1, o);
             }
             return d;
         };

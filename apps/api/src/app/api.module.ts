@@ -1,10 +1,10 @@
-import { BackendAuthModule } from '@app/backend-auth';
-import { BackendDiagnosticsModule } from '@app/backend-diagnostics';
-import { BackendGqlModule } from '@app/backend-gql';
-import { BackendGrpcModule } from '@app/backend-grpc';
+import { AppAuthModule } from '@app/backend-auth';
+import { AppDiagnosticsModule } from '@app/backend-diagnostics';
+import { AppGqlModule } from '@app/backend-gql';
+import { AppGrpcModule } from '@app/backend-grpc';
 import { API_ENV } from '@app/backend-interfaces';
-import { BackendLoggerModule } from '@app/backend-logger';
-import { BackendWebsocketModule } from '@app/backend-websocket';
+import { AppLoggerModule } from '@app/backend-logger';
+import { AppWebsocketModule } from '@app/backend-websocket';
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 
@@ -21,12 +21,12 @@ import { environment } from '../environments/environment';
         maxRedirects: 5,
       }),
     }),
-    BackendDiagnosticsModule.forRoot(),
-    BackendAuthModule,
-    BackendWebsocketModule,
-    BackendLoggerModule,
-    BackendGqlModule.forRoot(environment),
-    BackendGrpcModule.forRoot(environment),
+    AppDiagnosticsModule.forRoot(),
+    AppAuthModule,
+    AppWebsocketModule,
+    AppLoggerModule,
+    AppGqlModule.forRoot(environment),
+    AppGrpcModule.forRoot(environment),
   ],
   providers: [
     {

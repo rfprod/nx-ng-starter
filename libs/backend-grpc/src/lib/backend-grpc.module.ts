@@ -1,19 +1,19 @@
-import { ApiEnvironment } from '@app/backend-interfaces';
+import { AppApiEnvironment } from '@app/backend-interfaces';
 import { DynamicModule, Module } from '@nestjs/common';
 import { ClientsModule } from '@nestjs/microservices';
 
-import { BackendGrpcController } from './controller/grpc.controller';
+import { AppGrpcController } from './controller/grpc.controller';
 import { backendGrpcClientOptions, NXNGSTARTER_PACKAGE } from './grpc-client.options';
 
 @Module({
-  controllers: [BackendGrpcController],
+  controllers: [AppGrpcController],
 })
-export class BackendGrpcModule {
-  public static forRoot(env: ApiEnvironment): DynamicModule {
+export class AppGrpcModule {
+  public static forRoot(env: AppApiEnvironment): DynamicModule {
     const grpcClientOptions = backendGrpcClientOptions(env);
 
     return {
-      module: BackendGrpcModule,
+      module: AppGrpcModule,
       imports: [
         ClientsModule.register([
           {
