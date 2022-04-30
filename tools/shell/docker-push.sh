@@ -10,19 +10,20 @@ CONTAINER_REGISTRY=rfprod/nx-ng-starter
 
 ##
 # Supported images.
+# Associative array mapping: <app name | docker file name> - <docker image name>
 ##
 declare -A IMAGES=(
-  ["base"]="$CONTAINER_REGISTRY"":base-latest"
   ["api-development"]="$CONTAINER_REGISTRY"":api-development-latest"
   ["api-production"]="$CONTAINER_REGISTRY"":api-production-latest"
+  ["base"]="$CONTAINER_REGISTRY"":base-latest"
   ["client-development"]="$CONTAINER_REGISTRY"":client-development-latest"
   ["client-production"]="$CONTAINER_REGISTRY"":client-production-latest"
   ["documentation"]="$CONTAINER_REGISTRY"":documentation-latest"
   ["elements-development"]="$CONTAINER_REGISTRY"":elements-development-latest"
   ["elements-production"]="$CONTAINER_REGISTRY"":elements-production-latest"
   ["envoy"]="$CONTAINER_REGISTRY"":envoy-latest"
-  ["mono-ci"]="$CONTAINER_REGISTRY"":mono-ci-latest"
-  ["mono-ci-slim"]="$CONTAINER_REGISTRY"":mono-ci-slim-latest"
+  ["runner-ci"]="$CONTAINER_REGISTRY"":runner-ci-latest"
+  ["runner-ci-slim"]="$CONTAINER_REGISTRY"":runner-ci-slim-latest"
 )
 
 ##
@@ -30,6 +31,7 @@ declare -A IMAGES=(
 ##
 reportUsage() {
   printInfoTitle "<< ${0} usage >>"
+  printUsageTip "bash tools/shell/docker-run.sh ?" "print help"
   printUsageTip "bash tools/shell/docker-push.sh APPLICATION_NAME_WITH_ENVIRONMENT" "push docker image to the repository"
   printGap
 

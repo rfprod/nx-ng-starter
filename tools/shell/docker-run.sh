@@ -12,18 +12,18 @@ CONTAINER_REGISTRY=rfprod/nx-ng-starter
 # Supported images.
 # Associative array mapping: <app name | docker file name> - <docker image name>
 ##
-declare -A SUPPORTED_IMAGES=(
-  ["base"]="$CONTAINER_REGISTRY"":base-latest"
+declare -A IMAGES=(
   ["api-development"]="$CONTAINER_REGISTRY"":api-development-latest"
   ["api-production"]="$CONTAINER_REGISTRY"":api-production-latest"
+  ["base"]="$CONTAINER_REGISTRY"":base-latest"
   ["client-development"]="$CONTAINER_REGISTRY"":client-development-latest"
   ["client-production"]="$CONTAINER_REGISTRY"":client-production-latest"
   ["documentation"]="$CONTAINER_REGISTRY"":documentation-latest"
   ["elements-development"]="$CONTAINER_REGISTRY"":elements-development-latest"
   ["elements-production"]="$CONTAINER_REGISTRY"":elements-production-latest"
   ["envoy"]="$CONTAINER_REGISTRY"":envoy-latest"
-  ["mono-ci"]="$CONTAINER_REGISTRY"":mono-ci-latest"
-  ["mono-ci-slim"]="$CONTAINER_REGISTRY"":mono-ci-slim-latest"
+  ["runner-ci"]="$CONTAINER_REGISTRY"":runner-ci-latest"
+  ["runner-ci-slim"]="$CONTAINER_REGISTRY"":runner-ci-slim-latest"
 )
 
 ##
@@ -39,7 +39,7 @@ reportUsage() {
   printInfoMessage "Supported applications"
   printGap
 
-  for SUPPORTED_IMAGE_KEY in "${!SUPPORTED_IMAGES[@]}"; do
+  for SUPPORTED_IMAGE_KEY in "${!IMAGES[@]}"; do
     printValue "${SUPPORTED_IMAGE_KEY}"
   done
   printGap
@@ -56,7 +56,7 @@ runContainer() {
   APP_NAME=$1
 
   local IMAGE_NAME
-  IMAGE_NAME=${SUPPORTED_IMAGES[$APP_NAME]}
+  IMAGE_NAME=${IMAGES[$APP_NAME]}
 
   if [ -z "$IMAGE_NAME" ]; then
     printErrorTitle "Application is not supported"
