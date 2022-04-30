@@ -12,12 +12,14 @@ CONTAINER_REGISTRY=rfprod/nx-ng-starter
 # Supported applications.
 ##
 declare -A APPLICATIONS=(
-  ["envoy"]="envoy"
-  ["base"]="base"
   ["api"]="api"
+  ["base"]="base"
   ["client"]="client"
   ["documentation"]="documentation"
   ["elements"]="elements"
+  ["envoy"]="envoy"
+  ["runner-ci"]="runner-ci"
+  ["runner-ci-slim"]="runner-ci-slim"
 )
 
 ##
@@ -111,7 +113,7 @@ checkEnvironmentSupport() {
 # Builds an application image.
 ##
 buildApplicationImage() {
-  printInfoTitle "<< Building Docker container image: $1 >>"
+  printInfoTitle "<< Building Docker container image >>"
   printNameAndValue "application" "$1"
   printNameAndValue "environment" "$2"
   printGap
@@ -121,8 +123,8 @@ buildApplicationImage() {
   local ENV_NAME
   ENV_NAME=$2
 
-  # if application name has suffix -e2e or equals documentation, it does not have a specific environment
-  if [[ "${APP_NAME##*"-e2e"*}" && "$APP_NAME" != "base" && "$APP_NAME" != "documentation" && "$APP_NAME" != "envoy" && -z "$ENV_NAME" ]]; then
+  # if application name has a suffix -e2e, or a suffix -ci, or is the base image, or the documentation app image, or the envoy image, it does not have a specific environment
+  if [[ "${APP_NAME##*"-e2e"*}" && "${APP_NAME##*"-ci"*}" && "$APP_NAME" != "base" && "$APP_NAME" != "documentation" && "$APP_NAME" != "envoy" && -z "$ENV_NAME" ]]; then
     printWarningMessage "Environment name was not provided."
     printGap
 
@@ -134,8 +136,8 @@ buildApplicationImage() {
 
   local IMAGE_NAME
 
-  # if application name has suffix -e2e or equals documentation, it does not have a specific environment
-  if [[ "${APP_NAME##*"-e2e"*}" && "$APP_NAME" != "base" && "$APP_NAME" != "documentation" && "$APP_NAME" != "envoy" ]]; then
+  # if application name has a suffix -e2e, or a suffix -ci, or is the base image, or the documentation app image, or the envoy image, it does not have a specific environment
+  if [[ "${APP_NAME##*"-e2e"*}" && "${APP_NAME##*"runner-ci"*}" && "$APP_NAME" != "base" && "$APP_NAME" != "documentation" && "$APP_NAME" != "envoy" ]]; then
     checkEnvironmentSupport "$ENV_NAME"
     IMAGE_NAME="$CONTAINER_REGISTRY":"$APP_NAME"-"$ENV_NAME""-latest"
   else

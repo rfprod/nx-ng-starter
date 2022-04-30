@@ -11,8 +11,7 @@ This folder contains utility shell scripts.
 - `build-utils.sh` - mobile application building utilities script
 - `changelog.sh` - apps/libs changelog generation script
 - `diagrams.sh` - generates images from mermaid diagrams
-- `docker-build-app.sh` - applications dockerization script
-- `docker-build-ci.sh` - CI container image building script
+- `docker-build.sh` - containerization script
 - `docker-push.sh` - script for pushing docker images to the registry
 - `docker-task.sh` - docker utility tasks script
 - `e2e.sh` - apps e2e testing script

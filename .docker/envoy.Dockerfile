@@ -1,6 +1,4 @@
-##
 # Envoy proxy for gRPC.
-##
 
 FROM envoyproxy/envoy-alpine:v1.20.0
 
