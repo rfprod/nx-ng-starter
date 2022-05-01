@@ -13,7 +13,7 @@ import { IUserState, TUserPayload, USER_STATE_TOKEN, userInitialState } from './
 @Injectable()
 export class AppUserState {
   @Selector()
-  public static model(state: IUserState) {
+  public static state(state: IUserState) {
     return state;
   }
 
