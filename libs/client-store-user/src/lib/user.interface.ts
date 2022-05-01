@@ -16,13 +16,7 @@ export const userInitialState: IUserState = {
 
 export const USER_STATE_TOKEN = new StateToken<IUserState>('user');
 
-export interface IUserStatePayload {
-  email?: string;
-  admin?: boolean;
-  token?: string;
-}
-
-export type TUserPayload = IActionPayload<IUserStatePayload>;
+export type TUserPayload = IActionPayload<Partial<IUserState>>;
 
 export interface IUserObservableOutput {
   model$: Observable<IUserState>;
@@ -30,8 +24,4 @@ export interface IUserObservableOutput {
   token$: Observable<string>;
   admin$: Observable<boolean>;
   isLoggedInSubscription$: Observable<boolean>;
-}
-
-export interface IUserHandlers {
-  setState(payload: IUserStatePayload): void;
 }
