@@ -12,7 +12,7 @@ export interface IWebsocketResponseEvent<T = unknown> {
   data: T;
 }
 
-export interface IAppWebsocketStateModel {
+export interface IAppWebsocketState {
   users: number;
   events: IWebsocketResponseEvent[];
 }
@@ -22,19 +22,14 @@ export const websocketInitialState = {
   events: [],
 };
 
-export const WEBSOCKET_STATE_TOKEN = new StateToken<IAppWebsocketStateModel>('websocket');
+export const WEBSOCKET_STATE_TOKEN = new StateToken<IAppWebsocketState>('websocket');
 
-export interface IAppWebsocketStatePayload {
-  users?: number;
-  events?: IWebsocketResponseEvent[];
-}
-
-export type TWebsocketPayload = IActionPayload<IAppWebsocketStatePayload>;
+export type TWebsocketPayload = IActionPayload<Partial<IAppWebsocketState>>;
 
 export interface IWebsocketConfig extends WebSocketSubjectConfig<IWebsocketRequestEvent> {
   url: string;
 }
 
-export type TWsConfigToken = InjectionToken<Window>;
+export type TWsConfigToken = InjectionToken<IWebsocketConfig>;
 
 export const WS_CONFIG: TWsConfigToken = new InjectionToken<IWebsocketConfig>('WS_CONFIG');
