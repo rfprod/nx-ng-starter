@@ -1,3 +1,4 @@
+import { OverlayContainer, OverlayModule } from '@angular/cdk/overlay';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { NgxsModule, Store } from '@ngxs/store';
 import { switchMap, tap } from 'rxjs';
@@ -8,16 +9,18 @@ import { AppThemeState } from './theme.state';
 
 describe('AppThemeState', () => {
   const testBedConfig: TestModuleMetadata = {
-    imports: [NgxsModule.forRoot([AppThemeState], { developmentMode: true })],
+    imports: [OverlayModule, NgxsModule.forRoot([AppThemeState], { developmentMode: true })],
   };
 
   let store: Store;
+  let overlayContainer: OverlayContainer;
 
   beforeEach(waitForAsync(() => {
     void TestBed.configureTestingModule(testBedConfig)
       .compileComponents()
       .then(() => {
         store = TestBed.inject(Store);
+        overlayContainer = TestBed.inject(OverlayContainer);
       });
   }));
 
@@ -44,6 +47,7 @@ describe('AppThemeState', () => {
   }));
 
   it('enableDarkTheme should modify the theme state as expected', waitForAsync(() => {
+    const spy = jest.spyOn(overlayContainer.getContainerElement().classList, 'add');
     void store
       .dispatch(new themeActions.enableDarkTheme())
       .pipe(
@@ -51,12 +55,14 @@ describe('AppThemeState', () => {
         tap(result => {
           const expectedState = <IThemeState>{ darkThemeEnabled: true };
           expect(result).toMatchObject(expectedState);
+          expect(spy).toHaveBeenCalledWith('unicorn-dark-theme');
         }),
       )
       .subscribe();
   }));
 
   it('disableDarkTheme should modify the theme state as expected', waitForAsync(() => {
+    const spy = jest.spyOn(overlayContainer.getContainerElement().classList, 'remove');
     void store
       .dispatch(new themeActions.disableDarkTheme())
       .pipe(
@@ -64,12 +70,15 @@ describe('AppThemeState', () => {
         tap(result => {
           const expectedState = <IThemeState>{ darkThemeEnabled: false };
           expect(result).toMatchObject(expectedState);
+          expect(spy).toHaveBeenCalledWith('unicorn-dark-theme');
         }),
       )
       .subscribe();
   }));
 
   it('toggleDarkTheme action should toggle the theme state', waitForAsync(() => {
+    const enableSpy = jest.spyOn(overlayContainer.getContainerElement().classList, 'add');
+    const disableSpy = jest.spyOn(overlayContainer.getContainerElement().classList, 'remove');
     void store
       .dispatch(new themeActions.toggleDarkTheme())
       .pipe(
@@ -77,12 +86,14 @@ describe('AppThemeState', () => {
         tap(result => {
           const expectedState = <IThemeState>{ darkThemeEnabled: true };
           expect(result).toMatchObject(expectedState);
+          expect(enableSpy).toHaveBeenCalledWith('unicorn-dark-theme');
         }),
         switchMap(() => store.dispatch(new themeActions.toggleDarkTheme())),
         switchMap(() => store.selectOnce(AppThemeState.state)),
         tap(result => {
           const expectedState = <IThemeState>{ darkThemeEnabled: false };
           expect(result).toMatchObject(expectedState);
+          expect(disableSpy).toHaveBeenCalledWith('unicorn-dark-theme');
         }),
       )
       .subscribe();
