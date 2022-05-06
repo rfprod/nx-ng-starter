@@ -81,10 +81,14 @@ if [ "$1" = "?" ]; then
     ${LIGHT_BLUE}%s\n
     ${DEFAULT} Importing this file in another files exposes the following functions:\n
     ${DEFAULT} - ${YELLOW} printGap
+    ${DEFAULT} - ${YELLOW} printUsageTip
+    ${DEFAULT} - ${YELLOW} printNameAndValue
+    ${DEFAULT} - ${YELLOW} printValue
     ${DEFAULT} - ${YELLOW} printInfoTitle
+    ${DEFAULT} - ${YELLOW} printInfoMessage
     ${DEFAULT} - ${YELLOW} printErrorTitle
     ${DEFAULT} - ${YELLOW} printWarningMessage
     ${DEFAULT} - ${YELLOW} printSuccessTitle
-    ${DEFAULT} - ${YELLOW} printNameAndValue
+    ${DEFAULT} - ${YELLOW} printSuccessMessage
     ${DEFAULT}\n\n" "USAGE"
 fi
