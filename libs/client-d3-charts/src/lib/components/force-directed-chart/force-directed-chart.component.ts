@@ -59,7 +59,7 @@ export class AppForceDirectedChartComponent implements AfterViewInit, OnChanges 
    */
   private chartOptions() {
     const margin = { top: 50, right: 50, bottom: 50, left: 50 };
-    const minWidth = 600;
+    const minWidth = 350;
     const modifiers = {
       width: 10,
       height: 20,

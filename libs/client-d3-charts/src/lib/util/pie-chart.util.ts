@@ -89,9 +89,7 @@ export const drawPieChart = (container: ElementRef<HTMLDivElement>, data: IPieCh
 
   arcs
     .append('path')
-    .attr('fill', (d, i) => {
-      return config.color(i.toString());
-    })
+    .attr('fill', (d, i) => config.color(i.toString()))
     .attr('d', arc);
 
   const textDy = 5;

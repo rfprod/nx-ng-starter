@@ -17,8 +17,10 @@ export const defaultRadarChartConfig: IRadarChartOptions = Object.freeze({
     bottom: 20,
     left: 20,
   },
+  scale: 0.9, // the chart scale factor
   levels: 3, // how many levels or inner circles should there be drawn
   maxValue: 0, // what is the value that the biggest circle will represent
+  lineFactor: 1.1, // how much farther than the radius of the outer circle should the lines be stretched
   labelFactor: 1.25, // how much farther than the radius of the outer circle should the labels be placed
   labelTextWrapWidth: 60, // the number of pixels after which a label needs to be given a new line
   opacityArea: 0.35, // the opacity of the area of the blob
@@ -48,7 +50,10 @@ const createContainer = (container: ElementRef<HTMLDivElement>, config: IRadarCh
     .attr('class', id);
   const g = svg
     .append('g')
-    .attr('transform', `translate(${config.width / 2 + config.margin.left},${config.height / 2 + config.margin.top})`);
+    .attr(
+      'transform',
+      `translate(${config.width / 2 + config.margin.left},${config.height / 2 + config.margin.top}) scale(${config.scale} ${config.scale})`,
+    );
 
   return { svg, g };
 };
@@ -157,14 +162,8 @@ const drawAxis = (
     .append('line')
     .attr('x1', 0)
     .attr('y1', 0)
-    .attr('x2', function (d, i) {
-      const multiplier = 1.1;
-      return radiusScale(maxValue * multiplier) * Math.cos(angleSlice * i - Math.PI / 2);
-    })
-    .attr('y2', function (d, i) {
-      const multiplier = 1.1;
-      return radiusScale(maxValue * multiplier) * Math.sin(angleSlice * i - Math.PI / 2);
-    })
+    .attr('x2', (d, i) => radiusScale(maxValue * config.lineFactor) * Math.cos(angleSlice * i - Math.PI / 2))
+    .attr('y2', (d, i) => radiusScale(maxValue * config.lineFactor) * Math.sin(angleSlice * i - Math.PI / 2))
     .attr('class', 'line')
     .style('stroke', 'white')
     .style('stroke-width', '2px');
@@ -175,15 +174,9 @@ const drawAxis = (
     .style('font-size', '11px')
     .attr('text-anchor', 'middle')
     .attr('dy', '0.35em')
-    .attr('x', function (d, i) {
-      return radiusScale(maxValue * config.labelFactor) * Math.cos(angleSlice * i - Math.PI / 2);
-    })
-    .attr('y', function (d, i) {
-      return radiusScale(maxValue * config.labelFactor) * Math.sin(angleSlice * i - Math.PI / 2);
-    })
-    .text(function (d) {
-      return d;
-    })
+    .attr('x', (d, i) => radiusScale(maxValue * config.labelFactor) * Math.cos(angleSlice * i - Math.PI / 2))
+    .attr('y', (d, i) => radiusScale(maxValue * config.labelFactor) * Math.sin(angleSlice * i - Math.PI / 2))
+    .text(d => d)
     .call(wrapSvgText, config.labelTextWrapWidth);
 };
 
@@ -205,24 +198,16 @@ const drawRadarChartBlobs = (
   // the radial line function
   const radarLine = d3
     .lineRadial<IRadarChartDataNode>()
-    .radius(function (d) {
-      return radiusScale(d.value);
-    })
-    .angle(function (d, i) {
-      return i * angleSlice;
-    });
+    .radius(d => radiusScale(d.value))
+    .angle((d, i) => i * angleSlice);
   // create a wrapper for the blobs
   const blobWrapper = g.selectAll('.radar-wrapper').data(data).enter().append('g').attr('class', 'radar-wrapper');
   // append the backgrounds
   blobWrapper
     .append('path')
     .attr('class', 'radar-area')
-    .attr('d', function (d, i) {
-      return radarLine(d);
-    })
-    .style('fill', function (d, i) {
-      return config.color(i.toString());
-    })
+    .attr('d', (d, i) => radarLine(d))
+    .style('fill', (d, i) => config.color(i.toString()))
     .style('fill-opacity', config.opacityArea)
     .on('mouseover', function (d, i) {
       // dim all blobs
@@ -232,7 +217,7 @@ const drawRadarChartBlobs = (
       const fillOpacity = 0.7;
       d3.select(this).transition().duration(config.transitionDuration).style('fill-opacity', fillOpacity);
     })
-    .on('mouseout', function () {
+    .on('mouseout', () => {
       // bring back all blobs
       d3.selectAll('.radar-area').transition().duration(config.transitionDuration).style('fill-opacity', config.opacityArea);
     });
@@ -240,35 +225,23 @@ const drawRadarChartBlobs = (
   blobWrapper
     .append('path')
     .attr('class', 'radar-stroke')
-    .attr('d', function (d, i) {
-      return radarLine(d);
-    })
+    .attr('d', (d, i) => radarLine(d))
     .style('stroke-width', `${config.strokeWidth}px`)
-    .style('stroke', function (d, i) {
-      return config.color(i.toString());
-    })
+    .style('stroke', (d, i) => config.color(i.toString()))
     .style('fill', 'none')
     .style('filter', 'url(#glow)');
   // append the circles
   const blobWrapperFillOpacity = 0.8;
   blobWrapper
     .selectAll('.radar-circle')
-    .data(function (d, i) {
-      return d;
-    })
+    .data((d, i) => d)
     .enter()
     .append('circle')
     .attr('class', 'radar-circle')
     .attr('r', config.dotRadius)
-    .attr('cx', function (d, i) {
-      return radiusScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2);
-    })
-    .attr('cy', function (d, i) {
-      return radiusScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2);
-    })
-    .style('fill', function (d, i, j) {
-      return config.color(j.toString());
-    })
+    .attr('cx', (d, i) => radiusScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2))
+    .attr('cy', (d, i) => radiusScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2))
+    .style('fill', (d, i, j) => config.color(j.toString()))
     .style('fill-opacity', blobWrapperFillOpacity);
 };
 
@@ -295,19 +268,13 @@ const appendInvisibleTooltipCircles = (
   const blobCircleWrapperRadiusMultiplier = 1.5;
   blobCircleWrapper
     .selectAll<SVGElement, IRadarChartDataNode>('.radar-invisible-circle')
-    .data(function (d, i) {
-      return d;
-    })
+    .data((d, i) => d)
     .enter()
     .append('circle')
     .attr('class', 'radar-invisible-circle')
     .attr('r', config.dotRadius * blobCircleWrapperRadiusMultiplier)
-    .attr('cx', function (d, i) {
-      return radiusScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2);
-    })
-    .attr('cy', function (d, i) {
-      return radiusScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2);
-    })
+    .attr('cx', (d, i) => radiusScale(d.value) * Math.cos(angleSlice * i - Math.PI / 2))
+    .attr('cy', (d, i) => radiusScale(d.value) * Math.sin(angleSlice * i - Math.PI / 2))
     .style('fill', 'none')
     .style('pointer-events', 'all')
     .on('mouseover', function (event: MouseEvent, i) {
@@ -319,7 +286,7 @@ const appendInvisibleTooltipCircles = (
       const tooltipText = `${nodeData.value} ${nodeData.unit}`;
       tooltip.attr('x', newX).attr('y', newY).text(tooltipText).transition().duration(config.transitionDuration).style('opacity', 1);
     })
-    .on('mouseout', function () {
+    .on('mouseout', () => {
       tooltip.transition().duration(config.transitionDuration).style('opacity', 0);
     });
 };
@@ -335,9 +302,7 @@ export const drawRadarChart = (container: ElementRef<HTMLDivElement>, data: TRad
   const config: IRadarChartOptions = generateConfiguration<IRadarChartOptions>(defaultRadarChartConfig, options, {});
 
   const maxValue = Math.max(config.maxValue, d3.max(data, i => d3.max(i.map(o => o.value))) ?? 0);
-  const axisNames = data[0].map(function (i, j) {
-    return i.axis;
-  });
+  const axisNames = data[0].map((i, j) => i.axis);
   const totalAxis = axisNames.length;
   const radius = Math.min(config.width / 2, config.height / 2);
   const angleSlice = (Math.PI * 2) / totalAxis;

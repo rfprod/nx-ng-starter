@@ -103,9 +103,7 @@ const applyChartData = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unkno
     .data(data.entities)
     .enter()
     .append('pattern')
-    .attr('id', (val, i) => {
-      return `img-${val.index}`;
-    })
+    .attr('id', (val, i) => `img-${val.index}`)
     .attr('x', 0)
     .attr('y', 0)
     .attr('height', val => {
@@ -127,9 +125,7 @@ const applyChartData = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unkno
       const baseValue = 30;
       return baseValue + val.linksCount * 2;
     })
-    .attr('xlink:href', val => {
-      return val.img;
-    });
+    .attr('xlink:href', val => val.img);
 };
 
 /**

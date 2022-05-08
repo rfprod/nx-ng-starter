@@ -183,7 +183,7 @@ const onMouseOver = (
       const modifier = 15;
       return y(d.value) - modifier;
     })
-    .text(() => `${d.value}`);
+    .text(() => d.value);
 };
 
 /**
