@@ -1,4 +1,6 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { first, map, switchMap, timer } from 'rxjs';
 
 import { TBarChartData } from '../../interfaces/bar-chart.interface';
 import { IForceDirectedChartData, IForceDirectedGraphEntity } from '../../interfaces/force-directed-chart.interface';
@@ -137,4 +139,57 @@ export class AppChartExamplesComponent {
     };
     return chartData;
   }
+
+  private readonly breakpoint$ = this.breakpointObserver
+    .observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
+    .pipe(map(result => Object.keys(result.breakpoints).find(item => result.breakpoints[item]) ?? 'unknown'));
+
+  public readonly barChartData$ = this.breakpoint$.pipe(
+    switchMap(() =>
+      timer(this.timeout).pipe(
+        first(),
+        map(() => this.barChartData),
+      ),
+    ),
+  );
+
+  public readonly lineChartData$ = this.breakpoint$.pipe(
+    switchMap(() =>
+      timer(this.timeout).pipe(
+        first(),
+        map(() => this.lineChartData),
+      ),
+    ),
+  );
+
+  public readonly radarChartData$ = this.breakpoint$.pipe(
+    switchMap(() =>
+      timer(this.timeout).pipe(
+        first(),
+        map(() => this.radarChartData),
+      ),
+    ),
+  );
+
+  public readonly pieChartData$ = this.breakpoint$.pipe(
+    switchMap(() =>
+      timer(this.timeout).pipe(
+        first(),
+        map(() => this.pieChartData),
+      ),
+    ),
+  );
+
+  public readonly forceDirectedChartData$ = this.breakpoint$.pipe(
+    switchMap(() =>
+      timer(this.timeout).pipe(
+        first(),
+        map(() => this.forceDirectedChartData),
+      ),
+    ),
+  );
+
+  constructor(private readonly breakpointObserver: BreakpointObserver) {}
+
+  private readonly timeout = 100;
 }

@@ -1,43 +1,39 @@
-<div class="container">
+<div class="container" *ngIf="barChartData$ | async as data">
   <app-bar-chart
     [chartId]="'bar-example-1'"
-    [data]="barChartData"
+    [data]="data"
     [options]="{ chartTitle: 'Example bar chart', xAxisTitle: 'axis x' }"
   ></app-bar-chart>
 </div>
 
 <hr [ngStyle]="{ width: '100%' }" />
 
-<div class="container">
+<div class="container" *ngIf="lineChartData$ | async as data">
   <app-line-chart
     [chartId]="'line-example-1'"
-    [data]="lineChartData"
+    [data]="data"
     [options]="{ chartTitle: 'Example line chart', xAxisTitle: 'Date', yAxisTitle: 'Value' }"
   ></app-line-chart>
 </div>
 
 <hr [ngStyle]="{ width: '100%' }" />
 
-<div class="container">
-  <app-radar-chart
-    [chartId]="'radar-example-1'"
-    [data]="radarChartData"
-    [options]="{ chartTitle: 'Example radar chart' }"
-  ></app-radar-chart>
+<div class="container" *ngIf="radarChartData$ | async as data">
+  <app-radar-chart [chartId]="'radar-example-1'" [data]="data" [options]="{ chartTitle: 'Example radar chart' }"></app-radar-chart>
 </div>
 
 <hr [ngStyle]="{ width: '100%' }" />
 
-<div class="container">
-  <app-pie-chart [chartId]="'pie-example-1'" [data]="pieChartData" [options]="{ chartTitle: 'Example pie chart' }"></app-pie-chart>
+<div class="container" *ngIf="pieChartData$ | async as data">
+  <app-pie-chart [chartId]="'pie-example-1'" [data]="data" [options]="{ chartTitle: 'Example pie chart' }"></app-pie-chart>
 </div>
 
 <hr [ngStyle]="{ width: '100%' }" />
 
-<div class="container">
+<div class="container" *ngIf="forceDirectedChartData$ | async as data">
   <app-force-directed-chart
     [chartId]="'force-directed-example-1'"
-    [data]="forceDirectedChartData"
+    [data]="data"
     [options]="{ chartTitle: 'Example force directed chart' }"
   ></app-force-directed-chart>
 </div>
