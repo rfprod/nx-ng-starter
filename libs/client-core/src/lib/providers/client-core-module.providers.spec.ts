@@ -1,7 +1,7 @@
 import { APP_BASE_HREF, DOCUMENT, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import { documentFactory, IWebClientAppEnvironment, WINDOW, windowFactory } from '@app/client-util';
+import { documentFactory, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@app/client-util';
 import { HttpLink } from 'apollo-angular/http';
 
 import { appClientCoreModuleProvidersFactory } from './client-core-module.providers';
@@ -35,6 +35,7 @@ describe('client-core-module-proviers', () => {
   let win: Window;
   let doc: Document;
   let httpLink: HttpLink;
+  let env: IWebClientAppEnvironment;
 
   beforeEach(waitForAsync(() => {
     void TestBed.configureTestingModule(testBedConfig)
@@ -45,6 +46,7 @@ describe('client-core-module-proviers', () => {
         win = TestBed.inject(WINDOW);
         doc = TestBed.inject(DOCUMENT);
         httpLink = TestBed.inject(HttpLink);
+        env = TestBed.inject(WEB_CLIENT_APP_ENV);
       });
   }));
 
@@ -54,5 +56,6 @@ describe('client-core-module-proviers', () => {
     expect(win).toEqual(windowFactory());
     expect(doc).toEqual(documentFactory());
     expect(httpLink).toBeDefined();
+    expect(env).toMatchObject(testingEnvironment);
   });
 });
