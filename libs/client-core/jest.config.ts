@@ -6,12 +6,11 @@ const config = {
   snapshotSerializers: jestPresetAngularSerializers,
   displayName: 'client-core',
   coverageThreshold: {
-    // TODO: bump unit test and remove this override
     global: {
       branches: 100,
-      functions: 0,
-      lines: 80,
-      statements: 80,
+      functions: 100,
+      lines: 100,
+      statements: 100,
     },
   },
   preset: '../../jest.preset.ts',
