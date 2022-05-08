@@ -11,5 +11,6 @@ describe('AppClientCoreModule', () => {
 
   it('should be defined', () => {
     expect(AppClientCoreModule).toBeDefined();
+    expect(AppClientCoreModule.forRoot).toEqual(expect.any(Function));
   });
 });

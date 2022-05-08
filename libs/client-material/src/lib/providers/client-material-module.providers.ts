@@ -5,8 +5,8 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY } from '@angular/material-moment-adapter';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
-import { AppHammerGestureConfig } from '../configs/hammerjs-gesture.config';
-import { CUSTOM_DATE_FORMATS, matMomentDateAdapterOptionsFactory } from '../configs/mat-date.config';
+import { AppHammerGestureConfig } from '../configs/hammerjs-gesture/hammerjs-gesture.config';
+import { CUSTOM_DATE_FORMATS, matMomentDateAdapterOptionsFactory } from '../configs/mat-date/mat-date.config';
 
 /**
  * The overlay reference injection token.
