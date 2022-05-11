@@ -3,12 +3,12 @@ import { Navigate } from '@ngxs/router-plugin';
 import { Action, Selector, State, StateContext, Store } from '@ngxs/store';
 
 import { sidebarActions } from './sidebar.actions';
-import { ISiedbarState, SIDEBAR_STATE_TOKEN, sidebarUiInitialState, TSidebarPayload } from './sidebar.interface';
+import { ISiedbarState, SIDEBAR_STATE_TOKEN, sidebarInitialState, TSidebarPayload } from './sidebar.interface';
 
 @State<ISiedbarState>({
   name: SIDEBAR_STATE_TOKEN,
   defaults: {
-    ...sidebarUiInitialState,
+    ...sidebarInitialState,
   },
 })
 @Injectable()
@@ -16,7 +16,7 @@ export class AppSidebarState {
   constructor(private readonly store: Store) {}
 
   @Selector()
-  public static getState(state: ISiedbarState) {
+  public static state(state: ISiedbarState) {
     return state;
   }
 

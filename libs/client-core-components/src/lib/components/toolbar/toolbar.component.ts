@@ -34,7 +34,7 @@ export class AppToolbarComponent {
 
   @Output() public readonly darkThemeEnabled = new EventEmitter<boolean>();
 
-  public readonly sidebarOpened$ = this.store.select(AppSidebarState.getState).pipe(map(state => state.sidebarOpened));
+  public readonly sidebarOpened$ = this.store.select(AppSidebarState.state).pipe(map(state => state.sidebarOpened));
 
   constructor(public readonly store: Store) {}
 

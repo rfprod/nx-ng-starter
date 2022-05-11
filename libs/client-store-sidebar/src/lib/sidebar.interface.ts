@@ -5,7 +5,7 @@ export interface ISiedbarState {
   sidebarOpened: boolean;
 }
 
-export const sidebarUiInitialState: ISiedbarState = {
+export const sidebarInitialState: ISiedbarState = {
   sidebarOpened: false,
 };
 
