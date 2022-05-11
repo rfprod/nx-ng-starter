@@ -16,7 +16,7 @@ import { map, tap } from 'rxjs/operators';
 export class AppContentComponent {
   @ViewChild('content') public readonly content?: MatSidenavContent;
 
-  public readonly sidebarOpened$ = this.store.select(AppSidebarState.getState).pipe(map(state => state.sidebarOpened));
+  public readonly sidebarOpened$ = this.store.select(AppSidebarState.state).pipe(map(state => state.sidebarOpened));
 
   public readonly routerEvents$ = this.router.events.pipe(
     tap(event => {
