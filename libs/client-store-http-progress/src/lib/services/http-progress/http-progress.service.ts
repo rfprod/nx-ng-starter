@@ -4,40 +4,27 @@ import { Injectable, Provider } from '@angular/core';
 import { tap } from 'rxjs/operators';
 
 import { AppGlobalProgressBarComponent } from '../../components/global-progress-bar/global-progress-bar.component';
-import { IHttpProgressHandlers } from '../../http-progress.interface';
+import { IHttpProgressHandler } from '../../http-progress.interface';
 
+/**
+ * Http progress service controls the global progress indicator visibility.
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class AppHttpProgressService {
-  public readonly handlers: IHttpProgressHandlers = {
-    mainView: {
-      start: () => this.startProgress(),
-      stop: () => this.stopProgress(),
-      tapStopperObservable: <T>() => {
-        return tap<T>({
-          next: () => {
-            this.handlers.mainView.stop();
-          },
-          error: () => {
-            this.handlers.mainView.stop();
-          },
-        });
-      },
-    },
-    sidebar: {
-      start: () => void 0,
-      stop: () => void 0,
-      tapStopperObservable: <T>() => {
-        return tap<T>({
-          next: () => {
-            this.handlers.sidebar.stop();
-          },
-          error: () => {
-            this.handlers.sidebar.stop();
-          },
-        });
-      },
+  public readonly globalProgressHandler: IHttpProgressHandler = {
+    start: () => this.startProgress(),
+    stop: () => this.stopProgress(),
+    tapStopperObservable: <T>() => {
+      return tap<T>({
+        next: () => {
+          this.globalProgressHandler.stop();
+        },
+        error: () => {
+          this.globalProgressHandler.stop();
+        },
+      });
     },
   };
 
@@ -51,13 +38,13 @@ export class AppHttpProgressService {
     this.progressRef.detach();
   }
 
-  private startProgress() {
+  private startProgress(): void {
     if (!this.progressRef.hasAttached()) {
       this.attachIndicator();
     }
   }
 
-  private stopProgress() {
+  private stopProgress(): void {
     if (this.progressRef.hasAttached()) {
       this.detachIndicator();
     }

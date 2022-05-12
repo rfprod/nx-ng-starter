@@ -16,13 +16,8 @@ export class AppChatbotState {
   constructor(private readonly store: Store) {}
 
   @Selector()
-  public static getChatbot(state: IChatbotState) {
+  public static state(state: IChatbotState) {
     return state;
-  }
-
-  @Selector()
-  public static getSidebarOpened(state: IChatbotState) {
-    return state.chatbotOpened;
   }
 
   @Action(chatbotActions.setState)
