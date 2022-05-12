@@ -13,7 +13,7 @@ export interface IAppHttpProgressState {
   };
 }
 
-export interface IAppHttpProgressStatePayload {
+export interface IAppHttpProgressPayload {
   mainView?: boolean;
   sidebar?: boolean;
 }
@@ -31,7 +31,7 @@ export const httpProgressInitialState = {
 
 export const HTTP_PROGRESS_STATE_TOKEN = new StateToken<IAppHttpProgressState>('httpProgress');
 
-export type THttpProgressPayload = IActionPayload<IAppHttpProgressStatePayload>;
+export type THttpProgressPayload = IActionPayload<IAppHttpProgressPayload>;
 
 export interface IShowToastPayload {
   message: string;
@@ -41,13 +41,8 @@ export interface IShowToastPayload {
 
 export type TShowToastPayload = IActionPayload<IShowToastPayload>;
 
-export interface IHttpProgressHandlersActions {
+export interface IHttpProgressHandler {
   start(): void;
   stop(): void;
   tapStopperObservable<T>(): MonoTypeOperatorFunction<T>;
-}
-
-export interface IHttpProgressHandlers {
-  mainView: IHttpProgressHandlersActions;
-  sidebar: IHttpProgressHandlersActions;
 }

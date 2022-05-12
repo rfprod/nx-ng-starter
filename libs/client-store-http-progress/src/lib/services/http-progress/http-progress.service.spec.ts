@@ -27,47 +27,30 @@ describe('AppHttpProgressService', () => {
     expect(service).toBeDefined();
   });
 
-  it('handlers.mainView start handler should attach the loading indicator', () => {
+  it('globalProgressHandler start handler should attach the loading indicator', () => {
     const spy = jest.spyOn(overlayRef, 'attach');
-    service.handlers.mainView.start();
+    service.globalProgressHandler.start();
     expect(spy).toHaveBeenCalled();
   });
 
-  it('handlers.mainView stop handler should detach the loading indicator', () => {
-    service.handlers.mainView.start();
+  it('globalProgressHandler stop handler should detach the loading indicator', () => {
+    service.globalProgressHandler.start();
     const spy = jest.spyOn(overlayRef, 'detach');
-    service.handlers.mainView.stop();
+    service.globalProgressHandler.stop();
     expect(spy).toHaveBeenCalled();
   });
 
-  it('handlers.mainView.tapStopperObservable should call handers.mainView.stop on success', waitForAsync(() => {
-    const spy = jest.spyOn(service.handlers.mainView, 'stop');
-    void of(null).pipe(service.handlers.mainView.tapStopperObservable()).subscribe();
+  it('globalProgressHandler.tapStopperObservable should call handers.mainView.stop on success', waitForAsync(() => {
+    const spy = jest.spyOn(service.globalProgressHandler, 'stop');
+    void of(null).pipe(service.globalProgressHandler.tapStopperObservable()).subscribe();
     expect(spy).toHaveBeenCalled();
   }));
 
-  it('handlers.sidebar.tapStopperObservable should call handers.sidebar.stop on success', waitForAsync(() => {
-    const spy = jest.spyOn(service.handlers.sidebar, 'stop');
-    void of(null).pipe(service.handlers.sidebar.tapStopperObservable()).subscribe();
-    expect(spy).toHaveBeenCalled();
-  }));
-
-  it('handlers.mainView.tapStopperObservable should call handers.mainView.stop on error', waitForAsync(() => {
-    const spy = jest.spyOn(service.handlers.mainView, 'stop');
+  it('globalProgressHandler.tapStopperObservable should call handers.mainView.stop on error', waitForAsync(() => {
+    const spy = jest.spyOn(service.globalProgressHandler, 'stop');
     void throwError(() => new Error(''))
       .pipe(
-        service.handlers.mainView.tapStopperObservable(),
-        catchError(() => of(null)),
-      )
-      .subscribe();
-    expect(spy).toHaveBeenCalled();
-  }));
-
-  it('handlers.sidebar.tapStopperObservable should call handers.sidebar.stop on error', waitForAsync(() => {
-    const spy = jest.spyOn(service.handlers.sidebar, 'stop');
-    void throwError(() => new Error(''))
-      .pipe(
-        service.handlers.sidebar.tapStopperObservable(),
+        service.globalProgressHandler.tapStopperObservable(),
         catchError(() => of(null)),
       )
       .subscribe();

@@ -21,11 +21,9 @@ describe('AppHttpProgressState', () => {
       {
         provide: AppHttpProgressService,
         useValue: {
-          handlers: {
-            mainView: {
-              start: () => void 0,
-              stop: () => void 0,
-            },
+          globalProgressHandler: {
+            start: () => void 0,
+            stop: () => void 0,
           },
         },
       },

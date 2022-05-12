@@ -49,7 +49,7 @@ export class AppHttpProgressState {
       }
     }
     if (newState.mainView.loading) {
-      this.service.handlers.mainView.start();
+      this.service.globalProgressHandler.start();
     }
     return ctx.patchState(newState);
   }
@@ -66,7 +66,7 @@ export class AppHttpProgressState {
       }
     }
     if (!newState.mainView.loading) {
-      this.service.handlers.mainView.stop();
+      this.service.globalProgressHandler.stop();
     }
     return ctx.patchState(newState);
   }

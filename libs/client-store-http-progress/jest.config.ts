@@ -9,7 +9,7 @@ const config = {
     // TODO: bump unit test coverage and remove this override
     global: {
       branches: 62,
-      functions: 90,
+      functions: 91,
       lines: 88,
       statements: 89,
     },
