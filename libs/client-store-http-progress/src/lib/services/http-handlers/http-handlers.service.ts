@@ -1,6 +1,6 @@
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { ApolloLink, split } from '@apollo/client/core';
+import { ApolloLink, ApolloQueryResult, FetchResult, split } from '@apollo/client/core';
 import { ErrorResponse, onError } from '@apollo/client/link/error';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { AppUserState, userActions } from '@app/client-store-user';
@@ -17,6 +17,8 @@ import { catchError, finalize, first, map, tap, timeout } from 'rxjs/operators';
 import { httpProgressActions } from '../../http-progress.actions';
 import { AppHttpProgressService } from '../http-progress/http-progress.service';
 import { AppToasterService } from '../toaster/toaster.service';
+
+export type TGqlClient = 'graphql';
 
 /**
  * Handlers to work with http requests.
@@ -96,18 +98,15 @@ export class AppHttpHandlersService {
    * @param observable input observable
    * @returns a piped observable
    */
-  public pipeGraphQlResponse<T>(observable: Observable<T>, withprogress = true) {
-    if (withprogress) {
-      void this.store.dispatch(new httpProgressActions.startProgress({ mainView: true }));
-    }
+  public pipeGqlResponse<T>(observable: Observable<ApolloQueryResult<T> | FetchResult<T>>) {
+    void this.store.dispatch(new httpProgressActions.startProgress({ mainView: true }));
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
-      this.tapError<T>(),
-      catchError(err => this.handleGraphQLError(err)),
+      this.tapError(),
+      map(result => result.data),
+      catchError(err => this.handleGqlError(err)),
       finalize(() => {
-        if (withprogress) {
-          void this.store.dispatch(new httpProgressActions.stopProgress({ mainView: true }));
-        }
+        void this.store.dispatch(new httpProgressActions.stopProgress({ mainView: true }));
       }),
     );
   }
@@ -183,10 +182,11 @@ export class AppHttpHandlersService {
 
   /**
    * Creates the gql link with an error handler.
+   * @param name the client name
    * @returns apollo link observable
    */
-  public createGqlLink() {
-    const uri = this.getEndpoint('graphql');
+  public createGqlLink(name: TGqlClient = 'graphql'): Observable<ApolloLink> {
+    const uri = this.getEndpoint(name);
     const httpLinkHandler = this.httpLink.create({ uri });
     const linkHandler: ApolloLink = this.createGqlErrorLinkHandler();
     const networkLink$ = this.createGqlNetworkLink(httpLinkHandler, uri);
@@ -227,11 +227,11 @@ export class AppHttpHandlersService {
   }
 
   /**
-   * Handles graphQL error response.
+   * Handles a graphQL error.
    * @param error error message
    * @returns an empty observable
    */
-  public handleGraphQLError(error: string): Observable<never> {
+  public handleGqlError(error: string): Observable<never> {
     this.toaster.showToaster(error, 'error');
     return of();
   }

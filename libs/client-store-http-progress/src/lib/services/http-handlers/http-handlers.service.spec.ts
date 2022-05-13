@@ -2,6 +2,7 @@ import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { ApolloLink } from '@apollo/client/core';
+import { AppUserState } from '@app/client-store-user';
 import { AppClientTranslateModule } from '@app/client-translate';
 import {
   flushHttpRequests,
@@ -11,7 +12,7 @@ import {
   TClassMemberFunctionSpiesObject,
 } from '@app/client-unit-testing';
 import { HTTP_STATUS, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
-import { Store } from '@ngxs/store';
+import { NgxsModule, Store } from '@ngxs/store';
 import { Apollo, ApolloModule } from 'apollo-angular';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, concatMap, map, tap } from 'rxjs/operators';
@@ -23,7 +24,12 @@ import { AppHttpHandlersService } from './http-handlers.service';
 
 describe('AppHttpHandlersService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [ApolloModule, AppClientTranslateModule.forRoot(), AppHttpProgressStoreModule.forRoot()],
+    imports: [
+      ApolloModule,
+      AppClientTranslateModule.forRoot(),
+      AppHttpProgressStoreModule.forRoot(),
+      NgxsModule.forFeature([AppUserState]),
+    ],
     providers: [toasterServiceProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
@@ -68,9 +74,9 @@ describe('AppHttpHandlersService', () => {
     expect(service.getEndpoint).toEqual(expect.any(Function));
     expect(service.checkErrorStatusAndRedirect).toEqual(expect.any(Function));
     expect(service.handleError).toEqual(expect.any(Function));
-    expect(service.handleGraphQLError).toEqual(expect.any(Function));
+    expect(service.handleGqlError).toEqual(expect.any(Function));
     expect(service.pipeHttpResponse).toEqual(expect.any(Function));
-    expect(service.pipeGraphQlResponse).toEqual(expect.any(Function));
+    expect(service.pipeGqlResponse).toEqual(expect.any(Function));
     expect(service.tapError).toEqual(expect.any(Function));
     expect(service.createGqlLink).toEqual(expect.any(Function));
   });
@@ -99,32 +105,32 @@ describe('AppHttpHandlersService', () => {
     expect(service.getEndpoint('/test')).toEqual(`${env.api}/test`);
   });
 
-  describe('pipeGraphQlResponse', () => {
+  describe('pipeGqlResponse', () => {
     it('pipeGraphQlResponse should check error for 401 status', waitForAsync(() => {
-      const observable$ = of({ networkError: { status: HTTP_STATUS.BAD_REQUEST } });
+      const observable$ = <Observable<never>>of({ networkError: { status: HTTP_STATUS.BAD_REQUEST } });
       void service
-        .pipeGraphQlResponse(observable$)
+        .pipeGqlResponse(observable$)
         .pipe(
           tap({
             error: err => {
               expect(serviceSpies.checkErrorStatusAndRedirect).toHaveBeenCalledWith(HTTP_STATUS.UNAUTHORIZED);
-              expect(serviceSpies.handleGraphQLError).not.toHaveBeenCalledWith(err);
+              expect(serviceSpies.handleGqlError).not.toHaveBeenCalledWith(err);
             },
           }),
         )
         .subscribe();
     }));
 
-    it('pipeGraphQlResponse should pipe observables that throw errors correctly', waitForAsync(() => {
+    it('pipeGqlResponse should pipe observables that throw errors correctly', waitForAsync(() => {
       const error = new Error('');
       const observable$ = throwError(() => error);
       void service
-        .pipeGraphQlResponse(observable$)
+        .pipeGqlResponse(observable$)
         .pipe(
           tap({
             error: err => {
               expect(serviceSpies.checkErrorStatusAndRedirect).toHaveBeenCalledWith(HTTP_STATUS.UNAUTHORIZED);
-              expect(serviceSpies.handleGraphQLError).toHaveBeenCalledWith(err);
+              expect(serviceSpies.handleGqlError).toHaveBeenCalledWith(err);
             },
           }),
         )
@@ -203,9 +209,9 @@ describe('AppHttpHandlersService', () => {
     });
   });
 
-  describe('handleGraphQLError', () => {
+  describe('handleGqlError', () => {
     it('should return an Observable', () => {
-      expect(service['handleGraphQLError']('err')).toEqual(expect.any(Observable));
+      expect(service['handleGqlError']('err')).toEqual(expect.any(Observable));
     });
   });
 

@@ -200,7 +200,7 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:client-gql',
-    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:proto', 'scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-store-http-progress', 'scope:client-unit-testing', 'scope:proto', 'scope:client-util'],
   },
   {
     sourceTag: 'scope:client-grpc',
