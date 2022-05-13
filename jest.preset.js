@@ -1,4 +1,4 @@
-const nxPreset = require('@nrwl/jest/preset');
+const nxPreset = require('@nrwl/jest/preset').default;
 const { pathsToModuleNameMapper } = require('ts-jest/utils');
 
 const { paths } = require('./tsconfig.base.json').compilerOptions;
