@@ -402,7 +402,7 @@ module.exports = {
       },
     },
     {
-      files: ['**/jest.config.ts', '**/jest.preset.ts'], // jest configs were converted from js to ts files, but still use the js syntax
+      files: ['**/jest.config.ts', '**/jest.preset.ts'], // jest configs may be converted from js to ts, but it still has to use some js language features
       rules: {
         '@typescript-eslint/no-require-imports': 'off',
         '@typescript-eslint/no-var-requires': 'off',
