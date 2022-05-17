@@ -1,16 +1,4 @@
 const config = {
-  displayName: 'backend-websocket',
-
-  globals: {
-    'ts-jest': {
-      tsconfig: '<rootDir>/tsconfig.spec.json',
-    },
-  },
-  testEnvironment: 'node',
-  transform: {
-    '^.+\\.[tj]sx?$': 'ts-jest',
-  },
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   coverageDirectory: '../../coverage/libs/backend-websocket',
   coverageThreshold: {
     global: {
@@ -20,7 +8,18 @@ const config = {
       statements: 100,
     },
   },
+  displayName: 'backend-websocket',
+  globals: {
+    'ts-jest': {
+      tsconfig: '<rootDir>/tsconfig.spec.json',
+    },
+  },
   preset: '../../jest.preset.js',
+  resolver: '../../tools/js/jest-node-resolver.js',
+  testEnvironment: 'node',
+  transform: {
+    '^.+\\.[tj]s$': 'ts-jest',
+  },
 };
 
 export default config;

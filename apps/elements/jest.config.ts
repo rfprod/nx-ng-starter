@@ -2,9 +2,6 @@ const jestPresetAngularSerializers = require('jest-preset-angular/build/serializ
 
 const config = {
   coverageDirectory: '../../coverage/apps/elements',
-  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  snapshotSerializers: jestPresetAngularSerializers,
-  displayName: 'elements',
   coverageThreshold: {
     global: {
       branches: 100,
@@ -13,7 +10,10 @@ const config = {
       statements: 100,
     },
   },
+  displayName: 'elements',
   preset: '../../jest.preset.js',
+  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
+  snapshotSerializers: jestPresetAngularSerializers,
 };
 
 export default config;
