@@ -1,12 +1,5 @@
 const config = {
   coverageDirectory: '../../coverage/apps/api',
-  globals: {
-    'ts-jest': {
-      tsconfig: '<rootDir>/tsconfig.spec.json',
-    },
-  },
-  displayName: 'api',
-  testEnvironment: 'node',
   coverageThreshold: {
     global: {
       branches: 100,
@@ -15,7 +8,18 @@ const config = {
       statements: 100,
     },
   },
+  displayName: 'api',
+  globals: {
+    'ts-jest': {
+      tsconfig: '<rootDir>/tsconfig.spec.json',
+    },
+  },
   preset: '../../jest.preset.js',
+  resolver: '../../tools/js/jest-node-resolver.js',
+  testEnvironment: 'node',
+  transform: {
+    '^.+\\.[tj]s$': 'ts-jest',
+  },
 };
 
 export default config;
