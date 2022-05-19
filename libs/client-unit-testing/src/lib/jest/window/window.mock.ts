@@ -1,6 +1,6 @@
 import { AppLocalStorageMock } from '../../local-storage/local-storage.mock';
 
-function setupAppLocalStorageMock(): AppLocalStorageMock {
+function setupWindowLocalStorageMock(): AppLocalStorageMock {
   Object.defineProperty(window, 'localStorage', {
     value: new AppLocalStorageMock(),
     writable: true,
@@ -50,7 +50,7 @@ function setupWindowCreateObjectUrlMock() {
 }
 
 export function setupJsdomWindowMocks() {
-  setupAppLocalStorageMock();
+  setupWindowLocalStorageMock();
   setupWindowMatchMediaMock();
   setupWindowResizeToMock();
   setupWindowGetComputedStyleMock();
