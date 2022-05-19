@@ -11,14 +11,14 @@ module.exports = {
     {
       name: '@storybook/addon-essentials',
       options: {
-        "actions": true,
-        "backgrounds": true,
-        "controls": true,
-        "docs": false,
-        "viewport": true,
-        "toolbars": true,
-      }
-    }
+        actions: true,
+        backgrounds: true,
+        controls: true,
+        docs: false,
+        viewport: true,
+        toolbars: true,
+      },
+    },
   ],
   features: {
     postcss: true,
@@ -31,14 +31,12 @@ module.exports = {
     }),
   ],
   stories: [],
-  webpackFinal: async (config) => {
+  webpackFinal: async config => {
     const tsPaths = new TsconfigPathsPlugin({
       configFile: './tsconfig.base.json',
     });
 
-    config.resolve.plugins
-      ? config.resolve.plugins.push(tsPaths)
-      : (config.resolve.plugins = [tsPaths]);
+    config.resolve.plugins ? config.resolve.plugins.push(tsPaths) : (config.resolve.plugins = [tsPaths]);
 
     // add your own webpack tweaks below if needed
 
@@ -54,7 +52,9 @@ module.exports = {
      *   exclude: /\.async\.html$/
      * },
      */
-    const rules = (config.module.rules ?? []).filter(rule => rule.test !== /\.html$/ && rule.exclude !== /\.async\.html$/ && !rule.loader?.includes('raw-loader'));
+    const rules = (config.module.rules ?? []).filter(
+      rule => rule.test !== /\.html$/ && rule.exclude !== /\.async\.html$/ && !rule.loader?.includes('raw-loader'),
+    );
     config.module.rules = [...rules];
 
     // add your own webpack tweaks above if needed
