@@ -18,7 +18,7 @@ export interface IAppHttpProgressPayload {
   sidebar?: boolean;
 }
 
-export const httpProgressInitialState = {
+export const httpProgressInitialState: IAppHttpProgressState = {
   mainView: {
     counter: 0,
     loading: false,

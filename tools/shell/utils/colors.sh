@@ -1,8 +1,6 @@
 #!/bin/bash
 
 ##
-# Colors definitions.
-#
 # Black        0;30     Dark Gray     1;30
 # Red          0;31     Light Red     1;31
 # Green        0;32     Light Green   1;32
@@ -83,7 +81,8 @@ REGISTERED_COLOR_VARS=(
 # Reports supported colors to the terminal.
 ##
 reportSupportedColors() {
-  local TITLE="<< COLORS >>"
+  local TITLE
+  TITLE="<< COLORS >>"
   printf "
     ${LIGHT_BLUE} %s ${DEFAULT}\n" "$TITLE"
 
@@ -93,7 +92,8 @@ reportSupportedColors() {
   for REGISTERED_COLOR_NAME in "${REGISTERED_COLOR_NAMES[@]}"; do printf "
       ${DEFAULT} - ${!REGISTERED_COLOR_NAME}%s${DEFAULT} = ${!REGISTERED_COLOR_NAME}%s${DEFAULT}" "$REGISTERED_COLOR_NAME" "${!REGISTERED_COLOR_NAME}"; done
 
-  local INFO="Use this colors in other module related scripts like tools/shell/lint.sh, tools/shell/test.sh etc."
+  local INFO
+  INFO="Use this colors in other module related scripts like tools/shell/lint.sh, tools/shell/test.sh etc."
   printf "\n\n${DEFAULT} %s\n\n" "$INFO"
 }
 
