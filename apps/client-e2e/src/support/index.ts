@@ -26,5 +26,5 @@ Cypress.on('uncaught:exception', (err, runnable) => {
   /**
    * Returning false here prevents Cypress from failing the test if Cypress encounters application error.
    */
-  return true;
+  return false;
 });

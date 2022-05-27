@@ -30,9 +30,9 @@ describe('nx-ng-starter', () => {
 
   it('first toolbar button should trigger sidebar', () => {
     cy.getSidenav().should('not.be.visible');
-    cy.getBottomToolbar().find('button').first().click();
+    cy.getBottomToolbar().find('button').first().click({ force: true });
     cy.getSidenav().should('be.visible');
-    cy.getBottomToolbar().find('button').first().click();
+    cy.getBottomToolbar().find('button').first().click({ force: true });
     cy.getSidenav().should('not.be.visible');
   });
 });

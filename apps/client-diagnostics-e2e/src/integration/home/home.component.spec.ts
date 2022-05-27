@@ -1,7 +1,13 @@
+import { getIframe } from '../../support/commands';
+
 describe('home component', () => {
   beforeEach(() => cy.visit('/?path=/story/appdiagnosticshomepage--primary'));
 
   it('should render the component', () => {
-    cy.get('app-diagnostics-home-page').should('exist');
+    getIframe().find('div[id="root"]').should('not.be.empty');
+
+    getIframe().find('storybook-dynamic-app-root').should('not.be.empty');
+
+    getIframe().find('app-diagnostics-home-page').should('not.be.empty');
   });
 });
