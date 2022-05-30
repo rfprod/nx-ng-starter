@@ -3,8 +3,8 @@ import { Inject, NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
 
-import { AppMatcompGuard } from './matcomp.guard';
-import { AppMatcompService } from './matcomp.service';
+import { AppMatcompGuard } from '../guard/matcomp.guard';
+import { AppMatcompService } from '../service/matcomp.service';
 
 @Resolver(() => AppMatcompModel)
 export class AppMatcompResolver {
@@ -44,13 +44,13 @@ export class AppMatcompResolver {
     return this.pubSub.asyncIterator('matcompCreated');
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => AppMatcompModel)
   @UseGuards(AppMatcompGuard)
   public async remove(@Args('id') id: string) {
     const removedMatcomp = this.service.remove(id);
     const matcompSubscription: AppMatcompSubscription = new AppMatcompSubscription(removedMatcomp);
     void this.pubSub.publish('matcompRemoved', matcompSubscription);
-    return Boolean(removedMatcomp);
+    return removedMatcomp;
   }
 
   @Subscription(() => AppMatcompModel)

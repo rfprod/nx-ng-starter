@@ -3,9 +3,9 @@ import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { PubSub } from 'graphql-subscriptions';
 
 // import { PubSub } from 'apollo-server-express';
-import { AppMatcompGuard } from './matcomp.guard';
-import { AppMatcompResolver } from './matcomp.resolver';
-import { AppMatcompService } from './matcomp.service';
+import { AppMatcompGuard } from './guard/matcomp.guard';
+import { AppMatcompResolver } from './resolver/matcomp.resolver';
+import { AppMatcompService } from './service/matcomp.service';
 
 const apiGqlMatcompModuleProviders: Provider[] = [
   AppMatcompService,

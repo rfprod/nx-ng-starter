@@ -6,20 +6,14 @@ export class AppMatcompService implements IMatcompQuery, IMatcompMutation {
   private readonly matcomps: AppMatcomp[] = [];
 
   public create(input: AppMatcompInput) {
-    const matcomp = new AppMatcomp(input);
+    const matcomp = new AppMatcomp({ ...input, id: this.matcomps.length.toString() });
     this.matcomps.push(matcomp);
     return matcomp;
   }
 
   public remove(id: string) {
-    let arrayId = 0;
-    this.matcomps.map((comp: AppMatcomp, index: number) => {
-      if (comp.id === id) {
-        arrayId = index;
-      }
-    });
-    const matcomp = this.matcomps.splice(arrayId, 1)[0];
-    return matcomp;
+    const arrayId = this.matcomps.findIndex((comp: AppMatcomp) => comp.id === id);
+    return arrayId !== -1 ? this.matcomps.splice(arrayId, 1)[0] : void 0;
   }
 
   public findAll(args: AppMatcompArgs) {

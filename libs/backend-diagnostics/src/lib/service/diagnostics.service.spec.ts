@@ -6,7 +6,7 @@ import { AppDiagnosticsService, CHILD_PROCESS_EXEC } from './diagnostics.service
 
 describe('AppDiagnosticsService', () => {
   let testingModule: TestingModule;
-  let diagService: AppDiagnosticsService;
+  let service: AppDiagnosticsService;
 
   describe('success cases', () => {
     beforeAll(async () => {
@@ -22,28 +22,28 @@ describe('AppDiagnosticsService', () => {
         .compile()
         .then(module => {
           testingModule = module;
-          diagService = testingModule.get<AppDiagnosticsService>(AppDiagnosticsService);
+          service = testingModule.get<AppDiagnosticsService>(AppDiagnosticsService);
         });
     });
 
     it('should return "Diagnostics service is online. Routes: /, /static."', () => {
-      expect(diagService.ping()).toEqual({
+      expect(service.ping()).toEqual({
         message: 'Diagnostics service is online. Routes: /, /static.',
       });
     });
 
     it('static should return static diagnostic data', async () => {
-      const staticData = await firstValueFrom(diagService.static());
+      const staticData = await firstValueFrom(service.static());
       expect(staticData).toEqual(expect.any(Array));
     });
 
     it('dynamic should return dynamic diagnostic data', () => {
-      expect(diagService.dynamic()).toEqual(expect.any(Array));
+      expect(service.dynamic()).toEqual(expect.any(Array));
     });
 
     it('npmVersion should return N/A for electron env', async () => {
       process.env.ELECTRON = 'true';
-      const staticData = await firstValueFrom(diagService.static());
+      const staticData = await firstValueFrom(service.static());
       expect(staticData.find(item => item.name === 'NPM Version')?.value).toEqual('N/A');
       delete process.env.ELECTRON;
     });
@@ -69,12 +69,12 @@ describe('AppDiagnosticsService', () => {
         .compile()
         .then(module => {
           testingModule = module;
-          diagService = testingModule.get<AppDiagnosticsService>(AppDiagnosticsService);
+          service = testingModule.get<AppDiagnosticsService>(AppDiagnosticsService);
         });
     });
 
     it('npmVersion should return N/A if exec error occurs', async () => {
-      const staticData = await firstValueFrom(diagService.static());
+      const staticData = await firstValueFrom(service.static());
       expect(staticData.find(item => item.name === 'NPM Version')?.value).toEqual('N/A');
     });
   });
