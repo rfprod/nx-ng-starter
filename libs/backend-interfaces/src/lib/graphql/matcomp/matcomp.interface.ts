@@ -16,7 +16,7 @@ export interface IMatcompQuery {
  */
 export interface IMatcompMutation {
   create(id: AppMatcompInput): AppMatcomp;
-  remove(id: string): AppMatcomp;
+  remove(id: string): AppMatcomp | undefined;
 }
 
 /**
