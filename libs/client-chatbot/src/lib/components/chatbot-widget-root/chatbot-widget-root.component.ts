@@ -36,7 +36,7 @@ export class AppChatbotWidgetRootComponent {
   });
 
   public sendMessage() {
-    const message: IChatMessage = { bot: false, text: this.form.controls.message.value ?? 'N/A' };
+    const message: IChatMessage = { bot: false, text: this.form.controls.message.value };
     const nextValue = [...this.messagesSubject.value, message];
     this.messagesSubject.next(nextValue);
   }

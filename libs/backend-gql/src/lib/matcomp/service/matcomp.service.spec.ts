@@ -59,7 +59,11 @@ describe('AppMatcompService', () => {
   it('create method should create a new item, assign a currect id, add the value to the item array and return the created item', () => {
     const input = new AppMatcompInput();
     const expected = new AppMatcomp({ ...input, id: '0' });
-    expect(service.create(input)).toEqual(expected);
+    const created = service.create(input);
+    expect(created.id).toEqual(expected.id);
+    expect(created.description).toEqual(expected.description);
+    expect(created.name).toEqual(expected.name);
+    expect(created.creationDate).toBeCloseTo(expected.creationDate);
   });
 
   it('remove method should remove an item from the items array and return the removed item', () => {
