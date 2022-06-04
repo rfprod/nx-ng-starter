@@ -20,7 +20,7 @@ export const routes: Array<Route> = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-      initialNavigation: 'enabled',
+      initialNavigation: 'enabledBlocking',
       onSameUrlNavigation: 'reload',
       relativeLinkResolution: 'legacy',
     }),
