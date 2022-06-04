@@ -281,11 +281,6 @@ function updateAndMigratePackages(bulkUserChoice?: boolean) {
         updatablePackages,
       );
 
-      /**
-       * Do live update check to verify that json is not outdated.
-       */
-      checkForUpdates(false);
-
       const packageNames = Object.keys(updatablePackages);
 
       migratePackagesRecursively({ packageNames, packageIndex: 0 }, bulkUserChoice);

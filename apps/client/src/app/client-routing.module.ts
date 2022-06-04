@@ -30,7 +30,13 @@ export const routes: Route[] = [
  * The client application routing module.
  */
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+  imports: [
+    RouterModule.forRoot(routes, {
+      initialNavigation: 'enabledBlocking',
+      onSameUrlNavigation: 'reload',
+      relativeLinkResolution: 'legacy',
+    }),
+  ],
   exports: [RouterModule],
 })
 export class AppClientRoutingModule {}
