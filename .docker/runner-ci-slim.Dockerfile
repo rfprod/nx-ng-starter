@@ -1,7 +1,7 @@
 # CI/CD runner image without docker.
 
 # Define image.
-FROM node:16.15.0-slim
+FROM node:16.15.1-slim
 # Set environment variables.
 ENV DEBIAN_FRONTEND=noninteractive
 # Create app directory.

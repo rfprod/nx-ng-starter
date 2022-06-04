@@ -19,7 +19,7 @@ scalar Date
 
 type Mutation {
   create(input: AppMatcompInputDto!): AppMatcompModel!
-  remove(id: String!): Boolean!
+  remove(id: String!): AppMatcompModel!
 }
 
 type Query {
