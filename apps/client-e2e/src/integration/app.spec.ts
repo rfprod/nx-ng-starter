@@ -3,7 +3,10 @@ import { TCypressCustomCommands } from '../support/config/commands.config';
 declare const cy: TCypressCustomCommands;
 
 describe('nx-ng-starter', () => {
-  beforeEach(() => cy.visit('/'));
+  beforeEach(() => {
+    cy.visit('/');
+    cy.setViewportSize('default');
+  });
 
   it('should have one app-root html element', () => {
     cy.getAppRoot().should('have.length', 1);

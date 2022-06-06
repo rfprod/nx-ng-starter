@@ -12,5 +12,7 @@ import { customCommands } from './config/commands.config';
 
 const commandNames = Object.keys(customCommands) as (keyof typeof customCommands)[];
 for (const commandName of commandNames) {
-  Cypress.Commands.add(commandName, customCommands[commandName]);
+  const name = commandName as unknown as keyof Cypress.Chainable;
+  const command = customCommands[commandName] as Cypress.CommandFn<keyof Cypress.Chainable>;
+  Cypress.Commands.add(name, command);
 }
