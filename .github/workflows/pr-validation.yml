@@ -84,7 +84,7 @@ jobs:
         run: echo "::set-output name=yarncachedir::$(yarn cache dir)"; echo "::set-output name=commitsha::$(echo ${GITHUB_SHA})"
 
       - name: Workspace cache (npm, yarn, nx, jest)
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         id: workspace-cache # use this to check for `cache-hit` (`steps.workspace-cache.outputs.cache-hit != 'true'`)
         env:
           cache-name: workspace-cache
