@@ -79,7 +79,7 @@ export class AppClientGqlService {
    * Returns apollo client options depending on user role.
    * @param name the client name
    */
-  private getApolloClientOptions(name: TGqlClient = 'graphql'): Observable<ApolloClientOptions<NormalizedCacheObject>> {
+  private getApolloClientOptions(name: TGqlClient): Observable<ApolloClientOptions<NormalizedCacheObject>> {
     return this.handlers.createGqlLink(name).pipe(
       map(link => {
         const options: ApolloClientOptions<NormalizedCacheObject> = {

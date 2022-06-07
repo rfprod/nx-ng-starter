@@ -78,7 +78,7 @@ describe('AppClientGqlService', () => {
       mutateSpy = jest.fn(() => valueChanges$);
     });
 
-    describe('#query', () => {
+    describe('query', () => {
       beforeEach(() => {
         useApolloSpy = jest.spyOn(apollo, 'use').mockImplementation(
           () =>
@@ -105,7 +105,7 @@ describe('AppClientGqlService', () => {
       });
     });
 
-    describe('#mutate', () => {
+    describe('mutate', () => {
       beforeEach(() => {
         useApolloSpy = jest.spyOn(apollo, 'use').mockImplementation(
           () =>
@@ -158,21 +158,57 @@ describe('AppClientGqlService', () => {
         );
       });
 
-      it('should call apollo use twise and call client.resetStore if client exists', waitForAsync(() => {
+      it('should call apollo use twise and call client.resetStore if client exists with the default client name', waitForAsync(() => {
+        void service
+          .resetApolloClient()
+          .pipe(
+            tap(() => {
+              const expectation = 2;
+              expect(useApolloSpy).toHaveBeenCalledTimes(expectation);
+              expect(useApolloSpy).toHaveBeenCalledWith(clientName);
+            }),
+          )
+          .subscribe();
+      }));
+
+      it('should call apollo use twise and call client.resetStore if client exists when the client name is specified', waitForAsync(() => {
         void service
           .resetApolloClient(clientName)
           .pipe(
             tap(() => {
               const expectation = 2;
               expect(useApolloSpy).toHaveBeenCalledTimes(expectation);
+              expect(useApolloSpy).toHaveBeenCalledWith(clientName);
             }),
           )
           .subscribe();
       }));
+
+      it('should reset apollo client if it was previously created', () => {
+        const apolloBase = new Object({
+          watchQuery: watchQuerySpy,
+          client: {
+            resetStore: () => new Promise<void>(resolve => resolve()),
+          },
+        }) as ApolloBase;
+        const resetStoreSpy = jest.spyOn(apolloBase.client, 'resetStore');
+        useApolloSpy = jest.spyOn(apollo, 'use').mockImplementation(() => apolloBase);
+        void service
+          .resetApolloClient(clientName)
+          .pipe(
+            tap(() => {
+              const expectation = 2;
+              expect(useApolloSpy).toHaveBeenCalledTimes(expectation);
+              expect(useApolloSpy).toHaveBeenCalledWith(clientName);
+              expect(resetStoreSpy).toHaveBeenCalled();
+            }),
+          )
+          .subscribe();
+      });
     });
   });
 
-  describe('#createApolloClient', () => {
+  describe('createApolloClient', () => {
     let createApolloLinkSpy: jest.SpyInstance;
     let createApolloSpy: jest.SpyInstance;
 
@@ -181,12 +217,25 @@ describe('AppClientGqlService', () => {
       createApolloSpy = jest.spyOn(apollo, 'create');
     });
 
-    it('should call apollo createApolloLinkSpy with proper params', waitForAsync(() => {
+    it('should call apollo createApolloLinkSpy with proper params with the default client name', waitForAsync(() => {
+      void service
+        .createApolloClient()
+        .pipe(
+          tap(() => {
+            expect(createApolloLinkSpy).toHaveBeenCalledWith(clientName);
+            expect(createApolloSpy).toHaveBeenCalledWith(expect.any(Object), clientName);
+          }),
+        )
+        .subscribe();
+    }));
+
+    it('should call apollo createApolloLinkSpy with proper params when the client name is specified', waitForAsync(() => {
       void service
         .createApolloClient(clientName)
         .pipe(
           tap(() => {
             expect(createApolloLinkSpy).toHaveBeenCalledWith(clientName);
+            expect(createApolloSpy).toHaveBeenCalledWith(expect.any(Object), clientName);
           }),
         )
         .subscribe();
