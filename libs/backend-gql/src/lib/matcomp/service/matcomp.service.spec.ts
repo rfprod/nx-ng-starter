@@ -52,18 +52,18 @@ describe('AppMatcompService', () => {
       const input = new AppMatcompInput();
       const expected = new AppMatcomp({ ...input, id: '0' });
       const created = service.create(input);
+      const found = service.findOneById('0');
       expect(created.id).toEqual(expected.id);
       expect(created.description).toEqual(expected.description);
       expect(created.name).toEqual(expected.name);
       expect(created.creationDate).toBeCloseTo(expected.creationDate);
-      const found = service.findOneById('0');
       expect(found).toBeDefined();
       expect(found instanceof AppMatcomp).toBeTruthy();
       if (typeof found !== 'undefined') {
         expect(found.id).toEqual(expected.id);
         expect(found.description).toEqual(expected.description);
         expect(found.name).toEqual(expected.name);
-        expect(found.creationDate).toBeCloseTo(expected.creationDate);
+        expect(found.creationDate).toBeCloseTo(created.creationDate);
       }
     });
   });
