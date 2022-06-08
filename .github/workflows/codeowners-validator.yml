@@ -9,7 +9,7 @@ defaults:
     shell: bash
 
 concurrency:
-  group: ${{ github.head_ref }}.${{ github.sha }}.codeowners-validator
+  group: ${{ github.ref_name }}.${{ github.sha }}.codeowners-validator
   cancel-in-progress: true
 
 jobs:

@@ -11,7 +11,7 @@ defaults:
     shell: bash
 
 concurrency:
-  group: ${{ github.head_ref }}.${{ github.sha }}.publish-d3-charts
+  group: ${{ github.ref_name }}.${{ github.sha }}.publish-d3-charts
   cancel-in-progress: true
 
 jobs:
