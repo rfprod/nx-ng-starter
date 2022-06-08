@@ -14,7 +14,7 @@ defaults:
     shell: bash
 
 concurrency:
-  group: ${{ github.head_ref }}.${{ github.sha }}.codeql
+  group: ${{ github.ref_name }}.${{ github.sha }}.codeql
   cancel-in-progress: true
 
 jobs:

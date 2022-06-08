@@ -10,7 +10,7 @@ defaults:
     shell: bash
 
 concurrency:
-  group: ${{ github.head_ref }}.${{ github.sha }}.e2e
+  group: ${{ github.ref_name }}.${{ github.sha }}.e2e
   cancel-in-progress: true
 
 jobs:
