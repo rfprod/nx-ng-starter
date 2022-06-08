@@ -43,7 +43,7 @@ installGlobalDependencies() {
   printInfoTitle "<< INSTALLING GLOBAL DEPENDENCIES >>"
   printGap
 
-  sudo npm install -g @angular/cli@latest @nestjs/cli@latest @ngxs/cli@latest @nrwl/cli@latest typescript@latest @compodoc/compodoc@latest commitizen@latest cz-conventional-changelog@latest clang-format@latest yarn@1.22.18 madge@latest npm-check-updates@latest || exit 1
+  sudo npm install -g @angular/cli@latest @nestjs/cli@latest @ngxs/cli@latest @nrwl/cli@latest typescript@latest @compodoc/compodoc@latest commitizen@latest cz-conventional-changelog@latest clang-format@latest yarn@1.22.19 madge@latest npm-check-updates@latest || exit 1
 }
 
 ##
