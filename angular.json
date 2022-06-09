@@ -2,6 +2,7 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "projects": {
     "api": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "build": {
           "builder": "@nrwl/node:webpack",
@@ -82,6 +83,7 @@
       "tags": ["scope:api", "type:application"]
     },
     "backend-auth": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -105,6 +107,7 @@
       "tags": ["scope:backend-auth", "type:feature"]
     },
     "backend-diagnostics": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -128,6 +131,7 @@
       "tags": ["scope:backend-diagnostics", "type:feature"]
     },
     "backend-gql": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -151,6 +155,7 @@
       "tags": ["scope:backend-gql", "type:feature"]
     },
     "backend-grpc": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -174,6 +179,7 @@
       "tags": ["scope:backend-grpc", "type:feature"]
     },
     "backend-interfaces": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "generate-client-definitions": {
           "builder": "@nrwl/workspace:run-commands",
@@ -209,6 +215,7 @@
       "tags": ["scope:backend-interfaces", "type:util"]
     },
     "backend-logger": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -232,6 +239,7 @@
       "tags": ["scope:backend-logger", "type:feature"]
     },
     "backend-websocket": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -255,6 +263,7 @@
       "tags": ["scope:backend-websocket", "type:feature"]
     },
     "client": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -403,6 +412,7 @@
       "tags": ["scope:client", "type:application"]
     },
     "client-chatbot": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -427,6 +437,7 @@
       "tags": ["scope:client-chatbot", "type:feature"]
     },
     "client-core": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -456,6 +467,7 @@
       "tags": ["scope:client-core", "type:feature"]
     },
     "client-core-components": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "build-storybook": {
           "builder": "@storybook/angular:build-storybook",
@@ -513,6 +525,7 @@
       "tags": ["scope:client-core-components", "type:feature"]
     },
     "client-core-components-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "e2e": {
           "builder": "@nrwl/cypress:cypress",
@@ -542,6 +555,7 @@
       "tags": ["scope:client-core-components-e2e", "type:e2e"]
     },
     "client-d3-charts": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "build": {
           "builder": "@nrwl/angular:package",
@@ -582,6 +596,7 @@
       "tags": ["scope:client-d3-charts", "type:ui"]
     },
     "client-diagnostics": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "build-storybook": {
           "builder": "@storybook/angular:build-storybook",
@@ -639,6 +654,7 @@
       "tags": ["scope:client-diagnostics", "type:feature"]
     },
     "client-diagnostics-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "e2e": {
           "builder": "@nrwl/cypress:cypress",
@@ -668,6 +684,7 @@
       "tags": ["scope:client-diagnostics-e2e", "type:e2e"]
     },
     "client-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "e2e": {
           "builder": "@nrwl/cypress:cypress",
@@ -697,6 +714,7 @@
       "tags": ["scope:client-e2e", "type:e2e"]
     },
     "client-gql": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -726,6 +744,7 @@
       "tags": ["scope:client-gql", "type:data-access"]
     },
     "client-grpc": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -750,6 +769,7 @@
       "tags": ["scope:client-grpc", "type:data-access"]
     },
     "client-material": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -779,6 +799,7 @@
       "tags": ["scope:client-material", "type:ui"]
     },
     "client-services": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -808,6 +829,7 @@
       "tags": ["scope:client-services", "type:util"]
     },
     "client-sidebar": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -832,6 +854,7 @@
       "tags": ["scope:client-sidebar", "type:data-access"]
     },
     "client-store": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -861,6 +884,7 @@
       "tags": ["scope:client-store", "type:data-access"]
     },
     "client-store-chatbot": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -885,6 +909,7 @@
       "tags": ["scope:client-store-chatbot", "type:data-access"]
     },
     "client-store-http-api": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -909,6 +934,7 @@
       "tags": ["scope:client-store-http-api", "type:data-access"]
     },
     "client-store-http-progress": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -933,6 +959,7 @@
       "tags": ["scope:client-store-http-progress", "type:data-access"]
     },
     "client-store-sidebar": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -957,6 +984,7 @@
       "tags": ["scope:client-store-sidebar", "type:data-access"]
     },
     "client-store-theme": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -981,6 +1009,7 @@
       "tags": ["scope:client-store-theme", "type:data-access"]
     },
     "client-store-user": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -1005,6 +1034,7 @@
       "tags": ["scope:client-store-user", "type:data-access"]
     },
     "client-store-websocket": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -1029,6 +1059,7 @@
       "tags": ["scope:client-store-websocket", "type:data-access"]
     },
     "client-translate": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -1058,6 +1089,7 @@
       "tags": ["scope:client-translate", "type:util"]
     },
     "client-unit-testing": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -1087,6 +1119,7 @@
       "tags": ["scope:client-unit-testing", "type:unit-testing"]
     },
     "client-util": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -1116,6 +1149,7 @@
       "tags": ["scope:client-util", "type:util"]
     },
     "client-util-sentry": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -1139,6 +1173,7 @@
       "tags": ["scope:client-util-sentry", "type:util"]
     },
     "documentation": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -1335,6 +1370,7 @@
       "tags": ["scope:documentation", "type:application"]
     },
     "documentation-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "e2e": {
           "builder": "@nrwl/cypress:cypress",
@@ -1364,6 +1400,7 @@
       "tags": ["scope:documentation-e2e", "type:e2e"]
     },
     "elements": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -1481,6 +1518,7 @@
       "tags": ["scope:elements", "type:application"]
     },
     "elements-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "e2e": {
           "builder": "@nrwl/cypress:cypress",
@@ -1510,6 +1548,7 @@
       "tags": ["scope:elements-e2e", "type:e2e"]
     },
     "elements-testing": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "build": {
           "builder": "@nrwl/web:webpack",
@@ -1582,6 +1621,7 @@
       "tags": ["scope:elements-testing", "type:application"]
     },
     "elements-testing-e2e": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "e2e": {
           "builder": "@nrwl/cypress:cypress",
@@ -1611,6 +1651,7 @@
       "tags": ["scope:elements-testing-e2e", "type:e2e"]
     },
     "proto": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -1632,6 +1673,7 @@
       "tags": ["scope:proto", "type:data-access"]
     },
     "server-dev": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "build": {
           "builder": "@nrwl/node:webpack",
@@ -1690,6 +1732,7 @@
       "tags": ["scope:server-dev", "type:application"]
     },
     "server-prod": {
+      "$schema": "../../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "build": {
           "builder": "@nrwl/node:webpack",
@@ -1743,6 +1786,7 @@
       "tags": ["scope:server-prod", "type:application"]
     },
     "tools": {
+      "$schema": "../node_modules/nx/schemas/project-schema.json",
       "architect": {
         "compodoc-build": {
           "builder": "@nrwl/workspace:run-commands",
