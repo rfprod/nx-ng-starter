@@ -80,8 +80,7 @@ describe('AppMatcompService', () => {
 
   it('remove method should remove an item from the items array and return the removed item', () => {
     const input = new AppMatcompInput();
-    const expected = new AppMatcomp({ ...input, id: '0' });
-    service.create(input);
+    const expected = service.create(input);
     expect(service.remove(expected.id)).toEqual(expected);
   });
 });
