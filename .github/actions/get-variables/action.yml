@@ -1,0 +1,27 @@
+# For more information see:
+# - https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+# - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
+
+# The action can be referenced in workflows like:
+# - nx-ns-starter/.github/actions/get-variables
+# ./.github/actions/get-variables
+
+name: get-variables
+description: Get variables for workspace cache
+outputs:
+  commitsha:
+    description: 'GitHub commit SHA'
+    value: ${{ steps.get-variables.outputs.commitsha }}
+  yarncachedir:
+    description: 'Yarn cache directory'
+    value: ${{ steps.get-variables.outputs.yarncachedir }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Get variables (commit hash, yarn cache directory)
+      id: get-variables
+      shell: bash
+      run: |
+        echo "::set-output name=commitsha::$(echo ${GITHUB_SHA})";
+        echo "::set-output name=yarnlockhash::$(yarn cache dir)";
