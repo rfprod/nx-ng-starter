@@ -46,8 +46,8 @@ jobs:
       - name: Configure kernel
         uses: ./.github/actions/configure-kernel
 
-      - name: Use yarn 1.22.19 (required for integrity check)
-        run: npm i -g yarn@1.22.19 # this is mandatory, yarn v2 does not have integrity check which is needed for the pipeline
+      - name: Use yarn v1 required for integrity check
+        uses: ./.github/actions/use-yarn-v1
 
       - name: Get variables
         id: get-variables
