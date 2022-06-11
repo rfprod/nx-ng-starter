@@ -25,6 +25,7 @@ runs:
   using: 'composite'
   steps:
     - name: Get variables (branch name, commit hash, yarn cache directory)
+      id: get-variables
       shell: bash
       run: |
         echo "::set-output name=shortref::${GITHUB_REF#refs/*/}";
