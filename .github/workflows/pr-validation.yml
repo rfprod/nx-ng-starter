@@ -81,7 +81,7 @@ jobs:
 
       - name: Get vars test
         id: getvars
-        uses: ./.github/actions/get-variables.yml
+        uses: ./.github/actions/get-variables
 
       - name: Get variables (yarn cache directory, commit hash)
         id: get-variables
