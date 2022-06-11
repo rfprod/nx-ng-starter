@@ -79,9 +79,26 @@ jobs:
       - name: Use yarn 1.22.19 (required for integrity check)
         run: npm i -g yarn@1.22.19 # this is mandatory, yarn v2 does not have integrity check which is needed for the pipeline
 
+      - name: Get vars test
+        id: getvars
+        uses: ./.github/actions/get-variables.yml
+
       - name: Get variables (yarn cache directory, commit hash)
         id: get-variables
         run: echo "::set-output name=yarncachedir::$(yarn cache dir)"; echo "::set-output name=commitsha::$(echo ${GITHUB_SHA})"
+
+      - name: Verify get vars
+        run: |
+          echo "steps.getvars.outputs.shortref"
+          echo ${{ steps.getvars.outputs.shortref }}
+          echo "steps.getvars.outputs.commitsha"
+          echo ${{ steps.getvars.outputs.commitsha }}
+          echo "steps.getvars.outputs.yarncachedir"
+          echo ${{ steps.getvars.outputs.yarncachedir }}
+          echo "steps.get-variables.outputs.commitsha"
+          echo ${{ steps.get-variables.outputs.commitsha }}
+          echo "steps.get-variables.outputs.yarncachedir"
+          echo ${{ steps.get-variables.outputs.yarncachedir }}
 
       - name: Workspace cache (npm, yarn, nx, jest)
         uses: actions/cache@v3
