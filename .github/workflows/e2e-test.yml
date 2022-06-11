@@ -34,8 +34,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
           check-latest: true
 
-      - name: Configure kernel (increase watchers)
-        run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+      - name: Configure kernel
+        uses: ./.github/actions/configure-kernel
 
       - name: Install project dependencies
         run: yarn install:ci
