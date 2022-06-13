@@ -65,7 +65,7 @@ describe('AppMatcompResolver', () => {
   it('create should call service.create with args, call pubSub.publish, and return the created item', async () => {
     const dto = new AppMatcompInputDto();
     const expectedItem = new AppMatcomp({ ...dto, id: '0' });
-    const expectedSubscription: AppMatcompSubscription = new AppMatcompSubscription(expectedItem);
+    const expectedSubscription: AppMatcompSubscription = new AppMatcompSubscription({ matcomp: expectedItem });
     const pubSubSpy = jest.spyOn(pubSub, 'publish');
     const serviceSpy = jest.spyOn(service, 'create');
     serviceSpy.mockReturnValue(expectedItem);
@@ -97,7 +97,7 @@ describe('AppMatcompResolver', () => {
     it('remove should call service.remove with args, call pubSub.publish, and return the removed item', async () => {
       const dto = new AppMatcompInputDto();
       const expectedItem = new AppMatcomp({ ...dto, id: '0' });
-      const expectedSubscription: AppMatcompSubscription = new AppMatcompSubscription(expectedItem);
+      const expectedSubscription: AppMatcompSubscription = new AppMatcompSubscription({ matcomp: expectedItem });
       await resolver.create(dto);
       const pubSubSpy = jest.spyOn(pubSub, 'publish');
       const serviceSpy = jest.spyOn(service, 'remove');

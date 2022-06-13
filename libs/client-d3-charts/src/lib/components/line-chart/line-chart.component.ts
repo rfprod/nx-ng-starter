@@ -54,7 +54,11 @@ export class AppLineChartComponent implements AfterViewInit, OnChanges {
    * @returns chart options
    */
   private chartOptions() {
-    const margin = { top: 70, right: 50, bottom: 50, left: 60 };
+    const margin: ILineChartOptions['margin'] = { top: 70, right: 50, bottom: 50, left: 60 };
+    const ticks: ILineChartOptions['ticks'] = {
+      x: 5,
+      y: Math.max(...this.data.map(item => item.value)),
+    };
     const minWidth = 350;
     const modifiers = {
       width: 10,
@@ -63,24 +67,23 @@ export class AppLineChartComponent implements AfterViewInit, OnChanges {
     const width = Math.min(minWidth, this.doc.body.clientWidth - modifiers.width) - margin.left - margin.right;
     const height = Math.min(width, this.doc.body.clientHeight - margin.top - margin.bottom - modifiers.height);
     const pixelsPerCharacter = 4;
+    const xAxisLabelShift: ILineChartOptions['xAxisLabelShift'] = {
+      x:
+        defaultLineChartConfig.xAxisLabelShift.x +
+        ((this.options.xAxisTitle ?? defaultLineChartConfig.xAxisTitle).length - 1) * pixelsPerCharacter,
+      y: 228,
+    };
+    const yAxisLabelShift: ILineChartOptions['yAxisLabelShift'] = {
+      x: -10,
+      y: -10,
+    };
     const options: Partial<ILineChartOptions> = {
       width,
       height,
       margin,
-      ticks: {
-        x: 5,
-        y: Math.max(...this.data.map(item => item.value)),
-      },
-      xAxisLabelShift: {
-        x:
-          defaultLineChartConfig.xAxisLabelShift.x +
-          ((this.options.xAxisTitle ?? defaultLineChartConfig.xAxisTitle).length - 1) * pixelsPerCharacter,
-        y: 228,
-      },
-      yAxisLabelShift: {
-        x: -10,
-        y: -10,
-      },
+      ticks,
+      xAxisLabelShift,
+      yAxisLabelShift,
       ...this.options,
     };
     return options;

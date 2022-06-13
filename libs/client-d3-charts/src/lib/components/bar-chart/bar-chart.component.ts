@@ -54,7 +54,7 @@ export class AppBarChartComponent implements AfterViewInit, OnChanges {
    * @returns chart options
    */
   private chartOptions() {
-    const margin = { top: 70, right: 50, bottom: 50, left: 60 };
+    const margin: IBarChartOptions['margin'] = { top: 70, right: 50, bottom: 50, left: 60 };
     const minWidth = 350;
     const modifiers = {
       width: 10,
@@ -64,21 +64,23 @@ export class AppBarChartComponent implements AfterViewInit, OnChanges {
     const height = Math.min(width, this.doc.body.clientHeight - margin.top - margin.bottom - modifiers.height);
     const yAxisTicks = Math.max(...this.data.map(item => item.value));
     const pixelsPerCharacter = 4;
+    const xAxisLabelShift: IBarChartOptions['xAxisLabelShift'] = {
+      x:
+        defaultBarChartConfig.xAxisLabelShift.x +
+        ((this.options.xAxisTitle ?? defaultBarChartConfig.xAxisTitle).length - 1) * pixelsPerCharacter,
+      y: 228,
+    };
+    const yAxisLabelShift: IBarChartOptions['yAxisLabelShift'] = {
+      x: -10,
+      y: -10,
+    };
     const options: Partial<IBarChartOptions> = {
       width,
       height,
       margin,
       yAxisTicks,
-      xAxisLabelShift: {
-        x:
-          defaultBarChartConfig.xAxisLabelShift.x +
-          ((this.options.xAxisTitle ?? defaultBarChartConfig.xAxisTitle).length - 1) * pixelsPerCharacter,
-        y: 228,
-      },
-      yAxisLabelShift: {
-        x: -10,
-        y: -10,
-      },
+      xAxisLabelShift,
+      yAxisLabelShift,
       ...this.options,
     };
     return options;

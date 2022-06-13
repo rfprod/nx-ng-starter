@@ -33,7 +33,7 @@ export class AppMatcompResolver {
   @UseGuards(AppMatcompGuard)
   public async create(@Args('input') args: AppMatcompInputDto) {
     const createdMatcomp = this.service.create(args);
-    const matcompSubscription: AppMatcompSubscription = new AppMatcompSubscription(createdMatcomp);
+    const matcompSubscription: AppMatcompSubscription = new AppMatcompSubscription({ matcomp: createdMatcomp });
     void this.pubSub.publish('matcompCreated', matcompSubscription);
     return createdMatcomp;
   }
@@ -48,7 +48,7 @@ export class AppMatcompResolver {
   @UseGuards(AppMatcompGuard)
   public async remove(@Args('id') id: string) {
     const removedMatcomp = this.service.remove(id);
-    const matcompSubscription: AppMatcompSubscription = new AppMatcompSubscription(removedMatcomp);
+    const matcompSubscription: AppMatcompSubscription = new AppMatcompSubscription({ matcomp: removedMatcomp });
     void this.pubSub.publish('matcompRemoved', matcompSubscription);
     return removedMatcomp;
   }

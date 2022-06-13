@@ -53,7 +53,7 @@ export class AppPieChartComponent implements AfterViewInit, OnChanges {
    * @returns chart options
    */
   private chartOptions() {
-    const margin = { top: 50, right: 50, bottom: 50, left: 50 };
+    const margin: IPieChartOptions['margin'] = { top: 50, right: 50, bottom: 50, left: 50 };
     const minWidth = 350;
     const modifiers = {
       width: 10,

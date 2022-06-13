@@ -9,14 +9,14 @@ export class AppDateScalar implements CustomScalar<number, Date> {
     return typeof value === 'number' ? new Date(value) : new Date();
   }
 
-  public serialize(value: Date | unknown): number {
-    return value instanceof Date ? value.getTime() : 0;
-  }
-
   public parseLiteral(ast: ASTNode): Date {
     if (ast.kind === Kind.INT) {
       return new Date(ast.value);
     }
     return new Date();
+  }
+
+  public serialize(value: Date | unknown): number {
+    return value instanceof Date ? value.getTime() : 0;
   }
 }
