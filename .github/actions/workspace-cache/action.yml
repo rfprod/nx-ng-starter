@@ -1,0 +1,49 @@
+# For more information see:
+# - https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+# - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
+
+# The action can be referenced in workflows like:
+# - rfprod/nx-ng-starter/.github/actions/workspace-cache@main
+# ./.github/actions/workspace-cache
+
+name: workspace-cache
+description: Configure and use workspace cache
+inputs:
+  node-version:
+    description: NodeJS version
+    required: true
+    default: 16.x
+outputs:
+  os:
+    description: Runner os
+    value: ${{ runner.os }}
+  commitsha:
+    description: GitHub commit SHA
+    value: ${{ steps.get-variables.outputs.commitsha }}
+  cache-hit:
+    description: Workspace cache hit
+    value: ${{ steps.workspace-cache.outputs.cache-hit }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Get variables (commit hash)
+      id: get-variables
+      shell: bash
+      run: |
+        echo "::set-output name=commitsha::$(echo ${GITHUB_SHA})";
+
+    - name: Workspace cache (npm, yarn, nx, jest)
+      uses: actions/cache@v3
+      id: workspace-cache
+      with:
+        path: |
+          ./node_modules
+          /tmp/nx
+          /tmp/jest_rs
+          ./angular
+        key: ${{ runner.os }}-node-${{ inputs.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}-workspace-${{ steps.get-variables.outputs.commitsha }}
+        restore-keys: |
+          ${{ runner.os }}-node-${{ inputs.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}-workspace-
+          ${{ runner.os }}-node-${{ inputs.node-version }}-yarn-
+          ${{ runner.os }}-

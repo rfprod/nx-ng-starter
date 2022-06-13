@@ -26,6 +26,9 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v3
 
+      - name: Disable session history
+        uses: ./.github/actions/disable-session-history
+
       - name: Detect changes
         uses: dorny/paths-filter@v2
         id: changes
@@ -61,9 +64,6 @@ jobs:
               - 'android/**'
               - 'capacitor.config.json'
 
-      - name: Don't save Bash session history
-        run: unset HISTFILE
-
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
@@ -76,28 +76,10 @@ jobs:
       - name: Use yarn v1 required for integrity check
         uses: ./.github/actions/use-yarn-v1
 
-      - name: Get variables
-        if: steps.changes.outputs.dependencies == 'false'
-        id: get-variables
-        uses: ./.github/actions/get-variables
-
-      - name: Workspace cache (npm, yarn, nx, jest)
-        if: steps.changes.outputs.dependencies == 'false'
-        uses: actions/cache@v3
-        id: workspace-cache # use this to check for `cache-hit` (`steps.workspace-cache.outputs.cache-hit != 'true'`)
-        env:
-          cache-name: workspace-cache
+      - name: Workspace cache
+        uses: ./.github/actions/workspace-cache
         with:
-          path: |
-            ./node_modules
-            /tmp/nx
-            /tmp/jest_rs
-            ./angular
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}-workspace-${{ steps.get-variables.outputs.commitsha }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}-workspace-
-            ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-
-            ${{ runner.os }}-
+          node-version: ${{ matrix.node-version }}
 
       - name: Install global dependencies
         if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
