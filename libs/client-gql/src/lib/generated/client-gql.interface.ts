@@ -30,7 +30,7 @@ export interface IAppMatcompModel {
 export interface IMutation {
   __typename?: 'Mutation';
   create: IAppMatcompModel;
-  remove: IScalars['Boolean'];
+  remove: IAppMatcompModel;
 }
 
 
