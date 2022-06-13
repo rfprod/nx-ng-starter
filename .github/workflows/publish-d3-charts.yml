@@ -23,11 +23,11 @@ jobs:
         node-version: [16.x]
 
     steps:
-      - name: Don't save Bash session history
-        run: unset HISTFILE
-
       - name: Checkout sources
         uses: actions/checkout@v3
+
+      - name: Disable session history
+        uses: ./.github/actions/disable-session-history
 
       - name: Detect changes
         uses: dorny/paths-filter@v2

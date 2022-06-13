@@ -3,15 +3,15 @@
 # - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
 
 # The action can be referenced in workflows like:
-# - rfprod/nx-ng-starter/.github/actions/configure-kernel@main
-# ./.github/actions/configure-kernel
+# - rfprod/nx-ng-starter/.github/actions/disable-session-history@main
+# ./.github/actions/disable-session-history
 
-name: configure-kernel
-description: Configure kernel (increase watchers)
+name: disable-session-history
+description: Disable session history
 
 runs:
   using: 'composite'
   steps:
-    - name: Configure kernel (increase watchers)
+    - name: Don't save Bash session history
       shell: bash
-      run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+      run: unset HISTFILE
