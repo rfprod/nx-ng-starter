@@ -37,26 +37,31 @@ jobs:
             d3charts:
               - 'libs/client-d3-charts/package.json'
 
+      - name: Check repository owner
+        if: ${{ steps.check-repo-owner.outputs.origin == 'true' && steps.changes.outputs.d3charts == 'true' }}
+        id: check-repo-owner
+        uses: ./.github/actions/check-repo-owner
+
       - name: Use Node.js ${{ matrix.node-version }}
-        if: steps.changes.outputs.d3charts == 'true'
+        if: ${{ steps.check-repo-owner.outputs.origin == 'true' && steps.changes.outputs.d3charts == 'true' }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           check-latest: true
 
       - name: Install dependencies
-        if: steps.changes.outputs.d3charts == 'true'
+        if: ${{ steps.check-repo-owner.outputs.origin == 'true' && steps.changes.outputs.d3charts == 'true' }}
         run: |
           yarn install
           sudo apt update
           sudo apt install secure-delete
 
       - name: Build the library
-        if: steps.changes.outputs.d3charts == 'true'
+        if: ${{ steps.check-repo-owner.outputs.origin == 'true' && steps.changes.outputs.d3charts == 'true' }}
         run: npx nx build client-d3-charts
 
       - name: Publish the package (npmjs.org)
-        if: steps.changes.outputs.d3charts == 'true'
+        if: ${{ steps.check-repo-owner.outputs.origin == 'true' && steps.changes.outputs.d3charts == 'true' }}
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTOMATION_TOKEN }}" > ~/.npmrc
           cd ./dist/libs/client-d3-charts
