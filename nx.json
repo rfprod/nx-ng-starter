@@ -67,13 +67,10 @@
   },
   "newProjectRoot": "",
   "npmScope": "app",
-  "targetDependencies": {
-    "build": [
-      {
-        "projects": "dependencies",
-        "target": "build"
-      }
-    ]
+  "targetDefaults": {
+    "build": {
+      "dependsOn": ["^build"]
+    }
   },
   "tasksRunnerOptions": {
     "default": {
