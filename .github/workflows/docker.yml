@@ -81,7 +81,12 @@ jobs:
           yarn generate:changelog
           yarn e2e:headless:report
 
+      - name: Check repository owner
+        id: check-repo-owner
+        uses: ./.github/actions/check-repo-owner
+
       - name: Docker login
+        if: ${{ steps.check-repo-owner.outputs.origin == 'true' }}
         run: yarn docker:login "$DOCKER_REGISTRY_USER" "$DOCKER_REGISTRY_ACCESS_TOKEN"
         env:
           DOCKER_REGISTRY_USER: ${{ secrets.DOCKER_REGISTRY_USER }}
@@ -96,7 +101,7 @@ jobs:
           yarn docker:build documentation
 
       - name: Docker push apps
-        if: github.event.inputs.dryRun == 'false'
+        if: ${{ github.event.inputs.dryRun == 'false' && steps.check-repo-owner.outputs.origin == 'true' }}
         run: |
           yarn docker:push base
           echo "TODO - Push docker images to the regitry"

@@ -1,0 +1,47 @@
+# For more information see:
+# - https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+# - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
+
+# The action can be referenced in workflows like:
+# - rfprod/nx-ng-starter/.github/actions/check-repo-owner@master
+# - ./.github/actions/check-repo-owner
+
+# Explanation:
+# This action is useful mainly for open source projects or those projects that accept contributions through a fork strategy.
+# This action can be used to skip job steps when CI is triggered in a forked repo.
+# When the repo is forked by a contributor, it does not make sence to run publish/deploy steps from a fork.
+# If this repo is used as a template to start a new project, one can reconfigure the default value of the 'original-owner' input in this file,
+
+name: check-repo-owner
+description: Checks the repository owner. The publish/deploy steps should not be triggered from forks.
+
+inputs:
+  repo-owner:
+    description: Repository owner
+    required: true
+    default: ${{ github.repository_owner }}
+  original-owner:
+    description: Original repository owner
+    required: true
+    default: 'rfprod'
+outputs:
+  origin:
+    description: Indicates that the repository owner is the original owner which means that it is not a fork. Has two values - 'true' if the repo owner is the original owner, 'false' if the repo owner is not the original owner, i.e. it is a fork.
+    value: ${{ steps.check-repo-owner.outputs.origin }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Check repository owner
+      id: check-repo-owner
+      shell: bash
+      run: |
+        echo "Checking repository owner..."
+        echo "REPO_OWNER $REPO_OWNER"
+        ORIGIN='false'
+        if [ "$REPO_OWNER" == "$ORIGINAL_OWNER" ]; then ORIGIN='true'; fi
+        echo "ORIGIN: $ORIGIN"
+        echo "::set-output name=origin::$(echo ${ORIGIN})"
+      env:
+        REPO_OWNER: ${{ inputs.repo-owner }}
+        ORIGINAL_OWNER: ${{ inputs.original-owner }}
