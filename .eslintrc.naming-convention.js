@@ -38,6 +38,7 @@ const namingConventionConfig = (options = { jestConfigs: false }) => ({
        * > Authorization, Content-Type - client http headers
        * > Cache-Control, Expires, Pragma - api http headers
        * > graphql-ws, subscriptions-transport-ws - api graphql object properties
+       * > graphQLErrors - gql client library property
        * Valid examples:
        * > property
        * > propertyName
@@ -50,7 +51,7 @@ const namingConventionConfig = (options = { jestConfigs: false }) => ({
       custom: {
         regex: options.jestConfigs
           ? `^(${camelCaseRegExpInput}|ts-jest|[^0-9]+)$` // [^0-9]+ expression negates all numeric characters, allowing any other characters
-          : `^(${camelCaseRegExpInput}|FORCE_COLOR|Authorization|Content-Type|Cache-Control|Expires|Pragma|graphql-ws|subscriptions-transport-ws)$`,
+          : `^(${camelCaseRegExpInput}|FORCE_COLOR|Authorization|Content-Type|Cache-Control|Expires|Pragma|graphql-ws|subscriptions-transport-ws|graphQLErrors)$`,
         match: true,
       },
     },
