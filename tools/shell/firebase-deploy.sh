@@ -11,14 +11,14 @@ reportUsageError() {
   printInfoTitle "<< ${0} usage >>"
   printWarningMessage "firebase deploy token must be provided as a first argument"
   printInfoMessage "Client app"
-  printUsageTip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN app:client" "CI environment"
-  printUsageTip "bash tools/shell/firebase-deploy.sh localhost app:client" "Local environment, firebase authentication required"
+  printUsageTip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN client" "CI environment"
+  printUsageTip "bash tools/shell/firebase-deploy.sh localhost client" "Local environment, firebase authentication required"
   printInfoMessage "Elements app"
-  printUsageTip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN app:elements" "CI environment"
-  printUsageTip "bash tools/shell/firebase-deploy.sh localhost app:elements" "Local environment, firebase authentication required"
+  printUsageTip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN elements" "CI environment"
+  printUsageTip "bash tools/shell/firebase-deploy.sh localhost elements" "Local environment, firebase authentication required"
   printInfoMessage "API app"
-  printUsageTip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN app:api" "CI environment"
-  printUsageTip "bash tools/shell/firebase-deploy.sh localhost app:api" "Local environment, firebase authentication required"
+  printUsageTip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN api" "CI environment"
+  printUsageTip "bash tools/shell/firebase-deploy.sh localhost api" "Local environment, firebase authentication required"
   printInfoMessage "All apps"
   printUsageTip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN" "CI environment"
   printUsageTip "bash tools/shell/firebase-deploy.sh localhost" "Local environment, firebase authentication required"
@@ -38,44 +38,53 @@ declare -A PROJECT_DIRECTORIES=(
 )
 
 ##
-# Removes junky files from project root.
+# Removes unneeded files from the project root.
 ##
 cleanup() {
   ##
-  # Remove firebase files from project root which are copied there from project directory.
+  # Delete the firebase configuration files from the project root that were previously copied from the project directory.
   ##
   rm -f ./.firebaserc ./firebase.json
   ##
-  # Remove .firebase directory with hosting cache
+  # Delete .firebase cache.
   ##
   rm -rf ./.firebase/
 }
 
 ##
-# Copies firebase config from application root to project root for deployment.
+# Copies firebase config from the application root to the project root.
 ##
 config() {
   printInfoTitle "<< CONFIG >>"
-  printInfoMessage "project directory" "$1"
+  printNameAndValue "project directory" "$1"
   printGap
 
   ##
-  # Copy firebase files to project root for deployment.
-  # Later both will be removed.
+  # Copy firebase files to the project root for deployment.
   ##
   cp "$1".firebaserc ./.firebaserc
   cp "$1"firebase.json ./firebase.json
 }
 
 ##
-# Deploys client application.
+# Deploys a client application to Firebase hosting.
 ##
-deployClientApp() {
-  config "${PROJECT_DIRECTORIES["client"]}"
+deployHosting() {
+  printInfoTitle "<< Deploying hosting >>"
+  printNameAndValue "project directory" "$2"
+  printGap
+
+  config "$2"
 
   if [ "$1" = "localhost" ]; then
+    printInfoMessage ">> deploying from localhost"
+    printGap
+
     firebase deploy --only hosting || exit 1
   else
+    printInfoMessage ">> deploying using deployment token"
+    printGap
+
     firebase deploy --only hosting --token "$1" || exit 1
   fi
 
@@ -83,44 +92,24 @@ deployClientApp() {
 }
 
 ##
-# Deploys elements application.
+# Deploys an api application to Firebase functions.
 ##
-deployElementsApp() {
-  config "${PROJECT_DIRECTORIES["elements"]}"
+deployFunctions() {
+  printInfoTitle "<< Deploying hosting >>"
+  printNameAndValue "project directory" "$2"
+  printGap
+
+  config "$2"
 
   if [ "$1" = "localhost" ]; then
-    firebase deploy --only hosting || exit 1
-  else
-    firebase deploy --only hosting --token "$1" || exit 1
-  fi
+    printInfoMessage ">> deploying from localhost, firebase auth is assumed"
+    printGap
 
-  cleanup
-}
-
-##
-# Deploys documentation application.
-##
-deployDocumentationApp() {
-  config "${PROJECT_DIRECTORIES["documentation"]}"
-
-  if [ "$1" = "localhost" ]; then
-    firebase deploy --only hosting || exit 1
-  else
-    firebase deploy --only hosting --token "$1" || exit 1
-  fi
-
-  cleanup
-}
-
-##
-# Deploys api to firebase functions.
-##
-deployApiApp() {
-  config "${PROJECT_DIRECTORIES["api"]}"
-
-  if [ "$1" = "localhost" ]; then
     firebase deploy --only functions || exit 1
   else
+    printInfoMessage ">> deploying using deployment token"
+    printGap
+
     firebase deploy --only functions --token "$1" || exit 1
   fi
 
@@ -128,13 +117,13 @@ deployApiApp() {
 }
 
 ##
-# Deploys both client app, and api.
+# Deploys all applications.
 ##
 deployAll() {
-  deployApiApp "$1"
-  deployClientApp "$1"
-  deployElementsApp "$1"
-  deployDocumentationApp "$1"
+  deployFunctions "$1" "${PROJECT_DIRECTORIES["api"]}"
+  deployHosting "$1" "${PROJECT_DIRECTORIES["client"]}"
+  deployHosting "$1" "${PROJECT_DIRECTORIES["elements"]}"
+  deployHosting "$1" "${PROJECT_DIRECTORIES["documentation"]}"
 }
 
 ##
@@ -143,14 +132,11 @@ deployAll() {
 if [ $# -lt 1 ]; then
   reportUsageError
 elif [ $# -ge 2 ]; then
-  if [ "$2" = "client" ]; then
-    deployClientApp "$1"
-  elif [ "$2" = "elements" ]; then
-    deployElementsApp "$1"
-  elif [ "$2" = "documentation" ]; then
-    deployDocumentationApp "$1"
+  APP_DIRECTORY="${PROJECT_DIRECTORIES["$2"]}"
+  if [ "$2" = "client" ] || [ "$2" = "elements" ] || [ "$2" = "documentation" ]; then
+    deployHosting "$1" "$APP_DIRECTORY"
   elif [ "$2" = "api" ]; then
-    deployApiApp "$1"
+    deployFunctions "$1" "$APP_DIRECTORY"
   else
     deployAll "$1"
   fi
