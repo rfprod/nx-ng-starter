@@ -1,7 +1,9 @@
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import { ApolloLink } from '@apollo/client/core';
+import { ApolloLink, Operation, ServerError, ServerParseError } from '@apollo/client/core';
+import { GraphQLErrors, NetworkError } from '@apollo/client/errors';
+import { ErrorResponse } from '@apollo/client/link/error';
 import { AppUserState } from '@app/client-store-user';
 import { AppClientTranslateModule } from '@app/client-translate';
 import {
@@ -13,7 +15,8 @@ import {
 } from '@app/client-unit-testing';
 import { HTTP_STATUS, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { NgxsModule, Store } from '@ngxs/store';
-import { Apollo, ApolloModule } from 'apollo-angular';
+import { Apollo, ApolloModule, gql } from 'apollo-angular';
+import { GraphQLError } from 'graphql';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, concatMap, map, tap } from 'rxjs/operators';
 
@@ -138,6 +141,106 @@ describe('AppHttpHandlersService', () => {
     }));
   });
 
+  describe('gqlLinkSplitTest', () => {
+    it('should resolve to false if query name is UploadFile', () => {
+      const query = gql`
+        query UploadFile($id: String!) {
+          matcomp(id: $id) {
+            id
+            name
+          }
+        }
+      `;
+      const operation = <Operation>{
+        query,
+      };
+      const splitTest = service.gqlLinkSplitTest();
+      const result = splitTest(operation);
+      expect(result).toBeFalsy();
+    });
+
+    it('should resolve to false if query name is defined and is no UploadFile', () => {
+      const query = gql`
+        query Test($id: String!) {
+          matcomp(id: $id) {
+            id
+            name
+          }
+        }
+      `;
+      const operation = <Operation>{
+        query,
+      };
+      const splitTest = service.gqlLinkSplitTest();
+      const result = splitTest(operation);
+      expect(result).toBeTruthy();
+    });
+  });
+
+  describe('gqlErrorLinkHandler', () => {
+    let showToasterSpy: jest.SpyInstance;
+
+    beforeEach(() => {
+      showToasterSpy = jest.spyOn(toaster, 'showToaster');
+    });
+
+    it('should process errors as expected: no errors', () => {
+      const errorRes = <ErrorResponse>{
+        graphQLErrors: void 0,
+        networkError: void 0,
+      };
+      service.gqlErrorLinkHandler(errorRes);
+      expect(showToasterSpy).toHaveBeenCalledWith('Graphql request error', 'error');
+    });
+
+    it('should process errors as expected: graphQLErrors', () => {
+      const testErrorNoCode = <GraphQLError>{
+        message: 'gql error 1',
+      };
+      const testError = <GraphQLError>{
+        message: 'gql error 2',
+        extensions: <GraphQLError['extensions']>{
+          code: '400',
+        },
+      };
+      const errorRes = <ErrorResponse>{
+        graphQLErrors: <GraphQLErrors>[testErrorNoCode, testError],
+        networkError: void 0,
+      };
+      service.gqlErrorLinkHandler(errorRes);
+      const expectedMessage = `[GraphQL error ${testErrorNoCode.extensions?.code}]: ${testErrorNoCode.message}[GraphQL error ${testError.extensions.code}]: ${testError.message}`;
+      expect(showToasterSpy).toHaveBeenCalledWith(expectedMessage, 'error');
+    });
+
+    it('should process errors as expected: networkError', () => {
+      const networkError: NetworkError = {
+        bodyText: '',
+        message: '',
+        name: '',
+        response: <Response>{
+          body: null,
+          bodyUsed: false,
+          headers: {},
+          ok: false,
+          status: 400,
+          statusText: 'err',
+          type: 'error',
+          url: 'https://test',
+        },
+        result: {},
+        statusCode: 400,
+      };
+      const errorRes = <ErrorResponse>{
+        graphQLErrors: void 0,
+        networkError,
+      };
+      service.gqlErrorLinkHandler(errorRes);
+      const err = <(ServerParseError & ServerError) | null>networkError;
+      const expectedMessage = `[Network error ${err?.statusCode}]: ${err?.message}`;
+      expect(showToasterSpy).toHaveBeenCalledWith(expectedMessage, 'error');
+    });
+  });
+
   it('checkErrorStatusAndRedirect should reset user if error status is 401', () => {
     service.checkErrorStatusAndRedirect(HTTP_STATUS.BAD_REQUEST);
     expect(storeDispatchSpy).not.toHaveBeenCalled();
@@ -176,16 +279,32 @@ describe('AppHttpHandlersService', () => {
     }));
   });
 
-  it('createApolloLink should return the newtork link observable', waitForAsync(() => {
+  it('createGqlLink should return the newtork link observable', waitForAsync(() => {
+    const getEndpointSpy = jest.spyOn(service, 'getEndpoint');
+    const gqlUriFunctionSpy = jest.spyOn(service, 'gqlUriFunction');
+    const gqlLinkSplitTestSpy = jest.spyOn(service, 'gqlLinkSplitTest');
     void service
       .createGqlLink()
       .pipe(
         tap(link => {
           expect(link instanceof ApolloLink).toBeTruthy();
+          expect(getEndpointSpy).toHaveBeenCalledTimes(1);
+          expect(gqlUriFunctionSpy).toHaveBeenCalledTimes(1);
+          expect(gqlLinkSplitTestSpy).toHaveBeenCalledTimes(1);
         }),
       )
       .subscribe();
   }));
+
+  it('gqlUriFunction should return expected URI function', () => {
+    const uri = 'https://test';
+    const uriFn = service.gqlUriFunction(uri);
+    const operation = <Operation>{
+      operationName: 'test',
+    };
+    const result = uriFn(operation);
+    expect(result).toEqual(`${uri}?operation=${operation.operationName}`);
+  });
 
   describe('getErrorMessage', () => {
     it('should process an error as expected if the message property is present', () => {
