@@ -7,6 +7,7 @@ import { AppLoggerModule } from '@app/backend-logger';
 import { AppWebsocketModule } from '@app/backend-websocket';
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 
 import { environment } from '../environments/environment';
 
@@ -27,6 +28,9 @@ import { environment } from '../environments/environment';
     AppLoggerModule,
     AppGqlModule.forRoot(environment),
     AppGrpcModule.forRoot(environment),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
   ],
   providers: [
     {
