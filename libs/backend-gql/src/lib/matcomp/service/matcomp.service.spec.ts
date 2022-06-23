@@ -56,7 +56,7 @@ describe('AppMatcompService', () => {
       expect(created.id).toEqual(expected.id);
       expect(created.description).toEqual(expected.description);
       expect(created.name).toEqual(expected.name);
-      expect(created.creationDate).toBeCloseTo(expected.creationDate);
+      expect(created.creationDate).toEqual(expect.any(Number));
       expect(found).toBeDefined();
       expect(found instanceof AppMatcomp).toBeTruthy();
       if (typeof found !== 'undefined') {
@@ -75,7 +75,7 @@ describe('AppMatcompService', () => {
     expect(created.id).toEqual(expected.id);
     expect(created.description).toEqual(expected.description);
     expect(created.name).toEqual(expected.name);
-    expect(created.creationDate).toBeCloseTo(expected.creationDate);
+    expect(created.creationDate).toEqual(expect.any(Number));
   });
 
   it('remove method should remove an item from the items array and return the removed item', () => {
