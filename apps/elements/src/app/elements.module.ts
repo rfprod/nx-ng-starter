@@ -23,7 +23,12 @@ import { AppElementsService } from './services/elements.service';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
-    NgxsModule.forRoot([], { developmentMode: !environment.production }),
+    NgxsModule.forRoot([], {
+      developmentMode: !environment.production,
+      compatibility: {
+        strictContentSecurityPolicy: true,
+      },
+    }),
     NgxsLoggerPluginModule.forRoot({ disabled: environment.production, collapsed: true }),
     NgxsRouterPluginModule.forRoot(),
     NgxsFormPluginModule.forRoot(),

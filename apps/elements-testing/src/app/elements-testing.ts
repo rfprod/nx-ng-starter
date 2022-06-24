@@ -1,9 +1,13 @@
 import './elements-testing.scss';
 
+import { sanitize } from 'dompurify';
+
 export class AppElementsTesting extends HTMLElement {
   public connectedCallback() {
     const title = 'elements-testing';
-    this.innerHTML = `
+    // eslint-disable-next-line no-unsanitized/property -- the value is sanitized
+    this.innerHTML = sanitize(
+      `
 <h1>${title}</h1>
 <pre>
 # To test elements serve the elements app first
@@ -28,7 +32,8 @@ ng serve elements-testing
 </pre>
 
 <app-chatbot-root></app-chatbot-root>
-    `;
+    `,
+    );
   }
 }
 customElements.define('elements-testing', AppElementsTesting);
