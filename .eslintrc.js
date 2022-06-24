@@ -180,7 +180,6 @@ module.exports = {
         'plugin:@typescript-eslint/recommended',
         'prettier',
         'plugin:eslint-comments/recommended',
-        'plugin:@angular-eslint/template/process-inline-templates',
       ],
       plugins: [
         'prettier',

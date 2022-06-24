@@ -38,7 +38,7 @@ jobs:
               - 'libs/client-d3-charts/package.json'
 
       - name: Check repository owner
-        if: ${{ steps.check-repo-owner.outputs.origin == 'true' && steps.changes.outputs.d3charts == 'true' }}
+        if: ${{ steps.changes.outputs.d3charts == 'true' }}
         id: check-repo-owner
         uses: ./.github/actions/check-repo-owner
 
