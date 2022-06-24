@@ -4,11 +4,7 @@ import { ITooltipData, TOOLTIP_DATA } from './tooltip.interface';
 
 @Component({
   selector: 'app-tooltip',
-  template: `
-    <div class="app-tooltip">
-      <small class="app-tooltip__text">{{ data.text }}</small>
-    </div>
-  `,
+  templateUrl: './tooltip.component.html',
   styleUrls: ['./tooltip.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
