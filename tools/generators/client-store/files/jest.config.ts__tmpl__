@@ -1,6 +1,6 @@
 const jestPresetAngularSerializers = require('jest-preset-angular/build/serializers');
 
-module.exports = {
+const config = {
   preset: '../../jest.preset.js',
   coverageDirectory: '../../coverage/libs/<%= name %>',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
@@ -15,3 +15,5 @@ module.exports = {
     },
   },
 };
+
+export default config;
