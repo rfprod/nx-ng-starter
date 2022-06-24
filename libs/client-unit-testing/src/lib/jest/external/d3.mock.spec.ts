@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 describe('setupD3JsMock', () => {
   describe('document.getElementById finds nothing', () => {
     it('should set up expected d3 mock: scaleOrdinal', () => {
-      expect(d3.scaleOrdinal('test')).toEqual('test');
+      expect(d3.scaleOrdinal('range')('test')).toEqual('test');
     });
 
     it('should set up expected d3 mock: max', () => {
@@ -62,7 +62,7 @@ describe('setupD3JsMock', () => {
     });
 
     it('should set up expected d3 mock: scaleOrdinal', () => {
-      expect(d3.scaleOrdinal('test')).toEqual('test');
+      expect(d3.scaleOrdinal('range')('test')).toEqual('test');
     });
 
     it('should set up expected d3 mock: max', () => {

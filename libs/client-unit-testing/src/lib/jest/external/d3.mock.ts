@@ -46,10 +46,10 @@ const lineRadial = (fn: unknown) => ({
 
 /**
  * d3js scaleOrdinal method mock.
- * @param original input data
+ * @param range input data
  * @returns
  */
-const scaleOrdinal = (original: string) => original;
+const scaleOrdinal = (range: string) => (original: string) => original;
 
 /**
  * d3js scaleLinear method mock.
