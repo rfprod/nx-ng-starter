@@ -55,12 +55,20 @@ module.exports = {
         '@angular-eslint/use-injectable-provided-in': 'off',
       },
     },
+    // NOTE: WE ARE NOT APPLYING PRETTIER IN THIS OVERRIDE, ONLY @ANGULAR-ESLINT/TEMPLATE
+    {
+      files: ['**/*.html'],
+      extends: ['plugin:@angular-eslint/template/recommended'],
+      rules: {},
+    },
     {
       files: ['**/*.html'],
       excludedFiles: ['*inline-template-*.component.html'],
-      plugins: ['prettier', '@angular-eslint/template'],
-      extends: ['plugin:prettier/recommended', 'plugin:@angular-eslint/template/recommended'],
-      rules: {},
+      extends: ['plugin:prettier/recommended'],
+      rules: {
+        // NOTE: WE ARE OVERRIDING THE DEFAULT CONFIG TO ALWAYS SET THE PARSER TO ANGULAR (SEE BELOW)
+        'prettier/prettier': ['error', { parser: 'angular' }],
+      },
     },
   ],
 };
