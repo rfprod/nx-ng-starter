@@ -5,10 +5,10 @@ const config = {
   coverageThreshold: {
     // TODO: bump coverage thresholds
     global: {
-      branches: 3,
-      functions: 12,
-      lines: 21,
-      statements: 23,
+      branches: 7,
+      functions: 27,
+      lines: 28,
+      statements: 32,
     },
   },
   displayName: 'client-d3-charts',
