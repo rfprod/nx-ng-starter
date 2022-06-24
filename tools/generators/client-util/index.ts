@@ -14,6 +14,7 @@ import {
 } from '@angular-devkit/schematics';
 import { createOrUpdate, deleteFile, formatFiles, getProjectConfig } from '@nrwl/workspace';
 import * as fs from 'fs';
+import { fileExists } from 'nx/src/utils/fileutils';
 
 import { ISchematicContext } from './schema.interface';
 
@@ -86,7 +87,10 @@ const updateProjectConfig =
 const cleanup =
   (schema: ISchematicContext): Rule =>
   (tree: Tree, context: SchematicContext) => {
-    return chain([deleteFile('./.eslintrc.json')])(tree, context);
+    const root = `${process.cwd()}`;
+    const rootEslintJson = `${root}/.eslintrc.json`;
+    const eslintJsonExists = fileExists(rootEslintJson);
+    return chain(eslintJsonExists ? [deleteFile(rootEslintJson)] : [])(tree, context);
   };
 
 export default function (schema: ISchematicContext) {

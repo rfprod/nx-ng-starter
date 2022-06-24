@@ -2,11 +2,15 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { first, map, switchMap, timer } from 'rxjs';
 
-import { TBarChartData } from '../../interfaces/bar-chart.interface';
-import { IForceDirectedChartData, IForceDirectedGraphEntity } from '../../interfaces/force-directed-chart.interface';
-import { TLineChartData } from '../../interfaces/line-chart.interface';
-import { IPieChartDataNode } from '../../interfaces/pie-chart.interface';
-import { IRadarChartDataNode } from '../../interfaces/radar-chart.interface';
+import { IBarChartOptions, TBarChartData } from '../../interfaces/bar-chart.interface';
+import {
+  IForceDirectedChartData,
+  IForceDirectedChartOptions,
+  IForceDirectedGraphEntity,
+} from '../../interfaces/force-directed-chart.interface';
+import { ILineChartOptions, TLineChartData } from '../../interfaces/line-chart.interface';
+import { IPieChartDataNode, IPieChartOptions } from '../../interfaces/pie-chart.interface';
+import { IRadarChartDataNode, IRadarChartOptions } from '../../interfaces/radar-chart.interface';
 
 @Component({
   selector: 'app-chart-examples',
@@ -144,47 +148,47 @@ export class AppChartExamplesComponent {
     .observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
     .pipe(map(result => Object.keys(result.breakpoints).find(item => result.breakpoints[item]) ?? 'unknown'));
 
-  public readonly barChartData$ = this.breakpoint$.pipe(
+  public readonly barChartConfig$ = this.breakpoint$.pipe(
     switchMap(() =>
       timer(this.timeout).pipe(
         first(),
-        map(() => this.barChartData),
+        map(() => ({ data: this.barChartData, options: this.barChartOptions() })),
       ),
     ),
   );
 
-  public readonly lineChartData$ = this.breakpoint$.pipe(
+  public readonly lineChartConfig$ = this.breakpoint$.pipe(
     switchMap(() =>
       timer(this.timeout).pipe(
         first(),
-        map(() => this.lineChartData),
+        map(() => ({ data: this.lineChartData, options: this.lineChartOptions() })),
       ),
     ),
   );
 
-  public readonly radarChartData$ = this.breakpoint$.pipe(
+  public readonly radarChartConfig$ = this.breakpoint$.pipe(
     switchMap(() =>
       timer(this.timeout).pipe(
         first(),
-        map(() => this.radarChartData),
+        map(() => ({ data: this.radarChartData, options: this.radarChartOptions() })),
       ),
     ),
   );
 
-  public readonly pieChartData$ = this.breakpoint$.pipe(
+  public readonly pieChartConfig$ = this.breakpoint$.pipe(
     switchMap(() =>
       timer(this.timeout).pipe(
         first(),
-        map(() => this.pieChartData),
+        map(() => ({ data: this.pieChartData, options: this.pieChartOptions() })),
       ),
     ),
   );
 
-  public readonly forceDirectedChartData$ = this.breakpoint$.pipe(
+  public readonly forceDirectedChartConfig$ = this.breakpoint$.pipe(
     switchMap(() =>
       timer(this.timeout).pipe(
         first(),
-        map(() => this.forceDirectedChartData),
+        map(() => ({ data: this.forceDirectedChartData, options: this.forceDirectedChartOptions() })),
       ),
     ),
   );
@@ -192,4 +196,37 @@ export class AppChartExamplesComponent {
   constructor(private readonly breakpointObserver: BreakpointObserver) {}
 
   private readonly timeout = 100;
+
+  public barChartOptions() {
+    return <Partial<IBarChartOptions>>{
+      chartTitle: 'Example bar chart',
+      xAxisTitle: 'axis x',
+    };
+  }
+
+  public lineChartOptions() {
+    return <Partial<ILineChartOptions>>{
+      chartTitle: 'Example line chart',
+      xAxisTitle: 'Date',
+      yAxisTitle: 'Value',
+    };
+  }
+
+  public radarChartOptions() {
+    return <Partial<IRadarChartOptions>>{
+      chartTitle: 'Example radar chart',
+    };
+  }
+
+  public pieChartOptions() {
+    return <Partial<IPieChartOptions>>{
+      chartTitle: 'Example pie chart',
+    };
+  }
+
+  public forceDirectedChartOptions() {
+    return <Partial<IForceDirectedChartOptions>>{
+      chartTitle: 'Example force directed chart',
+    };
+  }
 }
