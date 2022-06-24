@@ -1,4 +1,12 @@
 {
   "extends": ["../../.eslintrc.js"],
-  "ignorePatterns": ["!**/*"]
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["elements-testing.ts"],
+      "rules": {
+        "eslint-comments/no-restricted-disable": ["off"]
+      }
+    }
+  ]
 }
