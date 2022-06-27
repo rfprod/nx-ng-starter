@@ -29,9 +29,6 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: Disable session history
-        uses: ./.github/actions/disable-session-history
-
       - name: Detect changes
         uses: dorny/paths-filter@v2
         id: changes
@@ -53,6 +50,7 @@ jobs:
               - '.prettier*'
               - '.protolint.yaml'
               - '.stylelint*'
+              - 'package.json'
             dependencies:
               - 'yarn.lock'
             electron:
@@ -67,29 +65,10 @@ jobs:
               - '.storybook/**'
               - '*.stories.ts'
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
         with:
           node-version: ${{ matrix.node-version }}
-          check-latest: true
-
-      - name: Configure kernel
-        uses: ./.github/actions/configure-kernel
-
-      - name: Use yarn v1 required for integrity check
-        uses: ./.github/actions/use-yarn-v1
-
-      - name: Workspace cache
-        uses: ./.github/actions/workspace-cache
-        with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Workspace integrity check
-        if: steps.changes.outputs.dependencies == 'false'
-        run: yarn workspace:integrity-check
-
-      - name: Install project dependencies
-        run: yarn install:ci
 
       - name: Validate the commit messages
         run: |

@@ -1,0 +1,49 @@
+# For more information see:
+# - https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+# - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
+
+# The action can be referenced in workflows like:
+# - rfprod/nx-ng-starter/.github/actions/setup-environment@main
+# - ./.github/actions/setup-environment
+
+name: setup-environment
+description: Set up the environment. This composite action should be used in two workflows - pr-validation and trunk-on-push.
+
+inputs:
+  node-version:
+    description: NodeJS version
+    required: true
+    default: 16.x
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Disable session history
+      uses: ./.github/actions/disable-session-history
+
+    - name: Use Node.js ${{ inputs.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-version }}
+        check-latest: true
+
+    - name: Configure kernel
+      uses: ./.github/actions/configure-kernel
+
+    - name: Use yarn v1 required for integrity check
+      uses: ./.github/actions/use-yarn-v1
+
+    - name: Workspace cache
+      id: workspace-cache
+      uses: ./.github/actions/workspace-cache
+      with:
+        node-version: ${{ inputs.node-version }}
+
+    - name: Workspace integrity check
+      if: steps.workspace-cache.outputs.cache-hit == 'true'
+      shell: bash
+      run: yarn workspace:integrity-check
+
+    - name: Install project dependencies
+      shell: bash
+      run: yarn install:ci
