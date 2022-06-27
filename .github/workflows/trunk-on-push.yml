@@ -26,9 +26,6 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v3
 
-      - name: Disable session history
-        uses: ./.github/actions/disable-session-history
-
       - name: Detect changes
         uses: dorny/paths-filter@v2
         id: changes
@@ -52,11 +49,9 @@ jobs:
               - '.prettier*'
               - '.protolint.yaml'
               - '.stylelint*'
-            dependencies:
               - 'package.json'
+            dependencies:
               - 'yarn.lock'
-              - 'functions/package.json'
-              - 'functions/package-lock.json'
             electron:
               - '.electron/**'
               - 'index.js'
@@ -64,33 +59,15 @@ jobs:
               - 'android/**'
               - 'capacitor.config.json'
 
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          check-latest: true
-
-      - name: Configure kernel
-        uses: ./.github/actions/configure-kernel
-
-      - name: Use yarn v1 required for integrity check
-        uses: ./.github/actions/use-yarn-v1
-
-      - name: Workspace cache
-        uses: ./.github/actions/workspace-cache
+      - name: Setup environment
+        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
+        uses: ./.github/actions/setup-environment
         with:
           node-version: ${{ matrix.node-version }}
 
       - name: Install global dependencies
         if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
         run: npm i -g firebase-tools @compodoc/compodoc
-
-      - name: Workspace integrity check
-        if: steps.changes.outputs.dependencies == 'false'
-        run: yarn workspace:integrity-check
-
-      - name: Install project dependencies
-        run: yarn install:ci
 
       - name: Lint all
         if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}

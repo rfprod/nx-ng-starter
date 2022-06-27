@@ -4,22 +4,17 @@
 
 # The action can be referenced in workflows like:
 # - rfprod/nx-ng-starter/.github/actions/workspace-cache@main
-# ./.github/actions/workspace-cache
+# - ./.github/actions/workspace-cache
 
 name: workspace-cache
-description: Configure and use workspace cache
+description: Configure and use workspace cache.
+
 inputs:
   node-version:
     description: NodeJS version
     required: true
     default: 16.x
 outputs:
-  os:
-    description: Runner os
-    value: ${{ runner.os }}
-  commitsha:
-    description: GitHub commit SHA
-    value: ${{ steps.get-variables.outputs.commitsha }}
   cache-hit:
     description: Workspace cache hit
     value: ${{ steps.workspace-cache.outputs.cache-hit }}
@@ -33,7 +28,7 @@ runs:
       run: |
         echo "::set-output name=commitsha::$(echo ${GITHUB_SHA})";
 
-    - name: Workspace cache (npm, yarn, nx, jest)
+    - name: Workspace cache (node_modules, nx, jest, angular)
       uses: actions/cache@v3
       id: workspace-cache
       with:
