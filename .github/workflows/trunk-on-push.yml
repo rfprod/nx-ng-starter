@@ -44,14 +44,16 @@ jobs:
               - 'nx.json'
               - 'angular.json'
               - 'babel.config.json'
+              - 'package.json'
+              - 'functions/package.json'
               - 'jest*'
               - '.eslint*'
               - '.prettier*'
               - '.protolint.yaml'
               - '.stylelint*'
-              - 'package.json'
             dependencies:
               - 'yarn.lock'
+              - 'functions/package-lock.json'
             electron:
               - '.electron/**'
               - 'index.js'
