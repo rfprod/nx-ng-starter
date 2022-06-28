@@ -200,15 +200,16 @@ export class AppChartExamplesComponent {
   public barChartOptions() {
     return <Partial<IBarChartOptions>>{
       chartTitle: 'Example bar chart',
-      xAxisTitle: 'axis x',
+      xAxisTitle: 'long x axis title',
+      yAxisTitle: 'long y axis title',
     };
   }
 
   public lineChartOptions() {
     return <Partial<ILineChartOptions>>{
       chartTitle: 'Example line chart',
-      xAxisTitle: 'Date',
-      yAxisTitle: 'Value',
+      xAxisTitle: 'Date range',
+      yAxisTitle: 'Value range',
     };
   }
 

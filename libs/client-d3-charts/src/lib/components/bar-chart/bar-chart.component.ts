@@ -13,7 +13,7 @@ import {
 
 import { IBarChartDataNode, IBarChartOptions, TBarChartData } from '../../interfaces/bar-chart.interface';
 import { D3_CHART_FACTORY, ID3ChartFactory } from '../../providers/d3-chart-factory.provider';
-import { defaultBarChartConfig } from '../../util/bar-chart.util';
+import { defaultBarChartConfig } from '../../util';
 
 interface IInputChanges {
   data?: SimpleChange | null;
@@ -54,33 +54,20 @@ export class AppBarChartComponent implements AfterViewInit, OnChanges {
    * @returns chart options
    */
   private chartOptions() {
-    const margin: IBarChartOptions['margin'] = { top: 70, right: 50, bottom: 50, left: 60 };
-    const minWidth = 350;
-    const modifiers = {
-      width: 10,
-      height: 20,
-    };
-    const width = Math.min(minWidth, this.doc.body.clientWidth - modifiers.width) - margin.left - margin.right;
-    const height = Math.min(width, this.doc.body.clientHeight - margin.top - margin.bottom - modifiers.height);
+    const bodyWidthAdjustment = 10;
+    const width = Math.min(
+      this.options.width ?? defaultBarChartConfig.width,
+      this.doc.body.clientWidth - defaultBarChartConfig.margin.left - defaultBarChartConfig.margin.right - bodyWidthAdjustment,
+    );
+    const height = Math.min(
+      this.options.height ?? width,
+      this.doc.body.clientWidth - defaultBarChartConfig.margin.top - defaultBarChartConfig.margin.bottom - bodyWidthAdjustment,
+    );
     const yAxisTicks = Math.max(...this.data.map(item => item.value));
-    const pixelsPerCharacter = 4;
-    const xAxisLabelShift: IBarChartOptions['xAxisLabelShift'] = {
-      x:
-        defaultBarChartConfig.xAxisLabelShift.x +
-        ((this.options.xAxisTitle ?? defaultBarChartConfig.xAxisTitle).length - 1) * pixelsPerCharacter,
-      y: 228,
-    };
-    const yAxisLabelShift: IBarChartOptions['yAxisLabelShift'] = {
-      x: -10,
-      y: -10,
-    };
     const options: Partial<IBarChartOptions> = {
       width,
       height,
-      margin,
       yAxisTicks,
-      xAxisLabelShift,
-      yAxisLabelShift,
       ...this.options,
     };
     return options;

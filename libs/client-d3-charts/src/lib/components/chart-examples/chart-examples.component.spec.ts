@@ -27,15 +27,16 @@ describe('AppGlobalProgressBarComponent', () => {
   it('barChartOptions should have expected structure', () => {
     expect(component.barChartOptions()).toEqual({
       chartTitle: 'Example bar chart',
-      xAxisTitle: 'axis x',
+      xAxisTitle: 'long x axis title',
+      yAxisTitle: 'long y axis title',
     });
   });
 
   it('lineChartOptions should have expected structure', () => {
     expect(component.lineChartOptions()).toEqual({
       chartTitle: 'Example line chart',
-      xAxisTitle: 'Date',
-      yAxisTitle: 'Value',
+      xAxisTitle: 'Date range',
+      yAxisTitle: 'Value range',
     });
   });
 
