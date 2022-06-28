@@ -9,27 +9,19 @@ import { generateConfiguration } from './configuration.util';
  */
 export const defaultBarChartConfig: IBarChartOptions = Object.freeze({
   chartTitle: '',
-  width: 600,
-  height: 600,
+  width: 350,
+  height: 350,
   margin: {
-    top: 20,
-    right: 20,
-    bottom: 20,
-    left: 20,
+    top: 70,
+    right: 50,
+    bottom: 50,
+    left: 50,
   },
   transitionDuration: 400,
   xAxisPadding: 0.4,
-  xAxisTitle: 'x',
-  yAxisTitle: 'y',
+  xAxisTitle: '',
+  yAxisTitle: '',
   yAxisTicks: 10,
-  xAxisLabelShift: {
-    x: 10,
-    y: 184,
-  },
-  yAxisLabelShift: {
-    x: -10,
-    y: -10,
-  },
   labelTextWrapWidth: 60, // the number of pixels after which a label needs to be given a new line
   color: d3.scaleOrdinal(d3.schemeCategory10),
 });
@@ -50,9 +42,7 @@ const createContainer = (container: ElementRef<HTMLDivElement>, config: IBarChar
     .attr('width', config.width + config.margin.left + config.margin.right)
     .attr('height', config.height + config.margin.top + config.margin.bottom)
     .attr('class', id);
-  const g = svg
-    .append('g')
-    .attr('transform', `translate(${config.width / 2 - config.margin.left},${config.height / 2 - config.margin.top})`);
+  const g = svg.append('g').attr('transform', `translate(${config.margin.left},${config.margin.top / 2})`);
 
   return { svg, g };
 };
@@ -97,6 +87,40 @@ const wrapSvgText = (svgText: d3.Selection<d3.BaseType, unknown, SVGGElement, un
 };
 
 /**
+ * Creates the legend.
+ * @param g the svg g element
+ * @param config the chart configuration
+ */
+const createLegend = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>, config: IBarChartOptions) => {
+  g.append('g')
+    .attr('transform', `translate(0, ${config.height + config.margin.bottom})`)
+    .append('text')
+    .style('font-size', '12px')
+    .attr('class', 'legend')
+    .attr('dx', '1.5em')
+    .attr('dy', '1em')
+    .text(`x - ${config.xAxisTitle}`);
+
+  g.append('g')
+    .attr('transform', `translate(0, ${config.height + config.margin.bottom})`)
+    .append('text')
+    .style('font-size', '12px')
+    .attr('class', 'legend')
+    .attr('dx', '1.5em')
+    .attr('dy', '2.5em')
+    .text(`y - ${config.yAxisTitle}`);
+
+  g.append('g')
+    .attr('transform', `translate(0, 0)`)
+    .append('text')
+    .style('font-size', '12px')
+    .attr('class', 'legend')
+    .attr('dx', '1.5em')
+    .attr('dy', '-2em')
+    .text(config.chartTitle);
+};
+
+/**
  * Creates the x axis.
  * @param g the svg g element
  * @param x the x axis scale
@@ -107,13 +131,7 @@ const createAxisX = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>
 
   g.selectAll('text').call(wrapSvgText, config.labelTextWrapWidth);
 
-  xLabels
-    .attr('y', config.height - config.xAxisLabelShift.y)
-    .attr('x', config.width + config.xAxisLabelShift.x)
-    .attr('text-anchor', 'end')
-    .attr('class', 'legend')
-    .attr('dy', '0.35em')
-    .text(config.xAxisTitle);
+  xLabels.attr('transform', `translate(${config.width}, 0)`).attr('class', 'legend').attr('dx', '1.5em').attr('dy', '0.7em').text('x');
 };
 
 /**
@@ -137,11 +155,9 @@ const createAxisY = (
         .ticks(config.yAxisTicks),
     )
     .append('text')
-    .attr('y', config.yAxisLabelShift.y)
-    .attr('x', config.yAxisLabelShift.x)
-    .attr('text-anchor', 'end')
+    .attr('dy', '-1.5em')
     .attr('class', 'legend')
-    .text(config.yAxisTitle);
+    .text('y');
 };
 
 /**
@@ -274,6 +290,8 @@ export const drawBarChart = (container: ElementRef<HTMLDivElement>, data: TBarCh
   createAxisX(g, x, config);
 
   createAxisY(g, y, config);
+
+  createLegend(g, config);
 
   drawBarsAndSetPointerEvents(g, x, y, config, data);
 

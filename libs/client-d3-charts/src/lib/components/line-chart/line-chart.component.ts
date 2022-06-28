@@ -13,7 +13,7 @@ import {
 
 import { ILineChartDataNode, ILineChartOptions, TLineChartData } from '../../interfaces/line-chart.interface';
 import { D3_CHART_FACTORY, ID3ChartFactory } from '../../providers/d3-chart-factory.provider';
-import { defaultLineChartConfig } from '../../util/line-chart.util';
+import { defaultLineChartConfig } from '../../util';
 
 interface IInputChanges {
   data?: SimpleChange | null;
@@ -30,7 +30,7 @@ export class AppLineChartComponent implements AfterViewInit, OnChanges {
   /**
    * The chart id.
    */
-  @Input() public chartId = 'bar-0';
+  @Input() public chartId = 'line-0';
 
   /**
    * The chart data.
@@ -54,36 +54,24 @@ export class AppLineChartComponent implements AfterViewInit, OnChanges {
    * @returns chart options
    */
   private chartOptions() {
-    const margin: ILineChartOptions['margin'] = { top: 70, right: 50, bottom: 50, left: 60 };
+    const bodyWidthAdjustment = 10;
+    const width = Math.min(
+      this.options.width ?? defaultLineChartConfig.width,
+      this.doc.body.clientWidth - defaultLineChartConfig.margin.left - defaultLineChartConfig.margin.right - bodyWidthAdjustment,
+    );
+    const xTicksScale = 50;
     const ticks: ILineChartOptions['ticks'] = {
-      x: 5,
+      x: width / xTicksScale,
       y: Math.max(...this.data.map(item => item.value)),
     };
-    const minWidth = 350;
-    const modifiers = {
-      width: 10,
-      height: 20,
-    };
-    const width = Math.min(minWidth, this.doc.body.clientWidth - modifiers.width) - margin.left - margin.right;
-    const height = Math.min(width, this.doc.body.clientHeight - margin.top - margin.bottom - modifiers.height);
-    const pixelsPerCharacter = 4;
-    const xAxisLabelShift: ILineChartOptions['xAxisLabelShift'] = {
-      x:
-        defaultLineChartConfig.xAxisLabelShift.x +
-        ((this.options.xAxisTitle ?? defaultLineChartConfig.xAxisTitle).length - 1) * pixelsPerCharacter,
-      y: 228,
-    };
-    const yAxisLabelShift: ILineChartOptions['yAxisLabelShift'] = {
-      x: -10,
-      y: -10,
-    };
+    const height = Math.min(
+      this.options.height ?? width,
+      this.doc.body.clientWidth - defaultLineChartConfig.margin.top - defaultLineChartConfig.margin.bottom - bodyWidthAdjustment,
+    );
     const options: Partial<ILineChartOptions> = {
       width,
       height,
-      margin,
       ticks,
-      xAxisLabelShift,
-      yAxisLabelShift,
       ...this.options,
     };
     return options;

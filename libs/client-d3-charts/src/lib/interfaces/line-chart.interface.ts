@@ -21,14 +21,6 @@ export interface ILineChartOptions {
   dotRadius: number;
   xAxisTitle: string;
   yAxisTitle: string;
-  xAxisLabelShift: {
-    x: number;
-    y: number;
-  };
-  yAxisLabelShift: {
-    x: number;
-    y: number;
-  };
   ticks: {
     x: number;
     y: number;

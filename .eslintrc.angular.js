@@ -8,7 +8,7 @@ module.exports = {
     '@angular-eslint/no-pipe-impure': 'error',
     '@angular-eslint/contextual-decorator': 'error',
     '@angular-eslint/contextual-lifecycle': 'error',
-    '@angular-eslint/no-attribute-decorator': 'off', // keep off, @Attribute is more porformant than @Input when static values are used
+    '@angular-eslint/no-attribute-decorator': 'off', // keep off, @Attribute is more performant than @Input when static values are used
     '@angular-eslint/use-lifecycle-interface': 'error',
     '@angular-eslint/component-max-inline-declarations': ['error', { animations: 20, styles: 8, template: 5 }],
     '@angular-eslint/use-injectable-provided-in': 'error',
