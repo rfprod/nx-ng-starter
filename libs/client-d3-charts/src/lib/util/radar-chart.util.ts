@@ -7,21 +7,20 @@ import { generateConfiguration } from './configuration.util';
 /**
  * The radar chart default configuration.
  */
-export const defaultRadarChartConfig: IRadarChartOptions = Object.freeze({
+export const defaultRadarChartConfig: IRadarChartOptions = Object.freeze(<IRadarChartOptions>{
   chartTitle: '',
-  width: 600,
-  height: 600,
+  width: 350,
+  height: 350,
   margin: {
-    top: 20,
-    right: 20,
-    bottom: 20,
-    left: 20,
+    top: 50,
+    right: 50,
+    bottom: 50,
+    left: 50,
   },
-  scale: 0.9, // the chart scale factor
   levels: 3, // how many levels or inner circles should there be drawn
   maxValue: 0, // what is the value that the biggest circle will represent
   lineFactor: 1.1, // how much farther than the radius of the outer circle should the lines be stretched
-  labelFactor: 1.25, // how much farther than the radius of the outer circle should the labels be placed
+  labelFactor: 1.15, // how much farther than the radius of the outer circle should the labels be placed
   labelTextWrapWidth: 60, // the number of pixels after which a label needs to be given a new line
   opacityArea: 0.35, // the opacity of the area of the blob
   dotRadius: 4, // the size of the colored circles of each blog
@@ -50,10 +49,7 @@ const createContainer = (container: ElementRef<HTMLDivElement>, config: IRadarCh
     .attr('class', id);
   const g = svg
     .append('g')
-    .attr(
-      'transform',
-      `translate(${config.width / 2 + config.margin.left},${config.height / 2 + config.margin.top}) scale(${config.scale} ${config.scale})`,
-    );
+    .attr('transform', `translate(${config.width / 2 + config.margin.left},${config.height / 2 + config.margin.top})`);
 
   return { svg, g };
 };
@@ -136,6 +132,22 @@ const wrapSvgText = (svgText: d3.Selection<SVGTextElement, string, SVGGElement, 
       word = words.pop();
     }
   });
+};
+
+/**
+ * Creates the legend.
+ * @param g the svg g element
+ * @param config the chart configuration
+ */
+const createLegend = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>, config: IRadarChartOptions) => {
+  if (config.chartTitle !== '') {
+    g.append('g')
+      .attr('transform', `translate(-${config.width / 2 + config.margin.left / 2}, -${config.height / 2 + config.margin.top / 2})`)
+      .append('text')
+      .style('font-size', '12px')
+      .attr('class', 'legend')
+      .text(config.chartTitle);
+  }
 };
 
 /**
@@ -304,7 +316,7 @@ export const drawRadarChart = (container: ElementRef<HTMLDivElement>, data: TRad
   const maxValue = Math.max(config.maxValue, d3.max(data, i => d3.max(i.map(o => o.value))) ?? 0);
   const axisNames = data[0].map((i, j) => i.axis);
   const totalAxis = axisNames.length;
-  const radius = Math.min(config.width / 2, config.height / 2);
+  const radius = Math.min(config.width / 2 - config.margin.left / 2, config.height / 2 - config.margin.top / 2);
   const angleSlice = (Math.PI * 2) / totalAxis;
   const radiusScale = d3.scaleLinear([0, radius]).domain([0, maxValue]);
 
@@ -322,6 +334,8 @@ export const drawRadarChart = (container: ElementRef<HTMLDivElement>, data: TRad
   drawCircularGrid(axisGrid, radius, maxValue, config);
 
   drawAxis(axisGrid, axisNames, radiusScale, maxValue, angleSlice, config);
+
+  createLegend(g, config);
 
   drawRadarChartBlobs(radiusScale, angleSlice, g, data, config);
 

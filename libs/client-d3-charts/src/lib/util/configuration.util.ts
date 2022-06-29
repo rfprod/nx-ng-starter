@@ -15,7 +15,7 @@ export const generateConfiguration = <T>(config: T, options: Partial<T> | undefi
     const defaultValue = defaultConfiguration[key];
     const value = options[key];
     const typedKey: keyof typeof defaultConfiguration = key;
-    if (typeof defaultValue === 'string' || typeof defaultValue === 'number') {
+    if (typeof defaultValue === 'string' || typeof defaultValue === 'number' || typeof defaultValue === 'boolean') {
       result[typedKey] = typeof value !== 'undefined' ? value : defaultValue;
     } else if (defaultValue instanceof Function) {
       result[typedKey] = defaultValue;
