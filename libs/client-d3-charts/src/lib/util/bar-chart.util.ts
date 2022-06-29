@@ -7,7 +7,7 @@ import { generateConfiguration } from './configuration.util';
 /**
  * The bar chart default configuration.
  */
-export const defaultBarChartConfig: IBarChartOptions = Object.freeze({
+export const defaultBarChartConfig: IBarChartOptions = Object.freeze(<IBarChartOptions>{
   chartTitle: '',
   width: 350,
   height: 350,
@@ -22,6 +22,7 @@ export const defaultBarChartConfig: IBarChartOptions = Object.freeze({
   xAxisTitle: '',
   yAxisTitle: '',
   yAxisTicks: 10,
+  displayAxisLabels: true,
   labelTextWrapWidth: 60, // the number of pixels after which a label needs to be given a new line
   color: d3.scaleOrdinal(d3.schemeCategory10),
 });
@@ -92,32 +93,38 @@ const wrapSvgText = (svgText: d3.Selection<d3.BaseType, unknown, SVGGElement, un
  * @param config the chart configuration
  */
 const createLegend = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>, config: IBarChartOptions) => {
-  g.append('g')
-    .attr('transform', `translate(0, ${config.height + config.margin.bottom})`)
-    .append('text')
-    .style('font-size', '12px')
-    .attr('class', 'legend')
-    .attr('dx', '1.5em')
-    .attr('dy', '1em')
-    .text(`x - ${config.xAxisTitle}`);
+  if (config.displayAxisLabels && config.xAxisTitle !== '') {
+    g.append('g')
+      .attr('transform', `translate(0, ${config.height + config.margin.bottom})`)
+      .append('text')
+      .style('font-size', '12px')
+      .attr('class', 'legend')
+      .attr('dx', '1.5em')
+      .attr('dy', '1em')
+      .text(`x - ${config.xAxisTitle}`);
+  }
 
-  g.append('g')
-    .attr('transform', `translate(0, ${config.height + config.margin.bottom})`)
-    .append('text')
-    .style('font-size', '12px')
-    .attr('class', 'legend')
-    .attr('dx', '1.5em')
-    .attr('dy', '2.5em')
-    .text(`y - ${config.yAxisTitle}`);
+  if (config.displayAxisLabels && config.yAxisTitle !== '') {
+    g.append('g')
+      .attr('transform', `translate(0, ${config.height + config.margin.bottom})`)
+      .append('text')
+      .style('font-size', '12px')
+      .attr('class', 'legend')
+      .attr('dx', '1.5em')
+      .attr('dy', '2.5em')
+      .text(`y - ${config.yAxisTitle}`);
+  }
 
-  g.append('g')
-    .attr('transform', `translate(0, 0)`)
-    .append('text')
-    .style('font-size', '12px')
-    .attr('class', 'legend')
-    .attr('dx', '1.5em')
-    .attr('dy', '-2em')
-    .text(config.chartTitle);
+  if (config.chartTitle !== '') {
+    g.append('g')
+      .attr('transform', `translate(0, 0)`)
+      .append('text')
+      .style('font-size', '12px')
+      .attr('class', 'legend')
+      .attr('dx', '1.5em')
+      .attr('dy', '-2em')
+      .text(config.chartTitle);
+  }
 };
 
 /**
@@ -131,7 +138,9 @@ const createAxisX = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>
 
   g.selectAll('text').call(wrapSvgText, config.labelTextWrapWidth);
 
-  xLabels.attr('transform', `translate(${config.width}, 0)`).attr('class', 'legend').attr('dx', '1.5em').attr('dy', '0.7em').text('x');
+  if (config.displayAxisLabels) {
+    xLabels.attr('transform', `translate(${config.width}, 0)`).attr('class', 'legend').attr('dx', '1.5em').attr('dy', '0.7em').text('x');
+  }
 };
 
 /**
@@ -145,7 +154,8 @@ const createAxisY = (
   y: d3.ScaleLinear<number, number>,
   config: IBarChartOptions,
 ) => {
-  g.append('g')
+  const yLabels = g
+    .append('g')
     .call(
       d3
         .axisLeft(y)
@@ -154,10 +164,11 @@ const createAxisY = (
         })
         .ticks(config.yAxisTicks),
     )
-    .append('text')
-    .attr('dy', '-1.5em')
-    .attr('class', 'legend')
-    .text('y');
+    .append('text');
+
+  if (config.displayAxisLabels) {
+    yLabels.attr('dy', '-1.5em').attr('class', 'legend').text('y');
+  }
 };
 
 /**

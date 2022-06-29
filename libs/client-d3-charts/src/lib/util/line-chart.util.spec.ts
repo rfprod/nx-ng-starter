@@ -20,6 +20,7 @@ describe('line-chart.util', () => {
         x: expect.any(Number),
         y: expect.any(Number),
       },
+      displayAxisLabels: expect.any(Boolean),
       labelTextWrapWidth: expect.any(Number),
       color: expect.any(Function),
     });

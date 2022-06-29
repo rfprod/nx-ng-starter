@@ -25,6 +25,7 @@ export interface ILineChartOptions {
     x: number;
     y: number;
   };
+  displayAxisLabels: boolean;
   labelTextWrapWidth: number;
   color: d3.ScaleOrdinal<string, string>;
 }

@@ -17,6 +17,7 @@ describe('bar-chart.util', () => {
       xAxisTitle: expect.any(String),
       yAxisTitle: expect.any(String),
       yAxisTicks: expect.any(Number),
+      displayAxisLabels: expect.any(Boolean),
       labelTextWrapWidth: expect.any(Number),
       color: expect.any(Function),
     });
