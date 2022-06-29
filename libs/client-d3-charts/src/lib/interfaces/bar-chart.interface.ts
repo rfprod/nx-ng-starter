@@ -22,6 +22,7 @@ export interface IBarChartOptions {
   xAxisTitle: string;
   yAxisTitle: string;
   yAxisTicks: number;
+  displayAxisLabels: boolean;
   labelTextWrapWidth: number;
   color: d3.ScaleOrdinal<string, string>;
 }

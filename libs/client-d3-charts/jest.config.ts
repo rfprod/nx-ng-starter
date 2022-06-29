@@ -8,7 +8,7 @@ const config = {
       branches: 7,
       functions: 27,
       lines: 28,
-      statements: 32,
+      statements: 31,
     },
   },
   displayName: 'client-d3-charts',
