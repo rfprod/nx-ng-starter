@@ -12,7 +12,6 @@ describe('radar-chart.util', () => {
         bottom: expect.any(Number),
         left: expect.any(Number),
       },
-      scale: expect.any(Number),
       levels: expect.any(Number),
       maxValue: expect.any(Number),
       lineFactor: expect.any(Number),

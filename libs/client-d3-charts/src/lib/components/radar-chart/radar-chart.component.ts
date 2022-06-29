@@ -13,6 +13,7 @@ import {
 
 import { IRadarChartDataNode, IRadarChartOptions } from '../../interfaces/radar-chart.interface';
 import { D3_CHART_FACTORY, ID3ChartFactory } from '../../providers/d3-chart-factory.provider';
+import { defaultRadarChartConfig } from '../../util';
 
 interface IInputChanges {
   data?: SimpleChange | null;
@@ -29,7 +30,7 @@ export class AppRadarChartComponent implements AfterViewInit, OnChanges {
   /**
    * The chart id.
    */
-  @Input() public chartId = '0';
+  @Input() public chartId = 'radar-0';
 
   /**
    * The chart data.
@@ -53,40 +54,31 @@ export class AppRadarChartComponent implements AfterViewInit, OnChanges {
    * @returns chart options
    */
   private chartOptions() {
-    const margin = { top: 90, right: 100, bottom: 90, left: 100 };
-    const widthOffset = { min: 500, max: 700 };
-    const halfWidth = this.doc.body.clientWidth;
     const xsOffset = 500;
     const smOffset = 800;
     const mdOffset = 1024;
-    const labelFactorDefault = 1.25;
-    const labelFactorMd = 1.35;
-    const labelFactorSm = 1.45;
-    const labelFactorXs = 1.55;
-    const labelFactor =
-      this.doc.body.clientWidth <= xsOffset
-        ? labelFactorXs
-        : this.doc.body.clientWidth <= smOffset
-        ? labelFactorSm
-        : this.doc.body.clientWidth <= mdOffset
-        ? labelFactorMd
-        : labelFactorDefault;
+    const labelFactorDefault = 1.15;
+    const labelFactorMd = 1.15;
+    const labelFactorSm = 1.15;
+    const labelFactorXs = 1.4;
     const wrapWidthDefault = 85;
     const wrapWidthMd = 80;
     const wrapWidthXs = 70;
-    const labelTextWrapWidth =
-      this.doc.body.clientWidth <= xsOffset ? wrapWidthXs : this.doc.body.clientWidth <= mdOffset ? wrapWidthMd : wrapWidthDefault;
-    const minWidth = halfWidth < widthOffset.min ? widthOffset.min : halfWidth > widthOffset.max ? widthOffset.max : halfWidth;
-    const modifiers = {
-      width: 10,
-      height: 20,
-    };
-    const width = Math.min(minWidth, this.doc.body.clientWidth - modifiers.width) - margin.left - margin.right;
-    const height = Math.min(width, this.doc.body.clientHeight - margin.top - margin.bottom - modifiers.height);
+    const bodyWidthAdjustment = 10;
+    const width = Math.min(
+      this.options.width ?? defaultRadarChartConfig.width,
+      this.doc.body.clientWidth - defaultRadarChartConfig.margin.left - defaultRadarChartConfig.margin.right - bodyWidthAdjustment,
+    );
+    const height = Math.min(
+      width,
+      this.doc.body.clientHeight - defaultRadarChartConfig.margin.top - defaultRadarChartConfig.margin.bottom - bodyWidthAdjustment,
+    );
+    const labelFactor =
+      width <= xsOffset ? labelFactorXs : width <= smOffset ? labelFactorSm : width <= mdOffset ? labelFactorMd : labelFactorDefault;
+    const labelTextWrapWidth = width <= xsOffset ? wrapWidthXs : width <= mdOffset ? wrapWidthMd : wrapWidthDefault;
     const options: Partial<IRadarChartOptions> = {
       width,
       height,
-      margin,
       maxValue: this.data[0].reduce((accumulator, item) => (item.value > accumulator ? item.value : accumulator), 0) + 1,
       levels: 5,
       roundStrokes: true,

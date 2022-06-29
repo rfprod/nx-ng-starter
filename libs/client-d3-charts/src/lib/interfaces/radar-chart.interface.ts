@@ -18,7 +18,6 @@ export interface IRadarChartOptions {
     bottom: number;
     left: number;
   };
-  scale: number;
   maxValue: number;
   levels: number;
   lineFactor: number;
