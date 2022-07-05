@@ -9,9 +9,9 @@ source tools/shell/utils/module-aliases.sh ''
 ##
 reportUsageErrorAndExit() {
   printInfoTitle "<< ${0} usage >>"
-  printInfoMessage "version increment exits with error if latest commit is already tagged or if checked out branch is not master"
+  printInfoMessage "version increment exits with error if latest commit is already tagged or if checked out branch is not main"
   printUsageTip "bash tools/shell/version-increment.sh" "tag latest comment with an appropriate version"
-  printInfoMessage "Working versions ruleset (based on https://semver.org specification):"
+  printInfoMessage "Custom ruleset based on the https://semver.org specification:"
   printNameAndValue "MAJOR" "changes in one of the applications or a core application library"
   printNameAndValue "MINOR" "changes in one of the feature libraries"
   printNameAndValue "PATCH" "changes in one of the general purpose libraries or other files which do not belong to apps or libs folders"
@@ -21,7 +21,7 @@ reportUsageErrorAndExit() {
 }
 
 ##
-# Tag latest merge commit.
+# Tag the latest merge commit.
 ##
 setTag() {
   printInfoTitle "<< Setting tag >>"
@@ -189,7 +189,7 @@ semverTag() {
     elif [ -n "$CHANGED_FILES_CONTAIN_PATCH_CHANGES" ]; then
       PATCH=$((PATCH + 1))
     else
-      reportUsageErrorAndExit "semverTag"
+      reportUsageErrorAndExit
     fi
 
     local TAG
@@ -216,7 +216,7 @@ checkCommitTagAndProceed() {
   # Exit with error if latest commit in given branch is already tagged
   ##
   if [ -n "$COMMIT_TAG" ]; then
-    reportUsageErrorAndExit "checkCommitTagAndProceed"
+    reportUsageErrorAndExit
   fi
 
   semverTag
@@ -246,10 +246,10 @@ setVersioningFormatAndProceed() {
   ##
   # Check which branch is checked out to choose versioning format
   ##
-  if [ "$1" = "master" ]; then
+  if [ "$1" = "main" ]; then
     checkCommitTagAndProceed "$COMMIT_HASH"
   else
-    reportUsageErrorAndExit "setVersioningFormatAndProceed"
+    reportUsageErrorAndExit
   fi
 }
 
@@ -264,22 +264,22 @@ versionTagCommit() {
   CHECKED_OUT_BRANCH_NAME=$(git branch | grep -o "\*.*")
 
   local BRANCH_NAME
-  BRANCH_NAME="${CHECKED_OUT_BRANCH_NAME//* /}" # remove pattern '* ' to get branch name only
+  BRANCH_NAME="${CHECKED_OUT_BRANCH_NAME//* /}" # remove pattern '* ' to get the branch name only
 
   printNameAndValue "checked out branch" "$BRANCH_NAME"
   printGap
 
-  if [ "${BRANCH_NAME}" = "master" ]; then
+  if [ "${BRANCH_NAME}" = "main" ]; then
     setVersioningFormatAndProceed "$BRANCH_NAME"
   else
-    reportUsageErrorAndExit "versionTagCommit"
+    reportUsageErrorAndExit
   fi
 }
 
 ##
 # Version increment control flow.
 #
-# Commits are tagged with version in semver format only for the following branches:
-# - master
+# Commits are tagged with a version in the semver format only for the following branches:
+# - main
 ##
 versionTagCommit
