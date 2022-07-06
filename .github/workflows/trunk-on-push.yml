@@ -98,7 +98,7 @@ jobs:
           npx nx run tools:compodoc-build
           cp -r ./dist/compodoc ./dist/apps/documentation/assets
           yarn generate:changelog
-          yarn e2e:headless:report
+          yarn e2e:report
           yarn generate:e2e-test-report-index
           npx nx run documentation:build-storybook
           cp -r ./dist/storybook/documentation ./dist/apps/documentation/assets/storybook

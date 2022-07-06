@@ -16,11 +16,9 @@ reportUsageErrorAndExit() {
   printInfoTitle "<< ${0} usage >>"
   printUsageTip "bash tools/shell/e2e.sh reports" "copy e2e reports to dist"
   printUsageTip "bash tools/shell/e2e.sh all" "run all e2e apps"
-  printUsageTip "bash tools/shell/e2e.sh all headless" "run all e2e apps in the headless mode"
   printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS>" "run a single e2e app"
-  printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS> headless" "run a single e2e app in the headless mode"
-  printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS> headless report" "run a single e2e app in the headless mode and save report"
-  printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS> headless report CONFIGURATION" "run a single e2e app in the headless mode and save report versus a specific configuration/environment"
+  printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS> report" "run a single e2e app and save report"
+  printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS> report CONFIGURATION" "run a single e2e app and save report versus a specific configuration/environment"
 
   reportSupportedModuleAliasesE2E
 
@@ -109,26 +107,17 @@ checkVariablesAndProceed() {
   printNameAndValue "module name" "$1"
   printNameAndValue "module partial path" "$2"
   printNameAndValue "e2e dist path" "$3"
-  printNameAndValue "optional action (headless)" "$4"
-  printNameAndValue "optional action (report)" "$5"
-  printNameAndValue "optional configuration (see angular.json)" "$6"
+  printNameAndValue "optional action (report)" "$4"
+  printNameAndValue "optional configuration (see angular.json)" "$5"
   printGap
 
-  if [ -z "$6" ]; then
-    if [ "$4" = "headless" ]; then
-      npx nx e2e "$1" --headless --configuration "$6"
-    else
-      npx nx e2e "$1" --configuration "$6"
-    fi
+  if [ -z "$5" ]; then
+    npx nx e2e "$1" --configuration "$5"
   else
-    if [ "$4" = "headless" ]; then
-      npx nx e2e "$1" --headless
-    else
-      npx nx e2e "$1"
-    fi
+    npx nx e2e "$1"
   fi
 
-  copyReportToDist "$1" "$2" "$3" "$5"
+  copyReportToDist "$1" "$2" "$3" "$4"
 }
 
 ##
@@ -137,18 +126,15 @@ checkVariablesAndProceed() {
 testModule() {
   printInfoTitle "<< Testing module >>"
   printNameAndValue "module name" "$1"
-  printNameAndValue "optional action (headless)" "$2"
-  printNameAndValue "optional action (report)" "$3"
-  printNameAndValue "optional configuration (see angular.json)" "$4"
+  printNameAndValue "optional action (report)" "$2"
+  printNameAndValue "optional configuration (see angular.json)" "$3"
 
   local MODULE_ALIAS
   MODULE_ALIAS=$1
-  local OPTIONAL_ACTION
-  OPTIONAL_ACTION=$2
   local COPY_REPORT
-  COPY_REPORT=$3
+  COPY_REPORT=$2
   local CONFIGURATION
-  CONFIGURATION=$4
+  CONFIGURATION=$3
 
   local MODULE_NAME
   MODULE_NAME="${MODULE_ALIAS//app\:/}" # remove app: prefix
@@ -168,11 +154,11 @@ testModule() {
   moduleAliasExists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
 
   if [ "$ALIAS_EXISTS" = 1 ]; then
-    checkVariablesAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$E2E_DIST_PATH" "$OPTIONAL_ACTION" "$COPY_REPORT" "$CONFIGURATION"
+    checkVariablesAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$E2E_DIST_PATH" "$COPY_REPORT" "$CONFIGURATION"
   elif
     [[ "$MODULE_ALIAS" = "all" ]]
   then
-    for MODULE_ALIAS_E2E in "${EXISTING_MODULE_ALIASES_E2E[@]}"; do testModule "$MODULE_ALIAS_E2E" "$OPTIONAL_ACTION" "$COPY_REPORT" "$CONFIGURATION"; done
+    for MODULE_ALIAS_E2E in "${EXISTING_MODULE_ALIASES_E2E[@]}"; do testModule "$MODULE_ALIAS_E2E" "$COPY_REPORT" "$CONFIGURATION"; done
   else
     reportUsageErrorAndExit
   fi
@@ -187,5 +173,5 @@ elif [ "$1" = "reports" ]; then
   copyReportToDist "app:client-e2e" "apps/client-e2e" "./dist/cypress/apps/client-e2e" "report"
   copyReportToDist "app:documentation-e2e" "apps/documentation-e2e" "./dist/cypress/apps/documentation-e2e" "report"
 else
-  testModule "$1" "$2" "$3" "$4"
+  testModule "$1" "$2" "$3"
 fi

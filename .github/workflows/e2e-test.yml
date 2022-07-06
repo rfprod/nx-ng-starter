@@ -44,4 +44,4 @@ jobs:
         run: npx cypress install
 
       - name: E2E all
-        run: npx nx run-many --target=e2e --all --headless
+        run: npx nx run-many --target=e2e --all
