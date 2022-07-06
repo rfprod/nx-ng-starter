@@ -1,0 +1,29 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "eslintConfig": "libs/client-util/.eslintrc.json",
+        "lintFilePatterns": ["libs/client-util/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "libs/client-util/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/libs/client-util"]
+    }
+  },
+  "prefix": "app",
+  "projectType": "library",
+  "generators": {
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "sourceRoot": "libs/client-util/src",
+  "tags": ["scope:client-util", "type:util"]
+}

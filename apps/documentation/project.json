@@ -1,0 +1,198 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "configurations": {
+        "analyze-bundle": {
+          "buildOptimizer": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/documentation/src/environments/environment.ts",
+              "with": "apps/documentation/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all"
+        },
+        "production": {
+          "buildOptimizer": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/documentation/src/environments/environment.ts",
+              "with": "apps/documentation/src/environments/environment.prod.ts"
+            }
+          ],
+          "namedChunks": false,
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "vendorChunk": false
+        }
+      },
+      "options": {
+        "allowedCommonJsDependencies": [
+          "hammerjs",
+          "apollo-upload-client",
+          "zen-observable",
+          "graphql-tag",
+          "protobufjs/minimal",
+          "extract-files/public/isExtractableFile",
+          "extract-files/public/extractFiles"
+        ],
+        "aot": true,
+        "assets": [
+          "apps/documentation/src/favicon.ico",
+          "apps/documentation/src/assets",
+          {
+            "glob": "**/*.*",
+            "input": "./libs/client-core/src/lib/assets",
+            "output": "assets"
+          },
+          {
+            "glob": "*.md",
+            "input": "./",
+            "output": "md/"
+          },
+          {
+            "glob": "**/*.md",
+            "input": "apps",
+            "output": "md/apps"
+          },
+          {
+            "glob": "**/*.md",
+            "input": "libs",
+            "output": "md/libs"
+          },
+          {
+            "glob": "**/*.md",
+            "input": "tools",
+            "output": "md/tools"
+          }
+        ],
+        "baseHref": "/",
+        "budgets": [
+          {
+            "maximumError": "15mb",
+            "maximumWarning": "12mb",
+            "type": "initial"
+          },
+          {
+            "maximumError": "10kb",
+            "maximumWarning": "6kb",
+            "type": "anyComponentStyle"
+          }
+        ],
+        "buildOptimizer": false,
+        "index": "apps/documentation/src/index.html",
+        "main": "apps/documentation/src/main.ts",
+        "namedChunks": true,
+        "optimization": {
+          "fonts": false,
+          "scripts": false,
+          "styles": {
+            "inlineCritical": false,
+            "minify": false
+          }
+        },
+        "outputHashing": "none",
+        "outputPath": "dist/apps/documentation",
+        "polyfills": "apps/documentation/src/polyfills.ts",
+        "scripts": [
+          "node_modules/dompurify/dist/purify.min.js",
+          "tools/js/trusted-types.policy.js",
+          "node_modules/marked/lib/marked.umd.js",
+          "node_modules/prismjs/prism.js",
+          "node_modules/prismjs/components/prism-csharp.min.js",
+          "node_modules/prismjs/components/prism-css.min.js",
+          "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.min.js",
+          "node_modules/prismjs/plugins/line-highlight/prism-line-highlight.min.js",
+          "node_modules/emoji-toolkit/lib/js/joypixels.min.js",
+          "node_modules/katex/dist/katex.min.js"
+        ],
+        "sourceMap": true,
+        "styles": [
+          "apps/documentation/src/styles.scss",
+          "libs/client-core/src/lib/styles/styles.scss",
+          "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+          "node_modules/material-design-icon-fonts-self-hosted-web/iconfont/material-icons.css",
+          "node_modules/prismjs/themes/prism-okaidia.css",
+          "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css",
+          "node_modules/prismjs/plugins/line-highlight/prism-line-highlight.css",
+          "node_modules/katex/dist/katex.min.css"
+        ],
+        "tsConfig": "apps/documentation/tsconfig.app.json",
+        "vendorChunk": true
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      },
+      "options": {
+        "browserTarget": "documentation:build",
+        "compodoc": false,
+        "configDir": "apps/documentation/.storybook",
+        "outputDir": "dist/storybook/documentation"
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "documentation:build"
+      }
+    },
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "eslintConfig": "apps/documentation/.eslintrc.json",
+        "lintFilePatterns": ["apps/documentation/**/*.ts", "apps/documentation/**/*.html"]
+      }
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "documentation:build:production"
+        }
+      },
+      "options": {
+        "browserTarget": "documentation:build"
+      }
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      },
+      "options": {
+        "browserTarget": "documentation:build",
+        "compodoc": false,
+        "configDir": "apps/documentation/.storybook",
+        "port": 4400
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "apps/documentation/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/apps/documentation"]
+    }
+  },
+  "prefix": "app",
+  "projectType": "application",
+  "generators": {
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "sourceRoot": "apps/documentation/src",
+  "tags": ["scope:documentation", "type:application"]
+}

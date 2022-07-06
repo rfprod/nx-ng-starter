@@ -6,7 +6,8 @@ import { Observable, Subscriber, timer } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 import { argv } from 'yargs';
 
-import { COLORS } from './colors';
+import { COLORS } from './utils/colors';
+import { logger } from './utils/logger';
 
 /**
  * @name cwd
@@ -111,8 +112,7 @@ function writeUpdateSummary(packages: TUpdatablePackages) {
   const path = `${root}/migrations-packages.json`;
   fs.writeFile(path, JSON.stringify(packages), (error: NodeJS.ErrnoException | null) => {
     if (error !== null) {
-      // eslint-disable-next-line no-console -- needed here to print output in the terminal
-      console.log(`\n${COLORS.RED}%s${COLORS.DEFAULT}\n%s\n`, 'ERROR', error);
+      logger.printError(error);
       process.exit(1);
     }
     // eslint-disable-next-line no-console -- needed here to print output in the terminal
@@ -266,8 +266,7 @@ function updateAndMigratePackages(bulkUserChoice?: boolean) {
   const path = `${root}/migrations-packages.json`;
   fs.readFile(path, (error: NodeJS.ErrnoException | null, data?: Buffer) => {
     if (error !== null) {
-      // eslint-disable-next-line no-console -- needed here to print output in the terminal
-      console.log(`\n${COLORS.RED}%s${COLORS.DEFAULT}\n%s\n`, 'ERROR', error);
+      logger.printError(error);
       process.exit(1);
     }
 
@@ -344,8 +343,7 @@ function migratePackagesOnly() {
   const path = `${root}/package.json`;
   fs.readFile(path, (error: NodeJS.ErrnoException | null, data?: Buffer) => {
     if (error !== null) {
-      // eslint-disable-next-line no-console -- needed here to print output in the terminal
-      console.log(`\n${COLORS.RED}%s${COLORS.DEFAULT}\n%s\n`, 'ERROR', error);
+      logger.printError(error);
       process.exit(1);
     }
 
@@ -364,14 +362,32 @@ function migratePackagesOnly() {
   });
 }
 
+const removeUnneededFiles = () => {
+  const migrations = `${root}/migrations.json`;
+  const migrationsPackages = `${root}/migrations-packages.json`;
+  fs.unlink(migrations, error => {
+    if (error !== null) {
+      logger.printError(error, 'Non breaking error');
+    }
+  });
+  fs.unlink(migrationsPackages, error => {
+    if (error !== null) {
+      logger.printError(error, 'Non breaking error');
+    }
+  });
+};
+
 /**
  * Reads input, and follows control flow.
  */
 function readInputAndRun(): void {
   const check = (<{ [key: string]: boolean | undefined }>argv).check;
+  const cleanup = (<{ [key: string]: boolean | undefined }>argv).cleanup;
   const migrate = (<{ [key: string]: string | undefined }>argv).migrate;
   const bulkUserChoice = (<{ [key: string]: boolean | undefined }>argv).bulkUserChoice;
-  if (check === true) {
+  if (cleanup === true) {
+    removeUnneededFiles();
+  } else if (check === true) {
     const jsonUpgraded = (<{ [key: string]: boolean | undefined }>argv).jsonUpgraded;
     checkForUpdates(jsonUpgraded);
   } else if (migrate === 'update') {

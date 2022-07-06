@@ -106,18 +106,20 @@ export default function (schema: ISchematicContext) {
           tags,
         }),
         addFiles(schema),
-        externalSchematic('@schematics/angular', 'component', {
+        externalSchematic('@nrwl/angular', 'component', {
           project: name,
           name,
           path: path.join('libs', name, 'src', 'lib', 'components'),
           style: 'scss',
+          changeDetection: 'OnPush',
+          displayBlock: true,
         }),
-        externalSchematic('@schematics/angular', 'service', {
+        externalSchematic('@nrwl/angular', 'service', {
           project: name,
           name,
           path: path.join('libs', name, 'src', 'lib', 'services'),
         }),
-        externalSchematic('@schematics/angular', 'guard', {
+        externalSchematic('@nrwl/angular', 'guard', {
           project: name,
           name,
           path: path.join('libs', name, 'src', 'lib', 'guards'),

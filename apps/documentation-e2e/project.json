@@ -1,0 +1,29 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "configurations": {
+        "production": {
+          "devServerTarget": "documentation:serve:production"
+        }
+      },
+      "options": {
+        "cypressConfig": "apps/documentation-e2e/cypress.json",
+        "devServerTarget": "documentation:serve",
+        "tsConfig": "apps/documentation-e2e/tsconfig.e2e.json"
+      }
+    },
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "eslintConfig": "apps/documentation-e2e/.eslintrc.json",
+        "lintFilePatterns": ["apps/documentation-e2e/**/*.ts"]
+      }
+    }
+  },
+  "implicitDependencies": ["documentation"],
+  "projectType": "application",
+  "sourceRoot": "apps/documentation-e2e/src",
+  "tags": ["scope:documentation-e2e", "type:e2e"]
+}

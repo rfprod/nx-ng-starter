@@ -1,0 +1,53 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:webpack",
+      "configurations": {
+        "production": {
+          "extractLicenses": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/server-prod/src/environments/environment.ts",
+              "with": "apps/server-prod/src/environments/environment.prod.ts"
+            }
+          ],
+          "inspect": false,
+          "optimization": true
+        }
+      },
+      "options": {
+        "assets": ["apps/server-prod/src/assets"],
+        "main": "apps/server-prod/src/main.ts",
+        "outputPath": "dist/apps/server-prod",
+        "tsConfig": "apps/server-prod/tsconfig.app.json"
+      },
+      "outputs": ["{options.outputPath}"]
+    },
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "eslintConfig": "apps/server-prod/.eslintrc.json",
+        "lintFilePatterns": ["apps/server-prod/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "serve": {
+      "executor": "@nrwl/node:node",
+      "options": {
+        "buildTarget": "server-prod:build"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "apps/server-prod/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/apps/server-prod"]
+    }
+  },
+  "projectType": "application",
+  "sourceRoot": "apps/server-prod/src",
+  "tags": ["scope:server-prod", "type:application"]
+}

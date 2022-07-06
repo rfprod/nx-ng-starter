@@ -1,0 +1,72 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:webpack",
+      "configurations": {
+        "production": {
+          "extractLicenses": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/elements-testing/src/environments/environment.ts",
+              "with": "apps/elements-testing/src/environments/environment.prod.ts"
+            }
+          ],
+          "namedChunks": false,
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "vendorChunk": false
+        }
+      },
+      "options": {
+        "assets": ["apps/elements-testing/src/favicon.ico", "apps/elements-testing/src/assets"],
+        "baseHref": "/",
+        "budgets": [
+          {
+            "maximumError": "5mb",
+            "maximumWarning": "2mb",
+            "type": "initial"
+          }
+        ],
+        "index": "apps/elements-testing/src/index.html",
+        "main": "apps/elements-testing/src/main.ts",
+        "outputPath": "dist/apps/elements-testing",
+        "polyfills": "apps/elements-testing/src/polyfills.ts",
+        "scripts": [],
+        "styles": ["apps/elements-testing/src/styles.scss"],
+        "tsConfig": "apps/elements-testing/tsconfig.app.json"
+      }
+    },
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "eslintConfig": "apps/elements-testing/.eslintrc.json",
+        "lintFilePatterns": ["apps/elements-testing/**/*.ts"]
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/web:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "elements-testing:build:production"
+        }
+      },
+      "options": {
+        "buildTarget": "elements-testing:build",
+        "port": 4021
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "apps/elements-testing/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/apps/elements-testing"]
+    }
+  },
+  "projectType": "application",
+  "sourceRoot": "apps/elements-testing/src",
+  "tags": ["scope:elements-testing", "type:application"]
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "eslintConfig": "libs/proto/.eslintrc.json",
+        "lintFilePatterns": ["libs/proto/**/*.ts"]
+      }
+    }
+  },
+  "prefix": "app",
+  "projectType": "library",
+  "generators": {
+    "@nrwl/angular:component": {
+      "styleext": "scss"
+    }
+  },
+  "sourceRoot": "libs/proto/src",
+  "tags": ["scope:proto", "type:data-access"]
+}
