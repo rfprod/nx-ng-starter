@@ -106,11 +106,13 @@ export default function (schema: ISchematicContext) {
           tags,
         }),
         addFiles(schema),
-        externalSchematic('@schematics/angular', 'component', {
+        externalSchematic('@nrwl/angular', 'component', {
           project: name,
           name,
           path: path.join('libs', name, 'src', 'lib', 'components'),
           style: 'scss',
+          changeDetection: 'OnPush',
+          displayBlock: true,
         }),
       ]),
       updateProjectConfig(schema),

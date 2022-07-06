@@ -1,0 +1,117 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "configurations": {
+        "production": {
+          "buildOptimizer": true,
+          "deployUrl": "https://nx-ng-starter-elements.web.app/",
+          "fileReplacements": [
+            {
+              "replace": "apps/elements/src/environments/environment.ts",
+              "with": "apps/elements/src/environments/environment.prod.ts"
+            }
+          ],
+          "namedChunks": false,
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "vendorChunk": false
+        }
+      },
+      "options": {
+        "allowedCommonJsDependencies": [
+          "hammerjs",
+          "google-protobuf/google/protobuf/any_pb.js",
+          "protobufjs/minimal",
+          "zen-observable",
+          "apollo-upload-client",
+          "extract-files/public/isExtractableFile",
+          "extract-files/public/extractFiles",
+          "graphql-tag",
+          "subscriptions-transport-ws"
+        ],
+        "aot": true,
+        "assets": [
+          "apps/elements/src/favicon.ico",
+          "apps/elements/src/assets",
+          "apps/elements/src/manifest.webmanifest",
+          {
+            "glob": "**/*",
+            "input": "./libs/client-core/src/lib/assets",
+            "output": "./assets"
+          }
+        ],
+        "baseHref": "/",
+        "budgets": [
+          {
+            "maximumError": "15mb",
+            "maximumWarning": "12mb",
+            "type": "initial"
+          },
+          {
+            "maximumError": "10kb",
+            "maximumWarning": "6kb",
+            "type": "anyComponentStyle"
+          }
+        ],
+        "buildOptimizer": false,
+        "index": "apps/elements/src/index.html",
+        "main": "apps/elements/src/main.ts",
+        "namedChunks": true,
+        "optimization": false,
+        "outputHashing": "none",
+        "outputPath": "dist/apps/elements",
+        "polyfills": "apps/elements/src/polyfills.ts",
+        "scripts": [],
+        "sourceMap": true,
+        "styles": [
+          "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+          "node_modules/material-design-icon-fonts-self-hosted-web/iconfont/material-icons.css",
+          "apps/elements/src/styles.scss",
+          "libs/client-core/src/lib/styles/styles.scss"
+        ],
+        "tsConfig": "apps/elements/tsconfig.app.json",
+        "vendorChunk": true
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "elements:build"
+      }
+    },
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "eslintConfig": "apps/elements/.eslintrc.json",
+        "lintFilePatterns": ["apps/elements/**/*.ts", "apps/elements/**/*.html"]
+      }
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "elements:build:production",
+          "proxyConfig": "apps/elements/proxy.conf.json"
+        }
+      },
+      "options": {
+        "browserTarget": "elements:build"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "apps/elements/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/apps/elements"]
+    }
+  },
+  "prefix": "app",
+  "projectType": "application",
+  "sourceRoot": "apps/elements/src",
+  "tags": ["scope:elements", "type:application"]
+}

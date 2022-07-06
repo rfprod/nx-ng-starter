@@ -2,6 +2,8 @@ import { constants } from 'fs';
 import { access, readFile, writeFile } from 'fs/promises';
 import { argv } from 'yargs';
 
+import { logger } from './utils/logger';
+
 /**
  * @name cwd
  * @constant
@@ -18,9 +20,7 @@ const supportedApps = ['client', 'elements'];
  * Prints the script usage instructions.
  */
 const printUsage = () => {
-  // eslint-disable-next-line no-console -- print usage instructions in the terminal
-  console.log(`Usage examples:
-
+  const message = `
   # read values from the workspace configuration files without passing arguments
     $ npx ts-node -O '{ \\"module\\": \\"commonjs\\", \\"typeRoots\\": [\\"node_modules/@types\\"], \\"types\\": [\\"node\\"] }' tools/ts/set-env.ts --app client
     $ npx ts-node -O '{ \\"module\\": \\"commonjs\\", \\"typeRoots\\": [\\"node_modules/@types\\"], \\"types\\": [\\"node\\"] }' tools/ts/set-env.ts --app client --reset
@@ -36,7 +36,8 @@ const printUsage = () => {
     $ yarn tools:env:client:reset
 
   # supported apps: ${supportedApps.join(' ')}
-  `);
+  `;
+  logger.printInfo(message, 'Usage examples');
 };
 
 /**
@@ -52,12 +53,18 @@ const reset = (<{ [key: string]: boolean | undefined }>argv).reset;
 if (typeof reset === 'undefined') {
   if (typeof app === 'undefined') {
     printUsage();
-    throw new Error(`The application name is not defined.\nSupported apps: ${supportedApps.join(' ')}`);
+
+    const error = new Error(`The application name is not defined.\nSupported apps: ${supportedApps.join(' ')}`);
+    logger.printError(error);
+    process.exit(1);
   }
 
   if (!supportedApps.includes(app)) {
     printUsage();
-    throw new Error(`The application is not supported.\nSupported apps: ${supportedApps.join(' ')}`);
+
+    const error = new Error(`The application is not supported.\nSupported apps: ${supportedApps.join(' ')}`);
+    logger.printError(error);
+    process.exit(1);
   }
 }
 
@@ -110,8 +117,7 @@ const getPackageVersion = (source = `${cwd}/../../package.json`) =>
       return packageJsonContent.version;
     })
     .catch(error => {
-      // eslint-disable-next-line no-console -- print error in the terminal
-      console.log('Unable to read the package.json', error);
+      logger.printError(error, 'Unable to read the package.json');
       process.exit(1);
     });
 
@@ -131,8 +137,7 @@ const getEnvConfiguration = async () => {
  */
 const checkEnvConfigFileAccess = (envPath: string) =>
   access(envPath, constants.W_OK).catch(error => {
-    // eslint-disable-next-line no-console -- print error in the terminal
-    console.log('Unable to access the environment configuration file', error);
+    logger.printError(error, 'Unable to write the environment configuration file');
     process.exit(1);
   });
 
@@ -145,12 +150,10 @@ const checkEnvConfigFileAccess = (envPath: string) =>
 const writeEnvConfigFile = (envPath: string, envConfig: string) =>
   writeFile(envPath, envConfig)
     .then(() => {
-      // eslint-disable-next-line no-console -- print output in the terminal
-      console.log(`Output generated at ${envPath}`);
+      logger.printSuccess(`Output generated at ${envPath}`);
     })
     .catch(error => {
-      // eslint-disable-next-line no-console -- print error in the terminal
-      console.log('Unable to write the environment configuration file', envConfig);
+      logger.printError(error, 'Unable to write the environment configuration file');
       process.exit(1);
     });
 
@@ -165,11 +168,9 @@ const execute = async () => {
 
 execute()
   .then(() => {
-    // eslint-disable-next-line no-console -- print output in the terminal
-    console.log('The environment is configured.');
+    logger.printSuccess('The environment is configured.');
   })
   .catch(error => {
-    // eslint-disable-next-line no-console -- print error in the terminal
-    console.error('There was an error executing the program', error);
+    logger.printError(error, 'There was an error executing the program');
     process.exit(1);
   });

@@ -1,0 +1,80 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:webpack",
+      "configurations": {
+        "firebase": {
+          "extractLicenses": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/api/src/environments/environment.ts",
+              "with": "apps/api/src/environments/environment.firebase.ts"
+            }
+          ],
+          "inspect": false,
+          "optimization": true
+        },
+        "production": {
+          "extractLicenses": true,
+          "fileReplacements": [
+            {
+              "replace": "apps/api/src/environments/environment.ts",
+              "with": "apps/api/src/environments/environment.prod.ts"
+            }
+          ],
+          "inspect": false,
+          "optimization": true
+        }
+      },
+      "options": {
+        "assets": ["apps/api/src/assets"],
+        "budgets": [
+          {
+            "maximumError": "15mb",
+            "maximumWarning": "12mb",
+            "type": "initial"
+          }
+        ],
+        "buildLibsFromSource": true,
+        "main": "apps/api/src/main.ts",
+        "outputPath": "dist/apps/api",
+        "tsConfig": "apps/api/tsconfig.app.json"
+      }
+    },
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "eslintConfig": "apps/api/.eslintrc.json",
+        "lintFilePatterns": ["apps/api/**/*.ts"]
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:node",
+      "configurations": {
+        "firebase": {
+          "buildTarget": "api:build:firebase"
+        },
+        "production": {
+          "buildTarget": "api:build:production"
+        }
+      },
+      "options": {
+        "buildTarget": "api:build"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "apps/api/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/apps/api"]
+    }
+  },
+  "prefix": "app",
+  "projectType": "application",
+  "generators": {},
+  "sourceRoot": "apps/api/src",
+  "tags": ["scope:api", "type:application"]
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "eslintConfig": "libs/backend-auth/.eslintrc.json",
+        "lintFilePatterns": ["libs/backend-auth/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "libs/backend-auth/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/libs/backend-auth"]
+    }
+  },
+  "projectType": "library",
+  "sourceRoot": "libs/backend-auth/src",
+  "tags": ["scope:backend-auth", "type:feature"]
+}

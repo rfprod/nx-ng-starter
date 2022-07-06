@@ -1,0 +1,57 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      },
+      "options": {
+        "browserTarget": "client-diagnostics:build-storybook",
+        "compodoc": false,
+        "configDir": "libs/client-diagnostics/.storybook",
+        "outputDir": "dist/storybook/client-diagnostics"
+      }
+    },
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "eslintConfig": "libs/client-diagnostics/.eslintrc.json",
+        "lintFilePatterns": ["libs/client-diagnostics/**/*.ts", "libs/client-diagnostics/**/*.html"]
+      }
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      },
+      "options": {
+        "browserTarget": "client-diagnostics:build-storybook",
+        "compodoc": false,
+        "configDir": "libs/client-diagnostics/.storybook",
+        "port": 4400
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "libs/client-diagnostics/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/libs/client-diagnostics"]
+    }
+  },
+  "prefix": "app",
+  "projectType": "library",
+  "generators": {
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "sourceRoot": "libs/client-diagnostics/src",
+  "tags": ["scope:client-diagnostics", "type:feature"]
+}

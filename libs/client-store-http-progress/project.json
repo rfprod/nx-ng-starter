@@ -1,0 +1,24 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "eslintConfig": "libs/client-store-http-progress/.eslintrc.json",
+        "lintFilePatterns": ["libs/client-store-http-progress/**/*.ts", "libs/client-store-http-progress/**/*.html"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "libs/client-store-http-progress/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/libs/client-store-http-progress"]
+    }
+  },
+  "prefix": "app",
+  "projectType": "library",
+  "sourceRoot": "libs/client-store-http-progress/src",
+  "tags": ["scope:client-store-http-progress", "type:data-access"]
+}

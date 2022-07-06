@@ -1,0 +1,102 @@
+{
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "compodoc-build": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "compodoc -p tsconfig.compodoc.json -d ./dist/compodoc",
+            "forwardAllArgs": false
+          }
+        ]
+      }
+    },
+    "compodoc-serve": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "compodoc -p tsconfig.compodoc.json -s",
+            "forwardAllArgs": false
+          }
+        ]
+      }
+    },
+    "coverage-stats": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/coverage-stats.ts",
+            "forwardAllArgs": false
+          }
+        ]
+      }
+    },
+    "help": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/package-commands.ts"
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "eslintConfig": "tools/.eslintrc.json",
+        "lintFilePatterns": ["tools/generators/**/*.ts", "tools/ts/**/*.ts", "tools/js/**/*.js", "/*.*.js"]
+      }
+    },
+    "update-check": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/update.ts --check",
+            "forwardAllArgs": false
+          }
+        ]
+      }
+    },
+    "update-migrate": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/update.ts --check --jsonUpgraded; npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/update.ts --migrate=update; npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/update.ts --cleanup;",
+            "forwardAllArgs": false
+          }
+        ]
+      }
+    },
+    "update-migrate-bulk-confirm": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/update.ts --check --jsonUpgraded; npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/update.ts --migrate=update --bulkUserChoice=true; npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/update.ts --cleanup;",
+            "forwardAllArgs": false
+          }
+        ]
+      }
+    },
+    "update-migrate-only": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "yarn install && yarn ngcc && npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/update.ts --migrate=only; npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/update.ts --cleanup;",
+            "forwardAllArgs": false
+          }
+        ]
+      }
+    }
+  },
+  "projectType": "application",
+  "sourceRoot": "tools",
+  "tags": ["scope:tools", "type:workspace"]
+}

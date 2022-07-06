@@ -1,7 +1,7 @@
 import { getJestProjects } from '@nrwl/jest';
 import * as fs from 'fs';
 
-import { COLORS } from './colors';
+import { logger } from './utils/logger';
 
 /**
  * Current working directory.
@@ -74,8 +74,7 @@ const writeAverageStats = () => {
 
   fs.writeFile(readmePath, coverageSummary, (error: NodeJS.ErrnoException | null) => {
     if (error !== null) {
-      // eslint-disable-next-line no-console -- needed here to print output in the terminal
-      console.log(error);
+      logger.printError(error);
     }
   });
 };
@@ -139,15 +138,13 @@ const recalculateStats = () => {
 
 const readFileCallback = (error: NodeJS.ErrnoException | null, data?: Buffer) => {
   if (error !== null) {
-    // eslint-disable-next-line no-console -- needed here to print output in the terminal
-    console.log(`❗ ${COLORS.LIGHT_RED}%s${COLORS.DEFAULT}`, 'No coverage summary for the project');
+    logger.printError(new Error('No coverage summary for the project'));
   }
 
   if (typeof data !== 'undefined') {
     const json: ICoverageSummaryJson = JSON.parse(data.toString());
 
-    // eslint-disable-next-line no-console -- needed here to print output in the terminal
-    console.log(`✅ ${COLORS.YELLOW}%s %o${COLORS.DEFAULT}`, `Total:\n`, json.total);
+    logger.printSuccess(`Total:\n ${json.total}`);
 
     const summary = json.total;
     const summaryKeys = Object.keys(summary) as (keyof ICoverageSummaryObj)[];

@@ -1,0 +1,40 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "configurations": {
+        "development": {
+          "tsConfig": "libs/client-d3-charts/tsconfig.lib.json"
+        },
+        "production": {
+          "tsConfig": "libs/client-d3-charts/tsconfig.lib.prod.json"
+        }
+      },
+      "defaultConfiguration": "production",
+      "options": {
+        "project": "libs/client-d3-charts/ng-package.json"
+      },
+      "outputs": ["dist/libs/client-d3-charts"]
+    },
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "eslintConfig": "libs/client-d3-charts/.eslintrc.json",
+        "lintFilePatterns": ["libs/client-d3-charts/src/**/*.ts", "libs/client-d3-charts/src/**/*.html"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "libs/client-d3-charts/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/libs/client-d3-charts"]
+    }
+  },
+  "prefix": "app",
+  "projectType": "library",
+  "sourceRoot": "libs/client-d3-charts/src",
+  "tags": ["scope:client-d3-charts", "type:ui"]
+}
