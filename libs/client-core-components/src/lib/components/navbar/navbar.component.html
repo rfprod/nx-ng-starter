@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" class="toolbar">
+<mat-toolbar color="primary" class="toolbar" *ngIf="routerEvents$ | async">
   <img [ngStyle]="{ height: '75%', width: 'auto!important' }" [src]="logoSrc" alt="{{ appName }}" title="{{ appName }}" />
 
   <span fxFlex="1 1 auto"></span>
@@ -7,6 +7,7 @@
     mat-button
     *ngFor="let button of buttons"
     [routerLink]="button.routerLink"
+    [disabled]="button.routeActive()"
     (click)="sidebarCloseHandler()"
     [fxHide.xs]="true"
     [fxHide.sm]="true"
@@ -19,7 +20,13 @@
   </button>
 
   <mat-menu #mobileMenuTop="matMenu" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
-    <a mat-menu-item *ngFor="let button of buttons" [routerLink]="button.routerLink" (click)="sidebarCloseHandler()">
+    <a
+      mat-menu-item
+      *ngFor="let button of buttons"
+      [routerLink]="button.routerLink"
+      [disabled]="button.routeActive()"
+      (click)="sidebarCloseHandler()"
+    >
       <mat-icon>{{ button.icon }}</mat-icon> {{ button.title }}
     </a>
   </mat-menu>
