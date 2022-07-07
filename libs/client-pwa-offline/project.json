@@ -1,0 +1,23 @@
+{
+  "prefix": "app",
+  "projectType": "library",
+  "sourceRoot": "libs/client-pwa-offline/src",
+  "tags": ["scope:client-pwa-offline", "type:feature"],
+  "targets": {
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "eslintConfig": "libs/client-pwa-offline/.eslintrc.json",
+        "lintFilePatterns": ["libs/client-pwa-offline/**/*.ts", "libs/client-pwa-offline/**/*.html"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "libs/client-pwa-offline/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/libs/client-pwa-offline"]
+    }
+  }
+}

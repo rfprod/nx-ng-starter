@@ -53,19 +53,19 @@ const backendConstraints = [
   {
     sourceTag: 'scope:api',
     onlyDependOnLibsWithTags: [
-      'scope:proto',
       'scope:backend-auth',
+      'scope:backend-diagnostics',
       'scope:backend-grpc',
       'scope:backend-gql',
       'scope:backend-interfaces',
       'scope:backend-logger',
       'scope:backend-websocket',
-      'scope:backend-diagnostics',
+      'scope:proto',
     ],
   },
   {
     sourceTag: 'scope:backend-auth',
-    onlyDependOnLibsWithTags: ['scope:proto', 'scope:backend-interfaces'],
+    onlyDependOnLibsWithTags: ['scope:backend-interfaces', 'scope:proto'],
   },
   {
     sourceTag: 'scope:backend-diagnostics',
@@ -73,7 +73,7 @@ const backendConstraints = [
   },
   {
     sourceTag: 'scope:backend-grpc',
-    onlyDependOnLibsWithTags: ['scope:proto', 'scope:backend-interfaces'],
+    onlyDependOnLibsWithTags: ['scope:backend-interfaces', 'scope:proto'],
   },
   {
     sourceTag: 'scope:backend-gql',
@@ -89,7 +89,7 @@ const backendConstraints = [
   },
   {
     sourceTag: 'scope:backend-websocket',
-    onlyDependOnLibsWithTags: ['scope:proto', 'scope:backend-interfaces'],
+    onlyDependOnLibsWithTags: ['scope:backend-interfaces', 'scope:proto'],
   },
 ];
 
@@ -99,7 +99,7 @@ const backendConstraints = [
 const clientConstraints = [
   {
     sourceTag: 'scope:documentation',
-    onlyDependOnLibsWithTags: ['scope:client-material', 'scope:client-unit-testing', 'scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-material', 'scope:client-pwa-offline', 'scope:client-unit-testing', 'scope:client-util'],
   },
   {
     sourceTag: 'scope:documentation-e2e',
@@ -114,8 +114,12 @@ const clientConstraints = [
     onlyDependOnLibsWithTags: [],
   },
   {
+    sourceTag: 'scope:client-pwa-offline',
+    onlyDependOnLibsWithTags: ['scope:client-util'],
+  },
+  {
     sourceTag: 'scope:client-core',
-    onlyDependOnLibsWithTags: ['scope:client-util', 'scope:client-store'],
+    onlyDependOnLibsWithTags: ['scope:client-store', 'scope:client-util'],
   },
   {
     sourceTag: 'scope:client-store',
@@ -123,13 +127,13 @@ const clientConstraints = [
       'scope:client-store-chatbot',
       'scope:client-store-http-progress',
       'scope:client-store-http-api',
-      'scope:client-store-theme',
       'scope:client-store-sidebar',
+      'scope:client-store-theme',
       'scope:client-store-user',
-      'scope:client-unit-testing',
-      'scope:proto',
-      'scope:client-util',
       'scope:client-translate',
+      'scope:client-unit-testing',
+      'scope:client-util',
+      'scope:proto',
     ],
   },
   {
@@ -172,48 +176,48 @@ const clientConstraints = [
   {
     sourceTag: 'scope:client-componnents',
     onlyDependOnLibsWithTags: [
-      'scope:client-unit-testing',
       'scope:client-core',
       'scope:client-material',
       'scope:client-store',
       'scope:client-store-chatbot',
       'scope:client-store-theme',
       'scope:client-store-user',
+      'scope:client-unit-testing',
       'scope:client-util',
     ],
   },
   {
     sourceTag: 'scope:client-diagnostics',
     onlyDependOnLibsWithTags: [
-      'scope:client-unit-testing',
-      'scope:proto',
       'scope:client-core',
       'scope:client-d3-charts',
       'scope:client-material',
+      'scope:client-services',
       'scope:client-store',
       'scope:client-store-http-api',
       'scope:client-store-websocket',
-      'scope:client-services',
-      'scope:client-util',
       'scope:client-translate',
+      'scope:client-unit-testing',
+      'scope:client-util',
+      'scope:proto',
     ],
   },
   {
     sourceTag: 'scope:client-gql',
-    onlyDependOnLibsWithTags: ['scope:client-store-http-progress', 'scope:client-unit-testing', 'scope:proto', 'scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-store-http-progress', 'scope:client-unit-testing', 'scope:client-util', 'scope:proto'],
   },
   {
     sourceTag: 'scope:client-grpc',
-    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:proto', 'scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util', 'scope:proto'],
   },
   {
     sourceTag: 'scope:client-chatbot',
     onlyDependOnLibsWithTags: [
-      'scope:client-unit-testing',
-      'scope:proto',
       'scope:client-material',
       'scope:client-store',
       'scope:client-translate',
+      'scope:client-unit-testing',
+      'scope:proto',
     ],
   },
   {
@@ -244,23 +248,24 @@ const clientConstraints = [
   {
     sourceTag: 'scope:client',
     onlyDependOnLibsWithTags: [
-      'scope:client-unit-testing',
+      'scope:client-chatbot',
+      'scope:client-core',
+      'scope:client-core-components',
+      'scope:client-diagnostics',
       'scope:client-gql',
       'scope:client-grpc',
+      'scope:client-material',
+      'scope:client-pwa-offline',
+      'scope:client-services',
+      'scope:client-sidebar',
       'scope:client-store',
-      'scope:client-store-websocket',
       'scope:client-store-theme',
       'scope:client-store-user',
-      'scope:client-services',
-      'scope:client-chatbot',
-      'scope:client-core-components',
-      'scope:client-core',
-      'scope:client-diagnostics',
-      'scope:client-material',
+      'scope:client-store-websocket',
       'scope:client-translate',
+      'scope:client-unit-testing',
       'scope:client-util',
       'scope:client-util-sentry',
-      'scope:client-sidebar',
     ],
   },
   {
@@ -286,13 +291,13 @@ const clientConstraints = [
   {
     sourceTag: 'scope:elements',
     onlyDependOnLibsWithTags: [
-      'scope:client-unit-testing',
-      'scope:client-gql',
-      'scope:client-store-websocket',
       'scope:client-chatbot',
       'scope:client-core',
+      'scope:client-gql',
       'scope:client-material',
+      'scope:client-store-websocket',
       'scope:client-translate',
+      'scope:client-unit-testing',
       'scope:client-util',
       'scope:client-util-sentry',
     ],

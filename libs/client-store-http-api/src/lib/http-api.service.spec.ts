@@ -17,7 +17,7 @@ describe('AppHttpApiService', () => {
         useValue: {
           getEndpoint: (endpoint: string) => {
             const endpoints = {
-              ping: 'http://ping',
+              auth: 'http://auth',
             };
             return endpoints[endpoint];
           },
@@ -65,8 +65,8 @@ describe('AppHttpApiService', () => {
       .ping()
       .pipe(
         tap(() => {
-          expect(httpHandlersSpy.getEndpoint).toHaveBeenCalledWith('ping');
-          expect(httpClientGetSpy).toHaveBeenCalledWith('http://ping');
+          expect(httpHandlersSpy.getEndpoint).toHaveBeenCalledWith('auth');
+          expect(httpClientGetSpy).toHaveBeenCalledWith('http://auth');
           expect(httpHandlersSpy.pipeHttpResponse).toHaveBeenCalledTimes(1);
         }),
       )

@@ -6,6 +6,7 @@ import { AppClientCoreComponentsModule } from '@app/client-core-components';
 import { AppClientGqlModule } from '@app/client-gql';
 import { AppClientGrpcModule, AppClientGrpcService } from '@app/client-grpc';
 import { AppClientMaterialModule } from '@app/client-material';
+import { AppClientPwaOfflineModule } from '@app/client-pwa-offline';
 import { AppThemeState } from '@app/client-store-theme';
 import { AppUserState } from '@app/client-store-user';
 import { AppWebsocketStoreModule } from '@app/client-store-websocket';
@@ -47,6 +48,7 @@ import { AppRootComponent } from './components/root.component';
     AppClientTranslateModule.forRoot(),
     AppClientGqlModule.forRoot(environment),
     AppClientGrpcModule.forRoot(environment),
+    AppClientPwaOfflineModule,
     AppClientRoutingModule,
   ],
   providers: [...sentryProviders(environment)],

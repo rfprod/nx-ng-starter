@@ -144,7 +144,7 @@ const readFileCallback = (error: NodeJS.ErrnoException | null, data?: Buffer) =>
   if (typeof data !== 'undefined') {
     const json: ICoverageSummaryJson = JSON.parse(data.toString());
 
-    logger.printSuccess(`Total:\n ${json.total}`);
+    logger.printSuccess(`Total:\n ${JSON.stringify(json.total)}`);
 
     const summary = json.total;
     const summaryKeys = Object.keys(summary) as (keyof ICoverageSummaryObj)[];

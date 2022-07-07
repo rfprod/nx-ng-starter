@@ -14,7 +14,7 @@ export class AppHttpApiService {
   constructor(private readonly httpClient: HttpClient, private readonly httpHandlers: AppHttpHandlersService) {}
 
   public ping() {
-    const endpoint = this.httpHandlers.getEndpoint('ping');
+    const endpoint = this.httpHandlers.getEndpoint('auth');
     const observable = this.httpClient.get<IPingResponse>(endpoint);
     return this.httpHandlers.pipeHttpResponse<IPingResponse>(observable);
   }
