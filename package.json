@@ -1,6 +1,6 @@
 {
   "name": "nx-ng-starter",
-  "version": "1.18.0",
+  "version": "1.18.1",
   "private": true,
   "description": "Monorepo starter: Nx, Angular, Angular Elements, Electron, NodeJS, NestJS, Firebase.",
   "license": "MIT",
@@ -47,8 +47,7 @@
     "docker:run": "bash ./tools/shell/docker-run.sh",
     "docker:run:envoy": "bash ./tools/shell/docker-run.sh envoy",
     "e2e": "bash tools/shell/e2e.sh all",
-    "e2e:headless": "bash tools/shell/e2e.sh all headless",
-    "e2e:headless:report": "bash tools/shell/e2e.sh all headless report",
+    "e2e:report": "bash tools/shell/e2e.sh all report",
     "firebase:deploy:ci:all": "bash tools/shell/firebase-deploy.sh $FIREBASE_DEPLOY_TOKEN all",
     "firebase:deploy:ci:api": "bash tools/shell/firebase-deploy.sh $FIREBASE_DEPLOY_TOKEN api",
     "firebase:deploy:ci:client": "bash tools/shell/firebase-deploy.sh $FIREBASE_DEPLOY_TOKEN client",
