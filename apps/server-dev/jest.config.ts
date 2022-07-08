@@ -15,7 +15,7 @@ const config = {
     },
   },
   preset: '../../jest.preset.js',
-  resolver: '../../tools/js/jest-node-resolver.js',
+  resolver: '../../tools/js/jest-nestjs-resolver.js',
   testEnvironment: 'node',
   transform: {
     '^.+\\.[tj]s$': 'ts-jest',
