@@ -54,6 +54,11 @@ export class AppNavbarComponent {
 
   public readonly appName = this.env.appName;
 
+  /**
+   * This subscription is needed to trigger change detection on router events so that the nav buttons state updates.
+   */
+  public readonly routerEvents$ = this.router.events;
+
   constructor(
     private readonly store: Store,
     private readonly router: Router,
