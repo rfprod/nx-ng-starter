@@ -21,7 +21,7 @@ describe('AppServerDevService', () => {
       spy.mockImplementation(() => child);
       service.resetEnvironments();
       child.emit('close');
-      expect(spy).toHaveBeenCalledWith('yarn', ['tools:env:reset:all'], {
+      expect(spy).toHaveBeenCalledWith('npx', ['nx', 'run-many', '--target', 'configure-env', '--all', '--reset'], {
         stdio: 'inherit',
         detached: true,
       });
