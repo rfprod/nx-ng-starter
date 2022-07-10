@@ -1,4 +1,5 @@
 import { ExecutorContext, logger } from '@nrwl/devkit';
+import dotenv from 'dotenv';
 import { constants } from 'fs';
 import { access, readFile, stat, writeFile } from 'fs/promises';
 
@@ -8,7 +9,7 @@ interface IEnvConfig {
   version: string;
 }
 
-export class AppClientEnvConfig {
+export abstract class AppBaseEnvConfig<T = IEnvConfig> {
   /**
    * Executor context.
    */
@@ -22,18 +23,22 @@ export class AppClientEnvConfig {
   /**
    * The supported application names.
    */
-  private readonly supportedApps: TSupportedApp[] = ['client', 'documentation', 'elements'];
+  protected supportedApps: TSupportedApp[] = [];
 
   /**
    * The environment configuration file initial value.
    */
-  private readonly defaultEnv: IEnvConfig = {
+  protected defaultEnv: T = <T>(<unknown>{
     version: 'N/A',
-  };
+  });
 
   constructor(options: IExecutorOptions, context: ExecutorContext) {
     this.options = { ...options };
     this.context = { ...context };
+    /**
+     * Load environment variables.
+     */
+    dotenv.config({ path: `${this.context.cwd}/.env` });
   }
 
   /**
@@ -43,6 +48,9 @@ export class AppClientEnvConfig {
     return `${this.context.cwd}/apps/${app}/src/environments/environment.config.ts`;
   }
 
+  /**
+   * Configures the application environment.
+   */
   public async execute() {
     const reset = this.options.reset;
     const app = this.options.app;
@@ -76,13 +84,15 @@ export class AppClientEnvConfig {
   /**
    * Returns environment configuration file contents.
    */
-  private envConfigFileContents(options: IEnvConfig) {
+  protected envConfigFileContents(options: T) {
     const envConfig = `/**
- * Metadata environment configuration factory.
- * @returns metadata environment configuration
+ * The application environment configuration factory.
+ * @returns application environment configuration
  */
-export const metaEnvFactory = () => ({
-  version: '${options.version}',
+export const appEnvFactory = () => ({
+  meta: {
+    version: '${(<Record<string, unknown>>options).version}',
+  },
 });
 `;
     return envConfig;
@@ -91,7 +101,7 @@ export const metaEnvFactory = () => ({
   /**
    * Writes environment file.
    */
-  private async writeEnvironmentFile(envFilePath: string, env: IEnvConfig) {
+  protected async writeEnvironmentFile(envFilePath: string, env: T) {
     return stat(envFilePath)
       .then(() => {
         const envFileContents = this.envConfigFileContents(env);
@@ -111,7 +121,7 @@ export const metaEnvFactory = () => ({
    * @param source the package.json file location
    * @returns the value of the version property from the package.json file
    */
-  private async getPackageVersion(source = `${this.context.cwd}/package.json`) {
+  protected async getPackageVersion(source = `${this.context.cwd}/package.json`) {
     return readFile(source, 'utf8')
       .then<string>(data => {
         const packageJsonContent: {
@@ -127,14 +137,23 @@ export const metaEnvFactory = () => ({
   }
 
   /**
-   * Sets environment variable values.
+   * Gets environment variable value.
+   * @param key environment variable key
+   * @returns environment variable value or key if value is null or undefined
    */
-  private async getEnvValues(): Promise<IEnvConfig> {
+  protected getEnvValue(key: string) {
+    return process.env[key] ?? key;
+  }
+
+  /**
+   * Forms the environment variable values object.
+   */
+  protected async getEnvValues(): Promise<T> {
     const version = await this.getPackageVersion();
 
-    const env: IEnvConfig = {
+    const env = <T>(<unknown>{
       version,
-    };
+    });
     return env;
   }
 }
