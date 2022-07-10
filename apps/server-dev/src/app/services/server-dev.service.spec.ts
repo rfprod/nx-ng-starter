@@ -27,14 +27,17 @@ describe('AppServerDevService', () => {
       });
     });
 
-    it('should invoke the child process spawn command', () => {
+    it('should invoke the child process spawn command, error code 8', () => {
       const spy = jest.spyOn(service, 'spawn');
       const child = new ChildProcess();
       spy.mockImplementation(() => child);
       service.resetEnvironments();
       const code = 8;
       child.emit('close', code);
-      expect(spy).toHaveBeenCalled();
+      expect(spy).toHaveBeenCalledWith('npx', ['nx', 'run-many', '--target', 'configure-env', '--all', '--reset'], {
+        stdio: 'inherit',
+        detached: true,
+      });
     });
   });
 });
