@@ -1,8 +1,11 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "prefix": "app",
+  "projectType": "library",
+  "sourceRoot": "libs/client-d3-charts/src",
+  "tags": ["scope:client-d3-charts", "type:ui"],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:ng-packagr",
       "configurations": {
         "development": {
           "tsConfig": "libs/client-d3-charts/tsconfig.lib.json"
@@ -12,6 +15,7 @@
         }
       },
       "defaultConfiguration": "production",
+      "executor": "@angular-devkit/build-angular:ng-packagr",
       "options": {
         "project": "libs/client-d3-charts/ng-package.json"
       },
@@ -32,9 +36,5 @@
       },
       "outputs": ["coverage/libs/client-d3-charts"]
     }
-  },
-  "prefix": "app",
-  "projectType": "library",
-  "sourceRoot": "libs/client-d3-charts/src",
-  "tags": ["scope:client-d3-charts", "type:ui"]
+  }
 }

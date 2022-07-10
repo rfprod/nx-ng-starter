@@ -1,8 +1,16 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "generators": {
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "prefix": "app",
+  "projectType": "application",
+  "sourceRoot": "apps/documentation/src",
+  "tags": ["scope:documentation", "type:application"],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
       "configurations": {
         "analyze-bundle": {
           "buildOptimizer": true,
@@ -30,18 +38,9 @@
           "vendorChunk": false
         }
       },
+      "executor": "@angular-devkit/build-angular:browser",
       "options": {
-        "allowedCommonJsDependencies": [
-          "hammerjs",
-          "memo-decorator",
-          "moment",
-          "apollo-upload-client",
-          "zen-observable",
-          "graphql-tag",
-          "protobufjs/minimal",
-          "extract-files/public/isExtractableFile",
-          "extract-files/public/extractFiles"
-        ],
+        "allowedCommonJsDependencies": ["hammerjs", "memo-decorator", "moment"],
         "aot": true,
         "assets": [
           "apps/documentation/src/favicon.ico",
@@ -128,17 +127,23 @@
       }
     },
     "build-storybook": {
-      "executor": "@storybook/angular:build-storybook",
       "configurations": {
         "ci": {
           "quiet": true
         }
       },
+      "executor": "@storybook/angular:build-storybook",
       "options": {
         "browserTarget": "documentation:build",
         "compodoc": false,
         "configDir": "apps/documentation/.storybook",
         "outputDir": "dist/storybook/documentation"
+      }
+    },
+    "configure-env": {
+      "executor": "./tools/executors/client-env:configure",
+      "options": {
+        "app": "documentation"
       }
     },
     "extract-i18n": {
@@ -155,23 +160,23 @@
       }
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
           "browserTarget": "documentation:build:production"
         }
       },
+      "executor": "@angular-devkit/build-angular:dev-server",
       "options": {
         "browserTarget": "documentation:build"
       }
     },
     "storybook": {
-      "executor": "@storybook/angular:start-storybook",
       "configurations": {
         "ci": {
           "quiet": true
         }
       },
+      "executor": "@storybook/angular:start-storybook",
       "options": {
         "browserTarget": "documentation:build",
         "compodoc": false,
@@ -187,14 +192,5 @@
       },
       "outputs": ["coverage/apps/documentation"]
     }
-  },
-  "prefix": "app",
-  "projectType": "application",
-  "generators": {
-    "@nrwl/angular:component": {
-      "style": "scss"
-    }
-  },
-  "sourceRoot": "apps/documentation/src",
-  "tags": ["scope:documentation", "type:application"]
+  }
 }

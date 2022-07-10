@@ -1,8 +1,11 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "prefix": "app",
+  "projectType": "application",
+  "sourceRoot": "apps/elements/src",
+  "tags": ["scope:elements", "type:application"],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
       "configurations": {
         "production": {
           "buildOptimizer": true,
@@ -20,6 +23,7 @@
           "vendorChunk": false
         }
       },
+      "executor": "@angular-devkit/build-angular:browser",
       "options": {
         "allowedCommonJsDependencies": [
           "hammerjs",
@@ -76,6 +80,12 @@
         "vendorChunk": true
       }
     },
+    "configure-env": {
+      "executor": "./tools/executors/client-env:configure",
+      "options": {
+        "app": "elements"
+      }
+    },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
@@ -90,13 +100,13 @@
       }
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
           "browserTarget": "elements:build:production",
           "proxyConfig": "apps/elements/proxy.conf.json"
         }
       },
+      "executor": "@angular-devkit/build-angular:dev-server",
       "options": {
         "browserTarget": "elements:build"
       }
@@ -109,9 +119,5 @@
       },
       "outputs": ["coverage/apps/elements"]
     }
-  },
-  "prefix": "app",
-  "projectType": "application",
-  "sourceRoot": "apps/elements/src",
-  "tags": ["scope:elements", "type:application"]
+  }
 }

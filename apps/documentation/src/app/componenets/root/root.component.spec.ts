@@ -1,5 +1,6 @@
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { Meta, Title } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -7,6 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppClientMaterialModule } from '@app/client-material';
 import { NgxsModule } from '@ngxs/store';
 import { MarkdownModule, MarkdownModuleConfig, MarkedOptions } from 'ngx-markdown';
+import { of, tap } from 'rxjs';
 
 import { testingEnvironment, testingProviders } from '../../../testing/testing-providers.mock';
 import { DOC_APP_ENV, IDocAppEnvironment } from '../../interfaces/environment.interface';
@@ -54,31 +56,135 @@ describe('AppDocRootComponent', () => {
 
   let env: IDocAppEnvironment;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        title = TestBed.inject(Title);
-        meta = TestBed.inject(Meta);
+  let bpObserver: BreakpointObserver;
+  let bpObserverSpy: jest.SpyInstance;
 
-        setTitleSpy = jest.spyOn(title, 'setTitle');
-        updateTagSpy = jest.spyOn(meta, 'updateTag');
+  const configureEnvironment = async (bpState?: BreakpointState) => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
 
-        fixture = TestBed.createComponent(AppDocRootComponent);
-        component = fixture.debugElement.componentInstance;
+    title = TestBed.inject(Title);
+    meta = TestBed.inject(Meta);
 
-        env = TestBed.inject(DOC_APP_ENV);
+    setTitleSpy = jest.spyOn(title, 'setTitle');
+    updateTagSpy = jest.spyOn(meta, 'updateTag');
 
-        fixture.detectChanges();
-      });
-  }));
+    bpObserver = TestBed.inject(BreakpointObserver);
+    bpObserverSpy = jest.spyOn(bpObserver, 'observe');
+    if (typeof bpState !== 'undefined') {
+      bpObserverSpy.mockReturnValue(of(<BreakpointState>{ ...bpState }));
+    }
 
-  it('should be defined', () => {
+    fixture = TestBed.createComponent(AppDocRootComponent);
+    component = fixture.debugElement.componentInstance;
+
+    env = TestBed.inject(DOC_APP_ENV);
+
+    fixture.detectChanges();
+  };
+
+  it('should initialize correctly', async () => {
+    await configureEnvironment();
     expect(component).toBeDefined();
-  });
-
-  it('ngOnInit should set title and update meta tag', () => {
     expect(setTitleSpy).toHaveBeenCalledWith(env.appName);
     expect(updateTagSpy).toHaveBeenCalledWith({ description: env.description });
+  });
+
+  describe('config$: sidebar closed', () => {
+    it('extra small viewport: ', async () => {
+      const breakpoints: BreakpointState['breakpoints'] = {};
+      breakpoints[Breakpoints.XSmall] = true;
+      breakpoints[Breakpoints.Small] = false;
+      breakpoints[Breakpoints.Medium] = false;
+      breakpoints[Breakpoints.Large] = false;
+      breakpoints[Breakpoints.XLarge] = false;
+
+      await configureEnvironment({ breakpoints, matches: true });
+
+      void component.config$
+        .pipe(
+          tap(result => {
+            expect(result.sidenavOpen).toBeFalsy();
+          }),
+        )
+        .subscribe();
+    });
+
+    it('small viewport', async () => {
+      const breakpoints: BreakpointState['breakpoints'] = {};
+      breakpoints[Breakpoints.XSmall] = false;
+      breakpoints[Breakpoints.Small] = true;
+      breakpoints[Breakpoints.Medium] = false;
+      breakpoints[Breakpoints.Large] = false;
+      breakpoints[Breakpoints.XLarge] = false;
+
+      await configureEnvironment({ breakpoints, matches: true });
+
+      void component.config$
+        .pipe(
+          tap(result => {
+            expect(result.sidenavOpen).toBeFalsy();
+          }),
+        )
+        .subscribe();
+    });
+  });
+
+  describe('config$: sidebar open', () => {
+    it('medium viewport', async () => {
+      const breakpoints: BreakpointState['breakpoints'] = {};
+      breakpoints[Breakpoints.XSmall] = false;
+      breakpoints[Breakpoints.Small] = false;
+      breakpoints[Breakpoints.Medium] = true;
+      breakpoints[Breakpoints.Large] = false;
+      breakpoints[Breakpoints.XLarge] = false;
+
+      await configureEnvironment({ breakpoints, matches: true });
+
+      void component.config$
+        .pipe(
+          tap(result => {
+            expect(result.sidenavOpen).toBeTruthy();
+          }),
+        )
+        .subscribe();
+    });
+
+    it('large viewport', async () => {
+      const breakpoints: BreakpointState['breakpoints'] = {};
+      breakpoints[Breakpoints.XSmall] = false;
+      breakpoints[Breakpoints.Small] = false;
+      breakpoints[Breakpoints.Medium] = false;
+      breakpoints[Breakpoints.Large] = true;
+      breakpoints[Breakpoints.XLarge] = false;
+
+      await configureEnvironment({ breakpoints, matches: true });
+
+      void component.config$
+        .pipe(
+          tap(result => {
+            expect(result.sidenavOpen).toBeTruthy();
+          }),
+        )
+        .subscribe();
+    });
+
+    it('extra large viewport', async () => {
+      const breakpoints: BreakpointState['breakpoints'] = {};
+      breakpoints[Breakpoints.XSmall] = false;
+      breakpoints[Breakpoints.Small] = false;
+      breakpoints[Breakpoints.Medium] = false;
+      breakpoints[Breakpoints.Large] = false;
+      breakpoints[Breakpoints.XLarge] = true;
+
+      await configureEnvironment({ breakpoints, matches: true });
+
+      void component.config$
+        .pipe(
+          tap(result => {
+            expect(result.sidenavOpen).toBeTruthy();
+          }),
+        )
+        .subscribe();
+    });
   });
 });

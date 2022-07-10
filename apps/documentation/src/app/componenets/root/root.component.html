@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutAlign="start stretch" class="root-container">
+<div fxLayout="column" fxLayoutAlign="start stretch" class="root-container" *ngIf="config$ | async as config">
   <mat-toolbar color="primary">
     <img [ngStyle]="{ height: '75%', width: 'auto!important' }" src="/favicon.ico" />
 
@@ -37,7 +37,7 @@
   </mat-toolbar>
 
   <mat-sidenav-container fxFlex="1 1 auto" [hasBackdrop]="false" [autosize]="true">
-    <mat-sidenav #appSidebar mode="side" [opened]="true">
+    <mat-sidenav #sidenav mode="side" [opened]="config.sidenavOpen">
       <app-documentation-md-reference-tree></app-documentation-md-reference-tree>
     </mat-sidenav>
 
@@ -49,11 +49,17 @@
   </mat-sidenav-container>
 
   <mat-toolbar color="primary" fxFlex="0 1 auto">
-    <button mat-icon-button (click)="appSidebar.toggle()">
-      <mat-icon title="open sidenav" *ngIf="!appSidebar.opened"> flip_to_front </mat-icon>
-      <mat-icon title="open sidenav" *ngIf="appSidebar.opened"> flip_to_back </mat-icon>
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon title="open sidenav" *ngIf="!sidenav.opened"> flip_to_front </mat-icon>
+      <mat-icon title="open sidenav" *ngIf="sidenav.opened"> flip_to_back </mat-icon>
     </button>
 
     <span fxFlex="1 1 auto"></span>
+
+    <div *ngIf="version">
+      <small>{{ version }}</small>
+    </div>
   </mat-toolbar>
 </div>
+
+<!-- <ng-container ></ng-container> -->

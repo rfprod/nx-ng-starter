@@ -1,13 +1,17 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "implicitDependencies": ["documentation"],
+  "projectType": "application",
+  "sourceRoot": "apps/documentation-e2e/src",
+  "tags": ["scope:documentation-e2e", "type:e2e"],
   "targets": {
     "e2e": {
-      "executor": "@nrwl/cypress:cypress",
       "configurations": {
         "production": {
           "devServerTarget": "documentation:serve:production"
         }
       },
+      "executor": "@nrwl/cypress:cypress",
       "options": {
         "cypressConfig": "apps/documentation-e2e/cypress.json",
         "devServerTarget": "documentation:serve",
@@ -21,9 +25,5 @@
         "lintFilePatterns": ["apps/documentation-e2e/**/*.ts"]
       }
     }
-  },
-  "implicitDependencies": ["documentation"],
-  "projectType": "application",
-  "sourceRoot": "apps/documentation-e2e/src",
-  "tags": ["scope:documentation-e2e", "type:e2e"]
+  }
 }

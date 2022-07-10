@@ -1,13 +1,17 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "implicitDependencies": ["client-diagnostics"],
+  "projectType": "application",
+  "sourceRoot": "apps/client-diagnostics-e2e/src",
+  "tags": ["scope:client-diagnostics-e2e", "type:e2e"],
   "targets": {
     "e2e": {
-      "executor": "@nrwl/cypress:cypress",
       "configurations": {
         "ci": {
           "devServerTarget": "client-diagnostics:storybook:ci"
         }
       },
+      "executor": "@nrwl/cypress:cypress",
       "options": {
         "cypressConfig": "apps/client-diagnostics-e2e/cypress.json",
         "devServerTarget": "client-diagnostics:storybook",
@@ -21,9 +25,5 @@
         "lintFilePatterns": ["apps/client-diagnostics-e2e/**/*.ts"]
       }
     }
-  },
-  "implicitDependencies": ["client-diagnostics"],
-  "projectType": "application",
-  "sourceRoot": "apps/client-diagnostics-e2e/src",
-  "tags": ["scope:client-diagnostics-e2e", "type:e2e"]
+  }
 }

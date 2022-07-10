@@ -10,6 +10,9 @@
 # diagrams are saved by default to the directory where input files reside
 tools/diagrams/*.*
 !tools/diagrams/*.mmd
+# compiled workspace executor output is saved to the same directory as its source code
+tools/executors/**/*.js
+tools/executors/**/*.js.map
 
 # migrations
 migrations.json

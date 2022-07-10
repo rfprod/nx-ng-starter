@@ -4,6 +4,9 @@ export interface IDocAppEnvironment {
   production: boolean;
   appName: string;
   description: string;
+  meta: {
+    version: string;
+  };
   mdFilePaths: string[];
 }
 

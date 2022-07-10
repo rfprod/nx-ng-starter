@@ -73,12 +73,12 @@ jobs:
 
       - name: Lint all
         if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
-        run: npx nx run-many --target=lint --all --parallel --max-parallel=2
+        run: npx nx run-many --target lint --all --parallel --max-parallel 2
 
       - name: Unit test all (with code coverage)
         if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
         run: |
-          npx nx run-many --target=test --all --pass-with-no-tests --code-coverage=true --watch=false --run-in-band --ci
+          npx nx run-many --target test --all --pass-with-no-tests --code-coverage --run-in-band --ci
           npx nx run tools:coverage-stats
           cat ./tools/ts/UNIT_COVERAGE.md
 
@@ -86,9 +86,9 @@ jobs:
         if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
         run: |
           yarn generate:env:documentation
-          yarn tools:env:set:all
-          npx nx run-many --target=build --all --configuration production
-          yarn tools:env:reset:all
+          npx nx run-many --target configure-env --all
+          npx nx run-many --target build --all --configuration production
+          npx nx run-many --target configure-env --all --reset
 
       - name: Build documentation app assets
         if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}

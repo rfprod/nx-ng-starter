@@ -1,5 +1,9 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "generators": {},
+  "projectType": "library",
+  "sourceRoot": "libs/backend-interfaces/src",
+  "tags": ["scope:backend-interfaces", "type:util"],
   "targets": {
     "generate-client-definitions": {
       "executor": "@nrwl/workspace:run-commands",
@@ -27,9 +31,5 @@
       },
       "outputs": ["coverage/libs/backend-interfaces"]
     }
-  },
-  "projectType": "library",
-  "generators": {},
-  "sourceRoot": "libs/backend-interfaces/src",
-  "tags": ["scope:backend-interfaces", "type:util"]
+  }
 }

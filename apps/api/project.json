@@ -1,8 +1,12 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "generators": {},
+  "prefix": "app",
+  "projectType": "application",
+  "sourceRoot": "apps/api/src",
+  "tags": ["scope:api", "type:application"],
   "targets": {
     "build": {
-      "executor": "@nrwl/node:webpack",
       "configurations": {
         "firebase": {
           "extractLicenses": true,
@@ -27,6 +31,7 @@
           "optimization": true
         }
       },
+      "executor": "@nrwl/node:webpack",
       "options": {
         "assets": ["apps/api/src/assets"],
         "budgets": [
@@ -50,7 +55,6 @@
       }
     },
     "serve": {
-      "executor": "@nrwl/node:node",
       "configurations": {
         "firebase": {
           "buildTarget": "api:build:firebase"
@@ -59,6 +63,7 @@
           "buildTarget": "api:build:production"
         }
       },
+      "executor": "@nrwl/node:node",
       "options": {
         "buildTarget": "api:build"
       }
@@ -71,10 +76,5 @@
       },
       "outputs": ["coverage/apps/api"]
     }
-  },
-  "prefix": "app",
-  "projectType": "application",
-  "generators": {},
-  "sourceRoot": "apps/api/src",
-  "tags": ["scope:api", "type:application"]
+  }
 }

@@ -1,8 +1,10 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/server-dev/src",
+  "tags": ["scope:server-dev", "type:application"],
   "targets": {
     "build": {
-      "executor": "@nrwl/node:webpack",
       "configurations": {
         "production": {
           "extractLicenses": true,
@@ -16,6 +18,7 @@
           "optimization": true
         }
       },
+      "executor": "@nrwl/node:webpack",
       "options": {
         "assets": ["apps/server-dev/src/assets"],
         "main": "apps/server-dev/src/main.ts",
@@ -33,12 +36,12 @@
       "outputs": ["{options.outputFile}"]
     },
     "serve": {
-      "executor": "@nrwl/node:node",
       "configurations": {
         "production": {
           "buildTarget": "server-dev:build:production"
         }
       },
+      "executor": "@nrwl/node:node",
       "options": {
         "buildTarget": "server-dev:build"
       }
@@ -51,8 +54,5 @@
       },
       "outputs": ["coverage/apps/server-dev"]
     }
-  },
-  "projectType": "application",
-  "sourceRoot": "apps/server-dev/src",
-  "tags": ["scope:server-dev", "type:application"]
+  }
 }

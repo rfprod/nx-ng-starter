@@ -11,7 +11,9 @@ buildDocumentation() {
   npx nx run tools:coverage-stats || exit 1
   yarn generate:env:documentation || exit 1
 
+  npx nx run documentation:configure-env
   npx nx build --project documentation --configuration production || exit 1
+  npx nx run documentation:configure-env --reset
 
   yarn test:reports || exit 1
   yarn generate:unit-test-coverage-index || exit 1

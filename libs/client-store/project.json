@@ -1,5 +1,14 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "generators": {
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "prefix": "app",
+  "projectType": "library",
+  "sourceRoot": "libs/client-store/src",
+  "tags": ["scope:client-store", "type:data-access"],
   "targets": {
     "lint": {
       "executor": "@angular-eslint/builder:lint",
@@ -16,14 +25,5 @@
       },
       "outputs": ["coverage/libs/client-store"]
     }
-  },
-  "prefix": "app",
-  "projectType": "library",
-  "generators": {
-    "@nrwl/angular:component": {
-      "style": "scss"
-    }
-  },
-  "sourceRoot": "libs/client-store/src",
-  "tags": ["scope:client-store", "type:data-access"]
+  }
 }
