@@ -1,13 +1,17 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "implicitDependencies": ["client-core-components"],
+  "projectType": "application",
+  "sourceRoot": "apps/client-core-components-e2e/src",
+  "tags": ["scope:client-core-components-e2e", "type:e2e"],
   "targets": {
     "e2e": {
-      "executor": "@nrwl/cypress:cypress",
       "configurations": {
         "ci": {
           "devServerTarget": "client-core-components:storybook:ci"
         }
       },
+      "executor": "@nrwl/cypress:cypress",
       "options": {
         "cypressConfig": "apps/client-core-components-e2e/cypress.json",
         "devServerTarget": "client-core-components:storybook",
@@ -21,9 +25,5 @@
         "lintFilePatterns": ["apps/client-core-components-e2e/**/*.ts"]
       }
     }
-  },
-  "implicitDependencies": ["client-core-components"],
-  "projectType": "application",
-  "sourceRoot": "apps/client-core-components-e2e/src",
-  "tags": ["scope:client-core-components-e2e", "type:e2e"]
+  }
 }

@@ -1,13 +1,22 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "generators": {
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "prefix": "app",
+  "projectType": "library",
+  "sourceRoot": "libs/client-core-components/src",
+  "tags": ["scope:client-core-components", "type:feature"],
   "targets": {
     "build-storybook": {
-      "executor": "@storybook/angular:build-storybook",
       "configurations": {
         "ci": {
           "quiet": true
         }
       },
+      "executor": "@storybook/angular:build-storybook",
       "options": {
         "browserTarget": "client-core-components:build-storybook",
         "compodoc": false,
@@ -23,12 +32,12 @@
       }
     },
     "storybook": {
-      "executor": "@storybook/angular:start-storybook",
       "configurations": {
         "ci": {
           "quiet": true
         }
       },
+      "executor": "@storybook/angular:start-storybook",
       "options": {
         "browserTarget": "client-core-components:build-storybook",
         "compodoc": false,
@@ -44,14 +53,5 @@
       },
       "outputs": ["coverage/libs/client-core-components"]
     }
-  },
-  "prefix": "app",
-  "projectType": "library",
-  "generators": {
-    "@nrwl/angular:component": {
-      "style": "scss"
-    }
-  },
-  "sourceRoot": "libs/client-core-components/src",
-  "tags": ["scope:client-core-components", "type:feature"]
+  }
 }

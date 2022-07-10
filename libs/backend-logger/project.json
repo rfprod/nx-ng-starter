@@ -1,5 +1,8 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/backend-logger/src",
+  "tags": ["scope:backend-logger", "type:feature"],
   "targets": {
     "lint": {
       "executor": "@angular-eslint/builder:lint",
@@ -16,8 +19,5 @@
       },
       "outputs": ["coverage/libs/backend-logger"]
     }
-  },
-  "projectType": "library",
-  "sourceRoot": "libs/backend-logger/src",
-  "tags": ["scope:backend-logger", "type:feature"]
+  }
 }

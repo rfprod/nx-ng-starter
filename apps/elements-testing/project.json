@@ -1,8 +1,10 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/elements-testing/src",
+  "tags": ["scope:elements-testing", "type:application"],
   "targets": {
     "build": {
-      "executor": "@nrwl/web:webpack",
       "configurations": {
         "production": {
           "extractLicenses": true,
@@ -19,6 +21,7 @@
           "vendorChunk": false
         }
       },
+      "executor": "@nrwl/web:webpack",
       "options": {
         "assets": ["apps/elements-testing/src/favicon.ico", "apps/elements-testing/src/assets"],
         "baseHref": "/",
@@ -46,12 +49,12 @@
       }
     },
     "serve": {
-      "executor": "@nrwl/web:dev-server",
       "configurations": {
         "production": {
           "buildTarget": "elements-testing:build:production"
         }
       },
+      "executor": "@nrwl/web:dev-server",
       "options": {
         "buildTarget": "elements-testing:build",
         "port": 4021
@@ -65,8 +68,5 @@
       },
       "outputs": ["coverage/apps/elements-testing"]
     }
-  },
-  "projectType": "application",
-  "sourceRoot": "apps/elements-testing/src",
-  "tags": ["scope:elements-testing", "type:application"]
+  }
 }

@@ -1,13 +1,17 @@
 {
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "implicitDependencies": ["elements-testing"],
+  "projectType": "application",
+  "sourceRoot": "apps/elements-testing-e2e/src",
+  "tags": ["scope:elements-testing-e2e", "type:e2e"],
   "targets": {
     "e2e": {
-      "executor": "@nrwl/cypress:cypress",
       "configurations": {
         "production": {
           "devServerTarget": "elements-testing:serve:production"
         }
       },
+      "executor": "@nrwl/cypress:cypress",
       "options": {
         "cypressConfig": "apps/elements-testing-e2e/cypress.json",
         "devServerTarget": "elements-testing:serve",
@@ -21,9 +25,5 @@
         "lintFilePatterns": ["apps/elements-testing-e2e/**/*.ts"]
       }
     }
-  },
-  "implicitDependencies": ["elements-testing"],
-  "projectType": "application",
-  "sourceRoot": "apps/elements-testing-e2e/src",
-  "tags": ["scope:elements-testing-e2e", "type:e2e"]
+  }
 }

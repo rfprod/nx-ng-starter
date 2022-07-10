@@ -1,5 +1,7 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
+import { map } from 'rxjs';
 
 import { DOC_APP_ENV, IDocAppEnvironment } from '../../interfaces/environment.interface';
 
@@ -10,9 +12,23 @@ import { DOC_APP_ENV, IDocAppEnvironment } from '../../interfaces/environment.in
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppDocRootComponent implements OnInit {
-  public inlineTitle = this.env.appName;
+  public readonly version = this.env.meta.version;
 
-  constructor(private readonly title: Title, private readonly meta: Meta, @Inject(DOC_APP_ENV) private readonly env: IDocAppEnvironment) {}
+  public readonly config$ = this.bpObserver
+    .observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
+    .pipe(
+      map(state => {
+        const sidenavOpen = !state.breakpoints[Breakpoints.XSmall] && !state.breakpoints[Breakpoints.Small];
+        return { sidenavOpen };
+      }),
+    );
+
+  constructor(
+    private readonly title: Title,
+    private readonly meta: Meta,
+    private readonly bpObserver: BreakpointObserver,
+    @Inject(DOC_APP_ENV) private readonly env: IDocAppEnvironment,
+  ) {}
 
   /**
    * Lifecycle hook called on component initialization.

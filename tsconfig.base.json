@@ -3,6 +3,13 @@
     "annotateForClosureCompiler": true,
     "enableIvy": true,
     "enableResourceInlining": true,
+    "extendedDiagnostics": {
+      "checks": {
+        "invalidBananaInBox": "error",
+        "nullishCoalescingNotNullable": "error"
+      },
+      "defaultCategory": "error"
+    },
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
@@ -17,6 +24,7 @@
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
+    "extendedDiagnostics": false,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
     "lib": ["ES2018", "DOM", "ESNext.AsyncIterable"],

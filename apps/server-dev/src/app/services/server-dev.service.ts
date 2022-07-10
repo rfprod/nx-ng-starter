@@ -8,7 +8,7 @@ export class AppServerDevService {
   public resetEnvironments() {
     Logger.verbose(`\n${new Date(Date.now())}: Dev server > Resetting environment variables...\n`);
 
-    const child = this.spawn('yarn', ['tools:env:reset:all'], {
+    const child = this.spawn('npx', ['nx', 'run-many', '--target', 'configure-env', '--all', '--reset'], {
       stdio: 'inherit',
       detached: true,
     });
