@@ -1,7 +1,7 @@
 import { IWebClientAppEnvironment, TCapacitorPlatform } from '@app/client-util';
 import { Capacitor } from '@capacitor/core';
 
-import { metaEnvFactory } from './environment.config';
+import { appEnvFactory } from './environment.config';
 import { sentryEnvFactory } from './sentry.config';
 
 const platform: TCapacitorPlatform = Capacitor.getPlatform();
@@ -22,5 +22,5 @@ export const environment: IWebClientAppEnvironment = {
       : `${window.location.origin}/api`,
   envoyUrl: 'http://localhost:8090',
   sentry: sentryEnvFactory({ production: true }),
-  meta: metaEnvFactory(),
+  ...appEnvFactory(),
 };

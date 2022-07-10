@@ -1,6 +1,6 @@
 import { IWebClientAppEnvironment } from '@app/client-util';
 
-import { metaEnvFactory } from './environment.config';
+import { appEnvFactory } from './environment.config';
 import { sentryEnvFactory } from './sentry.config';
 
 /**
@@ -14,5 +14,5 @@ export const environment: IWebClientAppEnvironment = {
   api: window.location.origin.includes('localhost') ? 'http://localhost:8080/api' : `${window.location.origin}/api`,
   envoyUrl: 'http://localhost:8090',
   sentry: sentryEnvFactory({ production: true }),
-  meta: metaEnvFactory(),
+  ...appEnvFactory(),
 };

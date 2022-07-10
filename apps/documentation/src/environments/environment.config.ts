@@ -1,7 +1,9 @@
 /**
- * Metadata environment configuration factory.
- * @returns metadata environment configuration
+ * The application environment configuration factory.
+ * @returns application environment configuration
  */
-export const metaEnvFactory = () => ({
-  version: 'N/A',
+export const appEnvFactory = () => ({
+  meta: {
+    version: 'N/A',
+  },
 });
