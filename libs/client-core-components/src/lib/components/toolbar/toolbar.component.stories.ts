@@ -6,7 +6,7 @@ import { AppClientMaterialModule } from '@app/client-material';
 import { AppChatbotState } from '@app/client-store-chatbot';
 import { AppSidebarState } from '@app/client-store-sidebar';
 import { AppUserState } from '@app/client-store-user';
-import { documentFactory, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@app/client-util';
+import { anchorButton, documentFactory, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@app/client-util';
 import { NgxsModule } from '@ngxs/store';
 import { Args, Story } from '@storybook/angular/types-6-0';
 
@@ -58,21 +58,21 @@ export const primary = story.bind({});
 primary.args = {
   version: '1.0.0',
   anchors: [
-    {
-      href: 'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=bug_report.md&title=',
-      icon: 'bug_report',
-      title: 'Report a bug',
-    },
-    {
-      href: 'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=feature_request.md&title=',
-      icon: 'lightbulb',
-      title: 'Request a feature',
-    },
-    {
-      href: 'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=maintenance.md&title=',
-      icon: 'engineering',
-      title: 'Request maintenance',
-    },
+    anchorButton(
+      'Report a bug',
+      'bug_report',
+      'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=bug_report.md&title=',
+    ),
+    anchorButton(
+      'Request a feature',
+      'lightbulb',
+      'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=feature_request.md&title=',
+    ),
+    anchorButton(
+      'Request maintenance',
+      'engineering',
+      'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=maintenance.md&title=',
+    ),
   ],
 };
 primary.parameters = {

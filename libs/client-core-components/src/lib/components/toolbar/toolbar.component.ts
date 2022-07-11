@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { chatbotActions } from '@app/client-store-chatbot';
 import { AppSidebarState, sidebarActions } from '@app/client-store-sidebar';
-import { IToolbarAnchor } from '@app/client-util';
+import { anchorButton, IAnchorButton } from '@app/client-util';
 import { Store } from '@ngxs/store';
 import { map } from 'rxjs/operators';
 
@@ -14,22 +14,22 @@ import { map } from 'rxjs/operators';
 export class AppToolbarComponent {
   @Input() public version = 'N/A';
 
-  @Input() public anchors: IToolbarAnchor[] = [
-    {
-      href: 'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=bug_report.md&title=',
-      icon: 'bug_report',
-      title: 'Report a bug',
-    },
-    {
-      href: 'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=feature_request.md&title=',
-      icon: 'lightbulb',
-      title: 'Request a feature',
-    },
-    {
-      href: 'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=maintenance.md&title=',
-      icon: 'engineering',
-      title: 'Request maintenance',
-    },
+  @Input() public anchors: IAnchorButton[] = [
+    anchorButton(
+      'Report a bug',
+      'bug_report',
+      'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=bug_report.md&title=',
+    ),
+    anchorButton(
+      'Request a feature',
+      'lightbulb',
+      'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=feature_request.md&title=',
+    ),
+    anchorButton(
+      'Request maintenance',
+      'engineering',
+      'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=maintenance.md&title=',
+    ),
   ];
 
   @Output() public readonly darkThemeEnabled = new EventEmitter<boolean>();
