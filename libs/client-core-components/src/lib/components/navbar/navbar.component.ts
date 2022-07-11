@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { sidebarActions } from '@app/client-store-sidebar';
-import { IToolbarButton, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
+import { IRouterButton, IWebClientAppEnvironment, routerButton, WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngxs/store';
 
 @Component({
@@ -13,43 +13,55 @@ import { Store } from '@ngxs/store';
 export class AppNavbarComponent {
   @Input() public logoSrc = 'assets/icons/icon-72x72.png';
 
-  @Input() public buttons: IToolbarButton[] = [
-    {
-      routerLink: [{ outlets: { primary: [''], sidebar: [] } }],
-      routeActive: () =>
+  @Input() public buttons: IRouterButton[] = [
+    routerButton(
+      'Home',
+      'home',
+      () =>
         this.router.isActive('', {
           matrixParams: 'ignored',
           queryParams: 'ignored',
           paths: 'exact',
           fragment: 'ignored',
         }),
-      icon: 'home',
-      title: 'Home',
-    },
-    {
-      routerLink: [{ outlets: { primary: ['info'], sidebar: [] } }],
-      routeActive: () =>
+      [{ outlets: { primary: [''], sidebar: [] } }],
+    ),
+    routerButton(
+      'API info',
+      'api',
+      () =>
         this.router.isActive('info', {
           matrixParams: 'ignored',
           queryParams: 'ignored',
           paths: 'exact',
           fragment: 'ignored',
         }),
-      icon: 'api',
-      title: 'API info',
-    },
-    {
-      routerLink: [{ outlets: { primary: ['chatbot'], sidebar: [] } }],
-      routeActive: () =>
-        this.router.isActive('chatbot', {
+      [{ outlets: { primary: ['info'], sidebar: [] } }],
+    ),
+    routerButton(
+      'Chart examples',
+      'show_chart',
+      () =>
+        this.router.isActive('charts', {
           matrixParams: 'ignored',
           queryParams: 'ignored',
           paths: 'exact',
           fragment: 'ignored',
         }),
-      icon: 'chat',
-      title: 'Chat',
-    },
+      [{ outlets: { primary: ['charts'], sidebar: [] } }],
+    ),
+    routerButton(
+      'Chat',
+      'chat',
+      () =>
+        this.router.isActive('chat', {
+          matrixParams: 'ignored',
+          queryParams: 'ignored',
+          paths: 'exact',
+          fragment: 'ignored',
+        }),
+      [{ outlets: { primary: ['chat'], sidebar: [] } }],
+    ),
   ];
 
   public readonly appName = this.env.appName;

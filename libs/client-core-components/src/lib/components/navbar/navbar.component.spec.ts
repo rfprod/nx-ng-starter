@@ -61,7 +61,7 @@ describe('AppNavbarComponent', () => {
   }));
 
   it('buttons should have default values', () => {
-    const expectedLength = 3;
+    const expectedLength = 4;
     expect(component.buttons.length).toEqual(expectedLength);
   });
 
@@ -88,7 +88,17 @@ describe('AppNavbarComponent', () => {
 
     const thirdButtonIndex = 2;
     component.buttons[thirdButtonIndex].routeActive();
-    expect(routerIsActiveSpy).toHaveBeenCalledWith('chatbot', {
+    expect(routerIsActiveSpy).toHaveBeenCalledWith('charts', {
+      matrixParams: 'ignored',
+      queryParams: 'ignored',
+      paths: 'exact',
+      fragment: 'ignored',
+    });
+    routerIsActiveSpy.mockClear();
+
+    const fourthButtonIndex = 3;
+    component.buttons[fourthButtonIndex].routeActive();
+    expect(routerIsActiveSpy).toHaveBeenCalledWith('chat', {
       matrixParams: 'ignored',
       queryParams: 'ignored',
       paths: 'exact',

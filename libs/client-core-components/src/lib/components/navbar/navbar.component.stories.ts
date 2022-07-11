@@ -6,7 +6,7 @@ import { AppClientMaterialModule } from '@app/client-material';
 import { AppChatbotState } from '@app/client-store-chatbot';
 import { AppSidebarState } from '@app/client-store-sidebar';
 import { AppUserState } from '@app/client-store-user';
-import { documentFactory, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@app/client-util';
+import { documentFactory, routerButton, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@app/client-util';
 import { NgxsModule } from '@ngxs/store';
 import { Args, Story } from '@storybook/angular/types-6-0';
 
@@ -58,24 +58,10 @@ export const primary = story.bind({});
 primary.args = {
   logoSrc: 'assets/icons/icon-72x72.png',
   buttons: [
-    {
-      routerLink: [{ outlets: { primary: [''], sidebar: [] } }],
-      routeActive: () => false,
-      icon: 'home',
-      title: 'Home',
-    },
-    {
-      routerLink: [{ outlets: { primary: ['info'], sidebar: [] } }],
-      routeActive: () => false,
-      icon: 'touch_app',
-      title: 'API info',
-    },
-    {
-      routerLink: [{ outlets: { primary: ['chatbot'], sidebar: [] } }],
-      routeActive: () => false,
-      icon: 'chat',
-      title: 'Chat',
-    },
+    routerButton('Home', 'home', () => false, [{ outlets: { primary: [''], sidebar: [] } }]),
+    routerButton('API info', 'api', () => false, [{ outlets: { primary: ['info'], sidebar: [] } }]),
+    routerButton('Chart examples', 'show_chart', () => false, [{ outlets: { primary: ['charts'], sidebar: [] } }]),
+    routerButton('Chat', 'chat', () => false, [{ outlets: { primary: ['chat'], sidebar: [] } }]),
   ],
 };
 primary.parameters = {
