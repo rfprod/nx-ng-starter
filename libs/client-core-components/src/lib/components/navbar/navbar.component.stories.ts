@@ -61,7 +61,7 @@ primary.args = {
     routerButton('Home', 'home', () => false, [{ outlets: { primary: [''], sidebar: [] } }]),
     routerButton('API info', 'api', () => false, [{ outlets: { primary: ['info'], sidebar: [] } }]),
     routerButton('Chart examples', 'show_chart', () => false, [{ outlets: { primary: ['charts'], sidebar: [] } }]),
-    routerButton('Chat', 'chat', () => false, [{ outlets: { primary: ['chat'], sidebar: [] } }]),
+    routerButton('Chat', 'chatbot', () => false, [{ outlets: { primary: ['chatbot'], sidebar: [] } }]),
   ],
 };
 primary.parameters = {

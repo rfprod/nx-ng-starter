@@ -10,7 +10,8 @@
       "options": {
         "eslintConfig": "libs/client-chatbot/.eslintrc.json",
         "lintFilePatterns": ["libs/client-chatbot/**/*.ts", "libs/client-chatbot/**/*.html"]
-      }
+      },
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nrwl/jest:jest",

@@ -21,7 +21,8 @@
       "options": {
         "eslintConfig": "libs/backend-interfaces/.eslintrc.json",
         "lintFilePatterns": ["libs/backend-interfaces/**/*.ts"]
-      }
+      },
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nrwl/jest:jest",

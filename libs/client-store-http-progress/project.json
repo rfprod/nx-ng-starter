@@ -10,7 +10,8 @@
       "options": {
         "eslintConfig": "libs/client-store-http-progress/.eslintrc.json",
         "lintFilePatterns": ["libs/client-store-http-progress/**/*.ts", "libs/client-store-http-progress/**/*.html"]
-      }
+      },
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nrwl/jest:jest",

@@ -9,7 +9,8 @@
       "options": {
         "eslintConfig": "libs/backend-websocket/.eslintrc.json",
         "lintFilePatterns": ["libs/backend-websocket/**/*.ts"]
-      }
+      },
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nrwl/jest:jest",

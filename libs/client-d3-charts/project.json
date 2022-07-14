@@ -26,7 +26,8 @@
       "options": {
         "eslintConfig": "libs/client-d3-charts/.eslintrc.json",
         "lintFilePatterns": ["libs/client-d3-charts/src/**/*.ts", "libs/client-d3-charts/src/**/*.html"]
-      }
+      },
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nrwl/jest:jest",

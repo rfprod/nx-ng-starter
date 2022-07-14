@@ -52,7 +52,8 @@
       "options": {
         "eslintConfig": "apps/api/.eslintrc.json",
         "lintFilePatterns": ["apps/api/**/*.ts"]
-      }
+      },
+      "outputs": ["{options.outputFile}"]
     },
     "serve": {
       "configurations": {

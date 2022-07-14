@@ -9,7 +9,8 @@
       "options": {
         "eslintConfig": "libs/client-pwa-offline/.eslintrc.json",
         "lintFilePatterns": ["libs/client-pwa-offline/**/*.ts", "libs/client-pwa-offline/**/*.html"]
-      }
+      },
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nrwl/jest:jest",

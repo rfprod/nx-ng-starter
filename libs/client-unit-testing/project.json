@@ -2,7 +2,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "generators": {
     "@nrwl/angular:component": {
-      "styleext": "scss"
+      "style": "scss"
     }
   },
   "prefix": "app",
@@ -15,7 +15,8 @@
       "options": {
         "eslintConfig": "libs/client-unit-testing/.eslintrc.json",
         "lintFilePatterns": ["libs/client-unit-testing/**/*.ts", "libs/client-unit-testing/**/*.html"]
-      }
+      },
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nrwl/jest:jest",

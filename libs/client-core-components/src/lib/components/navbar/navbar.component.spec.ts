@@ -98,7 +98,7 @@ describe('AppNavbarComponent', () => {
 
     const fourthButtonIndex = 3;
     component.buttons[fourthButtonIndex].routeActive();
-    expect(routerIsActiveSpy).toHaveBeenCalledWith('chat', {
+    expect(routerIsActiveSpy).toHaveBeenCalledWith('chatbot', {
       matrixParams: 'ignored',
       queryParams: 'ignored',
       paths: 'exact',

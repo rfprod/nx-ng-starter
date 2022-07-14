@@ -203,6 +203,10 @@ const clientConstraints = [
     ],
   },
   {
+    sourceTag: 'scope:client-directives',
+    onlyDependOnLibsWithTags: ['scope:client-unit-testing'],
+  },
+  {
     sourceTag: 'scope:client-gql',
     onlyDependOnLibsWithTags: ['scope:client-store-http-progress', 'scope:client-unit-testing', 'scope:client-util', 'scope:proto'],
   },
@@ -213,11 +217,12 @@ const clientConstraints = [
   {
     sourceTag: 'scope:client-chatbot',
     onlyDependOnLibsWithTags: [
+      'scope:client-directives',
       'scope:client-material',
       'scope:client-store',
       'scope:client-translate',
+      'scope:client-util-eliza',
       'scope:client-unit-testing',
-      'scope:proto',
     ],
   },
   {
@@ -235,6 +240,10 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:client-util',
+    onlyDependOnLibsWithTags: [],
+  },
+  {
+    sourceTag: 'scope:client-util-eliza',
     onlyDependOnLibsWithTags: [],
   },
   {
@@ -265,6 +274,7 @@ const clientConstraints = [
       'scope:client-translate',
       'scope:client-unit-testing',
       'scope:client-util',
+      'scope:client-util-eliza',
       'scope:client-util-sentry',
     ],
   },
@@ -299,6 +309,7 @@ const clientConstraints = [
       'scope:client-translate',
       'scope:client-unit-testing',
       'scope:client-util',
+      'scope:client-util-eliza',
       'scope:client-util-sentry',
     ],
   },

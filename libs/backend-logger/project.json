@@ -9,7 +9,8 @@
       "options": {
         "eslintConfig": "libs/backend-logger/.eslintrc.json",
         "lintFilePatterns": ["libs/backend-logger/**/*.ts"]
-      }
+      },
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nrwl/jest:jest",

@@ -29,7 +29,8 @@ interface IProjectConfig {
       options: {
         eslintConfig: string;
         lintFilePatterns: string[];
-      } & Record<string, string>;
+      };
+      outputs: string[];
     };
     test: {
       builder: string;
@@ -69,6 +70,7 @@ const updateProjectConfig =
     projectConfig.architect.lint.builder = '@angular-eslint/builder:lint';
     projectConfig.architect.lint.options.eslintConfig = `libs/${schema.name}/.eslintrc.json`;
     projectConfig.architect.lint.options.lintFilePatterns = [`libs/${schema.name}/**/*.ts`];
+    projectConfig.architect.lint.outputs = ['{options.outputFile}'];
 
     const projectRoot = `${process.cwd()}`;
     const angularJsonPath = `${projectRoot}/angular.json`;

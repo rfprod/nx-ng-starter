@@ -46,7 +46,8 @@
       "options": {
         "eslintConfig": "apps/elements-testing/.eslintrc.json",
         "lintFilePatterns": ["apps/elements-testing/**/*.ts"]
-      }
+      },
+      "outputs": ["{options.outputFile}"]
     },
     "serve": {
       "configurations": {

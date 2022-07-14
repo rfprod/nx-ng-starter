@@ -11,6 +11,7 @@ import { AppThemeState } from '@app/client-store-theme';
 import { AppUserState } from '@app/client-store-user';
 import { AppWebsocketStoreModule } from '@app/client-store-websocket';
 import { AppClientTranslateModule } from '@app/client-translate';
+import { AppClientUtilElizaModule } from '@app/client-util-eliza';
 import { sentryProviders } from '@app/client-util-sentry';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
@@ -48,6 +49,7 @@ import { AppRootComponent } from './components/root.component';
     AppClientTranslateModule.forRoot(),
     AppClientGqlModule.forRoot(environment),
     AppClientGrpcModule.forRoot(environment),
+    AppClientUtilElizaModule.forRoot(),
     AppClientPwaOfflineModule,
     AppClientRoutingModule,
   ],

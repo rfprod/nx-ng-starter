@@ -8,6 +8,7 @@ import { AppClientGqlModule } from '@app/client-gql';
 import { AppClientMaterialModule } from '@app/client-material';
 import { AppWebsocketStoreModule } from '@app/client-store-websocket';
 import { AppClientTranslateModule } from '@app/client-translate';
+import { AppClientUtilElizaModule } from '@app/client-util-eliza';
 import { sentryProviders } from '@app/client-util-sentry';
 import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
@@ -38,8 +39,9 @@ import { AppElementsService } from './services/elements.service';
     AppClientTranslateModule.forRoot(),
     AppClientGqlModule.forRoot(environment),
     AppWebsocketStoreModule.forRoot(environment),
-    RouterModule.forRoot([]),
+    AppClientUtilElizaModule.forRoot(),
     AppClientChatbotModule,
+    RouterModule.forRoot([]),
   ],
   providers: [...sentryProviders(environment)],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
