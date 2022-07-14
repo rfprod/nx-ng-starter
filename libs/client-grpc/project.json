@@ -10,7 +10,8 @@
       "options": {
         "eslintConfig": "libs/client-gql/.eslintrc.json",
         "lintFilePatterns": ["libs/client-grpc/**/*.ts"]
-      }
+      },
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nrwl/jest:jest",

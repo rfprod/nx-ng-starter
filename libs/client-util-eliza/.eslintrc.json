@@ -1,0 +1,20 @@
+{
+  "extends": ["../../.eslintrc.js", "../../.eslintrc.angular.js"],
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["eliza.service.ts"],
+      "rules": {
+        "@typescript-eslint/no-magic-numbers": "off",
+        "max-depth": ["error", 6],
+        "eslint-comments/no-restricted-disable": ["error", "*", "!no-console", "!max-lines-per-function", "!complexity"]
+      }
+    },
+    {
+      "files": ["keywords.config.ts"],
+      "rules": {
+        "max-lines": ["error", 1060]
+      }
+    }
+  ]
+}

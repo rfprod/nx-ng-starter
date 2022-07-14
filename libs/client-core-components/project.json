@@ -29,7 +29,8 @@
       "options": {
         "eslintConfig": "libs/client-core-components/.eslintrc.json",
         "lintFilePatterns": ["libs/client-core-components/**/*.ts", "libs/client-core-components/**/*.html"]
-      }
+      },
+      "outputs": ["{options.outputFile}"]
     },
     "storybook": {
       "configurations": {

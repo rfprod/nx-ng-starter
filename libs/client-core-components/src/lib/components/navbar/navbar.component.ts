@@ -54,13 +54,13 @@ export class AppNavbarComponent {
       'Chat',
       'chat',
       () =>
-        this.router.isActive('chat', {
+        this.router.isActive('chatbot', {
           matrixParams: 'ignored',
           queryParams: 'ignored',
           paths: 'exact',
           fragment: 'ignored',
         }),
-      [{ outlets: { primary: ['chat'], sidebar: [] } }],
+      [{ outlets: { primary: ['chatbot'], sidebar: [] } }],
     ),
   ];
 

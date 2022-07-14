@@ -9,7 +9,8 @@
       "options": {
         "eslintConfig": "libs/backend-auth/.eslintrc.json",
         "lintFilePatterns": ["libs/backend-auth/**/*.ts"]
-      }
+      },
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nrwl/jest:jest",

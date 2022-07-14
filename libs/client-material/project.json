@@ -15,7 +15,8 @@
       "options": {
         "eslintConfig": "libs/client-material/.eslintrc.json",
         "lintFilePatterns": ["libs/client-material/**/*.ts", "libs/client-material/**/*.html"]
-      }
+      },
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nrwl/jest:jest",

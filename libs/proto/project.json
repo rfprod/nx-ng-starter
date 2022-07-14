@@ -2,7 +2,7 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "generators": {
     "@nrwl/angular:component": {
-      "styleext": "scss"
+      "style": "scss"
     }
   },
   "prefix": "app",
@@ -15,7 +15,8 @@
       "options": {
         "eslintConfig": "libs/proto/.eslintrc.json",
         "lintFilePatterns": ["libs/proto/**/*.ts"]
-      }
+      },
+      "outputs": ["{options.outputFile}"]
     }
   }
 }

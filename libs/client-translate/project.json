@@ -15,7 +15,8 @@
       "options": {
         "eslintConfig": "libs/client-translate/.eslintrc.json",
         "lintFilePatterns": ["libs/client-translate/**/*.ts"]
-      }
+      },
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nrwl/jest:jest",

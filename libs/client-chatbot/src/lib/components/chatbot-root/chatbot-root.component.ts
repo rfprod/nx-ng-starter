@@ -1,9 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
-
-import { minMessageLength } from '../../interfaces/form.interface';
-import { IChatMessage } from '../../interfaces/message.interface';
+import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { AppElizaService, IChatMessage } from '@app/client-util-eliza';
+import { BehaviorSubject, from, of, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-chatbot-root',
@@ -12,32 +10,57 @@ import { IChatMessage } from '../../interfaces/message.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppChatbotRootComponent {
-  private readonly messagesSubject = new BehaviorSubject<IChatMessage[]>([
-    { bot: true, text: 'message 1' },
-    { bot: false, text: 'message 2' },
-    { bot: true, text: 'message 3' },
-    { bot: true, text: 'message 4' },
-    { bot: false, text: 'message 5' },
-    { bot: true, text: 'message 6' },
-    { bot: true, text: 'message 7' },
-    { bot: false, text: 'message 8' },
-    { bot: true, text: 'message 9' },
-    { bot: true, text: 'message 10' },
-    { bot: false, text: 'message 11' },
-    { bot: true, text: 'message 12' },
-  ]);
+  public readonly messages$ = this.eliza.messages$;
 
-  public readonly messages$ = this.messagesSubject.asObservable();
+  private readonly nextUserMessageSubject = new BehaviorSubject<IChatMessage | null>(null);
 
-  constructor(private readonly fb: FormBuilder) {}
+  public readonly respond$ = this.nextUserMessageSubject.asObservable().pipe(
+    switchMap(message => {
+      if (message !== null && !message.bot) {
+        const text = message.text;
+        return from(this.eliza.getResponse(text));
+      }
+      return of(null);
+    }),
+    tap(response => {
+      if (response !== null) {
+        this.botResponse(response.reply);
+        if (response.final) {
+          this.form.disable();
+        }
+      }
+    }),
+  );
 
   public readonly form = this.fb.group({
-    message: ['', Validators.compose([Validators.required, Validators.minLength(minMessageLength)])],
+    message: [''],
   });
 
-  public sendMessage() {
-    const message: IChatMessage = { bot: false, text: this.form.controls.message.value };
-    const nextValue = [...this.messagesSubject.value, message];
-    this.messagesSubject.next(nextValue);
+  constructor(private readonly fb: FormBuilder, private readonly eliza: AppElizaService) {}
+
+  public resetBot() {
+    this.eliza.reset();
+    this.form.enable();
+  }
+
+  public userMessage() {
+    if (this.form.controls.message.value !== null && this.form.controls.message.value.length > 0) {
+      const message: IChatMessage = { bot: false, text: this.form.controls.message.value };
+      this.nextUserMessageSubject.next(message);
+      this.eliza.nextMessage(message);
+      this.form.reset();
+    }
+  }
+
+  public botResponse(text: string) {
+    const message: IChatMessage = { bot: true, text };
+    this.eliza.nextMessage(message);
+  }
+
+  @HostListener('window:keyup', ['$event'])
+  public keyUp(event: KeyboardEvent) {
+    if (event.ctrlKey && event.key === 'Enter') {
+      this.userMessage();
+    }
   }
 }

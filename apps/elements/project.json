@@ -97,7 +97,8 @@
       "options": {
         "eslintConfig": "apps/elements/.eslintrc.json",
         "lintFilePatterns": ["apps/elements/**/*.ts", "apps/elements/**/*.html"]
-      }
+      },
+      "outputs": ["{options.outputFile}"]
     },
     "serve": {
       "configurations": {

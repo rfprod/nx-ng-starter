@@ -10,7 +10,8 @@
       "options": {
         "eslintConfig": "libs/client-store-theme/.eslintrc.json",
         "lintFilePatterns": ["libs/client-store-theme/**/*.ts"]
-      }
+      },
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@nrwl/jest:jest",
