@@ -17,6 +17,9 @@ inputs:
   library-name:
     description: Name of the library to publish
     required: true
+  npm-automation-token:
+    description: NPM automation token for packages publishing
+    required: true
 
 runs:
   using: 'composite'
@@ -44,7 +47,7 @@ runs:
     - name: Publish the package to npmjs.org
       shell: bash
       run: |
-        echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTOMATION_TOKEN }}" > ~/.npmrc
+        echo "//registry.npmjs.org/:_authToken=${{ inputs.npm-automation-token }}" > ~/.npmrc
         cd ./dist/libs/${{ inputs.library-name }}
         npm publish --access public
         find ~/.npmrc -exec shred -fuz {} +
