@@ -1,0 +1,47 @@
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: publish-util-eliza
+
+on:
+  push:
+    branches: [main]
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.ref_name }}.${{ github.sha }}.publish-util-eliza
+  cancel-in-progress: true
+
+jobs:
+  publish-util-eliza:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: Detect changes
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            package:
+              - 'libs/client-util-eliza/package.json'
+
+      - name: Check repository owner
+        if: ${{ steps.changes.outputs.package == 'true' }}
+        id: check-repo-owner
+        uses: ./.github/actions/check-repo-owner
+
+      - name: NPM publish
+        if: ${{ steps.check-repo-owner.outputs.origin == 'true' && steps.changes.outputs.package == 'true' }}
+        uses: ./.github/actions/npm-publish
+        with:
+          node-version: ${{ matrix.node-version }}
+          library-name: client-util-eliza

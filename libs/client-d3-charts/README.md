@@ -1,6 +1,20 @@
-# Angular D3 chart components
+# Angular D3 Chart Components Module
 
 This library was generated with [Nx](https://nx.dev).
+
+## Description
+
+The Angular chart components based on the [D3.js](https://d3js.org/) library.
+
+Supported chart types:
+
+- bar chart;
+- line chart;
+- pie chart;
+- radar chart;
+- force-directed chart;
+
+The library contains Angular components as well as basic utility functions that can be used to implement the chart types mentioned above in TypeScript.
 
 ## Development commands reference
 
@@ -25,16 +39,16 @@ import { AppClientD3ChartsModule } from '@app/client-d3-charts';
 Install the package
 
 ```bash
-yarn add @rfprodz/d3-charts d3 @types/d3
+yarn add @rfprodz/client-d3-charts d3 @types/d3
 ```
 
 Import the charts module
 
 ```typescript
-import { AppClientD3ChartsModule } from '@rfprodz/d3-charts';
+import { AppClientD3ChartsModule } from '@rfprodz/client-d3-charts';
 ```
 
-### Use chart components
+### Use the chart components
 
 #### in templates
 
@@ -60,11 +74,15 @@ import {
   AppForceDirectedChartComponent,
   AppBarChartComponent,
   AppLineChartComponent,
-} from '@rfprodz/d3-charts';
+} from '@rfprodz/client-d3-charts';
 ```
 
-### See the chart examples component
+### Chart examples
+
+See the chart eamples components
 
 ```typescript
-import { AppChartExamplesComponent } from '@rfprodz/d3-charts';
+import { AppChartExamplesComponent } from '@rfprodz/client-d3-charts';
 ```
+
+or the [source code](https://github.com/rfprod/nx-ng-starter/blob/main/libs/client-d3-charts/src/lib/components/chart-examples/chart-examples.component.ts) of the chart examples component

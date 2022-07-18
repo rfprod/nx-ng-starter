@@ -1,12 +1,17 @@
 {
-  "extends": "./tsconfig.json",
+  "angularCompilerOptions": {
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true
+  },
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": []
+    "lib": ["dom", "es2018"],
+    "outDir": "../../dist/out-tsc",
+    "target": "es2015"
   },
   "exclude": ["src/test-setup.ts", "**/*.spec.ts", "**/*.mock.ts", "**/*.stories.ts", "jest.config.ts"],
+  "extends": "./tsconfig.json",
   "include": ["**/*.ts"]
 }

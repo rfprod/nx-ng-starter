@@ -1,14 +1,13 @@
 {
-  "name": "@rfprodz/client-d3-charts",
+  "name": "@rfprodz/client-util-eliza",
   "version": "1.0.0",
-  "description": "Angular chart components based on d3js (https://d3js.org/).",
+  "description": "Angular chatbot logic based on Eliza (https://en.wikipedia.org/wiki/ELIZA).",
   "keywords": [
     "angular-module",
-    "angular-components",
-    "angular-charts",
-    "chart-components",
-    "chart-utils",
-    "d3js"
+    "angular-service",
+    "angular-chatbot",
+    "eliza-bot",
+    "chatbot"
   ],
   "homepage": "https://github.com/rfprod/nx-ng-starter",
   "bugs": {
@@ -24,9 +23,6 @@
     "tslib": "2.4.0"
   },
   "peerDependencies": {
-    "@angular/common": "14.0.6",
-    "@angular/core": "14.0.6",
-    "@types/d3": "7.4.0",
-    "d3": "7.6.1"
+    "@angular/core": "14.0.6"
   }
 }

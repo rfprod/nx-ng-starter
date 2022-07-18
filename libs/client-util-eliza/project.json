@@ -4,6 +4,22 @@
   "sourceRoot": "libs/client-util-eliza/src",
   "tags": ["scope:client-util-eliza", "type:util"],
   "targets": {
+    "build": {
+      "configurations": {
+        "development": {
+          "tsConfig": "libs/client-util-eliza/tsconfig.lib.json"
+        },
+        "production": {
+          "tsConfig": "libs/client-util-eliza/tsconfig.lib.prod.json"
+        }
+      },
+      "defaultConfiguration": "production",
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "options": {
+        "project": "libs/client-util-eliza/ng-package.json"
+      },
+      "outputs": ["dist/libs/client-util-eliza"]
+    },
     "lint": {
       "executor": "@angular-eslint/builder:lint",
       "options": {
