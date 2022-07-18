@@ -1,0 +1,50 @@
+# For more information see:
+# - https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+# - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
+
+# The action can be referenced in workflows like:
+# - rfprod/nx-ng-starter/.github/actions/npm-publish@main
+# - ./.github/actions/npm-publish
+
+name: npm-publish
+description: Publish a library to NPM. This composite action should be only used in workflows that publish specific libraries to npm.
+
+inputs:
+  node-version:
+    description: NodeJS version
+    required: true
+    default: 16.x
+  library-name:
+    description: Name of the library to publish
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Disable session history
+      uses: ./.github/actions/disable-session-history
+
+    - name: Use Node.js ${{ inputs.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-version }}
+        check-latest: true
+
+    - name: Install dependencies
+      shell: bash
+      run: |
+        yarn install:ci
+        sudo apt update
+        sudo apt install secure-delete
+
+    - name: Build ${{ inputs.library-name }}
+      shell: bash
+      run: npx nx build ${{ inputs.library-name }}
+
+    - name: Publish the package to npmjs.org
+      shell: bash
+      run: |
+        echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_AUTOMATION_TOKEN }}" > ~/.npmrc
+        cd ./dist/libs/${{ inputs.library-name }}
+        npm publish --access public
+        find ~/.npmrc -exec shred -fuz {} +

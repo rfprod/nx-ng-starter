@@ -1,11 +1,89 @@
-# client-util-eliza
+# Angular Eliza Chatbot Module
 
 This library was generated with [Nx](https://nx.dev).
 
-## Running unit tests
+## Description
+
+The Angular chatbot service based on an early natural language processing program called Eliza.
+
+> ELIZA is an early natural language processing computer program created from 1964 to 1966 at the MIT Artificial Intelligence Laboratory by Joseph Weizenbaum. Created to demonstrate the superficiality of communication between humans and machines, Eliza simulated conversation by using a "pattern matching" and substitution methodology that gave users an illusion of understanding on the part of the program, but had no built in framework for contextualizing events.
+
+Source and more information about the Elisa program: [https://en.wikipedia.org/wiki/ELIZA](https://en.wikipedia.org/wiki/ELIZA)
+
+## Development commands reference
 
 Run `nx test client-util-eliza` to execute the unit tests.
 
-## General info
+Run `nx lint client-util-eliza` to lint the library.
 
-[ELIZA](https://en.wikipedia.org/wiki/ELIZA)
+Run `nx build client-util-eliza` to build the library.
+
+## Usage
+
+### Within the development workspace
+
+Import the charts module
+
+```typescript
+import { AppClientUtilElizaModule } from '@app/client-util-eliza';
+```
+
+Example [client.module.ts](https://github.com/rfprod/nx-ng-starter/blob/main/apps/client/src/app/client.module.ts#L52)
+
+### As an external package
+
+Install the package
+
+```bash
+yarn add @rfprodz/client-util-eliza
+```
+
+#### With the default configuration
+
+Import in your application root module
+
+```typescript
+import { AppClientUtilElizaModule } from '@rfprodz/client-util-eliza';
+
+@NgModule({
+...
+  imports: [
+    ...
+    AppClientUtilElizaModule.forRoot(),
+    ...
+  ],
+...
+})
+export class AppModule {
+  ...
+}
+```
+
+#### With a custom configuration
+
+Import in your application root module
+
+```typescript
+import { AppClientUtilElizaModule, IElizaData } from '@rfprodz/client-util-eliza';
+
+const customElizaData: IElizaData = {
+  ...
+};
+
+@NgModule({
+...
+  imports: [
+    ...
+    AppClientUtilElizaModule.forRoot(customElizaData),
+    ...
+  ],
+...
+})
+export class AppModule {
+  ...
+}
+```
+
+### Chatbot component
+
+Example [chatbot-root.component.ts](https://github.com/rfprod/nx-ng-starter/blob/main/libs/client-chatbot/src/lib/components/chatbot-root/chatbot-root.component.ts)
