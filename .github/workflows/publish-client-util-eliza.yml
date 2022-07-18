@@ -1,6 +1,6 @@
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: publish-util-eliza
+name: publish-client-util-eliza
 
 on:
   push:
@@ -11,11 +11,11 @@ defaults:
     shell: bash
 
 concurrency:
-  group: ${{ github.ref_name }}.${{ github.sha }}.publish-util-eliza
+  group: ${{ github.ref_name }}.${{ github.sha }}.publish-client-util-eliza
   cancel-in-progress: true
 
 jobs:
-  publish-util-eliza:
+  publish-client-util-eliza:
     runs-on: ubuntu-latest
 
     strategy:
@@ -45,3 +45,4 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           library-name: client-util-eliza
+          npm-automation-token: ${{ secrets.NPM_AUTOMATION_TOKEN }}

@@ -45,3 +45,4 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           library-name: client-d3-charts
+          npm-automation-token: ${{ secrets.NPM_AUTOMATION_TOKEN }}
