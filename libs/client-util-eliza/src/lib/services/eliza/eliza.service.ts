@@ -87,7 +87,7 @@ export class AppElizaService {
    * @param reinitialize indicates that Eliza should be initialized again, even if it's data has already been initialized
    */
   public setup(data: IElizaData, reinitialize = false): void {
-    if (typeof this.data === 'undefined' && !reinitialize) {
+    if (typeof this.data === 'undefined' || reinitialize) {
       this.init(data);
     }
     this.reset();

@@ -9,23 +9,4 @@ import { TElisaPosts } from '../interfaces/eliza.interface';
  * - https://cacm.acm.org/
  * - https://dl.acm.org/doi/10.1145/365153.365168
  */
-export const elizaPosts: TElisaPosts = [
-  'am',
-  'are',
-  'your',
-  'my',
-  'me',
-  'you',
-  'myself',
-  'yourself',
-  'yourself',
-  'myself',
-  'i',
-  'you',
-  'you',
-  'I',
-  'my',
-  'your',
-  "i'm",
-  'you are',
-];
+export const elizaPosts: TElisaPosts = ['am', 'are', 'your', 'my', 'me', 'myself', 'yourself', 'i', 'you', 'I', "i'm", 'you are'];
