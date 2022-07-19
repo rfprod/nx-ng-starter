@@ -35,8 +35,8 @@ describe('elizaData', () => {
       initials: 3,
       keywords: 42,
       postTransforms: 7,
-      posts: 18,
-      pres: 36,
+      posts: 12,
+      pres: 34,
       quits: 5,
       synonyms: 8,
     };
