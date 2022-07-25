@@ -81,7 +81,7 @@ jobs:
           yarn test:reports
           npx nx run tools:compodoc-build
           yarn generate:changelog
-          yarn e2e:headless:report
+          yarn e2e:report
 
       - name: Check repository owner
         id: check-repo-owner
