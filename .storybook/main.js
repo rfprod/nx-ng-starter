@@ -57,6 +57,10 @@ module.exports = {
     );
     config.module.rules = [...rules];
 
+    // adjust file size limits, see docs here https://webpack.js.org/configuration/performance/#performance-maxentrypointsize
+    config.performance.maxEntrypointSize = 512000;
+    config.performance.maxAssetSize = 512000;
+
     // add your own webpack tweaks above if needed
 
     return config;
