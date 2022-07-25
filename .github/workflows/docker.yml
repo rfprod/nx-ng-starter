@@ -39,7 +39,7 @@ jobs:
       - name: Install global dependencies
         run: |
           npm i -g @compodoc/compodoc
-          cypress install
+          npx cypress install
 
       - name: Workspace integrity check
         run: yarn workspace:integrity-check
