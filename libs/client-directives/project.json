@@ -20,6 +20,13 @@
         "passWithNoTests": true
       },
       "outputs": ["coverage/libs/client-directives"]
+    },
+    "tsc-check": {
+      "executor": "./tools/executors/tsc:check",
+      "options": {
+        "tsConfig": "libs/client-directives/tsconfig.lib.json"
+      },
+      "outputs": ["dist/out-tsc/libs/client-directives"]
     }
   }
 }

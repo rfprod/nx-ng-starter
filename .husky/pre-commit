@@ -12,3 +12,5 @@ printf '%s\n' "$STAGED_FILES" | while IFS= read -r FILE; do
     git add "$FILE"
   fi
 done
+
+npx nx affected --target tsc-check || exit 1

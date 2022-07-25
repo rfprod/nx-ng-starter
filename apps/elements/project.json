@@ -121,6 +121,13 @@
         "passWithNoTests": true
       },
       "outputs": ["coverage/apps/elements"]
+    },
+    "tsc-check": {
+      "executor": "./tools/executors/tsc:check",
+      "options": {
+        "tsConfig": "apps/elements/tsconfig.app.json"
+      },
+      "outputs": ["dist/out-tsc/apps/elements"]
     }
   }
 }

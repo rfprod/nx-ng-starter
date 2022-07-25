@@ -12,6 +12,13 @@
         "lintFilePatterns": ["libs/proto/**/*.ts"]
       },
       "outputs": ["{options.outputFile}"]
+    },
+    "tsc-check": {
+      "executor": "./tools/executors/tsc:check",
+      "options": {
+        "tsConfig": "libs/proto/tsconfig.lib.json"
+      },
+      "outputs": ["dist/out-tsc/libs/proto"]
     }
   }
 }
