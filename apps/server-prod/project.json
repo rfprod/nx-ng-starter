@@ -48,6 +48,13 @@
         "passWithNoTests": true
       },
       "outputs": ["coverage/apps/server-prod"]
+    },
+    "tsc-check": {
+      "executor": "./tools/executors/tsc:check",
+      "options": {
+        "tsConfig": "apps/server-prod/tsconfig.app.json"
+      },
+      "outputs": ["dist/out-tsc/apps/server-prod"]
     }
   }
 }

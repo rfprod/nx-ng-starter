@@ -55,6 +55,12 @@
       },
       "outputs": ["{options.outputFile}"]
     },
+    "tsc-configure": {
+      "executor": "./tools/executors/tsc:configure",
+      "options": {
+        "tsConfig": ""
+      }
+    },
     "update-check": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {

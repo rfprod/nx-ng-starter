@@ -19,6 +19,13 @@
         "passWithNoTests": true
       },
       "outputs": ["coverage/libs/backend-diagnostics"]
+    },
+    "tsc-check": {
+      "executor": "./tools/executors/tsc:check",
+      "options": {
+        "tsConfig": "libs/backend-diagnostics/tsconfig.lib.json"
+      },
+      "outputs": ["dist/out-tsc/libs/backend-diagnostics"]
     }
   }
 }
