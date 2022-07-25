@@ -31,31 +31,15 @@ jobs:
         run: |
           echo "Dry run: ${{ github.event.inputs.dryRun }}"
 
-      - name: Checkout sources
-        uses: actions/checkout@v3
-
-      - name: Disable session history
-        uses: ./.github/actions/disable-session-history
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          check-latest: true
-
-      - name: Configure kernel
-        uses: ./.github/actions/configure-kernel
-
-      - name: Use yarn v1 required for integrity check
-        uses: ./.github/actions/use-yarn-v1
-
-      - name: Workspace cache
-        uses: ./.github/actions/workspace-cache
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
         with:
           node-version: ${{ matrix.node-version }}
 
       - name: Install global dependencies
-        run: npm i -g @compodoc/compodoc
+        run: |
+          npm i -g @compodoc/compodoc
+          cypress install
 
       - name: Workspace integrity check
         run: yarn workspace:integrity-check
@@ -81,7 +65,7 @@ jobs:
           yarn test:reports
           npx nx run tools:compodoc-build
           yarn generate:changelog
-          yarn e2e:report
+          yarn e2e:report || exit 1
 
       - name: Check repository owner
         id: check-repo-owner
@@ -106,7 +90,10 @@ jobs:
         if: ${{ github.event.inputs.dryRun == 'false' && steps.check-repo-owner.outputs.origin == 'true' }}
         run: |
           yarn docker:push base
-          echo "TODO - Push docker images to the regitry"
+          yarn docker:push api-production
+          yarn docker:push client-production
+          yarn docker:push elements-production
+          yarn docker:push documentation
 
       - name: Docker cleanup
         if: always()
