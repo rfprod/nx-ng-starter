@@ -69,7 +69,9 @@ jobs:
 
       - name: Install global dependencies
         if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
-        run: npm i -g firebase-tools @compodoc/compodoc
+        run: |
+          npm i -g firebase-tools @compodoc/compodoc
+          cypress install
 
       - name: Lint all
         if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
@@ -98,7 +100,7 @@ jobs:
           npx nx run tools:compodoc-build
           cp -r ./dist/compodoc ./dist/apps/documentation/assets
           yarn generate:changelog
-          yarn e2e:report
+          yarn e2e:report || exit 1
           yarn generate:e2e-test-report-index
           npx nx run documentation:build-storybook
           cp -r ./dist/storybook/documentation ./dist/apps/documentation/assets/storybook
