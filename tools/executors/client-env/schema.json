@@ -9,6 +9,10 @@
       "enum": ["client", "documentation", "elements"],
       "description": "Application name to set environment for."
     },
+    "dryRun": {
+      "type": "boolean",
+      "description": "Execute all logic without flushing the file system changes."
+    },
     "reset": {
       "type": "boolean",
       "description": "Reset application environment."

@@ -1,4 +1,4 @@
-import { ExecutorContext, logger } from '@nrwl/devkit';
+import { ExecutorContext } from '@nrwl/devkit';
 
 import { AppBaseEnvConfig } from './env-base';
 import { AppClientEnvConfig } from './env-client';
@@ -21,9 +21,7 @@ export default async function clientEnvExecutor(options: IExecutorOptions, conte
   if (typeof config !== 'undefined') {
     await config.execute();
   } else {
-    const error = new Error(`There was an error processing the app argument.\nIts value is: ${app}`);
-    logger.error(error);
-    process.exit(1);
+    throw new Error(`There was an error processing the app argument.\nIts value is: ${app}`);
   }
 
   return { success: true };
