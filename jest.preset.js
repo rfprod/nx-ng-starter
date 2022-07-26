@@ -31,6 +31,7 @@ module.exports = {
   },
   collectCoverageFrom: [
     '**/*.ts',
+    '!**/*.d.ts',
     '!**/index.ts',
     '!**/main.ts',
     '!**/polyfills.ts',

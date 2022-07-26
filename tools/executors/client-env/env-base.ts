@@ -57,15 +57,11 @@ export abstract class AppBaseEnvConfig<T = IEnvConfig> {
 
     if (typeof reset === 'undefined') {
       if (typeof app === 'undefined') {
-        const error = new Error(`The application name is not defined.\nSupported apps: ${this.supportedApps.join(' ')}`);
-        logger.error(error);
-        process.exit(1);
+        throw new Error(`The application name is not defined.\nSupported apps: ${this.supportedApps.join(' ')}`);
       }
 
       if (!this.supportedApps.includes(app)) {
-        const error = new Error(`The application is not supported.\nSupported apps: ${this.supportedApps.join(' ')}`);
-        logger.error(error);
-        process.exit(1);
+        throw new Error(`The application is not supported.\nSupported apps: ${this.supportedApps.join(' ')}`);
       }
     }
 
@@ -74,8 +70,7 @@ export abstract class AppBaseEnvConfig<T = IEnvConfig> {
     const envFilePath = this.environmentFilePath(app);
 
     await access(envFilePath, constants.W_OK).catch((error: NodeJS.ErrnoException) => {
-      logger.error(`Unable to write the environment configuration file:\n${error.message}`);
-      process.exit(1);
+      throw new Error(`Unable to write the environment configuration file:\n${error.message}`);
     });
 
     await this.writeEnvironmentFile(envFilePath, env);
@@ -108,8 +103,7 @@ export const appEnvFactory = () => ({
         return writeFile(envFilePath, envFileContents);
       })
       .catch((error: NodeJS.ErrnoException) => {
-        logger.error(error.message);
-        process.exit(1);
+        throw error;
       })
       .finally(() => {
         logger.info(`Output generated at ${envFilePath}`);
@@ -131,8 +125,7 @@ export const appEnvFactory = () => ({
         return packageJsonContent.version;
       })
       .catch((error: NodeJS.ErrnoException) => {
-        logger.error(error.message);
-        process.exit(1);
+        throw error;
       });
   }
 

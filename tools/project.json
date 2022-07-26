@@ -55,6 +55,14 @@
       },
       "outputs": ["{options.outputFile}"]
     },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "options": {
+        "jestConfig": "tools/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["coverage/tools"]
+    },
     "tsc-configure": {
       "executor": "./tools/executors/tsc:configure",
       "options": {

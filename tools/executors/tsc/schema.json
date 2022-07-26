@@ -8,6 +8,10 @@
       "type": "boolean",
       "description": "If true, indicates that the executor configuration should be removed from all projects. If absent or set to false, the configuration will be added to all projects."
     },
+    "dryRun": {
+      "type": "boolean",
+      "description": "Execute all logic without flushing the file system changes."
+    },
     "tsConfig": {
       "type": "string",
       "description": "TypeScript configuration."
