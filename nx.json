@@ -52,11 +52,6 @@
     }
   },
   "implicitDependencies": {
-    ".eslintrc.angular.js": "*",
-    ".eslintrc.cypress.js": "*",
-    ".eslintrc.js": "*",
-    ".eslintrc.module-boundaries.js": "*",
-    ".eslintrc.naming-convention.js": "*",
     "angular.json": "*",
     "nx.json": "*",
     "package.json": {
@@ -66,11 +61,30 @@
     },
     "tsconfig.base.json": "*"
   },
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*"],
+    "prod": ["!{projectRoot}/**/*.spec.ts"],
+    "rootLinterConfig": [
+      "{workspaceRoot}/.eslintignore",
+      "{workspaceRoot}/.eslintrc.js",
+      "{workspaceRoot}/.eslintrc.*.js",
+      "{workspaceRoot}/.prettierignore",
+      "{workspaceRoot}/.prettierrc"
+    ],
+    "rootTestConfig": ["{workspaceRoot}/jest.config.ts", "{workspaceRoot}/jest.preset.js"]
+  },
   "newProjectRoot": "",
   "npmScope": "app",
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "inputs": ["default", "^prod"]
+    },
+    "lint": {
+      "inputs": ["default", "^prod", "rootLinterConfig"]
+    },
+    "test": {
+      "inputs": ["default", "^prod", "rootTestConfig"]
     }
   },
   "tasksRunnerOptions": {
