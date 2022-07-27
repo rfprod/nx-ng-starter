@@ -45,8 +45,24 @@
     "public": "./dist/apps/documentation",
     "rewrites": [
       {
-        "function": "api",
-        "source": "/api/**"
+        "function": "login",
+        "source": "/api/auth/login"
+      },
+      {
+        "function": "logout",
+        "source": "/api/auth/logout"
+      },
+      {
+        "function": "signup",
+        "source": "/api/auth/signup"
+      },
+      {
+        "function": "ping",
+        "source": "/api/auth"
+      },
+      {
+        "function": "graphql",
+        "source": "/api/graphql"
       },
       {
         "destination": "/index.html",
