@@ -5,7 +5,7 @@ import { access, readFile, stat, writeFile } from 'fs/promises';
 
 import { IExecutorOptions, TSupportedApp } from './schema';
 
-interface IEnvConfig {
+export interface IEnvConfig {
   version: string;
 }
 
@@ -13,17 +13,31 @@ export abstract class AppBaseEnvConfig<T = IEnvConfig> {
   /**
    * Executor context.
    */
-  public options: IExecutorOptions;
+  public options: IExecutorOptions = {
+    app: 'client',
+  };
 
   /**
    * Executor context.
    */
-  public context: ExecutorContext;
+  public context: ExecutorContext = {
+    cwd: process.cwd(),
+    isVerbose: false,
+    root: '/root',
+    workspace: {
+      version: 1,
+      projects: {},
+    },
+    configurationName: '',
+    projectName: '',
+    target: { executor: '' },
+    targetName: '',
+  };
 
   /**
    * The supported application names.
    */
-  protected supportedApps: TSupportedApp[] = [];
+  public readonly supportedApps: TSupportedApp[] = [];
 
   /**
    * The environment configuration file initial value.
@@ -56,10 +70,6 @@ export abstract class AppBaseEnvConfig<T = IEnvConfig> {
     const app = this.options.app;
 
     if (typeof reset === 'undefined') {
-      if (typeof app === 'undefined') {
-        throw new Error(`The application name is not defined.\nSupported apps: ${this.supportedApps.join(' ')}`);
-      }
-
       if (!this.supportedApps.includes(app)) {
         throw new Error(`The application is not supported.\nSupported apps: ${this.supportedApps.join(' ')}`);
       }
@@ -69,11 +79,15 @@ export abstract class AppBaseEnvConfig<T = IEnvConfig> {
 
     const envFilePath = this.environmentFilePath(app);
 
-    await access(envFilePath, constants.W_OK).catch((error: NodeJS.ErrnoException) => {
-      throw new Error(`Unable to write the environment configuration file:\n${error.message}`);
-    });
+    const accessResult = await access(envFilePath, constants.W_OK)
+      .then(() => null)
+      .catch((error: NodeJS.ErrnoException) => error);
 
-    await this.writeEnvironmentFile(envFilePath, env);
+    if (accessResult === null) {
+      await this.writeEnvironmentFile(envFilePath, env);
+    } else {
+      throw new Error(`Unable to write the environment configuration file:\n${accessResult.message}`);
+    }
   }
 
   /**
@@ -97,17 +111,22 @@ export const appEnvFactory = () => ({
    * Writes environment file.
    */
   protected async writeEnvironmentFile(envFilePath: string, env: T) {
-    return stat(envFilePath)
-      .then(() => {
-        const envFileContents = this.envConfigFileContents(env);
-        return writeFile(envFilePath, envFileContents);
-      })
-      .catch((error: NodeJS.ErrnoException) => {
-        throw error;
-      })
-      .finally(() => {
-        logger.info(`Output generated at ${envFilePath}`);
-      });
+    const statResult = await stat(envFilePath)
+      .then(() => this.envConfigFileContents(env))
+      .catch((error: NodeJS.ErrnoException) => error);
+
+    if (typeof statResult === 'string') {
+      await writeFile(envFilePath, statResult)
+        .then(() => {
+          logger.info('Output generated at:');
+          logger.info(envFilePath);
+        })
+        .catch((error: NodeJS.ErrnoException) => {
+          throw new Error(`Unable to write environment file:\n${error.message}`);
+        });
+    } else {
+      throw new Error(`Unable to stat environment file:\n${statResult.message}`);
+    }
   }
 
   /**

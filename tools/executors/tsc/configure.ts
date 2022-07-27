@@ -26,8 +26,8 @@ export class AppConfigureTscCheckExecutor {
   public tree: FsTree = new FsTree(this.context.root, false);
 
   constructor(options: IExecutorOptions, context: ExecutorContext) {
-    this.options = options;
-    this.context = context;
+    this.options = { ...options };
+    this.context = { ...context };
     this.tree = new FsTree(this.context.root, false);
   }
 

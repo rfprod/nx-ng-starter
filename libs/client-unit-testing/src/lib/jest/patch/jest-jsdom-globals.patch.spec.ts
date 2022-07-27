@@ -10,7 +10,7 @@ describe('setupJestJsdomGlobalMocks', () => {
   });
 
   it('setupJestJsdomGlobalMocks should define 8 object properties for jest tests and override console,log an console.group methods', () => {
-    const expectedCalls = 8;
+    const expectedCalls = 9;
     expect(definePropertySpy).toHaveBeenCalledTimes(expectedCalls);
     const originalConsoleLogSpy = jest.spyOn(consoleBackup, 'log');
     const originalConsoleGroupSpy = jest.spyOn(consoleBackup, 'group');

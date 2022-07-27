@@ -9,7 +9,7 @@ describe('setupJsdomWindowMocks', () => {
   });
 
   it('setupDocumentDoctypeMock should define 3 object properties for jest tests', () => {
-    const expectedCalls = 3;
+    const expectedCalls = 4;
     expect(definePropertySpy).toHaveBeenCalledTimes(expectedCalls);
   });
 
