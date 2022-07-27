@@ -55,7 +55,7 @@ describe('clientEnvExecutor', () => {
   describe('correct behavior', () => {
     afterEach(() => jest.clearAllMocks());
 
-    it('should execSync with expected parameters', async () => {
+    it('should execute successfully', async () => {
       const { context, options } = setup('client', true);
 
       const result = await clientEnvExecutor(options, context);
