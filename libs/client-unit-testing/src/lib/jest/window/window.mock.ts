@@ -49,10 +49,15 @@ function setupWindowCreateObjectUrlMock() {
   });
 }
 
+function setupWindowCssMock() {
+  Object.defineProperty(window, 'CSS', { value: null });
+}
+
 export function setupJsdomWindowMocks() {
   setupWindowLocalStorageMock();
   setupWindowMatchMediaMock();
   setupWindowResizeToMock();
   setupWindowGetComputedStyleMock();
   setupWindowCreateObjectUrlMock();
+  setupWindowCssMock();
 }
