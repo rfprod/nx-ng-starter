@@ -30,10 +30,15 @@ In order to run own copy of the project one must fulfill the following requireme
   - one will have to figure out oneself how to set up the dev environment;
   - given that the dev environment is set up, the command `yarn install:all:osx` should install everything needed to work with the project;
   - the automation scripts support the OS with relatively high probability, but it has not been tested;
-- :no_entry_sign: [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) - `not recommended`
+- :no_entry_sign: [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) - `should work, but no guarantees`
   - one will have to figure out oneself how to set up the dev environment;
-  - one will have to figure out oneself how to install required dependencies like `protolint` and `shellcheck` system wide;
-  - the automation scripts support the OS with relatively low probability, but it has not been tested.
+  - one will have to figure out oneself how to install `protolint`, [see available installation options](https://github.com/yoheimuta/protolint#installation);
+  - given that the dev environment is set up, the following commands should be used to install `shellcheck` via PowerShell;
+    ```powershell
+    iwr -useb get.scoop.sh | iex
+    scoop install shellcheck
+    ```
+  - recommended shell: [Git for Windows](https://gitforwindows.org/) > `Git BASH`.
 
 ### Core dependencies
 
