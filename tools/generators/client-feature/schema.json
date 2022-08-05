@@ -1,20 +1,21 @@
 {
   "$id": "client-feature",
   "$schema": "http://json-schema.org/schema",
-  "type": "object",
+  "cli": "nx",
   "properties": {
     "name": {
-      "type": "string",
-      "description": "Library name.",
       "$default": {
         "$source": "argv",
         "index": 0
-      }
+      },
+      "description": "Library name.",
+      "type": "string"
     },
     "tags": {
-      "type": "string",
-      "description": "Library tags."
+      "description": "Library tags.",
+      "type": "string"
     }
   },
-  "required": ["name"]
+  "required": ["name"],
+  "type": "object"
 }
