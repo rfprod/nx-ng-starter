@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppSidebarState, sidebarActions } from '@app/client-store-sidebar';
+import { AppSidebarStoreModule, sidebarActions } from '@app/client-store-sidebar';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
 import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
-import { NgxsModule, Store } from '@ngxs/store';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 
 import { AppNavbarComponent } from './navbar.component';
 
 describe('AppNavbarComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [RouterTestingModule, NgxsModule.forFeature([AppSidebarState])],
+    imports: [RouterTestingModule, AppSidebarStoreModule.forRoot()],
     declarations: [AppNavbarComponent],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
@@ -57,7 +57,7 @@ describe('AppNavbarComponent', () => {
 
   it('sidebarCloseHandler should call store dispatch', waitForAsync(() => {
     component.sidebarCloseHandler();
-    expect(storeSpy.dispatch).toHaveBeenCalledWith(new sidebarActions.setState({ sidebarOpened: false }));
+    expect(storeSpy.dispatch).toHaveBeenCalledWith(sidebarActions.close({ payload: { navigate: false } }));
   }));
 
   it('buttons should have default values', () => {

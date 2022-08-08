@@ -23,7 +23,7 @@ const addFiles = (schema: ISchematicContext, tree: Tree) => {
 
   generateFiles(tree, joinPathFragments(__dirname, './files'), root, {
     tmpl: '',
-    name: 'myscript',
+    name: schema.name,
   });
 };
 

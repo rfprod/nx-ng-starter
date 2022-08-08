@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppClientStoreModule } from '@app/client-store';
 import { IWebClientAppEnvironment } from '@app/client-util';
 
-import { appClientCoreModuleProvidersFactory } from './providers/client-core-module.providers';
+import { appClientCoreModuleProviders } from './providers/client-core-module.providers';
 
 /**
  * Client core module.
@@ -22,7 +22,7 @@ export class AppClientCoreModule {
   public static forRoot(environment: IWebClientAppEnvironment): ModuleWithProviders<AppClientCoreModule> {
     return {
       ngModule: AppClientCoreModule,
-      providers: [appClientCoreModuleProvidersFactory(environment)],
+      providers: [...appClientCoreModuleProviders(environment)],
     };
   }
 }

@@ -12,7 +12,7 @@ import { HttpLink } from 'apollo-angular/http';
 /**
  * Client core module providers.
  */
-export const appClientCoreModuleProvidersFactory = (environment: IWebClientAppEnvironment): Provider[] => [
+export const appClientCoreModuleProviders = (environment: IWebClientAppEnvironment): Provider[] => [
   pathLocationStrategyProvider,
   appBaseHrefProvider,
   windowProvider,

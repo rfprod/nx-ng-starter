@@ -1,11 +1,24 @@
 import { OverlayModule } from '@angular/cdk/overlay';
-import { NgModule } from '@angular/core';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { NgxsModule } from '@ngxs/store';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
-import { AppThemeState } from './theme.state';
+import { AppThemeEffects } from './theme.effects';
+import { featureName, IThemeState } from './theme.interface';
+import { AppThemeReducer } from './theme.reducer';
 
 @NgModule({
-  imports: [MatSidenavModule, OverlayModule, NgxsModule.forFeature([AppThemeState])],
+  imports: [
+    OverlayModule,
+    StoreModule.forFeature<IThemeState>(featureName, AppThemeReducer.token),
+    EffectsModule.forFeature([AppThemeEffects]),
+  ],
 })
-export class AppThemeStoreModule {}
+export class AppThemeStoreModule {
+  public static forRoot(): ModuleWithProviders<AppThemeStoreModule> {
+    return {
+      ngModule: AppThemeStoreModule,
+      providers: [AppThemeReducer.provider],
+    };
+  }
+}

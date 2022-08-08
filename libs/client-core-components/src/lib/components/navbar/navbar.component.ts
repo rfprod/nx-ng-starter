@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core
 import { Router } from '@angular/router';
 import { sidebarActions } from '@app/client-store-sidebar';
 import { IRouterButton, IWebClientAppEnvironment, routerButton, WEB_CLIENT_APP_ENV } from '@app/client-util';
-import { Store } from '@ngxs/store';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-navbar',
@@ -24,7 +24,7 @@ export class AppNavbarComponent {
           paths: 'exact',
           fragment: 'ignored',
         }),
-      [{ outlets: { primary: [''], sidebar: [] } }],
+      [{ outlets: { primary: [''] } }],
     ),
     routerButton(
       'API info',
@@ -36,7 +36,7 @@ export class AppNavbarComponent {
           paths: 'exact',
           fragment: 'ignored',
         }),
-      [{ outlets: { primary: ['info'], sidebar: [] } }],
+      [{ outlets: { primary: ['info'] } }],
     ),
     routerButton(
       'Chart examples',
@@ -48,7 +48,7 @@ export class AppNavbarComponent {
           paths: 'exact',
           fragment: 'ignored',
         }),
-      [{ outlets: { primary: ['charts'], sidebar: [] } }],
+      [{ outlets: { primary: ['charts'] } }],
     ),
     routerButton(
       'Chat',
@@ -60,7 +60,7 @@ export class AppNavbarComponent {
           paths: 'exact',
           fragment: 'ignored',
         }),
-      [{ outlets: { primary: ['chatbot'], sidebar: [] } }],
+      [{ outlets: { primary: ['chatbot'] } }],
     ),
   ];
 
@@ -78,6 +78,6 @@ export class AppNavbarComponent {
   ) {}
 
   public sidebarCloseHandler(): void {
-    void this.store.dispatch(new sidebarActions.setState({ sidebarOpened: false }));
+    this.store.dispatch(sidebarActions.close({ payload: { navigate: false } }));
   }
 }

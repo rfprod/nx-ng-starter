@@ -1,9 +1,19 @@
-import { NgModule } from '@angular/core';
-import { NgxsModule } from '@ngxs/store';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
-import { AppChatbotState } from './chatbot.state';
+import { AppChatbotEffects } from './chatbot.effects';
+import { featureName, IChatbotState } from './chatbot.interface';
+import { AppChatbotReducer } from './chatbot.reducer';
 
 @NgModule({
-  imports: [NgxsModule.forFeature([AppChatbotState])],
+  imports: [StoreModule.forFeature<IChatbotState>(featureName, AppChatbotReducer.token), EffectsModule.forFeature([AppChatbotEffects])],
 })
-export class AppChatbotStoreModule {}
+export class AppChatbotStoreModule {
+  public static forRoot(): ModuleWithProviders<AppChatbotStoreModule> {
+    return {
+      ngModule: AppChatbotStoreModule,
+      providers: [AppChatbotReducer.provider],
+    };
+  }
+}

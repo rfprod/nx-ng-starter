@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { chatbotActions } from '@app/client-store-chatbot';
-import { AppSidebarState, sidebarActions } from '@app/client-store-sidebar';
+import { chatbotActions, IChatbotState } from '@app/client-store-chatbot';
+import { ISidebarState, sidebarActions, sidebarSelectors } from '@app/client-store-sidebar';
 import { anchorButton, IAnchorButton } from '@app/client-util';
-import { Store } from '@ngxs/store';
-import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-toolbar',
@@ -34,16 +33,16 @@ export class AppToolbarComponent {
 
   @Output() public readonly darkThemeEnabled = new EventEmitter<boolean>();
 
-  public readonly sidebarOpened$ = this.store.select(AppSidebarState.state).pipe(map(state => state.sidebarOpened));
+  public readonly sidebarOpened$ = this.store.select(sidebarSelectors.sidebarOpened);
 
-  constructor(public readonly store: Store) {}
+  constructor(public readonly store: Store<IChatbotState & ISidebarState>) {}
 
   public toggleSidebar(): void {
-    void this.store.dispatch(new sidebarActions.toggleSidebar());
+    this.store.dispatch(sidebarActions.toggle());
   }
 
   public toggleChatbot(): void {
-    void this.store.dispatch(new chatbotActions.toggle());
+    this.store.dispatch(chatbotActions.toggle());
   }
 
   public toggleMaterialTheme(event: boolean): void {

@@ -1,20 +1,17 @@
-import { actionPayloadConstructor } from '@app/client-util';
+import { createAction, props } from '@ngrx/store';
 
-import { SIDEBAR_STATE_TOKEN, TSidebarPayload } from './sidebar.interface';
+import { featureName } from './sidebar.interface';
 
-const createAction = actionPayloadConstructor(SIDEBAR_STATE_TOKEN.getName());
+const type = (name: string) => `[${featureName}] ${name}`;
 
-const openSidebar = createAction('open');
+const open = createAction(type('open'), props<{ payload: { navigate: boolean } }>());
 
-const closeSidebar = createAction('close');
+const close = createAction(type('close'), props<{ payload: { navigate: boolean } }>());
 
-const toggleSidebar = createAction('toggle');
-
-const setState = createAction<TSidebarPayload>('set state');
+const toggle = createAction(type('toggle'));
 
 export const sidebarActions = {
-  openSidebar,
-  closeSidebar,
-  toggleSidebar,
-  setState,
+  open,
+  close,
+  toggle,
 };

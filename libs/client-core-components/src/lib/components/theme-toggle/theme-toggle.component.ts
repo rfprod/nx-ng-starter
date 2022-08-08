@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
-import { AppThemeState, themeActions } from '@app/client-store-theme';
-import { Store } from '@ngxs/store';
+import { IThemeState, themeActions, themeSelectors } from '@app/client-store-theme';
+import { Store } from '@ngrx/store';
 import { tap } from 'rxjs';
 
 @Component({
@@ -12,15 +12,15 @@ import { tap } from 'rxjs';
 export class AppThemeToggleComponent {
   @Output() public readonly themeToggled = new EventEmitter<boolean>();
 
-  public readonly darkThemeEnabled$ = this.store.select(AppThemeState.darkThemeEnabled).pipe(
+  public readonly darkThemeEnabled$ = this.store.select(themeSelectors.darkThemeEnabled).pipe(
     tap(darkThemeEnabled => {
       this.themeToggled.emit(darkThemeEnabled);
     }),
   );
 
-  constructor(public readonly store: Store) {}
+  constructor(public readonly store: Store<IThemeState>) {}
 
   public toggleMaterialTheme(): void {
-    void this.store.dispatch(new themeActions.toggleDarkTheme());
+    this.store.dispatch(themeActions.toggleDarkTheme());
   }
 }

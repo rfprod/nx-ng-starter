@@ -1,14 +1,9 @@
-import { IActionPayload } from '@app/client-util';
-import { StateToken } from '@ngxs/store';
-
-export interface ISiedbarState {
+export interface ISidebarStateModel {
   sidebarOpened: boolean;
 }
 
-export const sidebarInitialState: ISiedbarState = {
-  sidebarOpened: false,
-};
+export interface ISidebarState {
+  sidebar: ISidebarStateModel;
+}
 
-export type TSidebarPayload = IActionPayload<ISiedbarState>;
-
-export const SIDEBAR_STATE_TOKEN = new StateToken<ISiedbarState>('sidebar');
+export const featureName: keyof ISidebarState = 'sidebar';

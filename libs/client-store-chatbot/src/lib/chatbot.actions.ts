@@ -1,13 +1,17 @@
-import { actionPayloadConstructor } from '@app/client-util';
+import { createAction } from '@ngrx/store';
 
-import { CHATBOT_STATE_TOKEN, TChatbotPayload } from './chatbot.interface';
+import { featureName } from './chatbot.interface';
 
-const createAction = actionPayloadConstructor(CHATBOT_STATE_TOKEN.getName());
+const type = (name: string) => `[${featureName}] ${name}`;
 
-const setState = createAction<TChatbotPayload>('set state');
-const toggle = createAction('toggle');
+const open = createAction(type('open'));
+
+const close = createAction(type('close'));
+
+const toggle = createAction(type('toggle'));
 
 export const chatbotActions = {
-  setState,
+  open,
+  close,
   toggle,
 };

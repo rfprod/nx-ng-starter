@@ -1,11 +1,17 @@
-import { actionPayloadConstructor } from '@app/client-util';
+import { createAction, props } from '@ngrx/store';
 
-import { TUserPayload, USER_STATE_TOKEN } from './user.interface';
+import { featureName, IUserStateModel } from './user.interface';
 
-const createAction = actionPayloadConstructor(USER_STATE_TOKEN.getName());
+const type = (name: string) => `[${featureName}] ${name}`;
 
-const setState = createAction<TUserPayload>('set state');
+const login = createAction(type('enable dark user'), props<{ payload: Pick<IUserStateModel, 'email'> }>());
+
+const logout = createAction(type('disable dark user'));
+
+const signup = createAction(type('toggle user'), props<{ payload: Pick<IUserStateModel, 'email'> }>());
 
 export const userActions = {
-  setState,
+  login,
+  logout,
+  signup,
 };

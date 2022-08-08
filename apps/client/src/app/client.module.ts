@@ -7,17 +7,14 @@ import { AppClientGqlModule } from '@app/client-gql';
 import { AppClientGrpcModule, AppClientGrpcService } from '@app/client-grpc';
 import { AppClientMaterialModule } from '@app/client-material';
 import { AppClientPwaOfflineModule } from '@app/client-pwa-offline';
-import { AppThemeState } from '@app/client-store-theme';
-import { AppUserState } from '@app/client-store-user';
 import { AppWebsocketStoreModule } from '@app/client-store-websocket';
 import { AppClientTranslateModule } from '@app/client-translate';
 import { AppClientUtilElizaModule } from '@app/client-util-eliza';
+import { AppRouteSerializer, metaReducers } from '@app/client-util-ngrx';
 import { sentryProviders } from '@app/client-util-sentry';
-import { NgxsFormPluginModule } from '@ngxs/form-plugin';
-import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
-import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
-import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
-import { NgxsModule } from '@ngxs/store';
+import { EffectsModule } from '@ngrx/effects';
+import { NavigationActionTiming, routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreModule } from '@ngrx/store';
 
 import { environment } from '../environments/environment';
 import { AppClientRoutingModule } from './client-routing.module';
@@ -29,29 +26,23 @@ import { AppRootComponent } from './components/root.component';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
-    NgxsModule.forRoot([], {
-      developmentMode: !environment.production,
-      compatibility: {
-        strictContentSecurityPolicy: true,
-      },
-    }),
-    NgxsStoragePluginModule.forRoot({
-      key: [AppUserState, AppThemeState],
-    }),
-    NgxsLoggerPluginModule.forRoot({ disabled: environment.production, collapsed: true }),
-    NgxsRouterPluginModule.forRoot(),
-    NgxsFormPluginModule.forRoot(),
+    StoreModule.forRoot({ router: routerReducer }, { metaReducers: metaReducers(environment.production) }),
+    EffectsModule.forRoot(),
+    AppWebsocketStoreModule.forRoot(environment),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     AppClientCoreModule.forRoot(environment),
     AppClientCoreComponentsModule,
     AppClientMaterialModule.forRoot(),
-    AppWebsocketStoreModule.forRoot(environment),
     AppClientTranslateModule.forRoot(),
     AppClientGqlModule.forRoot(environment),
     AppClientGrpcModule.forRoot(environment),
     AppClientUtilElizaModule.forRoot(),
     AppClientPwaOfflineModule,
     AppClientRoutingModule,
+    StoreRouterConnectingModule.forRoot({
+      serializer: AppRouteSerializer,
+      navigationActionTiming: NavigationActionTiming.PostActivation,
+    }),
   ],
   providers: [...sentryProviders(environment)],
   declarations: [AppRootComponent],

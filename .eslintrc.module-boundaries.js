@@ -99,7 +99,13 @@ const backendConstraints = [
 const clientConstraints = [
   {
     sourceTag: 'scope:documentation',
-    onlyDependOnLibsWithTags: ['scope:client-material', 'scope:client-pwa-offline', 'scope:client-unit-testing', 'scope:client-util'],
+    onlyDependOnLibsWithTags: [
+      'scope:client-material',
+      'scope:client-pwa-offline',
+      'scope:client-unit-testing',
+      'scope:client-util',
+      'scope:client-util-ngrx',
+    ],
   },
   {
     sourceTag: 'scope:documentation-e2e',
@@ -247,6 +253,10 @@ const clientConstraints = [
     onlyDependOnLibsWithTags: [],
   },
   {
+    sourceTag: 'scope:client-util-ngrx',
+    onlyDependOnLibsWithTags: [],
+  },
+  {
     sourceTag: 'scope:client-util-sentry',
     onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util'],
   },
@@ -275,6 +285,7 @@ const clientConstraints = [
       'scope:client-unit-testing',
       'scope:client-util',
       'scope:client-util-eliza',
+      'scope:client-util-ngrx',
       'scope:client-util-sentry',
     ],
   },
@@ -310,6 +321,7 @@ const clientConstraints = [
       'scope:client-unit-testing',
       'scope:client-util',
       'scope:client-util-eliza',
+      'scope:client-util-ngrx',
       'scope:client-util-sentry',
     ],
   },

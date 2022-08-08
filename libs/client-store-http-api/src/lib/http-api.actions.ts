@@ -1,11 +1,14 @@
-import { actionPayloadConstructor } from '@app/client-util';
+import { createAction, props } from '@ngrx/store';
 
-import { HTTP_API_STATE_TOKEN } from './http-api.interface';
+import { featureName, IPingResponse } from './http-api.interface';
 
-const createAction = actionPayloadConstructor(HTTP_API_STATE_TOKEN.getName());
+const type = (name: string) => `[${featureName}] ${name}`;
 
-const ping = createAction('ping');
+const ping = createAction(type('ping'));
+
+const pingSuccess = createAction(type('ping success'), props<{ payload: IPingResponse }>());
 
 export const httpApiActions = {
   ping,
+  pingSuccess,
 };

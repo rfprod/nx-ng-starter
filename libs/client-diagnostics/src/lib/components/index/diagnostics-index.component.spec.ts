@@ -8,7 +8,7 @@ import {
   TClassMemberFunctionSpiesObject,
   testingEnvironment,
 } from '@app/client-unit-testing';
-import { Store } from '@ngxs/store';
+import { Store } from '@ngrx/store';
 
 import { AppDiagnosticsIndexComponent } from './diagnostics-index.component';
 
@@ -51,7 +51,7 @@ describe('AppDiagnosticsIndexComponent', () => {
   });
 
   it('should call store dispatch on init', () => {
-    expect(storeDispatchSpy).toHaveBeenCalledWith(new websocketActions.connect());
-    expect(storeDispatchSpy).toHaveBeenCalledWith(new websocketActions.getEvents());
+    expect(storeDispatchSpy).toHaveBeenCalledWith(websocketActions.connect());
+    expect(storeDispatchSpy).toHaveBeenCalledWith(websocketActions.getEvents());
   });
 });

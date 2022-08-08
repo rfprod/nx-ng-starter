@@ -1,20 +1,17 @@
-import { actionPayloadConstructor } from '@app/client-util';
+import { createAction } from '@ngrx/store';
 
-import { THEME_STATE_TOKEN, TThemePayload } from './theme.interface';
+import { featureName } from './theme.interface';
 
-const createAction = actionPayloadConstructor(THEME_STATE_TOKEN.getName());
+const type = (name: string) => `[${featureName}] ${name}`;
 
-const enableDarkTheme = createAction('enable dark theme');
+const enableDarkTheme = createAction(type('enable dark theme'));
 
-const disableDarkTheme = createAction('disable dark theme');
+const disableDarkTheme = createAction(type('disable dark theme'));
 
-const toggleDarkTheme = createAction('toggle theme');
-
-const setState = createAction<TThemePayload>('set theme');
+const toggleDarkTheme = createAction(type('toggle theme'));
 
 export const themeActions = {
   enableDarkTheme,
   disableDarkTheme,
   toggleDarkTheme,
-  setState,
 };

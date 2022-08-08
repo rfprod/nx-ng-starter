@@ -1,9 +1,19 @@
-import { NgModule } from '@angular/core';
-import { NgxsModule } from '@ngxs/store';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
-import { AppUserState } from './user.state';
+import { AppUserEffects } from './user.effects';
+import { featureName, IUserState } from './user.interface';
+import { AppUserReducer } from './user.reducer';
 
 @NgModule({
-  imports: [NgxsModule.forFeature([AppUserState])],
+  imports: [StoreModule.forFeature<IUserState>(featureName, AppUserReducer.token), EffectsModule.forFeature([AppUserEffects])],
 })
-export class AppUserStoreModule {}
+export class AppUserStoreModule {
+  public static forRoot(): ModuleWithProviders<AppUserStoreModule> {
+    return {
+      ngModule: AppUserStoreModule,
+      providers: [AppUserReducer.provider],
+    };
+  }
+}

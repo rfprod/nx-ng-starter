@@ -8,8 +8,8 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppClientMaterialModule } from '@app/client-material';
 import { documentFactory, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@app/client-util';
-import { NgxsFormPluginModule } from '@ngxs/form-plugin';
-import { NgxsModule } from '@ngxs/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { HttpLink } from 'apollo-angular/http';
 
 import { AppTestingComponent } from './components/testing/testing.component.mock';
@@ -67,8 +67,8 @@ export const mocksCoreModuleProviders: Provider[] = [
     AppClientMaterialModule.forRoot(),
     HttpClientTestingModule,
     RouterTestingModule,
-    NgxsModule.forRoot([], { developmentMode: true }),
-    NgxsFormPluginModule.forRoot(),
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot(),
   ],
   declarations: [AppTestingComponent],
   exports: [

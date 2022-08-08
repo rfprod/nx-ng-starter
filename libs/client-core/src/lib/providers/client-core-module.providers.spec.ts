@@ -4,7 +4,7 @@ import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing
 import { documentFactory, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@app/client-util';
 import { HttpLink } from 'apollo-angular/http';
 
-import { appClientCoreModuleProvidersFactory } from './client-core-module.providers';
+import { appClientCoreModuleProviders } from './client-core-module.providers';
 
 describe('client-core-module-proviers', () => {
   const testingEnvironment: IWebClientAppEnvironment = {
@@ -27,7 +27,7 @@ describe('client-core-module-proviers', () => {
 
   const testBedConfig: TestModuleMetadata = {
     imports: [HttpClientTestingModule],
-    providers: [...appClientCoreModuleProvidersFactory(testingEnvironment)],
+    providers: [...appClientCoreModuleProviders(testingEnvironment)],
   };
 
   let locationStrategy: LocationStrategy;
