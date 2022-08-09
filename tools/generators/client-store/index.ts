@@ -7,10 +7,8 @@ import {
   Tree,
   updateProjectConfiguration,
 } from '@nrwl/devkit';
-import { wrapAngularDevkitSchematic } from '@nrwl/devkit/ngcli-adapter';
 import { unlink } from 'fs/promises';
 import { fileExists } from 'nx/src/utils/fileutils';
-import * as path from 'path';
 
 import { ISchematicContext } from './schema.interface';
 
@@ -21,9 +19,13 @@ const addFiles = (schema: ISchematicContext, tree: Tree) => {
   const config: ProjectConfiguration = readProjectConfiguration(tree, schema.name);
   const root = config.root;
 
+  const fileName = schema.name.replace('client-store-', '');
+
   generateFiles(tree, joinPathFragments(__dirname, './files'), root, {
     tmpl: '',
     name: schema.name,
+    fileName,
+    className: `${fileName[0].toUpperCase()}${fileName.slice(1)}`,
   });
 };
 
@@ -57,10 +59,6 @@ const cleanup = async (): Promise<void> => {
   }
 };
 
-const serviceGenerator = wrapAngularDevkitSchematic('@schematics/angular', 'service');
-
-const ngxsGenerator = wrapAngularDevkitSchematic('@ngxs/schematics', 'store');
-
 export default async function (tree: Tree, schema: ISchematicContext) {
   const name = schema.name;
   const tags = schema.tags;
@@ -70,22 +68,10 @@ export default async function (tree: Tree, schema: ISchematicContext) {
     prefix: 'app',
     standaloneConfig: true,
     tags,
+    skipModule: true,
   });
 
   addFiles(schema, tree);
-
-  await serviceGenerator(tree, {
-    project: name,
-    name,
-    path: path.join('libs', name, 'src', 'lib', 'services'),
-  });
-
-  await ngxsGenerator(tree, {
-    name,
-    sourceRoot: path.join('libs', name, 'src', 'lib'),
-    path: '/',
-    spec: true,
-  });
 
   updateProjectConfig(schema, tree);
 

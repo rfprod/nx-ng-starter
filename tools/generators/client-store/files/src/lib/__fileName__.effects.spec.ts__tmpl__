@@ -1,0 +1,29 @@
+import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
+import { EffectsModule } from '@ngrx/effects';
+import { Store, StoreModule } from '@ngrx/store';
+
+import { <%= fileName %>Actions } from './<%= fileName %>.actions';
+import { App<%= className %>Effects } from './<%= fileName %>.effects';
+import { featureName, I<%= className %>State } from './<%= fileName %>.interface';
+import { App<%= className %>Reducer } from './<%= fileName %>.reducer';
+
+describe('App<%= className %>Effects', () => {
+  const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
+    imports: [StoreModule.forFeature<I<%= className %>State>(featureName, App<%= className %>Reducer.token), EffectsModule.forFeature([App<%= className %>Effects])],
+    providers: [App<%= className %>Reducer.provider],
+  });
+  const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
+
+  let store: Store<I<%= className %>State>;
+
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        store = TestBed.inject(Store);
+      });
+  }));
+
+  test.todo('App<%= className %>Effects spec');
+});
