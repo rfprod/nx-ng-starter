@@ -1,0 +1,11 @@
+import { createSelector } from '@ngrx/store';
+
+import { I<%= className %>State, I<%= className %>StateModel } from './<%= fileName %>.interface';
+
+const selectFeature = (state: I<%= className %>State) => state.<%= fileName %>;
+
+const <%= fileName %> = createSelector(selectFeature, (state: I<%= className %>StateModel) => state.<%= fileName %>);
+
+export const <%= fileName %>Selectors = {
+  <%= fileName %>, // TODO
+};

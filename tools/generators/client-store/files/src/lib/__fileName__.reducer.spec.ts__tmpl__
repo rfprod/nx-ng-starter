@@ -1,0 +1,34 @@
+import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
+import { Store, StoreModule } from '@ngrx/store';
+
+import { <%= fileName %>Actions } from './<%= fileName %>.actions';
+import { featureName, I<%= className %>State, I<%= className %>StateModel } from './<%= fileName %>.interface';
+import { App<%= className %>Reducer } from './<%= fileName %>.reducer';
+import { <%= fileName %>Selectors } from './<%= fileName %>.selectors';
+
+describe('App<%= className %>Reducer', () => {
+  const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
+    imports: [StoreModule.forFeature<I<%= className %>State>(featureName, App<%= className %>Reducer.token)],
+    providers: [App<%= className %>Reducer.provider],
+  });
+  const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
+
+  let reducer: App<%= className %>Reducer;
+  let store: Store<I<%= className %>State>;
+
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        reducer = TestBed.inject(App<%= className %>Reducer);
+        store = TestBed.inject(Store);
+      });
+  }));
+
+  it('should be defined', () => {
+    expect(reducer).toBeDefined();
+  });
+
+  test.todo('App<%= className %>Reducer spec');
+});
