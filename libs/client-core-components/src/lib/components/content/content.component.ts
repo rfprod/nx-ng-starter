@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
 import { MatSidenavContent } from '@angular/material/sidenav';
 import { NavigationEnd, Router } from '@angular/router';
-import { AppSidebarState, sidebarActions } from '@app/client-store-sidebar';
+import { ISidebarState, sidebarActions, sidebarSelectors } from '@app/client-store-sidebar';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { Store } from '@ngxs/store';
-import { map, tap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { tap } from 'rxjs/operators';
 
 @UntilDestroy()
 @Component({
@@ -16,7 +16,7 @@ import { map, tap } from 'rxjs/operators';
 export class AppContentComponent {
   @ViewChild('content') public readonly content?: MatSidenavContent;
 
-  public readonly sidebarOpened$ = this.store.select(AppSidebarState.state).pipe(map(state => state.sidebarOpened));
+  public readonly sidebarOpened$ = this.store.select(sidebarSelectors.sidebarOpened);
 
   public readonly routerEvents$ = this.router.events.pipe(
     tap(event => {
@@ -27,15 +27,15 @@ export class AppContentComponent {
     untilDestroyed(this),
   );
 
-  constructor(private readonly store: Store, private readonly router: Router) {
+  constructor(private readonly store: Store<ISidebarState>, private readonly router: Router) {
     void this.routerEvents$.subscribe();
   }
 
   public sidebarCloseHandler(): void {
-    void this.store.dispatch(new sidebarActions.closeSidebar());
+    this.store.dispatch(sidebarActions.close({ payload: { navigate: true } }));
   }
 
   public sidebarOpenHandler(): void {
-    void this.store.dispatch(new sidebarActions.openSidebar());
+    this.store.dispatch(sidebarActions.open({ payload: { navigate: true } }));
   }
 }

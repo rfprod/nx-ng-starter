@@ -12,10 +12,10 @@ import {
 } from '@apollo/client/core';
 import { ErrorResponse, onError } from '@apollo/client/link/error';
 import { getMainDefinition } from '@apollo/client/utilities';
-import { AppUserState, userActions } from '@app/client-store-user';
+import { IUserState, userActions, userSelectors } from '@app/client-store-user';
 import { HTTP_STATUS, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV, WINDOW } from '@app/client-util';
+import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { Store } from '@ngxs/store';
 import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
 import { createUploadLink } from 'apollo-upload-client';
 import memo from 'memo-decorator';
@@ -23,6 +23,7 @@ import { MonoTypeOperatorFunction, Observable, of } from 'rxjs';
 import { catchError, finalize, first, map, tap, timeout } from 'rxjs/operators';
 
 import { httpProgressActions } from '../../http-progress.actions';
+import { IHttpProgressState } from '../../http-progress.interface';
 import { AppHttpProgressService } from '../http-progress/http-progress.service';
 import { AppToasterService } from '../toaster/toaster.service';
 
@@ -37,10 +38,10 @@ export type TGqlClient = 'graphql';
 export class AppHttpHandlersService {
   public readonly defaultHttpTimeout = 10000;
 
-  public readonly userToken$: Observable<string> = this.store.select(AppUserState.token);
+  public readonly userToken$: Observable<string> = this.store.select(userSelectors.token);
 
   constructor(
-    public readonly store: Store,
+    public readonly store: Store<IHttpProgressState & IUserState>,
     public readonly toaster: AppToasterService,
     public readonly httpLink: HttpLink,
     public readonly httpProgress: AppHttpProgressService,
@@ -86,13 +87,13 @@ export class AppHttpHandlersService {
    * @returns a piped observable
    */
   public pipeHttpResponse<T>(observable: Observable<T>) {
-    void this.store.dispatch(new httpProgressActions.startProgress({ mainView: true }));
+    this.store.dispatch(httpProgressActions.start({ payload: { mainView: true } }));
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
       this.tapError<T>(),
       catchError(err => this.handleError(err)),
       finalize(() => {
-        void this.store.dispatch(new httpProgressActions.stopProgress({ mainView: true }));
+        this.store.dispatch(httpProgressActions.stop({ payload: { mainView: true } }));
       }),
     );
   }
@@ -107,14 +108,14 @@ export class AppHttpHandlersService {
    * @returns a piped observable
    */
   public pipeGqlResponse<T>(observable: Observable<ApolloQueryResult<T> | FetchResult<T>>) {
-    void this.store.dispatch(new httpProgressActions.startProgress({ mainView: true }));
+    this.store.dispatch(httpProgressActions.start({ payload: { mainView: true } }));
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
       this.tapError(),
       map(result => result.data),
       catchError(err => this.handleGqlError(err)),
       finalize(() => {
-        void this.store.dispatch(new httpProgressActions.stopProgress({ mainView: true }));
+        this.store.dispatch(httpProgressActions.stop({ payload: { mainView: true } }));
       }),
     );
   }
@@ -218,7 +219,7 @@ export class AppHttpHandlersService {
    */
   public checkErrorStatusAndRedirect(status: HTTP_STATUS): void {
     if (status === HTTP_STATUS.UNAUTHORIZED) {
-      void this.store.dispatch(new userActions.setState({ token: '' }));
+      this.store.dispatch(userActions.logout());
     }
   }
 

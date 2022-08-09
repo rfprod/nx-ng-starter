@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { AppHttpProgressState } from '@app/client-store-http-progress';
+import { Router } from '@angular/router';
+import { httpProgressSelectors, IHttpProgressState } from '@app/client-store-http-progress';
 import { sidebarActions } from '@app/client-store-sidebar';
-import { Navigate } from '@ngxs/router-plugin';
-import { Store } from '@ngxs/store';
+import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 
 @Component({
@@ -12,16 +12,16 @@ import { map } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppSidebarRootComponent {
-  public readonly loading$ = this.store.select(AppHttpProgressState.sidebar).pipe(map(state => state.loading));
+  public readonly loading$ = this.store.select(httpProgressSelectors.sidebar).pipe(map(state => state.loading));
 
-  constructor(private readonly store: Store) {}
+  constructor(private readonly store: Store<IHttpProgressState>, private readonly router: Router) {}
 
   /**
    * Sidebar close handler.
    * Propagates sidebar close event from UI to state store.
    */
   public sidebarCloseHandler(): void {
-    void this.store.dispatch(new sidebarActions.closeSidebar());
+    this.store.dispatch(sidebarActions.close({ payload: { navigate: true } }));
   }
 
   /**
@@ -29,7 +29,7 @@ export class AppSidebarRootComponent {
    */
   public navigateToInfoPage(): void {
     this.sidebarCloseHandler();
-    void this.store.dispatch(new Navigate([{ outlets: { primary: 'info' } }]));
+    void this.router.navigate([{ outlets: { primary: 'info' } }]);
   }
 
   /**
@@ -37,6 +37,6 @@ export class AppSidebarRootComponent {
    */
   public navigateToChartExamples(): void {
     this.sidebarCloseHandler();
-    void this.store.dispatch(new Navigate([{ outlets: { primary: 'charts' } }]));
+    void this.router.navigate([{ outlets: { primary: 'charts' } }]);
   }
 }

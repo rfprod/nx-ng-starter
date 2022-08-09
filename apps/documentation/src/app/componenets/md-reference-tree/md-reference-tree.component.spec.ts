@@ -3,11 +3,13 @@ import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@an
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppClientMaterialModule } from '@app/client-material';
-import { NgxsModule, Store } from '@ngxs/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { MarkdownModule, MarkdownModuleConfig, MarkedOptions } from 'ngx-markdown';
 
-import { testingEnvironment, testingProviders } from '../../../testing/testing-providers.mock';
-import { AppMdFilesState, mdFilesActions } from '../../modules/store/md-files/md-files.state';
+import { testingProviders } from '../../../testing/testing-providers.mock';
+import { mdFilesActions } from '../../modules/md-files/md-files.actions';
+import { IMdFilesState } from '../../modules/md-files/md-files.interface';
+import { AppMdFilesStoreModule } from '../../modules/md-files/md-files.module';
 import { AppDocMarkdownReferenceTreeComponent } from './md-reference-tree.component';
 
 describe('AppDocMarkdownReferenceTreeComponent', () => {
@@ -30,7 +32,8 @@ describe('AppDocMarkdownReferenceTreeComponent', () => {
       HttpClientTestingModule,
       RouterTestingModule,
       AppClientMaterialModule.forRoot(),
-      NgxsModule.forRoot([AppMdFilesState], { developmentMode: !testingEnvironment.production }),
+      StoreModule.forRoot({}),
+      AppMdFilesStoreModule.forRoot(),
       MarkdownModule.forRoot(markdownModuleConfig),
     ],
     declarations: [AppDocMarkdownReferenceTreeComponent],
@@ -40,7 +43,7 @@ describe('AppDocMarkdownReferenceTreeComponent', () => {
   let fixture: ComponentFixture<AppDocMarkdownReferenceTreeComponent>;
   let component: AppDocMarkdownReferenceTreeComponent;
 
-  let store: Store;
+  let store: Store<IMdFilesState>;
   let storeDispatchSpy: jest.SpyInstance;
 
   beforeEach(waitForAsync(() => {
@@ -64,6 +67,6 @@ describe('AppDocMarkdownReferenceTreeComponent', () => {
   it('showReadme should call store.dispatch', () => {
     const filePath = '/README.md';
     component.showReadme(filePath);
-    expect(storeDispatchSpy).toHaveBeenCalledWith(new mdFilesActions.setState({ filePath }));
+    expect(storeDispatchSpy).toHaveBeenCalledWith(mdFilesActions.showReadme({ filePath }));
   });
 });

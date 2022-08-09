@@ -1,10 +1,11 @@
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
-import { Store } from '@ngxs/store';
+import { Store } from '@ngrx/store';
 
 import { DOC_APP_ENV, IDocAppEnvironment } from '../../interfaces/environment.interface';
-import { mdFilesActions } from '../../modules/store/md-files/md-files.state';
+import { mdFilesActions } from '../../modules/md-files/md-files.actions';
+import { IMdFilesState } from '../../modules/md-files/md-files.interface';
 
 /**
  * Nodes data with nested structure.
@@ -39,11 +40,11 @@ export class AppDocMarkdownReferenceTreeComponent {
       const children: IMarkdownReferenceNode[] = [{ name: item.replace(/^.*\/(?=[A-Za-z]+\.md$)/, ''), filePath }];
       return { name, children } as IMarkdownReferenceNode;
     });
-    void this.store.dispatch(new mdFilesActions.setState({ mdFilePaths })).subscribe();
+    this.showReadme(`md${mdFilePaths[0]}`);
     return treeNodes;
   };
 
-  constructor(private readonly store: Store, @Inject(DOC_APP_ENV) private readonly env: IDocAppEnvironment) {
+  constructor(private readonly store: Store<IMdFilesState>, @Inject(DOC_APP_ENV) private readonly env: IDocAppEnvironment) {
     this.dataSource.data = this.treeData();
   }
 
@@ -51,6 +52,6 @@ export class AppDocMarkdownReferenceTreeComponent {
     typeof node.children !== 'undefined' && node.children.length > 0;
 
   public showReadme(filePath: string): void {
-    void this.store.dispatch(new mdFilesActions.setState({ filePath })).subscribe();
+    this.store.dispatch(mdFilesActions.showReadme({ filePath }));
   }
 }

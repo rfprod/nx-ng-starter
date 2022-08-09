@@ -1,15 +1,17 @@
-import { actionPayloadConstructor } from '@app/client-util';
+import { createAction, props } from '@ngrx/store';
 
-import { HTTP_PROGRESS_STATE_TOKEN, THttpProgressPayload, TShowToastPayload } from './http-progress.interface';
+import { featureName, IHttpProgressPayload, IShowToastPayload } from './http-progress.interface';
 
-const createAction = actionPayloadConstructor(HTTP_PROGRESS_STATE_TOKEN.toString());
+const type = (name: string) => `[${featureName}] ${name}`;
 
-const startProgress = createAction<THttpProgressPayload>('start');
-const stopProgress = createAction<THttpProgressPayload>('stop');
-const displayToast = createAction<TShowToastPayload>('display toast');
+const start = createAction(type('start'), props<{ payload: IHttpProgressPayload }>());
+
+const stop = createAction(type('stop'), props<{ payload: IHttpProgressPayload }>());
+
+const displayToast = createAction(type('display toast'), props<{ payload: IShowToastPayload }>());
 
 export const httpProgressActions = {
-  startProgress,
-  stopProgress,
+  start,
+  stop,
   displayToast,
 };

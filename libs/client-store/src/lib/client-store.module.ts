@@ -8,20 +8,12 @@ import { AppUserStoreModule } from '@app/client-store-user';
 
 @NgModule({
   imports: [
-    AppChatbotStoreModule,
-    AppHttpApiStoreModule,
+    AppChatbotStoreModule.forRoot(),
+    AppHttpApiStoreModule.forRoot(),
     AppHttpProgressStoreModule.forRoot(),
-    AppSidebarStoreModule,
-    AppThemeStoreModule,
-    AppUserStoreModule,
-  ],
-  exports: [
-    AppChatbotStoreModule,
-    AppHttpApiStoreModule,
-    AppHttpProgressStoreModule,
-    AppSidebarStoreModule,
-    AppThemeStoreModule,
-    AppUserStoreModule,
+    AppSidebarStoreModule.forRoot(),
+    AppThemeStoreModule.forRoot(),
+    AppUserStoreModule.forRoot(),
   ],
 })
 export class AppClientStoreModule {}

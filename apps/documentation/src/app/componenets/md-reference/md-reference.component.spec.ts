@@ -3,11 +3,11 @@ import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@an
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppClientMaterialModule } from '@app/client-material';
-import { NgxsModule } from '@ngxs/store';
+import { StoreModule } from '@ngrx/store';
 import { MarkdownModule, MarkdownModuleConfig, MarkedOptions } from 'ngx-markdown';
 
-import { testingEnvironment, testingProviders } from '../../../testing/testing-providers.mock';
-import { AppMdFilesState } from '../../modules/store/md-files/md-files.state';
+import { testingProviders } from '../../../testing/testing-providers.mock';
+import { AppMdFilesStoreModule } from '../../modules/md-files/md-files.module';
 import { AppDocMarkdownReferenceComponent } from './md-reference.component';
 
 describe('AppDocMarkdownReferenceComponent', () => {
@@ -30,7 +30,8 @@ describe('AppDocMarkdownReferenceComponent', () => {
       HttpClientTestingModule,
       RouterTestingModule,
       AppClientMaterialModule.forRoot(),
-      NgxsModule.forRoot([AppMdFilesState], { developmentMode: !testingEnvironment.production }),
+      StoreModule.forRoot({}),
+      AppMdFilesStoreModule.forRoot(),
       MarkdownModule.forRoot(markdownModuleConfig),
     ],
     declarations: [AppDocMarkdownReferenceComponent],

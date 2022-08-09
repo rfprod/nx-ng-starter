@@ -1,20 +1,17 @@
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { Meta, Title } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppClientMaterialModule } from '@app/client-material';
-import { NgxsModule } from '@ngxs/store';
 import { MarkdownModule, MarkdownModuleConfig, MarkedOptions } from 'ngx-markdown';
 import { of, tap } from 'rxjs';
 
-import { testingEnvironment, testingProviders } from '../../../testing/testing-providers.mock';
+import { testingProviders } from '../../../testing/testing-providers.mock';
 import { DOC_APP_ENV, IDocAppEnvironment } from '../../interfaces/environment.interface';
-import { AppMdFilesState } from '../../modules/store/md-files/md-files.state';
-import { AppDocMarkdownReferenceComponent } from '../md-reference/md-reference.component';
-import { AppDocMarkdownReferenceTreeComponent } from '../md-reference-tree/md-reference-tree.component';
 import { AppDocRootComponent } from './root.component';
 
 describe('AppDocRootComponent', () => {
@@ -38,11 +35,11 @@ describe('AppDocRootComponent', () => {
       RouterTestingModule,
       AppClientMaterialModule.forRoot(),
       FlexLayoutModule,
-      NgxsModule.forRoot([AppMdFilesState], { developmentMode: !testingEnvironment.production }),
       MarkdownModule.forRoot(markdownModuleConfig),
     ],
-    declarations: [AppDocRootComponent, AppDocMarkdownReferenceTreeComponent, AppDocMarkdownReferenceComponent],
+    declarations: [AppDocRootComponent],
     providers: [...testingProviders],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
   };
 
   let fixture: ComponentFixture<AppDocRootComponent>;

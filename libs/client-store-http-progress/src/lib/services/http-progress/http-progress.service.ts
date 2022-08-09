@@ -13,6 +13,19 @@ import { IHttpProgressHandler } from '../../http-progress.interface';
   providedIn: 'root',
 })
 export class AppHttpProgressService {
+  public static readonly provider: Provider = {
+    provide: AppHttpProgressService,
+    useFactory: (overlay: Overlay) => {
+      const progressRef: OverlayRef = overlay.create({
+        hasBackdrop: true,
+        backdropClass: '',
+        positionStrategy: overlay.position().global().top(),
+      });
+      return new AppHttpProgressService(progressRef);
+    },
+    deps: [Overlay],
+  };
+
   public readonly globalProgressHandler: IHttpProgressHandler = {
     start: () => this.startProgress(),
     stop: () => this.stopProgress(),
@@ -50,19 +63,3 @@ export class AppHttpProgressService {
     }
   }
 }
-
-/**
- * Http progress service provider.
- */
-export const httpProgressServiceProvider: Provider = {
-  provide: AppHttpProgressService,
-  useFactory: (overlay: Overlay) => {
-    const progressRef: OverlayRef = overlay.create({
-      hasBackdrop: true,
-      backdropClass: '',
-      positionStrategy: overlay.position().global().top(),
-    });
-    return new AppHttpProgressService(progressRef);
-  },
-  deps: [Overlay],
-};

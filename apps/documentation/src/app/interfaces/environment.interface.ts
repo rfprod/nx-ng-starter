@@ -2,6 +2,7 @@ import { InjectionToken } from '@angular/core';
 
 export interface IDocAppEnvironment {
   production: boolean;
+  testing: boolean;
   appName: string;
   description: string;
   meta: {

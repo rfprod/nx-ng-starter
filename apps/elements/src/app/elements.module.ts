@@ -9,11 +9,11 @@ import { AppClientMaterialModule } from '@app/client-material';
 import { AppWebsocketStoreModule } from '@app/client-store-websocket';
 import { AppClientTranslateModule } from '@app/client-translate';
 import { AppClientUtilElizaModule } from '@app/client-util-eliza';
+import { AppRouteSerializer, metaReducers } from '@app/client-util-ngrx';
 import { sentryProviders } from '@app/client-util-sentry';
-import { NgxsFormPluginModule } from '@ngxs/form-plugin';
-import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
-import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
-import { NgxsModule } from '@ngxs/store';
+import { EffectsModule } from '@ngrx/effects';
+import { NavigationActionTiming, routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreModule } from '@ngrx/store';
 
 import { environment } from '../environments/environment';
 import { AppElementsService } from './services/elements.service';
@@ -24,24 +24,21 @@ import { AppElementsService } from './services/elements.service';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
-    NgxsModule.forRoot([], {
-      developmentMode: !environment.production,
-      compatibility: {
-        strictContentSecurityPolicy: true,
-      },
-    }),
-    NgxsLoggerPluginModule.forRoot({ disabled: environment.production, collapsed: true }),
-    NgxsRouterPluginModule.forRoot(),
-    NgxsFormPluginModule.forRoot(),
+    StoreModule.forRoot({ router: routerReducer }, { metaReducers: metaReducers(environment.production) }),
+    EffectsModule.forRoot(),
+    AppWebsocketStoreModule.forRoot(environment),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     AppClientCoreModule.forRoot(environment),
     AppClientMaterialModule.forRoot(),
     AppClientTranslateModule.forRoot(),
     AppClientGqlModule.forRoot(environment),
-    AppWebsocketStoreModule.forRoot(environment),
     AppClientUtilElizaModule.forRoot(),
     AppClientChatbotModule,
     RouterModule.forRoot([]),
+    StoreRouterConnectingModule.forRoot({
+      serializer: AppRouteSerializer,
+      navigationActionTiming: NavigationActionTiming.PostActivation,
+    }),
   ],
   providers: [...sentryProviders(environment)],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

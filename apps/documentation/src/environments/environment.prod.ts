@@ -3,6 +3,7 @@ import { appEnvFactory } from './environment.config';
 
 export const environment: IDocAppEnvironment = {
   production: true,
+  testing: false,
   appName: 'Documentation',
   description: 'Nx Ng Starter documentation',
   ...appEnvFactory(),

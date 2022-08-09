@@ -1,14 +1,9 @@
-import { IActionPayload } from '@app/client-util';
-import { StateToken } from '@ngxs/store';
-
-export interface IChatbotState {
+export interface IChatbotStateModel {
   chatbotOpened: boolean;
 }
 
-export const chatbotInitialState: IChatbotState = {
-  chatbotOpened: false,
-};
+export interface IChatbotState {
+  chatbot: IChatbotStateModel;
+}
 
-export const CHATBOT_STATE_TOKEN = new StateToken<IChatbotState>('chatbot');
-
-export type TChatbotPayload = IActionPayload<IChatbotState>;
+export const featureName: keyof IChatbotState = 'chatbot';

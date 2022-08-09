@@ -1,7 +1,6 @@
 <mat-toolbar color="primary" class="toolbar">
   <button mat-icon-button (click)="toggleSidebar()">
     <mat-icon appTooltip="Open sidenav" *ngIf="(sidebarOpened$ | async) === false"> flip_to_front </mat-icon>
-
     <mat-icon appTooltip="Close sidenav" *ngIf="sidebarOpened$ | async"> flip_to_back </mat-icon>
   </button>
 

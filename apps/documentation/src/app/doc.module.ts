@@ -5,10 +5,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppClientMaterialModule } from '@app/client-material';
 import { AppClientPwaOfflineModule } from '@app/client-pwa-offline';
 import { documentProvider, windowProvider } from '@app/client-util';
-import { NgxsFormPluginModule } from '@ngxs/form-plugin';
-import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
-import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
-import { NgxsModule } from '@ngxs/store';
+import { AppRouteSerializer, metaReducers } from '@app/client-util-ngrx';
+import { NavigationActionTiming, routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { StoreModule } from '@ngrx/store';
 import { MarkdownModule, MarkdownModuleConfig, MarkedOptions } from 'ngx-markdown';
 
 import { environment } from '../environments/environment';
@@ -17,7 +16,7 @@ import { AppDocMarkdownReferenceTreeComponent } from './componenets/md-reference
 import { AppDocRootComponent } from './componenets/root/root.component';
 import { AppDocRoutingModule } from './doc-routing.module';
 import { DOC_APP_ENV } from './interfaces/environment.interface';
-import { AppDocStoreModule } from './modules/store/store.module';
+import { AppMdFilesStoreModule } from './modules/md-files/md-files.module';
 
 /**
  * The markdown module configuration.
@@ -46,19 +45,15 @@ const markdownModuleConfig: MarkdownModuleConfig = {
     HttpClientModule,
     MarkdownModule.forRoot(markdownModuleConfig),
     FlexLayoutModule,
-    NgxsModule.forRoot([], {
-      developmentMode: !environment.production,
-      compatibility: {
-        strictContentSecurityPolicy: true,
-      },
-    }),
-    NgxsLoggerPluginModule.forRoot({ disabled: environment.production, collapsed: true }),
-    NgxsRouterPluginModule.forRoot(),
-    NgxsFormPluginModule.forRoot(),
+    StoreModule.forRoot({ router: routerReducer }, { metaReducers: metaReducers(environment.production) }),
+    AppMdFilesStoreModule.forRoot(),
     AppClientMaterialModule.forRoot(),
     AppClientPwaOfflineModule,
-    AppDocStoreModule,
     AppDocRoutingModule,
+    StoreRouterConnectingModule.forRoot({
+      serializer: AppRouteSerializer,
+      navigationActionTiming: NavigationActionTiming.PostActivation,
+    }),
   ],
   providers: [windowProvider, documentProvider, { provide: DOC_APP_ENV, useValue: environment }],
   bootstrap: [AppDocRootComponent],

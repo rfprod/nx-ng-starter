@@ -1,14 +1,9 @@
-import { IActionPayload } from '@app/client-util';
-import { StateToken } from '@ngxs/store';
-
-export interface IThemeState {
+export interface IThemeStateModel {
   darkThemeEnabled: boolean;
 }
 
-export const themeInitialState: IThemeState = {
-  darkThemeEnabled: false,
-};
+export interface IThemeState {
+  theme: IThemeStateModel;
+}
 
-export type TThemePayload = IActionPayload<IThemeState>;
-
-export const THEME_STATE_TOKEN = new StateToken<IThemeState>('theme');
+export const featureName: keyof IThemeState = 'theme';

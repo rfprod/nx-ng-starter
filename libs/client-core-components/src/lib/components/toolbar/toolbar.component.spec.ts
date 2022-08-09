@@ -1,15 +1,15 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { chatbotActions } from '@app/client-store-chatbot';
-import { AppSidebarState, sidebarActions } from '@app/client-store-sidebar';
+import { AppSidebarStoreModule, sidebarActions } from '@app/client-store-sidebar';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
-import { NgxsModule, Store } from '@ngxs/store';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 
 import { AppToolbarComponent } from './toolbar.component';
 
 describe('AppToolbarComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [NgxsModule.forFeature([AppSidebarState])],
+    imports: [AppSidebarStoreModule.forRoot()],
     declarations: [AppToolbarComponent],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
@@ -43,12 +43,12 @@ describe('AppToolbarComponent', () => {
 
   it('toggleSidebar should call store dispatch', waitForAsync(() => {
     component.toggleSidebar();
-    expect(storeSpy.dispatch).toHaveBeenCalledWith(new sidebarActions.toggleSidebar());
+    expect(storeSpy.dispatch).toHaveBeenCalledWith(sidebarActions.toggle());
   }));
 
   it('toggleChatbot should call store dispatch', waitForAsync(() => {
     component.toggleChatbot();
-    expect(storeSpy.dispatch).toHaveBeenCalledWith(new chatbotActions.toggle());
+    expect(storeSpy.dispatch).toHaveBeenCalledWith(chatbotActions.toggle());
   }));
 
   it('toggleMaterialTheme should emit an output event', () => {

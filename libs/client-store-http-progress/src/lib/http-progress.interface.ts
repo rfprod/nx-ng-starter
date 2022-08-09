@@ -1,45 +1,37 @@
-import { IActionPayload, TToastType } from '@app/client-util';
-import { StateToken } from '@ngxs/store';
+import { TToastType } from '@app/client-util';
 import { MonoTypeOperatorFunction } from 'rxjs';
 
-export interface IAppHttpProgressState {
-  mainView: {
-    counter: number;
-    loading: boolean;
-  };
-  sidebar: {
-    counter: number;
-    loading: boolean;
+export interface IViewProgress {
+  counter: number;
+  loading: boolean;
+}
+
+export interface IHttpProgressStateModel {
+  mainView: IViewProgress;
+  sidebar: IViewProgress;
+  toaster: {
+    message: string;
+    type: TToastType;
+    duration?: number;
   };
 }
 
-export interface IAppHttpProgressPayload {
+export interface IHttpProgressState {
+  httpProgress: IHttpProgressStateModel;
+}
+
+export const featureName: keyof IHttpProgressState = 'httpProgress';
+
+export interface IHttpProgressPayload {
   mainView?: boolean;
   sidebar?: boolean;
 }
-
-export const httpProgressInitialState: IAppHttpProgressState = {
-  mainView: {
-    counter: 0,
-    loading: false,
-  },
-  sidebar: {
-    counter: 0,
-    loading: false,
-  },
-};
-
-export const HTTP_PROGRESS_STATE_TOKEN = new StateToken<IAppHttpProgressState>('httpProgress');
-
-export type THttpProgressPayload = IActionPayload<IAppHttpProgressPayload>;
 
 export interface IShowToastPayload {
   message: string;
   type: TToastType;
   duration?: number;
 }
-
-export type TShowToastPayload = IActionPayload<IShowToastPayload>;
 
 export interface IHttpProgressHandler {
   start(): void;

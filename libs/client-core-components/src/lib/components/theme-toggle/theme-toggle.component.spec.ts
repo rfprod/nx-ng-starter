@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import { AppThemeState, themeActions } from '@app/client-store-theme';
+import { AppThemeStoreModule, themeActions } from '@app/client-store-theme';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
-import { NgxsModule, Store } from '@ngxs/store';
+import { Store } from '@ngrx/store';
 
 import { AppThemeToggleComponent } from './theme-toggle.component';
 
 describe('AppThemeToggleComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [NgxsModule.forFeature([AppThemeState])],
+    imports: [AppThemeStoreModule.forRoot()],
     declarations: [AppThemeToggleComponent],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
@@ -42,12 +42,12 @@ describe('AppThemeToggleComponent', () => {
   it('toggleMaterialTheme should call store dispatch and emit an output event', () => {
     const outputSpy = jest.spyOn(component.themeToggled, 'emit');
     component.toggleMaterialTheme();
-    expect(storeSpy.dispatch).toHaveBeenCalledWith(new themeActions.toggleDarkTheme());
+    expect(storeSpy.dispatch).toHaveBeenCalledWith(themeActions.toggleDarkTheme());
     expect(outputSpy).toHaveBeenCalledWith(true);
     storeSpy.dispatch.mockClear();
     outputSpy.mockClear();
     component.toggleMaterialTheme();
-    expect(storeSpy.dispatch).toHaveBeenCalledWith(new themeActions.toggleDarkTheme());
+    expect(storeSpy.dispatch).toHaveBeenCalledWith(themeActions.toggleDarkTheme());
     expect(outputSpy).toHaveBeenCalledWith(false);
   });
 });

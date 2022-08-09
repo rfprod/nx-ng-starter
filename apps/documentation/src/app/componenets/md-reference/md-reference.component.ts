@@ -1,9 +1,11 @@
-import { ChangeDetectionStrategy, Component, SecurityContext } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, SecurityContext } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Store } from '@ngxs/store';
+import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 
-import { AppMdFilesState } from '../../modules/store/md-files/md-files.state';
+import { DOC_APP_ENV, IDocAppEnvironment } from '../../interfaces/environment.interface';
+import { IMdFilesState } from '../../modules/md-files/md-files.interface';
+import { mdFilesSelectors } from '../../modules/md-files/md-files.selectors';
 
 @Component({
   selector: 'app-documentation-md-reference',
@@ -16,8 +18,14 @@ export class AppDocMarkdownReferenceComponent {
    * Selected markdown file path.
    */
   public readonly filePath$ = this.store
-    .select(AppMdFilesState.filePath)
+    .select(mdFilesSelectors.filePath)
     .pipe(map(filePath => this.sanitizer.sanitize(SecurityContext.HTML, filePath)));
 
-  constructor(private readonly store: Store, private readonly sanitizer: DomSanitizer) {}
+  public readonly useEmoji = !this.env.testing;
+
+  constructor(
+    private readonly store: Store<IMdFilesState>,
+    private readonly sanitizer: DomSanitizer,
+    @Inject(DOC_APP_ENV) private readonly env: IDocAppEnvironment,
+  ) {}
 }

@@ -1,17 +1,17 @@
-import { actionPayloadConstructor } from '@app/client-util';
+import { createAction, props } from '@ngrx/store';
 
-import { TWebsocketPayload, WEBSOCKET_STATE_TOKEN } from './websocket.interface';
+import { featureName, IWebsocketStateModel } from './websocket.interface';
 
-const createAction = actionPayloadConstructor(WEBSOCKET_STATE_TOKEN.getName());
+const type = (name: string) => `[${featureName}] ${name}`;
 
-const connect = createAction('connect');
+const connect = createAction(type('connect'));
 
-const setState = createAction<TWebsocketPayload>('set state');
+const connected = createAction(type('connected'), props<{ payload: Partial<IWebsocketStateModel> }>());
 
-const getEvents = createAction('get events');
+const getEvents = createAction(type('get events'));
 
 export const websocketActions = {
-  setState,
   connect,
+  connected,
   getEvents,
 };

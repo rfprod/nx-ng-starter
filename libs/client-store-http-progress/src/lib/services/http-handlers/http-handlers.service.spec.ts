@@ -1,10 +1,11 @@
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { Router } from '@angular/router';
 import { ApolloLink, Operation, ServerError, ServerParseError } from '@apollo/client/core';
 import { GraphQLErrors, NetworkError } from '@apollo/client/errors';
 import { ErrorResponse } from '@apollo/client/link/error';
-import { AppUserState } from '@app/client-store-user';
+import { AppUserStoreModule } from '@app/client-store-user';
 import { AppClientTranslateModule } from '@app/client-translate';
 import {
   flushHttpRequests,
@@ -14,11 +15,11 @@ import {
   TClassMemberFunctionSpiesObject,
 } from '@app/client-unit-testing';
 import { HTTP_STATUS, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
-import { NgxsModule, Store } from '@ngxs/store';
+import { Store } from '@ngrx/store';
 import { Apollo, ApolloModule, gql } from 'apollo-angular';
 import { GraphQLError } from 'graphql';
 import { Observable, of, throwError } from 'rxjs';
-import { catchError, concatMap, map, tap } from 'rxjs/operators';
+import { catchError, concatMap, finalize, map, tap } from 'rxjs/operators';
 
 import { httpProgressActions } from '../../http-progress.actions';
 import { AppHttpProgressStoreModule } from '../../http-progress.module';
@@ -27,12 +28,7 @@ import { AppHttpHandlersService } from './http-handlers.service';
 
 describe('AppHttpHandlersService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [
-      ApolloModule,
-      AppClientTranslateModule.forRoot(),
-      AppHttpProgressStoreModule.forRoot(),
-      NgxsModule.forFeature([AppUserState]),
-    ],
+    imports: [ApolloModule, AppClientTranslateModule.forRoot(), AppHttpProgressStoreModule.forRoot(), AppUserStoreModule.forRoot()],
     providers: [toasterServiceProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
@@ -45,6 +41,8 @@ describe('AppHttpHandlersService', () => {
   let env: IWebClientAppEnvironment;
   let store: Store;
   let storeDispatchSpy: jest.SpyInstance;
+  let router: Router;
+  let routerNavigateSpy: jest.SpyInstance;
 
   beforeEach(waitForAsync(() => {
     void TestBed.configureTestingModule(testBedConfig)
@@ -58,6 +56,13 @@ describe('AppHttpHandlersService', () => {
         env = TestBed.inject(WEB_CLIENT_APP_ENV);
         store = TestBed.inject(Store);
         storeDispatchSpy = jest.spyOn(store, 'dispatch');
+        router = TestBed.inject(Router);
+        routerNavigateSpy = jest.spyOn(router, 'navigate').mockImplementation(
+          () =>
+            new Promise<boolean>(resolve => {
+              resolve(true);
+            }),
+        );
       });
   }));
 
@@ -243,9 +248,9 @@ describe('AppHttpHandlersService', () => {
 
   it('checkErrorStatusAndRedirect should reset user if error status is 401', () => {
     service.checkErrorStatusAndRedirect(HTTP_STATUS.BAD_REQUEST);
-    expect(storeDispatchSpy).not.toHaveBeenCalled();
+    expect(routerNavigateSpy).not.toHaveBeenCalled();
     service.checkErrorStatusAndRedirect(HTTP_STATUS.UNAUTHORIZED);
-    expect(storeDispatchSpy).toHaveBeenCalled();
+    expect(routerNavigateSpy).toHaveBeenCalled();
   });
 
   describe('handleError', () => {
@@ -342,7 +347,10 @@ describe('AppHttpHandlersService', () => {
         .pipe(
           tap(() => {
             expect(serviceSpies.handleError).not.toHaveBeenCalled();
-            expect(storeDispatchSpy).toHaveBeenCalledWith(new httpProgressActions.stopProgress({ mainView: true }));
+            expect(storeDispatchSpy).toHaveBeenCalledWith(httpProgressActions.start({ payload: { mainView: true } }));
+          }),
+          finalize(() => {
+            expect(storeDispatchSpy).toHaveBeenCalledWith(httpProgressActions.stop({ payload: { mainView: true } }));
           }),
         )
         .subscribe();
@@ -356,7 +364,7 @@ describe('AppHttpHandlersService', () => {
         .pipe(
           tap(() => {
             expect(serviceSpies.handleError).toHaveBeenCalledWith(error, true);
-            expect(storeDispatchSpy).toHaveBeenCalledWith(new httpProgressActions.stopProgress({ mainView: true }));
+            expect(storeDispatchSpy).toHaveBeenCalledWith(httpProgressActions.start({ payload: { mainView: true } }));
           }),
         )
         .subscribe();

@@ -2,7 +2,7 @@ import { HttpTestingController } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppMarkdownService } from '@app/client-services';
-import { AppHttpApiState } from '@app/client-store-http-api';
+import { AppHttpApiStoreModule, httpApiSelectors, IHttpApiState } from '@app/client-store-http-api';
 import { AppClientTranslateModule } from '@app/client-translate';
 import {
   flushHttpRequests,
@@ -12,7 +12,7 @@ import {
   TClassMemberFunctionSpiesObject,
 } from '@app/client-unit-testing';
 import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
-import { NgxsModule, Store } from '@ngxs/store';
+import { Store } from '@ngrx/store';
 import { combineLatest, first, tap } from 'rxjs';
 
 import { AppDiagnosticsInfoComponent } from './diagnostics-info.component';
@@ -21,7 +21,7 @@ describe('AppDiagnosticsInfoComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     declarations: [AppDiagnosticsInfoComponent],
     imports: [
-      NgxsModule.forFeature([AppHttpApiState]),
+      AppHttpApiStoreModule.forRoot(),
       AppClientTranslateModule.forRoot(),
       RouterTestingModule.withRoutes([
         { path: '', component: AppDiagnosticsInfoComponent },
@@ -36,7 +36,7 @@ describe('AppDiagnosticsInfoComponent', () => {
   let component: AppDiagnosticsInfoComponent;
   let componentSpy: TClassMemberFunctionSpiesObject<AppDiagnosticsInfoComponent>;
   let service: AppMarkdownService;
-  let store: Store;
+  let store: Store<IHttpApiState>;
 
   let env: IWebClientAppEnvironment;
 
@@ -87,10 +87,10 @@ describe('AppDiagnosticsInfoComponent', () => {
   }));
 
   it('state should return the whole ping state', waitForAsync(() => {
-    void combineLatest([component.ping$.pipe(first()), store.selectOnce(AppHttpApiState.state)])
+    void combineLatest([component.ping$.pipe(first()), store.select(httpApiSelectors.ping).pipe(first())])
       .pipe(
         tap(([ping, pingState]) => {
-          expect(ping).toEqual(pingState.ping);
+          expect(ping).toEqual(pingState);
         }),
       )
       .subscribe();

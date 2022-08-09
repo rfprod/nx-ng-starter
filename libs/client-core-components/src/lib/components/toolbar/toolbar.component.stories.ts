@@ -1,13 +1,15 @@
 import { APP_BASE_HREF, DOCUMENT, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppClientMaterialModule } from '@app/client-material';
-import { AppChatbotState } from '@app/client-store-chatbot';
-import { AppSidebarState } from '@app/client-store-sidebar';
-import { AppUserState } from '@app/client-store-user';
+import { AppChatbotStoreModule } from '@app/client-store-chatbot';
+import { AppSidebarStoreModule } from '@app/client-store-sidebar';
+import { AppUserStoreModule } from '@app/client-store-user';
 import { anchorButton, documentFactory, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@app/client-util';
-import { NgxsModule } from '@ngxs/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { Args, Story } from '@storybook/angular/types-6-0';
 
 import { AppToolbarComponent } from './toolbar.component';
@@ -31,7 +33,11 @@ const story: Story<AppToolbarComponent> = (args: Args) => ({
       BrowserAnimationsModule,
       FlexLayoutModule,
       RouterTestingModule,
-      NgxsModule.forRoot([AppSidebarState, AppChatbotState, AppUserState]),
+      StoreModule.forRoot({}),
+      EffectsModule.forRoot(),
+      AppSidebarStoreModule.forRoot(),
+      AppChatbotStoreModule.forRoot(),
+      AppUserStoreModule.forRoot(),
       AppClientMaterialModule.forRoot(),
     ],
     providers: [
@@ -48,6 +54,7 @@ const story: Story<AppToolbarComponent> = (args: Args) => ({
       },
     ],
     declarations: [AppToolbarComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
   },
   props: {
     ...args,

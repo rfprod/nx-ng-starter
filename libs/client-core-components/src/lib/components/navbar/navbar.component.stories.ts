@@ -1,14 +1,15 @@
 import { APP_BASE_HREF, DOCUMENT, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppClientMaterialModule } from '@app/client-material';
-import { AppChatbotState } from '@app/client-store-chatbot';
-import { AppSidebarState } from '@app/client-store-sidebar';
-import { AppUserState } from '@app/client-store-user';
+import { AppSidebarStoreModule } from '@app/client-store-sidebar';
 import { documentFactory, routerButton, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@app/client-util';
-import { NgxsModule } from '@ngxs/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 import { Args, Story } from '@storybook/angular/types-6-0';
+import { of } from 'rxjs';
 
 import { AppNavbarComponent } from './navbar.component';
 
@@ -31,10 +32,19 @@ const story: Story<AppNavbarComponent> = (args: Args) => ({
       BrowserAnimationsModule,
       FlexLayoutModule,
       RouterTestingModule,
-      NgxsModule.forRoot([AppSidebarState, AppChatbotState, AppUserState]),
+      StoreModule.forRoot({}),
+      EffectsModule.forRoot(),
+      AppSidebarStoreModule.forRoot(),
       AppClientMaterialModule.forRoot(),
     ],
     providers: [
+      {
+        provide: Router,
+        useValue: {
+          events: of(true),
+          navigate: () => new Promise<boolean>(resolve => resolve(true)),
+        },
+      },
       {
         provide: LocationStrategy,
         useClass: PathLocationStrategy,
