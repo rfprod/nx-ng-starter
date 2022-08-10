@@ -19,7 +19,7 @@ export class AppUserEffects {
     { dispatch: false },
   );
 
-  public readonly close$ = createEffect(
+  public readonly logout$ = createEffect(
     () =>
       this.actions$.pipe(
         ofType(userActions.logout.type),

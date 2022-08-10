@@ -13,12 +13,12 @@ export class AppWebsocketEffects {
   public readonly connect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(websocketActions.connect.type),
-      mergeMap(() => this.api.connect()),
+      mergeMap(() => this.api.connect<string | number>()),
       map(event => {
         const nextState: Partial<IWebsocketStateModel> =
           event.event === 'users'
             ? {
-                users: event.data,
+                users: <number>event.data,
                 events: [event],
               }
             : {
