@@ -12,7 +12,7 @@ export interface IWebsocketResponseEvent<T = unknown> {
 
 export interface IWebsocketStateModel {
   users: number;
-  events: IWebsocketResponseEvent[];
+  events: IWebsocketResponseEvent<string | number | undefined>[];
 }
 
 export interface IWebsocketState {

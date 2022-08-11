@@ -1,10 +1,10 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { flushHttpRequests, getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
-import { tap } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { WebSocketSubject } from 'rxjs/webSocket';
 
-import { IWebsocketConfig, WS_CONFIG } from '../websocket.interface';
+import { IWebsocketConfig, IWebsocketResponseEvent, WS_CONFIG } from '../websocket.interface';
 import { AppWebsocketApiService } from './websocket-api.service';
 
 describe('AppWebsocketApiService correct connection', () => {
@@ -53,11 +53,31 @@ describe('AppWebsocketApiService correct connection', () => {
       .subscribe();
   }));
 
+  it('should work as expected when the websocket url is provided correctly and the websocket connection emits', waitForAsync(() => {
+    const testData: IWebsocketResponseEvent = { event: 'data', data: 1 };
+    (service as unknown as { websocketSubject: Observable<IWebsocketResponseEvent> }).websocketSubject = of(testData);
+    void service
+      .connect()
+      .pipe(
+        tap(result => {
+          expect(result).toEqual(testData);
+        }),
+      )
+      .subscribe();
+  }));
+
   it('sendEvent should work as expected', () => {
-    const nextEventSpy = jest.spyOn(service['websocketSubject$'], 'next');
+    const nextEventSpy = jest.spyOn(service['websocketSubject'], 'next');
     const event = { event: 'events' };
     service.sendEvent(event.event as 'events');
     expect(nextEventSpy).toHaveBeenCalledWith(event);
+  });
+
+  it('sendMessage should work as expected', () => {
+    const nextEventSpy = jest.spyOn(service['websocketSubject'], 'next');
+    const event = { sender: 'test', text: 'test' };
+    service.sendMessage(event);
+    expect(nextEventSpy).toHaveBeenCalledWith({ data: event, event: 'message' });
   });
 });
 
