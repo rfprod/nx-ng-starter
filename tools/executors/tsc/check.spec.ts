@@ -8,8 +8,8 @@ import { IExecutorOptions } from './schema';
 
 describe('tscCheck', () => {
   const setup = (projestName?: string) => {
-    (childProcess.execSync as jest.Mock).mockImplementation((command: string, options: childProcess.ExecSyncOptionsWithBufferEncoding) =>
-      Buffer.from([]),
+    (childProcess.execFileSync as jest.Mock).mockImplementation(
+      (command: string, options: childProcess.ExecSyncOptionsWithBufferEncoding) => Buffer.from([]),
     );
 
     const context: ExecutorContext = {
@@ -41,7 +41,7 @@ describe('tscCheck', () => {
         const result = await tscCheck(options, context);
         expect(result).not.toMatchObject({ success: true });
       } catch (e) {
-        expect(childProcess.execSync).not.toHaveBeenCalled();
+        expect(childProcess.execFileSync).not.toHaveBeenCalled();
         expect((<Error>e).message).toEqual('Project name is not defined.');
       }
     });
@@ -50,11 +50,11 @@ describe('tscCheck', () => {
   describe('correct behavior', () => {
     afterEach(() => jest.clearAllMocks());
 
-    it('should execSync with expected parameters', async () => {
+    it('should execFileSync with expected parameters', async () => {
       const { context, options } = setup('test');
 
       const result = await tscCheck(options, context);
-      expect(childProcess.execSync).toHaveBeenCalled();
+      expect(childProcess.execFileSync).toHaveBeenCalled();
       expect(result).toMatchObject({ success: true });
     });
   });
