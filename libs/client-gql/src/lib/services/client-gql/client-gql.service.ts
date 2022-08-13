@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ApolloClient, ApolloClientOptions, InMemoryCache, NormalizedCacheObject } from '@apollo/client/core';
 import { AppHttpHandlersService, TGqlClient } from '@app/client-store-http-progress';
+import { IUserState, userSelectors } from '@app/client-store-user';
+import { Store } from '@ngrx/store';
 import { Apollo } from 'apollo-angular';
 import { DocumentNode } from 'graphql';
 import { from, Observable, of } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { first, map, switchMap, tap } from 'rxjs/operators';
 
 /**
  * Client Graphql service.
@@ -13,7 +15,13 @@ import { map, switchMap, tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AppClientGqlService {
-  constructor(private readonly apollo: Apollo, private readonly handlers: AppHttpHandlersService) {}
+  private readonly userToken$ = this.store.select(userSelectors.token).pipe(first());
+
+  constructor(
+    private readonly apollo: Apollo,
+    private readonly handlers: AppHttpHandlersService,
+    private readonly store: Store<IUserState>,
+  ) {}
 
   /**
    * Creates apollo client for a specific user role.
@@ -80,7 +88,8 @@ export class AppClientGqlService {
    * @param name the client name
    */
   private getApolloClientOptions(name: TGqlClient): Observable<ApolloClientOptions<NormalizedCacheObject>> {
-    return this.handlers.createGqlLink(name).pipe(
+    return this.userToken$.pipe(
+      map(token => this.handlers.createGqlLink(token, name)),
       map(link => {
         const options: ApolloClientOptions<NormalizedCacheObject> = {
           link,

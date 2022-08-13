@@ -1,5 +1,6 @@
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   ApolloLink,
   ApolloQueryResult,
@@ -12,19 +13,16 @@ import {
 } from '@apollo/client/core';
 import { ErrorResponse, onError } from '@apollo/client/link/error';
 import { getMainDefinition } from '@apollo/client/utilities';
-import { IUserState, userActions, userSelectors } from '@app/client-store-user';
-import { HTTP_STATUS, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV, WINDOW } from '@app/client-util';
+import { HTTP_STATUS, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngrx/store';
-import { TranslateService } from '@ngx-translate/core';
 import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
 import { createUploadLink } from 'apollo-upload-client';
 import memo from 'memo-decorator';
 import { MonoTypeOperatorFunction, Observable, of } from 'rxjs';
-import { catchError, finalize, first, map, tap, timeout } from 'rxjs/operators';
+import { catchError, finalize, map, tap, timeout } from 'rxjs/operators';
 
 import { httpProgressActions } from '../../http-progress.actions';
 import { IHttpProgressState } from '../../http-progress.interface';
-import { AppHttpProgressService } from '../http-progress/http-progress.service';
 import { AppToasterService } from '../toaster/toaster.service';
 
 export type TGqlClient = 'graphql';
@@ -38,31 +36,23 @@ export type TGqlClient = 'graphql';
 export class AppHttpHandlersService {
   public readonly defaultHttpTimeout = 10000;
 
-  public readonly userToken$: Observable<string> = this.store.select(userSelectors.token);
-
   constructor(
-    public readonly store: Store<IHttpProgressState & IUserState>,
-    public readonly toaster: AppToasterService,
-    public readonly httpLink: HttpLink,
-    public readonly httpProgress: AppHttpProgressService,
-    public readonly translate: TranslateService,
-    @Inject(WINDOW) public readonly win: Window,
-    @Inject(WEB_CLIENT_APP_ENV) public readonly env: IWebClientAppEnvironment,
+    private readonly store: Store<IHttpProgressState>,
+    private readonly toaster: AppToasterService,
+    private readonly httpLink: HttpLink,
+    private readonly router: Router,
+    @Inject(WEB_CLIENT_APP_ENV) private readonly env: IWebClientAppEnvironment,
   ) {}
 
   /**
    * Gets gql http headers.
+   * @param userToken user token
    * @returns the gql headers observable
    */
-  public getGraphQLHttpHeaders() {
-    return this.userToken$.pipe(
-      first(),
-      map(token => {
-        return new HttpHeaders({
-          Authorization: `Token ${token}`,
-        });
-      }),
-    );
+  public getGraphQLHttpHeaders(userToken: string) {
+    return new HttpHeaders({
+      Authorization: `Token ${userToken}`,
+    });
   }
 
   /**
@@ -124,21 +114,17 @@ export class AppHttpHandlersService {
    * Gets the gql network link.
    * @param hander http link handler
    * @param uri universal resource indentifier
+   * @param userToken user token
    * @returns gql link
    */
-  private createGqlNetworkLink(splitTest: (op: Operation) => boolean, hander: HttpLinkHandler, uri: string) {
-    return this.userToken$.pipe(
-      first(),
-      map(token => {
-        return split(
-          splitTest,
-          hander,
-          createUploadLink({
-            uri,
-            headers: { Authorization: `Token ${token}` },
-          }) as unknown as ApolloLink,
-        );
-      }),
+  private createGqlNetworkLink(splitTest: (op: Operation) => boolean, hander: HttpLinkHandler, uri: string, userToken: string) {
+    return split(
+      splitTest,
+      hander,
+      createUploadLink({
+        uri,
+        headers: { Authorization: `Token ${userToken}` },
+      }) as unknown as ApolloLink,
     );
   }
 
@@ -188,10 +174,11 @@ export class AppHttpHandlersService {
 
   /**
    * Creates the gql link with an error handler.
+   * @param userToken user token
    * @param name the client name
    * @returns apollo link observable
    */
-  public createGqlLink(name: TGqlClient = 'graphql'): Observable<ApolloLink> {
+  public createGqlLink(userToken: string, name: TGqlClient = 'graphql'): ApolloLink {
     const uri = this.getEndpoint(name);
     const uriFn = this.gqlUriFunction(uri);
     const httpLinkHandler = this.httpLink.create({
@@ -199,8 +186,8 @@ export class AppHttpHandlersService {
     });
     const linkHandler: ApolloLink = onError((error: ErrorResponse) => this.gqlErrorLinkHandler(error));
     const splitTest = this.gqlLinkSplitTest();
-    const networkLink$ = this.createGqlNetworkLink(splitTest, httpLinkHandler, uri);
-    return networkLink$.pipe(map(networkLink => linkHandler.concat(networkLink)));
+    const networkLink = this.createGqlNetworkLink(splitTest, httpLinkHandler, uri, userToken);
+    return linkHandler.concat(networkLink);
   }
 
   /**
@@ -219,7 +206,9 @@ export class AppHttpHandlersService {
    */
   public checkErrorStatusAndRedirect(status: HTTP_STATUS): void {
     if (status === HTTP_STATUS.UNAUTHORIZED) {
-      this.store.dispatch(userActions.logout());
+      const message = 'Something went wrong during authorization or you are not authorized to see this content.';
+      this.toaster.showToaster(message, 'error');
+      void this.router.navigate([{ outlets: { primary: [''] } }]);
     }
   }
 
