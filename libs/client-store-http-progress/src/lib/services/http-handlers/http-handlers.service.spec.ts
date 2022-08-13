@@ -5,7 +5,6 @@ import { Router } from '@angular/router';
 import { ApolloLink, Operation, ServerError, ServerParseError } from '@apollo/client/core';
 import { GraphQLErrors, NetworkError } from '@apollo/client/errors';
 import { ErrorResponse } from '@apollo/client/link/error';
-import { AppUserStoreModule } from '@app/client-store-user';
 import { AppClientTranslateModule } from '@app/client-translate';
 import {
   flushHttpRequests,
@@ -19,7 +18,7 @@ import { Store } from '@ngrx/store';
 import { Apollo, ApolloModule, gql } from 'apollo-angular';
 import { GraphQLError } from 'graphql';
 import { Observable, of, throwError } from 'rxjs';
-import { catchError, concatMap, finalize, map, tap } from 'rxjs/operators';
+import { catchError, finalize, tap } from 'rxjs/operators';
 
 import { httpProgressActions } from '../../http-progress.actions';
 import { AppHttpProgressStoreModule } from '../../http-progress.module';
@@ -28,7 +27,7 @@ import { AppHttpHandlersService } from './http-handlers.service';
 
 describe('AppHttpHandlersService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [ApolloModule, AppClientTranslateModule.forRoot(), AppHttpProgressStoreModule.forRoot(), AppUserStoreModule.forRoot()],
+    imports: [ApolloModule, AppClientTranslateModule.forRoot(), AppHttpProgressStoreModule.forRoot()],
     providers: [toasterServiceProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
@@ -89,24 +88,17 @@ describe('AppHttpHandlersService', () => {
     expect(service.createGqlLink).toEqual(expect.any(Function));
   });
 
-  it('getGraphQLHttpHeaders should return new http headers with authorization header set', waitForAsync(() => {
-    void service.userToken$
-      .pipe(
-        concatMap(userToken => {
-          const newHeadersObj: {
-            [name: string]: string | string[];
-          } = {
-            Authorization: `Token ${userToken}`,
-          };
-          const newHeaders: HttpHeaders = new HttpHeaders(newHeadersObj);
-          return service.getGraphQLHttpHeaders().pipe(map(headers => ({ headers, newHeaders })));
-        }),
-        tap(({ headers, newHeaders }) => {
-          expect(headers.get('Authorization')).toEqual(newHeaders.get('Authorization'));
-        }),
-      )
-      .subscribe();
-  }));
+  it('getGraphQLHttpHeaders should return new http headers with authorization header set', () => {
+    const userToken = 'test';
+    const newHeadersObj: {
+      [name: string]: string | string[];
+    } = {
+      Authorization: `Token ${userToken}`,
+    };
+    const newHeaders: HttpHeaders = new HttpHeaders(newHeadersObj);
+    const headers = service.getGraphQLHttpHeaders(userToken);
+    expect(headers.get('Authorization')).toEqual(newHeaders.get('Authorization'));
+  });
 
   it('getEndpoint should return an API endpoint', () => {
     expect(service.getEndpoint('test')).toEqual(`${env.api}/test`);
@@ -247,10 +239,13 @@ describe('AppHttpHandlersService', () => {
   });
 
   it('checkErrorStatusAndRedirect should reset user if error status is 401', () => {
+    const showToasterSpy = jest.spyOn(toaster, 'showToaster');
     service.checkErrorStatusAndRedirect(HTTP_STATUS.BAD_REQUEST);
     expect(routerNavigateSpy).not.toHaveBeenCalled();
+    expect(showToasterSpy).not.toHaveBeenCalledWith(expect.any(String), 'error');
     service.checkErrorStatusAndRedirect(HTTP_STATUS.UNAUTHORIZED);
     expect(routerNavigateSpy).toHaveBeenCalled();
+    expect(showToasterSpy).toHaveBeenCalledWith(expect.any(String), 'error');
   });
 
   describe('handleError', () => {
@@ -288,17 +283,11 @@ describe('AppHttpHandlersService', () => {
     const getEndpointSpy = jest.spyOn(service, 'getEndpoint');
     const gqlUriFunctionSpy = jest.spyOn(service, 'gqlUriFunction');
     const gqlLinkSplitTestSpy = jest.spyOn(service, 'gqlLinkSplitTest');
-    void service
-      .createGqlLink()
-      .pipe(
-        tap(link => {
-          expect(link instanceof ApolloLink).toBeTruthy();
-          expect(getEndpointSpy).toHaveBeenCalledTimes(1);
-          expect(gqlUriFunctionSpy).toHaveBeenCalledTimes(1);
-          expect(gqlLinkSplitTestSpy).toHaveBeenCalledTimes(1);
-        }),
-      )
-      .subscribe();
+    const link = service.createGqlLink('testToken');
+    expect(link instanceof ApolloLink).toBeTruthy();
+    expect(getEndpointSpy).toHaveBeenCalledTimes(1);
+    expect(gqlUriFunctionSpy).toHaveBeenCalledTimes(1);
+    expect(gqlLinkSplitTestSpy).toHaveBeenCalledTimes(1);
   }));
 
   it('gqlUriFunction should return expected URI function', () => {

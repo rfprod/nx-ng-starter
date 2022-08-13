@@ -113,7 +113,7 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:client-unit-testing',
-    onlyDependOnLibsWithTags: ['scope:client-material', 'scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-material', 'scope:client-util', 'scope:client-util-ngrx'],
   },
   {
     sourceTag: 'scope:client-material',
@@ -157,7 +157,7 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:client-store-http-progress',
-    onlyDependOnLibsWithTags: ['scope:client-store-user', 'scope:client-translate', 'scope:client-unit-testing', 'scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-translate', 'scope:client-unit-testing', 'scope:client-util'],
   },
   {
     sourceTag: 'scope:client-store-sidebar',
@@ -214,7 +214,13 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:client-gql',
-    onlyDependOnLibsWithTags: ['scope:client-store-http-progress', 'scope:client-unit-testing', 'scope:client-util', 'scope:proto'],
+    onlyDependOnLibsWithTags: [
+      'scope:client-store-http-progress',
+      'scope:client-store-user',
+      'scope:client-unit-testing',
+      'scope:client-util',
+      'scope:proto',
+    ],
   },
   {
     sourceTag: 'scope:client-grpc',

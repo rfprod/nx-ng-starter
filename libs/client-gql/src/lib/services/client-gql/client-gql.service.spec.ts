@@ -1,6 +1,7 @@
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import { ApolloLink, InMemoryCache } from '@apollo/client/core';
+import { ApolloLink } from '@apollo/client/core';
 import { AppHttpHandlersService, TGqlClient } from '@app/client-store-http-progress';
+import { AppUserStoreModule } from '@app/client-store-user';
 import { getTestBedConfig } from '@app/client-unit-testing';
 import { Apollo, ApolloBase, ApolloModule } from 'apollo-angular';
 import { DocumentNode } from 'graphql';
@@ -15,14 +16,14 @@ type TTestSuccessMethodParams = [node: DocumentNode, name?: TGqlClient, variable
 
 describe('AppClientGqlService', () => {
   const testBedConfig: TestModuleMetadata = getTestBedConfig({
-    imports: [ApolloModule],
+    imports: [ApolloModule, AppUserStoreModule.forRoot()],
     providers: [
       AppClientGqlService,
       {
         provide: AppHttpHandlersService,
         useValue: {
           pipeGqlResponse: <T>(observable$: Observable<T>) => observable$,
-          createGqlLink: (name: TGqlClient) => of(new ApolloLink()),
+          createGqlLink: (token: string, name: TGqlClient) => of(new ApolloLink()),
         },
       },
     ],
@@ -222,7 +223,7 @@ describe('AppClientGqlService', () => {
         .createApolloClient()
         .pipe(
           tap(() => {
-            expect(createApolloLinkSpy).toHaveBeenCalledWith(clientName);
+            expect(createApolloLinkSpy).toHaveBeenCalledWith('', clientName);
             expect(createApolloSpy).toHaveBeenCalledWith(expect.any(Object), clientName);
           }),
         )
@@ -234,36 +235,8 @@ describe('AppClientGqlService', () => {
         .createApolloClient(clientName)
         .pipe(
           tap(() => {
-            expect(createApolloLinkSpy).toHaveBeenCalledWith(clientName);
+            expect(createApolloLinkSpy).toHaveBeenCalledWith('', clientName);
             expect(createApolloSpy).toHaveBeenCalledWith(expect.any(Object), clientName);
-          }),
-        )
-        .subscribe();
-    }));
-
-    it('should call createApollo with proper params', waitForAsync(() => {
-      void service
-        .createApolloClient(clientName)
-        .pipe(
-          tap(() => {
-            expect(createApolloSpy).toHaveBeenCalledWith(
-              expect.objectContaining({
-                link: expect.any(ApolloLink),
-                cache: expect.any(InMemoryCache),
-                defaultOptions: {
-                  query: {
-                    errorPolicy: 'all',
-                  },
-                  watchQuery: {
-                    errorPolicy: 'all',
-                  },
-                  mutate: {
-                    errorPolicy: 'all',
-                  },
-                },
-              }),
-              clientName,
-            );
           }),
         )
         .subscribe();
