@@ -3,7 +3,6 @@ const jestPresetAngularSerializers = require('jest-preset-angular/build/serializ
 const config = {
   coverageDirectory: '../../coverage/libs/client-store-websocket',
   coverageThreshold: {
-    // TODO: increate unit test coverage
     global: {
       branches: 100,
       functions: 100,
