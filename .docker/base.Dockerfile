@@ -1,7 +1,7 @@
 # Base NodeJS image for apps.
 
 # Define image.
-FROM node:16.16.0-alpine
+FROM node:16.17.0-alpine
 # Set environment variables.
 ENV DEBIAN_FRONTEND=noninteractive
 # Create app directory.
