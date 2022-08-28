@@ -1,7 +1,7 @@
-import { IDocAppEnvironment } from '../app/interfaces/environment.interface';
+import { IDocumentationEnvironment } from '../app/interfaces/environment.interface';
 import { appEnvFactory } from './environment.config';
 
-export const environment: IDocAppEnvironment = {
+export const environment: IDocumentationEnvironment = {
   production: true,
   testing: false,
   appName: 'Documentation',
