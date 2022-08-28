@@ -1,4 +1,4 @@
-import { APP_BASE_HREF, DOCUMENT } from '@angular/common';
+import { APP_BASE_HREF } from '@angular/common';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ModuleWithProviders, NgModule, NgZone, Provider } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -7,7 +7,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppClientMaterialModule } from '@app/client-material';
-import { documentFactory, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@app/client-util';
+import { documentProvider, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV, windowProvider } from '@app/client-util';
 import { AppRouteSerializer } from '@app/client-util-ngrx';
 import { EffectsModule } from '@ngrx/effects';
 import { NavigationActionTiming, routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
@@ -46,8 +46,8 @@ export const mocksCoreModuleProviders: Provider[] = [
     provide: APP_BASE_HREF,
     useValue: '/',
   },
-  { provide: WINDOW, useFactory: windowFactory },
-  { provide: DOCUMENT, useFactory: documentFactory },
+  windowProvider,
+  documentProvider,
   {
     provide: WEB_CLIENT_APP_ENV,
     useValue: testingEnvironment,

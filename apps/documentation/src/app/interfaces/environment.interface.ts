@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
 
-export interface IDocAppEnvironment {
+export interface IDocumentationEnvironment {
   production: boolean;
   testing: boolean;
   appName: string;
@@ -11,4 +11,4 @@ export interface IDocAppEnvironment {
   mdFilePaths: string[];
 }
 
-export const DOC_APP_ENV = new InjectionToken<IDocAppEnvironment>('DOC_APP_ENV');
+export const DOCUMENTATION_ENVIRONMENT = new InjectionToken<IDocumentationEnvironment>('DOCUMENTATION_ENVIRONMENT');

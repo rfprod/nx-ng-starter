@@ -1,9 +1,9 @@
 import { Provider } from '@angular/core';
 import { documentProvider, windowProvider } from '@app/client-util';
 
-import { DOC_APP_ENV, IDocAppEnvironment } from '../app/interfaces/environment.interface';
+import { DOCUMENTATION_ENVIRONMENT, IDocumentationEnvironment } from '../app/interfaces/environment.interface';
 
-export const testingEnvironment: IDocAppEnvironment = {
+export const testingEnvironment: IDocumentationEnvironment = {
   appName: 'test',
   description: 'unit test',
   production: false,
@@ -14,4 +14,8 @@ export const testingEnvironment: IDocAppEnvironment = {
   mdFilePaths: [],
 };
 
-export const testingProviders: Provider[] = [windowProvider, documentProvider, { provide: DOC_APP_ENV, useValue: testingEnvironment }];
+export const testingProviders: Provider[] = [
+  windowProvider,
+  documentProvider,
+  { provide: DOCUMENTATION_ENVIRONMENT, useValue: testingEnvironment },
+];

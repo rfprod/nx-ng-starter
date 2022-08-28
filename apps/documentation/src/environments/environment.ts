@@ -1,4 +1,4 @@
-import { IDocAppEnvironment } from '../app/interfaces/environment.interface';
+import { IDocumentationEnvironment } from '../app/interfaces/environment.interface';
 import { appEnvFactory } from './environment.config';
 
 /**
@@ -12,7 +12,7 @@ import { appEnvFactory } from './environment.config';
  * on performance if an error is thrown.
  * import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
  */
-export const environment: IDocAppEnvironment = {
+export const environment: IDocumentationEnvironment = {
   production: false,
   testing: false,
   appName: 'Documentation',
