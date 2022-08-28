@@ -3,7 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 
-import { DOC_APP_ENV, IDocAppEnvironment } from '../../interfaces/environment.interface';
+import { DOCUMENTATION_ENVIRONMENT, IDocumentationEnvironment } from '../../interfaces/environment.interface';
 import { IMdFilesState } from '../../modules/md-files/md-files.interface';
 import { mdFilesSelectors } from '../../modules/md-files/md-files.selectors';
 
@@ -26,6 +26,6 @@ export class AppDocMarkdownReferenceComponent {
   constructor(
     private readonly store: Store<IMdFilesState>,
     private readonly sanitizer: DomSanitizer,
-    @Inject(DOC_APP_ENV) private readonly env: IDocAppEnvironment,
+    @Inject(DOCUMENTATION_ENVIRONMENT) private readonly env: IDocumentationEnvironment,
   ) {}
 }

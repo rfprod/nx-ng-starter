@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/cor
 import { Meta, Title } from '@angular/platform-browser';
 import { map } from 'rxjs';
 
-import { DOC_APP_ENV, IDocAppEnvironment } from '../../interfaces/environment.interface';
+import { DOCUMENTATION_ENVIRONMENT, IDocumentationEnvironment } from '../../interfaces/environment.interface';
 
 @Component({
   selector: 'app-documentation-root',
@@ -27,7 +27,7 @@ export class AppDocRootComponent implements OnInit {
     private readonly title: Title,
     private readonly meta: Meta,
     private readonly bpObserver: BreakpointObserver,
-    @Inject(DOC_APP_ENV) private readonly env: IDocAppEnvironment,
+    @Inject(DOCUMENTATION_ENVIRONMENT) private readonly env: IDocumentationEnvironment,
   ) {}
 
   /**

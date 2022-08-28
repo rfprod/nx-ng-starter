@@ -15,7 +15,7 @@ import { AppDocMarkdownReferenceComponent } from './componenets/md-reference/md-
 import { AppDocMarkdownReferenceTreeComponent } from './componenets/md-reference-tree/md-reference-tree.component';
 import { AppDocRootComponent } from './componenets/root/root.component';
 import { AppDocRoutingModule } from './doc-routing.module';
-import { DOC_APP_ENV } from './interfaces/environment.interface';
+import { DOCUMENTATION_ENVIRONMENT } from './interfaces/environment.interface';
 import { AppMdFilesStoreModule } from './modules/md-files/md-files.module';
 
 /**
@@ -55,7 +55,7 @@ const markdownModuleConfig: MarkdownModuleConfig = {
       navigationActionTiming: NavigationActionTiming.PostActivation,
     }),
   ],
-  providers: [windowProvider, documentProvider, { provide: DOC_APP_ENV, useValue: environment }],
+  providers: [windowProvider, documentProvider, { provide: DOCUMENTATION_ENVIRONMENT, useValue: environment }],
   bootstrap: [AppDocRootComponent],
 })
 export class AppDocModule {}

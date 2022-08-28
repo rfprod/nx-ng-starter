@@ -11,7 +11,7 @@ import { MarkdownModule, MarkdownModuleConfig, MarkedOptions } from 'ngx-markdow
 import { of, tap } from 'rxjs';
 
 import { testingProviders } from '../../../testing/testing-providers.mock';
-import { DOC_APP_ENV, IDocAppEnvironment } from '../../interfaces/environment.interface';
+import { DOCUMENTATION_ENVIRONMENT, IDocumentationEnvironment } from '../../interfaces/environment.interface';
 import { AppDocRootComponent } from './root.component';
 
 describe('AppDocRootComponent', () => {
@@ -51,7 +51,7 @@ describe('AppDocRootComponent', () => {
   let title: Title;
   let meta: Meta;
 
-  let env: IDocAppEnvironment;
+  let env: IDocumentationEnvironment;
 
   let bpObserver: BreakpointObserver;
   let bpObserverSpy: jest.SpyInstance;
@@ -74,7 +74,7 @@ describe('AppDocRootComponent', () => {
     fixture = TestBed.createComponent(AppDocRootComponent);
     component = fixture.debugElement.componentInstance;
 
-    env = TestBed.inject(DOC_APP_ENV);
+    env = TestBed.inject(DOCUMENTATION_ENVIRONMENT);
 
     fixture.detectChanges();
   };
