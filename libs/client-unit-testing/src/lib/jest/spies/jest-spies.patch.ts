@@ -23,7 +23,7 @@ export function spyOnFunctions<T>(classInstance: T): TClassMemberFunctionSpiesOb
   for (const key of keys) {
     const classMember = classInstance[key];
     if (classMember instanceof Function) {
-      spiesObject[key] = jest.spyOn(classInstance, <never>key);
+      spiesObject[key] = jest.spyOn(<Record<string, unknown>>classInstance, <never>key);
     }
   }
 

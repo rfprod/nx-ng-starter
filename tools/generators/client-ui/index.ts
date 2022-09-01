@@ -2,14 +2,17 @@ import { componentGenerator, libraryGenerator } from '@nrwl/angular/generators';
 import {
   generateFiles,
   joinPathFragments,
+  logger,
   ProjectConfiguration,
   readProjectConfiguration,
   Tree,
   updateProjectConfiguration,
 } from '@nrwl/devkit';
+import { exec } from 'child_process';
 import { unlink } from 'fs/promises';
 import { fileExists } from 'nx/src/utils/fileutils';
 import * as path from 'path';
+import { promisify } from 'util';
 
 import { ISchematicContext } from './schema.interface';
 
@@ -82,5 +85,10 @@ export default async function (tree: Tree, schema: ISchematicContext) {
 
   await cleanup();
 
-  return () => ({ success: true });
+  return async () => {
+    const { stdout, stderr } = await promisify(exec)(`npx nx run tools:tsc-configure`);
+    logger.log(stdout);
+    logger.error(stderr);
+    return { success: stderr === '' };
+  };
 }
