@@ -1,18 +1,10 @@
 import { libraryGenerator } from '@nrwl/angular/generators';
-import {
-  generateFiles,
-  joinPathFragments,
-  logger,
-  ProjectConfiguration,
-  readProjectConfiguration,
-  Tree,
-  updateProjectConfiguration,
-} from '@nrwl/devkit';
+import { generateFiles, joinPathFragments, logger, ProjectConfiguration, readProjectConfiguration, Tree } from '@nrwl/devkit';
 import { exec } from 'child_process';
-import { unlink } from 'fs/promises';
-import { fileExists } from 'nx/src/utils/fileutils';
 import { promisify } from 'util';
 
+import { cleanup } from '../utils/cleanup.util';
+import { updateProjectLinterConfig } from '../utils/project-configuration.util';
 import { ISchematicContext } from './schema.interface';
 
 /**
@@ -23,43 +15,14 @@ const addFiles = (schema: ISchematicContext, tree: Tree) => {
   const root = config.root;
 
   const fileName = schema.name.replace('client-store-', '');
+  const className = `${fileName[0].toUpperCase()}${fileName.slice(1)}`;
 
   generateFiles(tree, joinPathFragments(__dirname, './files'), root, {
     tmpl: '',
     name: schema.name,
     fileName,
-    className: `${fileName[0].toUpperCase()}${fileName.slice(1)}`,
+    className,
   });
-};
-
-/**
- * Updates project.json
- */
-const updateProjectConfig = (schema: ISchematicContext, tree: Tree) => {
-  const projectConfig: ProjectConfiguration = readProjectConfiguration(tree, schema.name);
-  if (typeof projectConfig.targets !== 'undefined') {
-    projectConfig.targets.lint.executor = '@angular-eslint/builder:lint';
-    projectConfig.targets.lint.options = {
-      ...(projectConfig.targets.lint.options ?? {}),
-      eslintConfig: `libs/${schema.name}/.eslintrc.json`,
-      lintFilePatterns: [`libs/${schema.name}/**/*.ts`],
-    };
-    projectConfig.targets.lint.outputs = ['{options.outputFile}'];
-  }
-
-  updateProjectConfiguration(tree, schema.name, projectConfig);
-};
-
-/**
- * Removes unneeded files.
- */
-const cleanup = async (): Promise<void> => {
-  const root = `${process.cwd()}`;
-  const rootEslintJson = `${root}/.eslintrc.json`;
-  const eslintJsonExists = fileExists(rootEslintJson);
-  if (eslintJsonExists) {
-    await unlink(rootEslintJson);
-  }
 };
 
 export default async function (tree: Tree, schema: ISchematicContext) {
@@ -76,7 +39,7 @@ export default async function (tree: Tree, schema: ISchematicContext) {
 
   addFiles(schema, tree);
 
-  updateProjectConfig(schema, tree);
+  updateProjectLinterConfig(schema, tree);
 
   await cleanup();
 
