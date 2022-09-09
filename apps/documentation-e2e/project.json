@@ -13,8 +13,9 @@
       },
       "executor": "@nrwl/cypress:cypress",
       "options": {
-        "cypressConfig": "apps/documentation-e2e/cypress.json",
+        "cypressConfig": "apps/documentation-e2e/cypress.config.js",
         "devServerTarget": "documentation:serve",
+        "testingType": "e2e",
         "tsConfig": "apps/documentation-e2e/tsconfig.e2e.json"
       }
     },
