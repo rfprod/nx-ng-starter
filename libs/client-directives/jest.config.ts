@@ -8,7 +8,7 @@ const config = {
       branches: 0,
       functions: 25,
       lines: 36,
-      statements: 41,
+      statements: 39,
     },
   },
   displayName: 'client-directives',

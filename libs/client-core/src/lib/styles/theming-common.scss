@@ -1,0 +1,96 @@
+/* Class for custom svg icons */
+.material-icons-svg {
+  display: inline-block;
+  font-weight: normal;
+  font-size: 24px; /* Preferred icon size */
+  font-style: normal;
+  line-height: 1;
+  direction: ltr;
+  letter-spacing: normal;
+  white-space: nowrap;
+  text-transform: none;
+  word-wrap: normal;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizelegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+
+  &:hover {
+    cursor: default;
+  }
+
+  svg {
+    width: 50%;
+    height: 50%;
+    margin: 25%;
+  }
+}
+
+/* Additional customizations for icons inside anchors and buttons */
+a,
+button,
+mat-button-toggle {
+  .material-icons,
+  .material-icons-fab,
+  .material-icons-fas,
+  .material-icons-svg {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+/* Show cursor when pointing icons in mat-menus if mat-menu-item is not disabled */
+mat-menu-content,
+.mat-menu-content {
+  .mat-menu-item[aria-disabled='false'] > .material-icons,
+  .mat-menu-item[aria-disabled='false'] > .material-icons-fab,
+  .mat-menu-item[aria-disabled='false'] > .material-icons-fas,
+  .mat-menu-item[aria-disabled='false'] > .material-icons-svg {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+/* Column progress class usage example. Container must be a block element. */
+// <ng-container *ngIf="loading$ | async">
+//     <div class="column-progress">
+//         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+//     </div>
+// </ng-container>
+.column-progress {
+  position: absolute;
+  z-index: 99999;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}
+
+/* Clamping for fixed width text block. */
+.clamp {
+  width: 90%;
+  overflow: hidden; // Needed to make it work
+  white-space: nowrap;
+  text-align: left;
+  text-overflow: ellipsis;
+}
+
+/* Clamping for flexible width text block. */
+.clamp-flex {
+  width: 100%;
+  overflow: hidden; // Needed to make it work
+  white-space: nowrap;
+  text-align: left;
+  text-overflow: ellipsis;
+}

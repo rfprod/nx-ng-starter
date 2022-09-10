@@ -1,11 +1,12 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
     "baseUrl": "../../",
+    "emitDecoratorMetadata": false,
     "module": "commonjs",
     "outDir": "../../dist/out-tsc",
     "types": ["jest", "node"]
   },
+  "extends": "./tsconfig.json",
   "files": ["src/test-setup.ts"],
   "include": ["**/*.spec.ts", "**/*.d.ts", "jest.config.ts"]
 }
