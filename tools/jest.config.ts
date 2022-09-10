@@ -10,6 +10,7 @@ const config = {
   },
   displayName: 'tools',
   preset: '../jest.preset.js',
+  globals: {},
 };
 
 export default config;
