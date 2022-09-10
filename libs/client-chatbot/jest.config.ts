@@ -8,7 +8,7 @@ const config = {
       branches: 8,
       functions: 42,
       lines: 45,
-      statements: 50,
+      statements: 49,
     },
   },
   displayName: 'client-chatbot',

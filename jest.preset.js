@@ -5,7 +5,7 @@ const { paths } = require('./tsconfig.base.json').compilerOptions;
 
 module.exports = {
   ...nxPreset,
-  testMatch: ['**/+(*.)+(spec|test).+(ts|js)?(x)'],
+  testMatch: ['**/+(*.)+(spec).+(ts|js)?(x)'],
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
