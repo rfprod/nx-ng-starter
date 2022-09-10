@@ -9,16 +9,17 @@ const config = {
     },
   },
   displayName: 'server-prod',
-  globals: {
-    'ts-jest': {
-      tsconfig: '<rootDir>/tsconfig.spec.json',
-    },
-  },
   preset: '../../jest.preset.js',
+  globals: {},
   resolver: '../../tools/js/jest-nestjs-resolver.js',
   testEnvironment: 'node',
   transform: {
-    '^.+\\.(ts|js)$': 'ts-jest',
+    '^.+\\.(ts|js)$': [
+      'ts-jest',
+      {
+        tsconfig: '<rootDir>/tsconfig.spec.json',
+      },
+    ],
   },
 };
 
