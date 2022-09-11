@@ -1,14 +1,13 @@
+import { actionType } from '@app/client-util-ngrx';
 import { createAction } from '@ngrx/store';
 
 import { featureName } from './theme.interface';
 
-const type = (name: string) => `[${featureName}] ${name}`;
+const enableDarkTheme = createAction('enable dark theme');
 
-const enableDarkTheme = createAction(type('enable dark theme'));
+const disableDarkTheme = createAction(actionType(featureName, 'disable dark theme'));
 
-const disableDarkTheme = createAction(type('disable dark theme'));
-
-const toggleDarkTheme = createAction(type('toggle theme'));
+const toggleDarkTheme = createAction(actionType(featureName, 'toggle theme'));
 
 export const themeActions = {
   enableDarkTheme,

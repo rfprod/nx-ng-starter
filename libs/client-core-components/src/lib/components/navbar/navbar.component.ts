@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { IRouterState, routerActions } from '@app/client-store-router';
 import { sidebarActions } from '@app/client-store-sidebar';
 import { IRouterButton, IWebClientAppEnvironment, routerButton, WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngrx/store';
@@ -72,12 +73,20 @@ export class AppNavbarComponent {
   public readonly routerEvents$ = this.router.events;
 
   constructor(
-    private readonly store: Store,
+    private readonly store: Store<IRouterState>,
     private readonly router: Router,
     @Inject(WEB_CLIENT_APP_ENV) private readonly env: IWebClientAppEnvironment,
   ) {}
 
   public sidebarCloseHandler(): void {
     this.store.dispatch(sidebarActions.close({ payload: { navigate: false } }));
+  }
+
+  public navigateBack(): void {
+    this.store.dispatch(routerActions.back());
+  }
+
+  public navigateForward(): void {
+    this.store.dispatch(routerActions.forward());
   }
 }

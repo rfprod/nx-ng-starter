@@ -1,14 +1,13 @@
+import { actionType } from '@app/client-util-ngrx';
 import { createAction, props } from '@ngrx/store';
 
 import { featureName, IUserStateModel } from './user.interface';
 
-const type = (name: string) => `[${featureName}] ${name}`;
+const login = createAction(actionType(featureName, 'login'), props<{ payload: Pick<IUserStateModel, 'email'> }>());
 
-const login = createAction(type('login'), props<{ payload: Pick<IUserStateModel, 'email'> }>());
+const logout = createAction(actionType(featureName, 'logout'));
 
-const logout = createAction(type('logout'));
-
-const signup = createAction(type('signup'), props<{ payload: Pick<IUserStateModel, 'email'> }>());
+const signup = createAction(actionType(featureName, 'signup'), props<{ payload: Pick<IUserStateModel, 'email'> }>());
 
 export const userActions = {
   login,

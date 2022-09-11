@@ -3,6 +3,31 @@
 
   <span fxFlex="1 1 auto"></span>
 
+  <button mat-button (click)="navigateBack()">
+    <mat-icon>navigate_before</mat-icon>
+    back
+  </button>
+
+  <mat-icon
+    appTooltip="Navigate history"
+    [flexibleConnectedPositions]="[
+      {
+        originX: 'center',
+        originY: 'bottom',
+        overlayX: 'center',
+        overlayY: 'top'
+      }
+    ]"
+    >explore</mat-icon
+  >
+
+  <button mat-button (click)="navigateForward()">
+    forward
+    <mat-icon>navigate_next</mat-icon>
+  </button>
+
+  <span fxFlex="1 1 auto"></span>
+
   <button
     mat-button
     *ngFor="let button of buttons"

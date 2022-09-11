@@ -6,13 +6,13 @@ import { AppClientChatbotModule } from '@app/client-chatbot';
 import { AppClientCoreModule } from '@app/client-core';
 import { AppClientGqlModule } from '@app/client-gql';
 import { AppClientMaterialModule } from '@app/client-material';
+import { AppRouterStoreModule } from '@app/client-store-router';
 import { AppWebsocketStoreModule } from '@app/client-store-websocket';
 import { AppClientTranslateModule } from '@app/client-translate';
 import { AppClientUtilElizaModule } from '@app/client-util-eliza';
-import { AppRouteSerializer, metaReducers } from '@app/client-util-ngrx';
+import { metaReducers } from '@app/client-util-ngrx';
 import { sentryProviders } from '@app/client-util-sentry';
 import { EffectsModule } from '@ngrx/effects';
-import { NavigationActionTiming, routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 
 import { environment } from '../environments/environment';
@@ -24,7 +24,7 @@ import { AppElementsService } from './services/elements.service';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
-    StoreModule.forRoot({ router: routerReducer }, { metaReducers: metaReducers(environment.production) }),
+    StoreModule.forRoot({}, { metaReducers: metaReducers(environment.production) }),
     EffectsModule.forRoot(),
     AppWebsocketStoreModule.forRoot(environment),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
@@ -35,10 +35,7 @@ import { AppElementsService } from './services/elements.service';
     AppClientUtilElizaModule.forRoot(),
     AppClientChatbotModule,
     RouterModule.forRoot([]),
-    StoreRouterConnectingModule.forRoot({
-      serializer: AppRouteSerializer,
-      navigationActionTiming: NavigationActionTiming.PostActivation,
-    }),
+    AppRouterStoreModule.forRoot(),
   ],
   providers: [...sentryProviders(environment)],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
