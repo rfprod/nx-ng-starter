@@ -1,7 +1,9 @@
 import { Router } from '@angular/router';
 
+export type TRouterCommands = { outlets: { [key: string]: string[] } }[];
+
 export interface IRouterButton {
-  routerLink: { outlets: { [key: string]: string[] } }[];
+  routerLink: TRouterCommands;
   routeActive: () => boolean;
   icon: string;
   title: string;
@@ -15,12 +17,8 @@ export interface IRouterButton {
  * @param routerLink router link
  * @returns router button object
  */
-export const routerButton = (
-  title: string,
-  icon: string,
-  routeActive: Router['isActive'],
-  routerLink: { outlets: { [key: string]: string[] } }[],
-) => <IRouterButton>{ title, icon, routeActive, routerLink };
+export const routerButton = (title: string, icon: string, routeActive: Router['isActive'], routerLink: TRouterCommands) =>
+  <IRouterButton>{ title, icon, routeActive, routerLink };
 
 export interface IAnchorButton {
   href: string;

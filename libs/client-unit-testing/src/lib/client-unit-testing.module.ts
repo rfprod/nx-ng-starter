@@ -8,7 +8,6 @@ import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/t
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppClientMaterialModule } from '@app/client-material';
 import { documentProvider, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV, windowProvider } from '@app/client-util';
-import { AppRouteSerializer } from '@app/client-util-ngrx';
 import { EffectsModule } from '@ngrx/effects';
 import { NavigationActionTiming, routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
@@ -72,7 +71,6 @@ export const mocksCoreModuleProviders: Provider[] = [
     StoreModule.forRoot({ router: routerReducer }),
     EffectsModule.forRoot(),
     StoreRouterConnectingModule.forRoot({
-      serializer: AppRouteSerializer,
       navigationActionTiming: NavigationActionTiming.PostActivation,
     }),
   ],

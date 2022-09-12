@@ -1,14 +1,13 @@
+import { actionType } from '@app/client-util-ngrx';
 import { createAction } from '@ngrx/store';
 
 import { featureName } from './chatbot.interface';
 
-const type = (name: string) => `[${featureName}] ${name}`;
+const open = createAction(actionType(featureName, 'open'));
 
-const open = createAction(type('open'));
+const close = createAction(actionType(featureName, 'close'));
 
-const close = createAction(type('close'));
-
-const toggle = createAction(type('toggle'));
+const toggle = createAction(actionType(featureName, 'toggle'));
 
 export const chatbotActions = {
   open,

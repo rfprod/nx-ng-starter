@@ -1,14 +1,13 @@
+import { actionType } from '@app/client-util-ngrx';
 import { createAction, props } from '@ngrx/store';
 
 import { featureName, IWebsocketStateModel } from './websocket.interface';
 
-const type = (name: string) => `[${featureName}] ${name}`;
+const connect = createAction(actionType(featureName, 'connect'));
 
-const connect = createAction(type('connect'));
+const connected = createAction(actionType(featureName, 'connected'), props<{ payload: Partial<IWebsocketStateModel> }>());
 
-const connected = createAction(type('connected'), props<{ payload: Partial<IWebsocketStateModel> }>());
-
-const getEvents = createAction(type('get events'));
+const getEvents = createAction(actionType(featureName, 'get events'));
 
 export const websocketActions = {
   connect,

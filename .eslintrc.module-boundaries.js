@@ -102,6 +102,7 @@ const clientConstraints = [
     onlyDependOnLibsWithTags: [
       'scope:client-material',
       'scope:client-pwa-offline',
+      'scope:client-store-router',
       'scope:client-unit-testing',
       'scope:client-util',
       'scope:client-util-ngrx',
@@ -144,7 +145,7 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:client-store-chatbot',
-    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util', 'scope:client-util-ngrx'],
   },
   {
     sourceTag: 'scope:client-store-http-api',
@@ -153,27 +154,32 @@ const clientConstraints = [
       'scope:client-translate',
       'scope:client-unit-testing',
       'scope:client-util',
+      'scope:client-util-ngrx',
     ],
   },
   {
     sourceTag: 'scope:client-store-http-progress',
-    onlyDependOnLibsWithTags: ['scope:client-translate', 'scope:client-unit-testing', 'scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-translate', 'scope:client-unit-testing', 'scope:client-util', 'scope:client-util-ngrx'],
+  },
+  {
+    sourceTag: 'scope:client-store-router',
+    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util', 'scope:client-util-ngrx'],
   },
   {
     sourceTag: 'scope:client-store-sidebar',
-    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util', 'scope:client-util-ngrx'],
   },
   {
     sourceTag: 'scope:client-store-theme',
-    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util', 'scope:client-util-ngrx'],
   },
   {
     sourceTag: 'scope:client-store-user',
-    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util', 'scope:client-util-ngrx'],
   },
   {
     sourceTag: 'scope:client-store-websocket',
-    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util', 'scope:client-util-ngrx'],
   },
   {
     sourceTag: 'scope:client-services',
@@ -284,6 +290,7 @@ const clientConstraints = [
       'scope:client-services',
       'scope:client-sidebar',
       'scope:client-store',
+      'scope:client-store-router',
       'scope:client-store-theme',
       'scope:client-store-user',
       'scope:client-store-websocket',
@@ -300,6 +307,7 @@ const clientConstraints = [
     onlyDependOnLibsWithTags: [
       'scope:client-material',
       'scope:client-store-chatbot',
+      'scope:client-store-router',
       'scope:client-store-sidebar',
       'scope:client-store-theme',
       'scope:client-store-user',
@@ -322,6 +330,7 @@ const clientConstraints = [
       'scope:client-core',
       'scope:client-gql',
       'scope:client-material',
+      'scope:client-store-router',
       'scope:client-store-websocket',
       'scope:client-translate',
       'scope:client-unit-testing',

@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { AppRouterStoreModule, routerActions } from '@app/client-store-router';
 import { AppSidebarStoreModule, sidebarActions } from '@app/client-store-sidebar';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
 import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
@@ -10,7 +11,7 @@ import { AppNavbarComponent } from './navbar.component';
 
 describe('AppNavbarComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [AppSidebarStoreModule.forRoot()],
+    imports: [AppSidebarStoreModule.forRoot(), AppRouterStoreModule.forRoot()],
     declarations: [AppNavbarComponent],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
@@ -105,4 +106,14 @@ describe('AppNavbarComponent', () => {
     });
     routerIsActiveSpy.mockClear();
   });
+
+  it('navigateBack should call store dispatch', waitForAsync(() => {
+    component.navigateBack();
+    expect(storeSpy.dispatch).toHaveBeenCalledWith(routerActions.back());
+  }));
+
+  it('navigateForward should call store dispatch', waitForAsync(() => {
+    component.navigateForward();
+    expect(storeSpy.dispatch).toHaveBeenCalledWith(routerActions.forward());
+  }));
 });

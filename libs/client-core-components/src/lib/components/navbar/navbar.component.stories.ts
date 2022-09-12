@@ -4,9 +4,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppClientMaterialModule } from '@app/client-material';
+import { AppRouterStoreModule } from '@app/client-store-router';
 import { AppSidebarStoreModule } from '@app/client-store-sidebar';
 import { documentFactory, routerButton, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@app/client-util';
 import { EffectsModule } from '@ngrx/effects';
+import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { Args, Story } from '@storybook/angular/types-6-0';
 import { of } from 'rxjs';
@@ -32,10 +34,12 @@ const story: Story<AppNavbarComponent> = (args: Args) => ({
       BrowserAnimationsModule,
       FlexLayoutModule,
       RouterTestingModule,
-      StoreModule.forRoot({}),
+      StoreModule.forRoot({ router: routerReducer }),
       EffectsModule.forRoot(),
       AppSidebarStoreModule.forRoot(),
       AppClientMaterialModule.forRoot(),
+      StoreRouterConnectingModule.forRoot(),
+      AppRouterStoreModule.forRoot(),
     ],
     providers: [
       {

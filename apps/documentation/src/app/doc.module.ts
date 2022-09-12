@@ -4,9 +4,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppClientMaterialModule } from '@app/client-material';
 import { AppClientPwaOfflineModule } from '@app/client-pwa-offline';
+import { AppRouterStoreModule } from '@app/client-store-router';
 import { documentProvider, windowProvider } from '@app/client-util';
-import { AppRouteSerializer, metaReducers } from '@app/client-util-ngrx';
-import { NavigationActionTiming, routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
+import { metaReducers } from '@app/client-util-ngrx';
 import { StoreModule } from '@ngrx/store';
 import { MarkdownModule, MarkdownModuleConfig, MarkedOptions } from 'ngx-markdown';
 
@@ -45,15 +45,12 @@ const markdownModuleConfig: MarkdownModuleConfig = {
     HttpClientModule,
     MarkdownModule.forRoot(markdownModuleConfig),
     FlexLayoutModule,
-    StoreModule.forRoot({ router: routerReducer }, { metaReducers: metaReducers(environment.production) }),
+    StoreModule.forRoot({}, { metaReducers: metaReducers(environment.production) }),
     AppMdFilesStoreModule.forRoot(),
     AppClientMaterialModule.forRoot(),
     AppClientPwaOfflineModule,
     AppDocRoutingModule,
-    StoreRouterConnectingModule.forRoot({
-      serializer: AppRouteSerializer,
-      navigationActionTiming: NavigationActionTiming.PostActivation,
-    }),
+    AppRouterStoreModule.forRoot(),
   ],
   providers: [windowProvider, documentProvider, { provide: DOCUMENTATION_ENVIRONMENT, useValue: environment }],
   bootstrap: [AppDocRootComponent],
