@@ -6,22 +6,13 @@ import { Observable, Subscriber, timer } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 import { argv } from 'yargs';
 
-import { COLORS } from './utils/colors';
-import { logger } from './utils/logger';
+import { COLORS } from '../utils/colors';
+import { logger } from '../utils/logger';
 
 /**
- * @name cwd
- * @constant
- * @summary Current working directory.
+ * Project root directory.
  */
-const cwd = __dirname;
-
-/**
- * @name root
- * @constant
- * @summary Project root directory.
- */
-const root = `${cwd}/../..`;
+const root = process.cwd();
 
 type TUpdatablePackages = Record<string, string>;
 
