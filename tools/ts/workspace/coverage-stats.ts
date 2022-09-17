@@ -1,12 +1,12 @@
 import { getJestProjects } from '@nrwl/jest';
 import * as fs from 'fs';
 
-import { logger } from './utils/logger';
+import { logger } from '../utils/logger';
 
 /**
- * Current working directory.
+ * Project root directory.
  */
-const cwd = __dirname;
+const root = process.cwd();
 
 /**
  * Jest projects array.
@@ -44,7 +44,7 @@ const totalCoverage: ICoverageSummaryObj = {
 let readFiles = 0;
 
 const writeAverageStats = () => {
-  const readmePath = `${cwd}/UNIT_COVERAGE.md`;
+  const readmePath = `${root}/UNIT_COVERAGE.md`;
   const coverageSummary = `# Unit Coverage Stats
 
 ## Lines
@@ -163,5 +163,5 @@ const readFileCallback = (error: NodeJS.ErrnoException | null, data?: Buffer) =>
 for (const project of jestProjects) {
   const path = project.replace(/<rootDir>/, '');
 
-  fs.readFile(`${cwd}/../../coverage${path}/coverage-summary.json`, readFileCallback);
+  fs.readFile(`${root}/coverage${path}/coverage-summary.json`, readFileCallback);
 }

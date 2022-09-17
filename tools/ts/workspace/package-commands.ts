@@ -1,22 +1,13 @@
 import * as fs from 'fs';
 import { argv } from 'yargs';
 
-import { COLORS } from './utils/colors';
-import { logger } from './utils/logger';
+import { COLORS } from '../utils/colors';
+import { logger } from '../utils/logger';
 
 /**
- * @name cwd
- * @constant
- * @summary Current working directory
+ * Project root directory.
  */
-const cwd = __dirname;
-
-/**
- * @name root
- * @constant
- * @summary Project root directory.
- */
-const root = `${cwd}/../..`;
+const root = process.cwd();
 
 interface IPackageJson {
   scripts: Record<string, string>;

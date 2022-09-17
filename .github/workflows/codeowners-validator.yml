@@ -13,18 +13,38 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  validate-codeowners:
+  codeowners:
     runs-on: ubuntu-latest
+
+    outputs:
+      matrix: ${{ steps.get-codeowners.outputs.matrix }}
 
     steps:
       - name: Checkout sources
         uses: actions/checkout@v3
 
-      - name: Disable session history
-        uses: ./.github/actions/disable-session-history
-
-      - name: GitHub CODEOWNERS Validator
-        uses: mszostok/codeowners-validator@v0.5.1
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
         with:
-          checks: 'files,duppatterns'
-          experimental_checks: 'notowned'
+          node-version: 16.x
+
+      - name: Get codeowners
+        id: get-codeowners
+        run: npx nx run tools:get-codeowners
+
+  validate:
+    needs: codeowners
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        name: ${{ fromJSON(needs.codeowners.outputs.matrix) }}
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: Validate a codeowner
+        uses: ./.github/actions/validate-codeowner
+        with:
+          name: ${{ matrix.name }}

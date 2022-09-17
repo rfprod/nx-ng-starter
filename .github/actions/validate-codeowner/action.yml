@@ -1,0 +1,28 @@
+# For more information see:
+# - https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+# - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
+
+# The action can be referenced in workflows like:
+# - rfprod/nx-ng-starter/.github/actions/validate-codeowners@main
+# ./.github/actions/validate-codeowners
+
+name: validate-codeowners
+description: Uses GitHub API to validate that a codeowner is a repo collaborator.
+
+inputs:
+  collaborator:
+    description: A collaborator name
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Validate codeowner
+      shell: bash
+      uses: octokit/request-action@v2.x
+      with:
+        route: GET /repos/{repository}/collaborators/{collaborator}
+        repository: ${{ github.repository }}
+        collaborator: ${{ inputs.collaborator }}
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
