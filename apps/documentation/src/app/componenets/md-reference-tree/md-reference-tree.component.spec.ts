@@ -2,7 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppClientMaterialModule } from '@app/client-material';
+import { AppMaterialModule } from '@app/client-material';
 import { Store, StoreModule } from '@ngrx/store';
 import { MarkdownModule, MarkdownModuleConfig, MarkedOptions } from 'ngx-markdown';
 
@@ -31,7 +31,7 @@ describe('AppDocMarkdownReferenceTreeComponent', () => {
       NoopAnimationsModule,
       HttpClientTestingModule,
       RouterTestingModule,
-      AppClientMaterialModule.forRoot(),
+      AppMaterialModule.forRoot(),
       StoreModule.forRoot({}),
       AppMdFilesStoreModule.forRoot(),
       MarkdownModule.forRoot(markdownModuleConfig),

@@ -1,2 +1,2 @@
-export * from './lib/client-material.module';
-export * from './lib/providers/client-material-module.providers';
+export * from './lib/material.module';
+export * from './lib/providers/material-module.providers';

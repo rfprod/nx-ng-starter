@@ -2,7 +2,7 @@ import { APP_BASE_HREF, DOCUMENT, LocationStrategy, PathLocationStrategy } from 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppClientMaterialModule } from '@app/client-material';
+import { AppMaterialModule } from '@app/client-material';
 import { AppThemeStoreModule } from '@app/client-store-theme';
 import { documentFactory, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@app/client-util';
 import { EffectsModule } from '@ngrx/effects';
@@ -33,7 +33,7 @@ const story: Story<AppThemeToggleComponent> = (args: Args) => ({
       StoreModule.forRoot({}),
       EffectsModule.forRoot(),
       AppThemeStoreModule.forRoot(),
-      AppClientMaterialModule.forRoot(),
+      AppMaterialModule.forRoot(),
     ],
     providers: [
       {

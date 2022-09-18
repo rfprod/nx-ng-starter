@@ -4,6 +4,7 @@ import { exec } from 'child_process';
 import { promisify } from 'util';
 
 import { cleanup } from '../utils/cleanup.util';
+import { generateFilesConfig } from '../utils/generate-files.config';
 import { updateProjectLinterConfig } from '../utils/project-configuration.util';
 import { ISchematicContext } from './schema.interface';
 
@@ -14,14 +15,10 @@ const addFiles = (schema: ISchematicContext, tree: Tree) => {
   const config: ProjectConfiguration = readProjectConfiguration(tree, schema.name);
   const root = config.root;
 
-  const fileName = schema.name.replace('client-util-', '');
-  const className = `${fileName[0].toUpperCase()}${fileName.slice(1)}`;
+  const generateFilesConf = generateFilesConfig(schema.name, 'client-util-');
 
   generateFiles(tree, joinPathFragments(__dirname, './files'), root, {
-    tmpl: '',
-    name: schema.name,
-    fileName,
-    className,
+    ...generateFilesConf,
   });
 };
 
@@ -32,7 +29,8 @@ export default async function (tree: Tree, schema: ISchematicContext) {
   await libraryGenerator(tree, {
     name,
     prefix: 'app',
-    standaloneConfig: true,
+    routing: false,
+    skipModule: true,
     tags,
   });
 
@@ -43,9 +41,14 @@ export default async function (tree: Tree, schema: ISchematicContext) {
   await cleanup();
 
   return async () => {
-    const { stdout, stderr } = await promisify(exec)(`npx nx run tools:tsc-configure`);
-    logger.log(stdout);
-    logger.error(stderr);
-    return { success: stderr === '' };
+    const tscConfigure = await promisify(exec)(`npx nx run tools:tsc-configure`);
+    logger.log(tscConfigure.stdout);
+    logger.error(tscConfigure.stderr);
+
+    const lint = await promisify(exec)(`npx nx lint ${schema.name} --fix`);
+    logger.log(lint.stdout);
+    logger.error(lint.stderr);
+
+    return { success: tscConfigure.stderr === '' && lint.stderr === '' };
   };
 }

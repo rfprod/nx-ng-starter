@@ -1,0 +1,34 @@
+import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
+import { Store, StoreModule } from '@ngrx/store';
+
+import { <%= camelCaseName %>Actions } from './<%= kebabCaseName %>.actions';
+import { featureName, I<%= pascalCaseName %>State, I<%= pascalCaseName %>StateModel } from './<%= kebabCaseName %>.interface';
+import { App<%= pascalCaseName %>Reducer } from './<%= kebabCaseName %>.reducer';
+import { <%= camelCaseName %>Selectors } from './<%= kebabCaseName %>.selectors';
+
+describe('App<%= pascalCaseName %>Reducer', () => {
+  const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
+    imports: [StoreModule.forFeature<I<%= pascalCaseName %>State>(featureName, App<%= pascalCaseName %>Reducer.token)],
+    providers: [App<%= pascalCaseName %>Reducer.provider],
+  });
+  const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
+
+  let reducer: App<%= pascalCaseName %>Reducer;
+  let store: Store<I<%= pascalCaseName %>State>;
+
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        reducer = TestBed.inject(App<%= pascalCaseName %>Reducer);
+        store = TestBed.inject(Store);
+      });
+  }));
+
+  it('should be defined', () => {
+    expect(reducer).toBeDefined();
+  });
+
+  test.todo('App<%= pascalCaseName %>Reducer spec');
+});

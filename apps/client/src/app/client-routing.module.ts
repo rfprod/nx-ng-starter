@@ -7,21 +7,25 @@ import { Route, RouterModule } from '@angular/router';
 export const routes: Route[] = [
   {
     path: '',
-    loadChildren: () => import('@app/client-diagnostics').then(mod => mod.AppClientDiagnosticsModule),
+    loadChildren: () => import('@app/client-diagnostics').then(mod => mod.AppDiagnosticsModule),
+  },
+  {
+    path: 'dashboards',
+    loadChildren: () => import('@app/client-dashboards').then(mod => mod.AppDashboardsModule),
   },
   {
     path: 'chatbot',
-    loadChildren: () => import('@app/client-chatbot').then(mod => mod.AppClientChatbotModule),
+    loadChildren: () => import('@app/client-chatbot').then(mod => mod.AppChatbotModule),
   },
   {
     path: '',
     outlet: 'sidebar',
-    loadChildren: () => import('@app/client-sidebar').then(mod => mod.AppClientSidebarModule),
+    loadChildren: () => import('@app/client-sidebar').then(mod => mod.AppSidebarModule),
   },
   {
     path: '',
     outlet: 'chatbot',
-    loadChildren: () => import('@app/client-chatbot').then(mod => mod.AppClientChatbotWidgetModule),
+    loadChildren: () => import('@app/client-chatbot').then(mod => mod.AppChatbotWidgetModule),
   },
   { path: '**', redirectTo: '' },
 ];

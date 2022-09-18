@@ -1,1 +1,1 @@
-export * from './lib/client-core-components.module';
+export * from './lib/core-components.module';

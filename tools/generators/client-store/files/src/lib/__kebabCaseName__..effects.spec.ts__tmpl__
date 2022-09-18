@@ -1,0 +1,29 @@
+import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
+import { EffectsModule } from '@ngrx/effects';
+import { Store, StoreModule } from '@ngrx/store';
+
+import { <%= camelCaseName %>Actions } from './<%= kebabCaseName %>.actions';
+import { App<%= pascalCaseName %>Effects } from './<%= kebabCaseName %>.effects';
+import { featureName, I<%= pascalCaseName %>State } from './<%= kebabCaseName %>.interface';
+import { App<%= pascalCaseName %>Reducer } from './<%= kebabCaseName %>.reducer';
+
+describe('App<%= pascalCaseName %>Effects', () => {
+  const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
+    imports: [StoreModule.forFeature<I<%= pascalCaseName %>State>(featureName, App<%= pascalCaseName %>Reducer.token), EffectsModule.forFeature([App<%= pascalCaseName %>Effects])],
+    providers: [App<%= pascalCaseName %>Reducer.provider],
+  });
+  const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
+
+  let store: Store<I<%= pascalCaseName %>State>;
+
+  beforeEach(waitForAsync(() => {
+    void TestBed.configureTestingModule(testBedConfig)
+      .compileComponents()
+      .then(() => {
+        store = TestBed.inject(Store);
+      });
+  }));
+
+  test.todo('App<%= pascalCaseName %>Effects spec');
+});

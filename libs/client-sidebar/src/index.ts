@@ -1,1 +1,1 @@
-export * from './lib/client-sidebar.module';
+export * from './lib/sidebar.module';

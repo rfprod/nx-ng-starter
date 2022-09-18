@@ -1,0 +1,11 @@
+import { createAction } from '@ngrx/store';
+
+import { featureName } from './<%= kebabCaseName %>.interface';
+
+const type = (name: string) => `[${featureName}] ${name}`;
+
+const action = createAction(type('action')); // TODO
+
+export const <%= camelCaseName %>Actions = {
+  action,
+};

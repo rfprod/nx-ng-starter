@@ -1,9 +1,0 @@
-export interface I<%= className %>StateModel {
-  <%= fileName %>: boolean; // TODO
-}
-
-export interface I<%= className %>State {
-  <%= fileName %>: I<%= className %>StateModel;
-}
-
-export const featureName: keyof I<%= className %>State = '<%= fileName %>';

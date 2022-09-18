@@ -2,10 +2,10 @@ const config = {
   coverageDirectory: '../coverage/tools',
   coverageThreshold: {
     global: {
-      branches: 77,
-      functions: 85,
-      lines: 86,
-      statements: 84,
+      branches: 73,
+      functions: 76,
+      lines: 81,
+      statements: 79,
     },
   },
   displayName: 'tools',

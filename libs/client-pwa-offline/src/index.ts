@@ -1,1 +1,1 @@
-export * from './lib/client-pwa-offline.module';
+export * from './lib/pwa-offline.module';

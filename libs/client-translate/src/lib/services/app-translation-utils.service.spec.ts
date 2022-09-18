@@ -3,13 +3,13 @@ import { DateAdapter } from '@angular/material/core';
 import { documentProvider, WINDOW, windowProvider } from '@app/client-util';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
-import { AppClientTranslateModule } from '../client-translate.module';
 import { ISupportedLanguage, TLangCode, uiLanguages } from '../interfaces/ui-languages.interface';
+import { AppTranslateModule } from '../translate.module';
 import { AppTranslationUtilsService } from './app-translation-utils.service';
 
 describe('AppTranslationUtilsService', () => {
   const testBedConfig: TestModuleMetadata = {
-    imports: [AppClientTranslateModule.forRoot()],
+    imports: [AppTranslateModule.forRoot()],
     providers: [windowProvider, documentProvider, DateAdapter],
   };
 

@@ -1,16 +1,16 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { AppClientCoreModule } from '@app/client-core';
-import { AppClientCoreComponentsModule } from '@app/client-core-components';
-import { AppClientGqlModule } from '@app/client-gql';
-import { AppClientGrpcModule, AppClientGrpcService } from '@app/client-grpc';
-import { AppClientMaterialModule } from '@app/client-material';
-import { AppClientPwaOfflineModule } from '@app/client-pwa-offline';
+import { AppCoreModule } from '@app/client-core';
+import { AppCoreComponentsModule } from '@app/client-core-components';
+import { AppGqlModule } from '@app/client-gql';
+import { AppGrpcModule, AppGrpcService } from '@app/client-grpc';
+import { AppMaterialModule } from '@app/client-material';
+import { AppPwaOfflineModule } from '@app/client-pwa-offline';
 import { AppRouterStoreModule } from '@app/client-store-router';
 import { AppWebsocketStoreModule } from '@app/client-store-websocket';
-import { AppClientTranslateModule } from '@app/client-translate';
-import { AppClientUtilElizaModule } from '@app/client-util-eliza';
+import { AppTranslateModule } from '@app/client-translate';
+import { AppElizaModule } from '@app/client-util-eliza';
 import { metaReducers } from '@app/client-util-ngrx';
 import { sentryProviders } from '@app/client-util-sentry';
 import { EffectsModule } from '@ngrx/effects';
@@ -30,14 +30,14 @@ import { AppRootComponent } from './components/root.component';
     EffectsModule.forRoot(),
     AppWebsocketStoreModule.forRoot(environment),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    AppClientCoreModule.forRoot(environment),
-    AppClientCoreComponentsModule,
-    AppClientMaterialModule.forRoot(),
-    AppClientTranslateModule.forRoot(),
-    AppClientGqlModule.forRoot(environment),
-    AppClientGrpcModule.forRoot(environment),
-    AppClientUtilElizaModule.forRoot(),
-    AppClientPwaOfflineModule,
+    AppCoreModule.forRoot(environment),
+    AppCoreComponentsModule,
+    AppMaterialModule.forRoot(),
+    AppTranslateModule.forRoot(),
+    AppGqlModule.forRoot(environment),
+    AppGrpcModule.forRoot(environment),
+    AppElizaModule.forRoot(),
+    AppPwaOfflineModule,
     AppClientRoutingModule,
     AppRouterStoreModule.forRoot(),
   ],
@@ -47,7 +47,7 @@ import { AppRootComponent } from './components/root.component';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppClientModule {
-  constructor(private readonly grpc: AppClientGrpcService) {
+  constructor(private readonly grpc: AppGrpcService) {
     void this.grpc.getEntityById().subscribe();
   }
 }
