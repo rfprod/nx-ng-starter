@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ApolloLink, Operation, ServerError, ServerParseError } from '@apollo/client/core';
 import { GraphQLErrors, NetworkError } from '@apollo/client/errors';
 import { ErrorResponse } from '@apollo/client/link/error';
-import { AppClientTranslateModule } from '@app/client-translate';
+import { AppTranslateModule } from '@app/client-translate';
 import {
   flushHttpRequests,
   getTestBedConfig,
@@ -27,7 +27,7 @@ import { AppHttpHandlersService } from './http-handlers.service';
 
 describe('AppHttpHandlersService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [ApolloModule, AppClientTranslateModule.forRoot(), AppHttpProgressStoreModule.forRoot()],
+    imports: [ApolloModule, AppTranslateModule.forRoot(), AppHttpProgressStoreModule.forRoot()],
     providers: [toasterServiceProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);

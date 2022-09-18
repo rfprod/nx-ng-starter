@@ -1,2 +1,2 @@
-export * from './lib/client-grpc.module';
-export * from './lib/client-grpc.service';
+export * from './lib/grpc.module';
+export * from './lib/grpc.service';

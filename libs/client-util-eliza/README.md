@@ -25,7 +25,7 @@ Run `nx build client-util-eliza` to build the library.
 Import the charts module
 
 ```typescript
-import { AppClientUtilElizaModule } from '@app/client-util-eliza';
+import { AppElizaModule } from '@app/client-util-eliza';
 ```
 
 Example [client.module.ts](https://github.com/rfprod/nx-ng-starter/blob/main/apps/client/src/app/client.module.ts#L52)
@@ -43,13 +43,13 @@ yarn add @rfprodz/client-util-eliza
 Import in your application root module
 
 ```typescript
-import { AppClientUtilElizaModule } from '@rfprodz/client-util-eliza';
+import { AppElizaModule } from '@rfprodz/client-util-eliza';
 
 @NgModule({
 ...
   imports: [
     ...
-    AppClientUtilElizaModule.forRoot(),
+    AppElizaModule.forRoot(),
     ...
   ],
 ...
@@ -64,7 +64,7 @@ export class AppModule {
 Import in your application root module
 
 ```typescript
-import { AppClientUtilElizaModule, IElizaData } from '@rfprodz/client-util-eliza';
+import { AppElizaModule, IElizaData } from '@rfprodz/client-util-eliza';
 
 const customElizaData: IElizaData = {
   ...
@@ -74,7 +74,7 @@ const customElizaData: IElizaData = {
 ...
   imports: [
     ...
-    AppClientUtilElizaModule.forRoot(customElizaData),
+    AppElizaModule.forRoot(customElizaData),
     ...
   ],
 ...

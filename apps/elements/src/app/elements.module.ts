@@ -2,14 +2,14 @@ import { CUSTOM_ELEMENTS_SCHEMA, DoBootstrap, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { AppClientChatbotModule } from '@app/client-chatbot';
-import { AppClientCoreModule } from '@app/client-core';
-import { AppClientGqlModule } from '@app/client-gql';
-import { AppClientMaterialModule } from '@app/client-material';
+import { AppChatbotModule } from '@app/client-chatbot';
+import { AppCoreModule } from '@app/client-core';
+import { AppGqlModule } from '@app/client-gql';
+import { AppMaterialModule } from '@app/client-material';
 import { AppRouterStoreModule } from '@app/client-store-router';
 import { AppWebsocketStoreModule } from '@app/client-store-websocket';
-import { AppClientTranslateModule } from '@app/client-translate';
-import { AppClientUtilElizaModule } from '@app/client-util-eliza';
+import { AppTranslateModule } from '@app/client-translate';
+import { AppElizaModule } from '@app/client-util-eliza';
 import { metaReducers } from '@app/client-util-ngrx';
 import { sentryProviders } from '@app/client-util-sentry';
 import { EffectsModule } from '@ngrx/effects';
@@ -28,12 +28,12 @@ import { AppElementsService } from './services/elements.service';
     EffectsModule.forRoot(),
     AppWebsocketStoreModule.forRoot(environment),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    AppClientCoreModule.forRoot(environment),
-    AppClientMaterialModule.forRoot(),
-    AppClientTranslateModule.forRoot(),
-    AppClientGqlModule.forRoot(environment),
-    AppClientUtilElizaModule.forRoot(),
-    AppClientChatbotModule,
+    AppCoreModule.forRoot(environment),
+    AppMaterialModule.forRoot(),
+    AppTranslateModule.forRoot(),
+    AppGqlModule.forRoot(environment),
+    AppElizaModule.forRoot(),
+    AppChatbotModule,
     RouterModule.forRoot([]),
     AppRouterStoreModule.forRoot(),
   ],

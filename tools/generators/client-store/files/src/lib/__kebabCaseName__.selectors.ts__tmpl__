@@ -1,0 +1,11 @@
+import { createSelector } from '@ngrx/store';
+
+import { I<%= pascalCaseName %>State, I<%= pascalCaseName %>StateModel } from './<%= kebabCaseName %>.interface';
+
+const selectFeature = (state: I<%= pascalCaseName %>State) => state.<%= camelCaseName %>;
+
+const <%= camelCaseName %> = createSelector(selectFeature, (state: I<%= pascalCaseName %>StateModel) => state.<%= camelCaseName %>);
+
+export const <%= camelCaseName %>Selectors = {
+  <%= camelCaseName %>, // TODO
+};

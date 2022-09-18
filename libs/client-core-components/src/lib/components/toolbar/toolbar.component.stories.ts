@@ -3,7 +3,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppClientMaterialModule } from '@app/client-material';
+import { AppMaterialModule } from '@app/client-material';
 import { AppChatbotStoreModule } from '@app/client-store-chatbot';
 import { AppSidebarStoreModule } from '@app/client-store-sidebar';
 import { AppUserStoreModule } from '@app/client-store-user';
@@ -38,7 +38,7 @@ const story: Story<AppToolbarComponent> = (args: Args) => ({
       AppSidebarStoreModule.forRoot(),
       AppChatbotStoreModule.forRoot(),
       AppUserStoreModule.forRoot(),
-      AppClientMaterialModule.forRoot(),
+      AppMaterialModule.forRoot(),
     ],
     providers: [
       {

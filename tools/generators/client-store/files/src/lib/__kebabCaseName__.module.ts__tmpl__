@@ -1,0 +1,19 @@
+import { ModuleWithProviders, NgModule } from '@angular/core';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+
+import { App<%= pascalCaseName %>Effects } from './<%= kebabCaseName %>.effects';
+import { featureName, I<%= pascalCaseName %>State } from './<%= kebabCaseName %>.interface';
+import { App<%= pascalCaseName %>Reducer } from './<%= kebabCaseName %>.reducer';
+
+@NgModule({
+  imports: [StoreModule.forFeature<I<%= pascalCaseName %>State>(featureName, App<%= pascalCaseName %>Reducer.token), EffectsModule.forFeature([App<%= pascalCaseName %>Effects])],
+})
+export class App<%= pascalCaseName %>StoreModule {
+  public static forRoot(): ModuleWithProviders<App<%= pascalCaseName %>StoreModule> {
+    return {
+      ngModule: App<%= pascalCaseName %>StoreModule,
+      providers: [App<%= pascalCaseName %>Reducer.provider],
+    };
+  }
+}

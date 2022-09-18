@@ -2,8 +2,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AppClientMaterialModule } from '@app/client-material';
-import { AppClientPwaOfflineModule } from '@app/client-pwa-offline';
+import { AppMaterialModule } from '@app/client-material';
+import { AppPwaOfflineModule } from '@app/client-pwa-offline';
 import { AppRouterStoreModule } from '@app/client-store-router';
 import { documentProvider, windowProvider } from '@app/client-util';
 import { metaReducers } from '@app/client-util-ngrx';
@@ -47,8 +47,8 @@ const markdownModuleConfig: MarkdownModuleConfig = {
     FlexLayoutModule,
     StoreModule.forRoot({}, { metaReducers: metaReducers(environment.production) }),
     AppMdFilesStoreModule.forRoot(),
-    AppClientMaterialModule.forRoot(),
-    AppClientPwaOfflineModule,
+    AppMaterialModule.forRoot(),
+    AppPwaOfflineModule,
     AppDocRoutingModule,
     AppRouterStoreModule.forRoot(),
   ],

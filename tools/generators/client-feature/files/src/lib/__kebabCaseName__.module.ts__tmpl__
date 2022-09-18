@@ -1,0 +1,11 @@
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+
+import { App<%= pascalCaseName %>RoutingModule } from './<%= kebabCaseName %>-routing.module';
+import { App<%= pascalCaseName %>Component } from './components/<%= kebabCaseName %>/<%= kebabCaseName %>.component';
+
+@NgModule({
+  imports: [CommonModule, App<%= pascalCaseName %>RoutingModule],
+  declarations: [App<%= pascalCaseName %>Component],
+})
+export class App<%= pascalCaseName %>Module {}

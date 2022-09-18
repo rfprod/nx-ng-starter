@@ -31,7 +31,7 @@ Run `nx build client-d3-charts` to build the library.
 Import the charts module
 
 ```typescript
-import { AppClientD3ChartsModule } from '@app/client-d3-charts';
+import { AppD3ChartsModule } from '@app/client-d3-charts';
 ```
 
 ### As an external package
@@ -45,7 +45,7 @@ yarn add @rfprodz/client-d3-charts d3 @types/d3
 Import the charts module
 
 ```typescript
-import { AppClientD3ChartsModule } from '@rfprodz/client-d3-charts';
+import { AppD3ChartsModule } from '@rfprodz/client-d3-charts';
 ```
 
 ### Use the chart components

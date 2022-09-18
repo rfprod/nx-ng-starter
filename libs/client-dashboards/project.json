@@ -1,0 +1,42 @@
+{
+  "projectType": "library",
+  "sourceRoot": "libs/client-dashboards/src",
+  "prefix": "app",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/libs/client-dashboards"
+      ],
+      "options": {
+        "jestConfig": "libs/client-dashboards/jest.config.ts",
+        "passWithNoTests": true
+      }
+    },
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/client-dashboards/**/*.ts"
+        ],
+        "eslintConfig": "libs/client-dashboards/.eslintrc.json"
+      },
+      "outputs": [
+        "{options.outputFile}"
+      ]
+    },
+    "tsc-check": {
+      "executor": "./tools/executors/tsc:check",
+      "options": {
+        "tsConfig": "libs/client-dashboards/tsconfig.lib.json"
+      },
+      "outputs": [
+        "dist/out-tsc/libs/client-dashboards"
+      ]
+    }
+  },
+  "tags": [
+    "scope:client-dashboards",
+    "type:feature"
+  ]
+}

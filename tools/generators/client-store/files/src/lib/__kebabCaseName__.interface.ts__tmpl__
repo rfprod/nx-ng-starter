@@ -1,0 +1,9 @@
+export interface I<%= pascalCaseName %>StateModel {
+  <%= camelCaseName %>: boolean; // TODO
+}
+
+export interface I<%= pascalCaseName %>State {
+  <%= camelCaseName %>: I<%= pascalCaseName %>StateModel;
+}
+
+export const featureName: keyof I<%= pascalCaseName %>State = '<%= camelCaseName %>';

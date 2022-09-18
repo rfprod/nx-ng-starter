@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@an
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppMarkdownService } from '@app/client-services';
 import { AppHttpApiStoreModule, httpApiSelectors, IHttpApiState } from '@app/client-store-http-api';
-import { AppClientTranslateModule } from '@app/client-translate';
+import { AppTranslateModule } from '@app/client-translate';
 import {
   flushHttpRequests,
   getTestBedConfig,
@@ -22,7 +22,7 @@ describe('AppDiagnosticsInfoComponent', () => {
     declarations: [AppDiagnosticsInfoComponent],
     imports: [
       AppHttpApiStoreModule.forRoot(),
-      AppClientTranslateModule.forRoot(),
+      AppTranslateModule.forRoot(),
       RouterTestingModule.withRoutes([
         { path: '', component: AppDiagnosticsInfoComponent },
         { path: '', redirectTo: '', pathMatch: 'full' },

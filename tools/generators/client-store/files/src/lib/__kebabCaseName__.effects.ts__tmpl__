@@ -1,0 +1,25 @@
+import { Injectable } from '@angular/core';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+
+import { <%= camelCaseName %>Actions } from './<%= kebabCaseName %>.actions';
+import { I<%= pascalCaseName %>State } from './<%= kebabCaseName %>.interface';
+import { <%= camelCaseName %>Selectors } from './<%= kebabCaseName %>.selectors';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class App<%= pascalCaseName %>Effects {
+  public readonly action$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(<%= camelCaseName %>Actions.action.type),
+        mergeMap(() => of(null)), // TODO
+      ),
+    { dispatch: false },
+  );
+
+  constructor(private readonly actions$: Actions, private readonly store: Store<I<%= pascalCaseName %>State>) {}
+}

@@ -1,2 +1,2 @@
 export * from './lib/autoscroll/autoscroll.directive';
-export * from './lib/client-directives.module';
+export * from './lib/directives.module';

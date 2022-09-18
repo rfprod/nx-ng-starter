@@ -15,16 +15,16 @@
   },
   "generators": {
     "@nrwl/angular:application": {
-      "e2eTestRunner": "cypress",
-      "linter": "eslint",
       "style": "scss",
-      "unitTestRunner": "jest"
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
     },
     "@nrwl/angular:component": {
+      "style": "scss",
       "changeDetection": "OnPush",
       "inlineStyle": false,
-      "inlineTemplate": false,
-      "style": "scss"
+      "inlineTemplate": false
     },
     "@nrwl/angular:library": {
       "linter": "eslint",

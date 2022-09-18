@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
-import { AppClientUtilElizaModule } from '@app/client-util-eliza';
+import { AppElizaModule } from '@app/client-util-eliza';
 import { tap } from 'rxjs';
 
 import { AppChatbotRootComponent } from './chatbot-root.component';
 
 describe('AppChatbotRootComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [AppClientUtilElizaModule.forRoot()],
+    imports: [AppElizaModule.forRoot()],
     declarations: [AppChatbotRootComponent],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);

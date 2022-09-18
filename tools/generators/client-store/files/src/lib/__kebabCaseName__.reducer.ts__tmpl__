@@ -1,0 +1,29 @@
+import { Injectable, InjectionToken, Provider } from '@angular/core';
+import { ActionReducer, createReducer, on } from '@ngrx/store';
+
+import { <%= camelCaseName %>Actions } from './<%= kebabCaseName %>.actions';
+import { featureName, I<%= pascalCaseName %>StateModel } from './<%= kebabCaseName %>.interface';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class App<%= pascalCaseName %>Reducer {
+  public static readonly initialState: I<%= pascalCaseName %>StateModel = {
+    <%= camelCaseName %>: false,
+  };
+
+  public static readonly token = new InjectionToken<ActionReducer<I<%= pascalCaseName %>StateModel>>(`${featureName} reducer`);
+
+  public static readonly provider: Provider = {
+    provide: App<%= pascalCaseName %>Reducer.token,
+    deps: [App<%= pascalCaseName %>Reducer],
+    useFactory: (reducer: App<%= pascalCaseName %>Reducer) => reducer.createReducer(),
+  };
+
+  public createReducer() {
+    return createReducer(
+      App<%= pascalCaseName %>Reducer.initialState,
+      on(<%= camelCaseName %>Actions.toggle, state => ({ <%= camelCaseName %>: !state.<%= camelCaseName %> })),
+    );
+  }
+}

@@ -1,1 +1,1 @@
-export * from './lib/client-diagnostics.module';
+export * from './lib/diagnostics.module';

@@ -199,6 +199,10 @@ const clientConstraints = [
     ],
   },
   {
+    sourceTag: 'scope:client-dashboards',
+    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util'],
+  },
+  {
     sourceTag: 'scope:client-diagnostics',
     onlyDependOnLibsWithTags: [
       'scope:client-core',
@@ -282,6 +286,7 @@ const clientConstraints = [
       'scope:client-chatbot',
       'scope:client-core',
       'scope:client-core-components',
+      'scope:client-dashboards',
       'scope:client-diagnostics',
       'scope:client-gql',
       'scope:client-grpc',

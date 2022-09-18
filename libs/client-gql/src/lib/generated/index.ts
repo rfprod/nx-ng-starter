@@ -1,1 +1,1 @@
-export * from './client-gql.interface';
+export * from './gql.interface';

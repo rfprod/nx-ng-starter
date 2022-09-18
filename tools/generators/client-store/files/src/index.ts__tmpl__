@@ -1,5 +1,5 @@
-export * from './lib/<%= fileName %>.actions';
-export * from './lib/<%= fileName %>.interface';
-export * from './lib/<%= fileName %>.module';
-export * from './lib/<%= fileName %>.reducer';
-export * from './lib/<%= fileName %>.selectors';
+export * from './lib/<%= kebabCaseName %>.actions';
+export * from './lib/<%= kebabCaseName %>.interface';
+export * from './lib/<%= kebabCaseName %>.module';
+export * from './lib/<%= kebabCaseName %>.reducer';
+export * from './lib/<%= kebabCaseName %>.selectors';
