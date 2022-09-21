@@ -273,7 +273,7 @@ Visit the [Nx Documentation](https://nx.dev) to learn more.
 - [Angular Material](https://material.angular.io/)
 - [Apollo Angular](https://github.com/apollographql/apollo-angular)
 - [Material Design Guidelines](https://material.io)
-- [NGXS](https://www.ngxs.io/)
+- [NgRx](https://ngrx.io/)
 
 ### Server
 
