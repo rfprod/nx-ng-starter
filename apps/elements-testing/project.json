@@ -21,7 +21,7 @@
           "vendorChunk": false
         }
       },
-      "executor": "@nrwl/web:webpack",
+      "executor": "@nrwl/webpack:webpack",
       "options": {
         "assets": ["apps/elements-testing/src/favicon.ico", "apps/elements-testing/src/assets"],
         "baseHref": "/",
@@ -55,7 +55,7 @@
           "buildTarget": "elements-testing:build:production"
         }
       },
-      "executor": "@nrwl/web:dev-server",
+      "executor": "@nrwl/webpack:dev-server",
       "options": {
         "buildTarget": "elements-testing:build",
         "port": 4021
