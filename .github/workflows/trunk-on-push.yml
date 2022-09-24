@@ -105,19 +105,19 @@ jobs:
           npx nx run documentation:build-storybook
           cp -r ./dist/storybook/documentation ./dist/apps/documentation/assets/storybook
 
-      - name: Check repository owner
+      - name: Check origin
         if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
-        id: check-repo-owner
-        uses: ./.github/actions/check-repo-owner
+        id: check-origin
+        uses: ./.github/actions/check-origin
 
       - name: Deploy client
-        if: ${{ (steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true') && steps.check-repo-owner.outputs.origin == 'true' }}
+        if: ${{ (steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true') && steps.check-origin.outputs.origin == 'true' }}
         run: yarn firebase:deploy:ci:client || exit 1
         env:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
 
       - name: Deploy elements
-        if: ${{ (steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true') && steps.check-repo-owner.outputs.origin == 'true' }}
+        if: ${{ (steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true') && steps.check-origin.outputs.origin == 'true' }}
         run: |
           bash tools/shell/generate-elements-bootstrap-script.sh ./dist/apps elements
           yarn firebase:deploy:ci:elements || exit 1
@@ -125,14 +125,14 @@ jobs:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
 
       - name: Deploy documentation
-        if: ${{ (steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true') && steps.check-repo-owner.outputs.origin == 'true' }}
+        if: ${{ (steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true') && steps.check-origin.outputs.origin == 'true' }}
         run: yarn firebase:deploy:ci:documentation || exit 1
         env:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
 
       # This job works only with a paid plan such as Blaze (https://firebase.google.com/pricing/)
       # - name: Deploy api
-      #   if: ${{ (steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true') && steps.check-repo-owner.outputs.origin == 'true' }}
+      #   if: ${{ (steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true') && steps.check-origin.outputs.origin == 'true' }}
       #   run: |
       #     npx nx build api --configuration firebase
       #     yarn firebase:deploy:ci:api || exit 1

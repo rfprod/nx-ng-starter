@@ -1,0 +1,32 @@
+# For more information see:
+# - https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+# - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
+
+# The action can be referenced in workflows like:
+# ./.github/actions/check-changes
+
+name: check-changes
+description: Detect repository changes using Git.
+
+inputs:
+  premerge:
+    description: Indicates whether the git change detection should work versus one previous commit or origin/main.
+  trunk:
+    description: Trunk (default branch) name.
+    required: true
+    default: 'main'
+outputs:
+  changes:
+    description: JSON array with names of all filters matching any of changed files
+    value: ${{ steps.check-changes.outputs.changes }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Changes
+      id: check-changes
+      shell: bash
+      run: npx nx run tools:action-changes
+      env:
+        PREMERGE: ${{ inputs.premerge }}
+        TRUNK: ${{ inputs.trunk }}

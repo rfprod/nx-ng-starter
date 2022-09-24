@@ -4,6 +4,17 @@
   "sourceRoot": "tools",
   "tags": ["scope:tools", "type:workspace"],
   "targets": {
+    "action-changes": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/actions/changes.ts",
+            "forwardAllArgs": false
+          }
+        ]
+      }
+    },
     "action-codeowners": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {

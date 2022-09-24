@@ -15,7 +15,32 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    outputs:
+      changes: ${{ steps.check-changes.outputs.changes }}
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+        with:
+          node-version: 16.x
+
+      - name: Check changes
+        id: check-changes
+        uses: ./.github/actions/check-changes
+        with:
+          premerge: 'true'
+          trunk: 'main'
+
   premerge:
+    needs: checks
     runs-on: ubuntu-latest
 
     strategy:
@@ -29,73 +54,35 @@ jobs:
           fetch-depth: 0
           ref: ${{ github.event.pull_request.head.sha }}
 
-      - name: Detect changes
-        uses: dorny/paths-filter@v2
-        id: changes
-        with:
-          filters: |
-            nx:
-              - '.github/workflows/pr-validation.yml'
-              - 'apps/**'
-              - 'libs/**'
-              - 'tools/generators/**'
-              - 'tools/ts/**'
-              - 'tools/*.json'
-              - 'tsconfig*'
-              - 'nx.json'
-              - 'angular.json'
-              - 'babel.config.json'
-              - 'package.json'
-              - 'functions/package.json'
-              - 'jest*'
-              - '.eslint*'
-              - '.prettier*'
-              - '.protolint.yaml'
-              - '.stylelint*'
-            dependencies:
-              - 'yarn.lock'
-              - 'functions/package-lock.json'
-            electron:
-              - '.electron/**'
-              - 'index.js'
-            mobile:
-              - 'android/**'
-              - 'capacitor.config.json'
-            shelltools:
-              - 'tools/shell/**'
-            storybook:
-              - '.storybook/**'
-              - '*.stories.ts'
-
       - name: Setup environment
         uses: ./.github/actions/setup-environment
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Validate the commit messages
+      - name: Validate commit messages
         run: |
           git checkout -b premerge
           git fetch origin main:main
           npx --no-install commitlint --from main
 
-      - name: Lint affected
-        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
-        run: npx nx affected --target lint --base origin/main --head HEAD --parallel --max-parallel 2
-
       - name: Lint shell
-        if: steps.changes.outputs.shelltools == 'true'
+        if: needs.checks.outputs.changes.shelltools == 'true'
         run: |
           sudo apt install shellcheck
           yarn lint:shell
 
-      - name: Unit test affected (with code coverage)
-        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
+      - name: Lint affected
+        run: npx nx affected --target lint --base origin/main --head HEAD --parallel --max-parallel 2
+
+      - name: Unit test affected
         run: npx nx affected --target test --base origin/main --head HEAD --pass-with-no-tests --code-coverage --run-in-band --ci
 
-      - name: Build affected (development)
-        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
+      - name: Build affected
         run: npx nx affected --target build --base origin/main --head HEAD
 
-      - name: Build storybook
-        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.storybook == 'true' || steps.changes.outputs.dependencies == 'true' }}
+      - name: Build storybook affected
+        run: npx nx affected --target build-storybook --base origin/main --head HEAD
+
+      - name: Build global storybook
+        if: ${{ needs.checks.outputs.changes.storybook == 'true' || steps.checks.outputs.changes.dependencies == 'true' }}
         run: npx nx run documentation:build-storybook
