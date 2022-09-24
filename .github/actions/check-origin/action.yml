@@ -3,8 +3,8 @@
 # - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
 
 # The action can be referenced in workflows like:
-# - rfprod/nx-ng-starter/.github/actions/check-repo-owner@master
-# - ./.github/actions/check-repo-owner
+# - rfprod/nx-ng-starter/.github/actions/check-origin@master
+# - ./.github/actions/check-origin
 
 # Explanation:
 # This action is useful mainly for open source projects or those projects that accept contributions through a fork strategy.
@@ -12,7 +12,7 @@
 # When the repo is forked by a contributor, it does not make sence to run publish/deploy steps from a fork.
 # If this repo is used as a template to start a new project, one can reconfigure the default value of the 'original-owner' input in this file,
 
-name: check-repo-owner
+name: check-origin
 description: Checks the repository owner. The publish/deploy steps should not be triggered from forks.
 
 inputs:
@@ -27,13 +27,13 @@ inputs:
 outputs:
   origin:
     description: Indicates that the repository owner is the original owner which means that it is not a fork. Has two values - 'true' if the repo owner is the original owner, 'false' if the repo owner is not the original owner, i.e. it is a fork.
-    value: ${{ steps.check-repo-owner.outputs.origin }}
+    value: ${{ steps.check-origin.outputs.origin }}
 
 runs:
   using: 'composite'
   steps:
-    - name: Check repository owner
-      id: check-repo-owner
+    - name: Check origin
+      id: check-origin
       shell: bash
       run: |
         echo "Checking repository owner..."

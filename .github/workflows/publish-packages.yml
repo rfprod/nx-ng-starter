@@ -1,0 +1,74 @@
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: publish-packages
+
+on:
+  push:
+    branches: [main]
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.ref_name }}.${{ github.sha }}.publish-packages
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    outputs:
+      changes: ${{ steps.check-changes.outputs.changes }}
+      origin: ${{ steps.check-origin.outputs.origin }}
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+        with:
+          node-version: 16.x
+
+      - name: Check changes
+        id: check-changes
+        uses: ./.github/actions/check-changes
+
+      - name: Check origin
+        id: check-origin
+        uses: ./.github/actions/check-origin
+
+  publish-client-d3-charts:
+    needs: checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: NPM publish
+        if: ${{ needs.checks.outputs.origin == 'true' && needs.checks.outputs.changes.package-d3-charts == 'true' }}
+        uses: ./.github/actions/npm-publish
+        with:
+          node-version: 16.x
+          library-name: client-d3-charts
+          npm-automation-token: ${{ secrets.NPM_AUTOMATION_TOKEN }}
+
+  publish-client-util-eliza:
+    needs: checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: NPM publish
+        if: ${{ needs.checks.outputs.origin == 'true' && needs.checks.outputs.changes.package-eliza == 'true' }}
+        uses: ./.github/actions/npm-publish
+        with:
+          node-version: 16.x
+          library-name: client-util-eliza
+          npm-automation-token: ${{ secrets.NPM_AUTOMATION_TOKEN }}

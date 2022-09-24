@@ -1,39 +1,65 @@
-import { getMultilineInput, setOutput } from '@actions/core';
-import { execSync } from 'child_process';
+import { setOutput } from '@actions/core';
+import { spawnSync } from 'child_process';
+import { readFileSync } from 'fs';
 
 import { logger } from '../utils/logger';
 
-const patterns = getMultilineInput('patterns');
-logger.printInfo(patterns, 'patterns');
+const changesConfig = `${__dirname}/changes.json`;
+
+const changesFileContent = <NodeJS.ErrnoException | string>readFileSync(changesConfig, 'utf8');
+if (typeof changesFileContent !== 'string') {
+  logger.printError(changesFileContent);
+
+  process.exit(1);
+}
+
+const patternsObj = <Record<string, string[]>>JSON.parse(changesFileContent.trim());
+
+const patternKeys = Object.keys(patternsObj);
+
+const env = {
+  premerge: Boolean(process.env.PREMERGE),
+  trunk: process.env.TRUNK ?? 'main',
+};
 
 /**
  * Get pattern changes.
- * @param pattern glob pattern
+ * @param patterns glob patterns
  */
-const patternChanges = (pattern: string) => {
-  let stdout = '';
-  try {
-    const buffer = execSync(`git diff --name-only HEAD HEAD~1 | grep ${pattern}`);
-    stdout = buffer.toString();
-    logger.printInfo(stdout);
-  } catch (error) {
-    logger.printError(<Error>error);
-    process.exit(1);
-  }
-  return Boolean(stdout);
-};
-
-const changes = {};
-
-(async () => {
+const patternChanges = (patterns: string[]) => {
+  let output = '';
   for (let i = 0, max = patterns.length; i < max; i += 1) {
     const pattern = patterns[i];
-    const change = patternChanges(pattern);
-    changes[i] = change;
+
+    const compareWith = env.premerge ? `origin/${env.trunk}` : 'HEAD~1';
+    const command = `git diff --name-only HEAD ${compareWith} | grep "${pattern}"`;
+
+    const { error, stdout } = spawnSync(command, {
+      encoding: 'utf-8',
+      stdio: 'pipe',
+      shell: true,
+    });
+    if (typeof error !== 'undefined') {
+      logger.printError(error);
+      process.exit(1);
+    }
+    output = stdout.toString();
   }
-})().catch(error => {
-  logger.printError(error);
-  process.exit(1);
-});
+  return Boolean(output);
+};
+
+const changes = patternKeys.reduce((accumulator, item) => {
+  accumulator[item] = [];
+  return accumulator;
+}, {});
+
+for (let i = 0, max = patternKeys.length; i < max; i += 1) {
+  const patternKey = patternKeys[i];
+  const patterns = patternsObj[patternKey];
+  const change = patternChanges(patterns);
+  changes[patternKey] = change;
+}
+
+logger.printInfo(changes, 'changes');
 
 setOutput('changes', changes);
