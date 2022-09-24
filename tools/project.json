@@ -4,6 +4,17 @@
   "sourceRoot": "tools",
   "tags": ["scope:tools", "type:workspace"],
   "targets": {
+    "action-codeowners": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/actions/codeowners.ts",
+            "forwardAllArgs": false
+          }
+        ]
+      }
+    },
     "compodoc-build": {
       "executor": "@nrwl/workspace:run-commands",
       "options": {
@@ -32,17 +43,6 @@
         "commands": [
           {
             "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/coverage-stats.ts",
-            "forwardAllArgs": false
-          }
-        ]
-      }
-    },
-    "get-codeowners": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "commands": [
-          {
-            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/actions/get-codeowners.ts",
             "forwardAllArgs": false
           }
         ]
