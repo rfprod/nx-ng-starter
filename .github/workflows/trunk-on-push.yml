@@ -61,6 +61,7 @@ jobs:
         if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
         uses: ./.github/actions/setup-environment
         with:
+          compodoc: true
           cypress: true
           firebase-tools: true
 
