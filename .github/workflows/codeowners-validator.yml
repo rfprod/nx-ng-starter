@@ -26,8 +26,6 @@ jobs:
 
       - name: Setup environment
         uses: ./.github/actions/setup-environment
-        with:
-          node-version: 16.x
 
       - name: Get codeowners
         id: get-codeowners

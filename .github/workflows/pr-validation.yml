@@ -29,8 +29,6 @@ jobs:
 
       - name: Setup environment
         uses: ./.github/actions/setup-environment
-        with:
-          node-version: 16.x
 
       - name: Check changes
         id: check-changes
