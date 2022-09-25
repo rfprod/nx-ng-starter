@@ -30,8 +30,6 @@ jobs:
 
       - name: Setup environment
         uses: ./.github/actions/setup-environment
-        with:
-          node-version: 16.x
 
       - name: Check changes
         id: check-changes
@@ -53,7 +51,6 @@ jobs:
         if: ${{ needs.checks.outputs.origin == 'true' && needs.checks.outputs.changes.package-d3-charts == 'true' }}
         uses: ./.github/actions/npm-publish
         with:
-          node-version: 16.x
           library-name: client-d3-charts
           npm-automation-token: ${{ secrets.NPM_AUTOMATION_TOKEN }}
 
@@ -69,6 +66,5 @@ jobs:
         if: ${{ needs.checks.outputs.origin == 'true' && needs.checks.outputs.changes.package-eliza == 'true' }}
         uses: ./.github/actions/npm-publish
         with:
-          node-version: 16.x
           library-name: client-util-eliza
           npm-automation-token: ${{ secrets.NPM_AUTOMATION_TOKEN }}

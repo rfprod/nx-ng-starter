@@ -22,30 +22,19 @@ jobs:
   docker-build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.x]
-
     steps:
       - name: Print inputs
         run: |
           echo "Dry run: ${{ github.event.inputs.dryRun }}"
 
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
       - name: Setup environment
         uses: ./.github/actions/setup-environment
         with:
-          node-version: ${{ matrix.node-version }}
-
-      - name: Install global dependencies
-        run: |
-          npm i -g @compodoc/compodoc
-          npx cypress install
-
-      - name: Workspace integrity check
-        run: yarn workspace:integrity-check
-
-      - name: Install project dependencies
-        run: yarn install:ci
+          compodoc: true
+          cypress: true
 
       - name: Unit test all (with code coverage)
         run: |
@@ -68,11 +57,11 @@ jobs:
           yarn e2e:report || exit 1
 
       - name: Check repository owner
-        id: check-repo-owner
-        uses: ./.github/actions/check-repo-owner
+        id: check-origin
+        uses: ./.github/actions/check-origin
 
       - name: Docker login
-        if: ${{ steps.check-repo-owner.outputs.origin == 'true' }}
+        if: ${{ steps.check-origin.outputs.origin == 'true' }}
         run: yarn docker:login "$DOCKER_REGISTRY_USER" "$DOCKER_REGISTRY_ACCESS_TOKEN"
         env:
           DOCKER_REGISTRY_USER: ${{ secrets.DOCKER_REGISTRY_USER }}
@@ -87,7 +76,7 @@ jobs:
           yarn docker:build documentation
 
       - name: Docker push apps
-        if: ${{ github.event.inputs.dryRun == 'false' && steps.check-repo-owner.outputs.origin == 'true' }}
+        if: ${{ github.event.inputs.dryRun == 'false' && steps.check-origin.outputs.origin == 'true' }}
         run: |
           yarn docker:push base
           yarn docker:push api-production

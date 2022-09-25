@@ -10,6 +10,18 @@ name: setup-environment
 description: Set up the environment. This composite action should be used in two workflows - pr-validation and trunk-on-push.
 
 inputs:
+  compodoc:
+    description: Install compodoc as a global npm package to build documentation
+    required: true
+    default: 'false'
+  cypress:
+    description: Install cypress to run e2e tests
+    required: true
+    default: 'false'
+  firebase-tools:
+    description: Install firebase-tools as a global npm package to deploy to firebase
+    required: true
+    default: 'false'
   node-version:
     description: NodeJS version
     required: true
@@ -47,3 +59,17 @@ runs:
     - name: Install project dependencies
       shell: bash
       run: yarn install:ci
+
+    - name: Install global compodoc
+      if: inputs.compodoc == 'true'
+      shell: bash
+      run: |
+        npm i -g @compodoc/compodoc
+        npx cypress install
+
+    - name: Install cypress
+      if: inputs.cypress == 'true'
+      shell: bash
+      run: |
+        npm i -g @compodoc/compodoc
+        npx cypress install

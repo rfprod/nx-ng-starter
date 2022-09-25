@@ -17,31 +17,14 @@ jobs:
   e2e-test:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.x]
-
     steps:
       - name: Checkout sources
         uses: actions/checkout@v3
 
-      - name: Disable session history
-        uses: ./.github/actions/disable-session-history
-
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
         with:
-          node-version: ${{ matrix.node-version }}
-          check-latest: true
-
-      - name: Configure kernel
-        uses: ./.github/actions/configure-kernel
-
-      - name: Install project dependencies
-        run: yarn install:ci
-
-      - name: Install Cypress
-        run: npx cypress install
+          cypress: true
 
       - name: E2E all
         run: |
