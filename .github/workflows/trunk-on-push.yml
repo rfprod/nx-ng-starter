@@ -15,77 +15,71 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test-build-deploy:
+  checks:
+    runs-on: ubuntu-latest
+
+    outputs:
+      changes: ${{ steps.check-changes.outputs.changes }}
+      origin: ${{ steps.check-origin.outputs.origin }}
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+
+      - name: Check changes
+        id: check-changes
+        uses: ./.github/actions/check-changes
+
+      - name: Check origin
+        id: check-origin
+        uses: ./.github/actions/check-origin
+
+  trunk:
+    needs: checks
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout sources
         uses: actions/checkout@v3
 
-      - name: Detect changes
-        uses: dorny/paths-filter@v2
-        id: changes
-        with:
-          filters: |
-            nx:
-              - '.github/workflows/trunk-on-push.yml'
-              - '.storybook/**'
-              - 'apps/**'
-              - 'libs/**'
-              - 'tools/generators/**'
-              - 'tools/shell/**'
-              - 'tools/ts/**'
-              - 'tools/*.json'
-              - 'tsconfig*'
-              - 'nx.json'
-              - 'angular.json'
-              - 'babel.config.json'
-              - 'package.json'
-              - 'functions/package.json'
-              - 'jest*'
-              - '.eslint*'
-              - '.prettier*'
-              - '.protolint.yaml'
-              - '.stylelint*'
-            dependencies:
-              - 'yarn.lock'
-              - 'functions/package-lock.json'
-            electron:
-              - '.electron/**'
-              - 'index.js'
-            mobile:
-              - 'android/**'
-              - 'capacitor.config.json'
-
       - name: Setup environment
-        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
+        if: ${{ needs.checks.outputs.changes.dependencies == 'true' || needs.checks.outputs.changes.src == 'true' || needs.checks.outputs.changes.storybook == 'true' }}
         uses: ./.github/actions/setup-environment
         with:
           compodoc: true
           cypress: true
           firebase-tools: true
 
-      - name: Lint all
-        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
+      - name: Lint shell
+        if: needs.checks.outputs.changes.shelltools == 'true'
+        run: |
+          sudo apt install shellcheck
+          yarn lint:shell
+
+      - name: Lint
+        if: ${{ needs.checks.outputs.changes.dependencies == 'true' || needs.checks.outputs.changes.src == 'true' }}
         run: npx nx run-many --target lint --all --parallel --max-parallel 2
 
-      - name: Unit test all (with code coverage)
-        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
+      - name: Unit test
+        if: ${{ needs.checks.outputs.changes.dependencies == 'true' || needs.checks.outputs.changes.src == 'true' || needs.checks.outputs.changes.storybook == 'true' }}
         run: |
           npx nx run-many --target test --all --pass-with-no-tests --code-coverage --run-in-band --ci
           npx nx run tools:coverage-stats
           cat ./UNIT_COVERAGE.md
 
-      - name: Build all (production)
-        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
+      - name: Build
+        if: ${{ needs.checks.outputs.changes.dependencies == 'true' || needs.checks.outputs.changes.src == 'true' || needs.checks.outputs.changes.storybook == 'true' }}
         run: |
           yarn generate:env:documentation
           npx nx run-many --target configure-env --all
           npx nx run-many --target build --all --configuration production
           npx nx run-many --target configure-env --all --reset
 
-      - name: Build documentation app assets
-        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
+      - name: Documentation assets
+        if: ${{ needs.checks.outputs.changes.dependencies == 'true' || needs.checks.outputs.changes.src == 'true' || needs.checks.outputs.changes.storybook == 'true' }}
         run: |
           yarn test:reports
           yarn generate:unit-test-coverage-index
@@ -97,19 +91,14 @@ jobs:
           npx nx run documentation:build-storybook
           cp -r ./dist/storybook/documentation ./dist/apps/documentation/assets/storybook
 
-      - name: Check origin
-        if: ${{ steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true' }}
-        id: check-origin
-        uses: ./.github/actions/check-origin
-
       - name: Deploy client
-        if: ${{ (steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true') && steps.check-origin.outputs.origin == 'true' }}
+        if: ${{ (needs.checks.outputs.changes.dependencies == 'true' || needs.checks.outputs.changes.src == 'true') && needs.checks.outputs.origin == 'true' }}
         run: yarn firebase:deploy:ci:client || exit 1
         env:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
 
       - name: Deploy elements
-        if: ${{ (steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true') && steps.check-origin.outputs.origin == 'true' }}
+        if: ${{ (needs.checks.outputs.changes.dependencies == 'true' || needs.checks.outputs.changes.src == 'true') && needs.checks.outputs.origin == 'true' }}
         run: |
           bash tools/shell/generate-elements-bootstrap-script.sh ./dist/apps elements
           yarn firebase:deploy:ci:elements || exit 1
@@ -117,14 +106,14 @@ jobs:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
 
       - name: Deploy documentation
-        if: ${{ (steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true') && steps.check-origin.outputs.origin == 'true' }}
+        if: ${{ (needs.checks.outputs.changes.dependencies == 'true' || needs.checks.outputs.changes.src == 'true' || needs.checks.outputs.changes.storybook == 'true') && needs.checks.outputs.origin == 'true' }}
         run: yarn firebase:deploy:ci:documentation || exit 1
         env:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
 
       # This job works only with a paid plan such as Blaze (https://firebase.google.com/pricing/)
       # - name: Deploy api
-      #   if: ${{ (steps.changes.outputs.nx == 'true' || steps.changes.outputs.dependencies == 'true') && steps.check-origin.outputs.origin == 'true' }}
+      #   if: ${{ (needs.checks.outputs.changes.dependencies == 'true' || needs.checks.outputs.changes.src == 'true') && needs.checks.outputs.origin == 'true' }}
       #   run: |
       #     npx nx build api --configuration firebase
       #     yarn firebase:deploy:ci:api || exit 1
