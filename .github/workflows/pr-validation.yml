@@ -76,5 +76,5 @@ jobs:
         run: npx nx affected --target build-storybook --base origin/main --head HEAD
 
       - name: Build global storybook
-        if: ${{ needs.checks.outputs.changes.storybook == 'true' || needs.checks.outputs.changes.dependencies == 'true' }}
+        if: ${{ needs.checks.outputs.changes.dependencies == 'true' || needs.checks.outputs.changes.storybook == 'true' || needs.checks.outputs.changes.src == 'true' }}
         run: npx nx run documentation:build-storybook
