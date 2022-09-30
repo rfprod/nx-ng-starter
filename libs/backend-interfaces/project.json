@@ -5,7 +5,7 @@
   "tags": ["scope:backend-interfaces", "type:util"],
   "targets": {
     "generate-client-definitions": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           {
