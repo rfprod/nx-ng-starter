@@ -10,7 +10,7 @@ name: validate-codeowners
 description: Uses GitHub API to validate that a codeowner is a repo collaborator.
 
 inputs:
-  collaborator:
+  name:
     description: A collaborator name
     required: true
 
@@ -18,11 +18,10 @@ runs:
   using: 'composite'
   steps:
     - name: Validate codeowner
-      shell: bash
       uses: octokit/request-action@v2.x
       with:
         route: GET /repos/{repository}/collaborators/{collaborator}
         repository: ${{ github.repository }}
-        collaborator: ${{ inputs.collaborator }}
+        collaborator: ${{ inputs.name }}
       env:
         GITHUB_TOKEN: ${{ github.token }}

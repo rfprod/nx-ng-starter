@@ -74,3 +74,9 @@ runs:
       if: inputs.firebase-tools == 'true'
       shell: bash
       run: npm i -g firebase-tools
+
+    - name: Install secure depete
+      shell: bash
+      run: |
+        sudo apt update
+        sudo apt install secure-delete

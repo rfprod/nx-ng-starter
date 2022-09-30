@@ -47,6 +47,13 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v3
 
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+        with:
+          compodoc: false
+          cypress: false
+          firebase-tools: false
+
       - name: NPM publish
         if: ${{ needs.checks.outputs.origin == 'true' && needs.checks.outputs.changes.package-d3-charts == 'true' }}
         uses: ./.github/actions/npm-publish
@@ -61,6 +68,13 @@ jobs:
     steps:
       - name: Checkout sources
         uses: actions/checkout@v3
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+        with:
+          compodoc: false
+          cypress: false
+          firebase-tools: false
 
       - name: NPM publish
         if: ${{ needs.checks.outputs.origin == 'true' && needs.checks.outputs.changes.package-eliza == 'true' }}
