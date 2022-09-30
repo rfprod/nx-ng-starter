@@ -18,7 +18,6 @@ runs:
   using: 'composite'
   steps:
     - name: Validate codeowner
-      shell: bash
       uses: octokit/request-action@v2.x
       with:
         route: GET /repos/{repository}/collaborators/{collaborator}

@@ -10,10 +10,6 @@ name: npm-publish
 description: Publish a library to NPM. This composite action should be only used in workflows that publish specific libraries to npm.
 
 inputs:
-  node-version:
-    description: NodeJS version
-    required: true
-    default: 16.x
   library-name:
     description: Name of the library to publish
     required: true
@@ -24,22 +20,6 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Disable session history
-      uses: ./.github/actions/disable-session-history
-
-    - name: Use Node.js ${{ inputs.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ inputs.node-version }}
-        check-latest: true
-
-    - name: Install dependencies
-      shell: bash
-      run: |
-        yarn install:ci
-        sudo apt update
-        sudo apt install secure-delete
-
     - name: Build ${{ inputs.library-name }}
       shell: bash
       run: npx nx build ${{ inputs.library-name }}
