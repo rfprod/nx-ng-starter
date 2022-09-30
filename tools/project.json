@@ -5,7 +5,7 @@
   "tags": ["scope:tools", "type:workspace"],
   "targets": {
     "action-changes": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           {
@@ -16,7 +16,7 @@
       }
     },
     "action-codeowners": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           {
@@ -27,7 +27,7 @@
       }
     },
     "compodoc-build": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           {
@@ -38,7 +38,7 @@
       }
     },
     "compodoc-serve": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           {
@@ -49,7 +49,7 @@
       }
     },
     "coverage-stats": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           {
@@ -60,7 +60,7 @@
       }
     },
     "help": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           {
@@ -92,7 +92,7 @@
       }
     },
     "update-check": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           {
@@ -103,7 +103,7 @@
       }
     },
     "update-migrate": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           {
@@ -114,7 +114,7 @@
       }
     },
     "update-migrate-bulk-confirm": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           {
@@ -125,7 +125,7 @@
       }
     },
     "update-migrate-only": {
-      "executor": "@nrwl/workspace:run-commands",
+      "executor": "nx:run-commands",
       "options": {
         "commands": [
           {
