@@ -3,8 +3,9 @@
 # - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
 
 # The action can be referenced in workflows like:
-# - rfprod/nx-ng-starter/.github/actions/configure-kernel@main
-# ./.github/actions/configure-kernel
+# uses: rfprod/nx-ng-starter/.github/actions/configure-kernel@main
+# or
+# uses: ./.github/actions/configure-kernel
 
 name: configure-kernel
 description: Configure kernel (increase watchers).

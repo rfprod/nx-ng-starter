@@ -3,8 +3,9 @@
 # - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
 
 # The action can be referenced in workflows like:
-# - rfprod/nx-ng-starter/.github/actions/use-yarn-v1@main
-# ./.github/actions/use-yarn-v1
+# uses: rfprod/nx-ng-starter/.github/actions/use-yarn-v1@main
+# or
+# uses: ./.github/actions/use-yarn-v1
 
 name: use-yarn-v1
 description: Use yarn v1.22.19. This is mandatory, yarn v2 does not have integrity check which is needed for the pipeline.

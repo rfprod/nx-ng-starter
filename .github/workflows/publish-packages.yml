@@ -19,14 +19,12 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      changes: ${{ steps.check-changes.outputs.changes }}
+      changes: ${{ fromJSON(steps.check-changes.outputs.changes) }}
       origin: ${{ steps.check-origin.outputs.origin }}
 
     steps:
       - name: Checkout sources
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - name: Setup environment
         uses: ./.github/actions/setup-environment
@@ -55,7 +53,7 @@ jobs:
           firebase-tools: false
 
       - name: NPM publish
-        if: ${{ needs.checks.outputs.origin == 'true' && needs.checks.outputs.changes.package-d3-charts == 'true' }}
+        if: ${{ fromJSON(needs.checks.outputs).origin == 'true' && fromJSON(needs.checks.outputs.changes).package-d3-charts == 'true' }}
         uses: ./.github/actions/npm-publish
         with:
           library-name: client-d3-charts
@@ -77,7 +75,7 @@ jobs:
           firebase-tools: false
 
       - name: NPM publish
-        if: ${{ needs.checks.outputs.origin == 'true' && needs.checks.outputs.changes.package-eliza == 'true' }}
+        if: ${{ fromJSON(needs.checks.outputs).origin == 'true' && fromJSON(needs.checks.outputs.changes).package-eliza == 'true' }}
         uses: ./.github/actions/npm-publish
         with:
           library-name: client-util-eliza
