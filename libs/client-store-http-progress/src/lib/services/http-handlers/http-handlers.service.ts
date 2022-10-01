@@ -10,11 +10,12 @@ import {
   ServerParseError,
   split,
   UriFunction,
-} from '@apollo/client/core';
+} from '@apollo/client/core/';
 import { ErrorResponse, onError } from '@apollo/client/link/error';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { HTTP_STATUS, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngrx/store';
+import { MutationResult } from 'apollo-angular';
 import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
 import { createUploadLink } from 'apollo-upload-client';
 import memo from 'memo-decorator';
@@ -97,12 +98,12 @@ export class AppHttpHandlersService {
    * @param observable input observable
    * @returns a piped observable
    */
-  public pipeGqlResponse<T>(observable: Observable<ApolloQueryResult<T> | FetchResult<T>>) {
+  public pipeGqlResponse<T>(observable: Observable<ApolloQueryResult<T> | FetchResult<T> | MutationResult<T>>) {
     this.store.dispatch(httpProgressActions.start({ payload: { mainView: true } }));
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
       this.tapError(),
-      map(result => result.data),
+      map(result => ('data' in result ? result.data : result)),
       catchError(err => this.handleGqlError(err)),
       finalize(() => {
         this.store.dispatch(httpProgressActions.stop({ payload: { mainView: true } }));

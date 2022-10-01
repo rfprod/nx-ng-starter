@@ -58,7 +58,7 @@ jobs:
           npx --no-install commitlint --from main
 
       - name: Lint shell
-        if: needs.checks.outputs.changes.shelltools == 'true'
+        if: fromJSON(needs.checks.outputs.changes).shelltools == 'true'
         run: |
           sudo apt install shellcheck
           yarn lint:shell
@@ -76,5 +76,5 @@ jobs:
         run: npx nx affected --target build-storybook --base origin/main --head HEAD
 
       - name: Build global storybook
-        if: ${{ needs.checks.outputs.changes.dependencies == 'true' || needs.checks.outputs.changes.storybook == 'true' || needs.checks.outputs.changes.src == 'true' }}
+        if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' }}
         run: npx nx run documentation:build-storybook

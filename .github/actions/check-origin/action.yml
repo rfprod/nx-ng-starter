@@ -3,8 +3,9 @@
 # - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
 
 # The action can be referenced in workflows like:
-# - rfprod/nx-ng-starter/.github/actions/check-origin@master
-# - ./.github/actions/check-origin
+# uses: rfprod/nx-ng-starter/.github/actions/check-origin@main
+# or
+# uses: ./.github/actions/check-origin
 
 # Explanation:
 # This action is useful mainly for open source projects or those projects that accept contributions through a fork strategy.

@@ -3,8 +3,9 @@
 # - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
 
 # The action can be referenced in workflows like:
-# - rfprod/nx-ng-starter/.github/actions/workspace-cache@main
-# - ./.github/actions/workspace-cache
+# uses: rfprod/nx-ng-starter/.github/actions/workspace-cache@main
+# or
+# uses: ./.github/actions/workspace-cache
 
 name: workspace-cache
 description: Configure and use workspace cache.

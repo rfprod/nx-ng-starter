@@ -46,7 +46,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup environment
-        if: ${{ needs.checks.outputs.changes.dependencies == 'true' || needs.checks.outputs.changes.src == 'true' || needs.checks.outputs.changes.storybook == 'true' }}
+        if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' }}
         uses: ./.github/actions/setup-environment
         with:
           compodoc: true
@@ -60,18 +60,18 @@ jobs:
           yarn lint:shell
 
       - name: Lint
-        if: ${{ needs.checks.outputs.changes.dependencies == 'true' || needs.checks.outputs.changes.src == 'true' }}
+        if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' }}
         run: npx nx run-many --target lint --all --parallel --max-parallel 2
 
       - name: Unit test
-        if: ${{ needs.checks.outputs.changes.dependencies == 'true' || needs.checks.outputs.changes.src == 'true' || needs.checks.outputs.changes.storybook == 'true' }}
+        if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' }}
         run: |
           npx nx run-many --target test --all --pass-with-no-tests --code-coverage --run-in-band --ci
           npx nx run tools:coverage-stats
           cat ./UNIT_COVERAGE.md
 
       - name: Build
-        if: ${{ needs.checks.outputs.changes.dependencies == 'true' || needs.checks.outputs.changes.src == 'true' || needs.checks.outputs.changes.storybook == 'true' }}
+        if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' }}
         run: |
           yarn generate:env:documentation
           npx nx run-many --target configure-env --all
@@ -79,7 +79,7 @@ jobs:
           npx nx run-many --target configure-env --all --reset
 
       - name: Documentation assets
-        if: ${{ needs.checks.outputs.changes.dependencies == 'true' || needs.checks.outputs.changes.src == 'true' || needs.checks.outputs.changes.storybook == 'true' }}
+        if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' }}
         run: |
           yarn test:reports
           yarn generate:unit-test-coverage-index
@@ -92,13 +92,13 @@ jobs:
           cp -r ./dist/storybook/documentation ./dist/apps/documentation/assets/storybook
 
       - name: Deploy client
-        if: ${{ (needs.checks.outputs.changes.dependencies == 'true' || needs.checks.outputs.changes.src == 'true') && needs.checks.outputs.origin == 'true' }}
+        if: ${{ (fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true') && needs.checks.outputs.origin == 'true' }}
         run: yarn firebase:deploy:ci:client || exit 1
         env:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
 
       - name: Deploy elements
-        if: ${{ (needs.checks.outputs.changes.dependencies == 'true' || needs.checks.outputs.changes.src == 'true') && needs.checks.outputs.origin == 'true' }}
+        if: ${{ (fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true') && needs.checks.outputs.origin == 'true' }}
         run: |
           bash tools/shell/generate-elements-bootstrap-script.sh ./dist/apps elements
           yarn firebase:deploy:ci:elements || exit 1
@@ -106,14 +106,14 @@ jobs:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
 
       - name: Deploy documentation
-        if: ${{ (needs.checks.outputs.changes.dependencies == 'true' || needs.checks.outputs.changes.src == 'true' || needs.checks.outputs.changes.storybook == 'true') && needs.checks.outputs.origin == 'true' }}
+        if: ${{ (fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true') && needs.checks.outputs.origin == 'true' }}
         run: yarn firebase:deploy:ci:documentation || exit 1
         env:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
 
       # This job works only with a paid plan such as Blaze (https://firebase.google.com/pricing/)
       # - name: Deploy api
-      #   if: ${{ (needs.checks.outputs.changes.dependencies == 'true' || needs.checks.outputs.changes.src == 'true') && needs.checks.outputs.origin == 'true' }}
+      #   if: ${{ (fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true') && needs.checks.outputs.origin == 'true' }}
       #   run: |
       #     npx nx build api --configuration firebase
       #     yarn firebase:deploy:ci:api || exit 1

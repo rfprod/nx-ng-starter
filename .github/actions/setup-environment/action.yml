@@ -3,8 +3,9 @@
 # - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
 
 # The action can be referenced in workflows like:
-# - rfprod/nx-ng-starter/.github/actions/setup-environment@main
-# - ./.github/actions/setup-environment
+# uses: rfprod/nx-ng-starter/.github/actions/setup-environment@main
+# or
+# uses: ./.github/actions/setup-environment
 
 name: setup-environment
 description: Set up the environment. This composite action should be used in two workflows - pr-validation and trunk-on-push.

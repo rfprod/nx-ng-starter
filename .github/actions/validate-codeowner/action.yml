@@ -3,8 +3,9 @@
 # - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
 
 # The action can be referenced in workflows like:
-# - rfprod/nx-ng-starter/.github/actions/validate-codeowners@main
-# ./.github/actions/validate-codeowners
+# uses: rfprod/nx-ng-starter/.github/actions/validate-codeowners@main
+# or
+# uses: ./.github/actions/validate-codeowners
 
 name: validate-codeowners
 description: Uses GitHub API to validate that a codeowner is a repo collaborator.
