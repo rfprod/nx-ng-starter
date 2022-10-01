@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      changes: ${{ fromJSON(steps.check-changes.outputs.changes) }}
+      changes: ${{ steps.check-changes.outputs.changes }}
       origin: ${{ steps.check-origin.outputs.origin }}
 
     steps:
