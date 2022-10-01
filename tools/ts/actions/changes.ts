@@ -48,8 +48,8 @@ const patternChanges = (patterns: string[]) => {
   return Boolean(output);
 };
 
-const changes = patternKeys.reduce((accumulator: Record<string, boolean>, item) => {
-  accumulator[item] = false;
+const changes = patternKeys.reduce((accumulator: Record<string, string>, item) => {
+  accumulator[item] = 'false';
   return accumulator;
 }, {});
 
@@ -57,7 +57,7 @@ for (let i = 0, max = patternKeys.length; i < max; i += 1) {
   const patternKey = patternKeys[i];
   const patterns = patternsObj[patternKey];
   const change = patternChanges(patterns);
-  changes[patternKey] = change;
+  changes[patternKey] = String(change);
 }
 
 logger.printInfo(changes, 'changes');

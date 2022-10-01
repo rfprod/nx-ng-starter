@@ -54,17 +54,17 @@ jobs:
           firebase-tools: true
 
       - name: Lint shell
-        if: needs.checks.outputs.changes.shelltools == 'true'
+        if: fromJSON(needs.checks.outputs.changes).shelltools == 'true'
         run: |
           sudo apt install shellcheck
           yarn lint:shell
 
       - name: Lint
-        if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' }}
+        if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' }}
         run: npx nx run-many --target lint --all --parallel --max-parallel 2
 
       - name: Unit test
-        if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' }}
+        if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' }}
         run: |
           npx nx run-many --target test --all --pass-with-no-tests --code-coverage --run-in-band --ci
           npx nx run tools:coverage-stats
