@@ -27,7 +27,7 @@ const env = {
  * @param patterns glob patterns
  */
 const patternChanges = (patterns: string[]) => {
-  let output = '';
+  let output = 'false';
   for (let i = 0, max = patterns.length; i < max; i += 1) {
     const pattern = patterns[i];
 
@@ -43,9 +43,11 @@ const patternChanges = (patterns: string[]) => {
       logger.printError(error);
       process.exit(1);
     }
-    output = stdout.toString();
+    if (stdout.length > 0) {
+      output = 'true';
+    }
   }
-  return Boolean(output);
+  return output;
 };
 
 const changes = patternKeys.reduce((accumulator: Record<string, string>, item) => {
@@ -57,7 +59,7 @@ for (let i = 0, max = patternKeys.length; i < max; i += 1) {
   const patternKey = patternKeys[i];
   const patterns = patternsObj[patternKey];
   const change = patternChanges(patterns);
-  changes[patternKey] = String(change);
+  changes[patternKey] = change;
 }
 
 logger.printInfo(changes, 'changes');
