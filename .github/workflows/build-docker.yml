@@ -36,11 +36,11 @@ jobs:
           compodoc: true
           cypress: true
 
-      - name: Unit test all (with code coverage)
+      - name: Unit test all
         run: |
           npx nx run-many --target test --all --pass-with-no-tests --code-coverage --run-in-band --ci
           npx nx run tools:coverage-stats
-          cat ./tools/ts/UNIT_COVERAGE.md
+          cat ./UNIT_COVERAGE.md
 
       - name: Build all (production)
         run: |
