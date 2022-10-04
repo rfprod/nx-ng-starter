@@ -87,5 +87,5 @@ primary.parameters = {
    * Use legacy Angular renderer.
    * See docs https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-angular-renderer
    */
-  angularLegacyRendering: true,
+  // angularLegacyRendering: true,
 };

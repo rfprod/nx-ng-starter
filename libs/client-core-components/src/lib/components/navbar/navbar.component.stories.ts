@@ -1,18 +1,17 @@
 import { APP_BASE_HREF, DOCUMENT, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRoute, Router, RouterModule, UrlTree } from '@angular/router';
 import { AppMaterialModule } from '@app/client-material';
 import { AppRouterStoreModule } from '@app/client-store-router';
 import { AppSidebarStoreModule } from '@app/client-store-sidebar';
 import { documentFactory, routerButton, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@app/client-util';
 import { EffectsModule } from '@ngrx/effects';
-import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
 import { Args, Story } from '@storybook/angular/types-6-0';
 import { of } from 'rxjs';
 
+import { AppTooltipDirective } from '../tooltip/tooltip.directive';
 import { AppNavbarComponent } from './navbar.component';
 
 const testingEnvironment = {
@@ -33,12 +32,11 @@ const story: Story<AppNavbarComponent> = (args: Args) => ({
     imports: [
       BrowserAnimationsModule,
       FlexLayoutModule,
-      RouterTestingModule,
-      StoreModule.forRoot({ router: routerReducer }),
+      AppMaterialModule.forRoot(),
+      StoreModule.forRoot({}),
       EffectsModule.forRoot(),
       AppSidebarStoreModule.forRoot(),
-      AppMaterialModule.forRoot(),
-      StoreRouterConnectingModule.forRoot(),
+      RouterModule,
       AppRouterStoreModule.forRoot(),
     ],
     providers: [
@@ -47,7 +45,13 @@ const story: Story<AppNavbarComponent> = (args: Args) => ({
         useValue: {
           events: of(true),
           navigate: () => new Promise<boolean>(resolve => resolve(true)),
+          createUrlTree: () => [],
+          serializeUrl: (url: UrlTree) => url.toString(),
         },
+      },
+      {
+        provide: ActivatedRoute,
+        useValue: {},
       },
       {
         provide: LocationStrategy,
@@ -61,7 +65,7 @@ const story: Story<AppNavbarComponent> = (args: Args) => ({
         useValue: testingEnvironment,
       },
     ],
-    declarations: [AppNavbarComponent],
+    declarations: [AppNavbarComponent, AppTooltipDirective],
   },
   props: {
     ...args,
@@ -83,5 +87,5 @@ primary.parameters = {
    * Use legacy Angular renderer.
    * See docs https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-angular-renderer
    */
-  angularLegacyRendering: true,
+  // angularLegacyRendering: true,
 };

@@ -31,6 +31,24 @@
           "outputHashing": "all",
           "sourceMap": false,
           "vendorChunk": false
+        },
+        "storybook": {
+          "assets": [
+            {
+              "glob": "**/*.*",
+              "input": "./libs/client-core/src/lib/assets",
+              "output": "assets"
+            }
+          ],
+          "polyfills": "",
+          "scripts": [],
+          "styles": [
+            "apps/documentation/src/styles.scss",
+            "libs/client-core/src/lib/styles/styles.scss",
+            "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
+            "node_modules/material-design-icon-fonts-self-hosted-web/iconfont/material-icons.css"
+          ],
+          "tsConfig": "apps/documentation/.storybook/tsconfig.json"
         }
       },
       "executor": "@angular-devkit/build-angular:browser",
@@ -129,7 +147,7 @@
       },
       "executor": "@storybook/angular:build-storybook",
       "options": {
-        "browserTarget": "documentation:build",
+        "browserTarget": "documentation:build:storybook",
         "compodoc": false,
         "configDir": "apps/documentation/.storybook",
         "outputDir": "dist/storybook/documentation"
@@ -167,14 +185,9 @@
       }
     },
     "storybook": {
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
-      },
       "executor": "@storybook/angular:start-storybook",
       "options": {
-        "browserTarget": "documentation:build",
+        "browserTarget": "documentation:build:storybook",
         "compodoc": false,
         "configDir": "apps/documentation/.storybook",
         "port": 4400
