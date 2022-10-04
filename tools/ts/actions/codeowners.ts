@@ -13,7 +13,7 @@ if (typeof codeownersFileContent !== 'string') {
 }
 
 const getCodeowners = (config: string) => {
-  const owners = config.match(/@[a-z0-9]+/g);
+  const owners = config.match(/@[a-z0-9-]+/g);
   return (owners ?? []).map(item => item.replace(/^@/, ''));
 };
 
