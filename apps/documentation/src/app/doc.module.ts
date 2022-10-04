@@ -7,6 +7,7 @@ import { AppPwaOfflineModule } from '@app/client-pwa-offline';
 import { AppRouterStoreModule } from '@app/client-store-router';
 import { documentProvider, windowProvider } from '@app/client-util';
 import { metaReducers } from '@app/client-util-ngrx';
+import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { MarkdownModule, MarkdownModuleConfig, MarkedOptions } from 'ngx-markdown';
 
@@ -46,6 +47,7 @@ const markdownModuleConfig: MarkdownModuleConfig = {
     MarkdownModule.forRoot(markdownModuleConfig),
     FlexLayoutModule,
     StoreModule.forRoot({}, { metaReducers: metaReducers(environment.production) }),
+    EffectsModule.forRoot(),
     AppMdFilesStoreModule.forRoot(),
     AppMaterialModule.forRoot(),
     AppPwaOfflineModule,

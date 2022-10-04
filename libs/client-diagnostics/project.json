@@ -13,7 +13,7 @@
       },
       "executor": "@storybook/angular:build-storybook",
       "options": {
-        "browserTarget": "client-diagnostics:build-storybook",
+        "browserTarget": "documentation:build:storybook",
         "compodoc": false,
         "configDir": "libs/client-diagnostics/.storybook",
         "outputDir": "dist/storybook/client-diagnostics"
@@ -28,14 +28,9 @@
       "outputs": ["{options.outputFile}"]
     },
     "storybook": {
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
-      },
       "executor": "@storybook/angular:start-storybook",
       "options": {
-        "browserTarget": "client-diagnostics:build-storybook",
+        "browserTarget": "documentation:build:storybook",
         "compodoc": false,
         "configDir": "libs/client-diagnostics/.storybook",
         "port": 4400
