@@ -1,4 +1,4 @@
-name: codeowners-validator
+name: validate-codeowners
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ defaults:
     shell: bash
 
 concurrency:
-  group: ${{ github.ref_name }}.${{ github.sha }}.codeowners-validator
+  group: ${{ github.ref_name }}.${{ github.sha }}.validate-codeowners
   cancel-in-progress: true
 
 jobs:
