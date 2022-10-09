@@ -1,13 +1,12 @@
 {
+  "name": "client-store-router",
   "projectType": "library",
   "sourceRoot": "libs/client-store-router/src",
   "prefix": "app",
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "coverage/libs/client-store-router"
-      ],
+      "outputs": ["coverage/libs/client-store-router"],
       "options": {
         "jestConfig": "libs/client-store-router/jest.config.ts",
         "passWithNoTests": true
@@ -16,27 +15,18 @@
     "lint": {
       "executor": "@angular-eslint/builder:lint",
       "options": {
-        "lintFilePatterns": [
-          "libs/client-store-router/**/*.ts"
-        ],
+        "lintFilePatterns": ["libs/client-store-router/**/*.ts"],
         "eslintConfig": "libs/client-store-router/.eslintrc.json"
       },
-      "outputs": [
-        "{options.outputFile}"
-      ]
+      "outputs": ["{options.outputFile}"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
         "tsConfig": "libs/client-store-router/tsconfig.lib.json"
       },
-      "outputs": [
-        "dist/out-tsc/libs/client-store-router"
-      ]
+      "outputs": ["dist/out-tsc/libs/client-store-router"]
     }
   },
-  "tags": [
-    "scope:client-store-router",
-    "type:data-access"
-  ]
+  "tags": ["scope:client-store-router", "type:data-access"]
 }
