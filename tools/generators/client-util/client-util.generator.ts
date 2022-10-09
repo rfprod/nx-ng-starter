@@ -1,9 +1,8 @@
 import { libraryGenerator } from '@nrwl/angular/generators';
-import { generateFiles, joinPathFragments, logger, ProjectConfiguration, readProjectConfiguration, Tree } from '@nrwl/devkit';
-import { exec } from 'child_process';
-import { promisify } from 'util';
+import { generateFiles, joinPathFragments, ProjectConfiguration, readProjectConfiguration, Tree } from '@nrwl/devkit';
 
 import { cleanup } from '../utils/cleanup.util';
+import { finalizeGenerator } from '../utils/finalizer.util';
 import { generateFilesConfig } from '../utils/generate-files.config';
 import { updateProjectLinterConfig } from '../utils/project-configuration.util';
 import { ISchematicContext } from './schema.interface';
@@ -15,7 +14,7 @@ const addFiles = (schema: ISchematicContext, tree: Tree) => {
   const config: ProjectConfiguration = readProjectConfiguration(tree, schema.name);
   const root = config.root;
 
-  const generateFilesConf = generateFilesConfig(schema.name, 'client-');
+  const generateFilesConf = generateFilesConfig(schema.name, 'client-util-');
 
   generateFiles(tree, joinPathFragments(__dirname, './files'), root, {
     ...generateFilesConf,
@@ -26,8 +25,8 @@ export default async function (tree: Tree, schema: ISchematicContext) {
   const name = schema.name;
   const tags = schema.tags;
 
-  if (!/^client-[a-z-]+$/.test(name)) {
-    const message = 'The name must start with client- and contain only lower case letters and dashes.';
+  if (!/^client-util-[a-z-]+$/.test(name)) {
+    const message = 'The name must start with client-util- and contain only lower case letters and dashes.';
     throw new Error(message);
   }
 
@@ -45,15 +44,5 @@ export default async function (tree: Tree, schema: ISchematicContext) {
 
   await cleanup();
 
-  return async () => {
-    const tscConfigure = await promisify(exec)(`npx nx run tools:tsc-configure`);
-    logger.log(tscConfigure.stdout);
-    logger.error(tscConfigure.stderr);
-
-    const lint = await promisify(exec)(`npx nx lint ${schema.name} --fix`);
-    logger.log(lint.stdout);
-    logger.error(lint.stderr);
-
-    return { success: tscConfigure.stderr === '' && lint.stderr === '' };
-  };
+  return async () => finalizeGenerator(schema);
 }

@@ -8,6 +8,7 @@ import { fileExists } from 'nx/src/utils/fileutils';
 export const cleanup = async (): Promise<void> => {
   const root = `${process.cwd()}`;
   const rootEslintJson = `${root}/.eslintrc.json`;
+
   const eslintJsonExists = fileExists(rootEslintJson);
   if (eslintJsonExists) {
     await unlink(rootEslintJson);
