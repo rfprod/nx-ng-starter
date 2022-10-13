@@ -12,7 +12,7 @@ const printSuccess = <T>(payload: T, title = 'Success') => console.log(`\n ✅ $
  * @param payload message payload
  * @param title message title
  */
-const printInfo = <T>(payload: T, title = 'Info') => console.log(`\n 💬 ${COLORS.YELLOW}%s${COLORS.DEFAULT}:\n%s`, title, payload);
+const printInfo = <T>(payload: T, title = 'Info') => console.log(`\n 💬 ${COLORS.YELLOW}%s${COLORS.DEFAULT}:\n%s\n`, title, payload);
 
 /**
  * Print error message in the terminal.
