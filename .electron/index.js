@@ -90,7 +90,7 @@ if (handleSquirrelEvent()) {
 /**
  * Instantiate Express App
  */
-app.server = require(__dirname + '/.electron/electron.server.js');
+app.server = require(__dirname + '/electron.server.js');
 
 /**
  * Catch uncaught exceptions
@@ -117,7 +117,7 @@ function createWindow() {
     resizable: true,
     webPreferences: {
       nodeIntegration: false, // if set to true, breaks client: d3, nv, nvd3
-      preload: path.join(app.getAppPath() + '/.electron/electron.preload.js'), // restores node globals
+      preload: path.join(app.getAppPath() + '/electron.preload.js'), // restores node globals
       webSecurity: true,
     },
   });

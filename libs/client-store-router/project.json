@@ -6,7 +6,7 @@
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/client-store-router"],
+      "outputs": ["{workspaceRoot}/coverage/libs/client-store-router"],
       "options": {
         "jestConfig": "libs/client-store-router/jest.config.ts",
         "passWithNoTests": true
@@ -25,7 +25,7 @@
       "options": {
         "tsConfig": "libs/client-store-router/tsconfig.lib.json"
       },
-      "outputs": ["dist/out-tsc/libs/client-store-router"]
+      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-store-router"]
     }
   },
   "tags": ["scope:client-store-router", "type:data-access"]

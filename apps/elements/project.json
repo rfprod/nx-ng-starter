@@ -121,14 +121,14 @@
         "jestConfig": "apps/elements/jest.config.ts",
         "passWithNoTests": true
       },
-      "outputs": ["coverage/apps/elements"]
+      "outputs": ["{workspaceRoot}/coverage/apps/elements"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
         "tsConfig": "apps/elements/tsconfig.app.json"
       },
-      "outputs": ["dist/out-tsc/apps/elements"]
+      "outputs": ["{workspaceRoot}/dist/out-tsc/apps/elements"]
     }
   }
 }

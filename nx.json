@@ -15,16 +15,16 @@
   },
   "generators": {
     "@nrwl/angular:application": {
-      "style": "scss",
+      "e2eTestRunner": "cypress",
       "linter": "eslint",
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
+      "style": "scss",
+      "unitTestRunner": "jest"
     },
     "@nrwl/angular:component": {
-      "style": "scss",
       "changeDetection": "OnPush",
       "inlineStyle": false,
-      "inlineTemplate": false
+      "inlineTemplate": false,
+      "style": "scss"
     },
     "@nrwl/angular:library": {
       "linter": "eslint",
@@ -51,19 +51,16 @@
       "unitTestRunner": "jest"
     }
   },
-  "implicitDependencies": {
-    "angular.json": "*",
-    "nx.json": "*",
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*",
-      "engines": "*"
-    },
-    "tsconfig.base.json": "*"
-  },
   "namedInputs": {
-    "default": ["{projectRoot}/**/*"],
-    "prod": ["!{projectRoot}/**/*.spec.ts"],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "prod": [
+      "default",
+      "!{projectRoot}/**/*.spec.ts",
+      "!{projectRoot}/**/*.md",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/jest.config.ts",
+      "!{projectRoot}/.eslintrc.json"
+    ],
     "rootLinterConfig": [
       "{workspaceRoot}/.eslintignore",
       "{workspaceRoot}/.eslintrc.js",
@@ -71,7 +68,13 @@
       "{workspaceRoot}/.prettierignore",
       "{workspaceRoot}/.prettierrc"
     ],
-    "rootTestConfig": ["{workspaceRoot}/jest.config.ts", "{workspaceRoot}/jest.preset.js"]
+    "rootTestConfig": ["{workspaceRoot}/jest.config.ts", "{workspaceRoot}/jest.preset.js"],
+    "sharedGlobals": [
+      "{workspaceRoot}/babel.config.json",
+      "{workspaceRoot}/angular.json",
+      "{workspaceRoot}/nx.json",
+      "{workspaceRoot}/tsconfig.base.json"
+    ]
   },
   "newProjectRoot": "",
   "npmScope": "app",
@@ -79,6 +82,12 @@
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["default", "^prod"]
+    },
+    "build-storybook": {
+      "inputs": ["default", "^default", "{workspaceRoot}/.storybook/**/*"]
+    },
+    "e2e": {
+      "inputs": ["default", "^default"]
     },
     "lint": {
       "inputs": ["default", "^prod", "rootLinterConfig"]

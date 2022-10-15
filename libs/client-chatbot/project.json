@@ -20,14 +20,14 @@
         "jestConfig": "libs/client-chatbot/jest.config.ts",
         "passWithNoTests": true
       },
-      "outputs": ["coverage/libs/client-chatbot"]
+      "outputs": ["{workspaceRoot}/coverage/libs/client-chatbot"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
         "tsConfig": "libs/client-chatbot/tsconfig.lib.json"
       },
-      "outputs": ["dist/out-tsc/libs/client-chatbot"]
+      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-chatbot"]
     }
   }
 }

@@ -7,7 +7,7 @@
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/libs/client-dashboards"],
+      "outputs": ["{workspaceRoot}/coverage/libs/client-dashboards"],
       "options": {
         "jestConfig": "libs/client-dashboards/jest.config.ts",
         "passWithNoTests": true
@@ -26,7 +26,7 @@
       "options": {
         "tsConfig": "libs/client-dashboards/tsconfig.lib.json"
       },
-      "outputs": ["dist/out-tsc/libs/client-dashboards"]
+      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-dashboards"]
     }
   },
   "tags": ["scope:client-dashboards", "type:feature"]
