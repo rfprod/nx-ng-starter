@@ -1,27 +1,24 @@
 import { AppMessage } from '@app/backend-interfaces';
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { exec, ExecException } from 'child_process';
 import * as dotenv from 'dotenv';
 import * as os from 'os';
 import { catchError, map, Observable, of } from 'rxjs';
 
-export interface IDiagDataItem {
-  name: string;
-  value: string | number;
-}
+import { IDiagnosticsService, TDiagData } from '../interfaces/diagnostics.interface';
 
-export type TDiagData = IDiagDataItem[];
+export const CHILD_PROCESS_EXEC = Symbol('CHILD_PROCESS_EXEC');
 
-export const CHILD_PROCESS_EXEC = 'CHILD_PROCESS_EXEC';
+export const DIAGNOSTICS_SERVICE_TOKEN = Symbol('DIAGNOSTICS_SERVICE_TOKEN');
 
 @Injectable()
-export class AppDiagnosticsService {
+export class AppDiagnosticsService implements IDiagnosticsService {
   constructor(@Inject(CHILD_PROCESS_EXEC) private readonly childProcessExec: typeof exec) {
     dotenv.config();
   }
 
   private npmVersion() {
-    const observable = new Observable<string>(subscriber => {
+    const observable$ = new Observable<string>(subscriber => {
       let version = 'N/A';
       if (typeof process.env.ELECTRON !== 'undefined') {
         subscriber.next(version);
@@ -29,6 +26,7 @@ export class AppDiagnosticsService {
       }
       this.childProcessExec('npm --version', (error: ExecException | null, stdout: string, stderr: string) => {
         if (error !== null) {
+          Logger.error(error);
           subscriber.error(version);
         }
         version = stdout.toString().replace(os.EOL, '');
@@ -36,7 +34,7 @@ export class AppDiagnosticsService {
         subscriber.complete();
       });
     });
-    return observable.pipe(catchError(error => of(error)));
+    return observable$.pipe(catchError((error: string) => of(error)));
   }
 
   public ping(): AppMessage {

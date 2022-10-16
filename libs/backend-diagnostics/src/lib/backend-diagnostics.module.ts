@@ -1,14 +1,18 @@
 import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { exec } from 'child_process';
 
-import { AppDiagnosticsController } from './controller/diagnostics.controller';
-import { AppDiagnosticsService, CHILD_PROCESS_EXEC } from './service/diagnostics.service';
+import { AppDiagnosticsController } from './controllers/diagnostics.controller';
+import { AppDiagnosticsService, CHILD_PROCESS_EXEC, DIAGNOSTICS_SERVICE_TOKEN } from './services/diagnostics.service';
 
 export const diagnosticsModuleProviders: Provider[] = [
   AppDiagnosticsService,
   {
     provide: CHILD_PROCESS_EXEC,
     useValue: exec,
+  },
+  {
+    provide: DIAGNOSTICS_SERVICE_TOKEN,
+    useExisting: AppDiagnosticsService,
   },
 ];
 

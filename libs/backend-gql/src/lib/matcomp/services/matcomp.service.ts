@@ -1,8 +1,12 @@
-import { AppMatcomp, AppMatcompArgs, AppMatcompInput, IMatcompMutation, IMatcompQuery } from '@app/backend-interfaces';
+import { AppMatcomp, AppMatcompArgs, AppMatcompInput } from '@app/backend-interfaces';
 import { Injectable } from '@nestjs/common';
 
+import { TMatcompService } from '../interfaces/matcomp.interface';
+
+export const MATCOMP_SERVICE_TOKEN = Symbol('MATCOMP_SERVICE_TOKEN');
+
 @Injectable()
-export class AppMatcompService implements IMatcompQuery, IMatcompMutation {
+export class AppMatcompService implements TMatcompService {
   private readonly matcomps: AppMatcomp[] = [];
 
   public create(input: AppMatcompInput) {

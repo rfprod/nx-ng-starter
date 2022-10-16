@@ -3,7 +3,7 @@ import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { PubSub } from 'graphql-subscriptions';
 
-import { AppMatcompService } from '../service/matcomp.service';
+import { AppMatcompService, MATCOMP_SERVICE_TOKEN } from '../services/matcomp.service';
 import { AppMatcompResolver } from './matcomp.resolver';
 
 describe('AppMatcompResolver', () => {
@@ -15,8 +15,12 @@ describe('AppMatcompResolver', () => {
   beforeEach(async () => {
     await Test.createTestingModule({
       providers: [
-        AppMatcompResolver,
         AppMatcompService,
+        {
+          provide: MATCOMP_SERVICE_TOKEN,
+          useExisting: AppMatcompService,
+        },
+        AppMatcompResolver,
         {
           provide: 'PUB_SUB',
           useFactory: () => new PubSub(),

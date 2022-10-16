@@ -2,7 +2,8 @@ import { AppMessage, AppUser, AppUserLoginCredentials, AppUserLogoutCredentials 
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { AppAuthService, IAuthPayload } from './auth.service';
+import { IAuthPayload } from '../interfaces/auth.interface';
+import { AppAuthService } from './auth.service';
 
 describe('AppAuthService', () => {
   let testingModule: TestingModule;

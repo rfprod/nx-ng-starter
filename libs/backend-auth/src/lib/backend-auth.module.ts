@@ -2,10 +2,16 @@ import { Module, Provider } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 
-import { AppAuthController } from './controller/auth.controller';
-import { AppAuthService } from './service/auth.service';
+import { AppAuthController } from './controllers/auth.controller';
+import { AppAuthService, AUTH_SERVICE_TOKEN } from './services/auth.service';
 
-export const authModuleProviders: Provider[] = [AppAuthService];
+export const authModuleProviders: Provider[] = [
+  AppAuthService,
+  {
+    provide: AUTH_SERVICE_TOKEN,
+    useExisting: AppAuthService,
+  },
+];
 
 @Module({
   imports: [
@@ -19,8 +25,8 @@ export const authModuleProviders: Provider[] = [AppAuthService];
       inject: [ConfigService],
     }),
   ],
-  exports: [JwtModule],
   controllers: [AppAuthController],
   providers: [...authModuleProviders],
+  exports: [AUTH_SERVICE_TOKEN],
 })
 export class AppAuthModule {}
