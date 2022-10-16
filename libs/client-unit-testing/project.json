@@ -20,14 +20,14 @@
         "jestConfig": "libs/client-unit-testing/jest.config.ts",
         "passWithNoTests": true
       },
-      "outputs": ["coverage/libs/client-unit-testing"]
+      "outputs": ["{workspaceRoot}/coverage/libs/client-unit-testing"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
         "tsConfig": "libs/client-unit-testing/tsconfig.lib.json"
       },
-      "outputs": ["dist/out-tsc/libs/client-unit-testing"]
+      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-unit-testing"]
     }
   }
 }

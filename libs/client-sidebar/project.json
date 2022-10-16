@@ -20,14 +20,14 @@
         "jestConfig": "libs/client-sidebar/jest.config.ts",
         "passWithNoTests": true
       },
-      "outputs": ["coverage/libs/client-sidebar"]
+      "outputs": ["{workspaceRoot}/coverage/libs/client-sidebar"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
         "tsConfig": "libs/client-sidebar/tsconfig.lib.json"
       },
-      "outputs": ["dist/out-tsc/libs/client-sidebar"]
+      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-sidebar"]
     }
   }
 }

@@ -30,14 +30,14 @@
         "jestConfig": "libs/backend-interfaces/jest.config.ts",
         "passWithNoTests": true
       },
-      "outputs": ["coverage/libs/backend-interfaces"]
+      "outputs": ["{workspaceRoot}/coverage/libs/backend-interfaces"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
         "tsConfig": "libs/backend-interfaces/tsconfig.lib.json"
       },
-      "outputs": ["dist/out-tsc/libs/backend-interfaces"]
+      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/backend-interfaces"]
     }
   }
 }

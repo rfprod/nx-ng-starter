@@ -20,14 +20,14 @@
         "jestConfig": "libs/client-grpc/jest.config.ts",
         "passWithNoTests": true
       },
-      "outputs": ["coverage/libs/client-grpc"]
+      "outputs": ["{workspaceRoot}/coverage/libs/client-grpc"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
         "tsConfig": "libs/client-grpc/tsconfig.lib.json"
       },
-      "outputs": ["dist/out-tsc/libs/client-grpc"]
+      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-grpc"]
     }
   }
 }

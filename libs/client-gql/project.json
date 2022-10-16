@@ -20,14 +20,14 @@
         "jestConfig": "libs/client-gql/jest.config.ts",
         "passWithNoTests": true
       },
-      "outputs": ["coverage/libs/client-gql"]
+      "outputs": ["{workspaceRoot}/coverage/libs/client-gql"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
         "tsConfig": "libs/client-gql/tsconfig.lib.json"
       },
-      "outputs": ["dist/out-tsc/libs/client-gql"]
+      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-gql"]
     }
   }
 }

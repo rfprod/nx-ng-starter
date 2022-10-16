@@ -5,10 +5,11 @@ name: build-docker
 on:
   workflow_dispatch:
     inputs:
-      dryRun:
-        description: 'Dry run (do not push containers to the registry): true / false'
+      dry-run:
+        type: boolean
+        description: 'Dry run, do not push containers to the registry.'
         required: true
-        default: 'false'
+        default: false
 
 defaults:
   run:
@@ -25,7 +26,7 @@ jobs:
     steps:
       - name: Print inputs
         run: |
-          echo "Dry run: ${{ github.event.inputs.dryRun }}"
+          echo "Dry run: ${{ github.event.inputs.dry-run }}"
 
       - name: Checkout sources
         uses: actions/checkout@v3
@@ -76,7 +77,7 @@ jobs:
           yarn docker:build documentation
 
       - name: Docker push apps
-        if: ${{ github.event.inputs.dryRun == 'false' && steps.check-origin.outputs.origin == 'true' }}
+        if: ${{ github.event.inputs.dry-run == false && steps.check-origin.outputs.origin == 'true' }}
         run: |
           yarn docker:push base
           yarn docker:push api-production

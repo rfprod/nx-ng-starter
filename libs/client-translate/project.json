@@ -20,14 +20,14 @@
         "jestConfig": "libs/client-translate/jest.config.ts",
         "passWithNoTests": true
       },
-      "outputs": ["coverage/libs/client-translate"]
+      "outputs": ["{workspaceRoot}/coverage/libs/client-translate"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
         "tsConfig": "libs/client-translate/tsconfig.lib.json"
       },
-      "outputs": ["dist/out-tsc/libs/client-translate"]
+      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-translate"]
     }
   }
 }

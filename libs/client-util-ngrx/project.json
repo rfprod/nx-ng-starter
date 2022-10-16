@@ -19,14 +19,14 @@
         "jestConfig": "libs/client-util-ngrx/jest.config.ts",
         "passWithNoTests": true
       },
-      "outputs": ["coverage/libs/client-util-ngrx"]
+      "outputs": ["{workspaceRoot}/coverage/libs/client-util-ngrx"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
         "tsConfig": "libs/client-util-ngrx/tsconfig.lib.json"
       },
-      "outputs": ["dist/out-tsc/libs/client-util-ngrx"]
+      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-util-ngrx"]
     }
   }
 }
