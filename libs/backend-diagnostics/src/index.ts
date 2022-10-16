@@ -1,2 +1,2 @@
 export * from './lib/backend-diagnostics.module';
-export * from './lib/service/diagnostics.service';
+export * from './lib/services/diagnostics.service';

@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { exec } from 'child_process';
 import { firstValueFrom, of } from 'rxjs';
 
-import { AppDiagnosticsService, CHILD_PROCESS_EXEC } from '../service/diagnostics.service';
+import { diagnosticsModuleProviders } from '../backend-diagnostics.module';
+import { AppDiagnosticsService } from '../services/diagnostics.service';
 import { AppDiagnosticsController } from './diagnostics.controller';
 
 describe('AppDiagnosticsController', () => {
@@ -17,13 +17,7 @@ describe('AppDiagnosticsController', () => {
   beforeAll(async () => {
     await Test.createTestingModule({
       controllers: [AppDiagnosticsController],
-      providers: [
-        AppDiagnosticsService,
-        {
-          provide: CHILD_PROCESS_EXEC,
-          useValue: exec,
-        },
-      ],
+      providers: [...diagnosticsModuleProviders],
     })
       .compile()
       .then(module => {

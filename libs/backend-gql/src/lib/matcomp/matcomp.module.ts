@@ -2,13 +2,16 @@ import { AppDateScalar } from '@app/backend-interfaces';
 import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { PubSub } from 'graphql-subscriptions';
 
-// import { PubSub } from 'apollo-server-express';
-import { AppMatcompGuard } from './guard/matcomp.guard';
-import { AppMatcompResolver } from './resolver/matcomp.resolver';
-import { AppMatcompService } from './service/matcomp.service';
+import { AppMatcompGuard } from './guards/matcomp.guard';
+import { AppMatcompResolver } from './resolvers/matcomp.resolver';
+import { AppMatcompService, MATCOMP_SERVICE_TOKEN } from './services/matcomp.service';
 
 const apiGqlMatcompModuleProviders: Provider[] = [
   AppMatcompService,
+  {
+    provide: MATCOMP_SERVICE_TOKEN,
+    useExisting: AppMatcompService,
+  },
   AppMatcompResolver,
   AppMatcompGuard,
   AppDateScalar,

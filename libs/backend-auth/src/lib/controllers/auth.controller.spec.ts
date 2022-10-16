@@ -2,7 +2,8 @@ import { AppMessage, AppUser, AppUserLoginCredentials, AppUserLogoutCredentials 
 import { JwtModule } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { AppAuthService } from '../service/auth.service';
+import { authModuleProviders } from '../backend-auth.module';
+import { AppAuthService } from '../services/auth.service';
 import { AppAuthController } from './auth.controller';
 
 describe('AppAuthController', () => {
@@ -23,7 +24,7 @@ describe('AppAuthController', () => {
         }),
       ],
       controllers: [AppAuthController],
-      providers: [AppAuthService],
+      providers: [...authModuleProviders],
     })
       .compile()
       .then(module => {

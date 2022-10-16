@@ -3,12 +3,16 @@ import { Inject, NotFoundException, UseGuards } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
 
-import { AppMatcompGuard } from '../guard/matcomp.guard';
-import { AppMatcompService } from '../service/matcomp.service';
+import { AppMatcompGuard } from '../guards/matcomp.guard';
+import type { TMatcompService } from '../interfaces/matcomp.interface';
+import { MATCOMP_SERVICE_TOKEN } from '../services/matcomp.service';
 
 @Resolver(() => AppMatcompModel)
 export class AppMatcompResolver {
-  constructor(private readonly service: AppMatcompService, @Inject('PUB_SUB') private readonly pubSub: PubSub) {}
+  constructor(
+    @Inject(MATCOMP_SERVICE_TOKEN) private readonly service: TMatcompService,
+    @Inject('PUB_SUB') private readonly pubSub: PubSub,
+  ) {}
 
   @Query(() => [AppMatcompModel])
   @UseGuards(AppMatcompGuard)
