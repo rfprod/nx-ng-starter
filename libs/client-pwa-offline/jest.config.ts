@@ -1,11 +1,9 @@
+import { Config } from '@jest/types';
+
 const jestPresetAngularSerializers = require('jest-preset-angular/build/serializers');
 
-const config = {
-  preset: '../../jest.preset.js',
+const config: Config.InitialOptions = {
   coverageDirectory: '../../coverage/libs/client-pwa-offline',
-  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  snapshotSerializers: jestPresetAngularSerializers,
-  displayName: 'client-pwa-offline',
   coverageThreshold: {
     global: {
       branches: 100,
@@ -14,6 +12,10 @@ const config = {
       statements: 100,
     },
   },
+  displayName: 'client-pwa-offline',
+  preset: '../../jest.preset.js',
+  setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
+  snapshotSerializers: jestPresetAngularSerializers,
 };
 
 export default config;

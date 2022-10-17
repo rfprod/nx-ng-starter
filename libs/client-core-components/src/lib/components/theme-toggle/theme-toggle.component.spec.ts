@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { AppThemeStoreModule, themeActions } from '@app/client-store-theme';
-import { getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
+import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store } from '@ngrx/store';
 
 import { AppThemeToggleComponent } from './theme-toggle.component';

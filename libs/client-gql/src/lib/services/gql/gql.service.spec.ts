@@ -2,7 +2,7 @@ import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing
 import { ApolloLink } from '@apollo/client/core';
 import { AppHttpHandlersService, TGqlClient } from '@app/client-store-http-progress';
 import { AppUserStoreModule } from '@app/client-store-user';
-import { getTestBedConfig } from '@app/client-unit-testing';
+import { getTestBedConfig } from '@app/client-testing-unit';
 import { Apollo, ApolloBase, ApolloModule } from 'apollo-angular';
 import { DocumentNode } from 'graphql';
 import { cold, getTestScheduler } from 'jasmine-marbles';

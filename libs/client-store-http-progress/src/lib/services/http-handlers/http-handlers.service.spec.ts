@@ -5,14 +5,14 @@ import { Router } from '@angular/router';
 import { ApolloLink, Operation, ServerError, ServerParseError } from '@apollo/client/core';
 import { GraphQLErrors, NetworkError } from '@apollo/client/errors';
 import { ErrorResponse } from '@apollo/client/link/error';
-import { AppTranslateModule } from '@app/client-translate';
 import {
   flushHttpRequests,
   getTestBedConfig,
   newTestBedMetadata,
   spyOnFunctions,
   TClassMemberFunctionSpiesObject,
-} from '@app/client-unit-testing';
+} from '@app/client-testing-unit';
+import { AppTranslateModule } from '@app/client-translate';
 import { HTTP_STATUS, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngrx/store';
 import { Apollo, ApolloModule, gql } from 'apollo-angular';

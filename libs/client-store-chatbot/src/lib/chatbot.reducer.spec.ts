@@ -1,5 +1,5 @@
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import { getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
+import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store, StoreModule } from '@ngrx/store';
 import { first, switchMap, tap } from 'rxjs';
 

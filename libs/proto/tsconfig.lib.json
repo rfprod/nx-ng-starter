@@ -11,7 +11,7 @@
     "outDir": "../../dist/out-tsc",
     "target": "es2015"
   },
-  "exclude": ["src/test-setup.ts", "**/*.patch.ts", "**/*.mock.ts", "**/*.spec.ts"],
+  "exclude": ["**/*.patch.ts", "**/*.mock.ts", "**/*.spec.ts"],
   "extends": "./tsconfig.json",
   "include": ["**/*.ts"]
 }

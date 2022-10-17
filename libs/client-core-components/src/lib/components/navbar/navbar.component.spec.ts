@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@an
 import { Router } from '@angular/router';
 import { AppRouterStoreModule, routerActions } from '@app/client-store-router';
 import { AppSidebarStoreModule, sidebarActions } from '@app/client-store-sidebar';
-import { getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
+import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';

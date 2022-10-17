@@ -1,8 +1,10 @@
 node_modules
+.angular
 .docker
 .electron
 .envoy
 !.envoy/envoy.yml
+.eslint*
 .firebase
 .git
 .github
@@ -22,3 +24,13 @@ libs
 tools
 !tools/proto
 *.log
+commitlint*
+.prettier
+.protolint
+.stylelint
+capacitor.config.json
+decorate-angular-cli.js
+jest*
+nx.json
+tsconfig.base.json
+tsconfig.compodoc.json

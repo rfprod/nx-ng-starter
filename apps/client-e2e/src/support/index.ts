@@ -15,16 +15,4 @@
  * https://on.cypress.io/configuration
  */
 
-import './commands';
-
-/**
- * Catches uncaught exceptions.
- * Documentation reference: https://docs.cypress.io/api/events/catalog-of-events.html#Examples
- */
-Cypress.on('uncaught:exception', (err, runnable) => {
-  console.warn('Cypress:uncaught:exception', err);
-  /**
-   * Returning false here prevents Cypress from failing the test if Cypress encounters application error.
-   */
-  return false;
-});
+import '@app/client-testing-e2e';

@@ -1,4 +1,4 @@
-import { TCypressCustomCommands } from '../support/config/commands.config';
+import { TCypressCustomCommands } from '@app/client-testing-e2e';
 
 declare const cy: TCypressCustomCommands;
 

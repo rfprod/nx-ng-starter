@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { AppHttpHandlersService } from '@app/client-store-http-progress';
-import { flushHttpRequests, getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
+import { flushHttpRequests, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { of, tap } from 'rxjs';
 
 import { AppHttpApiService } from './http-api.service';

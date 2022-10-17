@@ -3,14 +3,14 @@ import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@an
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppMarkdownService } from '@app/client-services';
 import { AppHttpApiStoreModule, httpApiSelectors, IHttpApiState } from '@app/client-store-http-api';
-import { AppTranslateModule } from '@app/client-translate';
 import {
   flushHttpRequests,
   getTestBedConfig,
   newTestBedMetadata,
   spyOnFunctions,
   TClassMemberFunctionSpiesObject,
-} from '@app/client-unit-testing';
+} from '@app/client-testing-unit';
+import { AppTranslateModule } from '@app/client-translate';
 import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngrx/store';
 import { combineLatest, first, tap } from 'rxjs';

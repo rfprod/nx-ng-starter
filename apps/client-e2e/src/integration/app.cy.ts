@@ -1,4 +1,4 @@
-import { TCypressCustomCommands } from '../support/config/commands.config';
+import { TCypressCustomCommands } from '@app/client-testing-e2e';
 
 declare const cy: TCypressCustomCommands;
 
@@ -12,7 +12,7 @@ describe('nx-ng-starter', () => {
     cy.getAppRoot().should('have.length', 1);
   });
 
-  it('should have one app-index html element', () => {
+  it('should have one app-diagnostics-index html element', () => {
     cy.getAppIndex().should('have.length', 1);
   });
 
