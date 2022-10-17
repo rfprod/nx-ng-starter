@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TestModuleMetadata } from '@angular/core/testing';
 
-import { AppMocksCoreModule } from '../unit-testing.module';
+import { AppMocksCoreModule } from '../testing-unit.module';
 
 /**
  * New TestBed metadata getter type.
