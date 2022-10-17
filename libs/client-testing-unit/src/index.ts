@@ -4,4 +4,4 @@ export * from './lib/jest';
 export * from './lib/local-storage/local-storage.mock';
 export * from './lib/refs';
 export * from './lib/test-bed/test-bed-config.mock';
-export * from './lib/unit-testing.module';
+export * from './lib/testing-unit.module';
