@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { chatbotActions } from '@app/client-store-chatbot';
 import { AppSidebarStoreModule, sidebarActions } from '@app/client-store-sidebar';
-import { getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
+import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 

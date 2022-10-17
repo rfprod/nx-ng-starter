@@ -3,7 +3,7 @@ import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppMaterialModule } from '@app/client-material';
-import { AppTestingComponent } from '@app/client-unit-testing';
+import { AppTestingComponent } from '@app/client-testing-unit';
 
 import { AppTooltipDirective } from './tooltip.directive';
 

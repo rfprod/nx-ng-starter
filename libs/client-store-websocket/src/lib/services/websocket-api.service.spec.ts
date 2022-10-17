@@ -1,6 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import { flushHttpRequests, getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
+import { flushHttpRequests, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Observable, of, tap } from 'rxjs';
 import { WebSocketSubject } from 'rxjs/webSocket';
 

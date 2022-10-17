@@ -1,4 +1,6 @@
-const config = {
+import { Config } from '@jest/types';
+
+const config: Config.InitialOptions = {
   coverageDirectory: '../../coverage/libs/backend-grpc',
   coverageThreshold: {
     // TODO: bump unit test coverage and remove this override

@@ -1,7 +1,7 @@
 import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { AppTestingComponent } from '@app/client-unit-testing';
+import { AppTestingComponent } from '@app/client-testing-unit';
 import { timer } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
 

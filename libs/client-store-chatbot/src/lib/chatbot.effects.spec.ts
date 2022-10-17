@@ -1,6 +1,6 @@
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
+import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 

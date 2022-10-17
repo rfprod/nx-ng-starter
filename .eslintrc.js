@@ -381,13 +381,6 @@ module.exports = {
       },
     },
     {
-      files: ['**/src/support/index.ts'],
-      rules: {
-        'no-console': 'off',
-        '@typescript-eslint/triple-slash-reference': 'off', // needed for Cypress types import via reference
-      },
-    },
-    {
       files: ['**/generated/**', '**/grpc/**', '*proto*.*'], // generated graphql and protobuf definitions
       rules: {
         'max-lines': 'off',

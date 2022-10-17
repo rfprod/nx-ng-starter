@@ -1,6 +1,8 @@
+import { Config } from '@jest/types';
+
 const jestPresetAngularSerializers = require('jest-preset-angular/build/serializers');
 
-const config = {
+const config: Config.InitialOptions = {
   coverageDirectory: '../../coverage/libs/client-store-http-progress',
   coverageThreshold: {
     // TODO: bump unit test coverage and remove this override

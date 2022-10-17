@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { Meta, Title } from '@angular/platform-browser';
-import { getTestBedConfig, newTestBedMetadata } from '@app/client-unit-testing';
+import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 
 import { AppRootComponent } from './root.component';
 

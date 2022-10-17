@@ -4,27 +4,35 @@
 const typeConstraints = [
   {
     sourceTag: 'type:application',
-    onlyDependOnLibsWithTags: ['type:feature', 'type:data-access', 'type:ui', 'type:util', 'type:unit-testing'],
+    onlyDependOnLibsWithTags: ['type:feature', 'type:data-access', 'type:ui', 'type:util', 'type:testing-unit'],
   },
   {
     sourceTag: 'type:feature',
-    onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util', 'type:unit-testing'],
+    onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util', 'type:testing-unit'],
   },
   {
     sourceTag: 'type:data-access',
-    onlyDependOnLibsWithTags: ['type:data-access', 'type:util', 'type:unit-testing'],
+    onlyDependOnLibsWithTags: ['type:data-access', 'type:util', 'type:testing-unit'],
   },
   {
     sourceTag: 'type:ui',
-    onlyDependOnLibsWithTags: ['type:ui', 'type:util', 'type:unit-testing'],
+    onlyDependOnLibsWithTags: ['type:ui', 'type:util', 'type:testing-unit'],
   },
   {
     sourceTag: 'type:util',
-    onlyDependOnLibsWithTags: ['type:util', 'type:unit-testing'],
+    onlyDependOnLibsWithTags: ['type:util', 'type:testing-unit'],
   },
   {
     sourceTag: 'type:e2e',
-    onlyDependOnLibsWithTags: ['type:util'],
+    onlyDependOnLibsWithTags: ['type:util', 'type:testing-e2e'],
+  },
+  {
+    sourceTag: 'type:testing-e2e',
+    onlyDependOnLibsWithTags: [],
+  },
+  {
+    sourceTag: 'type:testing-unit',
+    onlyDependOnLibsWithTags: ['type:util', 'type:ui'],
   },
 ];
 
@@ -103,17 +111,17 @@ const clientConstraints = [
       'scope:client-material',
       'scope:client-pwa-offline',
       'scope:client-store-router',
-      'scope:client-unit-testing',
+      'scope:client-testing-unit',
       'scope:client-util',
       'scope:client-util-ngrx',
     ],
   },
   {
     sourceTag: 'scope:documentation-e2e',
-    onlyDependOnLibsWithTags: ['scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-testing-e2e', 'scope:client-util'],
   },
   {
-    sourceTag: 'scope:client-unit-testing',
+    sourceTag: 'scope:client-testing-unit',
     onlyDependOnLibsWithTags: ['scope:client-material', 'scope:client-util', 'scope:client-util-ngrx'],
   },
   {
@@ -138,52 +146,52 @@ const clientConstraints = [
       'scope:client-store-theme',
       'scope:client-store-user',
       'scope:client-translate',
-      'scope:client-unit-testing',
+      'scope:client-testing-unit',
       'scope:client-util',
       'scope:proto',
     ],
   },
   {
     sourceTag: 'scope:client-store-chatbot',
-    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util', 'scope:client-util-ngrx'],
+    onlyDependOnLibsWithTags: ['scope:client-testing-unit', 'scope:client-util', 'scope:client-util-ngrx'],
   },
   {
     sourceTag: 'scope:client-store-http-api',
     onlyDependOnLibsWithTags: [
       'scope:client-store-http-progress',
       'scope:client-translate',
-      'scope:client-unit-testing',
+      'scope:client-testing-unit',
       'scope:client-util',
       'scope:client-util-ngrx',
     ],
   },
   {
     sourceTag: 'scope:client-store-http-progress',
-    onlyDependOnLibsWithTags: ['scope:client-translate', 'scope:client-unit-testing', 'scope:client-util', 'scope:client-util-ngrx'],
+    onlyDependOnLibsWithTags: ['scope:client-translate', 'scope:client-testing-unit', 'scope:client-util', 'scope:client-util-ngrx'],
   },
   {
     sourceTag: 'scope:client-store-router',
-    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util', 'scope:client-util-ngrx'],
+    onlyDependOnLibsWithTags: ['scope:client-testing-unit', 'scope:client-util', 'scope:client-util-ngrx'],
   },
   {
     sourceTag: 'scope:client-store-sidebar',
-    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util', 'scope:client-util-ngrx'],
+    onlyDependOnLibsWithTags: ['scope:client-testing-unit', 'scope:client-util', 'scope:client-util-ngrx'],
   },
   {
     sourceTag: 'scope:client-store-theme',
-    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util', 'scope:client-util-ngrx'],
+    onlyDependOnLibsWithTags: ['scope:client-testing-unit', 'scope:client-util', 'scope:client-util-ngrx'],
   },
   {
     sourceTag: 'scope:client-store-user',
-    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util', 'scope:client-util-ngrx'],
+    onlyDependOnLibsWithTags: ['scope:client-testing-unit', 'scope:client-util', 'scope:client-util-ngrx'],
   },
   {
     sourceTag: 'scope:client-store-websocket',
-    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util', 'scope:client-util-ngrx'],
+    onlyDependOnLibsWithTags: ['scope:client-testing-unit', 'scope:client-util', 'scope:client-util-ngrx'],
   },
   {
     sourceTag: 'scope:client-services',
-    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-testing-unit', 'scope:client-util'],
   },
   {
     sourceTag: 'scope:client-componnents',
@@ -194,13 +202,13 @@ const clientConstraints = [
       'scope:client-store-chatbot',
       'scope:client-store-theme',
       'scope:client-store-user',
-      'scope:client-unit-testing',
+      'scope:client-testing-unit',
       'scope:client-util',
     ],
   },
   {
     sourceTag: 'scope:client-dashboards',
-    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-testing-unit', 'scope:client-util'],
   },
   {
     sourceTag: 'scope:client-diagnostics',
@@ -213,28 +221,32 @@ const clientConstraints = [
       'scope:client-store-http-api',
       'scope:client-store-websocket',
       'scope:client-translate',
-      'scope:client-unit-testing',
+      'scope:client-testing-unit',
       'scope:client-util',
       'scope:proto',
     ],
   },
   {
+    sourceTag: 'scope:client-diagnostics-e2e',
+    onlyDependOnLibsWithTags: ['scope:client-testing-e2e', 'scope:client-util'],
+  },
+  {
     sourceTag: 'scope:client-directives',
-    onlyDependOnLibsWithTags: ['scope:client-unit-testing'],
+    onlyDependOnLibsWithTags: ['scope:client-testing-unit'],
   },
   {
     sourceTag: 'scope:client-gql',
     onlyDependOnLibsWithTags: [
       'scope:client-store-http-progress',
       'scope:client-store-user',
-      'scope:client-unit-testing',
+      'scope:client-testing-unit',
       'scope:client-util',
       'scope:proto',
     ],
   },
   {
     sourceTag: 'scope:client-grpc',
-    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util', 'scope:proto'],
+    onlyDependOnLibsWithTags: ['scope:client-testing-unit', 'scope:client-util', 'scope:proto'],
   },
   {
     sourceTag: 'scope:client-chatbot',
@@ -244,7 +256,7 @@ const clientConstraints = [
       'scope:client-store',
       'scope:client-translate',
       'scope:client-util-eliza',
-      'scope:client-unit-testing',
+      'scope:client-testing-unit',
     ],
   },
   {
@@ -257,7 +269,7 @@ const clientConstraints = [
       'scope:client-store',
       'scope:client-store-http-progress',
       'scope:client-store-sidebar',
-      'scope:client-unit-testing',
+      'scope:client-testing-unit',
     ],
   },
   {
@@ -274,7 +286,7 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:client-util-sentry',
-    onlyDependOnLibsWithTags: ['scope:client-unit-testing', 'scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-testing-unit', 'scope:client-util'],
   },
   {
     sourceTag: 'scope:client-translate',
@@ -300,7 +312,7 @@ const clientConstraints = [
       'scope:client-store-user',
       'scope:client-store-websocket',
       'scope:client-translate',
-      'scope:client-unit-testing',
+      'scope:client-testing-unit',
       'scope:client-util',
       'scope:client-util-eliza',
       'scope:client-util-ngrx',
@@ -316,17 +328,17 @@ const clientConstraints = [
       'scope:client-store-sidebar',
       'scope:client-store-theme',
       'scope:client-store-user',
-      'scope:client-unit-testing',
+      'scope:client-testing-unit',
       'scope:client-util',
     ],
   },
   {
     sourceTag: 'scope:client-e2e',
-    onlyDependOnLibsWithTags: ['scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-testing-e2e', 'scope:client-util'],
   },
   {
     sourceTag: 'scope:client-core-components-e2e',
-    onlyDependOnLibsWithTags: ['scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-testing-e2e', 'scope:client-util'],
   },
   {
     sourceTag: 'scope:elements',
@@ -338,7 +350,7 @@ const clientConstraints = [
       'scope:client-store-router',
       'scope:client-store-websocket',
       'scope:client-translate',
-      'scope:client-unit-testing',
+      'scope:client-testing-unit',
       'scope:client-util',
       'scope:client-util-eliza',
       'scope:client-util-ngrx',
@@ -347,7 +359,11 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:elements-e2e',
-    onlyDependOnLibsWithTags: ['scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-testing-e2e', 'scope:client-util'],
+  },
+  {
+    sourceTag: 'scope:elements-testing',
+    onlyDependOnLibsWithTags: [],
   },
 ];
 

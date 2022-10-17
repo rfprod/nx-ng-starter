@@ -1,4 +1,6 @@
-const config = {
+import { Config } from '@jest/types';
+
+const config: Config.InitialOptions = {
   coverageDirectory: '../../coverage/apps/server-dev',
   coverageThreshold: {
     global: {

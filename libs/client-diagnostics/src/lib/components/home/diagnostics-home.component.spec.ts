@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppMarkdownService } from '@app/client-services';
-import { getTestBedConfig, newTestBedMetadata, spyOnObservables, TClassMemberObservableSpiesObject } from '@app/client-unit-testing';
+import { getTestBedConfig, newTestBedMetadata, spyOnObservables, TClassMemberObservableSpiesObject } from '@app/client-testing-unit';
 import { of, tap } from 'rxjs';
 
 import { AppDiagnosticsHomeComponent } from './diagnostics-home.component';
