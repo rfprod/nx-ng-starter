@@ -38,11 +38,14 @@ runs:
       shell: bash
       run: |
         echo "Checking repository owner..."
-        echo "REPO_OWNER $REPO_OWNER"
         ORIGIN='false'
         if [ "$REPO_OWNER" == "$ORIGINAL_OWNER" ]; then ORIGIN='true'; fi
-        echo "### :rocket: ORIGIN: $ORIGIN" >> $GITHUB_STEP_SUMMARY
         echo "origin=$(echo ${ORIGIN})" >> $GITHUB_OUTPUT
+        echo "### :rocket: Check origin" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "- REPO_OWNER: $REPO_OWNER" >> $GITHUB_STEP_SUMMARY
+        echo "- ORIGINAL_OWNER: $ORIGINAL_OWNER" >> $GITHUB_STEP_SUMMARY
+        echo "- ORIGIN: $ORIGIN" >> $GITHUB_STEP_SUMMARY
       env:
         REPO_OWNER: ${{ inputs.repo-owner }}
         ORIGINAL_OWNER: ${{ inputs.original-owner }}
