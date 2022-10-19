@@ -41,8 +41,8 @@ runs:
         echo "REPO_OWNER $REPO_OWNER"
         ORIGIN='false'
         if [ "$REPO_OWNER" == "$ORIGINAL_OWNER" ]; then ORIGIN='true'; fi
-        echo "ORIGIN: $ORIGIN"
-        echo "::set-output name=origin::$(echo ${ORIGIN})"
+        echo "### :rocket: ORIGIN: $ORIGIN" >> $GITHUB_STEP_SUMMARY
+        echo "origin=$(echo ${ORIGIN})" >> $GITHUB_OUTPUT
       env:
         REPO_OWNER: ${{ inputs.repo-owner }}
         ORIGINAL_OWNER: ${{ inputs.original-owner }}
