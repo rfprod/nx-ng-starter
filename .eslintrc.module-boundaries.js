@@ -125,6 +125,10 @@ const clientConstraints = [
     onlyDependOnLibsWithTags: ['scope:client-material', 'scope:client-util', 'scope:client-util-ngrx'],
   },
   {
+    sourceTag: 'scope:client-testing-e2e',
+    onlyDependOnLibsWithTags: [],
+  },
+  {
     sourceTag: 'scope:client-material',
     onlyDependOnLibsWithTags: [],
   },
