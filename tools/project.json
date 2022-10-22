@@ -92,48 +92,63 @@
         "tsConfig": ""
       }
     },
-    "update-check": {
+    "migrate": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [
           {
-            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --check",
+            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --check --jsonUpgraded",
+            "forwardAllArgs": false
+          },
+          {
+            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --migrate=update",
+            "forwardAllArgs": false
+          },
+          {
+            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --cleanup",
             "forwardAllArgs": false
           }
-        ]
+        ],
+        "parallel": false,
+        "color": true
       }
     },
-    "update-migrate": {
+    "migrate-bulk-confirm": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [
           {
-            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --check --jsonUpgraded; npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --migrate=update; npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --cleanup;",
+            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --check --jsonUpgraded",
+            "forwardAllArgs": false
+          },
+          {
+            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --migrate=update --bulkUserChoice=true",
+            "forwardAllArgs": false
+          },
+          {
+            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --cleanup;",
             "forwardAllArgs": false
           }
-        ]
+        ],
+        "parallel": false,
+        "color": true
       }
     },
-    "update-migrate-bulk-confirm": {
+    "migrate-only": {
       "executor": "nx:run-commands",
       "options": {
         "commands": [
           {
-            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --check --jsonUpgraded; npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --migrate=update --bulkUserChoice=true; npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --cleanup;",
+            "command": "yarn install && yarn ngcc && npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --migrate=only",
             "forwardAllArgs": false
-          }
-        ]
-      }
-    },
-    "update-migrate-only": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
+          },
           {
-            "command": "yarn install && yarn ngcc && npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --migrate=only; npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --cleanup;",
+            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --cleanup",
             "forwardAllArgs": false
           }
-        ]
+        ],
+        "parallel": false,
+        "color": true
       }
     }
   }

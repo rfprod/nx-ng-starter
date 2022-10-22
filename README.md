@@ -6,16 +6,15 @@
 
 ## Workflows
 
-| Info                                                                         | Trigger                             | Badge                                                                                                                                                                                                       |
-| ---------------------------------------------------------------------------- | ----------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [:information_source:](# 'Source code security scanning.')                   | Manual, Scheduled (weekly)          | [![codeql-analysis](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeql-analysis.yml)                |
-| [:information_source:](# 'Containerization.')                                | Manual                              | [![build-docker](https://github.com/rfprod/nx-ng-starter/actions/workflows/build-docker.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/build-docker.yml)                         |
-| [:information_source:](# 'Publish npm packages.')                            | PR merge event (destination: trunk) | [![publish-packages](https://github.com/rfprod/nx-ng-starter/actions/workflows/publish-packages.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/publish-packages.yml)             |
-| [:information_source:](# 'User acceptance testing.')                         | Manual                              | [![test-e2e](https://github.com/rfprod/nx-ng-starter/actions/workflows/test-e2e.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/test-e2e.yml)                                     |
-| [:information_source:](# 'Full testing, deliverables build and deployment.') | PR merge event (destination: trunk) | [![trunk](https://github.com/rfprod/nx-ng-starter/actions/workflows/trunk.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/trunk.yml)                                              |
-| [:information_source:](# 'Code ownership validation.')                       | Scheduled (weekly)                  | [![validate-codeowners](https://github.com/rfprod/nx-ng-starter/actions/workflows/validate-codeowners.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/validate-codeowners.yml)    |
-| [:information_source:](# 'Quality gates: pull request validation.')          | PR open event (destination: trunk)  | [![validate-pr](https://github.com/rfprod/nx-ng-starter/actions/workflows/validate-pr.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/validate-pr.yml)                            |
-
+| Info                                                                         | Trigger                             | Badge                                                                                                                                                                                                    |
+| ---------------------------------------------------------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [:information_source:](# 'Source code security scanning.')                   | Manual, Scheduled (weekly)          | [![codeql-analysis](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeql-analysis.yml)             |
+| [:information_source:](# 'Containerization.')                                | Manual                              | [![build-docker](https://github.com/rfprod/nx-ng-starter/actions/workflows/build-docker.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/build-docker.yml)                      |
+| [:information_source:](# 'Publish npm packages.')                            | PR merge event (destination: trunk) | [![publish-packages](https://github.com/rfprod/nx-ng-starter/actions/workflows/publish-packages.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/publish-packages.yml)          |
+| [:information_source:](# 'User acceptance testing.')                         | Manual                              | [![test-e2e](https://github.com/rfprod/nx-ng-starter/actions/workflows/test-e2e.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/test-e2e.yml)                                  |
+| [:information_source:](# 'Full testing, deliverables build and deployment.') | PR merge event (destination: trunk) | [![trunk](https://github.com/rfprod/nx-ng-starter/actions/workflows/trunk.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/trunk.yml)                                           |
+| [:information_source:](# 'Code ownership validation.')                       | Scheduled (weekly)                  | [![validate-codeowners](https://github.com/rfprod/nx-ng-starter/actions/workflows/validate-codeowners.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/validate-codeowners.yml) |
+| [:information_source:](# 'Quality gates: pull request validation.')          | PR open event (destination: trunk)  | [![validate-pr](https://github.com/rfprod/nx-ng-starter/actions/workflows/validate-pr.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/validate-pr.yml)                         |
 
 ## Requirements
 
@@ -96,25 +95,25 @@ Application deployments and autogenerated engineering documentation.
 #### `feature` library
 
 ```bash
-yarn workspace:schematic client-feature client-<feature-name> --tags=scope:client-<feature-name>,type:feature
+npx nx workspace-schematic client-feature client-<feature-name> --tags=scope:client-<feature-name>,type:feature
 ```
 
 #### `ui` library
 
 ```bash
-yarn workspace:schematic client-ui client-ui-<feature-name> --tags=scope:client-ui-<feature-name>,type:ui
+npx nx workspace-schematic client-ui client-ui-<feature-name> --tags=scope:client-ui-<feature-name>,type:ui
 ```
 
 #### `data-access` library
 
 ```bash
-yarn workspace:schematic client-store client-store-<feature-name> --tags=scope:client-store-<feature-name>,type:data-access
+npx nx workspace-schematic client-store client-store-<feature-name> --tags=scope:client-store-<feature-name>,type:data-access
 ```
 
 #### `util` library
 
 ```bash
-yarn workspace:schematic client-util client-util-<feature-name> --tags=scope:client-util-<feature-name>,type:util
+npx nx workspace-schematic client-util client-util-<feature-name> --tags=scope:client-util-<feature-name>,type:util
 ```
 
 ## General Tooling
