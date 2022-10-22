@@ -128,5 +128,5 @@ jobs:
   publish-packages:
     needs: trunk
     if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packages == 'true' }}
-    uses: ./.github/workflows/publish-packages.yml@main
+    uses: ./.github/workflows/publish-packages.yml
     secrets: inherit
