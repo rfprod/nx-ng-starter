@@ -86,6 +86,13 @@
       },
       "outputs": ["{workspaceRoot}/coverage/tools"]
     },
+    "tsc-check": {
+      "executor": "./tools/executors/tsc:check",
+      "options": {
+        "tsConfig": "tools/tsconfig.tools.json"
+      },
+      "outputs": ["{workspaceRoot}/dist/out-tsc/tools"]
+    },
     "tsc-configure": {
       "executor": "./tools/executors/tsc:configure",
       "options": {
