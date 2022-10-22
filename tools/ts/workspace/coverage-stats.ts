@@ -1,4 +1,5 @@
 import { getJestProjects } from '@nrwl/jest';
+import { exec, ExecException } from 'child_process';
 import * as fs from 'fs';
 
 import { logger } from '../utils/logger';
@@ -76,6 +77,12 @@ const writeAverageStats = () => {
     if (error !== null) {
       logger.printError(error);
     }
+
+    exec(`yarn prettier ${readmePath} --write`, (err: ExecException | null) => {
+      if (err !== null) {
+        logger.printError(err);
+      }
+    });
   });
 };
 

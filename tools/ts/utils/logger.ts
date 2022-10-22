@@ -20,7 +20,7 @@ const printInfo = <T>(payload: T, title = 'Info') => console.log(`\n 💬 ${COLO
  * @param title message title
  */
 const printError = <T>(payload: Error & T, title = 'Error') =>
-  console.log(`\n ❌ ${COLORS.RED}%s${COLORS.DEFAULT}:\n%s\n`, title, payload.message);
+  console.log(`\n ❌ ${COLORS.RED}%s${COLORS.DEFAULT}:\n%s\n`, title, payload.stack);
 
 export const logger = {
   printSuccess,
