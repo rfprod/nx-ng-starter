@@ -6,7 +6,7 @@
 
 ## Workflows
 
-| Info                                                                         | Trigger                             | Badge                                                                                                                                                                                                    |
+|                                                                              | Trigger                             | Badge                                                                                                                                                                                                    |
 | ---------------------------------------------------------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [:information_source:](# 'Source code security scanning.')                   | Manual, Scheduled (weekly)          | [![codeql-analysis](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeql-analysis.yml)             |
 | [:information_source:](# 'Containerization.')                                | Manual                              | [![build-docker](https://github.com/rfprod/nx-ng-starter/actions/workflows/build-docker.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/build-docker.yml)                      |
