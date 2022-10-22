@@ -41,13 +41,13 @@ describe('logger', () => {
   it('printError should call console.log with expected parameters, default title', () => {
     const payload = new Error('test');
     logger.printError(payload);
-    expect(spy).toHaveBeenCalledWith(`\n ❌ ${COLORS.RED}%s${COLORS.DEFAULT}:\n%s\n`, 'Error', payload.message);
+    expect(spy).toHaveBeenCalledWith(`\n ❌ ${COLORS.RED}%s${COLORS.DEFAULT}:\n%s\n`, 'Error', payload.stack);
   });
 
   it('printError should call console.log with expected parameters, custom title', () => {
     const title = 'Title';
     const payload = new Error('test');
     logger.printError(payload, title);
-    expect(spy).toHaveBeenCalledWith(`\n ❌ ${COLORS.RED}%s${COLORS.DEFAULT}:\n%s\n`, title, payload.message);
+    expect(spy).toHaveBeenCalledWith(`\n ❌ ${COLORS.RED}%s${COLORS.DEFAULT}:\n%s\n`, title, payload.stack);
   });
 });

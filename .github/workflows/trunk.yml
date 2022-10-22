@@ -70,7 +70,7 @@ jobs:
         run: |
           npx nx run-many --target test --all --pass-with-no-tests --code-coverage --run-in-band --ci
           npx nx run tools:coverage-stats
-          cat ./UNIT_COVERAGE.md
+          cat ./UNIT_COVERAGE.md >> $GITHUB_STEP_SUMMARY
 
       - name: Build
         if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' }}
