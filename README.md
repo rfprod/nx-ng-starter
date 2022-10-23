@@ -154,7 +154,7 @@ Below are some plugins which can be added to the workspace:
 To generate an application run:
 
 ```bash
-ng g @nrwl/angular:app my-app
+npx nx g @nrwl/angular:app my-app
 ```
 
 > You can use any of the plugins above to generate applications as well.
@@ -166,7 +166,7 @@ When using Nx, you can create multiple applications and libraries in the same wo
 To generate a library run:
 
 ```bash
-ng g @nrwl/angular:lib my-lib
+npx nx g @nrwl/angular:lib my-lib
 ```
 
 > You can also use any of the plugins above to generate libraries as well.
@@ -180,7 +180,7 @@ It can be imported from `@nx-ng-starter/mylib`.
 To start a dev server run:
 
 ```bash
-ng serve my-app
+npx nx serve my-app
 ```
 
 Navigate to http://localhost:4200/.
@@ -192,7 +192,7 @@ The app will automatically reload if you change any of the source files.
 To generate a new component run:
 
 ```bash
-ng g component my-component --project=my-app
+npx nx g @nrwl/angular:component my-component --project=my-app
 ```
 
 ### Building applications
@@ -200,7 +200,7 @@ ng g component my-component --project=my-app
 To build the project run:
 
 ```bash
-ng build my-app
+npx nx build my-app
 ```
 
 The build artifacts will be stored in the `dist/` directory.
@@ -212,13 +212,13 @@ Use the `--prod` flag for a production build.
 To execute the unit tests run:
 
 ```bash
-ng test my-app
+npx nx test my-app
 ```
 
 To execute the unit tests affected by a change run:
 
 ```bash
-npm run affected:test
+npx nx affected:test
 ```
 
 ### End-to-end testing with [Cypress](https://www.cypress.io)
@@ -226,13 +226,13 @@ npm run affected:test
 To execute the end-to-end tests run:
 
 ```bash
-ng e2e my-app
+npx nx e2e my-app
 ```
 
 To execute the end-to-end tests affected by a change run:
 
 ```bash
-npm run affected:e2e
+npx nx affected:e2e
 ```
 
 ### Understanding the workspace
@@ -240,7 +240,7 @@ npm run affected:e2e
 To see a diagram of the dependencies of the projects run:
 
 ```bash
-npm run dep-graph
+npx nx dep-graph
 ```
 
 ### Generating a storybook for a feature or ui library
@@ -252,7 +252,7 @@ npx nx g @nrwl/angular:storybook-configuration project-name
 ### Tools help
 
 ```bash
-ng run tools:help
+npx nx run tools:help
 ```
 
 ### Further help
