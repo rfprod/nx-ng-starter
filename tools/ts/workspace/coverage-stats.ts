@@ -1,6 +1,7 @@
 import { getJestProjects } from '@nrwl/jest';
-import { exec, ExecException } from 'child_process';
+import { ExecException, execFile } from 'child_process';
 import * as fs from 'fs';
+import path from 'path';
 
 import { logger } from '../utils/logger';
 
@@ -45,7 +46,6 @@ const totalCoverage: ICoverageSummaryObj = {
 let readFiles = 0;
 
 const writeAverageStats = () => {
-  const readmePath = `${root}/UNIT_COVERAGE.md`;
   const coverageSummary = `# Unit Coverage Stats
 
 ## Lines
@@ -73,12 +73,17 @@ const writeAverageStats = () => {
 | ${totalCoverage.branches.total}  | ${totalCoverage.branches.covered}  | ${totalCoverage.branches.skipped}  | ${totalCoverage.branches.pct}% |
 `;
 
+  const readmePath = path.join(root, 'UNIT_COVERAGE.md');
+
   fs.writeFile(readmePath, coverageSummary, (error: NodeJS.ErrnoException | null) => {
     if (error !== null) {
       logger.printError(error);
     }
 
-    exec(`yarn prettier ${readmePath} --write`, (err: ExecException | null) => {
+    const command = 'yarn';
+    const args = ['prettier', readmePath, '--write'];
+
+    execFile(command, args, (err: ExecException | null) => {
       if (err !== null) {
         logger.printError(err);
       }
@@ -168,7 +173,8 @@ const readFileCallback = (error: NodeJS.ErrnoException | null, data?: Buffer) =>
 };
 
 for (const project of jestProjects) {
-  const path = project.replace(/<rootDir>/, '');
+  const projectPath = project.replace(/<rootDir>/, '');
+  const filePath = path.join(root, 'coverage', projectPath, 'coverage-summary.json');
 
-  fs.readFile(`${root}/coverage${path}/coverage-summary.json`, readFileCallback);
+  fs.readFile(filePath, readFileCallback);
 }
