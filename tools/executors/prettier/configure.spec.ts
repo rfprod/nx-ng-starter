@@ -5,10 +5,10 @@ import type { ExecutorContext, ProjectConfiguration } from '@nrwl/devkit';
 import * as devkit from '@nrwl/devkit';
 import * as nxTree from 'nx/src/generators/tree';
 
-import configureTscCheck, { AppConfigureTscCheckExecutor } from './configure';
+import configureTscCheck, { AppConfigurePrettierCheckExecutor } from './configure';
 import { IExecutorOptions } from './schema';
 
-describe('AppConfigureTscCheckExecutor', () => {
+describe('AppConfigurePrettierCheckExecutor', () => {
   const setup = (projectsInput?: Record<string, ProjectConfiguration>, optionsInput?: IExecutorOptions & { dryRun: boolean }) => {
     let projects: Record<string, ProjectConfiguration> = {};
     if (typeof projectsInput === 'undefined') {
@@ -49,7 +49,7 @@ describe('AppConfigureTscCheckExecutor', () => {
     };
 
     const options: IExecutorOptions & { dryRun: boolean } =
-      typeof optionsInput !== 'undefined' ? optionsInput : { tsConfig: '', dryRun: true };
+      typeof optionsInput !== 'undefined' ? optionsInput : { config: '', dryRun: true };
 
     return { context, options, projects };
   };
@@ -59,7 +59,7 @@ describe('AppConfigureTscCheckExecutor', () => {
 
     it('should throw an error if a project sourceRoot is undefined when adding a configuration', () => {
       const { context, options } = setup();
-      const executor = new AppConfigureTscCheckExecutor(options, context);
+      const executor = new AppConfigurePrettierCheckExecutor(options, context);
       try {
         executor.configure();
       } catch (e) {
@@ -89,7 +89,7 @@ describe('AppConfigureTscCheckExecutor', () => {
       };
       const { context, options } = setup(projectsInput);
 
-      const executor = new AppConfigureTscCheckExecutor(options, context);
+      const executor = new AppConfigurePrettierCheckExecutor(options, context);
       try {
         executor.configure();
       } catch (e) {
@@ -118,7 +118,7 @@ describe('AppConfigureTscCheckExecutor', () => {
       };
       const { context, options } = setup(projectsInput);
 
-      const executor = new AppConfigureTscCheckExecutor(options, context);
+      const executor = new AppConfigurePrettierCheckExecutor(options, context);
       try {
         executor.configure();
       } catch (e) {
@@ -149,13 +149,13 @@ describe('AppConfigureTscCheckExecutor', () => {
       const optionsInput: IExecutorOptions & {
         dryRun: boolean;
       } = {
-        tsConfig: '',
+        config: '',
         dryRun: true,
         cleanup: true,
       };
       const { context, options } = setup(projectsInput, optionsInput);
 
-      const executor = new AppConfigureTscCheckExecutor(options, context);
+      const executor = new AppConfigurePrettierCheckExecutor(options, context);
       try {
         executor.configure();
       } catch (e) {
@@ -190,7 +190,7 @@ describe('AppConfigureTscCheckExecutor', () => {
       };
       const { context, options } = setup(projectsInput);
 
-      const executor = new AppConfigureTscCheckExecutor(options, context);
+      const executor = new AppConfigurePrettierCheckExecutor(options, context);
       expect(executor.tree).toBeDefined();
       const treeListChangesSpy = jest.spyOn(executor.tree, 'listChanges');
       executor.configure();
@@ -224,11 +224,11 @@ describe('AppConfigureTscCheckExecutor', () => {
         dryRun: boolean;
       } = {
         dryRun: false,
-        tsConfig: '',
+        config: '',
       };
       const { context, options } = setup(projectsInput, optionsInput);
 
-      const executor = new AppConfigureTscCheckExecutor(options, context);
+      const executor = new AppConfigurePrettierCheckExecutor(options, context);
       expect(executor.tree).toBeDefined();
       const treeListChangesSpy = jest.spyOn(executor.tree, 'listChanges');
       executor.configure();
@@ -267,11 +267,11 @@ describe('AppConfigureTscCheckExecutor', () => {
       } = {
         dryRun: true,
         cleanup: true,
-        tsConfig: '',
+        config: '',
       };
       const { context, options } = setup(projectsInput, optionsInput);
 
-      const executor = new AppConfigureTscCheckExecutor(options, context);
+      const executor = new AppConfigurePrettierCheckExecutor(options, context);
       expect(executor.tree).toBeDefined();
       const treeListChangesSpy = jest.spyOn(executor.tree, 'listChanges');
       executor.configure();
@@ -283,39 +283,36 @@ describe('AppConfigureTscCheckExecutor', () => {
 
     it('should call updateProjectConfiguration without calling flushChanges when the dryRun option is true', () => {
       const targets = {};
-      targets['tsc-check'] = {};
+      targets['prettier-check'] = {};
       const projectsInput: Record<string, ProjectConfiguration> = {};
       projectsInput['test-app'] = {
         root: '/root',
-        sourceRoot: '/src',
+        sourceRoot: '/test-app/src',
         projectType: 'application',
-        targets: {},
+        targets: { ...targets },
       };
-      projectsInput['test-app'].targets = { ...targets };
       projectsInput['test-e2e'] = {
         root: '/root',
-        sourceRoot: '/src',
+        sourceRoot: '/test-e2e/src',
         projectType: 'application',
-        targets: {},
+        targets: { ...targets },
       };
-      projectsInput['test-e2e'].targets = { ...targets };
       projectsInput['test-lib'] = {
         root: '/root',
-        sourceRoot: '/src',
+        sourceRoot: '/test-lib/src',
         projectType: 'library',
-        targets: {},
+        targets: { ...targets },
       };
-      projectsInput['test-lib'].targets = { ...targets };
       const optionsInput: IExecutorOptions & {
         dryRun: boolean;
       } = {
         dryRun: true,
         cleanup: true,
-        tsConfig: '',
+        config: '',
       };
       const { context, options } = setup(projectsInput, optionsInput);
 
-      const executor = new AppConfigureTscCheckExecutor(options, context);
+      const executor = new AppConfigurePrettierCheckExecutor(options, context);
       expect(executor.tree).toBeDefined();
       const treeListChangesSpy = jest.spyOn(executor.tree, 'listChanges');
       executor.configure();
@@ -327,39 +324,36 @@ describe('AppConfigureTscCheckExecutor', () => {
 
     it('should call updateProjectConfiguration and flushChanges when the dryRun option is falsy', () => {
       const targets = {};
-      targets['tsc-check'] = {};
+      targets['prettier-check'] = {};
       const projectsInput: Record<string, ProjectConfiguration> = {};
       projectsInput['test-app'] = {
         root: '/root',
         sourceRoot: '/src',
         projectType: 'application',
-        targets: {},
+        targets: { ...targets },
       };
-      projectsInput['test-app'].targets = { ...targets };
       projectsInput['test-e2e'] = {
         root: '/root',
         sourceRoot: '/src',
         projectType: 'application',
-        targets: {},
+        targets: { ...targets },
       };
-      projectsInput['test-e2e'].targets = { ...targets };
       projectsInput['test-lib'] = {
         root: '/root',
         sourceRoot: '/src',
         projectType: 'library',
-        targets: {},
+        targets: { ...targets },
       };
-      projectsInput['test-lib'].targets = { ...targets };
       const optionsInput: IExecutorOptions & {
         dryRun: boolean;
       } = {
         dryRun: false,
         cleanup: true,
-        tsConfig: '',
+        config: '',
       };
       const { context, options } = setup(projectsInput, optionsInput);
 
-      const executor = new AppConfigureTscCheckExecutor(options, context);
+      const executor = new AppConfigurePrettierCheckExecutor(options, context);
       expect(executor.tree).toBeDefined();
       const treeListChangesSpy = jest.spyOn(executor.tree, 'listChanges');
       executor.configure();

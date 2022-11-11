@@ -21,6 +21,13 @@
       },
       "outputs": ["{workspaceRoot}/coverage/libs/backend-websocket"]
     },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/backend-websocket"]
+    },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {

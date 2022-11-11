@@ -8,9 +8,9 @@ export interface IProjectMetadata {
   config: ProjectConfiguration;
 }
 
-export class AppConfigureTscCheckExecutor {
+export class AppConfigurePrettierCheckExecutor {
   public options: IExecutorOptions = {
-    tsConfig: '',
+    config: '',
   };
 
   public context: ExecutorContext = {
@@ -37,14 +37,13 @@ export class AppConfigureTscCheckExecutor {
       throw new Error(`The project ${project.name} does not have the 'sourceRoot' configuration option defined.`);
     }
 
-    const suffix =
-      project.config.projectType === 'application' && project.name.includes('-e2e')
-        ? 'e2e'
-        : project.config.projectType === 'library'
-        ? 'lib'
-        : project.config.projectType === 'application'
-        ? 'app'
-        : '';
+    const suffix = project.name.includes('-e2e')
+      ? 'e2e'
+      : project.config.projectType === 'library'
+      ? 'lib'
+      : project.config.projectType === 'application'
+      ? 'app'
+      : '';
 
     if (suffix === '') {
       throw new Error(`Could not determine a suffix for the project: ${project.name}.`);
@@ -54,11 +53,11 @@ export class AppConfigureTscCheckExecutor {
     if (typeof config.targets === 'undefined') {
       throw new Error(`The project ${project.name} does not have the 'targets' configuration option defined.`);
     }
-    if (typeof config.targets['tsc-check'] === 'undefined' && /\/src$/.test(srcRoot)) {
-      config.targets['tsc-check'] = {
-        executor: './tools/executors/tsc:check',
+    if (typeof config.targets['prettier-check'] === 'undefined' && /\/src$/.test(srcRoot)) {
+      config.targets['prettier-check'] = {
+        executor: './tools/executors/prettier:check',
         options: {
-          tsConfig: `${srcRoot.replace(/src$/, `tsconfig.${suffix}.json`)}`,
+          config: this.options.config,
         },
         outputs: [`{workspaceRoot}/dist/out-tsc/${srcRoot.replace(/\/src$/, '')}`],
       };
@@ -71,8 +70,8 @@ export class AppConfigureTscCheckExecutor {
     if (typeof config.targets === 'undefined') {
       throw new Error(`The project ${project.name} does not have the 'targets' configuration option defined.`);
     }
-    if (typeof config.targets['tsc-check'] !== 'undefined') {
-      delete config.targets['tsc-check'];
+    if (typeof config.targets['prettier-check'] !== 'undefined') {
+      delete config.targets['prettier-check'];
       updateProjectConfiguration(tree, project.name, config);
     }
   }
@@ -100,14 +99,16 @@ export class AppConfigureTscCheckExecutor {
       flushChanges(this.context.root, changes);
 
       if (this.options.cleanup === true) {
-        logger.warn(`Don't forget to remove the executor configuration target from './tools/project.json'. Find a target 'tsc-configure'.`);
+        logger.warn(
+          `Don't forget to remove the executor configuration target from './tools/project.json'. Find a target 'prettier-configure'.`,
+        );
       }
     }
   }
 }
 
 export default async function configureTscCheck(options: IExecutorOptions, context: ExecutorContext): Promise<{ success: boolean }> {
-  const executor = new AppConfigureTscCheckExecutor(options, context);
+  const executor = new AppConfigurePrettierCheckExecutor(options, context);
   executor.configure();
 
   return { success: true };

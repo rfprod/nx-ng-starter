@@ -28,6 +28,13 @@
       },
       "outputs": ["{options.outputFile}"]
     },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/out-tsc/apps/elements-e2e"]
+    },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {

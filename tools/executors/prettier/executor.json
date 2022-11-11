@@ -1,0 +1,14 @@
+{
+  "executors": {
+    "check": {
+      "implementation": "./check",
+      "schema": "./schema.json",
+      "description": "Check HTML files for formatting errors using prettier."
+    },
+    "configure": {
+      "implementation": "./configure",
+      "schema": "./schema.json",
+      "description": "Configure the executor - add targets to the application and library configurations."
+    }
+  }
+}

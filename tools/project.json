@@ -78,6 +78,12 @@
       },
       "outputs": ["{options.outputFile}"]
     },
+    "prettier-configure": {
+      "executor": "./tools/executors/prettier:configure",
+      "options": {
+        "config": ""
+      }
+    },
     "test": {
       "executor": "@nrwl/jest:jest",
       "options": {
