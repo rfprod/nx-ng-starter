@@ -1,6 +1,6 @@
 {
-  "name": "api",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "api",
   "projectType": "application",
   "sourceRoot": "apps/api/src",
   "tags": ["scope:api", "type:application"],
@@ -41,11 +41,11 @@
           }
         ],
         "buildLibsFromSource": true,
+        "compiler": "tsc",
         "main": "apps/api/src/main.ts",
         "outputPath": "dist/apps/api",
-        "tsConfig": "apps/api/tsconfig.app.json",
         "target": "node",
-        "compiler": "tsc"
+        "tsConfig": "apps/api/tsconfig.app.json"
       }
     },
     "lint": {
@@ -77,13 +77,6 @@
         "passWithNoTests": true
       },
       "outputs": ["{workspaceRoot}/coverage/apps/api"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/apps/api"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",

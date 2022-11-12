@@ -69,6 +69,10 @@ jobs:
         if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' }}
         run: npx nx run-many --target prettier-check --dryRun --all --parallel --max-parallel 2
 
+      - name: Lint scss
+        if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' }}
+        run: npx nx run-many --target stylelint-check --dryRun --all --parallel --max-parallel 2
+
       - name: Unit test
         if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' }}
         run: |

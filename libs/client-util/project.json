@@ -1,6 +1,6 @@
 {
-  "name": "client-util",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "client-util",
   "prefix": "app",
   "projectType": "library",
   "sourceRoot": "libs/client-util/src",
@@ -14,6 +14,20 @@
       },
       "outputs": ["{options.outputFile}"]
     },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-util"]
+    },
+    "stylelint-check": {
+      "executor": "./tools/executors/stylelint:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/stylelint/libs/client-util"]
+    },
     "test": {
       "executor": "@nrwl/jest:jest",
       "options": {
@@ -21,13 +35,6 @@
         "passWithNoTests": true
       },
       "outputs": ["{workspaceRoot}/coverage/libs/client-util"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-util"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",

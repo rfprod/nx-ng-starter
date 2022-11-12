@@ -3,10 +3,10 @@ import { execFileSync } from 'child_process';
 import { FsTree } from 'nx/src/generators/tree';
 
 import { IExecutorOptions } from './schema';
-import { findHtmlFiles } from './utils/find-html-files.util';
+import { findScssFiles } from './utils/find-scss-files.util';
 
 /**
- * Execute prettier checks.
+ * Execute stylelint checks.
  * @param options executor options
  * @param context executor context
  * @returns execution result
@@ -29,7 +29,7 @@ export default async function check(options: IExecutorOptions, context: Executor
     throw new Error('Project root does not exist.');
   }
 
-  const files = findHtmlFiles(tree, src);
+  const files = findScssFiles(tree, src);
 
   if (files.stdout.length > 0) {
     const input = files.stdout.split(' ');
@@ -37,13 +37,13 @@ export default async function check(options: IExecutorOptions, context: Executor
     const cmd = 'npx';
     const args =
       options.dryRun === true
-        ? ['prettier', '--config', options.config, '-c', ...input]
-        : ['prettier', '--config', options.config, '-c', '--write', ...input];
+        ? ['stylelint', '--config', options.config, '--custom-syntax', options.customSyntax ?? 'postcss-scss', ...input]
+        : ['stylelint', '--config', options.config, '--custom-syntax', options.customSyntax ?? 'postcss-scss', '--fix', ...input];
     execFileSync(cmd, args, { stdio: 'inherit' });
   }
 
   if (files.stdout.length === 0 && files.stderr.length === 0) {
-    logger.info(`${src} does not contain html files.`);
+    logger.info(`${src} does not contain scss files.`);
   }
 
   return { success: files.stderr === '' };

@@ -1,6 +1,6 @@
 {
-  "name": "proto",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "proto",
   "prefix": "app",
   "projectType": "library",
   "sourceRoot": "libs/proto/src",
@@ -13,13 +13,6 @@
         "lintFilePatterns": ["libs/proto/**/*.ts"]
       },
       "outputs": ["{options.outputFile}"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/proto"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",

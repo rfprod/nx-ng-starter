@@ -1,6 +1,6 @@
 {
-  "name": "client-d3-charts",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "client-d3-charts",
   "prefix": "app",
   "projectType": "library",
   "sourceRoot": "libs/client-d3-charts/src",
@@ -30,6 +30,20 @@
       },
       "outputs": ["{options.outputFile}"]
     },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-d3-charts"]
+    },
+    "stylelint-check": {
+      "executor": "./tools/executors/stylelint:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/stylelint/libs/client-d3-charts"]
+    },
     "test": {
       "executor": "@nrwl/jest:jest",
       "options": {
@@ -37,13 +51,6 @@
         "passWithNoTests": true
       },
       "outputs": ["{workspaceRoot}/coverage/libs/client-d3-charts"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-d3-charts"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",

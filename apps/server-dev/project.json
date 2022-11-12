@@ -1,6 +1,6 @@
 {
-  "name": "server-dev",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "server-dev",
   "projectType": "application",
   "sourceRoot": "apps/server-dev/src",
   "tags": ["scope:server-dev", "type:application"],
@@ -22,11 +22,11 @@
       "executor": "@nrwl/webpack:webpack",
       "options": {
         "assets": ["apps/server-dev/src/assets"],
+        "compiler": "tsc",
         "main": "apps/server-dev/src/main.ts",
         "outputPath": "dist/apps/server-dev",
-        "tsConfig": "apps/server-dev/tsconfig.app.json",
         "target": "node",
-        "compiler": "tsc"
+        "tsConfig": "apps/server-dev/tsconfig.app.json"
       },
       "outputs": ["{options.outputPath}"]
     },
@@ -56,13 +56,6 @@
         "passWithNoTests": true
       },
       "outputs": ["{workspaceRoot}/coverage/apps/server-dev"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/apps/server-dev"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",

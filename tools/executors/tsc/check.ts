@@ -4,7 +4,7 @@ import path from 'path';
 
 import { IExecutorOptions } from './schema';
 
-export default async function tscCheck(options: IExecutorOptions, context: ExecutorContext): Promise<{ success: boolean }> {
+export default async function check(options: IExecutorOptions, context: ExecutorContext): Promise<{ success: boolean }> {
   const projectName = context.projectName;
 
   if (typeof projectName === 'undefined') {

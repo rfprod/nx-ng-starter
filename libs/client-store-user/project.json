@@ -1,6 +1,6 @@
 {
-  "name": "client-store-user",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "client-store-user",
   "prefix": "app",
   "projectType": "library",
   "sourceRoot": "libs/client-store-user/src",
@@ -14,6 +14,20 @@
       },
       "outputs": ["{options.outputFile}"]
     },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-store-user"]
+    },
+    "stylelint-check": {
+      "executor": "./tools/executors/stylelint:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/stylelint/libs/client-store-user"]
+    },
     "test": {
       "executor": "@nrwl/jest:jest",
       "options": {
@@ -21,13 +35,6 @@
         "passWithNoTests": true
       },
       "outputs": ["{workspaceRoot}/coverage/libs/client-store-user"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-store-user"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",

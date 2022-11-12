@@ -1,6 +1,6 @@
 {
-  "name": "client-core-components",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "client-core-components",
   "prefix": "app",
   "projectType": "library",
   "sourceRoot": "libs/client-core-components/src",
@@ -28,6 +28,13 @@
       },
       "outputs": ["{options.outputFile}"]
     },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-core-components"]
+    },
     "storybook": {
       "executor": "@storybook/angular:start-storybook",
       "options": {
@@ -37,6 +44,13 @@
         "port": 4400
       }
     },
+    "stylelint-check": {
+      "executor": "./tools/executors/stylelint:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/stylelint/libs/client-core-components"]
+    },
     "test": {
       "executor": "@nrwl/jest:jest",
       "options": {
@@ -44,13 +58,6 @@
         "passWithNoTests": true
       },
       "outputs": ["{workspaceRoot}/coverage/libs/client-core-components"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-core-components"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",

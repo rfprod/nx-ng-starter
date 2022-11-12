@@ -1,6 +1,6 @@
 {
-  "name": "client-util-eliza",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "client-util-eliza",
   "prefix": "app",
   "projectType": "library",
   "sourceRoot": "libs/client-util-eliza/src",
@@ -30,6 +30,20 @@
       },
       "outputs": ["{options.outputFile}"]
     },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-util-eliza"]
+    },
+    "stylelint-check": {
+      "executor": "./tools/executors/stylelint:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/stylelint/libs/client-util-eliza"]
+    },
     "test": {
       "executor": "@nrwl/jest:jest",
       "options": {
@@ -37,13 +51,6 @@
         "passWithNoTests": true
       },
       "outputs": ["{workspaceRoot}/coverage/libs/client-util-eliza"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-util-eliza"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",

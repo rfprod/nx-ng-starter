@@ -1,6 +1,6 @@
 {
-  "name": "client-diagnostics",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "client-diagnostics",
   "prefix": "app",
   "projectType": "library",
   "sourceRoot": "libs/client-diagnostics/src",
@@ -28,6 +28,13 @@
       },
       "outputs": ["{options.outputFile}"]
     },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-diagnostics"]
+    },
     "storybook": {
       "executor": "@storybook/angular:start-storybook",
       "options": {
@@ -37,6 +44,13 @@
         "port": 4400
       }
     },
+    "stylelint-check": {
+      "executor": "./tools/executors/stylelint:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/stylelint/libs/client-diagnostics"]
+    },
     "test": {
       "executor": "@nrwl/jest:jest",
       "options": {
@@ -44,13 +58,6 @@
         "passWithNoTests": true
       },
       "outputs": ["{workspaceRoot}/coverage/libs/client-diagnostics"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-diagnostics"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",

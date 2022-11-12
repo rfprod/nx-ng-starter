@@ -10,8 +10,13 @@
     },
     "config": {
       "type": "string",
-      "description": "Prettier configuration path.",
-      "default": ".prettierrc"
+      "description": "Stylelint configuration path.",
+      "default": ".stylelintrc"
+    },
+    "customSyntax": {
+      "type": "string",
+      "description": "Stylelint cli configuration option. Documentation https://stylelint.io/user-guide/usage/options/#customsyntax",
+      "default": "postcss-scss"
     },
     "dryRun": {
       "type": "boolean",

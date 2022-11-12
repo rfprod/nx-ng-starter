@@ -5,7 +5,7 @@ import type { ExecutorContext, ProjectConfiguration } from '@nrwl/devkit';
 import * as devkit from '@nrwl/devkit';
 import * as nxTree from 'nx/src/generators/tree';
 
-import configureTscCheck, { AppConfigurePrettierCheckExecutor } from './configure';
+import configure, { AppConfigurePrettierCheckExecutor } from './configure';
 import { IExecutorOptions } from './schema';
 
 describe('AppConfigurePrettierCheckExecutor', () => {
@@ -170,21 +170,33 @@ describe('AppConfigurePrettierCheckExecutor', () => {
 
     it('should call updateProjectConfiguration without calling flushChanges when the dryRun option is true', () => {
       const projectsInput: Record<string, ProjectConfiguration> = {};
-      projectsInput['test-app'] = {
-        root: '/root',
-        sourceRoot: '/src',
+      projectsInput['client-app'] = {
+        root: '',
+        sourceRoot: 'apps/client-app/src',
+        projectType: 'application',
+        targets: {},
+      };
+      projectsInput['backend-app'] = {
+        root: '',
+        sourceRoot: 'apps/backend-app/src',
         projectType: 'application',
         targets: {},
       };
       projectsInput['test-e2e'] = {
-        root: '/root',
-        sourceRoot: '/src',
+        root: '',
+        sourceRoot: 'apps/test-e2e/src',
         projectType: 'application',
         targets: {},
       };
-      projectsInput['test-lib'] = {
-        root: '/root',
-        sourceRoot: '/src',
+      projectsInput['client-lib'] = {
+        root: '',
+        sourceRoot: 'apps/client-lib/src',
+        projectType: 'library',
+        targets: {},
+      };
+      projectsInput['backend-lib'] = {
+        root: '',
+        sourceRoot: 'apps/backend-lib/src',
         projectType: 'library',
         targets: {},
       };
@@ -194,7 +206,18 @@ describe('AppConfigurePrettierCheckExecutor', () => {
       expect(executor.tree).toBeDefined();
       const treeListChangesSpy = jest.spyOn(executor.tree, 'listChanges');
       executor.configure();
-      expect(devkit.updateProjectConfiguration).toHaveBeenCalledTimes(Object.keys(projectsInput).length);
+
+      const expectedLoggerMessages = [
+        `backend-app: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
+        `test-e2e: applications with e2e tests don't need this executor.`,
+        `backend-lib: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
+      ];
+      expect(devkit.logger.log).toHaveBeenCalledTimes(expectedLoggerMessages.length);
+      for (let i = 1, max = expectedLoggerMessages.length; i <= max; i += 1) {
+        expect(devkit.logger.log).toHaveBeenNthCalledWith(i, expectedLoggerMessages[i - 1]);
+      }
+      expect(devkit.updateProjectConfiguration).toHaveBeenCalledTimes(Object.keys(projectsInput).length - expectedLoggerMessages.length);
+
       expect(treeListChangesSpy).not.toHaveBeenCalled();
       expect(nxTree.flushChanges).not.toHaveBeenCalled();
       expect(devkit.logger.warn).not.toHaveBeenCalled();
@@ -202,21 +225,51 @@ describe('AppConfigurePrettierCheckExecutor', () => {
 
     it('should call updateProjectConfiguration and flushChanges when the dryRun option is falsy', () => {
       const projectsInput: Record<string, ProjectConfiguration> = {};
-      projectsInput['test-app'] = {
-        root: '/root',
-        sourceRoot: '/src',
+      projectsInput['client-app'] = {
+        root: '',
+        sourceRoot: 'apps/client-app/src',
+        projectType: 'application',
+        targets: {},
+      };
+      projectsInput['client'] = {
+        root: '',
+        sourceRoot: 'apps/client-app/src',
+        projectType: 'application',
+        targets: {},
+      };
+      projectsInput['documentation'] = {
+        root: '',
+        sourceRoot: 'apps/documentation/src',
+        projectType: 'application',
+        targets: {},
+      };
+      projectsInput['elements'] = {
+        root: '',
+        sourceRoot: 'apps/elements/src',
+        projectType: 'application',
+        targets: {},
+      };
+      projectsInput['backend-app'] = {
+        root: '',
+        sourceRoot: 'apps/backend-app/src',
         projectType: 'application',
         targets: {},
       };
       projectsInput['test-e2e'] = {
-        root: '/root',
-        sourceRoot: '/src',
+        root: '',
+        sourceRoot: 'apps/test-e2e/src',
         projectType: 'application',
         targets: {},
       };
-      projectsInput['test-lib'] = {
-        root: '/root',
-        sourceRoot: '/src',
+      projectsInput['client-lib'] = {
+        root: '',
+        sourceRoot: 'apps/client-lib/src',
+        projectType: 'library',
+        targets: {},
+      };
+      projectsInput['backend-lib'] = {
+        root: '',
+        sourceRoot: 'apps/backend-lib/src',
         projectType: 'library',
         targets: {},
       };
@@ -232,7 +285,18 @@ describe('AppConfigurePrettierCheckExecutor', () => {
       expect(executor.tree).toBeDefined();
       const treeListChangesSpy = jest.spyOn(executor.tree, 'listChanges');
       executor.configure();
-      expect(devkit.updateProjectConfiguration).toHaveBeenCalledTimes(Object.keys(projectsInput).length);
+
+      const expectedLoggerMessages = [
+        `backend-app: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
+        `test-e2e: applications with e2e tests don't need this executor.`,
+        `backend-lib: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
+      ];
+      expect(devkit.logger.log).toHaveBeenCalledTimes(expectedLoggerMessages.length);
+      for (let i = 1, max = expectedLoggerMessages.length; i <= max; i += 1) {
+        expect(devkit.logger.log).toHaveBeenNthCalledWith(i, expectedLoggerMessages[i - 1]);
+      }
+      expect(devkit.updateProjectConfiguration).toHaveBeenCalledTimes(Object.keys(projectsInput).length - expectedLoggerMessages.length);
+
       expect(treeListChangesSpy).toHaveBeenCalledTimes(1);
       expect(nxTree.flushChanges).toHaveBeenCalledTimes(1);
       expect(devkit.logger.warn).not.toHaveBeenCalled();
@@ -360,7 +424,9 @@ describe('AppConfigurePrettierCheckExecutor', () => {
       expect(devkit.updateProjectConfiguration).toHaveBeenCalledTimes(Object.keys(projectsInput).length);
       expect(treeListChangesSpy).toHaveBeenCalledTimes(1);
       expect(nxTree.flushChanges).toHaveBeenCalledTimes(1);
-      expect(devkit.logger.warn).toHaveBeenCalled();
+      expect(devkit.logger.warn).toHaveBeenCalledWith(
+        `Don't forget to remove the executor configuration target from './tools/project.json'. Find a target 'prettier-configure'.`,
+      );
     });
   });
 
@@ -389,7 +455,7 @@ describe('AppConfigurePrettierCheckExecutor', () => {
       };
       const { context, options } = setup(projectsInput);
 
-      const result = await configureTscCheck(options, context);
+      const result = await configure(options, context);
       expect(result).toMatchObject({ success: true });
     });
   });
