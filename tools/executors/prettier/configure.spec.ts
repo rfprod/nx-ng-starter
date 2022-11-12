@@ -9,27 +9,69 @@ import configure, { AppConfigurePrettierCheckExecutor } from './configure';
 import { IExecutorOptions } from './schema';
 
 describe('AppConfigurePrettierCheckExecutor', () => {
+  const getProjectsInput = (withTargets = false) => {
+    const targets = {};
+    targets['prettier-check'] = {};
+    const projectsInput: Record<string, ProjectConfiguration> = {};
+    projectsInput['client-app'] = {
+      root: '',
+      sourceRoot: 'apps/client-app/src',
+      projectType: 'application',
+      targets: withTargets ? { ...targets } : {},
+    };
+    projectsInput['client'] = {
+      root: '',
+      sourceRoot: 'apps/client-app/src',
+      projectType: 'application',
+      targets: withTargets ? { ...targets } : {},
+    };
+    projectsInput['documentation'] = {
+      root: '',
+      sourceRoot: 'apps/documentation/src',
+      projectType: 'application',
+      targets: withTargets ? { ...targets } : {},
+    };
+    projectsInput['elements'] = {
+      root: '',
+      sourceRoot: 'apps/elements/src',
+      projectType: 'application',
+      targets: withTargets ? { ...targets } : {},
+    };
+    projectsInput['backend-app'] = {
+      root: '',
+      sourceRoot: 'apps/backend-app/src',
+      projectType: 'application',
+      targets: withTargets ? { ...targets } : {},
+    };
+    projectsInput['test-e2e'] = {
+      root: '',
+      sourceRoot: 'apps/test-e2e/src',
+      projectType: 'application',
+      targets: withTargets ? { ...targets } : {},
+    };
+    projectsInput['client-lib'] = {
+      root: '',
+      sourceRoot: 'apps/client-lib/src',
+      projectType: 'library',
+      targets: withTargets ? { ...targets } : {},
+    };
+    projectsInput['backend-lib'] = {
+      root: '',
+      sourceRoot: 'apps/backend-lib/src',
+      projectType: 'library',
+      targets: withTargets ? { ...targets } : {},
+    };
+    projectsInput['tools'] = {
+      root: '',
+      sourceRoot: 'tools',
+      projectType: 'application',
+      targets: withTargets ? { ...targets } : {},
+    };
+    return projectsInput;
+  };
+
   const setup = (projectsInput?: Record<string, ProjectConfiguration>, optionsInput?: IExecutorOptions & { dryRun: boolean }) => {
-    let projects: Record<string, ProjectConfiguration> = {};
-    if (typeof projectsInput === 'undefined') {
-      projects['test-app'] = {
-        root: '/root',
-        projectType: 'application',
-        targets: {},
-      };
-      projects['test-e2e'] = {
-        root: '/root',
-        projectType: 'application',
-        targets: {},
-      };
-      projects['test-lib'] = {
-        root: '/root',
-        projectType: 'library',
-        targets: {},
-      };
-    } else {
-      projects = { ...projectsInput };
-    }
+    const projects = typeof projectsInput === 'undefined' ? getProjectsInput() : { ...projectsInput };
 
     (<jest.Mock>devkit.getProjects).mockImplementation((tree: nxTree.FsTree) => new Map(Object.entries(projects)));
     (<jest.Mock>nxTree.flushChanges).mockImplementation((root: string, fileChanges: nxTree.FileChange[]) => void 0);
@@ -58,34 +100,28 @@ describe('AppConfigurePrettierCheckExecutor', () => {
     afterEach(() => jest.clearAllMocks());
 
     it('should throw an error if a project sourceRoot is undefined when adding a configuration', () => {
-      const { context, options } = setup();
+      const projectsInput = getProjectsInput();
+      projectsInput['client-test-app'] = {
+        root: '',
+        projectType: 'application',
+        targets: {},
+      };
+      const { context, options } = setup(projectsInput);
       const executor = new AppConfigurePrettierCheckExecutor(options, context);
       try {
         executor.configure();
       } catch (e) {
         expect(devkit.getProjects).toHaveBeenCalled();
-        expect((<Error>e).message).toEqual(`The project test-app does not have the 'sourceRoot' configuration option defined.`);
+        expect((<Error>e).message).toEqual(`The project client-test-app does not have the 'sourceRoot' configuration option defined.`);
       }
     });
 
     it('should throw an error if a project targets is undefined when adding a configuration', () => {
-      const projectsInput: Record<string, ProjectConfiguration> = {};
-      projectsInput['test-app'] = {
-        root: '/root',
-        sourceRoot: '/src',
+      const projectsInput = getProjectsInput();
+      projectsInput['client-test-app'] = {
+        root: '',
+        sourceRoot: 'apps/client-test-app/src',
         projectType: 'application',
-      };
-      projectsInput['test-e2e'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['test-lib'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'library',
-        targets: {},
       };
       const { context, options } = setup(projectsInput);
 
@@ -94,26 +130,15 @@ describe('AppConfigurePrettierCheckExecutor', () => {
         executor.configure();
       } catch (e) {
         expect(devkit.getProjects).toHaveBeenCalled();
-        expect((<Error>e).message).toEqual(`The project test-app does not have the 'targets' configuration option defined.`);
+        expect((<Error>e).message).toEqual(`The project client-test-app does not have the 'targets' configuration option defined.`);
       }
     });
 
     it('should throw an error if unable to determine a suffix for a project when adding a configuration', () => {
-      const projectsInput: Record<string, ProjectConfiguration> = {};
-      projectsInput['test-app'] = {
-        root: '/root',
-        sourceRoot: '/src',
-      };
-      projectsInput['test-e2e'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['test-lib'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'library',
+      const projectsInput = getProjectsInput();
+      projectsInput['client-test-app'] = {
+        root: '',
+        sourceRoot: 'apps/client-test-app/src',
         targets: {},
       };
       const { context, options } = setup(projectsInput);
@@ -123,28 +148,16 @@ describe('AppConfigurePrettierCheckExecutor', () => {
         executor.configure();
       } catch (e) {
         expect(devkit.getProjects).toHaveBeenCalled();
-        expect((<Error>e).message).toEqual(`Could not determine a suffix for the project: test-app.`);
+        expect((<Error>e).message).toEqual(`Could not determine a suffix for the project: client-test-app.`);
       }
     });
 
     it('should throw an error if a project targets is undefined when removing a configuration', () => {
-      const projectsInput: Record<string, ProjectConfiguration> = {};
-      projectsInput['test-app'] = {
-        root: '/root',
-        sourceRoot: '/src',
+      const projectsInput = getProjectsInput();
+      projectsInput['client-test-app'] = {
+        root: '',
+        sourceRoot: 'apps/client-test-app/src',
         projectType: 'application',
-      };
-      projectsInput['test-e2e'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['test-lib'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'library',
-        targets: {},
       };
       const optionsInput: IExecutorOptions & {
         dryRun: boolean;
@@ -160,7 +173,7 @@ describe('AppConfigurePrettierCheckExecutor', () => {
         executor.configure();
       } catch (e) {
         expect(devkit.getProjects).toHaveBeenCalled();
-        expect((<Error>e).message).toEqual(`The project test-app does not have the 'targets' configuration option defined.`);
+        expect((<Error>e).message).toEqual(`The project client-test-app does not have the 'targets' configuration option defined.`);
       }
     });
   });
@@ -169,37 +182,7 @@ describe('AppConfigurePrettierCheckExecutor', () => {
     afterEach(() => jest.clearAllMocks());
 
     it('should call updateProjectConfiguration without calling flushChanges when the dryRun option is true', () => {
-      const projectsInput: Record<string, ProjectConfiguration> = {};
-      projectsInput['client-app'] = {
-        root: '',
-        sourceRoot: 'apps/client-app/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['backend-app'] = {
-        root: '',
-        sourceRoot: 'apps/backend-app/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['test-e2e'] = {
-        root: '',
-        sourceRoot: 'apps/test-e2e/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['client-lib'] = {
-        root: '',
-        sourceRoot: 'apps/client-lib/src',
-        projectType: 'library',
-        targets: {},
-      };
-      projectsInput['backend-lib'] = {
-        root: '',
-        sourceRoot: 'apps/backend-lib/src',
-        projectType: 'library',
-        targets: {},
-      };
+      const projectsInput = getProjectsInput();
       const { context, options } = setup(projectsInput);
 
       const executor = new AppConfigurePrettierCheckExecutor(options, context);
@@ -211,6 +194,7 @@ describe('AppConfigurePrettierCheckExecutor', () => {
         `backend-app: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
         `test-e2e: applications with e2e tests don't need this executor.`,
         `backend-lib: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
+        `tools: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
       ];
       expect(devkit.logger.log).toHaveBeenCalledTimes(expectedLoggerMessages.length);
       for (let i = 1, max = expectedLoggerMessages.length; i <= max; i += 1) {
@@ -224,55 +208,7 @@ describe('AppConfigurePrettierCheckExecutor', () => {
     });
 
     it('should call updateProjectConfiguration and flushChanges when the dryRun option is falsy', () => {
-      const projectsInput: Record<string, ProjectConfiguration> = {};
-      projectsInput['client-app'] = {
-        root: '',
-        sourceRoot: 'apps/client-app/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['client'] = {
-        root: '',
-        sourceRoot: 'apps/client-app/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['documentation'] = {
-        root: '',
-        sourceRoot: 'apps/documentation/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['elements'] = {
-        root: '',
-        sourceRoot: 'apps/elements/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['backend-app'] = {
-        root: '',
-        sourceRoot: 'apps/backend-app/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['test-e2e'] = {
-        root: '',
-        sourceRoot: 'apps/test-e2e/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['client-lib'] = {
-        root: '',
-        sourceRoot: 'apps/client-lib/src',
-        projectType: 'library',
-        targets: {},
-      };
-      projectsInput['backend-lib'] = {
-        root: '',
-        sourceRoot: 'apps/backend-lib/src',
-        projectType: 'library',
-        targets: {},
-      };
+      const projectsInput = getProjectsInput();
       const optionsInput: IExecutorOptions & {
         dryRun: boolean;
       } = {
@@ -290,6 +226,7 @@ describe('AppConfigurePrettierCheckExecutor', () => {
         `backend-app: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
         `test-e2e: applications with e2e tests don't need this executor.`,
         `backend-lib: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
+        `tools: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
       ];
       expect(devkit.logger.log).toHaveBeenCalledTimes(expectedLoggerMessages.length);
       for (let i = 1, max = expectedLoggerMessages.length; i <= max; i += 1) {
@@ -307,25 +244,7 @@ describe('AppConfigurePrettierCheckExecutor', () => {
     afterEach(() => jest.clearAllMocks());
 
     it('should not call updateProjectConfiguration and flushChanges when the dryRun option is true but there is no tsc-check target in project configurations', () => {
-      const projectsInput: Record<string, ProjectConfiguration> = {};
-      projectsInput['test-app'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['test-e2e'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['test-lib'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'library',
-        targets: {},
-      };
+      const projectsInput = getProjectsInput();
       const optionsInput: IExecutorOptions & {
         dryRun: boolean;
       } = {
@@ -346,27 +265,7 @@ describe('AppConfigurePrettierCheckExecutor', () => {
     });
 
     it('should call updateProjectConfiguration without calling flushChanges when the dryRun option is true', () => {
-      const targets = {};
-      targets['prettier-check'] = {};
-      const projectsInput: Record<string, ProjectConfiguration> = {};
-      projectsInput['test-app'] = {
-        root: '/root',
-        sourceRoot: '/test-app/src',
-        projectType: 'application',
-        targets: { ...targets },
-      };
-      projectsInput['test-e2e'] = {
-        root: '/root',
-        sourceRoot: '/test-e2e/src',
-        projectType: 'application',
-        targets: { ...targets },
-      };
-      projectsInput['test-lib'] = {
-        root: '/root',
-        sourceRoot: '/test-lib/src',
-        projectType: 'library',
-        targets: { ...targets },
-      };
+      const projectsInput = getProjectsInput(true);
       const optionsInput: IExecutorOptions & {
         dryRun: boolean;
       } = {
@@ -387,27 +286,7 @@ describe('AppConfigurePrettierCheckExecutor', () => {
     });
 
     it('should call updateProjectConfiguration and flushChanges when the dryRun option is falsy', () => {
-      const targets = {};
-      targets['prettier-check'] = {};
-      const projectsInput: Record<string, ProjectConfiguration> = {};
-      projectsInput['test-app'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: { ...targets },
-      };
-      projectsInput['test-e2e'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: { ...targets },
-      };
-      projectsInput['test-lib'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'library',
-        targets: { ...targets },
-      };
+      const projectsInput = getProjectsInput(true);
       const optionsInput: IExecutorOptions & {
         dryRun: boolean;
       } = {
@@ -430,29 +309,11 @@ describe('AppConfigurePrettierCheckExecutor', () => {
     });
   });
 
-  describe('should expose configureTscCheck function that initializes the executor class', () => {
+  describe('should expose configure function that initializes the executor class', () => {
     afterEach(() => jest.clearAllMocks());
 
     it('should call updateProjectConfiguration without calling flushChanges when the dryRun option is true', async () => {
-      const projectsInput: Record<string, ProjectConfiguration> = {};
-      projectsInput['test-app'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['test-e2e'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['test-lib'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'library',
-        targets: {},
-      };
+      const projectsInput = getProjectsInput();
       const { context, options } = setup(projectsInput);
 
       const result = await configure(options, context);
