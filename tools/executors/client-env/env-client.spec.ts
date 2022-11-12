@@ -20,12 +20,12 @@ describe('AppClientEnvConfig', () => {
     mockStat?: boolean,
     mockwriteFile?: boolean,
   ) => {
-    const accessMock = fsPromises.access as jest.Mock;
+    const accessMock = <jest.Mock>fsPromises.access;
     if (mockAccess === true) {
       accessMock.mockImplementation((path: PathLike, mode?: number) => new Promise<void>(resolve => resolve()));
     }
 
-    const readFileMock = fsPromises.readFile as jest.Mock;
+    const readFileMock = <jest.Mock>fsPromises.readFile;
     if (mockReadFile === true) {
       readFileMock.mockImplementation(
         (
@@ -40,7 +40,7 @@ describe('AppClientEnvConfig', () => {
       );
     }
 
-    const statMock = fsPromises.stat as jest.Mock;
+    const statMock = <jest.Mock>fsPromises.stat;
     if (mockStat === true) {
       statMock.mockImplementation(
         (
@@ -81,7 +81,7 @@ describe('AppClientEnvConfig', () => {
       );
     }
 
-    const writeFileMock = fsPromises.writeFile as jest.Mock;
+    const writeFileMock = <jest.Mock>fsPromises.writeFile;
     if (mockwriteFile === true) {
       writeFileMock.mockImplementation(
         (

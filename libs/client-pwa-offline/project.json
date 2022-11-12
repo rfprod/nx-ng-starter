@@ -21,6 +21,13 @@
       },
       "outputs": ["{workspaceRoot}/coverage/libs/client-pwa-offline"]
     },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-pwa-offline"]
+    },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {

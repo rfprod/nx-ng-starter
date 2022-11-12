@@ -21,6 +21,13 @@
       },
       "outputs": ["{workspaceRoot}/coverage/libs/client-util-sentry"]
     },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-util-sentry"]
+    },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {

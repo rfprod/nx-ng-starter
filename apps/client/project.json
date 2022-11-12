@@ -133,6 +133,13 @@
       },
       "outputs": ["{workspaceRoot}/coverage/libs/client"]
     },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/out-tsc/apps/client"]
+    },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {

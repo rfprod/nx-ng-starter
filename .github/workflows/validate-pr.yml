@@ -63,20 +63,23 @@ jobs:
           sudo apt install shellcheck
           yarn lint:shell
 
-      - name: Lint affected
-        run: npx nx affected --target lint --base origin/main --head HEAD --parallel --max-parallel 2
+      - name: Lint ts affected
+        run: npx nx affected --target lint --base origin/main --parallel --max-parallel 2
+
+      - name: Lint html affected
+        run: npx nx affected --target prettier-check --dryRun --base origin/main --parallel --max-parallel 2
 
       - name: Unit test affected
         run: |
-          npx nx affected --target test --base origin/main --head HEAD --pass-with-no-tests --code-coverage --run-in-band --ci
+          npx nx affected --target test --base origin/main --pass-with-no-tests --code-coverage --run-in-band --ci
           npx nx run tools:coverage-stats
           cat ./UNIT_COVERAGE.md >> $GITHUB_STEP_SUMMARY
 
       - name: Build affected
-        run: npx nx affected --target build --base origin/main --head HEAD
+        run: npx nx affected --target build --base origin/main
 
       - name: Build storybook affected
-        run: npx nx affected --target build-storybook --base origin/main --head HEAD
+        run: npx nx affected --target build-storybook --base origin/main
 
       - name: Build global storybook
         if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' }}

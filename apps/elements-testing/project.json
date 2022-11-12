@@ -70,6 +70,13 @@
       },
       "outputs": ["{workspaceRoot}/coverage/apps/elements-testing"]
     },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/out-tsc/apps/elements-testing"]
+    },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {

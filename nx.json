@@ -100,7 +100,7 @@
     "default": {
       "options": {
         "cacheDirectory": "/tmp/nx/nx-ng-starter",
-        "cacheableOperations": ["build", "lint", "test", "e2e", "build-storybook", "tsc-check"],
+        "cacheableOperations": ["build", "lint", "test", "e2e", "build-storybook", "tsc-check", "prettier-check"],
         "parallel": 1,
         "runtimeCacheInputs": ["node -v", "echo $IMPORTANT_ENV_VAR"]
       },

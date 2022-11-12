@@ -8,8 +8,8 @@ import { IExecutorOptions } from './schema';
 
 describe('tscCheck', () => {
   const setup = (projestName?: string) => {
-    (childProcess.execFileSync as jest.Mock).mockImplementation(
-      (command: string, options: childProcess.ExecSyncOptionsWithBufferEncoding) => Buffer.from([]),
+    (<jest.Mock>childProcess.execFileSync).mockImplementation((command: string, options: childProcess.ExecSyncOptionsWithBufferEncoding) =>
+      Buffer.from([]),
     );
 
     const context: ExecutorContext = {

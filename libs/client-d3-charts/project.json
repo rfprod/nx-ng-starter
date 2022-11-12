@@ -38,6 +38,13 @@
       },
       "outputs": ["{workspaceRoot}/coverage/libs/client-d3-charts"]
     },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-d3-charts"]
+    },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
