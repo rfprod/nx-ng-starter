@@ -62,9 +62,16 @@ export class AppConfigureStylelintCheckExecutor {
       return;
     }
 
-    if (!/^client(-)?/.test(project.name) && !/^elements(-)?/.test(project.name) && !/^documentation(-)?/.test(project.name)) {
+    const prefixes = ['client', 'elements', 'documentation'];
+    const correctPrefix = prefixes.reduce((accumulator, prefix) => {
+      const correct = new RegExp(`^${prefix}(-)?`).test(project.name);
+      return accumulator || correct;
+    }, false);
+
+    if (!correctPrefix) {
+      const prefixOptions = prefixes.join(', ').trim();
       logger.log(
-        `${project.name}: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
+        `${project.name}: only client applications and libraries need this executor. Client application and libraries have the following prefixes in their directory names: ${prefixOptions}.`,
       );
       return;
     }

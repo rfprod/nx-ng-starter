@@ -7,7 +7,7 @@ const config: Config.InitialOptions = {
       branches: 81,
       functions: 98,
       lines: 95,
-      statements: 95,
+      statements: 96,
     },
   },
   displayName: 'tools',

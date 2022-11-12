@@ -96,6 +96,9 @@ describe('AppConfigurePrettierCheckExecutor', () => {
     return { context, options, projects };
   };
 
+  const prefixes = ['client', 'elements', 'documentation'];
+  const prefixOptions = prefixes.join(', ').trim();
+
   describe('errors', () => {
     afterEach(() => jest.clearAllMocks());
 
@@ -191,10 +194,10 @@ describe('AppConfigurePrettierCheckExecutor', () => {
       executor.configure();
 
       const expectedLoggerMessages = [
-        `backend-app: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
+        `backend-app: only client applications and libraries need this executor. Client application and libraries have the following prefixes in their directory names: ${prefixOptions}.`,
         `test-e2e: applications with e2e tests don't need this executor.`,
-        `backend-lib: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
-        `tools: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
+        `backend-lib: only client applications and libraries need this executor. Client application and libraries have the following prefixes in their directory names: ${prefixOptions}.`,
+        `tools: only client applications and libraries need this executor. Client application and libraries have the following prefixes in their directory names: ${prefixOptions}.`,
       ];
       expect(devkit.logger.log).toHaveBeenCalledTimes(expectedLoggerMessages.length);
       for (let i = 1, max = expectedLoggerMessages.length; i <= max; i += 1) {
@@ -223,10 +226,10 @@ describe('AppConfigurePrettierCheckExecutor', () => {
       executor.configure();
 
       const expectedLoggerMessages = [
-        `backend-app: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
+        `backend-app: only client applications and libraries need this executor. Client application and libraries have the following prefixes in their directory names: ${prefixOptions}.`,
         `test-e2e: applications with e2e tests don't need this executor.`,
-        `backend-lib: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
-        `tools: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
+        `backend-lib: only client applications and libraries need this executor. Client application and libraries have the following prefixes in their directory names: ${prefixOptions}.`,
+        `tools: only client applications and libraries need this executor. Client application and libraries have the following prefixes in their directory names: ${prefixOptions}.`,
       ];
       expect(devkit.logger.log).toHaveBeenCalledTimes(expectedLoggerMessages.length);
       for (let i = 1, max = expectedLoggerMessages.length; i <= max; i += 1) {
