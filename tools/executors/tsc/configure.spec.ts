@@ -9,27 +9,69 @@ import configure, { AppConfigureTscCheckExecutor } from './configure';
 import { IExecutorOptions } from './schema';
 
 describe('AppConfigureTscCheckExecutor', () => {
+  const getProjectsInput = (withTargets = false) => {
+    const targets = {};
+    targets['tsc-check'] = {};
+    const projectsInput: Record<string, ProjectConfiguration> = {};
+    projectsInput['client-app'] = {
+      root: '',
+      sourceRoot: 'apps/client-app/src',
+      projectType: 'application',
+      targets: withTargets ? { ...targets } : {},
+    };
+    projectsInput['client'] = {
+      root: '',
+      sourceRoot: 'apps/client-app/src',
+      projectType: 'application',
+      targets: withTargets ? { ...targets } : {},
+    };
+    projectsInput['documentation'] = {
+      root: '',
+      sourceRoot: 'apps/documentation/src',
+      projectType: 'application',
+      targets: withTargets ? { ...targets } : {},
+    };
+    projectsInput['elements'] = {
+      root: '',
+      sourceRoot: 'apps/elements/src',
+      projectType: 'application',
+      targets: withTargets ? { ...targets } : {},
+    };
+    projectsInput['backend-app'] = {
+      root: '',
+      sourceRoot: 'apps/backend-app/src',
+      projectType: 'application',
+      targets: withTargets ? { ...targets } : {},
+    };
+    projectsInput['test-e2e'] = {
+      root: '',
+      sourceRoot: 'apps/test-e2e/src',
+      projectType: 'application',
+      targets: withTargets ? { ...targets } : {},
+    };
+    projectsInput['client-lib'] = {
+      root: '',
+      sourceRoot: 'apps/client-lib/src',
+      projectType: 'library',
+      targets: withTargets ? { ...targets } : {},
+    };
+    projectsInput['backend-lib'] = {
+      root: '',
+      sourceRoot: 'apps/backend-lib/src',
+      projectType: 'library',
+      targets: withTargets ? { ...targets } : {},
+    };
+    projectsInput['tools'] = {
+      root: '',
+      sourceRoot: 'tools',
+      projectType: 'application',
+      targets: withTargets ? { ...targets } : {},
+    };
+    return projectsInput;
+  };
+
   const setup = (projectsInput?: Record<string, ProjectConfiguration>, optionsInput?: IExecutorOptions & { dryRun: boolean }) => {
-    let projects: Record<string, ProjectConfiguration> = {};
-    if (typeof projectsInput === 'undefined') {
-      projects['test-app'] = {
-        root: '/root',
-        projectType: 'application',
-        targets: {},
-      };
-      projects['test-e2e'] = {
-        root: '/root',
-        projectType: 'application',
-        targets: {},
-      };
-      projects['test-lib'] = {
-        root: '/root',
-        projectType: 'library',
-        targets: {},
-      };
-    } else {
-      projects = { ...projectsInput };
-    }
+    const projects = typeof projectsInput === 'undefined' ? getProjectsInput() : { ...projectsInput };
 
     (<jest.Mock>devkit.getProjects).mockImplementation((tree: nxTree.FsTree) => new Map(Object.entries(projects)));
     (<jest.Mock>nxTree.flushChanges).mockImplementation((root: string, fileChanges: nxTree.FileChange[]) => void 0);
@@ -37,7 +79,7 @@ describe('AppConfigureTscCheckExecutor', () => {
     const context: ExecutorContext = {
       cwd: process.cwd(),
       isVerbose: false,
-      root: '/root',
+      root: '',
       workspace: {
         version: 1,
         projects,
@@ -69,23 +111,11 @@ describe('AppConfigureTscCheckExecutor', () => {
     });
 
     it('should throw an error if a project targets is undefined when adding a configuration', () => {
-      const projectsInput: Record<string, ProjectConfiguration> = {};
+      const projectsInput = getProjectsInput();
       projectsInput['test-app'] = {
-        root: '/root',
+        root: '',
         sourceRoot: '/src',
         projectType: 'application',
-      };
-      projectsInput['test-e2e'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['test-lib'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'library',
-        targets: {},
       };
       const { context, options } = setup(projectsInput);
 
@@ -99,22 +129,10 @@ describe('AppConfigureTscCheckExecutor', () => {
     });
 
     it('should throw an error if unable to determine a suffix for a project when adding a configuration', () => {
-      const projectsInput: Record<string, ProjectConfiguration> = {};
+      const projectsInput = getProjectsInput();
       projectsInput['test-app'] = {
-        root: '/root',
+        root: '',
         sourceRoot: '/src',
-      };
-      projectsInput['test-e2e'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['test-lib'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'library',
-        targets: {},
       };
       const { context, options } = setup(projectsInput);
 
@@ -128,23 +146,11 @@ describe('AppConfigureTscCheckExecutor', () => {
     });
 
     it('should throw an error if a project targets is undefined when removing a configuration', () => {
-      const projectsInput: Record<string, ProjectConfiguration> = {};
+      const projectsInput = getProjectsInput();
       projectsInput['test-app'] = {
-        root: '/root',
+        root: '',
         sourceRoot: '/src',
         projectType: 'application',
-      };
-      projectsInput['test-e2e'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['test-lib'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'library',
-        targets: {},
       };
       const optionsInput: IExecutorOptions & {
         dryRun: boolean;
@@ -169,25 +175,7 @@ describe('AppConfigureTscCheckExecutor', () => {
     afterEach(() => jest.clearAllMocks());
 
     it('should call updateProjectConfiguration without calling flushChanges when the dryRun option is true', () => {
-      const projectsInput: Record<string, ProjectConfiguration> = {};
-      projectsInput['test-app'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['test-e2e'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['test-lib'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'library',
-        targets: {},
-      };
+      const projectsInput = getProjectsInput();
       const { context, options } = setup(projectsInput);
 
       const executor = new AppConfigureTscCheckExecutor(options, context);
@@ -201,25 +189,7 @@ describe('AppConfigureTscCheckExecutor', () => {
     });
 
     it('should call updateProjectConfiguration and flushChanges when the dryRun option is falsy', () => {
-      const projectsInput: Record<string, ProjectConfiguration> = {};
-      projectsInput['test-app'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['test-e2e'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['test-lib'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'library',
-        targets: {},
-      };
+      const projectsInput = getProjectsInput();
       const optionsInput: IExecutorOptions & {
         dryRun: boolean;
       } = {
@@ -243,25 +213,7 @@ describe('AppConfigureTscCheckExecutor', () => {
     afterEach(() => jest.clearAllMocks());
 
     it('should not call updateProjectConfiguration and flushChanges when the dryRun option is true but there is no tsc-check target in project configurations', () => {
-      const projectsInput: Record<string, ProjectConfiguration> = {};
-      projectsInput['test-app'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['test-e2e'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['test-lib'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'library',
-        targets: {},
-      };
+      const projectsInput = getProjectsInput();
       const optionsInput: IExecutorOptions & {
         dryRun: boolean;
       } = {
@@ -282,27 +234,7 @@ describe('AppConfigureTscCheckExecutor', () => {
     });
 
     it('should call updateProjectConfiguration without calling flushChanges when the dryRun option is true', () => {
-      const targets = {};
-      targets['tsc-check'] = {};
-      const projectsInput: Record<string, ProjectConfiguration> = {};
-      projectsInput['test-app'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: { ...targets },
-      };
-      projectsInput['test-e2e'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: { ...targets },
-      };
-      projectsInput['test-lib'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'library',
-        targets: { ...targets },
-      };
+      const projectsInput = getProjectsInput(true);
       const optionsInput: IExecutorOptions & {
         dryRun: boolean;
       } = {
@@ -323,33 +255,7 @@ describe('AppConfigureTscCheckExecutor', () => {
     });
 
     it('should call updateProjectConfiguration and flushChanges when the dryRun option is falsy', () => {
-      const targets = {};
-      targets['tsc-check'] = {};
-      const projectsInput: Record<string, ProjectConfiguration> = {};
-      projectsInput['test-app'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: { ...targets },
-      };
-      projectsInput['test-e2e'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: { ...targets },
-      };
-      projectsInput['test-lib'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'library',
-        targets: { ...targets },
-      };
-      projectsInput['tools'] = {
-        root: '/root',
-        sourceRoot: 'tools',
-        projectType: 'application',
-        targets: { ...targets },
-      };
+      const projectsInput = getProjectsInput(true);
       const optionsInput: IExecutorOptions & {
         dryRun: boolean;
       } = {
@@ -376,25 +282,7 @@ describe('AppConfigureTscCheckExecutor', () => {
     afterEach(() => jest.clearAllMocks());
 
     it('should call updateProjectConfiguration without calling flushChanges when the dryRun option is true', async () => {
-      const projectsInput: Record<string, ProjectConfiguration> = {};
-      projectsInput['test-app'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['test-e2e'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'application',
-        targets: {},
-      };
-      projectsInput['test-lib'] = {
-        root: '/root',
-        sourceRoot: '/src',
-        projectType: 'library',
-        targets: {},
-      };
+      const projectsInput = getProjectsInput();
       const { context, options } = setup(projectsInput);
 
       const result = await configure(options, context);
