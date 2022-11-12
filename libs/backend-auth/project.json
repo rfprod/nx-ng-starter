@@ -1,6 +1,6 @@
 {
-  "name": "backend-auth",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "backend-auth",
   "projectType": "library",
   "sourceRoot": "libs/backend-auth/src",
   "tags": ["scope:backend-auth", "type:feature"],
@@ -20,13 +20,6 @@
         "passWithNoTests": true
       },
       "outputs": ["{workspaceRoot}/coverage/libs/backend-auth"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/backend-auth"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",

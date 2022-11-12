@@ -9,6 +9,9 @@ export interface IEnvConfig {
   version: string;
 }
 
+/**
+ * Base environment configurator for the client applications.
+ */
 export abstract class AppBaseEnvConfig<T = IEnvConfig> {
   /**
    * Executor context.

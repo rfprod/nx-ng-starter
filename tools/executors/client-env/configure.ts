@@ -4,7 +4,13 @@ import { AppBaseEnvConfig } from './env-base';
 import { AppClientEnvConfig } from './env-client';
 import { IExecutorOptions } from './schema';
 
-export default async function clientEnvExecutor(options: IExecutorOptions, context: ExecutorContext): Promise<{ success: boolean }> {
+/**
+ * Configure client-env executor.
+ * @param options executor options
+ * @param context executor context
+ * @returns execution result
+ */
+export default async function configure(options: IExecutorOptions, context: ExecutorContext): Promise<{ success: boolean }> {
   const app = options.app;
   let config: AppBaseEnvConfig | undefined;
 

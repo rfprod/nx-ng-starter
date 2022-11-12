@@ -1,6 +1,6 @@
 {
-  "name": "elements",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "elements",
   "prefix": "app",
   "projectType": "application",
   "sourceRoot": "apps/elements/src",
@@ -103,6 +103,13 @@
       },
       "outputs": ["{options.outputFile}"]
     },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/apps/elements"]
+    },
     "serve": {
       "configurations": {
         "production": {
@@ -115,6 +122,13 @@
         "browserTarget": "elements:build"
       }
     },
+    "stylelint-check": {
+      "executor": "./tools/executors/stylelint:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/stylelint/apps/elements"]
+    },
     "test": {
       "executor": "@nrwl/jest:jest",
       "options": {
@@ -122,13 +136,6 @@
         "passWithNoTests": true
       },
       "outputs": ["{workspaceRoot}/coverage/apps/elements"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/apps/elements"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",

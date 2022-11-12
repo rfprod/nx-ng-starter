@@ -1,6 +1,6 @@
 {
-  "name": "server-prod",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "server-prod",
   "projectType": "application",
   "sourceRoot": "apps/server-prod/src",
   "tags": ["scope:server-prod", "type:application"],
@@ -22,11 +22,11 @@
       "executor": "@nrwl/webpack:webpack",
       "options": {
         "assets": ["apps/server-prod/src/assets"],
+        "compiler": "tsc",
         "main": "apps/server-prod/src/main.ts",
         "outputPath": "dist/apps/server-prod",
-        "tsConfig": "apps/server-prod/tsconfig.app.json",
         "target": "node",
-        "compiler": "tsc"
+        "tsConfig": "apps/server-prod/tsconfig.app.json"
       },
       "outputs": ["{options.outputPath}"]
     },
@@ -51,13 +51,6 @@
         "passWithNoTests": true
       },
       "outputs": ["{workspaceRoot}/coverage/apps/server-prod"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/apps/server-prod"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",

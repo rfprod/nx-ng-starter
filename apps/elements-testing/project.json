@@ -1,6 +1,6 @@
 {
-  "name": "elements-testing",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "elements-testing",
   "projectType": "application",
   "sourceRoot": "apps/elements-testing/src",
   "tags": ["scope:elements-testing", "type:application"],
@@ -50,6 +50,13 @@
       },
       "outputs": ["{options.outputFile}"]
     },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/apps/elements-testing"]
+    },
     "serve": {
       "configurations": {
         "production": {
@@ -62,6 +69,13 @@
         "port": 4021
       }
     },
+    "stylelint-check": {
+      "executor": "./tools/executors/stylelint:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/stylelint/apps/elements-testing"]
+    },
     "test": {
       "executor": "@nrwl/jest:jest",
       "options": {
@@ -69,13 +83,6 @@
         "passWithNoTests": true
       },
       "outputs": ["{workspaceRoot}/coverage/apps/elements-testing"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/apps/elements-testing"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",

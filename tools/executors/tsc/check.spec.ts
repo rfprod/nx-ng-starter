@@ -3,10 +3,10 @@ jest.mock('child_process');
 import type { ExecutorContext } from '@nrwl/devkit';
 import * as childProcess from 'child_process';
 
-import tscCheck from './check';
+import check from './check';
 import { IExecutorOptions } from './schema';
 
-describe('tscCheck', () => {
+describe('check', () => {
   const setup = (projestName?: string) => {
     (<jest.Mock>childProcess.execFileSync).mockImplementation((command: string, options: childProcess.ExecSyncOptionsWithBufferEncoding) =>
       Buffer.from([]),
@@ -38,7 +38,7 @@ describe('tscCheck', () => {
       const { context, options } = setup();
 
       try {
-        const result = await tscCheck(options, context);
+        const result = await check(options, context);
         expect(result).not.toMatchObject({ success: true });
       } catch (e) {
         expect(childProcess.execFileSync).not.toHaveBeenCalled();
@@ -53,7 +53,7 @@ describe('tscCheck', () => {
     it('should execFileSync with expected parameters', async () => {
       const { context, options } = setup('test');
 
-      const result = await tscCheck(options, context);
+      const result = await check(options, context);
       expect(childProcess.execFileSync).toHaveBeenCalled();
       expect(result).toMatchObject({ success: true });
     });

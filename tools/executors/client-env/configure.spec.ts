@@ -3,11 +3,11 @@ jest.mock('./env-client');
 
 import type { ExecutorContext } from '@nrwl/devkit';
 
-import clientEnvExecutor from './configure';
+import configure from './configure';
 import * as envClient from './env-client';
 import { IExecutorOptions, TSupportedApp } from './schema';
 
-describe('clientEnvExecutor', () => {
+describe('configure', () => {
   const setup = (app: TSupportedApp = 'client', mockEnvClient?: boolean) => {
     const envClientMock = <jest.Mock>envClient.AppClientEnvConfig;
     if (mockEnvClient === true) {
@@ -44,7 +44,7 @@ describe('clientEnvExecutor', () => {
 
       let error: Error | undefined;
       try {
-        await clientEnvExecutor(options, context);
+        await configure(options, context);
       } catch (e) {
         error = <Error>e;
       }
@@ -58,7 +58,7 @@ describe('clientEnvExecutor', () => {
     it('should execute successfully', async () => {
       const { context, options } = setup('client', true);
 
-      const result = await clientEnvExecutor(options, context);
+      const result = await configure(options, context);
       expect(result).toMatchObject({ success: true });
     });
   });

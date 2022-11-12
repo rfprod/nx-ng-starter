@@ -8,6 +8,9 @@ export interface IProjectMetadata {
   config: ProjectConfiguration;
 }
 
+/**
+ * TSC check executor configurator.
+ */
 export class AppConfigureTscCheckExecutor {
   public options: IExecutorOptions = {
     tsConfig: '',
@@ -31,20 +34,27 @@ export class AppConfigureTscCheckExecutor {
     this.tree = new FsTree(this.context.root, false);
   }
 
-  private addExecutorConfiguration(tree: FsTree, project: IProjectMetadata) {
-    const srcRoot = project.config.sourceRoot;
-    if (typeof srcRoot === 'undefined') {
-      throw new Error(`The project ${project.name} does not have the 'sourceRoot' configuration option defined.`);
-    }
-
+  private mapSuffix(project: IProjectMetadata) {
     const suffix =
       project.config.projectType === 'application' && project.name.includes('-e2e')
         ? 'e2e'
+        : project.config.projectType === 'application' && project.name === 'tools'
+        ? 'tools'
         : project.config.projectType === 'library'
         ? 'lib'
         : project.config.projectType === 'application'
         ? 'app'
         : '';
+    return suffix;
+  }
+
+  private addExecutorConfiguration(tree: FsTree, project: IProjectMetadata) {
+    const src = project.config.sourceRoot;
+    if (typeof src === 'undefined') {
+      throw new Error(`The project ${project.name} does not have the 'sourceRoot' configuration option defined.`);
+    }
+
+    const suffix = this.mapSuffix(project);
 
     if (suffix === '') {
       throw new Error(`Could not determine a suffix for the project: ${project.name}.`);
@@ -54,13 +64,13 @@ export class AppConfigureTscCheckExecutor {
     if (typeof config.targets === 'undefined') {
       throw new Error(`The project ${project.name} does not have the 'targets' configuration option defined.`);
     }
-    if (typeof config.targets['tsc-check'] === 'undefined' && /\/src$/.test(srcRoot)) {
+    if (typeof config.targets['tsc-check'] === 'undefined' && (/\/src$/.test(src) || src === 'tools')) {
       config.targets['tsc-check'] = {
         executor: './tools/executors/tsc:check',
         options: {
-          tsConfig: `${srcRoot.replace(/src$/, `tsconfig.${suffix}.json`)}`,
+          tsConfig: `${src.replace(/src$/, `tsconfig.${suffix}.json`)}`,
         },
-        outputs: [`{workspaceRoot}/dist/out-tsc/${srcRoot.replace(/\/src$/, '')}`],
+        outputs: [`{workspaceRoot}/dist/out-tsc/${src.replace(/\/src$/, '')}`],
       };
       updateProjectConfiguration(tree, project.name, config);
     }
@@ -106,7 +116,13 @@ export class AppConfigureTscCheckExecutor {
   }
 }
 
-export default async function configureTscCheck(options: IExecutorOptions, context: ExecutorContext): Promise<{ success: boolean }> {
+/**
+ * Configure TSC executor.
+ * @param options executor options
+ * @param context executor context
+ * @returns execution result
+ */
+export default async function configure(options: IExecutorOptions, context: ExecutorContext): Promise<{ success: boolean }> {
   const executor = new AppConfigureTscCheckExecutor(options, context);
   executor.configure();
 

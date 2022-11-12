@@ -9,9 +9,9 @@ export interface IProjectMetadata {
 }
 
 /**
- * Prettier check executor configurator.
+ * Stylelint check executor configurator.
  */
-export class AppConfigurePrettierCheckExecutor {
+export class AppConfigureStylelintCheckExecutor {
   public options: IExecutorOptions = {
     config: '',
   };
@@ -46,8 +46,8 @@ export class AppConfigurePrettierCheckExecutor {
   }
 
   private addExecutorConfiguration(tree: FsTree, project: IProjectMetadata) {
-    const srcRoot = project.config.sourceRoot;
-    if (typeof srcRoot === 'undefined') {
+    const src = project.config.sourceRoot;
+    if (typeof src === 'undefined') {
       throw new Error(`The project ${project.name} does not have the 'sourceRoot' configuration option defined.`);
     }
 
@@ -73,13 +73,13 @@ export class AppConfigurePrettierCheckExecutor {
     if (typeof config.targets === 'undefined') {
       throw new Error(`The project ${project.name} does not have the 'targets' configuration option defined.`);
     }
-    if (typeof config.targets['prettier-check'] === 'undefined' && /\/src$/.test(srcRoot)) {
-      config.targets['prettier-check'] = {
-        executor: './tools/executors/prettier:check',
+    if (typeof config.targets['stylelint-check'] === 'undefined' && /\/src$/.test(src)) {
+      config.targets['stylelint-check'] = {
+        executor: './tools/executors/stylelint:check',
         options: {
           config: this.options.config,
         },
-        outputs: [`{workspaceRoot}/dist/prettier/${srcRoot.replace(/\/src$/, '')}`],
+        outputs: [`{workspaceRoot}/dist/stylelint/${src.replace(/\/src$/, '')}`],
       };
       updateProjectConfiguration(tree, project.name, config);
     }
@@ -90,8 +90,8 @@ export class AppConfigurePrettierCheckExecutor {
     if (typeof config.targets === 'undefined') {
       throw new Error(`The project ${project.name} does not have the 'targets' configuration option defined.`);
     }
-    if (typeof config.targets['prettier-check'] !== 'undefined') {
-      delete config.targets['prettier-check'];
+    if (typeof config.targets['stylelint-check'] !== 'undefined') {
+      delete config.targets['stylelint-check'];
       updateProjectConfiguration(tree, project.name, config);
     }
   }
@@ -120,7 +120,7 @@ export class AppConfigurePrettierCheckExecutor {
 
       if (this.options.cleanup === true) {
         logger.warn(
-          `Don't forget to remove the executor configuration target from './tools/project.json'. Find a target 'prettier-configure'.`,
+          `Don't forget to remove the executor configuration target from './tools/project.json'. Find a target 'stylelint-configure'.`,
         );
       }
     }
@@ -128,13 +128,13 @@ export class AppConfigurePrettierCheckExecutor {
 }
 
 /**
- * Configure prettier executor.
+ * Configure stylelint executor.
  * @param options executor options
  * @param context executor context
  * @returns execution result
  */
 export default async function configure(options: IExecutorOptions, context: ExecutorContext): Promise<{ success: boolean }> {
-  const executor = new AppConfigurePrettierCheckExecutor(options, context);
+  const executor = new AppConfigureStylelintCheckExecutor(options, context);
   executor.configure();
 
   return { success: true };

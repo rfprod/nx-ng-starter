@@ -1,6 +1,6 @@
 {
-  "name": "backend-websocket",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "backend-websocket",
   "projectType": "library",
   "sourceRoot": "libs/backend-websocket/src",
   "tags": ["scope:backend-websocket", "type:feature"],
@@ -20,13 +20,6 @@
         "passWithNoTests": true
       },
       "outputs": ["{workspaceRoot}/coverage/libs/backend-websocket"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/backend-websocket"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",

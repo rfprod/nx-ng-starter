@@ -1,6 +1,6 @@
 {
-  "name": "client-gql",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "client-gql",
   "prefix": "app",
   "projectType": "library",
   "sourceRoot": "libs/client-gql/src",
@@ -14,6 +14,20 @@
       },
       "outputs": ["{options.outputFile}"]
     },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-gql"]
+    },
+    "stylelint-check": {
+      "executor": "./tools/executors/stylelint:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/stylelint/libs/client-gql"]
+    },
     "test": {
       "executor": "@nrwl/jest:jest",
       "options": {
@@ -21,13 +35,6 @@
         "passWithNoTests": true
       },
       "outputs": ["{workspaceRoot}/coverage/libs/client-gql"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-gql"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",

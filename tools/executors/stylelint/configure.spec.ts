@@ -5,10 +5,10 @@ import type { ExecutorContext, ProjectConfiguration } from '@nrwl/devkit';
 import * as devkit from '@nrwl/devkit';
 import * as nxTree from 'nx/src/generators/tree';
 
-import configure, { AppConfigureTscCheckExecutor } from './configure';
+import configure, { AppConfigureStylelintCheckExecutor } from './configure';
 import { IExecutorOptions } from './schema';
 
-describe('AppConfigureTscCheckExecutor', () => {
+describe('AppConfigureStylelintCheckExecutor', () => {
   const setup = (projectsInput?: Record<string, ProjectConfiguration>, optionsInput?: IExecutorOptions & { dryRun: boolean }) => {
     let projects: Record<string, ProjectConfiguration> = {};
     if (typeof projectsInput === 'undefined') {
@@ -49,7 +49,7 @@ describe('AppConfigureTscCheckExecutor', () => {
     };
 
     const options: IExecutorOptions & { dryRun: boolean } =
-      typeof optionsInput !== 'undefined' ? optionsInput : { tsConfig: '', dryRun: true };
+      typeof optionsInput !== 'undefined' ? optionsInput : { config: '', dryRun: true };
 
     return { context, options, projects };
   };
@@ -59,7 +59,7 @@ describe('AppConfigureTscCheckExecutor', () => {
 
     it('should throw an error if a project sourceRoot is undefined when adding a configuration', () => {
       const { context, options } = setup();
-      const executor = new AppConfigureTscCheckExecutor(options, context);
+      const executor = new AppConfigureStylelintCheckExecutor(options, context);
       try {
         executor.configure();
       } catch (e) {
@@ -89,7 +89,7 @@ describe('AppConfigureTscCheckExecutor', () => {
       };
       const { context, options } = setup(projectsInput);
 
-      const executor = new AppConfigureTscCheckExecutor(options, context);
+      const executor = new AppConfigureStylelintCheckExecutor(options, context);
       try {
         executor.configure();
       } catch (e) {
@@ -118,7 +118,7 @@ describe('AppConfigureTscCheckExecutor', () => {
       };
       const { context, options } = setup(projectsInput);
 
-      const executor = new AppConfigureTscCheckExecutor(options, context);
+      const executor = new AppConfigureStylelintCheckExecutor(options, context);
       try {
         executor.configure();
       } catch (e) {
@@ -149,13 +149,13 @@ describe('AppConfigureTscCheckExecutor', () => {
       const optionsInput: IExecutorOptions & {
         dryRun: boolean;
       } = {
-        tsConfig: '',
+        config: '',
         dryRun: true,
         cleanup: true,
       };
       const { context, options } = setup(projectsInput, optionsInput);
 
-      const executor = new AppConfigureTscCheckExecutor(options, context);
+      const executor = new AppConfigureStylelintCheckExecutor(options, context);
       try {
         executor.configure();
       } catch (e) {
@@ -170,31 +170,54 @@ describe('AppConfigureTscCheckExecutor', () => {
 
     it('should call updateProjectConfiguration without calling flushChanges when the dryRun option is true', () => {
       const projectsInput: Record<string, ProjectConfiguration> = {};
-      projectsInput['test-app'] = {
-        root: '/root',
-        sourceRoot: '/src',
+      projectsInput['client-app'] = {
+        root: '',
+        sourceRoot: 'apps/client-app/src',
+        projectType: 'application',
+        targets: {},
+      };
+      projectsInput['backend-app'] = {
+        root: '',
+        sourceRoot: 'apps/backend-app/src',
         projectType: 'application',
         targets: {},
       };
       projectsInput['test-e2e'] = {
-        root: '/root',
-        sourceRoot: '/src',
+        root: '',
+        sourceRoot: 'apps/test-e2e/src',
         projectType: 'application',
         targets: {},
       };
-      projectsInput['test-lib'] = {
-        root: '/root',
-        sourceRoot: '/src',
+      projectsInput['client-lib'] = {
+        root: '',
+        sourceRoot: 'apps/client-lib/src',
+        projectType: 'library',
+        targets: {},
+      };
+      projectsInput['backend-lib'] = {
+        root: '',
+        sourceRoot: 'apps/backend-lib/src',
         projectType: 'library',
         targets: {},
       };
       const { context, options } = setup(projectsInput);
 
-      const executor = new AppConfigureTscCheckExecutor(options, context);
+      const executor = new AppConfigureStylelintCheckExecutor(options, context);
       expect(executor.tree).toBeDefined();
       const treeListChangesSpy = jest.spyOn(executor.tree, 'listChanges');
       executor.configure();
-      expect(devkit.updateProjectConfiguration).toHaveBeenCalledTimes(Object.keys(projectsInput).length);
+
+      const expectedLoggerMessages = [
+        `backend-app: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
+        `test-e2e: applications with e2e tests don't need this executor.`,
+        `backend-lib: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
+      ];
+      expect(devkit.logger.log).toHaveBeenCalledTimes(expectedLoggerMessages.length);
+      for (let i = 1, max = expectedLoggerMessages.length; i <= max; i += 1) {
+        expect(devkit.logger.log).toHaveBeenNthCalledWith(i, expectedLoggerMessages[i - 1]);
+      }
+      expect(devkit.updateProjectConfiguration).toHaveBeenCalledTimes(Object.keys(projectsInput).length - expectedLoggerMessages.length);
+
       expect(treeListChangesSpy).not.toHaveBeenCalled();
       expect(nxTree.flushChanges).not.toHaveBeenCalled();
       expect(devkit.logger.warn).not.toHaveBeenCalled();
@@ -202,21 +225,51 @@ describe('AppConfigureTscCheckExecutor', () => {
 
     it('should call updateProjectConfiguration and flushChanges when the dryRun option is falsy', () => {
       const projectsInput: Record<string, ProjectConfiguration> = {};
-      projectsInput['test-app'] = {
-        root: '/root',
-        sourceRoot: '/src',
+      projectsInput['client-app'] = {
+        root: '',
+        sourceRoot: 'apps/client-app/src',
+        projectType: 'application',
+        targets: {},
+      };
+      projectsInput['client'] = {
+        root: '',
+        sourceRoot: 'apps/client-app/src',
+        projectType: 'application',
+        targets: {},
+      };
+      projectsInput['documentation'] = {
+        root: '',
+        sourceRoot: 'apps/documentation/src',
+        projectType: 'application',
+        targets: {},
+      };
+      projectsInput['elements'] = {
+        root: '',
+        sourceRoot: 'apps/elements/src',
+        projectType: 'application',
+        targets: {},
+      };
+      projectsInput['backend-app'] = {
+        root: '',
+        sourceRoot: 'apps/backend-app/src',
         projectType: 'application',
         targets: {},
       };
       projectsInput['test-e2e'] = {
-        root: '/root',
-        sourceRoot: '/src',
+        root: '',
+        sourceRoot: 'apps/test-e2e/src',
         projectType: 'application',
         targets: {},
       };
-      projectsInput['test-lib'] = {
-        root: '/root',
-        sourceRoot: '/src',
+      projectsInput['client-lib'] = {
+        root: '',
+        sourceRoot: 'apps/client-lib/src',
+        projectType: 'library',
+        targets: {},
+      };
+      projectsInput['backend-lib'] = {
+        root: '',
+        sourceRoot: 'apps/backend-lib/src',
         projectType: 'library',
         targets: {},
       };
@@ -224,15 +277,26 @@ describe('AppConfigureTscCheckExecutor', () => {
         dryRun: boolean;
       } = {
         dryRun: false,
-        tsConfig: '',
+        config: '',
       };
       const { context, options } = setup(projectsInput, optionsInput);
 
-      const executor = new AppConfigureTscCheckExecutor(options, context);
+      const executor = new AppConfigureStylelintCheckExecutor(options, context);
       expect(executor.tree).toBeDefined();
       const treeListChangesSpy = jest.spyOn(executor.tree, 'listChanges');
       executor.configure();
-      expect(devkit.updateProjectConfiguration).toHaveBeenCalledTimes(Object.keys(projectsInput).length);
+
+      const expectedLoggerMessages = [
+        `backend-app: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
+        `test-e2e: applications with e2e tests don't need this executor.`,
+        `backend-lib: only client applications and libraries need this executor. Client application and libraries have 'client-' prefix in their directory names.`,
+      ];
+      expect(devkit.logger.log).toHaveBeenCalledTimes(expectedLoggerMessages.length);
+      for (let i = 1, max = expectedLoggerMessages.length; i <= max; i += 1) {
+        expect(devkit.logger.log).toHaveBeenNthCalledWith(i, expectedLoggerMessages[i - 1]);
+      }
+      expect(devkit.updateProjectConfiguration).toHaveBeenCalledTimes(Object.keys(projectsInput).length - expectedLoggerMessages.length);
+
       expect(treeListChangesSpy).toHaveBeenCalledTimes(1);
       expect(nxTree.flushChanges).toHaveBeenCalledTimes(1);
       expect(devkit.logger.warn).not.toHaveBeenCalled();
@@ -267,11 +331,11 @@ describe('AppConfigureTscCheckExecutor', () => {
       } = {
         dryRun: true,
         cleanup: true,
-        tsConfig: '',
+        config: '',
       };
       const { context, options } = setup(projectsInput, optionsInput);
 
-      const executor = new AppConfigureTscCheckExecutor(options, context);
+      const executor = new AppConfigureStylelintCheckExecutor(options, context);
       expect(executor.tree).toBeDefined();
       const treeListChangesSpy = jest.spyOn(executor.tree, 'listChanges');
       executor.configure();
@@ -283,23 +347,23 @@ describe('AppConfigureTscCheckExecutor', () => {
 
     it('should call updateProjectConfiguration without calling flushChanges when the dryRun option is true', () => {
       const targets = {};
-      targets['tsc-check'] = {};
+      targets['stylelint-check'] = {};
       const projectsInput: Record<string, ProjectConfiguration> = {};
       projectsInput['test-app'] = {
         root: '/root',
-        sourceRoot: '/src',
+        sourceRoot: '/test-app/src',
         projectType: 'application',
         targets: { ...targets },
       };
       projectsInput['test-e2e'] = {
         root: '/root',
-        sourceRoot: '/src',
+        sourceRoot: '/test-e2e/src',
         projectType: 'application',
         targets: { ...targets },
       };
       projectsInput['test-lib'] = {
         root: '/root',
-        sourceRoot: '/src',
+        sourceRoot: '/test-lib/src',
         projectType: 'library',
         targets: { ...targets },
       };
@@ -308,11 +372,11 @@ describe('AppConfigureTscCheckExecutor', () => {
       } = {
         dryRun: true,
         cleanup: true,
-        tsConfig: '',
+        config: '',
       };
       const { context, options } = setup(projectsInput, optionsInput);
 
-      const executor = new AppConfigureTscCheckExecutor(options, context);
+      const executor = new AppConfigureStylelintCheckExecutor(options, context);
       expect(executor.tree).toBeDefined();
       const treeListChangesSpy = jest.spyOn(executor.tree, 'listChanges');
       executor.configure();
@@ -324,7 +388,7 @@ describe('AppConfigureTscCheckExecutor', () => {
 
     it('should call updateProjectConfiguration and flushChanges when the dryRun option is falsy', () => {
       const targets = {};
-      targets['tsc-check'] = {};
+      targets['stylelint-check'] = {};
       const projectsInput: Record<string, ProjectConfiguration> = {};
       projectsInput['test-app'] = {
         root: '/root',
@@ -344,22 +408,16 @@ describe('AppConfigureTscCheckExecutor', () => {
         projectType: 'library',
         targets: { ...targets },
       };
-      projectsInput['tools'] = {
-        root: '/root',
-        sourceRoot: 'tools',
-        projectType: 'application',
-        targets: { ...targets },
-      };
       const optionsInput: IExecutorOptions & {
         dryRun: boolean;
       } = {
         dryRun: false,
         cleanup: true,
-        tsConfig: '',
+        config: '',
       };
       const { context, options } = setup(projectsInput, optionsInput);
 
-      const executor = new AppConfigureTscCheckExecutor(options, context);
+      const executor = new AppConfigureStylelintCheckExecutor(options, context);
       expect(executor.tree).toBeDefined();
       const treeListChangesSpy = jest.spyOn(executor.tree, 'listChanges');
       executor.configure();
@@ -367,12 +425,12 @@ describe('AppConfigureTscCheckExecutor', () => {
       expect(treeListChangesSpy).toHaveBeenCalledTimes(1);
       expect(nxTree.flushChanges).toHaveBeenCalledTimes(1);
       expect(devkit.logger.warn).toHaveBeenCalledWith(
-        `Don't forget to remove the executor configuration target from './tools/project.json'. Find a target 'tsc-configure'.`,
+        `Don't forget to remove the executor configuration target from './tools/project.json'. Find a target 'stylelint-configure'.`,
       );
     });
   });
 
-  describe('should expose configure function that initializes the executor class', () => {
+  describe('should expose configureTscCheck function that initializes the executor class', () => {
     afterEach(() => jest.clearAllMocks());
 
     it('should call updateProjectConfiguration without calling flushChanges when the dryRun option is true', async () => {

@@ -1,6 +1,6 @@
 {
-  "name": "backend-gql",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "backend-gql",
   "projectType": "library",
   "sourceRoot": "libs/backend-gql/src",
   "tags": ["scope:backend-gql", "type:feature"],
@@ -20,13 +20,6 @@
         "passWithNoTests": true
       },
       "outputs": ["{workspaceRoot}/coverage/libs/backend-gql"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/backend-gql"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
