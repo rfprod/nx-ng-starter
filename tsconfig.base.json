@@ -27,7 +27,7 @@
     "extendedDiagnostics": false,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "lib": ["ES2018", "DOM", "ESNext.AsyncIterable"],
+    "lib": ["ES2022", "DOM", "ESNext.AsyncIterable"],
     "module": "ESNext",
     "moduleResolution": "Node",
     "noEmit": false,
@@ -81,8 +81,9 @@
     "sourceMap": true,
     "strict": true,
     "suppressImplicitAnyIndexErrors": true,
-    "target": "ES2020",
-    "typeRoots": ["node_modules/@types"]
+    "target": "ES2022",
+    "typeRoots": ["node_modules/@types"],
+    "useDefineForClassFields": false
   },
   "exclude": [
     "node_modules",

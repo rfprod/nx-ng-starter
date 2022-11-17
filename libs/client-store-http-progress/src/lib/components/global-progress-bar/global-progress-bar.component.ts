@@ -12,7 +12,7 @@ export class AppGlobalProgressBarComponent implements AfterViewInit {
 
   public ngAfterViewInit() {
     if (typeof this.progressBar !== 'undefined') {
-      (this.progressBar._elementRef.nativeElement as HTMLElement).style.width = `${document.body.clientWidth}px`;
+      this.progressBar._elementRef.nativeElement.style.width = `${document.body.clientWidth}px`;
     }
   }
 }

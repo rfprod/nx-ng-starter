@@ -12,8 +12,10 @@ describe('AppRouteSerializer', () => {
   it('should serialize route as expected', () => {
     const snapshot: RouterStateSnapshot = {
       root: {
+        title: '',
         children: [],
         firstChild: {
+          title: '',
           children: [],
           firstChild: null,
           component: null,
