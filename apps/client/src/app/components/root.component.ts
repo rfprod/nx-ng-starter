@@ -1,6 +1,12 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Inject, OnInit } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
+import { BehaviorSubject } from 'rxjs';
+
+interface ILogoRef {
+  dark: 'assets/svg/logo.svg';
+  light: 'assets/svg/logo-light.svg';
+}
 
 @Component({
   selector: 'app-root',
@@ -20,6 +26,15 @@ export class AppRootComponent implements OnInit {
    */
   @HostBinding('class.mat-body-1') public matBody = true;
 
+  private readonly logoRef: ILogoRef = {
+    dark: 'assets/svg/logo.svg',
+    light: 'assets/svg/logo-light.svg',
+  };
+
+  private readonly logoSrcSubject = new BehaviorSubject<ILogoRef['dark'] | ILogoRef['light']>(this.logoRef.light);
+
+  public readonly logoSrc$ = this.logoSrcSubject.asObservable();
+
   /**
    * Application release version.
    */
@@ -33,6 +48,8 @@ export class AppRootComponent implements OnInit {
 
   public toggleMaterialTheme(darkThemeEnabled: boolean): void {
     this.darkTheme = darkThemeEnabled;
+    const nextLogo = darkThemeEnabled ? this.logoRef.light : this.logoRef.dark;
+    this.logoSrcSubject.next(nextLogo);
   }
 
   /**

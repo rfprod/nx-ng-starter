@@ -4,31 +4,17 @@
     <mat-icon appTooltip="Close sidenav" *ngIf="sidebarOpened$ | async"> flip_to_back </mat-icon>
   </button>
 
-  <span fxFlex="1 1 auto"></span>
+  <span class="flex--full"></span>
 
   <app-theme-toggle (themeToggled)="toggleMaterialTheme($event)"></app-theme-toggle>
 
-  <span fxFlex="1 1 auto"></span>
+  <span class="flex--full"></span>
 
-  <div appTooltip="Release version" *ngIf="version">
-    <small>{{ version }}</small>
-  </div>
-
-  <a mat-button *ngFor="let anchor of anchors" [fxHide.xs]="true" [fxHide.sm]="true" [href]="anchor.href" target="_blank" rel="noreferrer">
-    <mat-icon>{{ anchor.icon }}</mat-icon> {{ anchor.title }}
-  </a>
-
-  <button mat-icon-button [matMenuTriggerFor]="mobileMenuBottom" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
+  <button mat-icon-button [matMenuTriggerFor]="mobileMenuBottom">
     <mat-icon>more_vert</mat-icon>
   </button>
 
-  <mat-divider [ngStyle]="{ height: '100%' }" [vertical]="true" [fxHide.xs]="true" [fxHide.sm]="true"></mat-divider>
-
-  <button mat-button (click)="toggleChatbot()" [fxHide.xs]="true" [fxHide.sm]="true">
-    <mat-icon>chat_bubble_outline</mat-icon> Chat widget
-  </button>
-
-  <mat-menu #mobileMenuBottom="matMenu" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
+  <mat-menu #mobileMenuBottom="matMenu">
     <a mat-menu-item *ngFor="let anchor of anchors" [href]="anchor.href" target="_blank" rel="noreferrer">
       <mat-icon>{{ anchor.icon }}</mat-icon> {{ anchor.title }}
     </a>
@@ -36,5 +22,12 @@
     <mat-divider></mat-divider>
 
     <a mat-menu-item (click)="toggleChatbot()"> <mat-icon>chat_bubble_outline</mat-icon> Chat widget </a>
+
+    <mat-divider></mat-divider>
+
+    <div mat-menu-item disabled *ngIf="version">
+      <mat-icon>new_releases</mat-icon>
+      {{ version }}
+    </div>
   </mat-menu>
 </mat-toolbar>

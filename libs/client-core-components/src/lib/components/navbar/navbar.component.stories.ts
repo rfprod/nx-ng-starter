@@ -1,5 +1,4 @@
 import { APP_BASE_HREF, DOCUMENT, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, Router, RouterModule, UrlTree } from '@angular/router';
 import { AppMaterialModule } from '@app/client-material';
@@ -11,6 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import { Args, Story } from '@storybook/angular/types-6-0';
 import { of } from 'rxjs';
 
+import { AppHistoryNavigatorComponent } from '../history-navigator/history-navigator.component';
 import { AppTooltipDirective } from '../tooltip/tooltip.directive';
 import { AppNavbarComponent } from './navbar.component';
 
@@ -31,7 +31,6 @@ const story: Story<AppNavbarComponent> = (args: Args) => ({
   moduleMetadata: {
     imports: [
       BrowserAnimationsModule,
-      FlexLayoutModule,
       AppMaterialModule.forRoot(),
       StoreModule.forRoot({}),
       EffectsModule.forRoot(),
@@ -65,7 +64,7 @@ const story: Story<AppNavbarComponent> = (args: Args) => ({
         useValue: testingEnvironment,
       },
     ],
-    declarations: [AppNavbarComponent, AppTooltipDirective],
+    declarations: [AppNavbarComponent, AppHistoryNavigatorComponent, AppTooltipDirective],
   },
   props: {
     ...args,

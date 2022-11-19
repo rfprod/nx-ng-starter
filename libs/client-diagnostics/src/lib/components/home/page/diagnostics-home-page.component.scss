@@ -1,17 +1,16 @@
+@use 'libs/client-core/src/lib/styles/partials/_flex.scss';
+
 :host {
-  display: flex;
-  flex: 1 1 auto;
-  flex-direction: row;
+  @extend .flex-row;
   flex-wrap: wrap;
   align-items: flex-start;
-  align-self: stretch;
   justify-content: center;
   width: 100%;
   padding: 0.5em;
 }
 
 .marked-instructions {
-  flex: 1 1 auto;
+  @extend .flex--full;
   width: 100%;
   margin: 0.5em 0 0.5em 0;
 }

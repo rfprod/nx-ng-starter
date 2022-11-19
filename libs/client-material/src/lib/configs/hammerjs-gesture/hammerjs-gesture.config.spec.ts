@@ -53,8 +53,8 @@ describe('AppHammerGestureConfig', () => {
       swipe: {
         enable: true,
         pointers: 1,
-        velocity: 0.4,
-        threshold: 20,
+        velocity: 0.8,
+        threshold: 80,
       },
     };
     expect(hammerGestureConfig.overrides).toMatchObject(expectedOverrides);

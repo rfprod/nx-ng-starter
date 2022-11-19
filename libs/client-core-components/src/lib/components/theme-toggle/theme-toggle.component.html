@@ -1,3 +1,7 @@
-<button mat-icon-button (click)="toggleMaterialTheme()" [color]="(darkThemeEnabled$ | async) ? null : null" appTooltip="Toogle theme">
-  <mat-icon>palette</mat-icon>
+<button mat-icon-button (click)="toggleMaterialTheme()" appTooltip="Toogle theme">
+  <mat-icon *ngIf="darkThemeEnabled$ | async; else lightMode">light_mode</mat-icon>
 </button>
+
+<ng-template #lightMode>
+  <mat-icon>dark_mode</mat-icon>
+</ng-template>

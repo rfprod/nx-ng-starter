@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppD3ChartsModule } from '@app/client-d3-charts';
 import { AppMaterialModule } from '@app/client-material';
 
@@ -12,7 +11,7 @@ import { AppDiagnosticsInfoPage } from './components/info/page/diagnostics-info-
 import { AppDiagnosticsRoutingModule } from './diagnostics-routing.module';
 
 @NgModule({
-  imports: [FlexLayoutModule, CommonModule, AppMaterialModule, AppDiagnosticsRoutingModule, AppD3ChartsModule],
+  imports: [CommonModule, AppMaterialModule, AppDiagnosticsRoutingModule, AppD3ChartsModule],
   declarations: [
     AppDiagnosticsIndexComponent,
     AppDiagnosticsHomeComponent,

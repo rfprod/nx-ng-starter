@@ -1,0 +1,35 @@
+/**
+ * Reusable flexbox classes.
+ * Use in component templates:
+ * @use 'libs/client-core/src/lib/styles/partials/_flex.scss';
+ */
+
+.flex {
+  display: flex;
+
+  &--full {
+    flex: 1 1 auto;
+  }
+
+  &--grow {
+    flex: 1 0 auto;
+  }
+
+  &--shrink {
+    flex: 0 1 auto;
+  }
+}
+
+.flex-column {
+  @extend .flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+.flex-row {
+  @extend .flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: stretch;
+}
