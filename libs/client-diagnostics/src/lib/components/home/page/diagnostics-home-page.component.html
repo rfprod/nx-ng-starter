@@ -1,6 +1,6 @@
-<span class="marked-instructions" [innerHtml]="markedInstructions"></span>
+<div class="marked-instructions" [innerHtml]="markedInstructions"></div>
 
-<div fxLayout="row" fxLayoutAlign="start center" *ngIf="timer">
+<ng-container *ngIf="timer">
   <mat-icon aria-hidden="false" [attr.aria-label]="timer" color="warn"> av_timer </mat-icon>
-  <span fxFlex>{{ timer }}</span>
-</div>
+  <span>{{ timer }}</span>
+</ng-container>

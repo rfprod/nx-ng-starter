@@ -1,6 +1,5 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from '@app/client-material';
 import { AppPwaOfflineModule } from '@app/client-pwa-offline';
@@ -45,7 +44,6 @@ const markdownModuleConfig: MarkdownModuleConfig = {
     BrowserAnimationsModule,
     HttpClientModule,
     MarkdownModule.forRoot(markdownModuleConfig),
-    FlexLayoutModule,
     StoreModule.forRoot({}, { metaReducers: metaReducers(environment.production) }),
     EffectsModule.forRoot(),
     AppMdFilesStoreModule.forRoot(),

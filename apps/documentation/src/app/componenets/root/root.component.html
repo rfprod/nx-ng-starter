@@ -1,29 +1,16 @@
-<div fxLayout="column" fxLayoutAlign="start stretch" class="root-container" *ngIf="config$ | async as config">
-  <mat-toolbar color="primary">
-    <img [ngStyle]="{ height: '75%', width: 'auto!important' }" src="/favicon.ico" />
+<div class="root" *ngIf="config$ | async as config">
+  <mat-toolbar color="primary" class="root__toolbar">
+    <button mat-icon-button disabled>
+      <mat-icon>recycling</mat-icon>
+    </button>
 
-    <span fxFlex="1 1 auto"></span>
+    <span class="flex--full"></span>
 
-    <a mat-button [fxHide.xs]="true" [fxHide.sm]="true" href="https://nx.dev" target="_blank" rel="noreferrer">
-      <mat-icon>library_books</mat-icon> Nx
-    </a>
-    <a mat-button [fxHide.xs]="true" [fxHide.sm]="true" href="https://cli.angular.io/reference.pdf" target="_blank" rel="noreferrer">
-      <mat-icon>build</mat-icon> Angular CLI
-    </a>
-    <a mat-button [fxHide.xs]="true" [fxHide.sm]="true" href="https://material.angular.io/" target="_blank" rel="noreferrer">
-      <mat-icon>change_history</mat-icon> Angular Material
-    </a>
-    <a mat-button [fxHide.xs]="true" [fxHide.sm]="true" href="https://material.io/icons/" target="_blank" rel="noreferrer">
-      <mat-icon>info_outline</mat-icon> Material Icons
-    </a>
-
-    <button mat-icon-button [matMenuTriggerFor]="mobileMenuTop" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
+    <button mat-icon-button [matMenuTriggerFor]="mobileMenuTop">
       <mat-icon>menu</mat-icon>
     </button>
-    <mat-menu #mobileMenuTop="matMenu" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
-      <a mat-button [fxHide.xs]="true" [fxHide.sm]="true" href="https://nx.dev" target="_blank" rel="noreferrer">
-        <mat-icon>library_books</mat-icon> Nx Reference
-      </a>
+    <mat-menu #mobileMenuTop="matMenu">
+      <a mat-menu-item href="https://nx.dev" target="_blank" rel="noreferrer"> <mat-icon>library_books</mat-icon> Nx Reference </a>
       <a mat-menu-item href="https://cli.angular.io/reference.pdf" target="_blank" rel="noreferrer">
         <mat-icon>build</mat-icon> Angular CLI Reference
       </a>
@@ -36,25 +23,25 @@
     </mat-menu>
   </mat-toolbar>
 
-  <mat-sidenav-container fxFlex="1 1 auto" [hasBackdrop]="false" [autosize]="true">
+  <mat-sidenav-container class="flex--ful" [hasBackdrop]="false" [autosize]="true">
     <mat-sidenav #sidenav mode="side" [opened]="config.sidenavOpen">
       <app-documentation-md-reference-tree></app-documentation-md-reference-tree>
     </mat-sidenav>
 
     <mat-sidenav-content>
-      <div class="content-container">
+      <div class="root__content">
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
 
-  <mat-toolbar color="primary" fxFlex="0 1 auto">
+  <mat-toolbar color="primary" class="root__toolbar">
     <button mat-icon-button (click)="sidenav.toggle()">
       <mat-icon title="open sidenav" *ngIf="!sidenav.opened"> flip_to_front </mat-icon>
       <mat-icon title="open sidenav" *ngIf="sidenav.opened"> flip_to_back </mat-icon>
     </button>
 
-    <span fxFlex="1 1 auto"></span>
+    <span class="flex--full"></span>
 
     <div *ngIf="version">
       <small>{{ version }}</small>

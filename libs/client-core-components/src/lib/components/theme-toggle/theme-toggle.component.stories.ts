@@ -1,5 +1,4 @@
 import { APP_BASE_HREF, DOCUMENT, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppMaterialModule } from '@app/client-material';
@@ -28,7 +27,6 @@ const story: Story<AppThemeToggleComponent> = (args: Args) => ({
   moduleMetadata: {
     imports: [
       BrowserAnimationsModule,
-      FlexLayoutModule,
       RouterTestingModule,
       StoreModule.forRoot({}),
       EffectsModule.forRoot(),

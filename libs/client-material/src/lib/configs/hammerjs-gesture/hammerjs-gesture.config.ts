@@ -43,8 +43,8 @@ export class AppHammerGestureConfig extends HammerGestureConfig {
     swipe: {
       enable: true,
       pointers: 1, // Required pointers.
-      velocity: 0.4, // inimal velocity required before recognizing, unit is in px per ms.
-      threshold: 20, // Minimal distance required before recognizing.
+      velocity: 0.8, // inimal velocity required before recognizing, unit is in px per ms.
+      threshold: 80, // Minimal distance required before recognizing.
     },
   };
 }

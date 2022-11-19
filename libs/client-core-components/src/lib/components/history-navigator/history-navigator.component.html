@@ -1,0 +1,44 @@
+<button
+  mat-icon-button
+  (click)="back()"
+  appTooltip="Back"
+  [flexibleConnectedPositions]="[
+    {
+      originX: 'center',
+      originY: 'bottom',
+      overlayX: 'center',
+      overlayY: 'top'
+    }
+  ]"
+>
+  <mat-icon>navigate_before</mat-icon>
+</button>
+
+<mat-icon
+  appTooltip="Navigate history"
+  [flexibleConnectedPositions]="[
+    {
+      originX: 'center',
+      originY: 'bottom',
+      overlayX: 'center',
+      overlayY: 'top'
+    }
+  ]"
+  >explore</mat-icon
+>
+
+<button
+  mat-icon-button
+  (click)="forward()"
+  appTooltip="Forward"
+  [flexibleConnectedPositions]="[
+    {
+      originX: 'center',
+      originY: 'bottom',
+      overlayX: 'center',
+      overlayY: 'top'
+    }
+  ]"
+>
+  <mat-icon>navigate_next</mat-icon>
+</button>

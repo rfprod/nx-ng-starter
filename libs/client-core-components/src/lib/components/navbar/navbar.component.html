@@ -1,50 +1,17 @@
 <mat-toolbar color="primary" class="toolbar" *ngIf="routerEvents$ | async">
-  <img [ngStyle]="{ height: '75%', width: 'auto!important' }" [src]="logoSrc" alt="{{ appName }}" title="{{ appName }}" />
+  <img class="toolbar--logo" [src]="logoSrc" alt="{{ appName }}" title="{{ appName }}" />
 
-  <span fxFlex="1 1 auto"></span>
+  <span class="flex--full"></span>
 
-  <button mat-button (click)="navigateBack()">
-    <mat-icon>navigate_before</mat-icon>
-    back
-  </button>
+  <app-history-navigator (nagivateBack)="navigateBack()" (nagivateForward)="navigateForward()"></app-history-navigator>
 
-  <mat-icon
-    appTooltip="Navigate history"
-    [flexibleConnectedPositions]="[
-      {
-        originX: 'center',
-        originY: 'bottom',
-        overlayX: 'center',
-        overlayY: 'top'
-      }
-    ]"
-    >explore</mat-icon
-  >
+  <span class="flex--full"></span>
 
-  <button mat-button (click)="navigateForward()">
-    forward
-    <mat-icon>navigate_next</mat-icon>
-  </button>
-
-  <span fxFlex="1 1 auto"></span>
-
-  <button
-    mat-button
-    *ngFor="let button of buttons"
-    [routerLink]="button.routerLink"
-    [disabled]="button.routeActive()"
-    (click)="sidebarCloseHandler()"
-    [fxHide.xs]="true"
-    [fxHide.sm]="true"
-  >
-    <mat-icon>{{ button.icon }}</mat-icon> {{ button.title }}
-  </button>
-
-  <button mat-icon-button [matMenuTriggerFor]="mobileMenuTop" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
+  <button mat-icon-button [matMenuTriggerFor]="mobileMenuTop">
     <mat-icon>menu</mat-icon>
   </button>
 
-  <mat-menu #mobileMenuTop="matMenu" [fxHide.md]="true" [fxHide.lg]="true" [fxHide.xl]="true">
+  <mat-menu #mobileMenuTop="matMenu">
     <a
       mat-menu-item
       *ngFor="let button of buttons"

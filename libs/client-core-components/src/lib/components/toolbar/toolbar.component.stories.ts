@@ -1,6 +1,5 @@
 import { APP_BASE_HREF, DOCUMENT, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppMaterialModule } from '@app/client-material';
@@ -31,7 +30,6 @@ const story: Story<AppToolbarComponent> = (args: Args) => ({
   moduleMetadata: {
     imports: [
       BrowserAnimationsModule,
-      FlexLayoutModule,
       RouterTestingModule,
       StoreModule.forRoot({}),
       EffectsModule.forRoot(),

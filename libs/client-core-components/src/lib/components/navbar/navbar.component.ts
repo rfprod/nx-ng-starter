@@ -12,7 +12,7 @@ import { Store } from '@ngrx/store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppNavbarComponent {
-  @Input() public logoSrc = 'assets/icons/icon-72x72.png';
+  @Input() public logoSrc: string | null = 'assets/svg/logo.svg';
 
   @Input() public buttons: IRouterButton[] = [
     routerButton(

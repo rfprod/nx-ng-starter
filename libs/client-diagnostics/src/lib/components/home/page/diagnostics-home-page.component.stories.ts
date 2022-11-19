@@ -1,5 +1,4 @@
 import { DOCUMENT, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from '@app/client-material';
 import { documentFactory, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@app/client-util';
@@ -22,7 +21,7 @@ export default {
 
 const story: Story<AppDiagnosticsHomePage> = (args: Args) => ({
   moduleMetadata: {
-    imports: [BrowserAnimationsModule, FlexLayoutModule, AppMaterialModule.forRoot()],
+    imports: [BrowserAnimationsModule, AppMaterialModule.forRoot()],
     providers: [
       {
         provide: LocationStrategy,
