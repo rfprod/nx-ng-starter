@@ -16,7 +16,7 @@ export class AppMatcompModel {
   public description = '';
 
   @Field(() => Date, {
-    defaultValue: new Date().getTime(),
+    defaultValue: new Date(),
   })
-  public creationDate?: number;
+  public creationDate?: Date;
 }

@@ -29,7 +29,7 @@ export class AppMatcomp implements AppMatcompModel {
 
   public description = '';
 
-  public creationDate = new Date().getTime();
+  public creationDate = new Date();
 
   constructor(input?: AppMatcomp | AppMatcompInput) {
     initializeClassProperties<AppMatcomp | AppMatcompInput>(this, input);

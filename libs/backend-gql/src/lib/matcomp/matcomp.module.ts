@@ -1,4 +1,3 @@
-import { AppDateScalar } from '@app/backend-interfaces';
 import { DynamicModule, Module, Provider } from '@nestjs/common';
 import { PubSub } from 'graphql-subscriptions';
 
@@ -14,7 +13,6 @@ const apiGqlMatcompModuleProviders: Provider[] = [
   },
   AppMatcompResolver,
   AppMatcompGuard,
-  AppDateScalar,
   {
     provide: 'PUB_SUB',
     useFactory: () => new PubSub(),

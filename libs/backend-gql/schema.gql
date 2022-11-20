@@ -8,14 +8,11 @@ input AppMatcompInputDto {
 }
 
 type AppMatcompModel {
-  creationDate: Date!
+  creationDate: Timestamp!
   description: String!
   id: ID!
   name: String!
 }
-
-"""Date custom scalar type"""
-scalar Date
 
 type Mutation {
   create(input: AppMatcompInputDto!): AppMatcompModel!
@@ -31,3 +28,8 @@ type Subscription {
   matcompCreated: AppMatcompModel!
   matcompRemoved: AppMatcompModel!
 }
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp

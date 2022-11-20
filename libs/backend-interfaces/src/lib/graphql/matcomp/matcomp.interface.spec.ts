@@ -6,13 +6,13 @@ describe('AppMatcomp', () => {
     expect(raw.id).toEqual('');
     expect(raw.name).toEqual('');
     expect(raw.description).toEqual('');
-    expect(typeof raw.creationDate === 'number').toBeTruthy();
+    expect(raw.creationDate instanceof Date).toBeTruthy();
 
     const initializer: AppMatcomp = {
       id: 'test',
       name: 'test',
       description: 'test',
-      creationDate: new Date().getTime(),
+      creationDate: new Date(),
     };
     const initialized = new AppMatcomp(initializer);
     expect(initialized.id).toEqual(initializer.id);

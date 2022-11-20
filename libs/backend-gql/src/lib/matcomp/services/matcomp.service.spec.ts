@@ -56,14 +56,14 @@ describe('AppMatcompService', () => {
       expect(created.id).toEqual(expected.id);
       expect(created.description).toEqual(expected.description);
       expect(created.name).toEqual(expected.name);
-      expect(created.creationDate).toEqual(expect.any(Number));
+      expect(created.creationDate).toEqual(expect.any(Date));
       expect(found).toBeDefined();
       expect(found instanceof AppMatcomp).toBeTruthy();
       if (typeof found !== 'undefined') {
         expect(found.id).toEqual(expected.id);
         expect(found.description).toEqual(expected.description);
         expect(found.name).toEqual(expected.name);
-        expect(found.creationDate).toBeCloseTo(created.creationDate);
+        expect(found.creationDate).toBeInstanceOf(Date);
       }
     });
   });
@@ -75,7 +75,7 @@ describe('AppMatcompService', () => {
     expect(created.id).toEqual(expected.id);
     expect(created.description).toEqual(expected.description);
     expect(created.name).toEqual(expected.name);
-    expect(created.creationDate).toEqual(expect.any(Number));
+    expect(created.creationDate).toEqual(expect.any(Date));
   });
 
   it('remove method should remove an item from the items array and return the removed item', () => {

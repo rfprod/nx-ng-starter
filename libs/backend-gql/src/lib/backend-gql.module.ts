@@ -40,6 +40,9 @@ export class AppGqlModule {
         credentials: true,
         origin: true,
       },
+      buildSchemaOptions: {
+        dateScalarMode: 'timestamp',
+      },
     };
     return {
       module: AppGqlModule,

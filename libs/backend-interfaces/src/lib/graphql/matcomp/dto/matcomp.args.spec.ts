@@ -11,7 +11,7 @@ import { AppMatcompArgs, defaultSkipValue, defaultTakeValue } from './matcomp.ar
 class AppTestResolver {
   @Query(() => [AppMatcompModel])
   public async matcomps(@Args() matcompArgs: AppMatcompArgs) {
-    const matcomp = (id = '0') => new AppMatcomp({ id, name: 'test', description: 'test', creationDate: new Date().getTime() });
+    const matcomp = (id = '0') => new AppMatcomp({ id, name: 'test', description: 'test', creationDate: new Date() });
     const matcomps = [matcomp(), matcomp('1'), matcomp('2')];
     return matcomps.slice(matcompArgs.skip, matcompArgs.take);
   }
