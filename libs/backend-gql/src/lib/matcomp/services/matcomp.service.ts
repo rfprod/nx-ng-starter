@@ -7,7 +7,7 @@ export const MATCOMP_SERVICE_TOKEN = Symbol('MATCOMP_SERVICE_TOKEN');
 
 @Injectable()
 export class AppMatcompService implements TMatcompService {
-  private readonly matcomps: AppMatcomp[] = [];
+  private readonly matcomps: AppMatcomp[] = [new AppMatcomp({ id: 'x', name: 'x', description: 'x', creationDate: new Date() })];
 
   public create(input: AppMatcompInput) {
     const matcomp = new AppMatcomp({ ...input, id: this.matcomps.length.toString() });
