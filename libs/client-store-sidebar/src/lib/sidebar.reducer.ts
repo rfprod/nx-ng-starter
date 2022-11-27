@@ -9,7 +9,7 @@ import { featureName, ISidebarStateModel } from './sidebar.interface';
 })
 export class AppSidebarReducer {
   public static readonly initialState: ISidebarStateModel = {
-    sidebarOpened: false,
+    sidebarOpen: false,
   };
 
   public static readonly token = new InjectionToken<ActionReducer<ISidebarStateModel>>(`${featureName} reducer`);
@@ -23,9 +23,9 @@ export class AppSidebarReducer {
   public createReducer() {
     return createReducer(
       AppSidebarReducer.initialState,
-      on(sidebarActions.open, () => ({ sidebarOpened: true })),
-      on(sidebarActions.close, () => ({ sidebarOpened: false })),
-      on(sidebarActions.toggle, state => ({ sidebarOpened: !state.sidebarOpened })),
+      on(sidebarActions.open, () => ({ sidebarOpen: true })),
+      on(sidebarActions.close, () => ({ sidebarOpen: false })),
+      on(sidebarActions.toggle, state => ({ sidebarOpen: !state.sidebarOpen })),
     );
   }
 }

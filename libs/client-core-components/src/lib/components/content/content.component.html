@@ -1,5 +1,5 @@
 <mat-sidenav-container class="flex--full">
-  <mat-sidenav mode="over" [opened]="sidebarOpened$ | async" (closedStart)="sidebarCloseHandler()" (swipeleft)="sidebarCloseHandler()">
+  <mat-sidenav mode="over" [opened]="sidebarOpen$ | async" (closedStart)="sidebarCloseHandler()" (swipeleft)="sidebarCloseHandler()">
     <router-outlet name="sidebar"></router-outlet>
   </mat-sidenav>
 

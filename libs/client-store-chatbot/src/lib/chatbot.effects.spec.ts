@@ -39,13 +39,4 @@ describe('AppChatbotEffects', () => {
     store.dispatch(chatbotActions.close());
     expect(routerNavigateSpy).toHaveBeenCalledWith([{ outlets: { chatbot: [] } }]);
   }));
-
-  it('should call router.navigate when either open or close action is dispatched', waitForAsync(() => {
-    store.dispatch(chatbotActions.toggle());
-    expect(routerNavigateSpy).toHaveBeenNthCalledWith(1, [{ outlets: { chatbot: ['root'] } }]);
-    store.dispatch(chatbotActions.toggle());
-    const expectedCalls = 2;
-    expect(routerNavigateSpy).toHaveBeenCalledTimes(expectedCalls);
-    expect(routerNavigateSpy).toHaveBeenNthCalledWith(expectedCalls, [{ outlets: { chatbot: [] } }]);
-  }));
 });

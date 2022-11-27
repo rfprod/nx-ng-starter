@@ -9,7 +9,7 @@ import { featureName, IChatbotStateModel } from './chatbot.interface';
 })
 export class AppChatbotReducer {
   public static readonly initialState: IChatbotStateModel = {
-    chatbotOpened: false,
+    chatbotOpen: false,
   };
 
   public static readonly token = new InjectionToken<ActionReducer<IChatbotStateModel>>(`${featureName} reducer`);
@@ -23,7 +23,8 @@ export class AppChatbotReducer {
   public createReducer() {
     return createReducer(
       AppChatbotReducer.initialState,
-      on(chatbotActions.toggle, state => ({ chatbotOpened: !state.chatbotOpened })),
+      on(chatbotActions.open, () => ({ chatbotOpen: true })),
+      on(chatbotActions.close, () => ({ chatbotOpen: false })),
     );
   }
 }

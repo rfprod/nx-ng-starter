@@ -33,23 +33,23 @@ describe('AppChatbotReducer', () => {
 
   it('should have correct initial state', () => {
     const initialState = AppChatbotReducer.initialState;
-    const expectation: IChatbotStateModel = { chatbotOpened: false };
+    const expectation: IChatbotStateModel = { chatbotOpen: false };
     expect(initialState).toEqual(expectation);
   });
 
-  it('should process the toggle action correctly', waitForAsync(() => {
-    store.dispatch(chatbotActions.toggle());
+  it('should process the open/close action correctly', waitForAsync(() => {
+    store.dispatch(chatbotActions.open());
     void store
-      .select(chatbotSelectors.chatbotOpened)
+      .select(chatbotSelectors.chatbotOpen)
       .pipe(
         first(),
-        tap(chatbotOpened => {
-          expect(chatbotOpened).toBeTruthy();
-          store.dispatch(chatbotActions.toggle());
+        tap(chatbotOpen => {
+          expect(chatbotOpen).toBeTruthy();
+          store.dispatch(chatbotActions.close());
         }),
-        switchMap(() => store.select(chatbotSelectors.chatbotOpened)),
-        tap(chatbotOpened => {
-          expect(chatbotOpened).toBeFalsy();
+        switchMap(() => store.select(chatbotSelectors.chatbotOpen)),
+        tap(chatbotOpen => {
+          expect(chatbotOpen).toBeFalsy();
         }),
       )
       .subscribe();

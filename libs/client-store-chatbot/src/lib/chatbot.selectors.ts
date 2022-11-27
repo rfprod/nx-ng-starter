@@ -4,8 +4,8 @@ import { IChatbotState, IChatbotStateModel } from './chatbot.interface';
 
 const selectFeature = (state: IChatbotState) => state.chatbot;
 
-const chatbotOpened = createSelector(selectFeature, (state: IChatbotStateModel) => state.chatbotOpened);
+const chatbotOpen = createSelector(selectFeature, (state: IChatbotStateModel) => state.chatbotOpen);
 
 export const chatbotSelectors = {
-  chatbotOpened,
+  chatbotOpen,
 };
