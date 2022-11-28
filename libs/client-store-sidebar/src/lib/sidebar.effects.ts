@@ -34,9 +34,9 @@ export class AppSidebarEffects {
   public readonly toggle$ = createEffect(() =>
     this.actions$.pipe(
       ofType(sidebarActions.toggle.type),
-      withLatestFrom(this.store.select(sidebarSelectors.sidebarOpened)),
-      map(([action, sidebarOpened]) =>
-        sidebarOpened ? sidebarActions.open({ payload: { navigate: true } }) : sidebarActions.close({ payload: { navigate: true } }),
+      withLatestFrom(this.store.select(sidebarSelectors.sidebarOpen)),
+      map(([action, sidebarOpen]) =>
+        sidebarOpen ? sidebarActions.open({ payload: { navigate: true } }) : sidebarActions.close({ payload: { navigate: true } }),
       ),
     ),
   );

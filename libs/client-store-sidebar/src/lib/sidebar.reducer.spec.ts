@@ -33,18 +33,18 @@ describe('AppSidebarReducer', () => {
 
   it('should have correct initial state', () => {
     const initialState = AppSidebarReducer.initialState;
-    const expectation: ISidebarStateModel = { sidebarOpened: false };
+    const expectation: ISidebarStateModel = { sidebarOpen: false };
     expect(initialState).toEqual(expectation);
   });
 
   it('should process the open action correctly', waitForAsync(() => {
     store.dispatch(sidebarActions.open({ payload: { navigate: false } }));
     void store
-      .select(sidebarSelectors.sidebarOpened)
+      .select(sidebarSelectors.sidebarOpen)
       .pipe(
         first(),
-        tap(sidebarOpened => {
-          expect(sidebarOpened).toBeTruthy();
+        tap(sidebarOpen => {
+          expect(sidebarOpen).toBeTruthy();
         }),
       )
       .subscribe();
@@ -53,16 +53,16 @@ describe('AppSidebarReducer', () => {
   it('should process the close action correctly', waitForAsync(() => {
     store.dispatch(sidebarActions.open({ payload: { navigate: false } }));
     void store
-      .select(sidebarSelectors.sidebarOpened)
+      .select(sidebarSelectors.sidebarOpen)
       .pipe(
         first(),
-        tap(sidebarOpened => {
-          expect(sidebarOpened).toBeTruthy();
+        tap(sidebarOpen => {
+          expect(sidebarOpen).toBeTruthy();
           store.dispatch(sidebarActions.close({ payload: { navigate: false } }));
         }),
-        switchMap(() => store.select(sidebarSelectors.sidebarOpened).pipe(first())),
-        tap(sidebarOpened => {
-          expect(sidebarOpened).toBeFalsy();
+        switchMap(() => store.select(sidebarSelectors.sidebarOpen).pipe(first())),
+        tap(sidebarOpen => {
+          expect(sidebarOpen).toBeFalsy();
         }),
       )
       .subscribe();
@@ -71,16 +71,16 @@ describe('AppSidebarReducer', () => {
   it('should process the toggle action correctly', waitForAsync(() => {
     store.dispatch(sidebarActions.toggle());
     void store
-      .select(sidebarSelectors.sidebarOpened)
+      .select(sidebarSelectors.sidebarOpen)
       .pipe(
         first(),
-        tap(sidebarOpened => {
-          expect(sidebarOpened).toBeTruthy();
+        tap(sidebarOpen => {
+          expect(sidebarOpen).toBeTruthy();
           store.dispatch(sidebarActions.toggle());
         }),
-        switchMap(() => store.select(sidebarSelectors.sidebarOpened)),
-        tap(sidebarOpened => {
-          expect(sidebarOpened).toBeFalsy();
+        switchMap(() => store.select(sidebarSelectors.sidebarOpen)),
+        tap(sidebarOpen => {
+          expect(sidebarOpen).toBeFalsy();
         }),
       )
       .subscribe();

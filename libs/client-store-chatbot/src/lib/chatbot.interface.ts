@@ -1,5 +1,5 @@
 export interface IChatbotStateModel {
-  chatbotOpened: boolean;
+  chatbotOpen: boolean;
 }
 
 export interface IChatbotState {

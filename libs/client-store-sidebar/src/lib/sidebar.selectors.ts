@@ -4,8 +4,8 @@ import { ISidebarState, ISidebarStateModel } from './sidebar.interface';
 
 const selectFeature = (state: ISidebarState) => state.sidebar;
 
-const sidebarOpened = createSelector(selectFeature, (state: ISidebarStateModel) => state.sidebarOpened);
+const sidebarOpen = createSelector(selectFeature, (state: ISidebarStateModel) => state.sidebarOpen);
 
 export const sidebarSelectors = {
-  sidebarOpened,
+  sidebarOpen,
 };

@@ -1,5 +1,5 @@
 export interface ISidebarStateModel {
-  sidebarOpened: boolean;
+  sidebarOpen: boolean;
 }
 
 export interface ISidebarState {
