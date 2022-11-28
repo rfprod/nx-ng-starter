@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import { chatbotActions } from '@app/client-store-chatbot';
+import { AppChatbotStoreModule, chatbotActions } from '@app/client-store-chatbot';
 import { AppSidebarStoreModule, sidebarActions } from '@app/client-store-sidebar';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store } from '@ngrx/store';
@@ -9,7 +9,7 @@ import { AppToolbarComponent } from './toolbar.component';
 
 describe('AppToolbarComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [AppSidebarStoreModule.forRoot()],
+    imports: [AppSidebarStoreModule.forRoot(), AppChatbotStoreModule.forRoot()],
     declarations: [AppToolbarComponent],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
@@ -48,7 +48,7 @@ describe('AppToolbarComponent', () => {
 
   it('toggleChatbot should call store dispatch', waitForAsync(() => {
     component.toggleChatbot();
-    expect(storeSpy.dispatch).toHaveBeenCalledWith(chatbotActions.toggle());
+    expect(storeSpy.dispatch).toHaveBeenCalledWith(chatbotActions.open());
   }));
 
   it('toggleMaterialTheme should emit an output event', () => {
