@@ -21,7 +21,9 @@ describe('client-util', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    tree = createTreeWithEmptyWorkspace();
+    tree = createTreeWithEmptyWorkspace({
+      layout: 'apps-libs',
+    });
   });
 
   it('should throw error if a name is missing', async () => {
