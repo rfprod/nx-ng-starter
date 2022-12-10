@@ -173,7 +173,7 @@ const readFileCallback = (error: NodeJS.ErrnoException | null, data?: Buffer) =>
 };
 
 for (const project of jestProjects) {
-  const projectPath = project.replace(/<rootDir>/, '');
+  const projectPath = project.replace(/<rootDir>/, '').replace('jest.config.ts', '');
   const filePath = path.join(root, 'coverage', projectPath, 'coverage-summary.json');
 
   fs.readFile(filePath, readFileCallback);

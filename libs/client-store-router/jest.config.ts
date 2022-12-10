@@ -5,12 +5,11 @@ const jestPresetAngularSerializers = require('jest-preset-angular/build/serializ
 const config: Config.InitialOptions = {
   coverageDirectory: '../../coverage/libs/client-store-router',
   coverageThreshold: {
-    // TODO: bump unit test coverage and remove this override
     global: {
       branches: 100,
-      functions: 61,
-      lines: 81,
-      statements: 73,
+      functions: 100,
+      lines: 100,
+      statements: 100,
     },
   },
   displayName: 'client-store-router',
