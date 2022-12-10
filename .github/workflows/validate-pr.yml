@@ -61,7 +61,7 @@ jobs:
         if: fromJSON(needs.checks.outputs.changes).shelltools == 'true'
         run: |
           sudo apt install shellcheck
-          yarn lint:shell
+          npx nx run tools:lint-shell
 
       - name: Lint ts affected
         run: npx nx affected --target lint --base origin/main --parallel --max-parallel 2

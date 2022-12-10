@@ -78,6 +78,16 @@
       },
       "outputs": ["{options.outputFile}"]
     },
+    "lint-shell": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "shellcheck tools/shell/*.sh tools/shell/utils/*.sh"
+          }
+        ]
+      }
+    },
     "migrate": {
       "executor": "nx:run-commands",
       "options": {

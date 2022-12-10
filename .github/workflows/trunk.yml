@@ -59,7 +59,7 @@ jobs:
         if: fromJSON(needs.checks.outputs.changes).shelltools == 'true'
         run: |
           sudo apt install shellcheck
-          yarn lint:shell
+          npx nx run tools:lint-shell
 
       - name: Lint ts
         if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' }}

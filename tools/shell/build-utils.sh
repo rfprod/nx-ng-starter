@@ -42,6 +42,7 @@ cmd() {
   printf " %s" "$@" >&2
   # shellcheck disable=SC2059
   printf "${DEFAULT}\n" >&2
+  # shellcheck disable=SC2294
   eval "$@"
   local rc=$?
   if ((rc)); then
