@@ -144,6 +144,7 @@ const clientConstraints = [
     sourceTag: 'scope:client-store',
     onlyDependOnLibsWithTags: [
       'scope:client-store-chatbot',
+      'scope:client-store-feature-access',
       'scope:client-store-http-progress',
       'scope:client-store-http-api',
       'scope:client-store-sidebar',
@@ -157,6 +158,10 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:client-store-chatbot',
+    onlyDependOnLibsWithTags: ['scope:client-testing-unit', 'scope:client-util', 'scope:client-util-ngrx'],
+  },
+  {
+    sourceTag: 'scope:client-store-feature-access',
     onlyDependOnLibsWithTags: ['scope:client-testing-unit', 'scope:client-util', 'scope:client-util-ngrx'],
   },
   {
@@ -311,6 +316,7 @@ const clientConstraints = [
       'scope:client-services',
       'scope:client-sidebar',
       'scope:client-store',
+      'scope:client-store-feature-access',
       'scope:client-store-router',
       'scope:client-store-theme',
       'scope:client-store-user',
@@ -328,6 +334,7 @@ const clientConstraints = [
     onlyDependOnLibsWithTags: [
       'scope:client-material',
       'scope:client-store-chatbot',
+      'scope:client-store-feature-access',
       'scope:client-store-router',
       'scope:client-store-sidebar',
       'scope:client-store-theme',

@@ -23,7 +23,7 @@ export class App<%= pascalCaseName %>Reducer {
   public createReducer() {
     return createReducer(
       App<%= pascalCaseName %>Reducer.initialState,
-      on(<%= camelCaseName %>Actions.toggle, state => ({ <%= camelCaseName %>: !state.<%= camelCaseName %> })),
+      on(<%= camelCaseName %>Actions.action, state => ({ <%= camelCaseName %>: !state.<%= camelCaseName %> })),
     );
   }
 }

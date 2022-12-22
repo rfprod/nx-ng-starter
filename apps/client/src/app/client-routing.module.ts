@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Route, RouterModule } from '@angular/router';
+import { AppFeatureAccessGuard, AppFeatureAccessInitGuard } from '@app/client-store-feature-access';
 
 /**
  * The client application routes.
@@ -7,14 +8,18 @@ import { Route, RouterModule } from '@angular/router';
 export const routes: Route[] = [
   {
     path: '',
+    canActivate: [AppFeatureAccessInitGuard],
     loadChildren: () => import('@app/client-diagnostics').then(mod => mod.AppDiagnosticsModule),
   },
   {
     path: 'dashboards',
+    canActivate: [AppFeatureAccessInitGuard, AppFeatureAccessGuard],
+    data: { feature: 'dashboards' },
     loadChildren: () => import('@app/client-dashboards').then(mod => mod.AppDashboardsModule),
   },
   {
     path: 'chatbot',
+    canActivate: [AppFeatureAccessInitGuard],
     loadChildren: () => import('@app/client-chatbot').then(mod => mod.AppChatbotModule),
   },
   {

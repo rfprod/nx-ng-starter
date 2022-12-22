@@ -3,8 +3,8 @@
 # ------------------------------------------------------
 
 input AppMatcompInputDto {
-  description: String = ""
-  name: String = ""
+  description: String! = ""
+  name: String! = ""
 }
 
 type AppMatcompModel {
@@ -21,7 +21,7 @@ type Mutation {
 
 type Query {
   matcomp(id: String!): AppMatcompModel!
-  matcomps(skip: Int = 0, take: Int = 25): [AppMatcompModel!]!
+  matcomps(skip: Int! = 0, take: Int! = 25): [AppMatcompModel!]!
 }
 
 type Subscription {
