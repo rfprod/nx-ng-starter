@@ -108,7 +108,7 @@ describe('AppNavbarComponent', () => {
 
     const fifthButtonIndex = 4;
     component.buttons[fifthButtonIndex].routeActive();
-    expect(routerIsActiveSpy).toHaveBeenCalledWith('dashbaords', {
+    expect(routerIsActiveSpy).toHaveBeenCalledWith('dashboards', {
       matrixParams: 'ignored',
       queryParams: 'ignored',
       paths: 'exact',

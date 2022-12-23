@@ -84,13 +84,13 @@ describe('AppFeatureFlagDirective', () => {
     expect(spans.length).toEqual(0);
   }));
 
-  it('should not display span in a production environment if the flag value is a feature name and the feature is disabled', waitForAsync(() => {
+  it('should display span in a production environment if the flag value is a feature name and the feature is disabled', waitForAsync(() => {
     store.dispatch(featureAccessActions.setFeatureFlags({ payload: { test: false } }));
     component.flag = 'test';
     expect(component.flag).toEqual('test');
     fixture.detectChanges();
     const spans = (<HTMLElement>fixture.debugElement.nativeElement).getElementsByTagName('span');
-    expect(spans.length).toEqual(0);
+    expect(spans.length).toEqual(1);
   }));
 
   it('should not display span in a production environment if the flag value is a feature name and the feature is disabled', waitForAsync(() => {
