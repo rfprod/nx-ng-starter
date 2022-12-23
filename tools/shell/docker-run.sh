@@ -26,6 +26,11 @@ declare -A IMAGES=(
   ["runner-ci-slim"]="$CONTAINER_REGISTRY"":runner-ci-slim-latest"
 )
 
+declare -A PORT_MAPPING=(
+  ["default"]="8080:8080"
+  ["envoy"]="8090:8090"
+)
+
 ##
 # Reports usage.
 ##
@@ -58,6 +63,9 @@ runContainer() {
   local IMAGE_NAME
   IMAGE_NAME=${IMAGES[$APP_NAME]}
 
+  local PORTS_MAP
+  PORTS_MAP=${PORT_MAPPING[$APP_NAME]:-"8080:8080"}
+
   if [ -z "$IMAGE_NAME" ]; then
     printErrorTitle "Application is not supported"
     printNameAndValue "application key" "$APP_NAME"
@@ -73,9 +81,9 @@ runContainer() {
   echo "$IMAGE_NAME"
 
   if [ "$2" = "debug" ]; then
-    docker run --rm --name "$APP_NAME" -it -p 127.0.0.1:8080:8080 "$IMAGE_NAME" /bin/sh
+    docker run --rm --name "$APP_NAME" -it -p 127.0.0.1:"$PORTS_MAP" "$IMAGE_NAME" /bin/sh
   else
-    docker run --rm --name "$APP_NAME" -it -p 127.0.0.1:8080:8080 "$IMAGE_NAME"
+    docker run --rm --name "$APP_NAME" -it -p 127.0.0.1:"$PORTS_MAP" "$IMAGE_NAME"
   fi
 }
 

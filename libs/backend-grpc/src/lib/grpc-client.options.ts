@@ -20,7 +20,7 @@ const protoPaths: (env: AppApiEnvironment) => string[] = (env: AppApiEnvironment
 export const backendGrpcClientOptions: (env: AppApiEnvironment) => ClientOptions = (env: AppApiEnvironment) => ({
   transport: Transport.GRPC,
   options: {
-    url: '0.0.0.0:8082',
+    url: env.grpcUrl,
     package: 'nxngstarter',
     protoPath: protoPaths(env),
     loader: {

@@ -1,6 +1,6 @@
 # Envoy proxy for gRPC.
 
-FROM envoyproxy/envoy-alpine:v1.20.0
+FROM envoyproxy/envoy-alpine:v1.21.6
 
 COPY .envoy/envoy.yml /etc/envoy/envoy.yaml
 
