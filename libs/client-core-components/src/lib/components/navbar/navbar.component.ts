@@ -63,6 +63,18 @@ export class AppNavbarComponent {
         }),
       [{ outlets: { primary: ['chatbot'] } }],
     ),
+    routerButton(
+      'Dashboards',
+      'dashboard',
+      () =>
+        this.router.isActive('dashboards', {
+          matrixParams: 'ignored',
+          queryParams: 'ignored',
+          paths: 'exact',
+          fragment: 'ignored',
+        }),
+      [{ outlets: { primary: ['dashboards'] } }],
+    ),
   ];
 
   public readonly appName = this.env.appName;

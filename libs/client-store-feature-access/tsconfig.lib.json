@@ -1,0 +1,17 @@
+{
+  "angularCompilerOptions": {
+    "skipTemplateCodegen": true,
+    "strictMetadataEmit": true,
+    "enableResourceInlining": true
+  },
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSources": true,
+    "lib": ["dom", "ES2022"],
+    "outDir": "../../dist/out-tsc"
+  },
+  "exclude": ["src/test-setup.ts", "**/*.spec.ts", "jest.config.ts"],
+  "extends": "./tsconfig.json",
+  "include": ["**/*.ts"]
+}
