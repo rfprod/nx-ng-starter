@@ -1,7 +1,6 @@
 admin:
-  access_log_path: /tmp/admin_access.log
   address:
-    socket_address: { address: 0.0.0.0, port_value: 9901 }
+    socket_address: { address: 127.0.0.1, port_value: 9901 }
 
 static_resources:
   listeners:
@@ -21,31 +20,54 @@ static_resources:
                     - name: local_service
                       domains: ['*']
                       routes:
-                        - match: { prefix: '/', grpc: {} }
-                          route: { cluster: echo_service, timeout: { seconds: 60 } }
+                        - match:
+                            prefix: '/grpc'
+                          route:
+                            cluster: http_service
+                        - match:
+                            prefix: '/'
+                          route:
+                            cluster: echo_service
                       cors:
                         allow_origin_string_match:
-                          - prefix: '*'
+                          - safe_regex:
+                              google_re2: {}
+                              regex: '\*'
                         allow_methods: GET, PUT, DELETE, POST, OPTIONS
-                        allow_headers: authorization,keep-alive,user-agent,cache-control,content-type,content-transfer-encoding,x-accept-content-transfer-encoding,x-accept-response-streaming,x-user-agent,x-grpc-web,grpc-timeout
+                        allow_headers: authorization,keep-alive,user-agent,cache-control,content-type,content-transfer-encoding,custom-header-1,x-accept-content-transfer-encoding,x-accept-response-streaming,x-user-agent,x-grpc-web,grpc-timeout,csrf-token,guestauth,token
                         max_age: '1728000'
-                        expose_headers: grpc-status,grpc-message
+                        expose_headers: custom-header-1,grpc-status,grpc-message
                         allow_credentials: true
                 http_filters:
                   - name: envoy.filters.http.grpc_web
                   - name: envoy.filters.http.cors
                   - name: envoy.filters.http.router
+                    typed_config:
+                      '@type': type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
   clusters:
     - name: echo_service
       connect_timeout: 0.25s
       type: logical_dns
       lb_policy: round_robin
-      http2_protocol_options: {}
-      hosts: [{ socket_address: { address: 0.0.0.0, port_value: 8082 } }]
-layered_runtime:
-  layers:
-    - name: static_layer
-      static_layer:
-        envoy.deprecated_features:envoy.api.v2.Cluster.hosts: true
-        envoy.deprecated_features:envoy.api.v2.listener.Filter.config: true
-        envoy.deprecated_features:envoy.api.v2.route.CorsPolicy.allow_origin: true
+      load_assignment:
+        cluster_name: echo_service
+        endpoints:
+          - lb_endpoints:
+              - endpoint:
+                  address:
+                    socket_address:
+                      address: 0.0.0.0
+                      port_value: 50051
+    - name: http_service
+      connect_timeout: 0.25s
+      type: logical_dns
+      lb_policy: round_robin
+      load_assignment:
+        cluster_name: http_service
+        endpoints:
+          - lb_endpoints:
+              - endpoint:
+                  address:
+                    socket_address:
+                      address: 0.0.0.0
+                      port_value: 8080

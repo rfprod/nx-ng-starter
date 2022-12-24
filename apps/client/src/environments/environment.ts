@@ -30,7 +30,7 @@ export const environment: IWebClientAppEnvironment = {
       : window.location.origin.includes('localhost')
       ? 'http://localhost:8080/api'
       : `${window.location.origin}/api`,
-  envoyUrl: 'http://localhost:8090',
+  envoyUrl: window.location.origin.includes('localhost') ? `${window.location.origin}/grpc` : 'https://envoy-is-not-deployed',
   sentry: sentryEnvFactory({ production: false }),
   ...appEnvFactory(),
 };

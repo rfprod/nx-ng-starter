@@ -6,7 +6,7 @@ export interface IApiEnvironment {
   production: boolean;
   firebase: boolean;
   appName: string;
-  envoyUrl: string;
+  grpcUrl: string;
   wsPort: number;
 }
 
@@ -27,7 +27,7 @@ export class AppApiEnvironment implements IApiEnvironment {
 
   public appName: TApiAppName = 'Nx Ng Starter API';
 
-  public envoyUrl = 'http://localhost:8081';
+  public grpcUrl = '0.0.0.0:50051';
 
   public wsPort = defaultWsPort;
 
