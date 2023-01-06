@@ -68,7 +68,7 @@ export class AppConfigureTscCheckExecutor {
       config.targets['tsc-check'] = {
         executor: './tools/executors/tsc:check',
         options: {
-          tsConfig: `${src.replace(/src$/, `tsconfig.${suffix}.json`)}`,
+          tsConfig: src === 'tools' ? `${src}/tsconfig.${suffix}.json` : `${src.replace(/src$/, `tsconfig.${suffix}.json`)}`,
         },
         outputs: [`{workspaceRoot}/dist/out-tsc/${src.replace(/\/src$/, '')}`],
       };
