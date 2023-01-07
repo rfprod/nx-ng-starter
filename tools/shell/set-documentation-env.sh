@@ -1,7 +1,8 @@
 #!/bin/bash
 
-source tools/shell/utils/colors.sh ''
 source tools/shell/utils/print-utils.sh ''
+
+source tools/shell/utils/config.sh
 
 declare -A EXISTING_README
 
@@ -35,8 +36,9 @@ reportExistingReadmes() {
   printGap
 
   local KEY
-  for KEY in "${!EXISTING_README[@]}"; do printf "
-      ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${EXISTING_README[$KEY]}${DEFAULT}" "${KEY}"; done
+  for KEY in "${!EXISTING_README[@]}"; do
+    printNameAndValue "${KEY}" "${EXISTING_README[$KEY]}"
+  done
 
   printGap
 }
@@ -59,13 +61,15 @@ findReadmes() {
   done
 
   # debug found readmes 2
-  #for KEY in "${!READMES[@]}"; do printf "
-  #  ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${READMES[$KEY]}${DEFAULT}" "${KEY}"; done
+  # for KEY in "${!FOUND_READMES[@]}"; do
+  #   printNameAndValue "${KEY}" "${FOUND_READMES[$KEY]}"
+  # done
   #printf "\n"
 
   # debug existing readmes
-  #for KEY in "${!EXISTING_README[@]}"; do printf "
-  #  ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${EXISTING_README[$KEY]}${DEFAULT}" "${KEY}"; done
+  # for KEY in "${!EXISTING_README[@]}"; do
+  #   printNameAndValue "${KEY}" "${EXISTING_README[$KEY]}"
+  # done
   #printf "\n"
 
   ##

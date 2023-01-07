@@ -1,7 +1,8 @@
 #!/bin/bash
 
-source tools/shell/utils/colors.sh ''
 source tools/shell/utils/print-utils.sh ''
+
+source tools/shell/utils/config.sh
 
 ##
 # Container registry base path.
@@ -36,9 +37,9 @@ declare -A PORT_MAPPING=(
 ##
 reportUsage() {
   printInfoTitle "<< ${0} usage >>"
-  printUsageTip "bash tools/shell/docker-run.sh ?" "print help"
-  printUsageTip "bash tools/shell/docker-run.sh APPLICATION" "run APPLICATION docker container"
-  printUsageTip "bash tools/shell/docker-run.sh APPLICATION debug" "run APPLICATION docker container in debug mode"
+  printUsageTip "bash tools/shell/run.sh ?" "print help"
+  printUsageTip "bash tools/shell/run.sh APPLICATION" "run APPLICATION docker container"
+  printUsageTip "bash tools/shell/run.sh APPLICATION debug" "run APPLICATION docker container in debug mode"
   printGap
 
   printInfoMessage "Supported applications"
