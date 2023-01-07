@@ -1,8 +1,9 @@
 #!/bin/bash
 
-source tools/shell/utils/colors.sh ''
 source tools/shell/utils/module-aliases.sh ''
 source tools/shell/utils/print-utils.sh ''
+
+source tools/shell/utils/config.sh
 
 ##
 # Project root reference.
@@ -71,10 +72,12 @@ run_protobufjs() {
   printNameAndValue "path to proto ts" "$PATH_TO_PROTO_TS"
   printGap
 
-  npx pbjs --target static-module --wrap es6 --es6 --force-number --keep-case --no-create --no-encode --no-decode --no-verify --no-delimited --no-beautify -o "$PATH_TO_PROTO_JS" "$PROTO_SOURCE_PATH"/*.proto
-  npx pbts -o "$PATH_TO_PROTO_TS" "$PATH_TO_PROTO_JS"
+  npm i --no-save pbts-grpc-transcoder --legacy-peer-deps
+  git checkout yarn.lock
+  node_modules/pbts-grpc-transcoder/node_modules/.bin/pbjs --target static-module --wrap es6 --es6 --force-number --keep-case --no-create --no-encode --no-decode --no-verify --no-delimited --no-beautify -o "$PATH_TO_PROTO_JS" "$PROTO_SOURCE_PATH"/*.proto
+  node_modules/pbts-grpc-transcoder/node_modules/.bin/pbts -o "$PATH_TO_PROTO_TS" "$PATH_TO_PROTO_JS"
   ## next run is needed to generate protobufjs library without jsdoc comments
-  npx pbjs --target static-module --wrap es6 --es6 --force-number --keep-case --no-create --no-encode --no-decode --no-verify --no-delimited --no-beautify --no-comments -o "$PATH_TO_PROTO_JS" "$PROTO_SOURCE_PATH"/*.proto
+  node_modules/pbts-grpc-transcoder/node_modules/.bin/pbjs --target static-module --wrap es6 --es6 --force-number --keep-case --no-create --no-encode --no-decode --no-verify --no-delimited --no-beautify --no-comments -o "$PATH_TO_PROTO_JS" "$PROTO_SOURCE_PATH"/*.proto
 
   reportSuccess
 
@@ -85,7 +88,7 @@ run_protobufjs() {
 # Lints libs/proto after regeneration.
 ##
 lintProtoLib() {
-  bash $PROJECT_ROOT/tools/shell/lint.sh "lib:proto" fix
+  npx nx lint proto --fix
 }
 
 ##

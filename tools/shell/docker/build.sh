@@ -1,7 +1,8 @@
 #!/bin/bash
 
-source tools/shell/utils/colors.sh ''
 source tools/shell/utils/print-utils.sh ''
+
+source tools/shell/utils/config.sh
 
 ##
 # Container registry base path.
@@ -35,21 +36,21 @@ declare -A ENVIRONMENTS=(
 ##
 reportUsage() {
   printInfoTitle "<< ${0} usage >>"
-  printUsageTip "bash tools/shell/docker-build-app.sh ?" "print help"
-  printUsageTip "bash tools/shell/docker-app.sh APPLICATION ENVIRONMENT" "build APPLICATION docker container image for a specific ENVIRONMENT"
+  printUsageTip "bash tools/shell/build-app.sh ?" "print help"
+  printUsageTip "bash tools/shell/app.sh APPLICATION ENVIRONMENT" "build APPLICATION docker container image for a specific ENVIRONMENT"
   printGap
   printInfoMessage "Supported container names"
   printGap
 
   for APPLICATION_KEY in "${!APPLICATIONS[@]}"; do
-    printf "${DEFAULT} - ${YELLOW}%s${DEFAULT}\\n" "${APPLICATION_KEY}"
+    printValue "${APPLICATION_KEY}"
   done
 
   printInfoMessage "Supported environments"
   printGap
 
   for ENVIRONMENT_KEY in "${!ENVIRONMENTS[@]}"; do
-    printf "${DEFAULT} - ${YELLOW}%s${DEFAULT}\\n" "${ENVIRONMENT_KEY}"
+    printValue "${ENVIRONMENT_KEY}"
   done
 
   printGap

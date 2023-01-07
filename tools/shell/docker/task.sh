@@ -1,16 +1,17 @@
 #!/bin/bash
 
-source tools/shell/utils/colors.sh ''
 source tools/shell/utils/print-utils.sh ''
+
+source tools/shell/utils/config.sh
 
 ##
 # Reports usage error.
 ##
 reportUsageError() {
   printInfoTitle "<< ${0} usage >>"
-  printUsageTip "bash tools/shell/docker-task.sh install-docker-ci" "install dependencies for CI docker container image (should be used from inside of docker only)"
-  printUsageTip "bash tools/shell/docker-task.sh cleanup" "utility task, removes stopped containers and cleans up untagged images (should be used on runners which use CI container images)"
-  printUsageTip "bash tools/shell/docker-task.sh login USERNAME PASSWORD" "docker login, requires a user name and a password"
+  printUsageTip "bash tools/shell/task.sh install-docker-ci" "install dependencies for CI docker container image (should be used from inside of docker only)"
+  printUsageTip "bash tools/shell/task.sh cleanup" "utility task, removes stopped containers and cleans up untagged images (should be used on runners which use CI container images)"
+  printUsageTip "bash tools/shell/task.sh login USERNAME PASSWORD" "docker login, requires a user name and a password"
   printGap
 
   exit 1
@@ -37,7 +38,7 @@ elif [ "$1" = "install-docker-ci" ]; then
 
   npm rebuild node-sass --unsafe-perm || exit 1
   # Installing yarn@1.22.18 is mandatory, yarn v2 does not have integrity check which is needed for pipelines.
-  npm i --force -g yarn@1.22.18 typescript@latest @angular/cli@latest @compodoc/compodoc@latest commitizen@latest cz-conventional-changelog@latest clang-format@latest --unsafe-perm || exit 1
+  npm i --force -g yarn@1.22.19 typescript@latest @angular/cli@latest @compodoc/compodoc@latest commitizen@latest cz-conventional-changelog@latest clang-format@latest --unsafe-perm || exit 1
   printInfoMessage "Setting yarn cache directory"
   printGap
   yarn config set cache-folder ~/.yarn || exit 1

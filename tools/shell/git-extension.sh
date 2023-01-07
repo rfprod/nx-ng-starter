@@ -1,6 +1,5 @@
 #!/bin/bash
 
-source tools/shell/utils/colors.sh ''
 source tools/shell/utils/module-aliases.sh ''
 source tools/shell/utils/print-utils.sh ''
 
@@ -50,8 +49,9 @@ printChangedAliases() {
   # shellcheck disable=SC2128
   if [ -n "$CHANGED_ALIASES" ]; then
     local CHANGED_ALIAS
-    for CHANGED_ALIAS in "${CHANGED_ALIASES[@]}"; do printf "
-      ${DEFAULT} - ${YELLOW}%s${DEFAULT}\n" "$CHANGED_ALIAS"; done
+    for CHANGED_ALIAS in "${CHANGED_ALIASES[@]}"; do
+      printValue "$CHANGED_ALIAS"
+    done
   else
     printInfoTitle "<< NO CHANGES >>"
     printGap

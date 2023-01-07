@@ -1,7 +1,8 @@
 #!/bin/bash
 
-source tools/shell/utils/colors.sh ''
 source tools/shell/utils/print-utils.sh ''
+
+source tools/shell/utils/config.sh
 
 ##
 # Reports usage error and exits.
@@ -27,7 +28,7 @@ reportUsage() {
 # Installs project dependencies.
 ##
 installProjectDependencies() {
-  printInfoTitle "<< INSTALLING PROJECT DEPENDENCIES >>"
+  printInfoTitle "<< Installing project dependencies >>"
   printGap
 
   cd ./functions || exit 1
@@ -40,161 +41,105 @@ installProjectDependencies() {
 # Installs global npm dependencies.
 ##
 installGlobalDependencies() {
-  printInfoTitle "<< INSTALLING GLOBAL DEPENDENCIES >>"
+  printInfoTitle "<< Installing global dependencies >>"
   printGap
 
   sudo npm install -g @angular/cli@latest @nestjs/cli@latest @ngxs/cli@latest @nrwl/cli@latest typescript@latest @compodoc/compodoc@latest commitizen@latest cz-conventional-changelog@latest clang-format@latest yarn@1.22.19 madge@latest npm-check-updates@latest || exit 1
 }
 
 ##
-# Resolves if package is installed, and installs the package if it is not.
+# Installs protobuf on Linux.
 ##
-resolveIfPackageIsInstalledAndInstall() {
-  printInfoTitle "<< Resolving if package is installed >>"
-  printNameAndValue "package name" "$1"
+installProtobufLinux() {
+  printInfoTitle "<< Installing protobuf, protoc-gen-grpc-web, protolint on linux >>"
   printGap
-
-  local PACKAGE_EXISTS
-  PACKAGE_EXISTS=$(dpkg -s "$1")
-
-  if [ -z "$PACKAGE_EXISTS" ]; then
-    printErrorTitle "<< PACKAGE DOES NOT EXIST >>"
-    printSuccessMessage "installing package..."
-    printGap
-
-    sudo apt update
-    sudo apt install "$1"
-  else
-    printSuccessTitle "<< PACKAGE EXISTS >>"
-    printSuccessMessage "$PACKAGE_EXISTS"
-    printGap
-  fi
-}
-
-##
-# Installs linuxbrew dependencies on Linux.
-##
-installLinuxBrewDependencies() {
-  printInfoTitle "<< INSTALLING LINUXBREW dependencies >>"
-  printGap
-
-  resolveIfPackageIsInstalledAndInstall build-essential
-}
-
-##
-# Installs brew and protobuf on Linux.
-##
-installBrewAndProtobufLinux() {
-  printInfoTitle "<< Installing brew, protolint, protobuf, protoc-gen-grpc-web on linux >>"
-  printGap
-
-  ##
-  # export variables for brew to work
-  # shellcheck disable=SC2016
-  ##
-  {
-    echo ''
-    echo '# homebrew'
-    echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"'
-    echo 'export MANPATH="/home/linuxbrew/.linuxbrew/share/man:$MANPATH"'
-    echo 'export INFOPATH="/home/linuxbrew/.linuxbrew/share/info:$INFOPATH"'
-  } >>~/.bashrc
-
-  ##
-  # Fix fix error:
-  # Warning: /usr/bin occurs before /home/linuxbrew/.linuxbrew/bin
-  # This means that system-provided programs will be used instead of those
-  # provided by Homebrew. Consider setting your PATH so that
-  # /home/linuxbrew/.linuxbrew/bin occurs before /usr/bin. Here is a one-liner:
-  # echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"' >> ~/.profile
-  #
-  # shellcheck disable=SC2016
-  {
-    echo ''
-    echo 'export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"'
-  } >>~/.profile
-
-  # install linux brew wrapper
-  if [ "$1" = "ci" ]; then
-    # don't use sudo in CI environment
-    apt -y install linuxbrew-wrapper
-
-    printInfoTitle "<< Defining locale (required by linuxbrew) >>"
-    localedef -i en_US -f UTF-8 en_US.UTF-8
-
-    printInfoTitle "<< Setting up a user for linuxbrew and calling brew coomands using that user (it does not work as root) >>"
-    useradd -m -s /bin/bash linuxbrew && echo 'linuxbrew ALL=(ALL) NOPASSWD:ALL' >>/etc/sudoers
-
-    # pass ENTER to brew --help command so that it automatically proceeds with installation
-    printf '\n' | runuser -l linuxbrew -c "brew --help"
-    # run doctor
-    runuser -l linuxbrew -c "brew doctor"
-    # tap source code
-    runuser -l linuxbrew -c "brew tap yoheimuta/protolint"
-    # install protolint
-    runuser -l linuxbrew -c "brew install protolint"
-    # install gcc
-    runuser -l linuxbrew -c "brew install gcc"
-    # cleanup
-    runuser -l linuxbrew -c "brew cleanup"
-  else
-    sudo apt -y install linuxbrew-wrapper
-
-    # pass ENTER to brew --help command so that it automatically proceeds with installation
-    printf '\n' | brew --help
-    # run doctor
-    brew doctor
-    # tap source code
-    brew tap yoheimuta/protolint
-    # install protolint
-    brew install protolint
-    # install gcc
-    brew install gcc
-    # cleanup
-    brew cleanup
-  fi
 
   if [ "$1" = "ci" ]; then
-    printInfoTitle "Passing protobuf, protoc-gen-grpc-web installation"
-    printGap
+    apt install -y protobuf-compiler-grpc
   else
-    # export variable for plex.vscode-protolint plugin to work
-    # shellcheck disable=SC2016
-    {
-      echo ''
-      echo '# protolint'
-      echo 'export PATH="/home/linuxbrew/.linuxbrew/Cellar/protolint/0.23.1/bin:$PATH"'
-    } >>~/.bashrc
-
-    # install protobuf and protoc-gen-grpc-web only in local environment
-    brew install protobuf
-    brew install protoc-gen-grpc-web --ignore-dependencies
-    # cleanup
-    brew cleanup
+    sudo apt install -y protobuf-compiler-grpc
   fi
+
+  wget https://github.com/grpc/grpc-web/releases/download/1.4.2/protoc-gen-grpc-web-1.4.2-linux-x86_64 \
+    https://github.com/grpc/grpc-web/releases/download/1.4.2/protoc-gen-grpc-web-1.4.2-linux-x86_64.sha256 \
+    -P ~/Downloads
+
+  cd ~/Downloads || exit 1
+  sha256sum -c ./protoc-gen-grpc-web-1.4.2-linux-x86_64.sha256 || exit 1
+
+  if [ "$1" = "ci" ]; then
+    mv ~/Downloads/protoc-gen-grpc-web-1.4.2-linux-x86_64 \
+      /usr/local/bin/protoc-gen-grpc-web
+  else
+    sudo mv ~/Downloads/protoc-gen-grpc-web-1.4.2-linux-x86_64 \
+      /usr/local/bin/protoc-gen-grpc-web
+  fi
+
+  chmod -x /usr/local/bin/protoc-gen-grpc-web
+
+  wget https://github.com/yoheimuta/protolint/releases/download/v0.42.2/protolint_0.42.2_Linux_x86_64.tar.gz \
+    https://github.com/yoheimuta/protolint/releases/download/v0.42.2/checksums.txt \
+    -P ~/Downloads
+
+  cd ~/Downloads || exit 1
+  local PROTOLINT_CHECKSUM
+  PROTOLINT_CHECKSUM=$(sha256sum protolint_0.42.2_Linux_x86_64.tar.gz)
+
+  local PROTOLINT_CHECKSUM_CHECK
+  PROTOLINT_CHECKSUM_CHECK=$(find ./ -type f -name "checksums.txt" -exec grep "${PROTOLINT_CHECKSUM}" {} +)
+
+  if [[ -z "$PROTOLINT_CHECKSUM_CHECK" ]]; then
+    printErrorTitle "Protolint checksum does not match"
+    printGap
+    exit 1
+  fi
+
+  mkdir ~/Downloads/protolint
+  tar -xvzf ~/Downloads/protolint_0.42.2_Linux_x86_64.tar.gz -C ~/Downloads/protolint
+
+  if [ "$1" = "ci" ]; then
+    mv ~/Downloads/protolint/protolint \
+      /usr/local/bin/protolint
+  else
+    sudo mv ~/Downloads/protolint/protolint \
+      /usr/local/bin/protolint
+  fi
+
+  chmod +x /usr/local/bin/protolint
+
+  # protoc-gen-protolint is shipped with protolint, but it looks like it is not needed
+  # if [ "$1" = "ci" ]; then
+  #   mv ~/Downloads/protolint/protoc-gen-protolint \
+  #     /usr/local/bin/protolint
+  # else
+  #   sudo mv ~/Downloads/protolint/protoc-gen-protolint \
+  #     /usr/local/bin/protolint
+  # fi
+  # chmod +x /usr/local/bin/protoc-gen-protolint
+
+  rm -rf ~/Downloads/protolint_0.42.2_Linux_x86_64.tar.gz ~/Downloads/checksums.txt ~/Downloads/protolint
 }
 
 ##
 # Installs protobuf and gRPC tools on OSX.
 ##
 installProtobufOsx() {
-  printInfoTitle "<< INSTALLING PROTOLINT, PROTOBUF, PROTOC-GEN-GRPC-WEB on OSX >>"
+  printInfoTitle "<< Installing protobuf, protoc-gen-grpc-web, protolint on osx >>"
   printGap
 
   brew install protolint
   brew install protobuf
   brew install protoc-gen-grpc-web --ignore-dependencies
-  brew install bradleyjkemp/formulae/grpc-tools
 }
 
 ##
-# Installs protobuf and gRPC tools.
+# Installs protobuf.
 ##
-installProtobufAndGrpcTools() {
+installProtobuf() {
   if [ "$1" = "osx" ]; then
     installProtobufOsx
   else
-    installBrewAndProtobufLinux "$2"
+    installProtobufLinux "$2"
   fi
 }
 
@@ -202,11 +147,10 @@ installProtobufAndGrpcTools() {
 # Installs Shellcheck on Linux.
 ##
 installShellcheckLinux() {
-  printInfoTitle "<< INSTALLING SHELLCHECK on LINUX >>"
+  printInfoTitle "<< Installing shellcheck on linux >>"
   printGap
 
   if [ "$1" = "ci" ]; then
-    # don't use sudo in CI environment
     apt -y install shellcheck
   else
     sudo apt -y install shellcheck
@@ -217,7 +161,7 @@ installShellcheckLinux() {
 # Installs Shellcheck on Osx.
 ##
 installShellcheckOsx() {
-  printInfoTitle "<< INSTALLING SHELLCHECK on OSX >>"
+  printInfoTitle "<< Installing shellcheck on osx >>"
   printGap
 
   brew install shellcheck

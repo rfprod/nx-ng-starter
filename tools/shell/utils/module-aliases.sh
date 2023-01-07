@@ -1,6 +1,5 @@
 #!/bin/bash
 
-source tools/shell/utils/colors.sh ''
 source tools/shell/utils/print-utils.sh ''
 
 declare -A EXISTING_MODULE_ALIASES
@@ -50,8 +49,9 @@ reportSupportedModuleAliases() {
   printGap
 
   local KEY
-  for KEY in "${!EXISTING_MODULE_ALIASES[@]}"; do printf "
-      ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${EXISTING_MODULE_ALIASES[$KEY]}${DEFAULT}" "${KEY}"; done
+  for KEY in "${!EXISTING_MODULE_ALIASES[@]}"; do
+    printNameAndValue "${KEY}" "${EXISTING_MODULE_ALIASES[$KEY]}"
+  done
 
   printGap
   printInfoMessage "Use this aliases in other module related scripts like tools/shell/changelog.sh, tools/shell/document.sh etc."
@@ -63,8 +63,9 @@ reportSupportedModuleAliasesUnit() {
   printGap
 
   local KEY
-  for KEY in "${!EXISTING_MODULE_ALIASES_UNIT[@]}"; do printf "
-      ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${EXISTING_MODULE_ALIASES_UNIT[$KEY]}${DEFAULT}" "${KEY}"; done
+  for KEY in "${!EXISTING_MODULE_ALIASES_UNIT[@]}"; do
+    printNameAndValue "${KEY}" "${EXISTING_MODULE_ALIASES_UNIT[$KEY]}"
+  done
 
   printGap
   printInfoMessage "Use this aliases in tools/shell/test.sh."
@@ -76,8 +77,9 @@ reportSupportedModuleAliasesE2E() {
   printGap
 
   local KEY
-  for KEY in "${!EXISTING_MODULE_ALIASES_E2E[@]}"; do printf "
-      ${DEFAULT} - ${YELLOW}%s${DEFAULT} = ${LIGHT_GREEN}${EXISTING_MODULE_ALIASES_E2E[$KEY]}${DEFAULT}" "${KEY}"; done
+  for KEY in "${!EXISTING_MODULE_ALIASES_E2E[@]}"; do
+    printNameAndValue "${KEY}" "${EXISTING_MODULE_ALIASES_E2E[$KEY]}"
+  done
 
   printGap
   printInfoMessage "Use this aliases in tools/shell/e2e.sh."

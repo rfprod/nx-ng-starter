@@ -1,7 +1,8 @@
 #!/bin/bash
 
-source tools/shell/utils/colors.sh ''
 source tools/shell/utils/print-utils.sh ''
+
+source tools/shell/utils/config.sh
 
 ##
 # Container registry base path.
@@ -31,15 +32,15 @@ declare -A IMAGES=(
 ##
 reportUsage() {
   printInfoTitle "<< ${0} usage >>"
-  printUsageTip "bash tools/shell/docker-run.sh ?" "print help"
-  printUsageTip "bash tools/shell/docker-push.sh APPLICATION_NAME_WITH_ENVIRONMENT" "push docker image to the repository"
+  printUsageTip "bash tools/shell/run.sh ?" "print help"
+  printUsageTip "bash tools/shell/push.sh APPLICATION_NAME_WITH_ENVIRONMENT" "push docker image to the repository"
   printGap
 
   printInfoMessage "Supported application names"
   printGap
 
   for IMAGE_KEY in "${!IMAGES[@]}"; do
-    printf "${DEFAULT} - ${YELLOW}%s${DEFAULT}\\n" "${IMAGE_KEY}"
+    printValue "${IMAGE_KEY}"
   done
 }
 
