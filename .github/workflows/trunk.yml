@@ -48,7 +48,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup environment
-        if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' }}
+        if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' || fromJSON(needs.checks.outputs.changes).shelltools == 'true' }}
         uses: ./.github/actions/setup-environment
         with:
           compodoc: true
