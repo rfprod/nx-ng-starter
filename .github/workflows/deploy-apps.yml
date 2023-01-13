@@ -1,0 +1,116 @@
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: deploy-apps
+
+on:
+  workflow_call:
+    inputs:
+      api:
+        type: boolean
+        required: true
+        default: false
+      client:
+        type: boolean
+        required: true
+        default: false
+      elements:
+        type: boolean
+        required: true
+        default: false
+      documentation:
+        type: boolean
+        required: true
+        default: false
+    secrets:
+      FIREBASE_DEPLOY_TOKEN:
+        required: true
+
+defaults:
+  run:
+    shell: bash
+
+concurrency:
+  group: ${{ github.ref_name }}.${{ github.sha }}.deploy-apps
+  cancel-in-progress: true
+
+jobs:
+  deploy-api:
+    if: ${{ inputs.api == true || inputs.api == 'true' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+        with:
+          firebase-tools: true
+
+      - name: Download dist artifact
+        uses: ./.github/actions/dist-artifact-download
+
+      # This job works only with a paid plan such as Blaze (https://firebase.google.com/pricing/)
+      # - name: Deploy api
+      #   if: ${{ (fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true') && needs.checks.outputs.origin == 'true' }}
+      #   run: |
+      #     npx nx build api --configuration firebase
+      #     yarn firebase:deploy:ci:api || exit 1
+      #   env:
+      #     FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
+
+  deploy-client:
+    if: ${{ inputs.client == true || inputs.client == 'true' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+        with:
+          firebase-tools: true
+
+      - name: Deploy client
+        run: yarn firebase:deploy:ci:client || exit 1
+        env:
+          FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
+
+  deploy-elements:
+    if: ${{ inputs.elements == true || inputs.elements == 'true' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+        with:
+          firebase-tools: true
+
+      - name: Deploy elements
+        run: |
+          bash tools/shell/generate-elements-bootstrap-script.sh ./dist/apps elements
+          yarn firebase:deploy:ci:elements || exit 1
+        env:
+          FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
+
+  deploy-documentation:
+    if: ${{ inputs.documentation == true || inputs.documentation == 'true' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+        with:
+          firebase-tools: true
+
+      - name: Deploy documentation
+        run: yarn firebase:deploy:ci:documentation || exit 1
+        env:
+          FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}

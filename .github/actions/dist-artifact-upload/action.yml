@@ -1,0 +1,30 @@
+# For more information see:
+# - https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+# - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
+
+# The action can be referenced in workflows like:
+# uses: rfprod/nx-ng-starter/.github/actions/dist-atifact-upload@main
+# or
+# uses: ./.github/actions/dist-atifact-upload
+
+name: dist-atifact-upload
+description: Archives dist directory and uploads the archive to the artifacts storage.
+
+inputs:
+  artifact-name:
+    description: Artifact name
+    required: true
+    default: 'nx-ng-starter-dist'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Archive dist directory
+      shell: bash
+      run: tar -cvf dist.tar /dist
+
+    - name: Upload dist artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: dist.tar

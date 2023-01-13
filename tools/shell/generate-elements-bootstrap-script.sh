@@ -2,6 +2,8 @@
 
 source tools/shell/utils/print-utils.sh ''
 
+source tools/shell/utils/config.sh
+
 ##
 # Reports usage error and exits.
 ##
