@@ -72,6 +72,9 @@ jobs:
         with:
           firebase-tools: true
 
+      - name: Download dist artifact
+        uses: ./.github/actions/dist-artifact-download
+
       - name: Deploy client
         run: yarn firebase:deploy:ci:client || exit 1
         env:
@@ -89,6 +92,9 @@ jobs:
         uses: ./.github/actions/setup-environment
         with:
           firebase-tools: true
+
+      - name: Download dist artifact
+        uses: ./.github/actions/dist-artifact-download
 
       - name: Deploy elements
         run: |
@@ -109,6 +115,9 @@ jobs:
         uses: ./.github/actions/setup-environment
         with:
           firebase-tools: true
+
+      - name: Download dist artifact
+        uses: ./.github/actions/dist-artifact-download
 
       - name: Deploy documentation
         run: yarn firebase:deploy:ci:documentation || exit 1
