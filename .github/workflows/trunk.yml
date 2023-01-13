@@ -101,40 +101,26 @@ jobs:
           npx nx run documentation:build-storybook
           cp -r ./dist/storybook/documentation ./dist/apps/documentation/assets/storybook
 
-      - name: Deploy client
-        if: ${{ (fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true') && needs.checks.outputs.origin == 'true' }}
-        run: yarn firebase:deploy:ci:client || exit 1
-        env:
-          FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
-
-      - name: Deploy elements
-        if: ${{ (fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true') && needs.checks.outputs.origin == 'true' }}
-        run: |
-          bash tools/shell/generate-elements-bootstrap-script.sh ./dist/apps elements
-          yarn firebase:deploy:ci:elements || exit 1
-        env:
-          FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
-
-      - name: Deploy documentation
-        if: ${{ (fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true') && needs.checks.outputs.origin == 'true' }}
-        run: yarn firebase:deploy:ci:documentation || exit 1
-        env:
-          FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
-
-      # This job works only with a paid plan such as Blaze (https://firebase.google.com/pricing/)
-      # - name: Deploy api
-      #   if: ${{ (fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true') && needs.checks.outputs.origin == 'true' }}
-      #   run: |
-      #     npx nx build api --configuration firebase
-      #     yarn firebase:deploy:ci:api || exit 1
-      #   env:
-      #     FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
+      - name: Upload dist artifact
+        if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' }}
+        uses: ./.github/actions/dist-artifact-upload
 
       - name: Cleanup
         run: rm -rf ./.env ./functions/.env
 
+  deploy-apps:
+    needs: [checks, trunk]
+    if: needs.checks.outputs.origin == 'true'
+    uses: ./.github/workflows/deploy-apps.yml
+    secrets: inherit
+    with:
+      api: false # This only works with a paid plan such as Blaze (https://firebase.google.com/pricing/)
+      client: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' }}
+      elements: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' }}
+      documentation: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' }}
+
   publish-packages:
-    needs: trunk
+    needs: [checks, trunk]
     if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packages == 'true' }}
     uses: ./.github/workflows/publish-packages.yml
     secrets: inherit

@@ -1,0 +1,35 @@
+# For more information see:
+# - https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+# - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
+
+# The action can be referenced in workflows like:
+# uses: rfprod/nx-ng-starter/.github/actions/dist-atifact-download@main
+# or
+# uses: ./.github/actions/dist-atifact-download
+
+name: dist-atifact-download
+description: Downloads dist directory archive from the artifacts storage and unarchives it.
+
+inputs:
+  artifact-name:
+    description: Artifact name
+    required: true
+    default: 'nx-ng-starter-dist'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Download dist artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ./
+
+    - name: List directory
+      shell: bash
+      run: ls -R
+      working-directory: ./
+
+    - name: Unarchive dist directory
+      shell: bash
+      run: tar -xvf dist.tar
