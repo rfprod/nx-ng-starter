@@ -21,7 +21,7 @@ runs:
   steps:
     - name: Archive dist directory
       shell: bash
-      run: tar -cvf dist.tar /dist
+      run: tar -cvf dist.tar ./dist
 
     - name: Upload dist artifact
       uses: actions/upload-artifact@v3
