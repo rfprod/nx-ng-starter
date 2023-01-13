@@ -19,6 +19,11 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: List directory
+      shell: bash
+      run: ls -R
+      working-directory: ./
+
     - name: Archive dist directory
       shell: bash
       run: tar -cvf dist.tar ./dist

@@ -9,7 +9,7 @@ import { environment } from '../environments/environment';
 import { AppElementsService } from './services/elements.service';
 
 /**
- * The elements application root module.
+ * The elements application module.
  */
 @NgModule({
   imports: [BrowserAnimationsModule, AppElizaModule.forRoot(), AppChatbotModule],
