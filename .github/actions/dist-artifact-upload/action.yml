@@ -12,16 +12,24 @@ description: Archives dist directory and uploads the archive to the artifacts st
 
 inputs:
   artifact-name:
-    description: Artifact name
+    description: The artifact name
     required: true
     default: 'nx-ng-starter-dist'
+  retention-days:
+    description: The artifact retention days
+    required: true
+    default: '5'
 
 runs:
   using: 'composite'
   steps:
     - name: List directory
       shell: bash
-      run: ls -R
+      run: |
+        echo "Disk usage: dist/apps"
+        du -sh ./dist/apps/*
+        echo "List recursively: dist/apps "
+        ls -R ./dist/apps
       working-directory: ./
 
     - name: Archive dist directory
@@ -33,3 +41,4 @@ runs:
       with:
         name: ${{ inputs.artifact-name }}
         path: dist.tar
+        retention-days: ${{ inputs.retention-days }}

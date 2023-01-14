@@ -27,7 +27,11 @@ runs:
 
     - name: List directory
       shell: bash
-      run: ls -R
+      run: |
+        echo "Disk usage: dist/apps"
+        du -sh ./dist/apps/*
+        echo "List recursively: dist/apps "
+        ls -R ./dist/apps
       working-directory: ./
 
     - name: Unarchive dist directory
