@@ -34,8 +34,70 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    outputs:
+      api: ${{ steps.dist-exists.outputs.api }}
+      client: ${{ steps.dist-exists.outputs.client }}
+      elements: ${{ steps.dist-exists.outputs.elements }}
+      documentation: ${{ steps.dist-exists.outputs.documentation }}
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: Check dists existence
+        id: dist-exists
+        shell: bash
+        run: |
+          echo "--"
+          echo "-- Check api dist --"
+          echo "--"
+          API_DIST_DIR=./dist/apps/api
+          API_DIST_EXISTS=false
+          [ -d "$API_DIST_DIR" ] && API_DIST_EXISTS=true
+          echo "api=$API_DIST_EXISTS" >> $GITHUB_OUTPUT
+          echo "--"
+          echo "-- Check client dist --"
+          echo "--"
+          CLIENT_DIST_DIR=./dist/apps/client
+          CLIENT_DIST_EXISTS=false
+          [ -d "$CLIENT_DIST_EXISTS" ] && CLIENT_DIST_EXISTS=true
+          echo "client=$CLIENT_DIST_EXISTS" >> $GITHUB_OUTPUT
+          echo "--"
+          echo "-- Check elements dist --"
+          echo "--"
+          ELEMENTS_DIST_DIR=./dist/apps/api
+          ELEMENTS_DIST_EXISTS=false
+          [ -d "$ELEMENTS_DIST_DIR" ] && ELEMENTS_DIST_EXISTS=true
+          echo "elements=$ELEMENTS_DIST_EXISTS" >> $GITHUB_OUTPUT
+          echo "--"
+          echo "-- Check documentation dist --"
+          echo "--"
+          DOCUMENTATION_DIST_DIR=./dist/apps/api
+          DOCUMENTATION_DIST_EXISTS=false
+          [ -d "$DOCUMENTATION_DIST_DIR" ] && DOCUMENTATION_DIST_EXISTS=true
+          echo "documentation=$DOCUMENTATION_DIST_EXISTS" >> $GITHUB_OUTPUT
+
+      - name: Print changes
+        shell: bash
+        run: |
+          echo "### :rocket: Existing dists" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- API: $API" >> $GITHUB_STEP_SUMMARY
+          echo "- CLIENT: $CLIENT" >> $GITHUB_STEP_SUMMARY
+          echo "- ELEMENTS: $ELEMENTS" >> $GITHUB_STEP_SUMMARY
+          echo "- DOCUMENTATION: $DOCUMENTATION" >> $GITHUB_STEP_SUMMARY
+        env:
+          API: ${{ steps.dist-exists.outputs.api }}
+          CLIENT: ${{ steps.dist-exists.outputs.client }}
+          ELEMENTS: ${{ steps.dist-exists.outputs.elements }}
+          DOCUMENTATION: ${{ steps.dist-exists.outputs.documentation }}
+
   deploy-api:
-    if: ${{ inputs.api == true || inputs.api == 'true' }}
+    needs: checks
+    if: ${{ (inputs.client == true || inputs.client == 'true') && needs.checks.outputs.api == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -60,7 +122,8 @@ jobs:
       #     FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
 
   deploy-client:
-    if: ${{ inputs.client == true || inputs.client == 'true' }}
+    needs: checks
+    if: ${{ (inputs.client == true || inputs.client == 'true') && needs.checks.outputs.client == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -81,7 +144,8 @@ jobs:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
 
   deploy-elements:
-    if: ${{ inputs.elements == true || inputs.elements == 'true' }}
+    needs: checks
+    if: ${{ (inputs.client == true || inputs.client == 'true') && needs.checks.outputs.elements == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -104,7 +168,8 @@ jobs:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
 
   deploy-documentation:
-    if: ${{ inputs.documentation == true || inputs.documentation == 'true' }}
+    needs: checks
+    if: ${{ (inputs.client == true || inputs.client == 'true') && needs.checks.outputs.documentation == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
