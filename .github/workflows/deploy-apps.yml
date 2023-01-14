@@ -47,6 +47,9 @@ jobs:
       - name: Checkout sources
         uses: actions/checkout@v3
 
+      - name: Download dist artifact
+        uses: ./.github/actions/dist-artifact-download
+
       - name: Check dists existence
         id: dist-exists
         shell: bash
