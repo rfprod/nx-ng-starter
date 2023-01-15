@@ -72,7 +72,7 @@ generateBootstrapScript() {
 
   # scripts bundle
   local SCRIPTS_REF
-  SCRIPTS_REF=$(find "$DIST_INDEX_HTML_PATH" -print0 | xargs -0 grep '[^"]*scripts[^"]*.js' -o)
+  SCRIPTS_REF=$(find "$DIST_INDEX_HTML_PATH" -print0 | xargs -0 grep '[^"]*scripts[^"]*.js' -o || true)
   echo "SCRIPTS_REF:" "$SCRIPTS_REF"
 
   # main bundle
