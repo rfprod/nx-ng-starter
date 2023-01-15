@@ -66,7 +66,7 @@ jobs:
           echo "--"
           CLIENT_DIST_DIR=./dist/apps/client
           CLIENT_DIST_EXISTS=false
-          [ -d "$CLIENT_DIST_EXISTS" ] && CLIENT_DIST_EXISTS=true
+          [ -d "$CLIENT_DIST_DIR" ] && CLIENT_DIST_EXISTS=true
           echo "client=$CLIENT_DIST_EXISTS" >> $GITHUB_OUTPUT
           echo "--"
           echo "-- Check elements dist --"
