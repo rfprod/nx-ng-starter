@@ -100,7 +100,7 @@ jobs:
 
   deploy-api:
     needs: checks
-    if: ${{ (inputs.client == true || inputs.client == 'true') && needs.checks.outputs.api == 'true' }}
+    if: ${{ (inputs.api == true || inputs.api == 'true') && needs.checks.outputs.api == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -148,7 +148,7 @@ jobs:
 
   deploy-elements:
     needs: checks
-    if: ${{ (inputs.client == true || inputs.client == 'true') && needs.checks.outputs.elements == 'true' }}
+    if: ${{ (inputs.elements == true || inputs.elements == 'true') && needs.checks.outputs.elements == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -172,7 +172,7 @@ jobs:
 
   deploy-documentation:
     needs: checks
-    if: ${{ (inputs.client == true || inputs.client == 'true') && needs.checks.outputs.documentation == 'true' }}
+    if: ${{ (inputs.documentation == true || inputs.documentation == 'true') && needs.checks.outputs.documentation == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
