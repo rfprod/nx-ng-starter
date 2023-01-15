@@ -25,6 +25,10 @@ runs:
         name: ${{ inputs.artifact-name }}
         path: ./
 
+    - name: Unarchive dist directory
+      shell: bash
+      run: tar -xvf dist.tar
+
     - name: List directory
       shell: bash
       run: |
@@ -33,7 +37,3 @@ runs:
         echo "List recursively: dist/apps "
         ls -R ./dist/apps
       working-directory: ./
-
-    - name: Unarchive dist directory
-      shell: bash
-      run: tar -xvf dist.tar
