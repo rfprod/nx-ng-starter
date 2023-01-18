@@ -1,7 +1,15 @@
 # client-gql
 
-This library was generated with [Nx](https://nx.dev).
+GraphQL functionality for web clients.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test client-gql` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-gql:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [GraphQL](https://graphql.org/)

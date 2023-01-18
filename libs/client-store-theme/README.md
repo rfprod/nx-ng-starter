@@ -1,7 +1,16 @@
 # client-store-theme
 
-This library was generated with [Nx](https://nx.dev).
+Material theme state store.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test client-store-theme` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-store-theme:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [Angular Material](https://material.angular.io)
+- [NgRx](https://ngrx.io/)

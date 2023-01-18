@@ -1,7 +1,15 @@
 # client-store-feature-access
 
-This library was generated with [Nx](https://nx.dev).
+Feature access state store.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test client-store-feature-access` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-store-feature-access:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [NgRx](https://ngrx.io/)

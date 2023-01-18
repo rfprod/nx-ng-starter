@@ -1,7 +1,15 @@
 # client-testing-e2e
 
-This library was generated with [Nx](https://nx.dev).
+Integration and user acceptance testing utilities for web clients.
 
-## Running lint
+## Print related commands
 
-Run `nx lint client-testing-e2e` to execute the lint via [ESLint](https://eslint.org/).
+```bash
+npx nx run tools:help --search client-testing-e2e:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [Cypress](https://www.cypress.io/)

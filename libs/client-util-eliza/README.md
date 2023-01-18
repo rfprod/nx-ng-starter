@@ -10,14 +10,6 @@ The Angular chatbot service based on an early natural language processing progra
 
 Source and more information about the Elisa program: [https://en.wikipedia.org/wiki/ELIZA](https://en.wikipedia.org/wiki/ELIZA)
 
-## Development commands reference
-
-Run `nx test client-util-eliza` to execute the unit tests.
-
-Run `nx lint client-util-eliza` to lint the library.
-
-Run `nx build client-util-eliza` to build the library.
-
 ## Usage
 
 ### Within the development workspace
@@ -87,3 +79,15 @@ export class AppModule {
 ### Chatbot component
 
 Example [chatbot-root.component.ts](https://github.com/rfprod/nx-ng-starter/blob/main/libs/client-chatbot/src/lib/components/chatbot-root/chatbot-root.component.ts)
+
+## Print related commands
+
+```bash
+npx nx run tools:help --search client-util-eliza:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [Eliza program](https://en.wikipedia.org/wiki/ELIZA)

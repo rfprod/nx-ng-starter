@@ -2,12 +2,16 @@
 
 Contains protobuf generated content.
 
-This library was generated with [Nx](https://nx.dev).
+## Print related commands
 
-## Running unit tests
+```bash
+npx nx run tools:help --search proto:
+```
 
-Run `nx test proto` to execute the unit tests.
+## References
 
-## Application
-
-This library is intended to contain generated protobuf output.
+- [Nx](https://nx.dev)
+- [Nx: executors](https://nx.dev/recipes/executors#executors)
+- [Nx: generators](https://nx.dev/recipes/generators#generators)
+- [Mermeid.js](https://mermaid-js.github.io/mermaid/)
+- [Protocol buffers](https://developers.google.com/protocol-buffers/docs/proto)

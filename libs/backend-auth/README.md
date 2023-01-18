@@ -1,7 +1,14 @@
 # backend-auth
 
-This library was generated with [Nx](https://nx.dev).
+Authentication functionality for backends.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test backend-auth` to execute the unit tests via [Jest](https://jestjs.io).
+```bash
+npx nx run tools:help --search backend-auth:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [NestJS](https://nestjs.com)

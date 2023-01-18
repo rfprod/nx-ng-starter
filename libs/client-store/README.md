@@ -1,7 +1,15 @@
 # client-store
 
-This library was generated with [Nx](https://nx.dev).
+Application state store.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test client-store` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-store:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [NgRx](https://ngrx.io/)

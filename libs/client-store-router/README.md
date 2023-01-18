@@ -1,7 +1,15 @@
 # client-store-router
 
-This library was generated with [Nx](https://nx.dev).
+Application router state store.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test client-store-router` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-store-router:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [NgRx](https://ngrx.io/)

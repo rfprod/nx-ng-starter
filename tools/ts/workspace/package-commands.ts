@@ -1,3 +1,4 @@
+import { ProjectConfiguration, ProjectsConfigurations, TargetConfiguration } from '@nrwl/devkit';
 import * as fs from 'fs';
 import { argv } from 'yargs';
 
@@ -22,33 +23,7 @@ interface IPackageJson {
   };
 }
 
-enum WORKSPACE_VERSION {
-  FIRST = 1,
-  SECOND = 2,
-}
-
-interface IAngularJson<T = unknown> {
-  projects: Record<string, T>;
-  version: number;
-}
-
-type TAngularJsonV2 = IAngularJson<string>;
-
-interface IProjectConfigV2 {
-  [key: string]: unknown;
-  targets: Record<
-    string,
-    {
-      builder?: string;
-      executor?: string;
-      options?: {
-        commands?: {
-          command: string;
-        }[];
-      };
-    }
-  >;
-}
+type TCli = 'yarn' | 'nx';
 
 /**
  * Prints arguments usage tip if no applicable arguments were used.
@@ -72,7 +47,7 @@ ${COLORS.CYAN}%s${COLORS.DEFAULT} ${COLORS.YELLOW}%s${COLORS.DEFAULT}\n`,
  * Prints package scripts.
  * @param scripts package scripts object.
  */
-function printPackageScripts(scripts: Record<string, string>, cli: 'yarn' | 'nx') {
+function printPackageScripts(scripts: Record<string, string>, cli: TCli) {
   const search = (<{ [key: string]: string }>argv).search;
   const scriptKeys = typeof search !== 'string' ? Object.keys(scripts) : Object.keys(scripts).filter(key => new RegExp(search).test(key));
   for (const key of scriptKeys) {
@@ -85,22 +60,27 @@ function printPackageScripts(scripts: Record<string, string>, cli: 'yarn' | 'nx'
   }
 }
 
-fs.readFile(`${root}/package.json`, 'utf8', (error, data) => {
-  if (error !== null) {
-    logger.printError(error);
-    process.exit(1);
-  }
+/**
+ * Parses package.json and prints root level commands.
+ */
+function processPackageJson() {
+  fs.readFile(`${root}/package.json`, 'utf8', (error, data) => {
+    if (error !== null) {
+      logger.printError(error);
+      process.exit(1);
+    }
 
-  const parsedPackageJson: IPackageJson = JSON.parse(data);
-  logger.printInfo('', 'PACKAGE COMMANDS');
+    const parsedPackageJson: IPackageJson = JSON.parse(data);
+    logger.printInfo('', 'Root commands');
 
-  const scripts = parsedPackageJson.scripts;
-  printPackageScripts(scripts, 'yarn');
-});
+    const scripts = parsedPackageJson.scripts;
+    printPackageScripts(scripts, 'yarn');
+  });
+}
 
-const processWorkpaceV2 = (angularJson: TAngularJsonV2) => {
-  const projectNames = Object.keys(angularJson.projects);
-  const projectDirs = projectNames.map(name => angularJson.projects[name]);
+const printNxCommands = (workspaceJson: ProjectsConfigurations) => {
+  const projectNames = Object.keys(workspaceJson.projects);
+  const projectDirs = projectNames.map(name => workspaceJson.projects[name]);
 
   let allCommands: Record<string, string> = {};
 
@@ -115,39 +95,62 @@ const processWorkpaceV2 = (angularJson: TAngularJsonV2) => {
       process.exit(1);
     }
 
-    const projectConfig: IProjectConfigV2 = JSON.parse(result);
+    const projectConfig: ProjectConfiguration = JSON.parse(result);
+    const targets = projectConfig.targets;
 
-    const commands = Object.keys(projectConfig.targets ?? {})
-      .filter(key => projectConfig.targets[key].builder === 'nx:run-commands' || projectConfig.targets[key].executor === 'nx:run-commands')
-      .reduce((acc, key) => {
-        const commandsConfig = projectConfig.targets[key].options?.commands;
-        acc[`run ${projectName}:${key}`] = typeof commandsConfig !== 'undefined' ? commandsConfig[0].command : '';
-        return acc;
-      }, {});
-    allCommands = { ...allCommands, ...commands };
+    const targetKeys = typeof targets !== 'undefined' ? Object.keys(targets) : [];
+
+    // aggregate custom commands based on nx:run-commands
+    if (typeof targets !== 'undefined') {
+      const commands = targetKeys
+        .filter(key => targets[key].executor === 'nx:run-commands')
+        .reduce((acc, key) => {
+          const target: TargetConfiguration<{
+            commands?: {
+              command: string;
+            }[];
+          }> = targets[key];
+          const commandsConfig = target.options?.commands;
+          acc[`run ${projectName}:${key}`] = typeof commandsConfig !== 'undefined' ? commandsConfig[0].command : '';
+          return acc;
+        }, {});
+      allCommands = { ...allCommands, ...commands };
+    }
+
+    // aggregate commands based on executors
+    if (typeof targets !== 'undefined') {
+      const commands = targetKeys
+        .filter(key => targets[key].executor !== 'nx:run-commands')
+        .reduce((acc, key) => {
+          acc[`run ${projectName}:${key}`] = `npx nx ${key} ${projectConfig.name}`;
+          return acc;
+        }, {});
+      allCommands = { ...allCommands, ...commands };
+    }
   }
 
-  logger.printInfo('', 'EXTRA nx COMMANDS');
+  logger.printInfo('', 'Project commands');
 
   printPackageScripts(allCommands, 'nx');
 
   printSearchArgumentTip();
 };
 
-fs.readFile(`${root}/angular.json`, 'utf8', (error, data) => {
-  if (error !== null) {
-    logger.printError(error);
-    process.exit(1);
-  }
+/**
+ * Parses workspace.json and prints project level commands.
+ */
+function processWorkspace() {
+  fs.readFile(`${root}/workspace.json`, 'utf8', (error, data) => {
+    if (error !== null) {
+      logger.printError(error);
+      process.exit(1);
+    }
 
-  const angularJson: IAngularJson = JSON.parse(data);
-  if (angularJson.version === WORKSPACE_VERSION.FIRST) {
-    const notSupported = new Error(
-      'Workspace v1 is not supported. Please migrate to workspace v2. Documentation: https://nx.dev/recipes/adopting-nx/migration-angular',
-    );
-    logger.printError(notSupported);
-    process.exit(1);
-  } else if (angularJson.version === WORKSPACE_VERSION.SECOND) {
-    processWorkpaceV2(<TAngularJsonV2>angularJson);
-  }
-});
+    const projectsConfig: ProjectsConfigurations = JSON.parse(data);
+    printNxCommands(projectsConfig);
+  });
+}
+
+processPackageJson();
+
+processWorkspace();

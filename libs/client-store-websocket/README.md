@@ -1,7 +1,15 @@
 # client-store-websocket
 
-This library was generated with [Nx](https://nx.dev).
+Websocket state store.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test client-store-websocket` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-store-websocket:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [NgRx](https://ngrx.io/)

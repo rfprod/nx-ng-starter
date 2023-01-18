@@ -1,7 +1,16 @@
 # client-store-sidebar
 
-This library was generated with [Nx](https://nx.dev).
+Application sidebar state store.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test client-store-sidebar` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-store-sidebar:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [Angular Material](https://material.angular.io)
+- [NgRx](https://ngrx.io/)

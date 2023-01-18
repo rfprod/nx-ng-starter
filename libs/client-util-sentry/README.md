@@ -1,7 +1,15 @@
 # client-util-sentry
 
-This library was generated with [Nx](https://nx.dev).
+Sentry integration utilities for web clients.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test client-util-sentry` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-util-sentry:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [Sentry: Angular](https://docs.sentry.io/platforms/javascript/guides/angular/)

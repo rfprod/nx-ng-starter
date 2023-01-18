@@ -1,11 +1,15 @@
 # client-core
 
-This library was generated with [Nx](https://nx.dev).
+Core modules and assets for web clients.
 
-## Running unit tests
+## Print related commands
 
-Run `ng test client-core` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-core:
+```
 
-## Application
+## References
 
-This library is intended to contain client modules and assets used by applications.
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [Angular Material](https://material.angular.io)

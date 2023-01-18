@@ -1,7 +1,15 @@
 # client-core-components
 
-This library was generated with [Nx](https://nx.dev).
+Core components for web clients.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test client-core-components` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-core-components:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [Angular Material](https://material.angular.io)

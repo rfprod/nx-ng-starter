@@ -1,7 +1,15 @@
 # client-material
 
-This library was generated with [Nx](https://nx.dev).
+Angular Material module for web clients.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test client-material` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-material:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [Angular Material](https://material.angular.io)

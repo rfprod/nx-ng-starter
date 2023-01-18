@@ -1,7 +1,15 @@
 # client-chatbot
 
-This library was generated with [Nx](https://nx.dev).
+Chatbot functionality.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test client-chatbot` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-chatbot:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [Angular Material](https://material.angular.io)
