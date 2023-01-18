@@ -1,7 +1,16 @@
 # client-directives
 
-This library was generated with [Nx](https://nx.dev).
+General purpose services for web clients.
 
-## Running unit tests
+`!IMPORTANT!` Do not add anything here unless absolutely needed.
 
-Run `nx test client-directives` to execute the unit tests.
+## Print related commands
+
+```bash
+npx nx run tools:help --search client-directives:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)

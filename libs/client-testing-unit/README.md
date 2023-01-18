@@ -1,11 +1,15 @@
 # client-testing-unit
 
-This library was generated with [Nx](https://nx.dev).
+Unit testing utilities for web clients.
 
-## Running unit tests
+## Print related commands
 
-Run `ng test client-testing-unit` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-testing-unit:
+```
 
-## Application
+## References
 
-This library is intended to contain testing utilites, and mocks used for unit testing.
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [Jest](https://jestjs.io)

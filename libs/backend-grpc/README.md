@@ -1,7 +1,14 @@
 # backend-grpc
 
-This library was generated with [Nx](https://nx.dev).
+gRPC functionality for backends.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test backend-grpc` to execute the unit tests via [Jest](https://jestjs.io).
+```bash
+npx nx run tools:help --search backend-grpc:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [NestJS](https://nestjs.com)

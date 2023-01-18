@@ -1,7 +1,14 @@
 # backend-diagnostics
 
-This library was generated with [Nx](https://nx.dev).
+Diagnostics functionality for backends.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test backend-diagnostics` to execute the unit tests via [Jest](https://jestjs.io).
+```bash
+npx nx run tools:help --search backend-diagnostics:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [NestJS](https://nestjs.com)

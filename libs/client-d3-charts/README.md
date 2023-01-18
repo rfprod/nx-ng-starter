@@ -86,3 +86,15 @@ import { AppChartExamplesComponent } from '@rfprodz/client-d3-charts';
 ```
 
 or the [source code](https://github.com/rfprod/nx-ng-starter/blob/main/libs/client-d3-charts/src/lib/components/chart-examples/chart-examples.component.ts) of the chart examples component
+
+## Print related commands
+
+```bash
+npx nx run tools:help --search client-d3-charts:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [D3.js](https://d3js.org/)

@@ -1,7 +1,14 @@
 # backend-gql
 
-This library was generated with [Nx](https://nx.dev).
+GraphQL functionality for backends.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test backend-gql` to execute the unit tests via [Jest](https://jestjs.io).
+```bash
+npx nx run tools:help --search backend-gql:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [NestJS](https://nestjs.com)

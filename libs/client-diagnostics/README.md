@@ -1,7 +1,15 @@
 # client-diagnostics
 
-This library was generated with [Nx](https://nx.dev).
+Diagnostics functionality.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test client-diagnostics` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-diagnostics:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [Angular Material](https://material.angular.io)

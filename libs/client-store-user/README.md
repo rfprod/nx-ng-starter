@@ -1,7 +1,15 @@
 # client-store-user
 
-This library was generated with [Nx](https://nx.dev).
+User state store.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test client-store-user` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-store-user:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [NgRx](https://ngrx.io/)

@@ -1,7 +1,15 @@
 # client-dashboards
 
-This library was generated with [Nx](https://nx.dev).
+Dashboards functionality.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test client-dashboards` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-dasboards:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [Angular Material](https://material.angular.io)

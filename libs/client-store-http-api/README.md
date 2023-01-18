@@ -1,7 +1,15 @@
 # client-store-http-api
 
-This library was generated with [Nx](https://nx.dev).
+Http API state store.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test client-store-http-api` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-store-http-api:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [NgRx](https://ngrx.io/)

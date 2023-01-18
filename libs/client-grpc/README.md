@@ -1,7 +1,16 @@
 # client-grpc
 
-This library was generated with [Nx](https://nx.dev).
+gRPC fuunctionality for web clients.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test client-grpc` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-grpc:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [gRPC](https://grpc.io/)
+- [gRPC: Web](https://grpc.io/docs/platforms/web/)

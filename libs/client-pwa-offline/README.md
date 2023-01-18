@@ -1,7 +1,15 @@
 # client-pwa-offline
 
-This library was generated with [Nx](https://nx.dev).
+PWA offline feature for web clients.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test client-pwa-offline` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-pwa-offline:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [Angular Material](https://material.angular.io)

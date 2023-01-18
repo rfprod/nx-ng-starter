@@ -1,7 +1,15 @@
 # client-util-ngrx
 
-This library was generated with [Nx](https://nx.dev).
+NgRx utilities for web clients.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test client-util-ngrx` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-util-ngrx:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
+- [NgRx](https://ngrx.io/)

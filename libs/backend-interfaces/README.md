@@ -1,13 +1,14 @@
 # backend-interfaces
 
-This library was generated with [Nx](https://nx.dev).
+API interfaces and the codegen functionality for web clients that use graphql.
 
-## Running unit tests
+## Print related commands
 
-Run `ng test backend-interfaces` to execute the unit tests via [Jest](https://jestjs.io).
+```bash
+npx nx run tools:help --search backend-interfaces:
+```
 
-## Application
+## References
 
-This library contains API interface for API app and client apps which use graphql.
-
-Use command `ng run backend-interfaces:generate-client-definitions` to generate client definitions.
+- [Nx](https://nx.dev)
+- [NestJS](https://nestjs.com)

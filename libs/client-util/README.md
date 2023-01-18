@@ -1,7 +1,14 @@
 # client-util
 
-This library was generated with [Nx](https://nx.dev).
+General purpose utilities for web clients.
 
-## Running unit tests
+## Print related commands
 
-Run `nx test client-util` to execute the unit tests.
+```bash
+npx nx run tools:help --search client-util:
+```
+
+## References
+
+- [Nx](https://nx.dev)
+- [Angular](https://angular.io)
