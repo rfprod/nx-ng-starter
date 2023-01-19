@@ -39,7 +39,7 @@ export default async function check(options: IExecutorOptions, context: Executor
       options.dryRun === true
         ? ['stylelint', '--config', options.config, '--custom-syntax', options.customSyntax ?? 'postcss-scss', ...input]
         : ['stylelint', '--config', options.config, '--custom-syntax', options.customSyntax ?? 'postcss-scss', '--fix', ...input];
-    execFileSync(cmd, args, { stdio: 'inherit' });
+    execFileSync(cmd, args, { stdio: 'inherit', cwd: process.cwd(), env: process.env, shell: true });
   }
 
   if (files.stdout.length === 0 && files.stderr.length === 0) {

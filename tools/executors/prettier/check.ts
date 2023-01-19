@@ -39,7 +39,7 @@ export default async function check(options: IExecutorOptions, context: Executor
       options.dryRun === true
         ? ['prettier', '--config', options.config, '-c', ...input]
         : ['prettier', '--config', options.config, '-c', '--write', ...input];
-    execFileSync(cmd, args, { stdio: 'inherit' });
+    execFileSync(cmd, args, { stdio: 'inherit', cwd: process.cwd(), env: process.env, shell: true });
   }
 
   if (files.stdout.length === 0 && files.stderr.length === 0) {
