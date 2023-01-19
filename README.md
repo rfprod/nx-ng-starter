@@ -37,7 +37,12 @@ In order to run own copy of the project one must fulfill the following requireme
     iwr -useb get.scoop.sh | iex
     scoop install shellcheck
     ```
-  - recommended shell: [Git for Windows](https://gitforwindows.org/) > `Git BASH`.
+  - recommended shell: [Git for Windows](https://gitforwindows.org/) > `Git BASH`;
+  - configure Git to use LF as a carriage return
+    ```bash
+    git config --global core.autocrlf false
+    git config --global core.eol lf
+    ```
 
 ### Core dependencies
 

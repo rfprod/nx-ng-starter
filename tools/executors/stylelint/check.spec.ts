@@ -55,7 +55,12 @@ describe('check', () => {
         const result = await check(options, context);
         expect(result).not.toMatchObject({ success: true });
       } catch (e) {
-        expect(childProcess.execFileSync).not.toHaveBeenCalled();
+        expect(childProcess.execFileSync).not.toHaveBeenCalledWith('npx', expect.any(Array), {
+          stdio: 'inherit',
+          cwd: process.cwd(),
+          env: process.env,
+          shell: true,
+        });
         expect((<Error>e).message).toEqual('Project name is not defined.');
       }
     });
@@ -71,7 +76,12 @@ describe('check', () => {
         const result = await check(options, context);
         expect(result).not.toMatchObject({ success: true });
       } catch (e) {
-        expect(childProcess.execFileSync).not.toHaveBeenCalled();
+        expect(childProcess.execFileSync).not.toHaveBeenCalledWith('npx', expect.any(Array), {
+          stdio: 'inherit',
+          cwd: process.cwd(),
+          env: process.env,
+          shell: true,
+        });
         expect((<Error>e).message).toEqual('Source directory test/app/src does not exist');
       }
     });

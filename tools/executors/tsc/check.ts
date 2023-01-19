@@ -11,7 +11,12 @@ export default async function check(options: IExecutorOptions, context: Executor
     throw new Error('Project name is not defined.');
   }
 
-  execFileSync('tsc', ['-p', path.join(context.cwd, options.tsConfig)], { stdio: 'inherit' });
+  execFileSync('tsc', ['-p', path.join(context.cwd, options.tsConfig)], {
+    stdio: 'inherit',
+    cwd: process.cwd(),
+    env: process.env,
+    shell: true,
+  });
 
   return { success: true };
 }

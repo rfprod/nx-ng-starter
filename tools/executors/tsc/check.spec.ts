@@ -2,6 +2,7 @@ jest.mock('child_process');
 
 import type { ExecutorContext } from '@nrwl/devkit';
 import * as childProcess from 'child_process';
+import path from 'path';
 
 import check from './check';
 import { IExecutorOptions } from './schema';
@@ -41,7 +42,12 @@ describe('check', () => {
         const result = await check(options, context);
         expect(result).not.toMatchObject({ success: true });
       } catch (e) {
-        expect(childProcess.execFileSync).not.toHaveBeenCalled();
+        expect(childProcess.execFileSync).not.toHaveBeenCalledWith('tsc', ['-p', path.join(context.cwd, options.tsConfig)], {
+          stdio: 'inherit',
+          cwd: process.cwd(),
+          env: process.env,
+          shell: true,
+        });
         expect((<Error>e).message).toEqual('Project name is not defined.');
       }
     });
@@ -54,7 +60,12 @@ describe('check', () => {
       const { context, options } = setup('test');
 
       const result = await check(options, context);
-      expect(childProcess.execFileSync).toHaveBeenCalled();
+      expect(childProcess.execFileSync).toHaveBeenCalledWith('tsc', ['-p', path.join(context.cwd, options.tsConfig)], {
+        stdio: 'inherit',
+        cwd: process.cwd(),
+        env: process.env,
+        shell: true,
+      });
       expect(result).toMatchObject({ success: true });
     });
   });
