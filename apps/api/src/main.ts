@@ -1,6 +1,5 @@
 import { backendGrpcClientOptions } from '@app/backend-grpc';
 import { defaultWsPort } from '@app/backend-interfaces';
-import { ValidationPipe } from '@nestjs/common';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions } from '@nestjs/microservices';
@@ -54,7 +53,6 @@ async function bootstrap(expressInstance: e.Express): Promise<unknown> {
 
   const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
-  app.useGlobalPipes(new ValidationPipe());
   const corsOptions: CorsOptions = {
     origin: [/localhost/, /firebase\.app/, /web\.app/],
     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
