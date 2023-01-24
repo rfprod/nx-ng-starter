@@ -14,7 +14,6 @@ const config: Config.InitialOptions = {
   preset: '../../jest.preset.js',
   globals: {},
   resolver: '../../tools/js/jest-nestjs-resolver.js',
-  testEnvironment: 'node',
   transform: {
     '^.+\\.(ts|js)$': [
       'ts-jest',
