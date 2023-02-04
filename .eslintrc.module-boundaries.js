@@ -112,6 +112,7 @@ const clientConstraints = [
       'scope:client-pwa-offline',
       'scope:client-store-router',
       'scope:client-testing-unit',
+      'scope:client-service-worker',
       'scope:client-util',
       'scope:client-util-ngrx',
     ],
@@ -201,6 +202,10 @@ const clientConstraints = [
   {
     sourceTag: 'scope:client-services',
     onlyDependOnLibsWithTags: ['scope:client-testing-unit', 'scope:client-util'],
+  },
+  {
+    sourceTag: 'scope:client-service-worker',
+    onlyDependOnLibsWithTags: [],
   },
   {
     sourceTag: 'scope:client-componnents',
@@ -314,6 +319,7 @@ const clientConstraints = [
       'scope:client-material',
       'scope:client-pwa-offline',
       'scope:client-services',
+      'scope:client-service-worker',
       'scope:client-sidebar',
       'scope:client-store',
       'scope:client-store-feature-access',

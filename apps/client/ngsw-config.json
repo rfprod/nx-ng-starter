@@ -17,5 +17,7 @@
       "updateMode": "prefetch"
     }
   ],
-  "index": "/index.html"
+  "index": "/index.html",
+  "navigationRequestStrategy": "freshness",
+  "navigationUrls": ["/**", "!/**/*.*", "!/**/*__*", "!/**/*__*/**"]
 }

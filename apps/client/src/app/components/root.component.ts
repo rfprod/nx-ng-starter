@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Inject, OnInit } from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, Component, HostBinding, Inject, OnInit } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
+import { AppServiceWorkerService } from '@app/client-service-worker';
 import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { BehaviorSubject } from 'rxjs';
 
 interface ILogoRef {
@@ -8,13 +10,14 @@ interface ILogoRef {
   light: 'assets/svg/logo-light.svg';
 }
 
+@UntilDestroy()
 @Component({
   selector: 'app-root',
   templateUrl: './root.component.html',
   styleUrls: ['./root.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppRootComponent implements OnInit {
+export class AppRootComponent implements OnInit, AfterContentInit {
   /**
    * Defines if UI should use alternative dark material theme.
    * This must be a flag. HostBinding should not use async pipes.
@@ -43,6 +46,7 @@ export class AppRootComponent implements OnInit {
   constructor(
     private readonly title: Title,
     private readonly meta: Meta,
+    private readonly sw: AppServiceWorkerService,
     @Inject(WEB_CLIENT_APP_ENV) private readonly env: IWebClientAppEnvironment,
   ) {}
 
@@ -61,5 +65,9 @@ export class AppRootComponent implements OnInit {
   public ngOnInit(): void {
     this.title.setTitle(this.env.appName);
     this.meta.updateTag({ description: this.env.description });
+  }
+
+  public ngAfterContentInit(): void {
+    void this.sw.subscribeToUpdates$.pipe(untilDestroyed(this)).subscribe();
   }
 }
