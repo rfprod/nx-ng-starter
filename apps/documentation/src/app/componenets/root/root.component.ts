@@ -9,7 +9,7 @@ import { DOCUMENTATION_ENVIRONMENT, IDocumentationEnvironment } from '../../inte
 
 @UntilDestroy()
 @Component({
-  selector: 'app-documentation-root',
+  selector: 'app-root',
   templateUrl: './root.component.html',
   styleUrls: ['./root.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

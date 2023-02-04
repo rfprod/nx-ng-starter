@@ -9,7 +9,10 @@ describe('documentation', () => {
   });
 
   it('should display welcome message', () => {
-    // Function helper example, see `../support/app.po.ts` file
     cy.get('title').contains('Documentation');
+  });
+
+  it('should have one app-root html element', () => {
+    cy.getAppRoot().should('have.length', 1);
   });
 });
