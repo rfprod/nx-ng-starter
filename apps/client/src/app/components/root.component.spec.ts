@@ -1,14 +1,32 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { Meta, Title } from '@angular/platform-browser';
-import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
+import { AppServiceWorkerService } from '@app/client-service-worker';
+import { testingEnvironment } from '@app/client-testing-unit';
+import { WEB_CLIENT_APP_ENV } from '@app/client-util';
+import { of } from 'rxjs';
 
 import { AppRootComponent } from './root.component';
 
 describe('AppRootComponent', () => {
-  const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
+  const testBedConfig: TestModuleMetadata = {
     declarations: [AppRootComponent],
-  });
-  const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
+    providers: [
+      Title,
+      Meta,
+      {
+        provide: AppServiceWorkerService,
+        useValue: {
+          subscribeToUpdates$: of(null),
+        },
+      },
+      {
+        provide: WEB_CLIENT_APP_ENV,
+        useValue: { ...testingEnvironment },
+      },
+    ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  };
 
   let fixture: ComponentFixture<AppRootComponent>;
   let component: AppRootComponent;

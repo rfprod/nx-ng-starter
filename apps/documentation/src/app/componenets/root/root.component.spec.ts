@@ -6,6 +6,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppMaterialModule } from '@app/client-material';
+import { AppServiceWorkerService } from '@app/client-service-worker';
 import { MarkdownModule, MarkdownModuleConfig, MarkedOptions } from 'ngx-markdown';
 import { of, tap } from 'rxjs';
 
@@ -36,7 +37,15 @@ describe('AppDocRootComponent', () => {
       MarkdownModule.forRoot(markdownModuleConfig),
     ],
     declarations: [AppDocRootComponent],
-    providers: [...testingProviders],
+    providers: [
+      ...testingProviders,
+      {
+        provide: AppServiceWorkerService,
+        useValue: {
+          subscribeToUpdates$: of(null),
+        },
+      },
+    ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
   };
 

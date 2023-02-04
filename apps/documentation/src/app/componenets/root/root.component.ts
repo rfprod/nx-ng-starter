@@ -1,17 +1,20 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
+import { AppServiceWorkerService } from '@app/client-service-worker';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { map } from 'rxjs';
 
 import { DOCUMENTATION_ENVIRONMENT, IDocumentationEnvironment } from '../../interfaces/environment.interface';
 
+@UntilDestroy()
 @Component({
   selector: 'app-documentation-root',
   templateUrl: './root.component.html',
   styleUrls: ['./root.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppDocRootComponent implements OnInit {
+export class AppDocRootComponent implements OnInit, AfterContentInit {
   public readonly version = this.env.meta.version;
 
   public readonly config$ = this.bpObserver
@@ -27,6 +30,7 @@ export class AppDocRootComponent implements OnInit {
     private readonly title: Title,
     private readonly meta: Meta,
     private readonly bpObserver: BreakpointObserver,
+    private readonly sw: AppServiceWorkerService,
     @Inject(DOCUMENTATION_ENVIRONMENT) private readonly env: IDocumentationEnvironment,
   ) {}
 
@@ -39,5 +43,9 @@ export class AppDocRootComponent implements OnInit {
   public ngOnInit(): void {
     this.title.setTitle(this.env.appName);
     this.meta.updateTag({ description: this.env.description });
+  }
+
+  public ngAfterContentInit(): void {
+    void this.sw.subscribeToUpdates$.pipe(untilDestroyed(this)).subscribe();
   }
 }
