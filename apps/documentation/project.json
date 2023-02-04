@@ -27,9 +27,11 @@
               "with": "apps/documentation/src/environments/environment.prod.ts"
             }
           ],
+          "ngswConfigPath": "apps/documentation/ngsw-config.json",
           "namedChunks": false,
           "optimization": true,
           "outputHashing": "all",
+          "serviceWorker": true,
           "sourceMap": false,
           "vendorChunk": false
         },
