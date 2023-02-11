@@ -1,7 +1,23 @@
 <span class="root">
-  <app-navbar class="root__toolbar" [logoSrc]="logoSrc$ | async"></app-navbar>
+  <app-navbar
+    class="root__toolbar"
+    [appName]="appName"
+    [logoSrc]="logoSrc$ | async"
+    (navButtonClicked)="navButtonClick()"
+    (navigatedBack)="navigateBack()"
+    (navigatedForward)="navigateForward()"
+  ></app-navbar>
 
   <app-content class="root__content"></app-content>
 
-  <app-toolbar class="root__toolbar" [version]="version" (darkThemeEnabled)="toggleMaterialTheme($event)"></app-toolbar>
+  <app-toolbar
+    class="root__toolbar"
+    [version]="version"
+    [sidebarOpen]="sidebarOpen$ | async"
+    [chatbotOpen]="chatbotOpen$ | async"
+    [darkThemeEnabled]="darkThemeEnabled$ | async"
+    (chatbotToggled)="toggleChatbot($event)"
+    (sidebarToggled)="toggleSidebar()"
+    (themeToggled)="toggleTheme($event)"
+  ></app-toolbar>
 </span>
