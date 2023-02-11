@@ -1,9 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { chatbotActions, chatbotSelectors, IChatbotState } from '@app/client-store-chatbot';
-import { ISidebarState, sidebarActions, sidebarSelectors } from '@app/client-store-sidebar';
 import { anchorButton, IAnchorButton } from '@app/client-util';
-import { Store } from '@ngrx/store';
-import { first, tap } from 'rxjs';
 
 @Component({
   selector: 'app-toolbar',
@@ -32,34 +28,29 @@ export class AppToolbarComponent {
     ),
   ];
 
-  @Output() public readonly darkThemeEnabled = new EventEmitter<boolean>();
+  @Input() public sidebarOpen: boolean | null = false;
 
-  public readonly sidebarOpen$ = this.store.select(sidebarSelectors.sidebarOpen);
+  @Input() public chatbotOpen: boolean | null = false;
 
-  public readonly chatbotOpen$ = this.store.select(chatbotSelectors.chatbotOpen);
+  @Input() public darkThemeEnabled: boolean | null = false;
 
-  constructor(public readonly store: Store<IChatbotState & ISidebarState>) {}
+  @Output() public readonly sidebarToggled = new EventEmitter<undefined>();
+
+  @Output() public readonly chatbotToggled = new EventEmitter<boolean>();
+
+  @Output() public readonly themeToggled = new EventEmitter<boolean>();
 
   public toggleSidebar(): void {
-    this.store.dispatch(sidebarActions.toggle());
+    this.sidebarToggled.emit();
   }
 
   public toggleChatbot(): void {
-    void this.chatbotOpen$
-      .pipe(
-        first(),
-        tap(open => {
-          if (open) {
-            this.store.dispatch(chatbotActions.close());
-          } else {
-            this.store.dispatch(chatbotActions.open());
-          }
-        }),
-      )
-      .subscribe();
+    if (this.chatbotOpen !== null) {
+      this.chatbotToggled.emit(!this.chatbotOpen);
+    }
   }
 
-  public toggleMaterialTheme(event: boolean): void {
-    this.darkThemeEnabled.emit(event);
+  public toggeTheme(event: boolean): void {
+    this.themeToggled.emit(event);
   }
 }

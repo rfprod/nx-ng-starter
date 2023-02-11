@@ -13,7 +13,7 @@
 
   <mat-menu #mobileMenuTop="matMenu">
     <ng-template *ngFor="let button of buttons" [appFeatureFlag]="button.title !== 'Dashboards' ? null : 'dashbaords'">
-      <a mat-menu-item [routerLink]="button.routerLink" [disabled]="button.routeActive()" (click)="sidebarCloseHandler()">
+      <a mat-menu-item [routerLink]="button.routerLink" [disabled]="button.routeActive()" (click)="navButtonClick()">
         <mat-icon>{{ button.icon }}</mat-icon> {{ button.title }}
       </a>
     </ng-template>

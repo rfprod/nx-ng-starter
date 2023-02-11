@@ -1,12 +1,11 @@
 <mat-toolbar color="primary" class="toolbar">
   <button mat-icon-button (click)="toggleSidebar()">
-    <mat-icon appTooltip="Open sidenav" *ngIf="(sidebarOpen$ | async) === false"> flip_to_front </mat-icon>
-    <mat-icon appTooltip="Close sidenav" *ngIf="sidebarOpen$ | async"> flip_to_back </mat-icon>
+    <ng-container *ngTemplateOutlet="sidebarOpen ? sidebarOpenIcon : sidebarClosedIcon"></ng-container>
   </button>
 
   <span class="flex--full"></span>
 
-  <app-theme-toggle (themeToggled)="toggleMaterialTheme($event)"></app-theme-toggle>
+  <app-theme-toggle [darkThemeEnabled]="darkThemeEnabled" (themeToggled)="toggeTheme($event)"></app-theme-toggle>
 
   <span class="flex--full"></span>
 
@@ -31,3 +30,11 @@
     </div>
   </mat-menu>
 </mat-toolbar>
+
+<ng-template #sidebarOpenIcon>
+  <mat-icon appTooltip="Close sidenav"> flip_to_back </mat-icon>
+</ng-template>
+
+<ng-template #sidebarClosedIcon>
+  <mat-icon appTooltip="Open sidenav"> flip_to_front </mat-icon>
+</ng-template>

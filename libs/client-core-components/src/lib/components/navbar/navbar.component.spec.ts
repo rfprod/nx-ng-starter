@@ -1,28 +1,27 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { AppRouterStoreModule, routerActions } from '@app/client-store-router';
-import { AppSidebarStoreModule, sidebarActions } from '@app/client-store-sidebar';
-import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
-import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
-import { Store } from '@ngrx/store';
+import { newTestBedMetadata } from '@app/client-testing-unit';
 import { of } from 'rxjs';
 
 import { AppNavbarComponent } from './navbar.component';
 
 describe('AppNavbarComponent', () => {
-  const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [AppSidebarStoreModule.forRoot(), AppRouterStoreModule.forRoot()],
+  const testBedConfig: TestModuleMetadata = newTestBedMetadata({
     declarations: [AppNavbarComponent],
+    providers: [
+      {
+        provide: Router,
+        useValue: {
+          events: of(null),
+          isActive: () => false,
+        },
+      },
+    ],
   });
-  const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
   let fixture: ComponentFixture<AppNavbarComponent>;
   let component: AppNavbarComponent;
-  let env: IWebClientAppEnvironment;
-  let store: Store;
-  let storeSpy: {
-    dispatch: jest.SpyInstance;
-  };
+
   let router: Router;
   let routerIsActiveSpy: jest.SpyInstance;
 
@@ -32,13 +31,6 @@ describe('AppNavbarComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(AppNavbarComponent);
         component = fixture.debugElement.componentInstance;
-
-        store = TestBed.inject(Store);
-        storeSpy = {
-          dispatch: jest.spyOn(store, 'dispatch').mockImplementation((action: unknown) => of(null)),
-        };
-
-        env = TestBed.inject(WEB_CLIENT_APP_ENV);
 
         router = TestBed.inject(Router);
         routerIsActiveSpy = jest.spyOn(router, 'isActive');
@@ -51,14 +43,11 @@ describe('AppNavbarComponent', () => {
     expect(component).toBeDefined();
   });
 
-  it('appName should be equal to the app name in the environment object', () => {
-    expect(component.appName).toEqual(env.appName);
+  it('sidebarCloseHandler should emit an output event', () => {
+    const spy = jest.spyOn(component.navButtonClicked, 'emit');
+    component.navButtonClick();
+    expect(spy).toHaveBeenCalled();
   });
-
-  it('sidebarCloseHandler should call store dispatch', waitForAsync(() => {
-    component.sidebarCloseHandler();
-    expect(storeSpy.dispatch).toHaveBeenCalledWith(sidebarActions.close({ payload: { navigate: false } }));
-  }));
 
   it('buttons should have default values', () => {
     const expectedLength = 5;
@@ -117,13 +106,15 @@ describe('AppNavbarComponent', () => {
     routerIsActiveSpy.mockClear();
   });
 
-  it('navigateBack should call store dispatch', waitForAsync(() => {
+  it('navigateBack should emit an output event', () => {
+    const spy = jest.spyOn(component.navigatedBack, 'emit');
     component.navigateBack();
-    expect(storeSpy.dispatch).toHaveBeenCalledWith(routerActions.back());
-  }));
+    expect(spy).toHaveBeenCalled();
+  });
 
-  it('navigateForward should call store dispatch', waitForAsync(() => {
+  it('navigateForward should emit an output event', () => {
+    const spy = jest.spyOn(component.navigatedForward, 'emit');
     component.navigateForward();
-    expect(storeSpy.dispatch).toHaveBeenCalledWith(routerActions.forward());
-  }));
+    expect(spy).toHaveBeenCalled();
+  });
 });

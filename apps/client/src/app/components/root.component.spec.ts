@@ -4,6 +4,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { AppServiceWorkerService } from '@app/client-service-worker';
 import { testingEnvironment } from '@app/client-testing-unit';
 import { WEB_CLIENT_APP_ENV } from '@app/client-util';
+import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 
 import { AppRootComponent } from './root.component';
@@ -18,6 +19,13 @@ describe('AppRootComponent', () => {
         provide: AppServiceWorkerService,
         useValue: {
           subscribeToUpdates$: of(null),
+        },
+      },
+      {
+        provide: Store,
+        useValue: {
+          select: () => of(null),
+          dispatch: () => void 0,
         },
       },
       {
@@ -57,9 +65,9 @@ describe('AppRootComponent', () => {
 
   it('toggleMaterialTheme should set the darkTheme value', () => {
     expect(component.darkTheme).toBeFalsy();
-    component.toggleMaterialTheme(true);
+    component.toggleTheme(false);
     expect(component.darkTheme).toBeTruthy();
-    component.toggleMaterialTheme(false);
+    component.toggleTheme(true);
     expect(component.darkTheme).toBeFalsy();
   });
 });

@@ -1,67 +1,29 @@
-import { APP_BASE_HREF, DOCUMENT, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ActivatedRoute, Router, RouterModule, UrlTree } from '@angular/router';
+import { Router } from '@angular/router';
 import { AppMaterialModule } from '@app/client-material';
-import { AppRouterStoreModule } from '@app/client-store-router';
-import { AppSidebarStoreModule } from '@app/client-store-sidebar';
-import { documentFactory, routerButton, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@app/client-util';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
-import { Args, Story } from '@storybook/angular/types-6-0';
+import { routerButton } from '@app/client-util';
+import { Args, Meta, Story } from '@storybook/angular';
 import { of } from 'rxjs';
 
 import { AppHistoryNavigatorComponent } from '../history-navigator/history-navigator.component';
 import { AppTooltipDirective } from '../tooltip/tooltip.directive';
 import { AppNavbarComponent } from './navbar.component';
 
-const testingEnvironment = {
-  production: false,
-  platform: '',
-  appName: 'Nx Ng Starter Client',
-  api: 'http://localhost:8080/api',
-  envoyUrl: 'http://localhost:8081',
-};
-
 export default {
   title: 'AppNavbarComponent',
   component: AppNavbarComponent,
-};
+} as Meta;
 
 const story: Story<AppNavbarComponent> = (args: Args) => ({
   moduleMetadata: {
-    imports: [
-      BrowserAnimationsModule,
-      AppMaterialModule.forRoot(),
-      StoreModule.forRoot({}),
-      EffectsModule.forRoot(),
-      AppSidebarStoreModule.forRoot(),
-      RouterModule,
-      AppRouterStoreModule.forRoot(),
-    ],
+    imports: [BrowserAnimationsModule, AppMaterialModule.forRoot()],
     providers: [
       {
         provide: Router,
         useValue: {
           events: of(true),
-          navigate: () => new Promise<boolean>(resolve => resolve(true)),
-          createUrlTree: () => [],
-          serializeUrl: (url: UrlTree) => url.toString(),
+          isActive: () => false,
         },
-      },
-      {
-        provide: ActivatedRoute,
-        useValue: {},
-      },
-      {
-        provide: LocationStrategy,
-        useClass: PathLocationStrategy,
-      },
-      { provide: WINDOW, useFactory: windowFactory },
-      { provide: DOCUMENT, useFactory: documentFactory },
-      { provide: APP_BASE_HREF, useValue: '/' },
-      {
-        provide: WEB_CLIENT_APP_ENV,
-        useValue: testingEnvironment,
       },
     ],
     declarations: [AppNavbarComponent, AppHistoryNavigatorComponent, AppTooltipDirective],

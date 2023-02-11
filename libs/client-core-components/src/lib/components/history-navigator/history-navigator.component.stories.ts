@@ -1,6 +1,6 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from '@app/client-material';
-import { Args, Story } from '@storybook/angular/types-6-0';
+import { Args, Meta, Story } from '@storybook/angular';
 
 import { AppTooltipDirective } from '../tooltip/tooltip.directive';
 import { AppHistoryNavigatorComponent } from './history-navigator.component';
@@ -8,7 +8,7 @@ import { AppHistoryNavigatorComponent } from './history-navigator.component';
 export default {
   title: 'AppHistoryNavigatorComponent',
   component: AppHistoryNavigatorComponent,
-};
+} as Meta;
 
 const story: Story<AppHistoryNavigatorComponent> = (args: Args) => ({
   moduleMetadata: {

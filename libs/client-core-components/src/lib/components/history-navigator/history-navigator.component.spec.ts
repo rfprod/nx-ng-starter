@@ -1,18 +1,14 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import { AppRouterStoreModule } from '@app/client-store-router';
-import { AppSidebarStoreModule } from '@app/client-store-sidebar';
-import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
+import { newTestBedMetadata } from '@app/client-testing-unit';
 
 import { AppHistoryNavigatorComponent } from './history-navigator.component';
 
 describe('AppHistoryNavigatorComponent', () => {
-  const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [AppSidebarStoreModule.forRoot(), AppRouterStoreModule.forRoot()],
+  const testBedConfig: TestModuleMetadata = newTestBedMetadata({
     declarations: [AppHistoryNavigatorComponent],
     schemas: [NO_ERRORS_SCHEMA],
   });
-  const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
   let fixture: ComponentFixture<AppHistoryNavigatorComponent>;
   let component: AppHistoryNavigatorComponent;

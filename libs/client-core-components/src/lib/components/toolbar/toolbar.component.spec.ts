@@ -1,25 +1,20 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import { AppChatbotStoreModule, chatbotActions } from '@app/client-store-chatbot';
-import { AppSidebarStoreModule, sidebarActions } from '@app/client-store-sidebar';
-import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
-import { Store } from '@ngrx/store';
-import { of } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { newTestBedMetadata } from '@app/client-testing-unit';
 
 import { AppToolbarComponent } from './toolbar.component';
 
 describe('AppToolbarComponent', () => {
-  const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [AppSidebarStoreModule.forRoot(), AppChatbotStoreModule.forRoot()],
+  const testBedConfig: TestModuleMetadata = newTestBedMetadata({
+    imports: [MatMenuModule, MatIconModule],
     declarations: [AppToolbarComponent],
+    schemas: [NO_ERRORS_SCHEMA],
   });
-  const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
   let fixture: ComponentFixture<AppToolbarComponent>;
   let component: AppToolbarComponent;
-  let store: Store;
-  let storeSpy: {
-    dispatch: jest.SpyInstance;
-  };
 
   beforeEach(waitForAsync(() => {
     void TestBed.configureTestingModule(testBedConfig)
@@ -27,11 +22,6 @@ describe('AppToolbarComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(AppToolbarComponent);
         component = fixture.debugElement.componentInstance;
-
-        store = TestBed.inject(Store);
-        storeSpy = {
-          dispatch: jest.spyOn(store, 'dispatch').mockImplementation((action: unknown) => of(null)),
-        };
 
         fixture.detectChanges();
       });
@@ -41,20 +31,22 @@ describe('AppToolbarComponent', () => {
     expect(component).toBeDefined();
   });
 
-  it('toggleSidebar should call store dispatch', waitForAsync(() => {
+  it('toggleSidebar should emit an output event', () => {
+    const spy = jest.spyOn(component.sidebarToggled, 'emit');
     component.toggleSidebar();
-    expect(storeSpy.dispatch).toHaveBeenCalledWith(sidebarActions.toggle());
-  }));
+    expect(spy).toHaveBeenCalled();
+  });
 
-  it('toggleChatbot should call store dispatch', waitForAsync(() => {
+  it('toggleChatbot should emit an output event', () => {
+    const spy = jest.spyOn(component.chatbotToggled, 'emit');
     component.toggleChatbot();
-    expect(storeSpy.dispatch).toHaveBeenCalledWith(chatbotActions.open());
-  }));
+    expect(spy).toHaveBeenCalled();
+  });
 
-  it('toggleMaterialTheme should emit an output event', () => {
-    const outputSpy = jest.spyOn(component.darkThemeEnabled, 'emit');
+  it('toggleTheme should emit an output event', () => {
+    const outputSpy = jest.spyOn(component.themeToggled, 'emit');
     const event = true;
-    component.toggleMaterialTheme(event);
+    component.toggeTheme(event);
     expect(outputSpy).toHaveBeenCalledWith(event);
   });
 });
