@@ -1,0 +1,50 @@
+{
+  "name": "client-elements",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/client-elements/src",
+  "prefix": "app",
+  "targets": {
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
+      "options": {
+        "jestConfig": "libs/client-elements/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "libs/client-elements/**/*.ts"
+        ],
+        "eslintConfig": "libs/client-elements/.eslintrc.json"
+      }
+    },
+    "tsc-check": {
+      "executor": "./tools/executors/tsc:check",
+      "options": {
+        "tsConfig": "libs/client-elements/tsconfig.lib.json"
+      },
+      "outputs": [
+        "{workspaceRoot}/dist/out-tsc/libs/client-elements"
+      ]
+    }
+  },
+  "tags": [
+    "scope:client-elements",
+    "type:feature"
+  ]
+}

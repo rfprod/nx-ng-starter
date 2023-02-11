@@ -1,15 +1,14 @@
 import { Injector } from '@angular/core';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
+import { newTestBedMetadata } from '@app/client-testing-unit';
 import { WINDOW, windowProvider } from '@app/client-util';
 
 import { AppElementsService } from './elements.service';
 
 describe('AppElementsService', () => {
-  const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
+  const testBedConfig: TestModuleMetadata = newTestBedMetadata({
     providers: [Injector, windowProvider],
   });
-  const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
   let service: AppElementsService;
 
