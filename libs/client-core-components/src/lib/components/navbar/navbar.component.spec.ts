@@ -43,7 +43,7 @@ describe('AppNavbarComponent', () => {
     expect(component).toBeDefined();
   });
 
-  it('sidebarCloseHandler should emit an output event', () => {
+  it('navButtonClick should emit an output event', () => {
     const spy = jest.spyOn(component.navButtonClicked, 'emit');
     component.navButtonClick();
     expect(spy).toHaveBeenCalled();

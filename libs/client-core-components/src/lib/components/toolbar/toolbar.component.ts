@@ -50,7 +50,9 @@ export class AppToolbarComponent {
     }
   }
 
-  public toggeTheme(event: boolean): void {
-    this.themeToggled.emit(event);
+  public toggeTheme(): void {
+    if (this.darkThemeEnabled !== null) {
+      this.themeToggled.emit(!this.darkThemeEnabled);
+    }
   }
 }
