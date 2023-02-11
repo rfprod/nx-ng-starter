@@ -50,12 +50,12 @@ describe('AppToolbarComponent', () => {
 
   it('toggleTheme should emit an output event', () => {
     const spy = jest.spyOn(component.themeToggled, 'emit');
-    component.toggeTheme();
+    component.toggleTheme();
     expect(spy).toHaveBeenCalledWith(!(component.darkThemeEnabled ?? false));
 
     component.darkThemeEnabled = null;
     spy.mockClear();
-    component.toggeTheme();
+    component.toggleTheme();
     expect(spy).not.toHaveBeenCalled();
   });
 });

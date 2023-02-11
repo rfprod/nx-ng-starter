@@ -50,7 +50,7 @@ export class AppToolbarComponent {
     }
   }
 
-  public toggeTheme(): void {
+  public toggleTheme(): void {
     if (this.darkThemeEnabled !== null) {
       this.themeToggled.emit(!this.darkThemeEnabled);
     }
