@@ -5,7 +5,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { applicationIsFramed } from '@app/client-util';
 import { initializeSentry } from '@app/client-util-sentry';
 
-import { AppElementsModule } from './app/elements.module';
+import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 
 if (applicationIsFramed()) {
@@ -26,7 +26,7 @@ if (applicationIsFramed()) {
   initializeSentry(environment, clientReleaseId);
 
   platformBrowserDynamic()
-    .bootstrapModule(AppElementsModule)
+    .bootstrapModule(AppModule)
     .catch(err => {
       console.error(err);
     });

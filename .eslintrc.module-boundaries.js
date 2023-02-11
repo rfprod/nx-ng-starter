@@ -8,7 +8,7 @@ const typeConstraints = [
   },
   {
     sourceTag: 'type:feature',
-    onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util', 'type:testing-unit'],
+    onlyDependOnLibsWithTags: ['type:feature', 'type:data-access', 'type:ui', 'type:util', 'type:testing-unit'],
   },
   {
     sourceTag: 'type:data-access',
@@ -360,11 +360,10 @@ const clientConstraints = [
   {
     sourceTag: 'scope:elements',
     onlyDependOnLibsWithTags: [
-      'scope:client-chatbot',
+      'scope:client-elements',
       'scope:client-core',
       'scope:client-testing-unit',
       'scope:client-util',
-      'scope:client-util-eliza',
       'scope:client-util-sentry',
     ],
   },
@@ -375,6 +374,10 @@ const clientConstraints = [
   {
     sourceTag: 'scope:elements-testing',
     onlyDependOnLibsWithTags: [],
+  },
+  {
+    sourceTag: 'scope:client-elements',
+    onlyDependOnLibsWithTags: ['scope:client-chatbot', 'scope:client-testing-unit', 'scope:client-util', 'scope:client-util-eliza'],
   },
 ];
 
