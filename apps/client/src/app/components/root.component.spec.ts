@@ -65,9 +65,9 @@ describe('AppRootComponent', () => {
 
   it('toggleMaterialTheme should set the darkTheme value', () => {
     expect(component.darkTheme).toBeFalsy();
-    component.toggleTheme(false);
-    expect(component.darkTheme).toBeTruthy();
     component.toggleTheme(true);
+    expect(component.darkTheme).toBeTruthy();
+    component.toggleTheme(false);
     expect(component.darkTheme).toBeFalsy();
   });
 });

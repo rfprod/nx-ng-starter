@@ -77,8 +77,8 @@ export class AppRootComponent implements OnInit, AfterContentInit {
   }
 
   public toggleTheme(darkThemeEnabled: boolean): void {
-    this.darkTheme = !darkThemeEnabled;
-    const nextLogo = !darkThemeEnabled ? this.logoRef.light : this.logoRef.dark;
+    this.darkTheme = darkThemeEnabled;
+    const nextLogo = darkThemeEnabled ? this.logoRef.light : this.logoRef.dark;
     this.logoSrcSubject.next(nextLogo);
     this.store.dispatch(themeActions.toggleDarkTheme());
   }
