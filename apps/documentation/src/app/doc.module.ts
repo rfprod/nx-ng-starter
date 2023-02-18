@@ -46,7 +46,7 @@ const markdownModuleConfig: MarkdownModuleConfig = {
     HttpClientModule,
     MarkdownModule.forRoot(markdownModuleConfig),
     StoreModule.forRoot({}, { metaReducers: metaReducers(environment.production) }),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
     EffectsModule.forRoot(),
     AppMdFilesStoreModule.forRoot(),
     AppMaterialModule.forRoot(),

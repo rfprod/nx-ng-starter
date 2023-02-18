@@ -3,7 +3,7 @@ import { createAction } from '@ngrx/store';
 
 import { featureName } from './theme.interface';
 
-const enableDarkTheme = createAction('enable dark theme');
+const enableDarkTheme = createAction(actionType(featureName, 'enable dark theme'));
 
 const disableDarkTheme = createAction(actionType(featureName, 'disable dark theme'));
 
