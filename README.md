@@ -147,7 +147,7 @@ Below are some plugins which can be added to the workspace:
 | -------------------------------------- | ------------------------ | --------------------- |
 | [Angular](https://angular.io)          | `ng add @nrwl/angular`   | :heavy_check_mark:    |
 | [React](https://reactjs.org)           | `ng add @nrwl/react`     | :x:                   |
-| Web (no framework frontends)           | `ng add @nrwl/web`       | :heavy_check_mark:    |
+| Web (no framework frontends)           | `ng add @nrwl/web`       | :x:                   |
 | [Nest](https://nestjs.com)             | `ng add @nrwl/nest`      | :heavy_check_mark:    |
 | [Express](https://expressjs.com)       | `ng add @nrwl/express`   | :x:                   |
 | [Node](https://nodejs.org)             | `ng add @nrwl/node`      | :heavy_check_mark:    |
