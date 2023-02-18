@@ -2,6 +2,7 @@ import { OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { InjectionToken, Provider } from '@angular/core';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatIconRegistry } from '@angular/material/icon';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY } from '@angular/material-moment-adapter';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
@@ -21,6 +22,13 @@ export const appMaterialModuleProviders: Provider[] = [
   {
     provide: MAT_DATE_LOCALE,
     useValue: 'en',
+  },
+  {
+    provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+    useValue: <MatSnackBarConfig>{
+      duration: 3000,
+      politeness: 'polite',
+    },
   },
   {
     provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY,

@@ -1,5 +1,6 @@
-import { ProjectConfiguration, ProjectsConfigurations, TargetConfiguration } from '@nrwl/devkit';
+import { getProjects, ProjectConfiguration, TargetConfiguration } from '@nrwl/devkit';
 import * as fs from 'fs';
+import { FsTree } from 'nx/src/generators/tree';
 import { argv } from 'yargs';
 
 import { COLORS } from '../utils/colors';
@@ -28,7 +29,7 @@ type TCli = 'yarn' | 'nx';
 /**
  * Prints arguments usage tip if no applicable arguments were used.
  */
-function printSearchArgumentTip() {
+const printSearchArgumentTip = () => {
   const search = (<{ [key: string]: string }>argv).search;
   if (typeof search !== 'string') {
     // eslint-disable-next-line no-console -- needed here to print output in the terminal
@@ -41,13 +42,13 @@ ${COLORS.CYAN}%s${COLORS.DEFAULT} ${COLORS.YELLOW}%s${COLORS.DEFAULT}\n`,
       'start generate install build lint test e2e affected analyze firebase nx workspace',
     );
   }
-}
+};
 
 /**
  * Prints package scripts.
  * @param scripts package scripts object.
  */
-function printPackageScripts(scripts: Record<string, string>, cli: TCli) {
+const printPackageScripts = (scripts: Record<string, string>, cli: TCli) => {
   const search = (<{ [key: string]: string }>argv).search;
   const scriptKeys = typeof search !== 'string' ? Object.keys(scripts) : Object.keys(scripts).filter(key => new RegExp(search).test(key));
   for (const key of scriptKeys) {
@@ -58,12 +59,12 @@ function printPackageScripts(scripts: Record<string, string>, cli: TCli) {
       `${scripts[key]}`,
     );
   }
-}
+};
 
 /**
  * Parses package.json and prints root level commands.
  */
-function processPackageJson() {
+const printPackageCommands = () => {
   fs.readFile(`${root}/package.json`, 'utf8', (error, data) => {
     if (error !== null) {
       logger.printError(error);
@@ -76,17 +77,21 @@ function processPackageJson() {
     const scripts = parsedPackageJson.scripts;
     printPackageScripts(scripts, 'yarn');
   });
-}
+};
 
-const printNxCommands = (workspaceJson: ProjectsConfigurations) => {
-  const projectNames = Object.keys(workspaceJson.projects);
-  const projectDirs = projectNames.map(name => workspaceJson.projects[name]);
+/**
+ * Parses workspace.json and prints project level commands.
+ */
+const printNxCommands = () => {
+  const tree = new FsTree(root, true);
+  const projects = [...getProjects(tree).values()];
 
   let allCommands: Record<string, string> = {};
 
-  for (let i = 0, max = projectNames.length; i < max; i += 1) {
-    const projectName = projectNames[i];
-    const projectDir = projectDirs[i];
+  for (let i = 0, max = projects.length; i < max; i += 1) {
+    const config = projects[i];
+    const projectName = config.name;
+    const projectDir = config.root;
     const projectJsonPath = `${projectDir}/project.json`;
 
     const result: NodeJS.ErrnoException | string = fs.readFileSync(projectJsonPath, 'utf8');
@@ -106,9 +111,7 @@ const printNxCommands = (workspaceJson: ProjectsConfigurations) => {
         .filter(key => targets[key].executor === 'nx:run-commands')
         .reduce((acc, key) => {
           const target: TargetConfiguration<{
-            commands?: {
-              command: string;
-            }[];
+            commands?: { command: string }[];
           }> = targets[key];
           const commandsConfig = target.options?.commands;
           acc[`run ${projectName}:${key}`] = typeof commandsConfig !== 'undefined' ? commandsConfig[0].command : '';
@@ -136,21 +139,6 @@ const printNxCommands = (workspaceJson: ProjectsConfigurations) => {
   printSearchArgumentTip();
 };
 
-/**
- * Parses workspace.json and prints project level commands.
- */
-function processWorkspace() {
-  fs.readFile(`${root}/workspace.json`, 'utf8', (error, data) => {
-    if (error !== null) {
-      logger.printError(error);
-      process.exit(1);
-    }
+printPackageCommands();
 
-    const projectsConfig: ProjectsConfigurations = JSON.parse(data);
-    printNxCommands(projectsConfig);
-  });
-}
-
-processPackageJson();
-
-processWorkspace();
+printNxCommands();

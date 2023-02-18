@@ -8,7 +8,7 @@ import { IThemeState, themeActions, themeSelectors } from '@app/client-store-the
 import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs';
 
 interface ILogoRef {
   dark: 'assets/svg/logo.svg';
@@ -41,10 +41,6 @@ export class AppRootComponent implements OnInit, AfterContentInit {
     light: 'assets/svg/logo-light.svg',
   };
 
-  private readonly logoSrcSubject = new BehaviorSubject<ILogoRef['dark'] | ILogoRef['light']>(this.logoRef.light);
-
-  public readonly logoSrc$ = this.logoSrcSubject.asObservable();
-
   /**
    * Application release version.
    */
@@ -55,6 +51,12 @@ export class AppRootComponent implements OnInit, AfterContentInit {
   public readonly chatbotOpen$ = this.store.select(chatbotSelectors.chatbotOpen);
 
   public readonly darkThemeEnabled$ = this.store.select(themeSelectors.darkThemeEnabled);
+
+  public readonly logoSrc$ = this.darkThemeEnabled$.pipe(
+    map(darkThemeEnabled => {
+      return darkThemeEnabled ? this.logoRef.light : this.logoRef.dark;
+    }),
+  );
 
   constructor(
     private readonly title: Title,
@@ -78,8 +80,6 @@ export class AppRootComponent implements OnInit, AfterContentInit {
 
   public toggleTheme(darkThemeEnabled: boolean): void {
     this.darkTheme = darkThemeEnabled;
-    const nextLogo = darkThemeEnabled ? this.logoRef.light : this.logoRef.dark;
-    this.logoSrcSubject.next(nextLogo);
     this.store.dispatch(themeActions.toggleDarkTheme());
   }
 
