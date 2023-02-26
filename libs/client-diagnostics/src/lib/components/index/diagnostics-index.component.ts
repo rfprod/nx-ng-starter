@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { IWebsocketState, websocketActions } from '@app/client-store-websocket';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { diagnosticsActions, IDiagnosticsState } from '@app/client-store-diagnostics';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -8,9 +8,15 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./diagnostics-index.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppDiagnosticsIndexComponent {
-  constructor(private readonly store: Store<IWebsocketState>) {
-    this.store.dispatch(websocketActions.connect());
-    this.store.dispatch(websocketActions.getEvents());
+export class AppDiagnosticsIndexComponent implements OnInit, OnDestroy {
+  constructor(private readonly store: Store<IDiagnosticsState>) {}
+
+  public ngOnInit(): void {
+    this.store.dispatch(diagnosticsActions.staticData());
+    this.store.dispatch(diagnosticsActions.startEvents());
+  }
+
+  public ngOnDestroy(): void {
+    this.store.dispatch(diagnosticsActions.stopEvents());
   }
 }

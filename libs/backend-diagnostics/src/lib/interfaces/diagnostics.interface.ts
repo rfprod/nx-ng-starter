@@ -1,4 +1,3 @@
-import { AppMessage } from '@app/backend-interfaces';
 import { Observable } from 'rxjs';
 
 export interface IDiagDataItem {
@@ -6,12 +5,23 @@ export interface IDiagDataItem {
   value: string | number;
 }
 
+export interface IPingResult {
+  message: string;
+}
+
 export type TDiagData = IDiagDataItem[];
 
+export interface IUserCountEvent {
+  event: 'users';
+  data: IDiagDataItem[];
+}
+
 export interface IDiagnosticsService {
-  ping(): AppMessage;
+  ping(): IPingResult;
 
   static(): Observable<TDiagData>;
 
   dynamic(): TDiagData;
 }
+
+export const dianosticEventsGatewayPort = 8081;

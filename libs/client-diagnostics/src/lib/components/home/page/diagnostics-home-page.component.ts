@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, SecurityContext, SimpleChange, SimpleChanges } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { TDiagnosticData } from '@app/client-store-diagnostics';
 import { trackChanges } from '@app/client-util';
 
 interface IAppHomePageChanges extends SimpleChanges {
-  timer: SimpleChange;
   markedInstructions: SimpleChange;
 }
 
@@ -13,18 +14,22 @@ interface IAppHomePageChanges extends SimpleChanges {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppDiagnosticsHomePage implements OnChanges {
-  @Input() public timer = '';
+  @Input() public users: number | null = null;
 
-  @Input() public markedInstructions = '';
+  @Input() public markedInstructions: string | null = null;
 
-  @trackChanges<AppDiagnosticsHomePage, string>('timer', 'timerChanges')
+  @Input() public staticData: TDiagnosticData[] | null = null;
+
+  @Input() public dynamicData: TDiagnosticData[] | null = null;
+
+  constructor(private readonly sanitizer: DomSanitizer) {}
+
+  @trackChanges<AppDiagnosticsHomePage, string>('markedInstructions', 'markedInstructionsChanges')
   public ngOnChanges(changes: IAppHomePageChanges) {
     return changes;
   }
 
-  public timerChanges(value?: string): void {
-    const index = parseInt(value?.replace(/[a-zA-Z\s]/gi, '') ?? '', 10);
-    const divisor = 2;
-    this.timer = index % divisor ? `The timer is freaking out ${Math.pow(divisor, index)}` : value ?? '';
+  public markedInstructionsChanges(value: string): void {
+    this.markedInstructions = this.sanitizer.sanitize(SecurityContext.HTML, `${value}\n\n<small> Sanitized with DOM Sanitizer.</small>`);
   }
 }

@@ -1,12 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AppMarkdownService } from '@app/client-services';
-import { of, timer } from 'rxjs';
-import { first, map, takeWhile } from 'rxjs/operators';
-
-const timeout = {
-  start: 0,
-  interval: 2000,
-};
+import { diagnosticsSelectors, IDiagnosticsState } from '@app/client-store-diagnostics';
+import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
+import { first, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-diagnostics-home',
@@ -15,13 +12,6 @@ const timeout = {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppDiagnosticsHomeComponent {
-  public take = Number(Infinity);
-
-  public readonly timer$ = timer(timeout.start, timeout.interval).pipe(
-    takeWhile(i => i.valueOf() <= this.take),
-    map(num => `Until destroyed ${num}`),
-  );
-
   public readonly markedInstructions$ = of('').pipe(
     first(),
     map(() => {
@@ -32,5 +22,11 @@ export class AppDiagnosticsHomeComponent {
     }),
   );
 
-  constructor(private readonly markdown: AppMarkdownService) {}
+  public readonly staticData$ = this.store.select(diagnosticsSelectors.staticData);
+
+  public readonly dynamicData$ = this.store.select(diagnosticsSelectors.dynamicData);
+
+  public readonly users$ = this.store.select(diagnosticsSelectors.users);
+
+  constructor(private readonly markdown: AppMarkdownService, private readonly store: Store<IDiagnosticsState>) {}
 }

@@ -1,27 +1,41 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { AppMarkdownService } from '@app/client-services';
-import { getTestBedConfig, newTestBedMetadata, spyOnObservables, TClassMemberObservableSpiesObject } from '@app/client-testing-unit';
+import { newTestBedMetadata } from '@app/client-testing-unit';
+import { Store } from '@ngrx/store';
+import { marked } from 'marked';
 import { of, tap } from 'rxjs';
 
 import { AppDiagnosticsHomeComponent } from './diagnostics-home.component';
 
 describe('AppDiagnosticsHomeComponent', () => {
-  const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
+  const testBedConfig: TestModuleMetadata = newTestBedMetadata({
     declarations: [AppDiagnosticsHomeComponent],
-    imports: [
-      RouterTestingModule.withRoutes([
-        { path: '', component: AppDiagnosticsHomeComponent },
-        { path: '', redirectTo: '', pathMatch: 'full' },
-        { path: '**', redirectTo: '' },
-      ]),
+    providers: [
+      {
+        provide: AppMarkdownService,
+        useValue: {
+          process: (input: string) => marked(input),
+        },
+      },
+      {
+        provide: Store,
+        useValue: {
+          select: () =>
+            of({
+              users: 1,
+              staticData: [],
+              dynamicData: [],
+            }),
+        },
+      },
     ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
   });
-  const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
   let fixture: ComponentFixture<AppDiagnosticsHomeComponent>;
   let component: AppDiagnosticsHomeComponent;
-  let componentSpy: TClassMemberObservableSpiesObject<AppDiagnosticsHomeComponent>;
+
   let service: AppMarkdownService;
 
   beforeEach(waitForAsync(() => {
@@ -30,8 +44,7 @@ describe('AppDiagnosticsHomeComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(AppDiagnosticsHomeComponent);
         component = fixture.componentInstance;
-        component.take = 2;
-        componentSpy = spyOnObservables<AppDiagnosticsHomeComponent>(component);
+
         service = TestBed.inject(AppMarkdownService);
         fixture.detectChanges();
       });
@@ -42,10 +55,6 @@ describe('AppDiagnosticsHomeComponent', () => {
   });
 
   it('markedInstructions should return processed markdown', waitForAsync(() => {
-    const sub = of().subscribe();
-    componentSpy.timer$.pipe.mockReturnValue(of(null));
-    componentSpy.timer$.subscribe.mockReturnValue(sub);
-
     const sidenavInstruction =
       'Open **sidenav** by clicking the **icon** button in the left corner of the browser window, and select an item.';
     const markdownInstructions = '# You can use Markdown \n\n via AppMarkdownService, just like in this example.';

@@ -21,8 +21,10 @@ const story: Story<AppDiagnosticsHomePage> = (args: Args) => ({
 
 export const primary = story.bind({});
 primary.args = {
-  timer: '1',
+  users: 1,
   markedInstructions: 'Marked instructions',
+  staticData: [{ name: 'Static test', value: 1 }],
+  dynamicData: [{ name: 'Dynamic test', value: 1 }],
 };
 primary.parameters = {
   /**

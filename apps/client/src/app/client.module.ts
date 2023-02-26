@@ -7,14 +7,14 @@ import { AppGqlModule } from '@app/client-gql';
 import { AppGrpcModule, AppGrpcService } from '@app/client-grpc';
 import { AppMaterialModule } from '@app/client-material';
 import { AppPwaOfflineModule } from '@app/client-pwa-offline';
+import { AppDiagnosticsStoreModule, diagnosticsActions, IDiagnosticsState } from '@app/client-store-diagnostics';
 import { AppRouterStoreModule } from '@app/client-store-router';
-import { AppWebsocketStoreModule } from '@app/client-store-websocket';
 import { AppTranslateModule } from '@app/client-translate';
 import { AppElizaModule } from '@app/client-util-eliza';
 import { metaReducers } from '@app/client-util-ngrx';
 import { sentryProviders } from '@app/client-util-sentry';
 import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 
 import { environment } from '../environments/environment';
 import { AppClientRoutingModule } from './client-routing.module';
@@ -28,7 +28,7 @@ import { AppRootComponent } from './components/root.component';
     BrowserAnimationsModule,
     StoreModule.forRoot({}, { metaReducers: metaReducers(environment.production) }),
     EffectsModule.forRoot(),
-    AppWebsocketStoreModule.forRoot(environment),
+    AppDiagnosticsStoreModule.forRoot(environment),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
     AppCoreModule.forRoot(environment),
     AppCoreComponentsModule,
@@ -47,7 +47,8 @@ import { AppRootComponent } from './components/root.component';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppClientModule {
-  constructor(private readonly grpc: AppGrpcService) {
+  constructor(private readonly grpc: AppGrpcService, private readonly store: Store<IDiagnosticsState>) {
     void this.grpc.getEntityById().subscribe();
+    this.store.dispatch(diagnosticsActions.connect());
   }
 }

@@ -1,6 +1,26 @@
 <div class="marked-instructions" [innerHtml]="markedInstructions"></div>
 
-<ng-container *ngIf="timer">
-  <mat-icon aria-hidden="false" [attr.aria-label]="timer" color="warn"> av_timer </mat-icon>
-  <span>{{ timer }}</span>
+<mat-list>
+  <mat-list-item>
+    <span matListItemTitle>Connected users</span>
+    <span>{{ users }}</span>
+  </mat-list-item>
+</mat-list>
+
+<ng-container *ngIf="staticData">
+  <mat-list *ngIf="staticData.length > 0">
+    <mat-list-item *ngFor="let unit of staticData">
+      <span matListItemTitle>{{ unit.name }}</span>
+      <span>{{ unit.value }}</span>
+    </mat-list-item>
+  </mat-list>
+</ng-container>
+
+<ng-container *ngIf="dynamicData">
+  <mat-list *ngIf="dynamicData.length > 0">
+    <mat-list-item *ngFor="let unit of dynamicData">
+      <span matListItemTitle>{{ unit.name }}</span>
+      <span>{{ unit.value }}</span>
+    </mat-list-item>
+  </mat-list>
 </ng-container>

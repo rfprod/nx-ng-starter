@@ -10,7 +10,7 @@
       "options": {
         "commands": [
           {
-            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/actions/changes.ts",
+            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/actions/changes/changes.ts",
             "forwardAllArgs": false
           }
         ]
@@ -21,7 +21,7 @@
       "options": {
         "commands": [
           {
-            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/actions/codeowners.ts",
+            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/actions/codeowners/codeowners.ts",
             "forwardAllArgs": false
           }
         ]

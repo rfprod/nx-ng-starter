@@ -11,5 +11,4 @@ export const environment: IApiEnvironment = {
   firebase: false,
   appName: 'Nx Ng Starter API',
   grpcUrl: '0.0.0.0:50051',
-  wsPort: 8081,
 };

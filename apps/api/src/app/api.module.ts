@@ -4,7 +4,6 @@ import { AppGqlModule } from '@app/backend-gql';
 import { AppGrpcModule } from '@app/backend-grpc';
 import { API_ENV } from '@app/backend-interfaces';
 import { AppLoggerModule } from '@app/backend-logger';
-import { AppWebsocketModule } from '@app/backend-websocket';
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -24,7 +23,6 @@ import { environment } from '../environments/environment';
     }),
     AppDiagnosticsModule.forRoot(),
     AppAuthModule,
-    AppWebsocketModule,
     AppLoggerModule,
     AppGqlModule.forRoot(environment),
     AppGrpcModule.forRoot(environment),
