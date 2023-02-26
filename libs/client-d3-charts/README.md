@@ -16,14 +16,6 @@ Supported chart types:
 
 The library contains Angular components as well as basic utility functions that can be used to implement the chart types mentioned above in TypeScript.
 
-## Development commands reference
-
-Run `nx test client-d3-charts` to execute the unit tests.
-
-Run `nx lint client-d3-charts` to lint the library.
-
-Run `nx build client-d3-charts` to build the library.
-
 ## Usage
 
 ### Within the development workspace
@@ -87,7 +79,7 @@ import { AppChartExamplesComponent } from '@rfprodz/client-d3-charts';
 
 or the [source code](https://github.com/rfprod/nx-ng-starter/blob/main/libs/client-d3-charts/src/lib/components/chart-examples/chart-examples.component.ts) of the chart examples component
 
-## Print related commands
+## Developer commands reference
 
 ```bash
 npx nx run tools:help --search client-d3-charts:

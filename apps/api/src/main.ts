@@ -1,5 +1,6 @@
 import { dianosticEventsGatewayPort } from '@app/backend-diagnostics';
 import { backendGrpcClientOptions } from '@app/backend-grpc';
+import { INestApplication } from '@nestjs/common';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions } from '@nestjs/microservices';
@@ -52,7 +53,7 @@ const initAdmin = () => {
 /**
  * Bootstraps server.
  */
-async function bootstrap(expressInstance: e.Express): Promise<unknown> {
+async function bootstrap(expressInstance: e.Express): Promise<INestApplication> {
   const app = await NestFactory.create(AppApiModule, new ExpressAdapter(expressInstance));
   app.useWebSocketAdapter(new WsAdapter(app));
 
