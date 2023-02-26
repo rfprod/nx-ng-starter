@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { API_ENV, apiAppEnvProvider, AppApiEnvironment, defaultWsPort } from './api-environment';
+import { API_ENV, apiAppEnvProvider, AppApiEnvironment } from './api-environment';
 
 describe('AppApiEnvironment', () => {
   it('should initialize class properties as expected', () => {
@@ -9,21 +9,18 @@ describe('AppApiEnvironment', () => {
     expect(raw.grpcUrl).toEqual('0.0.0.0:50051');
     expect(raw.firebase).toBeFalsy();
     expect(raw.production).toBeFalsy();
-    expect(raw.wsPort).toEqual(defaultWsPort);
 
     const initializer: AppApiEnvironment = {
       appName: 'test',
       grpcUrl: 'test',
       firebase: true,
       production: true,
-      wsPort: 0,
     };
     const initialized = new AppApiEnvironment(initializer);
     expect(initialized.appName).toEqual(initializer.appName);
     expect(initialized.grpcUrl).toEqual(initializer.grpcUrl);
     expect(initialized.firebase).toEqual(initializer.firebase);
     expect(initialized.production).toEqual(initializer.production);
-    expect(initialized.wsPort).toEqual(initializer.wsPort);
   });
 });
 
@@ -48,6 +45,5 @@ describe('apiAppEnvProvider', () => {
     expect(environment.grpcUrl).toEqual(raw.grpcUrl);
     expect(environment.firebase).toEqual(raw.firebase);
     expect(environment.production).toEqual(raw.production);
-    expect(environment.wsPort).toEqual(raw.wsPort);
   });
 });

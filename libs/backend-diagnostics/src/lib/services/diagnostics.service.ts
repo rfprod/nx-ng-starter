@@ -1,11 +1,10 @@
-import { AppMessage } from '@app/backend-interfaces';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { exec, ExecException } from 'child_process';
 import * as dotenv from 'dotenv';
 import * as os from 'os';
 import { catchError, map, Observable, of } from 'rxjs';
 
-import { IDiagnosticsService, TDiagData } from '../interfaces/diagnostics.interface';
+import { IDiagnosticsService, IPingResult, TDiagData } from '../interfaces/diagnostics.interface';
 
 export const CHILD_PROCESS_EXEC = Symbol('CHILD_PROCESS_EXEC');
 
@@ -37,10 +36,10 @@ export class AppDiagnosticsService implements IDiagnosticsService {
     return observable$.pipe(catchError((error: string) => of(error)));
   }
 
-  public ping(): AppMessage {
-    return new AppMessage({
+  public ping(): IPingResult {
+    return <IPingResult>{
       message: 'Diagnostics service is online. Routes: /, /static.',
-    });
+    };
   }
 
   public static(): Observable<TDiagData> {

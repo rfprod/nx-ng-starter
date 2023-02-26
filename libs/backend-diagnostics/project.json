@@ -5,6 +5,27 @@
   "sourceRoot": "libs/backend-diagnostics/src",
   "tags": ["scope:backend-diagnostics", "type:feature"],
   "targets": {
+    "build": {
+      "configurations": {
+        "development": {
+          "tsConfig": "libs/backend-diagnostics/tsconfig.lib.json"
+        },
+        "production": {
+          "tsConfig": "libs/backend-diagnostics/tsconfig.lib.prod.json"
+        }
+      },
+      "defaultConfiguration": "production",
+      "executor": "@nrwl/js:tsc",
+      "options": {
+        "outputPath": "dist/libs/backend-diagnostics",
+        "packageJson": "libs/backend-diagnostics/package.json",
+        "rootDir": "libs/backend-diagnostics/src",
+        "main": "libs/backend-diagnostics/src/index.ts",
+        "tsConfig": "libs/backend-diagnostics/tsconfig.lib.json",
+        "assets": ["libs/backend-diagnostics/LICENSE", "libs/backend-diagnostics/README.md"]
+      },
+      "outputs": ["{workspaceRoot}/dist/libs/backend-diagnostics"]
+    },
     "lint": {
       "executor": "@angular-eslint/builder:lint",
       "options": {

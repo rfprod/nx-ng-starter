@@ -1,30 +1,24 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AppWebsocketStoreModule, websocketActions } from '@app/client-store-websocket';
-import {
-  getTestBedConfig,
-  newTestBedMetadata,
-  spyOnFunctions,
-  TClassMemberFunctionSpiesObject,
-  testingEnvironment,
-} from '@app/client-testing-unit';
+import { diagnosticsActions } from '@app/client-store-diagnostics';
+import { newTestBedMetadata, spyOnFunctions, TClassMemberFunctionSpiesObject } from '@app/client-testing-unit';
 import { Store } from '@ngrx/store';
 
 import { AppDiagnosticsIndexComponent } from './diagnostics-index.component';
 
 describe('AppDiagnosticsIndexComponent', () => {
-  const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
+  const testBedConfig: TestModuleMetadata = newTestBedMetadata({
     declarations: [AppDiagnosticsIndexComponent],
-    imports: [
-      AppWebsocketStoreModule.forRoot(testingEnvironment),
-      RouterTestingModule.withRoutes([
-        { path: '', component: AppDiagnosticsIndexComponent },
-        { path: '', redirectTo: '', pathMatch: 'full' },
-        { path: '**', redirectTo: '' },
-      ]),
+    providers: [
+      {
+        provide: Store,
+        useValue: {
+          dispatch: () => void 0,
+        },
+      },
     ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
   });
-  const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
   let fixture: ComponentFixture<AppDiagnosticsIndexComponent>;
   let component: AppDiagnosticsIndexComponent;
@@ -51,7 +45,13 @@ describe('AppDiagnosticsIndexComponent', () => {
   });
 
   it('should call store dispatch on init', () => {
-    expect(storeDispatchSpy).toHaveBeenCalledWith(websocketActions.connect());
-    expect(storeDispatchSpy).toHaveBeenCalledWith(websocketActions.getEvents());
+    const calls = {
+      first: 1,
+      second: 2,
+      third: 3,
+    };
+    expect(storeDispatchSpy).toHaveBeenNthCalledWith(calls.first, diagnosticsActions.staticData());
+    expect(storeDispatchSpy).toHaveBeenNthCalledWith(calls.second, diagnosticsActions.startEvents());
+    expect(storeDispatchSpy).toHaveBeenNthCalledWith(calls.third, diagnosticsActions.stopEvents());
   });
 });

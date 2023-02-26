@@ -1,24 +1,30 @@
+import { CUSTOM_ELEMENTS_SCHEMA, SecurityContext } from '@angular/core';
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
+import { MatListModule } from '@angular/material/list';
+import { DomSanitizer } from '@angular/platform-browser';
+import { newTestBedMetadata } from '@app/client-testing-unit';
 
 import { AppDiagnosticsHomePage } from './diagnostics-home-page.component';
 
 describe('AppDiagnosticsHomePage', () => {
-  const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
+  const testBedConfig: TestModuleMetadata = newTestBedMetadata({
+    imports: [MatListModule],
     declarations: [AppDiagnosticsHomePage],
-    imports: [
-      RouterTestingModule.withRoutes([
-        { path: '', component: AppDiagnosticsHomePage },
-        { path: '', redirectTo: '', pathMatch: 'full' },
-        { path: '**', redirectTo: '' },
-      ]),
+    providers: [
+      {
+        provide: DomSanitizer,
+        useValue: {
+          sanitize: (ctx: SecurityContext, input: string) => input,
+        },
+      },
     ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
   });
-  const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
   let fixture: ComponentFixture<AppDiagnosticsHomePage>;
   let component: AppDiagnosticsHomePage;
+
+  let sanitizer: DomSanitizer;
 
   beforeEach(waitForAsync(() => {
     void TestBed.configureTestingModule(testBedConfig)
@@ -26,6 +32,7 @@ describe('AppDiagnosticsHomePage', () => {
       .then(() => {
         fixture = TestBed.createComponent(AppDiagnosticsHomePage);
         component = fixture.debugElement.componentInstance;
+        sanitizer = TestBed.inject(DomSanitizer);
         fixture.detectChanges();
       });
   }));
@@ -34,52 +41,11 @@ describe('AppDiagnosticsHomePage', () => {
     expect(component).toBeDefined();
   });
 
-  it('timerChanges should set timer value correctly #1', () => {
+  it('markedInstructionsChanges should append a sanitiation note', () => {
     const change = 'timer changes 10';
-    component.timerChanges(change);
-    expect(component.timer).toEqual(change);
-  });
-
-  it('timerChanges should set timer value correctly #2', () => {
-    const base = 2;
-    const exponent = 11;
-    const change = `timer changes ${exponent}`;
-    component.timerChanges(change);
-    expect(component.timer).toEqual(`The timer is freaking out ${Math.pow(base, exponent)}`);
-  });
-
-  it('timerChanges should set timer value correctly #3', () => {
-    component.timerChanges();
-    expect(component.timer).toEqual('');
-  });
-
-  it('ngOnChanges should work correctly #1', () => {
-    component.timer = '60';
-    component.ngOnChanges({
-      timer: { currentValue: component.timer, firstChange: true, isFirstChange: () => true, previousValue: null },
-      markedInstructions: {
-        currentValue: '',
-        firstChange: true,
-        isFirstChange: () => true,
-        previousValue: null,
-      },
-    });
-    expect(component.timer).toEqual(component.timer);
-  });
-
-  it('ngOnChanges should work correctly #2', () => {
-    component.timer = '61';
-    component.ngOnChanges({
-      timer: { currentValue: component.timer, firstChange: true, isFirstChange: () => true, previousValue: null },
-      markedInstructions: {
-        currentValue: '',
-        firstChange: true,
-        isFirstChange: () => true,
-        previousValue: null,
-      },
-    });
-    const base = 2;
-    const exponent = 61;
-    expect(component.timer).toEqual(`The timer is freaking out ${Math.pow(base, exponent)}`);
+    component.markedInstructionsChanges(change);
+    expect(component.markedInstructions).toEqual(
+      sanitizer.sanitize(SecurityContext.HTML, `${change}\n\n<small> Sanitized with DOM Sanitizer.</small>`),
+    );
   });
 });

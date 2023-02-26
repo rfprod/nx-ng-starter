@@ -43,7 +43,7 @@ jobs:
 
   publish-client-d3-charts:
     needs: checks
-    if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).package-d3-charts == 'true' }}
+    if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packageCharts == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -65,7 +65,7 @@ jobs:
 
   publish-client-util-eliza:
     needs: checks
-    if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).package-eliza == 'true' }}
+    if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packageEliza == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -83,4 +83,26 @@ jobs:
         uses: ./.github/actions/npm-publish
         with:
           library-name: client-util-eliza
+          npm-automation-token: ${{ secrets.NPM_AUTOMATION_TOKEN }}
+
+  publish-backend-diagnostics:
+    needs: checks
+    if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packageBackendDiagnostics == 'true' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+        with:
+          compodoc: false
+          cypress: false
+          firebase-tools: false
+
+      - name: NPM publish
+        uses: ./.github/actions/npm-publish
+        with:
+          library-name: backend-diagnostics
           npm-automation-token: ${{ secrets.NPM_AUTOMATION_TOKEN }}

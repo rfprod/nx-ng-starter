@@ -1,10 +1,11 @@
+import { dianosticEventsGatewayPort } from '@app/backend-diagnostics';
 import { backendGrpcClientOptions } from '@app/backend-grpc';
-import { defaultWsPort } from '@app/backend-interfaces';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions } from '@nestjs/microservices';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { WsAdapter } from '@nestjs/platform-ws';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as compression from 'compression';
 import dotenv from 'dotenv';
 import e from 'express';
@@ -22,6 +23,10 @@ const server: e.Express = e();
  * Defult port value.
  */
 const defaultPort = 8080;
+/**
+ * Global prefix for the API endpoints.
+ */
+const globalPrefix = 'api';
 
 /**
  * Load environment variables.
@@ -51,7 +56,6 @@ async function bootstrap(expressInstance: e.Express): Promise<unknown> {
   const app = await NestFactory.create(AppApiModule, new ExpressAdapter(expressInstance));
   app.useWebSocketAdapter(new WsAdapter(app));
 
-  const globalPrefix = 'api';
   app.setGlobalPrefix(globalPrefix);
   const corsOptions: CorsOptions = {
     origin: [/localhost/, /firebase\.app/, /web\.app/],
@@ -60,12 +64,7 @@ async function bootstrap(expressInstance: e.Express): Promise<unknown> {
   };
   app.enableCors(corsOptions);
 
-  app.use(
-    compression.default({
-      threshold: 0,
-      level: -1,
-    }),
-  );
+  app.use(compression.default({ threshold: 0, level: -1 }));
 
   const grpcClientOptions = backendGrpcClientOptions(environment);
   app.connectMicroservice<MicroserviceOptions>(grpcClientOptions);
@@ -73,12 +72,17 @@ async function bootstrap(expressInstance: e.Express): Promise<unknown> {
 
   initAdmin();
 
+  const config = new DocumentBuilder().setTitle(environment.appName).setVersion('1.0').build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup(globalPrefix, app, document);
+
   if (typeof process.env.FIREBASE_CONFIG === 'undefined' || process.env.FIREBASE_CONFIG === '') {
     const port = typeof process.env.port !== 'undefined' ? process.env.port : defaultPort;
     await app.listen(port, () => {
       console.warn(`Listening at:
     - http://localhost:${port}/${globalPrefix}/
-    - http://localhost:${port}/${globalPrefix}/static
+    - http://localhost:${port}/${globalPrefix}/diagnostics
+    - http://localhost:${port}/${globalPrefix}/diagnostics/static
     - http://localhost:${port}/${globalPrefix}/auth
       - http://localhost:${port}/${globalPrefix}/auth/signup
       - http://localhost:${port}/${globalPrefix}/auth/login
@@ -86,7 +90,7 @@ async function bootstrap(expressInstance: e.Express): Promise<unknown> {
     - http://localhost:${port}/${globalPrefix}/graphql
     - http://localhost:${port}/${globalPrefix}/grpc
       - http://localhost:${port}/${globalPrefix}/grpc/:id
-    - ws://localhost:${defaultWsPort}/api/events`);
+    - ws://localhost:${dianosticEventsGatewayPort}/api/events`);
     });
   }
 

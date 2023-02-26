@@ -145,14 +145,14 @@ Below are some plugins which can be added to the workspace:
 
 | Application type                       | Command                  | Part of the workspace |
 | -------------------------------------- | ------------------------ | --------------------- |
-| [Angular](https://angular.io)          | `ng add @nrwl/angular`   | :heavy_check_mark:    |
-| [React](https://reactjs.org)           | `ng add @nrwl/react`     | :x:                   |
-| Web (no framework frontends)           | `ng add @nrwl/web`       | :x:                   |
-| [Nest](https://nestjs.com)             | `ng add @nrwl/nest`      | :heavy_check_mark:    |
-| [Express](https://expressjs.com)       | `ng add @nrwl/express`   | :x:                   |
-| [Node](https://nodejs.org)             | `ng add @nrwl/node`      | :heavy_check_mark:    |
-| [Storybook](https://storybook.js.org/) | `ng add @nrwl/storybook` | :heavy_check_mark:    |
-| [Cypress](https://www.cypress.io/)     | `ng add @nrwl/cypress`   | :heavy_check_mark:    |
+| [Angular](https://angular.io)          | `nx add @nrwl/angular`   | :heavy_check_mark:    |
+| [React](https://reactjs.org)           | `nx add @nrwl/react`     | :x:                   |
+| Web (no framework frontends)           | `nx add @nrwl/web`       | :x:                   |
+| [Nest](https://nestjs.com)             | `nx add @nrwl/nest`      | :heavy_check_mark:    |
+| [Express](https://expressjs.com)       | `nx add @nrwl/express`   | :x:                   |
+| [Node](https://nodejs.org)             | `nx add @nrwl/node`      | :heavy_check_mark:    |
+| [Storybook](https://storybook.js.org/) | `nx add @nrwl/storybook` | :heavy_check_mark:    |
+| [Cypress](https://www.cypress.io/)     | `nx add @nrwl/cypress`   | :heavy_check_mark:    |
 
 ### Generating an application
 

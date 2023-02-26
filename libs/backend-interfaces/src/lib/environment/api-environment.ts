@@ -7,15 +7,12 @@ export interface IApiEnvironment {
   firebase: boolean;
   appName: string;
   grpcUrl: string;
-  wsPort: number;
 }
 
 /**
  * Application name type.
  */
 export type TApiAppName = 'Nx Ng Starter API' | string;
-
-export const defaultWsPort = 8081;
 
 /**
  * API application environment.
@@ -28,8 +25,6 @@ export class AppApiEnvironment implements IApiEnvironment {
   public appName: TApiAppName = 'Nx Ng Starter API';
 
   public grpcUrl = '0.0.0.0:50051';
-
-  public wsPort = defaultWsPort;
 
   constructor(input?: Partial<AppApiEnvironment>) {
     initializeClassProperties<Partial<AppApiEnvironment>>(this, input);

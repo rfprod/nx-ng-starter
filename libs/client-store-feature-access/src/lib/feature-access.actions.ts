@@ -6,7 +6,7 @@ import { featureName, IFeatureAccessStateModel } from './feature-access.interfac
 const initialize = createAction(actionType(featureName, 'init'));
 
 const setEnvironment = createAction(
-  actionType(featureName, 'setEnvironment'),
+  actionType(featureName, 'set environment'),
   props<{ payload: IFeatureAccessStateModel['environment'] }>(),
 );
 

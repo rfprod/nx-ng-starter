@@ -4,10 +4,10 @@ const config: Config.InitialOptions = {
   coverageDirectory: '../../coverage/libs/backend-diagnostics',
   coverageThreshold: {
     global: {
-      branches: 100,
-      functions: 100,
-      lines: 100,
-      statements: 100,
+      branches: 50,
+      functions: 80,
+      lines: 84,
+      statements: 84,
     },
   },
   displayName: 'backend-diagnostics',

@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { firstValueFrom, of } from 'rxjs';
 
-import { diagnosticsModuleProviders } from '../backend-diagnostics.module';
+import { diagnosticsModuleProviders } from '../diagnostics.module';
 import { AppDiagnosticsService } from '../services/diagnostics.service';
 import { AppDiagnosticsController } from './diagnostics.controller';
 

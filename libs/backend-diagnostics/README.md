@@ -2,7 +2,7 @@
 
 Diagnostics functionality for backends.
 
-## Print related commands
+## Developer commands reference
 
 ```bash
 npx nx run tools:help --search backend-diagnostics:

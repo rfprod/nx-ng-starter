@@ -1,4 +1,6 @@
 <app-diagnostics-home-page
-  [timer]="$any(timer$ | async)"
   [markedInstructions]="$any(markedInstructions$ | async)"
+  [staticData]="staticData$ | async"
+  [dynamicData]="dynamicData$ | async"
+  [users]="users$ | async"
 ></app-diagnostics-home-page>
