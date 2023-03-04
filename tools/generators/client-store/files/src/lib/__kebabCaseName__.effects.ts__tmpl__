@@ -6,7 +6,6 @@ import { mergeMap } from 'rxjs/operators';
 
 import { <%= camelCaseName %>Actions } from './<%= kebabCaseName %>.actions';
 import { I<%= pascalCaseName %>State } from './<%= kebabCaseName %>.interface';
-import { <%= camelCaseName %>Selectors } from './<%= kebabCaseName %>.selectors';
 
 @Injectable({
   providedIn: 'root',

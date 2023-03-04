@@ -6,13 +6,16 @@ import { Store, StoreModule } from '@ngrx/store';
 
 import { themeActions } from './theme.actions';
 import { AppThemeEffects } from './theme.effects';
-import { featureName, IThemeState } from './theme.interface';
-import { AppThemeReducer } from './theme.reducer';
+import { IThemeState, themeReducerConfig } from './theme.interface';
+import { themeReducerProvider } from './theme.reducer';
 
 describe('AppThemeEffects', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [StoreModule.forFeature<IThemeState>(featureName, AppThemeReducer.token), EffectsModule.forFeature([AppThemeEffects])],
-    providers: [AppThemeReducer.provider],
+    imports: [
+      StoreModule.forFeature<IThemeState>(themeReducerConfig.featureName, themeReducerConfig.token),
+      EffectsModule.forFeature([AppThemeEffects]),
+    ],
+    providers: [themeReducerProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 

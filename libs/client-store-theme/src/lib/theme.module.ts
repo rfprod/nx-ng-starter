@@ -4,13 +4,13 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { AppThemeEffects } from './theme.effects';
-import { featureName, IThemeState } from './theme.interface';
-import { AppThemeReducer } from './theme.reducer';
+import { IThemeState, themeReducerConfig } from './theme.interface';
+import { themeReducerProvider } from './theme.reducer';
 
 @NgModule({
   imports: [
     OverlayModule,
-    StoreModule.forFeature<IThemeState>(featureName, AppThemeReducer.token),
+    StoreModule.forFeature<IThemeState>(themeReducerConfig.featureName, themeReducerConfig.token),
     EffectsModule.forFeature([AppThemeEffects]),
   ],
 })
@@ -18,7 +18,7 @@ export class AppThemeStoreModule {
   public static forRoot(): ModuleWithProviders<AppThemeStoreModule> {
     return {
       ngModule: AppThemeStoreModule,
-      providers: [AppThemeReducer.provider],
+      providers: [themeReducerProvider],
     };
   }
 }

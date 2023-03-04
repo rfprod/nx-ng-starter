@@ -4,14 +4,14 @@ import { Store, StoreModule } from '@ngrx/store';
 import { first, tap } from 'rxjs';
 
 import { featureAccessActions } from './feature-access.actions';
-import { featureName, IFeatureAccessState, IFeatureAccessStateModel } from './feature-access.interface';
-import { AppFeatureAccessReducer } from './feature-access.reducer';
+import { featureAccessReducerConfig, IFeatureAccessState, IFeatureAccessStateModel } from './feature-access.interface';
+import { AppFeatureAccessReducer, featureAccessReducerProvider } from './feature-access.reducer';
 import { featureAccessSelectors } from './feature-access.selectors';
 
 describe('AppFeatureAccessReducer', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [StoreModule.forFeature<IFeatureAccessState>(featureName, AppFeatureAccessReducer.token)],
-    providers: [AppFeatureAccessReducer.provider],
+    imports: [StoreModule.forFeature<IFeatureAccessState>(featureAccessReducerConfig.featureName, featureAccessReducerConfig.token)],
+    providers: [featureAccessReducerProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
@@ -32,7 +32,7 @@ describe('AppFeatureAccessReducer', () => {
   });
 
   it('should have correct initial state', () => {
-    const initialState = AppFeatureAccessReducer.initialState;
+    const initialState = featureAccessReducerConfig.initialState;
     const expectation: IFeatureAccessStateModel = { environment: { production: false }, featureFlags: {} };
     expect(initialState).toEqual(expectation);
   });

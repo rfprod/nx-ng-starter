@@ -2,15 +2,13 @@ import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store, StoreModule } from '@ngrx/store';
 
-import { <%= camelCaseName %>Actions } from './<%= kebabCaseName %>.actions';
-import { featureName, I<%= pascalCaseName %>State, I<%= pascalCaseName %>StateModel } from './<%= kebabCaseName %>.interface';
-import { App<%= pascalCaseName %>Reducer } from './<%= kebabCaseName %>.reducer';
-import { <%= camelCaseName %>Selectors } from './<%= kebabCaseName %>.selectors';
+import { <%= camelCaseName %>ReducerConfig, I<%= pascalCaseName %>State } from './<%= kebabCaseName %>.interface';
+import { App<%= pascalCaseName %>Reducer, <%= camelCaseName %>ReducerProvider } from './<%= kebabCaseName %>.reducer';
 
 describe('App<%= pascalCaseName %>Reducer', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [StoreModule.forFeature<I<%= pascalCaseName %>State>(featureName, App<%= pascalCaseName %>Reducer.token)],
-    providers: [App<%= pascalCaseName %>Reducer.provider],
+    imports: [StoreModule.forFeature<I<%= pascalCaseName %>State>(<%= camelCaseName %>ReducerConfig.featureName, <%= camelCaseName %>ReducerConfig.token)],
+    providers: [<%= camelCaseName %>ReducerProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 

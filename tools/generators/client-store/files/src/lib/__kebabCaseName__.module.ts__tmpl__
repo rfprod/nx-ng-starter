@@ -3,17 +3,17 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { App<%= pascalCaseName %>Effects } from './<%= kebabCaseName %>.effects';
-import { featureName, I<%= pascalCaseName %>State } from './<%= kebabCaseName %>.interface';
-import { App<%= pascalCaseName %>Reducer } from './<%= kebabCaseName %>.reducer';
+import { <%= camelCaseName %>ReducerConfig, I<%= pascalCaseName %>State } from './<%= kebabCaseName %>.interface';
+import { <%= camelCaseName %>ReducerProvider } from './<%= kebabCaseName %>.reducer';
 
 @NgModule({
-  imports: [StoreModule.forFeature<I<%= pascalCaseName %>State>(featureName, App<%= pascalCaseName %>Reducer.token), EffectsModule.forFeature([App<%= pascalCaseName %>Effects])],
+  imports: [StoreModule.forFeature<I<%= pascalCaseName %>State>(<%= camelCaseName %>ReducerConfig.featureName, <%= camelCaseName %>ReducerConfig.token), EffectsModule.forFeature([App<%= pascalCaseName %>Effects])],
 })
 export class App<%= pascalCaseName %>StoreModule {
   public static forRoot(): ModuleWithProviders<App<%= pascalCaseName %>StoreModule> {
     return {
       ngModule: App<%= pascalCaseName %>StoreModule,
-      providers: [App<%= pascalCaseName %>Reducer.provider],
+      providers: [<%= camelCaseName %>ReducerProvider],
     };
   }
 }

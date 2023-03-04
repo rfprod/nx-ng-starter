@@ -1,11 +1,11 @@
 import { actionType } from '@app/client-util-ngrx';
 import { createAction } from '@ngrx/store';
 
-import { featureName } from './chatbot.interface';
+import { chatbotReducerConfig } from './chatbot.interface';
 
-const open = createAction(actionType(featureName, 'open'));
+const open = createAction(actionType(chatbotReducerConfig.featureName, 'open'));
 
-const close = createAction(actionType(featureName, 'close'));
+const close = createAction(actionType(chatbotReducerConfig.featureName, 'close'));
 
 export const chatbotActions = {
   open,

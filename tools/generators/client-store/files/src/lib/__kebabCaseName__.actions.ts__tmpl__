@@ -1,9 +1,9 @@
 import { actionType } from '@app/client-util-ngrx';
 import { createAction } from '@ngrx/store';
 
-import { featureName } from './<%= kebabCaseName %>.interface';
+import { <%= camelCaseName %>ReducerConfig } from './<%= kebabCaseName %>.interface';
 
-const action = createAction(actionType(featureName, 'action')); // TODO
+const action = createAction(actionType(<%= camelCaseName %>ReducerConfig.featureName, 'action')); // TODO
 
 export const <%= camelCaseName %>Actions = {
   action,

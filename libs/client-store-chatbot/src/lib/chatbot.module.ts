@@ -3,17 +3,20 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { AppChatbotEffects } from './chatbot.effects';
-import { featureName, IChatbotState } from './chatbot.interface';
-import { AppChatbotReducer } from './chatbot.reducer';
+import { chatbotReducerConfig, IChatbotState } from './chatbot.interface';
+import { chatbotReducerProvider } from './chatbot.reducer';
 
 @NgModule({
-  imports: [StoreModule.forFeature<IChatbotState>(featureName, AppChatbotReducer.token), EffectsModule.forFeature([AppChatbotEffects])],
+  imports: [
+    StoreModule.forFeature<IChatbotState>(chatbotReducerConfig.featureName, chatbotReducerConfig.token),
+    EffectsModule.forFeature([AppChatbotEffects]),
+  ],
 })
 export class AppChatbotStoreModule {
   public static forRoot(): ModuleWithProviders<AppChatbotStoreModule> {
     return {
       ngModule: AppChatbotStoreModule,
-      providers: [AppChatbotReducer.provider],
+      providers: [chatbotReducerProvider],
     };
   }
 }

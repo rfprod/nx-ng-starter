@@ -1,10 +1,12 @@
+import { actionType } from '@app/client-util-ngrx';
 import { createAction, props } from '@ngrx/store';
 
-import { featureName, IMdFilesStateModel } from './md-files.interface';
+import { IMdFilesStateModel, mdFilesReducerConfig } from './md-files.interface';
 
-const type = (name: string) => `[${featureName}] ${name}`;
-
-const showReadme = createAction(type('show readme'), props<{ filePath: IMdFilesStateModel['filePath'] }>());
+const showReadme = createAction(
+  actionType(mdFilesReducerConfig.featureName, 'show readme'),
+  props<{ filePath: IMdFilesStateModel['filePath'] }>(),
+);
 
 export const mdFilesActions = {
   showReadme,

@@ -4,14 +4,14 @@ import { Store, StoreModule } from '@ngrx/store';
 import { first, switchMap, tap } from 'rxjs';
 
 import { httpProgressActions } from './http-progress.actions';
-import { featureName, IHttpProgressState, IHttpProgressStateModel, IShowToastPayload } from './http-progress.interface';
-import { AppHttpProgressReducer } from './http-progress.reducer';
+import { httpProgressReducerConfig, IHttpProgressState, IHttpProgressStateModel, IShowToastPayload } from './http-progress.interface';
+import { AppHttpProgressReducer, httpProgressReducerProvider } from './http-progress.reducer';
 import { httpProgressSelectors } from './http-progress.selectors';
 
 describe('AppHttpProgressReducer', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [StoreModule.forFeature<IHttpProgressState>(featureName, AppHttpProgressReducer.token)],
-    providers: [AppHttpProgressReducer.provider],
+    imports: [StoreModule.forFeature<IHttpProgressState>(httpProgressReducerConfig.featureName, httpProgressReducerConfig.token)],
+    providers: [httpProgressReducerProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
@@ -32,7 +32,7 @@ describe('AppHttpProgressReducer', () => {
   });
 
   it('should have correct initial state', () => {
-    const initialState = AppHttpProgressReducer.initialState;
+    const initialState = httpProgressReducerConfig.initialState;
     const expectation: IHttpProgressStateModel = {
       mainView: {
         counter: 0,

@@ -70,7 +70,7 @@ checkConfigPathAndProceed() {
   else
     if [ "$3" = "fix" ]; then
       # ts formatting with nx
-      npx nx lint "$1" "--${3}" --parallel --max-parallel=2
+      npx nx lint "$1" "--${3}"
       # scss formatting with stylelint
       if [ -n "${MODULE_HAS_SCSS_FILES}" ]; then
         npx stylelint "$STYLELINT_PATHS" --customSyntax=postcss-scss "--${3}"
@@ -89,7 +89,7 @@ checkConfigPathAndProceed() {
       fi
     else
       # ts formatting with nx
-      npx nx lint "$1" --parallel --max-parallel=2 || exit 1
+      npx nx lint "$1" || exit 1
       # scss formatting with stylelint
       if [ -n "${MODULE_HAS_SCSS_FILES}" ]; then
         # catch stylelint exit code; it returns 2 in case of errors
@@ -124,11 +124,11 @@ lintAffected() {
   printGap
 
   if [ "$1" = "fix" ]; then
-    npx nx affected --target=lint --base=origin/dev --head=HEAD --fix --parallel --max-parallel=2 || exit 1
+    npx nx affected --target=lint --base=origin/dev --head=HEAD --fix || exit 1
     npm run lint:scss:fix || exit 1
     npm run lint:html:fix || exit 1
   else
-    npx nx affected --target=lint --base=origin/dev --head=HEAD --parallel --max-parallel=2 || exit 1
+    npx nx affected --target=lint --base=origin/dev --head=HEAD || exit 1
     npm run lint:scss || exit 1
     npm run lint:html || exit 1
   fi
@@ -145,11 +145,11 @@ lintAll() {
   printGap
 
   if [ "$1" = "fix" ]; then
-    npx nx run-many --target=lint --all --fix --parallel --max-parallel=2 || exit 1
+    npx nx run-many --target=lint --all --fix || exit 1
     npm run lint:scss:fix || exit 1
     npm run lint:html:fix || exit 1
   else
-    npx nx run-many --target=lint --all --parallel --max-parallel=2 || exit 1
+    npx nx run-many --target=lint --all || exit 1
     npm run lint:scss || exit 1
     npm run lint:html || exit 1
   fi

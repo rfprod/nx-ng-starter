@@ -6,13 +6,16 @@ import { Store, StoreModule } from '@ngrx/store';
 
 import { userActions } from './user.actions';
 import { AppUserEffects } from './user.effects';
-import { featureName, IUserState } from './user.interface';
-import { AppUserReducer } from './user.reducer';
+import { IUserState, userReducerConfig } from './user.interface';
+import { userReducerProvider } from './user.reducer';
 
 describe('AppUserEffects', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [StoreModule.forFeature<IUserState>(featureName, AppUserReducer.token), EffectsModule.forFeature([AppUserEffects])],
-    providers: [AppUserReducer.provider],
+    imports: [
+      StoreModule.forFeature<IUserState>(userReducerConfig.featureName, userReducerConfig.token),
+      EffectsModule.forFeature([AppUserEffects]),
+    ],
+    providers: [userReducerProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 

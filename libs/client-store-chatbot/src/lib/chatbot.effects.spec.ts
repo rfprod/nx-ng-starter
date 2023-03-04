@@ -6,13 +6,16 @@ import { Store, StoreModule } from '@ngrx/store';
 
 import { chatbotActions } from './chatbot.actions';
 import { AppChatbotEffects } from './chatbot.effects';
-import { featureName, IChatbotState } from './chatbot.interface';
-import { AppChatbotReducer } from './chatbot.reducer';
+import { chatbotReducerConfig, IChatbotState } from './chatbot.interface';
+import { chatbotReducerProvider } from './chatbot.reducer';
 
 describe('AppChatbotEffects', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [StoreModule.forFeature<IChatbotState>(featureName, AppChatbotReducer.token), EffectsModule.forFeature([AppChatbotEffects])],
-    providers: [AppChatbotReducer.provider],
+    imports: [
+      StoreModule.forFeature<IChatbotState>(chatbotReducerConfig.featureName, chatbotReducerConfig.token),
+      EffectsModule.forFeature([AppChatbotEffects]),
+    ],
+    providers: [chatbotReducerProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 

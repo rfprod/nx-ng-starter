@@ -6,18 +6,18 @@ import { of } from 'rxjs';
 
 import { diagnosticsActions } from './diagnostics.actions';
 import { AppDiagnosticsEffects } from './diagnostics.effects';
-import { featureName, IDiagnosticsState } from './diagnostics.interface';
-import { AppDiagnosticsReducer } from './diagnostics.reducer';
+import { diagnosticsReducerConfig, IDiagnosticsState } from './diagnostics.interface';
+import { diagnosticsReducerProvider } from './diagnostics.reducer';
 import { AppWebsocketApiService } from './services/websocket/websocket-api.service';
 
 describe('AppDiagnosticsEffects', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     imports: [
-      StoreModule.forFeature<IDiagnosticsState>(featureName, AppDiagnosticsReducer.token),
+      StoreModule.forFeature<IDiagnosticsState>(diagnosticsReducerConfig.featureName, diagnosticsReducerConfig.token),
       EffectsModule.forFeature([AppDiagnosticsEffects]),
     ],
     providers: [
-      AppDiagnosticsReducer.provider,
+      diagnosticsReducerProvider,
       {
         provide: AppWebsocketApiService,
         useValue: {

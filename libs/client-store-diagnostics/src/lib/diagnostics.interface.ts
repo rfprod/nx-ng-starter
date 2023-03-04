@@ -1,4 +1,6 @@
 import { InjectionToken } from '@angular/core';
+import { IReducerConfig } from '@app/client-util-ngrx';
+import { ActionReducer } from '@ngrx/store';
 import { WebSocketSubjectConfig } from 'rxjs/webSocket';
 
 export interface IWebsocketRequestEvent {
@@ -31,4 +33,13 @@ export type TWsConfigToken = InjectionToken<IWebsocketConfig>;
 
 export const WS_CONFIG: TWsConfigToken = new InjectionToken<IWebsocketConfig>('WS_CONFIG');
 
-export const featureName: keyof IDiagnosticsState = 'diagnostics';
+export const diagnosticsReducerConfig: IReducerConfig<keyof IDiagnosticsState, IDiagnosticsStateModel> = {
+  featureName: 'diagnostics',
+  token: new InjectionToken<ActionReducer<IDiagnosticsStateModel>>('diagnostics reducer'),
+  initialState: {
+    users: 0,
+    events: [],
+    dynamicData: [],
+    staticData: [],
+  },
+};

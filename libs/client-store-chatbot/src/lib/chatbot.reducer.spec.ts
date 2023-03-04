@@ -4,14 +4,14 @@ import { Store, StoreModule } from '@ngrx/store';
 import { first, switchMap, tap } from 'rxjs';
 
 import { chatbotActions } from './chatbot.actions';
-import { featureName, IChatbotState, IChatbotStateModel } from './chatbot.interface';
-import { AppChatbotReducer } from './chatbot.reducer';
+import { chatbotReducerConfig, IChatbotState, IChatbotStateModel } from './chatbot.interface';
+import { AppChatbotReducer, chatbotReducerProvider } from './chatbot.reducer';
 import { chatbotSelectors } from './chatbot.selectors';
 
 describe('AppChatbotReducer', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [StoreModule.forFeature<IChatbotState>(featureName, AppChatbotReducer.token)],
-    providers: [AppChatbotReducer.provider],
+    imports: [StoreModule.forFeature<IChatbotState>(chatbotReducerConfig.featureName, chatbotReducerConfig.token)],
+    providers: [chatbotReducerProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
@@ -32,7 +32,7 @@ describe('AppChatbotReducer', () => {
   });
 
   it('should have correct initial state', () => {
-    const initialState = AppChatbotReducer.initialState;
+    const initialState = chatbotReducerConfig.initialState;
     const expectation: IChatbotStateModel = { chatbotOpen: false };
     expect(initialState).toEqual(expectation);
   });

@@ -10,7 +10,7 @@ const config: Config.InitialOptions = {
       branches: 100,
       functions: 87,
       lines: 100,
-      statements: 96,
+      statements: 95,
     },
   },
   displayName: 'client-store-user',

@@ -1,4 +1,7 @@
+import { InjectionToken } from '@angular/core';
 import { TToastType } from '@app/client-util';
+import { IReducerConfig } from '@app/client-util-ngrx';
+import { ActionReducer } from '@ngrx/store';
 import { MonoTypeOperatorFunction } from 'rxjs';
 
 export interface IViewProgress {
@@ -20,8 +23,6 @@ export interface IHttpProgressState {
   httpProgress: IHttpProgressStateModel;
 }
 
-export const featureName: keyof IHttpProgressState = 'httpProgress';
-
 export interface IHttpProgressPayload {
   mainView?: boolean;
   sidebar?: boolean;
@@ -38,3 +39,23 @@ export interface IHttpProgressHandler {
   stop(): void;
   tapStopperObservable<T>(): MonoTypeOperatorFunction<T>;
 }
+
+export const httpProgressReducerConfig: IReducerConfig<keyof IHttpProgressState, IHttpProgressStateModel> = {
+  featureName: 'httpProgress',
+  token: new InjectionToken<ActionReducer<IHttpProgressStateModel>>('httpProgress reducer'),
+  initialState: {
+    mainView: {
+      counter: 0,
+      loading: false,
+    },
+    sidebar: {
+      counter: 0,
+      loading: false,
+    },
+    toaster: {
+      message: '',
+      type: 'primary',
+      duration: void 0,
+    },
+  },
+};

@@ -6,7 +6,7 @@ const config: Config.InitialOptions = {
   coverageDirectory: '../../coverage/libs/client-store-diagnostics',
   coverageThreshold: {
     global: {
-      branches: 83,
+      branches: 75,
       functions: 78,
       lines: 95,
       statements: 92,

@@ -8,8 +8,8 @@ import { MarkdownModule, MarkdownModuleConfig, MarkedOptions } from 'ngx-markdow
 
 import { testingProviders } from '../../../testing/testing-providers.mock';
 import { mdFilesActions } from '../../modules/md-files/md-files.actions';
-import { IMdFilesState } from '../../modules/md-files/md-files.interface';
-import { AppMdFilesStoreModule } from '../../modules/md-files/md-files.module';
+import { IMdFilesState, mdFilesReducerConfig } from '../../modules/md-files/md-files.interface';
+import { mdFilesReducerProvider } from '../../modules/md-files/md-files.reducer';
 import { AppDocMarkdownReferenceTreeComponent } from './md-reference-tree.component';
 
 describe('AppDocMarkdownReferenceTreeComponent', () => {
@@ -33,11 +33,11 @@ describe('AppDocMarkdownReferenceTreeComponent', () => {
       RouterTestingModule,
       AppMaterialModule.forRoot(),
       StoreModule.forRoot({}),
-      AppMdFilesStoreModule.forRoot(),
+      StoreModule.forFeature<IMdFilesState>(mdFilesReducerConfig.featureName, mdFilesReducerConfig.token),
       MarkdownModule.forRoot(markdownModuleConfig),
     ],
     declarations: [AppDocMarkdownReferenceTreeComponent],
-    providers: [...testingProviders],
+    providers: [...testingProviders, mdFilesReducerProvider],
   };
 
   let fixture: ComponentFixture<AppDocMarkdownReferenceTreeComponent>;

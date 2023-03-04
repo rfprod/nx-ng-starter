@@ -6,16 +6,19 @@ import { first, of, tap } from 'rxjs';
 
 import { httpApiActions } from './http-api.actions';
 import { AppHttpApiEffects } from './http-api.effects';
-import { featureName, IHttpApiState, IPingResponse } from './http-api.interface';
-import { AppHttpApiReducer } from './http-api.reducer';
+import { httpApiReducerConfig, IHttpApiState, IPingResponse } from './http-api.interface';
+import { httpApiReducerProvider } from './http-api.reducer';
 import { httpApiSelectors } from './http-api.selectors';
 import { AppHttpApiService } from './services/http-api/http-api.service';
 
 describe('AppHttpApiEffects', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [StoreModule.forFeature<IHttpApiState>(featureName, AppHttpApiReducer.token), EffectsModule.forFeature([AppHttpApiEffects])],
+    imports: [
+      StoreModule.forFeature<IHttpApiState>(httpApiReducerConfig.featureName, httpApiReducerConfig.token),
+      EffectsModule.forFeature([AppHttpApiEffects]),
+    ],
     providers: [
-      AppHttpApiReducer.provider,
+      httpApiReducerProvider,
       {
         provide: AppHttpApiService,
         useValue: {
