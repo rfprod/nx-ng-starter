@@ -4,13 +4,13 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { AppSidebarEffects } from './sidebar.effects';
-import { featureName, ISidebarState } from './sidebar.interface';
-import { AppSidebarReducer } from './sidebar.reducer';
+import { ISidebarState, sidebarReducerConfig } from './sidebar.interface';
+import { sidebarReducerProvider } from './sidebar.reducer';
 
 @NgModule({
   imports: [
     MatSidenavModule,
-    StoreModule.forFeature<ISidebarState>(featureName, AppSidebarReducer.token),
+    StoreModule.forFeature<ISidebarState>(sidebarReducerConfig.featureName, sidebarReducerConfig.token),
     EffectsModule.forFeature([AppSidebarEffects]),
   ],
 })
@@ -18,7 +18,7 @@ export class AppSidebarStoreModule {
   public static forRoot(): ModuleWithProviders<AppSidebarStoreModule> {
     return {
       ngModule: AppSidebarStoreModule,
-      providers: [AppSidebarReducer.provider],
+      providers: [sidebarReducerProvider],
     };
   }
 }

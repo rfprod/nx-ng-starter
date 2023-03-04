@@ -3,15 +3,14 @@ import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 
-import { <%= camelCaseName %>Actions } from './<%= kebabCaseName %>.actions';
 import { App<%= pascalCaseName %>Effects } from './<%= kebabCaseName %>.effects';
-import { featureName, I<%= pascalCaseName %>State } from './<%= kebabCaseName %>.interface';
-import { App<%= pascalCaseName %>Reducer } from './<%= kebabCaseName %>.reducer';
+import { <%= camelCaseName %>ReducerConfig, I<%= pascalCaseName %>State } from './<%= kebabCaseName %>.interface';
+import { App<%= pascalCaseName %>Reducer, <%= camelCaseName %>ReducerProvider } from './<%= kebabCaseName %>.reducer';
 
 describe('App<%= pascalCaseName %>Effects', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [StoreModule.forFeature<I<%= pascalCaseName %>State>(featureName, App<%= pascalCaseName %>Reducer.token), EffectsModule.forFeature([App<%= pascalCaseName %>Effects])],
-    providers: [App<%= pascalCaseName %>Reducer.provider],
+    imports: [StoreModule.forFeature<I<%= pascalCaseName %>State>(<%= camelCaseName %>ReducerConfig.featureName, <%= camelCaseName %>ReducerConfig.token)],
+    providers: [<%= camelCaseName %>ReducerProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 

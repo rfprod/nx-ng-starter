@@ -7,7 +7,8 @@ import { StoreModule } from '@ngrx/store';
 import { MarkdownModule, MarkdownModuleConfig, MarkedOptions } from 'ngx-markdown';
 
 import { testingProviders } from '../../../testing/testing-providers.mock';
-import { AppMdFilesStoreModule } from '../../modules/md-files/md-files.module';
+import { IMdFilesState, mdFilesReducerConfig } from '../../modules/md-files/md-files.interface';
+import { mdFilesReducerProvider } from '../../modules/md-files/md-files.reducer';
 import { AppDocMarkdownReferenceComponent } from './md-reference.component';
 
 describe('AppDocMarkdownReferenceComponent', () => {
@@ -31,11 +32,11 @@ describe('AppDocMarkdownReferenceComponent', () => {
       RouterTestingModule,
       AppMaterialModule.forRoot(),
       StoreModule.forRoot({}),
-      AppMdFilesStoreModule.forRoot(),
+      StoreModule.forFeature<IMdFilesState>(mdFilesReducerConfig.featureName, mdFilesReducerConfig.token),
       MarkdownModule.forRoot(markdownModuleConfig),
     ],
     declarations: [AppDocMarkdownReferenceComponent],
-    providers: [...testingProviders],
+    providers: [...testingProviders, mdFilesReducerProvider],
   };
 
   let fixture: ComponentFixture<AppDocMarkdownReferenceComponent>;

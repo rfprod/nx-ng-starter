@@ -4,12 +4,12 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { AppDiagnosticsEffects } from './diagnostics.effects';
-import { featureName, IDiagnosticsState, IWebsocketConfig, WS_CONFIG } from './diagnostics.interface';
-import { AppDiagnosticsReducer } from './diagnostics.reducer';
+import { diagnosticsReducerConfig, IDiagnosticsState, IWebsocketConfig, WS_CONFIG } from './diagnostics.interface';
+import { diagnosticsReducerProvider } from './diagnostics.reducer';
 
 @NgModule({
   imports: [
-    StoreModule.forFeature<IDiagnosticsState>(featureName, AppDiagnosticsReducer.token),
+    StoreModule.forFeature<IDiagnosticsState>(diagnosticsReducerConfig.featureName, diagnosticsReducerConfig.token),
     EffectsModule.forFeature([AppDiagnosticsEffects]),
   ],
 })
@@ -22,7 +22,7 @@ export class AppDiagnosticsStoreModule {
     return {
       ngModule: AppDiagnosticsStoreModule,
       providers: [
-        AppDiagnosticsReducer.provider,
+        diagnosticsReducerProvider,
         {
           provide: WS_CONFIG,
           useValue: wsConfig,

@@ -5,19 +5,19 @@ import { Store, StoreModule } from '@ngrx/store';
 
 import { httpProgressActions } from './http-progress.actions';
 import { AppHttpProgressEffects } from './http-progress.effects';
-import { featureName, IHttpProgressState, IShowToastPayload } from './http-progress.interface';
-import { AppHttpProgressReducer } from './http-progress.reducer';
+import { httpProgressReducerConfig, IHttpProgressState, IShowToastPayload } from './http-progress.interface';
+import { httpProgressReducerProvider } from './http-progress.reducer';
 import { AppHttpProgressService } from './services/http-progress/http-progress.service';
 import { AppToasterService } from './services/toaster/toaster.service';
 
 describe('AppHttpProgressEffects', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     imports: [
-      StoreModule.forFeature<IHttpProgressState>(featureName, AppHttpProgressReducer.token),
+      StoreModule.forFeature<IHttpProgressState>(httpProgressReducerConfig.featureName, httpProgressReducerConfig.token),
       EffectsModule.forFeature([AppHttpProgressEffects]),
     ],
     providers: [
-      AppHttpProgressReducer.provider,
+      httpProgressReducerProvider,
       {
         provide: AppHttpProgressService,
         useValue: {

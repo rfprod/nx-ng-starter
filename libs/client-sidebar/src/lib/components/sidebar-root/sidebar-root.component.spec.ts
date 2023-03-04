@@ -18,6 +18,10 @@ describe('AppSidebarRootComponent', () => {
           path: 'info',
           component: AppTestingComponent,
         },
+        {
+          path: 'charts',
+          component: AppTestingComponent,
+        },
       ]),
     ],
   });

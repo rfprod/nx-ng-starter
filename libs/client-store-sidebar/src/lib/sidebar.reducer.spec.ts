@@ -4,14 +4,14 @@ import { Store, StoreModule } from '@ngrx/store';
 import { first, switchMap, tap } from 'rxjs';
 
 import { sidebarActions } from './sidebar.actions';
-import { featureName, ISidebarState, ISidebarStateModel } from './sidebar.interface';
-import { AppSidebarReducer } from './sidebar.reducer';
+import { ISidebarState, ISidebarStateModel, sidebarReducerConfig } from './sidebar.interface';
+import { AppSidebarReducer, sidebarReducerProvider } from './sidebar.reducer';
 import { sidebarSelectors } from './sidebar.selectors';
 
 describe('AppSidebarReducer', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [StoreModule.forFeature<ISidebarState>(featureName, AppSidebarReducer.token)],
-    providers: [AppSidebarReducer.provider],
+    imports: [StoreModule.forFeature<ISidebarState>(sidebarReducerConfig.featureName, sidebarReducerConfig.token)],
+    providers: [sidebarReducerProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
@@ -32,7 +32,7 @@ describe('AppSidebarReducer', () => {
   });
 
   it('should have correct initial state', () => {
-    const initialState = AppSidebarReducer.initialState;
+    const initialState = sidebarReducerConfig.initialState;
     const expectation: ISidebarStateModel = { sidebarOpen: false };
     expect(initialState).toEqual(expectation);
   });

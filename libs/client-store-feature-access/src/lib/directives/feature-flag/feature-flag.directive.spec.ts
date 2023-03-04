@@ -6,8 +6,8 @@ import { Store, StoreModule } from '@ngrx/store';
 
 import { featureAccessActions } from '../../feature-access.actions';
 import { AppFeatureAccessEffects } from '../../feature-access.effects';
-import { featureName, IFeatureAccessState } from '../../feature-access.interface';
-import { AppFeatureAccessReducer } from '../../feature-access.reducer';
+import { featureAccessReducerConfig, IFeatureAccessState } from '../../feature-access.interface';
+import { featureAccessReducerProvider } from '../../feature-access.reducer';
 import { AppFeatureFlagDirective } from './feature-flag.directive';
 
 @Component({
@@ -23,10 +23,10 @@ class AppFeatureFlagTestComponent {
 describe('AppFeatureFlagDirective', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     imports: [
-      StoreModule.forFeature<IFeatureAccessState>(featureName, AppFeatureAccessReducer.token),
+      StoreModule.forFeature<IFeatureAccessState>(featureAccessReducerConfig.featureName, featureAccessReducerConfig.token),
       EffectsModule.forFeature([AppFeatureAccessEffects]),
     ],
-    providers: [AppFeatureAccessReducer.provider],
+    providers: [featureAccessReducerProvider],
     declarations: [AppFeatureFlagTestComponent, AppFeatureFlagDirective],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);

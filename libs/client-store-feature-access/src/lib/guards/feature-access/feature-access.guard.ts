@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { first, map, Observable } from 'rxjs';
 
@@ -9,7 +9,7 @@ import { featureAccessSelectors } from '../../feature-access.selectors';
 @Injectable({
   providedIn: 'root',
 })
-export class AppFeatureAccessGuard implements CanActivate {
+export class AppFeatureAccessGuard {
   constructor(private readonly router: Router, private readonly store: Store<IFeatureAccessState>) {}
 
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {

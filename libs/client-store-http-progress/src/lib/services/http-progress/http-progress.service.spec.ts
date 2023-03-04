@@ -3,11 +3,11 @@ import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { catchError, of, throwError } from 'rxjs';
 
-import { AppHttpProgressService } from './http-progress.service';
+import { AppHttpProgressService, httpProgressService } from './http-progress.service';
 
 describe('AppHttpProgressService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    providers: [AppHttpProgressService.provider],
+    providers: [httpProgressService],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 

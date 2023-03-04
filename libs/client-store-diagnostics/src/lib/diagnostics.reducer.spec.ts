@@ -4,14 +4,14 @@ import { Store, StoreModule } from '@ngrx/store';
 import { first, tap } from 'rxjs';
 
 import { diagnosticsActions } from './diagnostics.actions';
-import { featureName, IDiagnosticsState, IDiagnosticsStateModel } from './diagnostics.interface';
-import { AppDiagnosticsReducer } from './diagnostics.reducer';
+import { diagnosticsReducerConfig, IDiagnosticsState, IDiagnosticsStateModel } from './diagnostics.interface';
+import { AppDiagnosticsReducer, diagnosticsReducerProvider } from './diagnostics.reducer';
 import { diagnosticsSelectors } from './diagnostics.selectors';
 
 describe('AppDiagnosticsReducer', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [StoreModule.forFeature<IDiagnosticsState>(featureName, AppDiagnosticsReducer.token)],
-    providers: [AppDiagnosticsReducer.provider],
+    imports: [StoreModule.forFeature<IDiagnosticsState>(diagnosticsReducerConfig.featureName, diagnosticsReducerConfig.token)],
+    providers: [diagnosticsReducerProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
@@ -32,7 +32,7 @@ describe('AppDiagnosticsReducer', () => {
   });
 
   it('should have correct initial state', () => {
-    const initialState = AppDiagnosticsReducer.initialState;
+    const initialState = diagnosticsReducerConfig.initialState;
     const expectation: IDiagnosticsStateModel = { users: 0, events: [], dynamicData: [], staticData: [] };
     expect(initialState).toEqual(expectation);
   });

@@ -4,14 +4,14 @@ import { Store, StoreModule } from '@ngrx/store';
 import { first, tap } from 'rxjs';
 
 import { userActions } from './user.actions';
-import { featureName, IUserState, IUserStateModel } from './user.interface';
-import { AppUserReducer } from './user.reducer';
+import { IUserState, IUserStateModel, userReducerConfig } from './user.interface';
+import { AppUserReducer, userReducerProvider } from './user.reducer';
 import { userSelectors } from './user.selectors';
 
 describe('AppUserReducer', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [StoreModule.forFeature<IUserState>(featureName, AppUserReducer.token)],
-    providers: [AppUserReducer.provider],
+    imports: [StoreModule.forFeature<IUserState>(userReducerConfig.featureName, userReducerConfig.token)],
+    providers: [userReducerProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
@@ -32,7 +32,7 @@ describe('AppUserReducer', () => {
   });
 
   it('should have correct initial state', () => {
-    const initialState = AppUserReducer.initialState;
+    const initialState = userReducerConfig.initialState;
     const expectation: IUserStateModel = { admin: false, email: '', token: '' };
     expect(initialState).toEqual(expectation);
   });

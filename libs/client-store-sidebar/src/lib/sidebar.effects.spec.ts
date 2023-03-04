@@ -6,13 +6,16 @@ import { Store, StoreModule } from '@ngrx/store';
 
 import { sidebarActions } from './sidebar.actions';
 import { AppSidebarEffects } from './sidebar.effects';
-import { featureName, ISidebarState } from './sidebar.interface';
-import { AppSidebarReducer } from './sidebar.reducer';
+import { ISidebarState, sidebarReducerConfig } from './sidebar.interface';
+import { sidebarReducerProvider } from './sidebar.reducer';
 
 describe('AppSidebarEffects', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [StoreModule.forFeature<ISidebarState>(featureName, AppSidebarReducer.token), EffectsModule.forFeature([AppSidebarEffects])],
-    providers: [AppSidebarReducer.provider],
+    imports: [
+      StoreModule.forFeature<ISidebarState>(sidebarReducerConfig.featureName, sidebarReducerConfig.token),
+      EffectsModule.forFeature([AppSidebarEffects]),
+    ],
+    providers: [sidebarReducerProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 

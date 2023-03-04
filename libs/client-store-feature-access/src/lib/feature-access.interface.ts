@@ -1,3 +1,7 @@
+import { InjectionToken } from '@angular/core';
+import { IReducerConfig } from '@app/client-util-ngrx';
+import { ActionReducer } from '@ngrx/store';
+
 export interface IFeatureAccessStateModel {
   environment: {
     production: boolean;
@@ -9,4 +13,13 @@ export interface IFeatureAccessState {
   featureAccess: IFeatureAccessStateModel;
 }
 
-export const featureName: keyof IFeatureAccessState = 'featureAccess';
+export const featureAccessReducerConfig: IReducerConfig<keyof IFeatureAccessState, IFeatureAccessStateModel> = {
+  featureName: 'featureAccess',
+  token: new InjectionToken<ActionReducer<IFeatureAccessStateModel>>('featureAccess reducer'),
+  initialState: {
+    environment: {
+      production: false,
+    },
+    featureFlags: {},
+  },
+};

@@ -4,14 +4,14 @@ import { Store, StoreModule } from '@ngrx/store';
 import { first, switchMap, tap } from 'rxjs';
 
 import { themeActions } from './theme.actions';
-import { featureName, IThemeState, IThemeStateModel } from './theme.interface';
-import { AppThemeReducer } from './theme.reducer';
+import { IThemeState, IThemeStateModel, themeReducerConfig } from './theme.interface';
+import { AppThemeReducer, themeReducerProvider } from './theme.reducer';
 import { themeSelectors } from './theme.selectors';
 
 describe('AppThemeReducer', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [StoreModule.forFeature<IThemeState>(featureName, AppThemeReducer.token)],
-    providers: [AppThemeReducer.provider],
+    imports: [StoreModule.forFeature<IThemeState>(themeReducerConfig.featureName, themeReducerConfig.token)],
+    providers: [themeReducerProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
@@ -32,7 +32,7 @@ describe('AppThemeReducer', () => {
   });
 
   it('should have correct initial state', () => {
-    const initialState = AppThemeReducer.initialState;
+    const initialState = themeReducerConfig.initialState;
     const expectation: IThemeStateModel = { darkThemeEnabled: false };
     expect(initialState).toEqual(expectation);
   });

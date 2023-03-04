@@ -4,14 +4,14 @@ import { Store, StoreModule } from '@ngrx/store';
 import { first, tap } from 'rxjs';
 
 import { httpApiActions } from './http-api.actions';
-import { featureName, IHttpApiState, IHttpApiStateModel } from './http-api.interface';
-import { AppHttpApiReducer } from './http-api.reducer';
+import { httpApiReducerConfig, IHttpApiState, IHttpApiStateModel } from './http-api.interface';
+import { AppHttpApiReducer, httpApiReducerProvider } from './http-api.reducer';
 import { httpApiSelectors } from './http-api.selectors';
 
 describe('AppHttpApiReducer', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [StoreModule.forFeature<IHttpApiState>(featureName, AppHttpApiReducer.token)],
-    providers: [AppHttpApiReducer.provider],
+    imports: [StoreModule.forFeature<IHttpApiState>(httpApiReducerConfig.featureName, httpApiReducerConfig.token)],
+    providers: [httpApiReducerProvider],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
@@ -32,7 +32,7 @@ describe('AppHttpApiReducer', () => {
   });
 
   it('should have correct initial state', () => {
-    const initialState = AppHttpApiReducer.initialState;
+    const initialState = httpApiReducerConfig.initialState;
     const expectation: IHttpApiStateModel = { ping: '' };
     expect(initialState).toEqual(expectation);
   });
