@@ -36,39 +36,45 @@ describe('client-ui', () => {
     await expect(generator.default(tree, { ...context, name: 'ui-client' })).rejects.toThrowError(expected);
   });
 
-  it('should generate expected files and directories', async () => {
-    const result = await generator.default(tree, context);
+  const testTimeout = 10000;
 
-    const defaultFilesPaths = defaultLibraryFilePaths(context.name);
-    for (let i = 0, max = defaultFilesPaths.length; i < max; i += 1) {
-      const filePath = defaultFilesPaths[i];
-      expectFileToExist(filePath, tree);
-    }
+  it(
+    'should generate expected files and directories',
+    async () => {
+      const result = await generator.default(tree, context);
 
-    expectFileToExist(`/libs/${context.name}/src/index.ts`, tree);
-    expectFileToExist(`/libs/${context.name}/src/test-setup.ts`, tree);
+      const defaultFilesPaths = defaultLibraryFilePaths(context.name);
+      for (let i = 0, max = defaultFilesPaths.length; i < max; i += 1) {
+        const filePath = defaultFilesPaths[i];
+        expectFileToExist(filePath, tree);
+      }
 
-    const kebabCaseName = context.name.replace('client-ui-', '');
+      expectFileToExist(`/libs/${context.name}/src/index.ts`, tree);
+      expectFileToExist(`/libs/${context.name}/src/test-setup.ts`, tree);
 
-    const barrel = tree.read(`/libs/${context.name}/src/index.ts`, 'utf-8');
-    expect(barrel).toContain(`export * from './lib/${kebabCaseName}.module';`);
+      const kebabCaseName = context.name.replace('client-ui-', '');
 
-    const testSetup = tree.read(`/libs/${context.name}/src/test-setup.ts`, 'utf-8');
-    const testSetupIncludes = defaultTestSetupIncludes();
-    for (let i = 0, max = testSetupIncludes.length; i < max; i += 1) {
-      const include = testSetupIncludes[i];
-      expect(testSetup).toContain(include);
-    }
+      const barrel = tree.read(`/libs/${context.name}/src/index.ts`, 'utf-8');
+      expect(barrel).toContain(`export * from './lib/${kebabCaseName}.module';`);
 
-    expectFileToExist(`/libs/${context.name}/src/lib/${kebabCaseName}.module.ts`, tree);
+      const testSetup = tree.read(`/libs/${context.name}/src/test-setup.ts`, 'utf-8');
+      const testSetupIncludes = defaultTestSetupIncludes();
+      for (let i = 0, max = testSetupIncludes.length; i < max; i += 1) {
+        const include = testSetupIncludes[i];
+        expect(testSetup).toContain(include);
+      }
 
-    expectFileToExist(`/libs/${context.name}/src/lib/components/${kebabCaseName}/${kebabCaseName}.component.html`, tree);
-    expectFileToExist(`/libs/${context.name}/src/lib/components/${kebabCaseName}/${kebabCaseName}.component.scss`, tree);
-    expectFileToExist(`/libs/${context.name}/src/lib/components/${kebabCaseName}/${kebabCaseName}.component.spec.ts`, tree);
-    expectFileToExist(`/libs/${context.name}/src/lib/components/${kebabCaseName}/${kebabCaseName}.component.ts`, tree);
+      expectFileToExist(`/libs/${context.name}/src/lib/${kebabCaseName}.module.ts`, tree);
 
-    await result();
+      expectFileToExist(`/libs/${context.name}/src/lib/components/${kebabCaseName}/${kebabCaseName}.component.html`, tree);
+      expectFileToExist(`/libs/${context.name}/src/lib/components/${kebabCaseName}/${kebabCaseName}.component.scss`, tree);
+      expectFileToExist(`/libs/${context.name}/src/lib/components/${kebabCaseName}/${kebabCaseName}.component.spec.ts`, tree);
+      expectFileToExist(`/libs/${context.name}/src/lib/components/${kebabCaseName}/${kebabCaseName}.component.ts`, tree);
 
-    expect(finalizeGenerator).toHaveBeenCalled();
-  });
+      await result();
+
+      expect(finalizeGenerator).toHaveBeenCalled();
+    },
+    testTimeout,
+  );
 });

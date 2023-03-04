@@ -64,13 +64,13 @@ jobs:
           npx nx run tools:lint-shell
 
       - name: Lint ts affected
-        run: npx nx affected --target lint --base origin/main --parallel --max-parallel 2
+        run: npx nx affected --target lint --base origin/main
 
       - name: Lint html affected
-        run: npx nx affected --target prettier-check --dryRun --base origin/main --parallel --max-parallel 2
+        run: npx nx affected --target prettier-check --dryRun --base origin/main
 
       - name: Lint scss affected
-        run: npx nx affected --target stylelint-check --dryRun --base origin/main --parallel --max-parallel 2
+        run: npx nx affected --target stylelint-check --dryRun --base origin/main
 
       - name: Unit test affected
         run: |

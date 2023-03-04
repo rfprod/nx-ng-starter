@@ -63,15 +63,15 @@ jobs:
 
       - name: Lint ts
         if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' }}
-        run: npx nx run-many --target lint --all --parallel --max-parallel 2
+        run: npx nx run-many --target lint --all
 
       - name: Lint html
         if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' }}
-        run: npx nx run-many --target prettier-check --dryRun --all --parallel --max-parallel 2
+        run: npx nx run-many --target prettier-check --dryRun --all
 
       - name: Lint scss
         if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' }}
-        run: npx nx run-many --target stylelint-check --dryRun --all --parallel --max-parallel 2
+        run: npx nx run-many --target stylelint-check --dryRun --all
 
       - name: Unit test
         if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' }}
