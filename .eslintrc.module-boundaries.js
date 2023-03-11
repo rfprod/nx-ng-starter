@@ -200,10 +200,6 @@ const clientConstraints = [
     ],
   },
   {
-    sourceTag: 'scope:client-services',
-    onlyDependOnLibsWithTags: ['scope:client-testing-unit', 'scope:client-util'],
-  },
-  {
     sourceTag: 'scope:client-service-worker',
     onlyDependOnLibsWithTags: [],
   },
@@ -227,17 +223,12 @@ const clientConstraints = [
   {
     sourceTag: 'scope:client-diagnostics',
     onlyDependOnLibsWithTags: [
-      'scope:client-core',
       'scope:client-d3-charts',
-      'scope:client-material',
-      'scope:client-services',
-      'scope:client-store',
-      'scope:client-store-http-api',
       'scope:client-store-diagnostics',
-      'scope:client-translate',
+      'scope:client-store-http-api',
+      'scope:client-store-user',
+      'scope:client-store-websocket',
       'scope:client-testing-unit',
-      'scope:client-util',
-      'scope:proto',
     ],
   },
   {
@@ -318,7 +309,6 @@ const clientConstraints = [
       'scope:client-grpc',
       'scope:client-material',
       'scope:client-pwa-offline',
-      'scope:client-services',
       'scope:client-service-worker',
       'scope:client-sidebar',
       'scope:client-store',
