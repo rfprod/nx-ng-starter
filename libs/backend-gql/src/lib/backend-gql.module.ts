@@ -18,7 +18,6 @@ export class AppGqlModule {
       useGlobalPrefix: true,
       path: '/graphql',
       include: [AppGqlMatcompModule],
-      debug: environment.production ? false : true,
       playground: environment.production ? false : true,
       installSubscriptionHandlers: true,
       autoSchemaFile: environment.firebase
@@ -35,10 +34,6 @@ export class AppGqlModule {
         'subscriptions-transport-ws': {
           path: '/api/graphql',
         },
-      },
-      cors: {
-        credentials: true,
-        origin: true,
       },
       buildSchemaOptions: {
         dateScalarMode: 'timestamp',
