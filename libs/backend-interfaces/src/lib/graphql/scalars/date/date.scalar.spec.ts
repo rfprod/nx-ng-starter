@@ -8,9 +8,9 @@ import { AppDateScalar } from './date.scalar';
 @ObjectType('AppModel', { isAbstract: true })
 export class AppModel {
   @Field(() => Date, {
-    defaultValue: new Date().getTime(),
+    defaultValue: new Date(),
   })
-  public creationDate?: number;
+  public created?: number;
 }
 
 @Resolver(() => AppModel)
