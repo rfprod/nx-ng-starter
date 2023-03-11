@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { diagnosticsActions } from '@app/client-store-diagnostics';
-import { newTestBedMetadata, spyOnFunctions, TClassMemberFunctionSpiesObject } from '@app/client-testing-unit';
+import { newTestBedMetadata } from '@app/client-testing-unit';
 import { Store } from '@ngrx/store';
 
 import { AppDiagnosticsIndexComponent } from './diagnostics-index.component';
@@ -22,7 +22,6 @@ describe('AppDiagnosticsIndexComponent', () => {
 
   let fixture: ComponentFixture<AppDiagnosticsIndexComponent>;
   let component: AppDiagnosticsIndexComponent;
-  let componentSpy: TClassMemberFunctionSpiesObject<AppDiagnosticsIndexComponent>;
   let store: Store;
   let storeDispatchSpy: jest.SpyInstance;
 
@@ -34,14 +33,12 @@ describe('AppDiagnosticsIndexComponent', () => {
         storeDispatchSpy = jest.spyOn(store, 'dispatch');
         fixture = TestBed.createComponent(AppDiagnosticsIndexComponent);
         component = fixture.componentInstance;
-        componentSpy = spyOnFunctions<AppDiagnosticsIndexComponent>(component);
         fixture.detectChanges();
       });
   }));
 
   it('should be defined', () => {
     expect(component).toBeDefined();
-    expect(componentSpy).toBeDefined();
   });
 
   it('should call store dispatch on init', () => {

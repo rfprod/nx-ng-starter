@@ -7,7 +7,5 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppDiagnosticsInfoPage {
-  @Input() public ping = '';
-
-  @Input() public markedInstructions = '';
+  @Input() public ping: string | null = '';
 }

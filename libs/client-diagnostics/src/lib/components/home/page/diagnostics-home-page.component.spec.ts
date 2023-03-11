@@ -1,30 +1,20 @@
-import { CUSTOM_ELEMENTS_SCHEMA, SecurityContext } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { DomSanitizer } from '@angular/platform-browser';
 import { newTestBedMetadata } from '@app/client-testing-unit';
 
 import { AppDiagnosticsHomePage } from './diagnostics-home-page.component';
 
 describe('AppDiagnosticsHomePage', () => {
   const testBedConfig: TestModuleMetadata = newTestBedMetadata({
-    imports: [MatListModule],
+    imports: [MatIconModule, MatListModule],
     declarations: [AppDiagnosticsHomePage],
-    providers: [
-      {
-        provide: DomSanitizer,
-        useValue: {
-          sanitize: (ctx: SecurityContext, input: string) => input,
-        },
-      },
-    ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
   });
 
   let fixture: ComponentFixture<AppDiagnosticsHomePage>;
   let component: AppDiagnosticsHomePage;
-
-  let sanitizer: DomSanitizer;
 
   beforeEach(waitForAsync(() => {
     void TestBed.configureTestingModule(testBedConfig)
@@ -32,7 +22,7 @@ describe('AppDiagnosticsHomePage', () => {
       .then(() => {
         fixture = TestBed.createComponent(AppDiagnosticsHomePage);
         component = fixture.debugElement.componentInstance;
-        sanitizer = TestBed.inject(DomSanitizer);
+
         fixture.detectChanges();
       });
   }));
@@ -41,11 +31,9 @@ describe('AppDiagnosticsHomePage', () => {
     expect(component).toBeDefined();
   });
 
-  it('markedInstructionsChanges should append a sanitiation note', () => {
-    const change = 'timer changes 10';
-    component.markedInstructionsChanges(change);
-    expect(component.markedInstructions).toEqual(
-      sanitizer.sanitize(SecurityContext.HTML, `${change}\n\n<small> Sanitized with DOM Sanitizer.</small>`),
-    );
+  it('should have expected initial state', () => {
+    expect(component.users).toBeNull();
+    expect(component.staticData).toBeNull();
+    expect(component.dynamicData).toBeNull();
   });
 });
