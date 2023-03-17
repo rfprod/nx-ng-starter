@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { AppD3ChartsModule } from '@app/client-d3-charts';
@@ -12,7 +13,7 @@ import { AppDiagnosticsInfoPage } from './components/info/page/diagnostics-info-
 import { AppDiagnosticsRoutingModule } from './diagnostics-routing.module';
 
 @NgModule({
-  imports: [CommonModule, MatIconModule, MatListModule, AppDiagnosticsRoutingModule, AppD3ChartsModule],
+  imports: [CommonModule, MatButtonModule, MatIconModule, MatListModule, AppDiagnosticsRoutingModule, AppD3ChartsModule],
   declarations: [
     AppDiagnosticsIndexComponent,
     AppDiagnosticsHomeComponent,
