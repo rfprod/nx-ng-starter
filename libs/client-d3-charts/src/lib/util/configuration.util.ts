@@ -4,7 +4,11 @@
  * @param options the input object
  * @param result the output object
  */
-export const generateConfiguration = <T>(config: T, options: Partial<T> | undefined, result: Record<string, unknown>) => {
+export const generateConfiguration = <T>(
+  config: T,
+  options: Partial<T & Record<string, unknown>> | undefined,
+  result: Record<string, unknown>,
+) => {
   const defaultConfiguration = <Record<string, unknown>>config;
 
   if (typeof options === 'undefined') {

@@ -4,7 +4,7 @@ import { spawnSync } from 'child_process';
 import { logger } from '../../utils/logger';
 import { changesConfig } from './changes.config';
 
-const patternKeys = Object.keys(changesConfig);
+const patternKeys = <(keyof typeof changesConfig)[]>Object.keys(changesConfig);
 
 const env = {
   premerge: Boolean(process.env.PREMERGE),

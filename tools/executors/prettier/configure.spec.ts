@@ -10,7 +10,7 @@ import { IExecutorOptions } from './schema';
 
 describe('AppConfigurePrettierCheckExecutor', () => {
   const getProjectsInput = (withTargets = false) => {
-    const targets = {};
+    const targets: ProjectConfiguration['targets'] = {};
     targets['prettier-check'] = {};
     const projectsInput: Record<string, ProjectConfiguration> = {};
     projectsInput['client-app'] = {

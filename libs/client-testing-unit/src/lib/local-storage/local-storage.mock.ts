@@ -3,14 +3,16 @@
  */
 export class AppLocalStorageMock {
   public getItem(key: string): unknown {
-    return this[key];
+    return (<Record<string, unknown>>this)[key];
   }
 
   public setItem(key: string, value: string): void {
-    this[key] = value;
+    const self = <Record<string, unknown>>this;
+    self[key] = value;
   }
 
   public removeItem(key: string): void {
-    this[key] = void 0;
+    const self = <Record<string, unknown>>this;
+    self[key] = void 0;
   }
 }
