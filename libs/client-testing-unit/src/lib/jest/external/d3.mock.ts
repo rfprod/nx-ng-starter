@@ -22,7 +22,7 @@ const select = (id: string) => {
     style: (name: string, value: string) => {
       const style = el?.style;
       if (typeof style !== 'undefined') {
-        style[name] = value;
+        Object.defineProperty(style, name, { value });
       }
       return select(id);
     },

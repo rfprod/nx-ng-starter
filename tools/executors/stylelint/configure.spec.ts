@@ -10,7 +10,7 @@ import { IExecutorOptions } from './schema';
 
 describe('AppConfigureStylelintCheckExecutor', () => {
   const getProjectsInput = (withTargets = false) => {
-    const targets = {};
+    const targets: ProjectConfiguration['targets'] = {};
     targets['stylelint-check'] = {};
     const projectsInput: Record<string, ProjectConfiguration> = {};
     projectsInput['client-app'] = {

@@ -143,7 +143,7 @@ export class AppElizaService {
         // Check mem flag and store it as decomp's element 2.
         if (rule.pattern.charAt(0) === '$') {
           let ofs = 1;
-          while (rule.pattern.charAt[ofs] === ' ') {
+          while (rule.pattern.charAt(ofs) === ' ') {
             ofs += 1;
           }
           rule.pattern = rule.pattern.substring(ofs);

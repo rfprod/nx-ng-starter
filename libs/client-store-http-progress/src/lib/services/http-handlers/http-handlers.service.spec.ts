@@ -5,13 +5,7 @@ import { Router } from '@angular/router';
 import { ApolloLink, Operation, ServerError, ServerParseError } from '@apollo/client/core';
 import { GraphQLErrors, NetworkError } from '@apollo/client/errors';
 import { ErrorResponse } from '@apollo/client/link/error';
-import {
-  flushHttpRequests,
-  getTestBedConfig,
-  newTestBedMetadata,
-  spyOnFunctions,
-  TClassMemberFunctionSpiesObject,
-} from '@app/client-testing-unit';
+import { flushHttpRequests, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { AppTranslateModule } from '@app/client-translate';
 import { HTTP_STATUS, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngrx/store';
@@ -33,7 +27,11 @@ describe('AppHttpHandlersService', () => {
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
   let service: AppHttpHandlersService;
-  let serviceSpies: TClassMemberFunctionSpiesObject<AppHttpHandlersService>;
+  let serviceSpies: {
+    checkErrorStatusAndRedirect: jest.SpyInstance;
+    handleGqlError: jest.SpyInstance;
+    handleError: jest.SpyInstance;
+  };
   let apollo: Apollo;
   let httpTestingController: HttpTestingController;
   let toaster: AppToasterService;
@@ -48,7 +46,11 @@ describe('AppHttpHandlersService', () => {
       .compileComponents()
       .then(() => {
         service = TestBed.inject(AppHttpHandlersService);
-        serviceSpies = spyOnFunctions<AppHttpHandlersService>(service);
+        serviceSpies = {
+          checkErrorStatusAndRedirect: jest.spyOn(service, 'checkErrorStatusAndRedirect'),
+          handleGqlError: jest.spyOn(service, 'handleGqlError'),
+          handleError: jest.spyOn(service, 'handleError'),
+        };
         toaster = TestBed.inject(AppToasterService);
         httpTestingController = TestBed.inject(HttpTestingController);
         apollo = TestBed.inject(Apollo);

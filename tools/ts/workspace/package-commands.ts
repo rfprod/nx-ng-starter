@@ -109,7 +109,7 @@ const printNxCommands = () => {
     if (typeof targets !== 'undefined') {
       const commands = targetKeys
         .filter(key => targets[key].executor === 'nx:run-commands')
-        .reduce((acc, key) => {
+        .reduce((acc: Record<string, string>, key) => {
           const target: TargetConfiguration<{
             commands?: { command: string }[];
           }> = targets[key];
@@ -124,7 +124,7 @@ const printNxCommands = () => {
     if (typeof targets !== 'undefined') {
       const commands = targetKeys
         .filter(key => targets[key].executor !== 'nx:run-commands')
-        .reduce((acc, key) => {
+        .reduce((acc: Record<string, string>, key) => {
           acc[`run ${projectName}:${key}`] = `npx nx ${key} ${projectConfig.name}`;
           return acc;
         }, {});

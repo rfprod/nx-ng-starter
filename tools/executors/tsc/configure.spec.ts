@@ -10,7 +10,7 @@ import { IExecutorOptions } from './schema';
 
 describe('AppConfigureTscCheckExecutor', () => {
   const getProjectsInput = (withTargets = false) => {
-    const targets = {};
+    const targets: ProjectConfiguration['targets'] = {};
     targets['tsc-check'] = {};
     const projectsInput: Record<string, ProjectConfiguration> = {};
     projectsInput['client-app'] = {

@@ -19,7 +19,7 @@ describe('AppHttpApiService', () => {
             const endpoints = {
               auth: 'http://auth',
             };
-            return endpoints[endpoint];
+            return endpoints[<keyof typeof endpoints>endpoint];
           },
           pipeHttpResponse: () => of(null),
         },

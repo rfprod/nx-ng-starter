@@ -28,7 +28,7 @@ export interface IToasterExtraClassesObj {
  * Returns extra classes for toaster depending on provided toaster type.
  * @param toasterType toaster type
  */
-export const toasterExtraClasses = (toasterType: TToastType | string): TToasterExtraClasses => {
+export const toasterExtraClasses = (toastType: TToastType | string): TToasterExtraClasses => {
   const extraClasses: IToasterExtraClassesObj = {
     error: ['error-bg'],
     success: ['success-bg'],
@@ -36,5 +36,5 @@ export const toasterExtraClasses = (toasterType: TToastType | string): TToasterE
     accent: ['accent-bg'],
     primary: ['primary-bg'],
   };
-  return extraClasses[toasterType] ?? [];
+  return toastType in extraClasses ? extraClasses[<keyof IToasterExtraClassesObj>toastType] : [];
 };

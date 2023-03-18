@@ -3,12 +3,14 @@
  * @param self initial class instance
  * @param input class instance property values
  */
-export const initializeClassProperties = <T>(self: T, input?: T) => {
+export const initializeClassProperties = <T = Record<string, unknown>>(self: T, input?: T) => {
   if (typeof input !== 'undefined') {
-    const keys = Object.keys(<Record<string, unknown>>input);
+    const typedSelf = <Record<string, unknown>>self;
+    const typedInput = <Record<string, unknown>>input;
+    const keys = Object.keys(typedInput);
     for (const key of keys) {
-      const inputValue = input[key];
-      self[key] = typeof inputValue !== 'undefined' && inputValue !== null ? inputValue : self[key];
+      const inputValue = typedInput[key];
+      typedSelf[key] = typeof inputValue !== 'undefined' && inputValue !== null ? typedInput[key] : typedSelf[key];
     }
   }
 };
