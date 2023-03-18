@@ -3,6 +3,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 module.exports = {
   core: {
     builder: 'webpack5',
+    disableTelemetry: true
   },
   addons: [
     {

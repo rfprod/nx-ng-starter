@@ -1,5 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
-import { FileUpload } from 'graphql-upload/Upload';
+import { FileUpload } from 'graphql-upload/Upload.mjs';
 
 @InputType()
 export class AppFileUploadInputDto implements Partial<FileUpload> {
