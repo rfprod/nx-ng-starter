@@ -15,7 +15,8 @@ export class AppPwaOfflineInterceptor implements HttpInterceptor {
   constructor(@Inject(WINDOW) private readonly win: Window, private readonly router: Router) {}
 
   public intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if (!this.win.navigator.onLine) {
+    const routeLoaded = this.router.url.includes('offline');
+    if (!this.win.navigator.onLine && !routeLoaded) {
       void this.router.navigateByUrl('/offline');
       return NEVER;
     }
