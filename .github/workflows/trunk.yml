@@ -111,7 +111,7 @@ jobs:
 
   deploy-apps:
     needs: [checks, trunk]
-    if: needs.checks.outputs.origin == 'true'
+    if: ${{ needs.checks.outputs.origin == 'true' && needs.checks.outputs.deploy == 'true' }}
     uses: ./.github/workflows/deploy-apps.yml
     secrets: inherit
     with:

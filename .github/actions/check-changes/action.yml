@@ -19,6 +19,9 @@ outputs:
   changes:
     description: JSON array with names of all filters matching any of changed files
     value: ${{ steps.check-changes.outputs.changes }}
+  deploy:
+    description: Whether to trigger deploy job or not
+    value: ${{ steps.check-changes.outputs.deploy }}
 
 runs:
   using: 'composite'
@@ -34,6 +37,7 @@ runs:
     - name: Print changes
       shell: bash
       run: |
+        echo "deploy=$DEPLOY" >> "$GITHUB_OUTPUT"
         echo "### :rocket: Changes" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "- DEPENDENCIES: $DEPENDENCIES" >> $GITHUB_STEP_SUMMARY
@@ -44,6 +48,7 @@ runs:
         echo "- SHELLTOOLS: $SHELLTOOLS" >> $GITHUB_STEP_SUMMARY
         echo "- SRC: $SRC" >> $GITHUB_STEP_SUMMARY
         echo "- STORYBOOK: $STORYBOOK" >> $GITHUB_STEP_SUMMARY
+        echo "- DEPLOY: $DEPLOY" >> $GITHUB_STEP_SUMMARY
       env:
         DEPENDENCIES: ${{ fromJSON(steps.check-changes.outputs.changes).dependencies }}
         ELECTRON: ${{ fromJSON(steps.check-changes.outputs.changes).electron }}
@@ -53,3 +58,4 @@ runs:
         SHELLTOOLS: ${{ fromJSON(steps.check-changes.outputs.changes).shelltools }}
         SRC: ${{ fromJSON(steps.check-changes.outputs.changes).src }}
         STORYBOOK: ${{ fromJSON(steps.check-changes.outputs.changes).storybook }}
+        DEPLOY: ${{ fromJSON(steps.check-changes.outputs.changes).dependencies || fromJSON(steps.check-changes.outputs.changes).src || fromJSON(needs.checks.outputs.changes).storybook == 'true' }}
