@@ -92,7 +92,7 @@ jobs:
       - name: Documentation assets
         if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' }}
         run: |
-          yarn test:reports
+          bash tools/shell/test.sh reports || exit 1
           yarn generate:unit-test-coverage-index
           npx nx run tools:compodoc-build
           cp -r ./dist/compodoc ./dist/apps/documentation/assets
