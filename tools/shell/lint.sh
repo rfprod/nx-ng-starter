@@ -207,12 +207,22 @@ lintModule() {
 ##
 # Linting control flow.
 ##
-if [ $# -lt 1 ]; then
-  reportUsageErrorAndExit
-else
-  if [ -z "${2}" ]; then
-    lintModule "$1" "none"
-  else
-    lintModule "$1" "$2"
-  fi
-fi
+# if [ $# -lt 1 ]; then
+#   reportUsageErrorAndExit
+# else
+#   if [ -z "${2}" ]; then
+#     lintModule "$1" "none"
+#   else
+#     lintModule "$1" "$2"
+#   fi
+# fi
+
+##
+# TODO: This script is deprecated and should be removed
+##
+printErrorTitle "${0} is deprecated"
+printInfoTitle "Use workspace executors:"
+printUsageTip "npx nx affected --target lint" "eslint checks: js, ts"
+printUsageTip "npx nx affected --target prettier-check" "prettier checks: html"
+printUsageTip "npx nx affected --target stylelint-check" "stylelint checks: scss"
+exit 1

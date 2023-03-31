@@ -16,13 +16,13 @@ PROJECT_ROOT=.
 ##
 reportUsageErrorAndExit() {
   printInfoTitle "<< ${0} usage >>"
-  printUsageTip "bash tools/shell/test.sh single-run all" "test all modules"
-  printUsageTip "bash tools/shell/test.sh single-run changed" "test changed modules"
-  printUsageTip "bash tools/shell/test.sh single-run-and-report changed" "test changed modules and collect coverage"
-  printUsageTip "bash tools/shell/test.sh single-run-and-report:ci \$MODULE_ALIAS" "test a module and collect coverage in CI environment"
-  printUsageTip "bash tools/shell/test.sh single-run \$MODULE_ALIAS" "test a module"
-  printUsageTip "bash tools/shell/test.sh single-run-and-report \$MODULE_ALIAS" "test a module and collect coverage"
-  printUsageTip "bash tools/shell/test.sh report" "copy pregenerated reports to dist"
+  printUsageTip "bash tools/shell/test.sh reports" "copy pregenerated reports to dist"
+  # printUsageTip "bash tools/shell/test.sh single-run all" "test all modules"
+  # printUsageTip "bash tools/shell/test.sh single-run changed" "test changed modules"
+  # printUsageTip "bash tools/shell/test.sh single-run-and-report changed" "test changed modules and collect coverage"
+  # printUsageTip "bash tools/shell/test.sh single-run-and-report:ci \$MODULE_ALIAS" "test a module and collect coverage in CI environment"
+  # printUsageTip "bash tools/shell/test.sh single-run \$MODULE_ALIAS" "test a module"
+  # printUsageTip "bash tools/shell/test.sh single-run-and-report \$MODULE_ALIAS" "test a module and collect coverage"
 
   reportSupportedModuleAliasesUnit
 
@@ -207,12 +207,24 @@ if [ $# -lt 1 ]; then
   reportUsageErrorAndExit
 else
   if [ "$1" = "single-run" ]; then
-    testModule "$2" "none" # test single run.
+    printErrorTitle "This command is deprecated"
+    printInfoTitle "Use workspace executors:"
+    printUsageTip "npx nx run-many --target test --all --run-in-band" "jest unit test"
+    exit 1
+    # testModule "$2" "none" # test single run.
   elif [ "$1" = "single-run-and-report" ]; then
-    testModule "$2" "report" # test single run, generate coverage report, and copy report to dist.
+    printErrorTitle "This command is deprecated"
+    printInfoTitle "Use workspace executors:"
+    printUsageTip "npx nx run-many --target test --all --run-in-band --code-coverage" "jest unit test"
+    exit 1
+    # testModule "$2" "report" # test single run, generate coverage report, and copy report to dist.
   elif [ "$1" = "single-run-and-report:ci" ]; then
-    testModule "$2" "report" "ci" # test single run, generate coverage report, and copy report to dist in CI environment.
-  elif [ "$1" = "report" ]; then
+    printErrorTitle "This command is deprecated"
+    printInfoTitle "Use workspace executors:"
+    printUsageTip "npx nx run-many --target test --all --run-in-band --code-coverage --ci" "jest unit test"
+    exit 1
+    # testModule "$2" "report" "ci" # test single run, generate coverage report, and copy report to dist in CI environment.
+  elif [ "$1" = "reports" ]; then
     copyReportsToDist # copy pregenerated reports to dist.
   else
     reportUsageErrorAndExit

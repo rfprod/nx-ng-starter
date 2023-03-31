@@ -16,10 +16,10 @@ PROJECT_ROOT=.
 reportUsageErrorAndExit() {
   printInfoTitle "<< ${0} usage >>"
   printUsageTip "bash tools/shell/e2e.sh reports" "copy e2e reports to dist"
-  printUsageTip "bash tools/shell/e2e.sh all" "run all e2e apps"
-  printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS>" "run a single e2e app"
-  printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS> report" "run a single e2e app and save report"
-  printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS> report CONFIGURATION" "run a single e2e app and save report versus a specific configuration/environment"
+  # printUsageTip "bash tools/shell/e2e.sh all" "run all e2e apps"
+  # printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS>" "run a single e2e app"
+  # printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS> report" "run a single e2e app and save report"
+  # printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS> report CONFIGURATION" "run a single e2e app and save report versus a specific configuration/environment"
 
   reportSupportedModuleAliasesE2E
 
@@ -174,5 +174,9 @@ elif [ "$1" = "reports" ]; then
   copyReportToDist "app:client-e2e" "apps/client-e2e" "./dist/cypress/apps/client-e2e" "report"
   copyReportToDist "app:documentation-e2e" "apps/documentation-e2e" "./dist/cypress/apps/documentation-e2e" "report"
 else
-  testModule "$1" "$2" "$3"
+  printErrorTitle "This command is deprecated"
+  printInfoTitle "Use workspace executors:"
+  printUsageTip "npx nx run-many --target e2e --all" "cypress e2e test"
+  exit 1
+  # testModule "$1" "$2" "$3"
 fi
