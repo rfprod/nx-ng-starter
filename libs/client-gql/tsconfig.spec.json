@@ -4,7 +4,8 @@
     "emitDecoratorMetadata": false,
     "module": "commonjs",
     "outDir": "../../dist/out-tsc",
-    "types": ["jest", "node"]
+    "types": ["jest", "node"],
+    "target": "es2016"
   },
   "extends": "./tsconfig.json",
   "files": ["src/test-setup.ts"],
