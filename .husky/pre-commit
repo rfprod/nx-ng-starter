@@ -5,7 +5,13 @@
 
 STAGED_FILES="$(git diff --cached --name-only --diff-filter=ACM | grep ".\(ts\|js\|html\|scss\)\{0,1\}$" || true)"
 
-yarn lint:changed:fix || exit 1
+# yarn lint:changed:fix || exit 1
+
+npx nx affected --target lint --fix || exit 1
+
+npx nx affected --target prettier-check --fix || exit 1
+
+npx nx affected --target stylelint-check --fix || exit 1
 
 printf '%s\n' "$STAGED_FILES" | while IFS= read -r FILE; do
   if [ "$FILE" != "" ]; then
