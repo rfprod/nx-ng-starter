@@ -24,7 +24,7 @@ setMarkdownFilePathsValue() {
   find ./apps/documentation/src/environments/ -type f -name "environment.ts" -exec sed -i "s#mdFilePaths.*#mdFilePaths: [$COMMA_SEPARATES_STRINGS],#g" {} +
   find ./apps/documentation/src/environments/ -type f -name "environment.prod.ts" -exec sed -i "s#mdFilePaths.*#mdFilePaths: [$COMMA_SEPARATES_STRINGS],#g" {} +
 
-  source tools/shell/lint.sh "app:documentation" "fix"
+  npx nx lint documentation --fix
 }
 
 ##
