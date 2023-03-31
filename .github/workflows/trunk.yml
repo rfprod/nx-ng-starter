@@ -20,6 +20,7 @@ jobs:
 
     outputs:
       changes: ${{ steps.check-changes.outputs.changes }}
+      deploy: ${{ steps.check-changes.outputs.deploy }}
       origin: ${{ steps.check-origin.outputs.origin }}
 
     steps:
