@@ -135,24 +135,22 @@ This project was generated using [Nx](https://nx.dev).
 - [30-minute video showing all Nx features](https://nx.dev/getting-started/what-is-nx)
 - [Interactive Tutorial](https://nx.dev/tutorial/01-create-application)
 
-### Adding capabilities to the workspace
+### Workspace capabilities
 
 Nx supports many plugins which add capabilities for developing different types of applications and different tools.
 
 These capabilities include generating applications, libraries, .etc as well as the devtools to test, and build projects as well.
 
-Below are some plugins which can be added to the workspace:
+Below are plugins which are added to the workspace:
 
-| Application type                       | Command                  | Part of the workspace |
-| -------------------------------------- | ------------------------ | --------------------- |
-| [Angular](https://angular.io)          | `nx add @nrwl/angular`   | :heavy_check_mark:    |
-| [React](https://reactjs.org)           | `nx add @nrwl/react`     | :x:                   |
-| Web (no framework frontends)           | `nx add @nrwl/web`       | :x:                   |
-| [Nest](https://nestjs.com)             | `nx add @nrwl/nest`      | :heavy_check_mark:    |
-| [Express](https://expressjs.com)       | `nx add @nrwl/express`   | :x:                   |
-| [Node](https://nodejs.org)             | `nx add @nrwl/node`      | :heavy_check_mark:    |
-| [Storybook](https://storybook.js.org/) | `nx add @nrwl/storybook` | :heavy_check_mark:    |
-| [Cypress](https://www.cypress.io/)     | `nx add @nrwl/cypress`   | :heavy_check_mark:    |
+| Application type                       | Command                  | Domain       |
+| -------------------------------------- | ------------------------ | ------------ |
+| [Angular](https://angular.io)          | `nx add @nrwl/angular`   | Web client   |
+| [Nest](https://nestjs.com)             | `nx add @nrwl/nest`      | API          |
+| [Node](https://nodejs.org)             | `nx add @nrwl/node`      | Automation   |
+| [Storybook](https://storybook.js.org/) | `nx add @nrwl/storybook` | UI testing   |
+| [Cypress](https://www.cypress.io/)     | `nx add @nrwl/cypress`   | E2E testing  |
+| [Jest](https://jestjs.io/)             | `nx add @nrwl/jest`      | Unit testing |
 
 ### Generating an application
 
@@ -264,7 +262,7 @@ npx nx run tools:help
 
 Visit the [Nx Documentation](https://nx.dev) to learn more.
 
-## Technologies Reference
+## Technology Reference
 
 ### Workspace
 
