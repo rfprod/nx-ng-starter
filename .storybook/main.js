@@ -26,7 +26,6 @@ module.exports = {
   },
   framework: '@storybook/angular',
   plugins: [
-    require('postcss-flexbugs-fixes'),
     require('autoprefixer')({
       flexbox: 'no-2009',
     }),
@@ -54,7 +53,7 @@ module.exports = {
      * },
      */
     const rules = (config.module.rules ?? []).filter(
-      rule => rule.test !== /\.html$/ && rule.exclude !== /\.async\.html$/ && !rule.loader?.includes('raw-loader'),
+      rule => !rule.loader?.includes('raw-loader'),
     );
     config.module.rules = [...rules];
 
