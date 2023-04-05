@@ -2,7 +2,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { AppMaterialModule } from '@app/client-material';
 import { routerButton } from '@app/client-util';
-import { Args, Meta, Story } from '@storybook/angular';
+import { Args, Meta, StoryFn } from '@storybook/angular';
 import { of } from 'rxjs';
 
 import { AppHistoryNavigatorComponent } from '../history-navigator/history-navigator.component';
@@ -14,7 +14,7 @@ export default {
   component: AppNavbarComponent,
 } as Meta;
 
-const story: Story<AppNavbarComponent> = (args: Args) => ({
+const story: StoryFn<AppNavbarComponent> = (args: Args) => ({
   moduleMetadata: {
     imports: [BrowserAnimationsModule, AppMaterialModule.forRoot()],
     providers: [
