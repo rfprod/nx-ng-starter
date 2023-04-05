@@ -1,6 +1,6 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from '@app/client-material';
-import { Args, Meta, Story } from '@storybook/angular';
+import { Args, Meta, StoryFn } from '@storybook/angular';
 
 import { AppThemeToggleComponent } from './theme-toggle.component';
 
@@ -9,7 +9,7 @@ export default {
   component: AppThemeToggleComponent,
 } as Meta;
 
-const story: Story<AppThemeToggleComponent> = (args: Args) => ({
+const story: StoryFn<AppThemeToggleComponent> = (args: Args) => ({
   moduleMetadata: {
     imports: [BrowserAnimationsModule, AppMaterialModule.forRoot()],
     declarations: [AppThemeToggleComponent],

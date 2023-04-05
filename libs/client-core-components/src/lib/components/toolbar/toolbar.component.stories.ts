@@ -2,7 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from '@app/client-material';
 import { anchorButton } from '@app/client-util';
-import { Args, Meta, Story } from '@storybook/angular';
+import { Args, Meta, StoryFn } from '@storybook/angular';
 
 import { AppToolbarComponent } from './toolbar.component';
 
@@ -11,7 +11,7 @@ export default {
   component: AppToolbarComponent,
 } as Meta;
 
-const story: Story<AppToolbarComponent> = (args: Args) => ({
+const story: StoryFn<AppToolbarComponent> = (args: Args) => ({
   moduleMetadata: {
     imports: [BrowserAnimationsModule, AppMaterialModule.forRoot()],
     declarations: [AppToolbarComponent],
