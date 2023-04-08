@@ -5,14 +5,13 @@ source tools/shell/utils/print-utils.sh ''
 source tools/shell/utils/config.sh
 
 ##
-# Reports usage error and exits.
+# Print help.
 ##
-reportUsageErrorAndExit() {
+printHelp() {
   printInfoTitle "<< ${0} usage >>"
+  printUsageTip "bash tools/shell/generate-elements-bootstrap-script.sh ?" "print help"
   printUsageTip "bash tools/shell/generate-elements-bootstrap-script.sh ELEMENTS_APP_DIST_PATH ELEMENTS_APP_PROJECT_NAME" "generates elements app bootstrap script"
   printGap
-
-  exit 1
 }
 
 ##
@@ -194,10 +193,13 @@ checkDistExistenceAndProceed() {
 }
 
 ##
-# Widget bootstrap script generation control flow.
+# Script control flow.
 ##
-if [ $# -lt 2 ]; then
-  reportUsageErrorAndExit
+if [ "$1" = "?" ]; then
+  printHelp
+elif [ $# -lt 2 ]; then
+  printHelp
+  exit 1
 else
   checkDistExistenceAndProceed "$1" "$2"
 fi

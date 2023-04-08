@@ -20,16 +20,14 @@ OUT_DIR_GRPC=$PROJECT_ROOT/libs/proto/src/lib/grpc
 OUT_DIR_TS=$PROJECT_ROOT/libs/proto/src/lib/ts
 
 ##
-# Reports script usage.
+# Print help.
 ##
-reportUsage() {
+printHelp() {
   printInfoTitle "<< ${0} usage >>"
-  printUsageTip "bash tools/shell/generate-proto.sh" "print generate-proto.sh usage"
+  printUsageTip "bash tools/shell/generate-proto.sh ?" "print help"
   printUsageTip "bash tools/shell/generate-proto.sh protoc" "generate grpc"
   printUsageTip "bash tools/shell/generate-proto.sh protobufjs" "generate ts definitions"
   printGap
-
-  exit 1
 }
 
 ##
@@ -92,10 +90,10 @@ lintProtoLib() {
 }
 
 ##
-# Proto generation control flow.
+# Script control flow.
 ##
-if [ $# -ne 1 ]; then
-  reportUsage
+if [ "$1" = "?" ]; then
+  printHelp
 elif [ "$1" == "protoc" ]; then
   run_protoc
   lintProtoLib
@@ -103,5 +101,6 @@ elif [ "$1" == "protobufjs" ]; then
   run_protobufjs
   lintProtoLib
 else
-  reportUsage
+  printHelp
+  exit 1
 fi

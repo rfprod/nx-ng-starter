@@ -11,21 +11,14 @@ source tools/shell/utils/config.sh
 PROJECT_ROOT=.
 
 ##
-# Reports usage error and exits.
+# Print help.
 ##
-reportUsageErrorAndExit() {
+printHelp() {
   printInfoTitle "<< ${0} usage >>"
+  printUsageTip "bash tools/shell/e2e.sh ?" "print help"
   printUsageTip "bash tools/shell/e2e.sh reports" "copy e2e reports to dist"
-  # printUsageTip "bash tools/shell/e2e.sh all" "run all e2e apps"
-  # printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS>" "run a single e2e app"
-  # printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS> report" "run a single e2e app and save report"
-  # printUsageTip "bash tools/shell/e2e.sh <E2E_APP_ALIAS> report CONFIGURATION" "run a single e2e app and save report versus a specific configuration/environment"
-
   reportSupportedModuleAliasesE2E
-
   printGap
-
-  exit 1
 }
 
 ##
@@ -101,82 +94,14 @@ copyReportToDist() {
 }
 
 ##
-# Checks provided variables and proceeds with testing.
+# Script control flow.
 ##
-checkVariablesAndProceed() {
-  printInfoTitle "<< Checking variables and proceeding >>"
-  printNameAndValue "module name" "$1"
-  printNameAndValue "module partial path" "$2"
-  printNameAndValue "e2e dist path" "$3"
-  printNameAndValue "optional action (report)" "$4"
-  printNameAndValue "optional configuration (see angular.json)" "$5"
-  printGap
-
-  if [ -z "$5" ]; then
-    npx nx e2e "$1" --configuration "$5"
-  else
-    npx nx e2e "$1"
-  fi
-
-  copyReportToDist "$1" "$2" "$3" "$4"
-}
-
-##
-# Tests module.
-##
-testModule() {
-  printInfoTitle "<< Testing module >>"
-  printNameAndValue "module name" "$1"
-  printNameAndValue "optional action (report)" "$2"
-  printNameAndValue "optional configuration (see angular.json)" "$3"
-
-  local MODULE_ALIAS
-  MODULE_ALIAS=$1
-  local COPY_REPORT
-  COPY_REPORT=$2
-  local CONFIGURATION
-  CONFIGURATION=$3
-
-  local MODULE_NAME
-  MODULE_NAME="${MODULE_ALIAS//app\:/}" # remove app: prefix
-
-  local MODULE_PARTIAL_PATH
-  MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s\/}" # replace ': ' with 's/ ' to get parial path (e.g. apps/client-e2e() for paths formation
-
-  local E2E_DIST_PATH
-  E2E_DIST_PATH=${PROJECT_ROOT}/dist/cypress/${MODULE_PARTIAL_PATH}
-
-  printNameAndValue "module name" "$MODULE_NAME"
-  printNameAndValue "module partial path name" "$MODULE_PARTIAL_PATH"
-  printNameAndValue "e2e dist path" "$E2E_DIST_PATH"
-  printGap
-
-  local ALIAS_EXISTS=
-  moduleAliasExists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
-
-  if [ "$ALIAS_EXISTS" = 1 ]; then
-    checkVariablesAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH" "$E2E_DIST_PATH" "$COPY_REPORT" "$CONFIGURATION"
-  elif
-    [[ "$MODULE_ALIAS" = "all" ]]
-  then
-    for MODULE_ALIAS_E2E in "${EXISTING_MODULE_ALIASES_E2E[@]}"; do testModule "$MODULE_ALIAS_E2E" "$COPY_REPORT" "$CONFIGURATION"; done
-  else
-    reportUsageErrorAndExit
-  fi
-}
-
-##
-# Testing control flow.
-##
-if [ $# -lt 1 ]; then
-  reportUsageErrorAndExit
+if [ "$1" = "?" ]; then
+  printHelp
 elif [ "$1" = "reports" ]; then
   copyReportToDist "app:client-e2e" "apps/client-e2e" "./dist/cypress/apps/client-e2e" "report"
   copyReportToDist "app:documentation-e2e" "apps/documentation-e2e" "./dist/cypress/apps/documentation-e2e" "report"
 else
-  printErrorTitle "This command is deprecated"
-  printInfoTitle "Use workspace executors:"
-  printUsageTip "npx nx run-many --target e2e --all" "cypress e2e test"
+  printHelp
   exit 1
-  # testModule "$1" "$2" "$3"
 fi

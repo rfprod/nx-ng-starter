@@ -8,11 +8,11 @@ source tools/shell/utils/config.sh
 PROJECT_ROOT=.
 
 ##
-# Prints script usage instructions.
+# Print help.
 ##
-reportUsage() {
+printHelp() {
   printInfoTitle "<< ${0} usage >>"
-  printUsageTip "bash tools/shell/generate-e2e-test-report-index.sh ?" "print usage"
+  printUsageTip "bash tools/shell/generate-e2e-test-report-index.sh ?" "print help"
   printUsageTip "bash tools/shell/generate-e2e-test-report-index.sh" "generate e2e reports index"
   printGap
 }
@@ -135,10 +135,10 @@ generate() {
 }
 
 ##
-# Script execution control flow.
+# Script control flow.
 ##
 if [ "$1" = "?" ]; then
-  reportUsage
+  printHelp
 else
   # generateReportIndex
   generate

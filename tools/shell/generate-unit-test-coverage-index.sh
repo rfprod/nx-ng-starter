@@ -7,11 +7,11 @@ source tools/shell/utils/config.sh
 PROJECT_ROOT=.
 
 ##
-# Prints script usage instructions.
+# Print help.
 ##
-reportUsage() {
+printHelp() {
   printInfoTitle "<< ${0} usage >>"
-  printUsageTip "bash tools/shell/generate-unit-test-coverage-index.sh ?" "print usage"
+  printUsageTip "bash tools/shell/generate-unit-test-coverage-index.sh ?" "print help"
   printUsageTip "bash tools/shell/generate-unit-test-coverage-index.sh" "generate unit test coverage reports index"
   printGap
 }
@@ -83,7 +83,7 @@ generateReportIndex() {
 # Script execution control flow.
 ##
 if [ "$1" = "?" ]; then
-  reportUsage
+  printHelp
 else
   generateReportIndex
 fi

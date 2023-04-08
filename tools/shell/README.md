@@ -14,7 +14,7 @@ This folder contains utility shell scripts.
 - `docker-build.sh` - containerization script
 - `docker-push.sh` - script for pushing docker images to the registry
 - `docker-task.sh` - docker utility tasks script
-- `e2e.sh` - apps e2e testing script
+- `e2e.sh` - process e2e test reports and copy to dist
 - `firebase-deploy.sh` - firebase deployment script
 - `generate-e2e-test-report-index.sh` - generates an index page that lists all generated e2e test report index pages
 - `generate-elements-bootstrap-script.sh` - generates web elements bootstrap script that should be loaded once by consumer of the web elements app
@@ -22,10 +22,9 @@ This folder contains utility shell scripts.
 - `generate-unit-test-coverage-index.sh` - generates an index page that lists all generated unit test coverage report index pages
 - `git-extension.sh` - git-extension script (detects changed files so that linting/testing can be preformed for changed files only)
 - `install.sh` - dependencies installation script
-- `lint.sh` - apps/libs linting script
 - `semver-tag.sh` - commit tagging script for versioning (eventually should be used by CI only; commits should be tagged when code is merged into the main development branch - this will require scripm improvement)
 - `set-documentation-env.sh` - documentation app prebuild script, collects references to \*.md files across the repo
-- `test.sh` - apps/libs unit testing script
+- `test.sh` - copy unit test coverage reports to dist
 - `yarn-extension.sh` - checks package integrity and cleans up workspace if there is no integrity
 
 ## Usage

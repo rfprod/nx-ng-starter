@@ -4,9 +4,9 @@ cd "$(dirname "${BASH_SOURCE[0]}")/../.." || exit
 source tools/shell/build-utils.sh
 
 ##
-# Reports usage error.
+# Print help.
 ##
-reportUsage() {
+printHelp() {
   local TITLE="<< ${0} usage >>"
   printf "
     ${LIGHT_BLUE}%s\n
@@ -22,7 +22,7 @@ reportUsage() {
 # Building control flow.
 ##
 if (($# != 1)); then
-  reportUsage
+  printHelp
 fi
 
 case "$1" in
@@ -37,6 +37,6 @@ windows)
   error 'TODO: build for Windows'
   ;;
 *)
-  reportUsage
+  printHelp
   ;;
 esac
