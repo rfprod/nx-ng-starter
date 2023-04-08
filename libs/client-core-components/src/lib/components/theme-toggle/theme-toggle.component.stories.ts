@@ -19,12 +19,15 @@ const story: StoryFn<AppThemeToggleComponent> = (args: Args) => ({
   },
 });
 
-export const primary = story.bind({});
-primary.args = {};
-primary.parameters = {
-  /**
-   * Use legacy Angular renderer.
-   * See docs https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-angular-renderer
-   */
-  // angularLegacyRendering: true,
+export const primary = {
+  render: story,
+  args: {},
+
+  parameters: {
+    /**
+     * Use legacy Angular renderer.
+     * See docs https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-angular-renderer
+     */
+    // angularLegacyRendering: true,
+  },
 };

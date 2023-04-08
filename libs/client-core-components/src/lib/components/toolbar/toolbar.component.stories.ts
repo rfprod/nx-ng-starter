@@ -22,31 +22,35 @@ const story: StoryFn<AppToolbarComponent> = (args: Args) => ({
   },
 });
 
-export const primary = story.bind({});
-primary.args = {
-  version: '1.0.0',
-  anchors: [
-    anchorButton(
-      'Report a bug',
-      'bug_report',
-      'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=bug_report.md&title=',
-    ),
-    anchorButton(
-      'Request a feature',
-      'lightbulb',
-      'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=feature_request.md&title=',
-    ),
-    anchorButton(
-      'Request maintenance',
-      'engineering',
-      'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=maintenance.md&title=',
-    ),
-  ],
-};
-primary.parameters = {
-  /**
-   * Use legacy Angular renderer.
-   * See docs https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-angular-renderer
-   */
-  // angularLegacyRendering: true,
+export const primary = {
+  render: story,
+
+  args: {
+    version: '1.0.0',
+    anchors: [
+      anchorButton(
+        'Report a bug',
+        'bug_report',
+        'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=bug_report.md&title=',
+      ),
+      anchorButton(
+        'Request a feature',
+        'lightbulb',
+        'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=feature_request.md&title=',
+      ),
+      anchorButton(
+        'Request maintenance',
+        'engineering',
+        'https://github.com/rfprod/nx-ng-starter/issues/new?assignees=&labels=&template=maintenance.md&title=',
+      ),
+    ],
+  },
+
+  parameters: {
+    /**
+     * Use legacy Angular renderer.
+     * See docs https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-angular-renderer
+     */
+    // angularLegacyRendering: true,
+  },
 };
