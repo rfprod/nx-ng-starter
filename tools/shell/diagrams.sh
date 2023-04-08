@@ -14,9 +14,9 @@ declare -A DIAGRAMS=(
 )
 
 ##
-# Reports usage.
+# Print help.
 ##
-reportUsage() {
+printHelp() {
   printInfoTitle "<< ${0} usage >>"
   printUsageTip "bash tools/shell/diagrams.sh ?" "print help"
   printUsageTip "bash tools/shell/diagrams.sh" "generate all diagrams"
@@ -43,7 +43,7 @@ generateDiagrams() {
 }
 
 if [ "$1" = "?" ]; then
-  reportUsage
+  printHelp
 else
   generateDiagrams
 fi

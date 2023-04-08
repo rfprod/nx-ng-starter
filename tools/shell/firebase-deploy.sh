@@ -6,11 +6,11 @@ source tools/shell/utils/print-utils.sh ''
 source tools/shell/utils/config.sh
 
 ##
-# Reports usage error.
+# Print help.
 ##
-reportUsageError() {
+printHelp() {
   printInfoTitle "<< ${0} usage >>"
-  printWarningMessage "firebase deploy token must be provided as a first argument"
+  printUsageTip "bash tools/shell/firebase-deploy.sh ?" "print help"
   printInfoMessage "Client app"
   printUsageTip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN client" "CI environment"
   printUsageTip "bash tools/shell/firebase-deploy.sh localhost client" "Local environment, firebase authentication required"
@@ -24,8 +24,6 @@ reportUsageError() {
   printUsageTip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN" "CI environment"
   printUsageTip "bash tools/shell/firebase-deploy.sh localhost" "Local environment, firebase authentication required"
   printGap
-
-  exit 1
 }
 
 ##
@@ -128,10 +126,10 @@ deployAll() {
 }
 
 ##
-# Firebase deployment control flow.
+# Script control flow.
 ##
-if [ $# -lt 1 ]; then
-  reportUsageError
+if [ "$1" = "?" ]; then
+  printHelp
 elif [ $# -ge 2 ]; then
   APP_DIRECTORY="${PROJECT_DIRECTORIES["$2"]}"
   if [ "$2" = "client" ] || [ "$2" = "elements" ] || [ "$2" = "documentation" ]; then
@@ -141,4 +139,7 @@ elif [ $# -ge 2 ]; then
   else
     deployAll "$1"
   fi
+else
+  printHelp
+  exit 1
 fi

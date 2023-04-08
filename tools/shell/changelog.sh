@@ -14,18 +14,15 @@ CHANGELOG_APPS=${PROJECT_ROOT}/changelog/apps
 CHANGELOG_LIBS=${PROJECT_ROOT}/changelog/libs
 
 ##
-# Reports usage error and exits.
+# Print help.
 ##
-reportUsageErrorAndExit() {
+printHelp() {
   printInfoTitle "<< ${0} usage >>"
+  printUsageTip "bash tools/shell/changelog.sh ?" "print help"
   printUsageTip "bash tools/shell/changelog.sh all" "generate all changelogs"
   printUsageTip "bash tools/shell/changelog.sh <APP_ALIAS_FROM_TSCONFIG>" "generate changelog for a specific application/library"
-
   reportSupportedModuleAliases
-
   printGap
-
-  exit 1
 }
 
 ##
@@ -220,19 +217,22 @@ generateModuleChangelog() {
   then
     for MODULE_ALIAS_VAR in "${EXISTING_MODULE_ALIASES[@]}"; do generateModuleChangelog "$MODULE_ALIAS_VAR"; done
   else
-    reportUsageErrorAndExit
+    printHelp
+    exit 1
   fi
 }
 
 ##
-# Changelog generation control flow.
+# Script control flow.
 ##
-if [ $# -lt 1 ]; then
-  reportUsageErrorAndExit
-else
-  # Remove previously generated changelogs.
+if [ "$1" = "?" ]; then
+  printHelp
+elif [ $# -eq 1 ]; then
   rm -rf ./changelog/*
   checkChangelogDirectoriesExistence
   generateModuleChangelog "$1"
   copyReportToDist
+else
+  printHelp
+  exit 1
 fi

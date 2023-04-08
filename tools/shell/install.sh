@@ -5,11 +5,11 @@ source tools/shell/utils/print-utils.sh ''
 source tools/shell/utils/config.sh
 
 ##
-# Reports usage error and exits.
+# Print help.
 ##
-reportUsage() {
+printHelp() {
   printInfoTitle "<< ${0} usage >>"
-  printUsageTip "bash tools/shell/install.sh" "print help"
+  printUsageTip "bash tools/shell/install.sh ?" "print help"
   printUsageTip "bash tools/shell/install.sh local" "install project dependencies only"
   printUsageTip "bash tools/shell/install.sh global" "install global dependencies only"
   printUsageTip "bash tools/shell/install.sh all" "install projects dependencies, global dependencies, brew (linux), protolint (linux), shellcheck (linux)"
@@ -182,7 +182,7 @@ installShellcheck() {
 # Dependencies installation control flow.
 ##
 if [ "$1" = "?" ]; then
-  reportUsage
+  printHelp
 elif [ "$1" = "all" ]; then
   installProjectDependencies
   installGlobalDependencies
@@ -197,6 +197,6 @@ elif [ "$1" = "proto" ]; then
 elif [ "$1" = "shellcheck" ]; then
   installShellcheck "$2" "$3"
 else
-  reportUsage
+  printHelp
   exit 1
 fi

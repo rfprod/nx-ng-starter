@@ -9,17 +9,15 @@ source tools/shell/utils/print-utils.sh ''
 CHANGED_ALIASES=()
 
 ##
-# Reports usage error and exits.
+# Print help.
 ##
-reportUsage() {
+printHelp() {
   printInfoTitle "<< ${0} usage >>"
   printUsageTip "bash tools/shell/git-extension.sh ?" "print help"
   printUsageTip "bash tools/shell/git-extension.sh detect-yarn-lock-change" "detects if yarn lock was changed"
   printUsageTip "bash tools/shell/git-extension.sh print" "get and print changed apps/libs aliases"
   printUsageTip "bash tools/shell/git-extension.sh" "get changed apps/libs aliases"
   printGap
-
-  exit 1
 }
 
 ##
@@ -76,7 +74,7 @@ checkYarnLockChanges() {
 }
 
 if [ "$1" = "?" ]; then
-  reportUsage
+  printHelp
 elif [ "$1" = "print" ]; then
   getChangedProjectAliases
   printChangedAliases

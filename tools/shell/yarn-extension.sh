@@ -4,9 +4,9 @@ source tools/shell/utils/print-utils.sh ''
 source tools/shell/git-extension.sh ''
 
 ##
-# Reports usage.
+# Print help.
 ##
-reportUsage() {
+printHelp() {
   printInfoTitle "<< ${0} usage >>"
   printUsageTip "tools/shell/yarn-extension.sh ?" "print help"
   printUsageTip "tools/shell/yarn-extension.sh integrity-check" "performs an integrity check, and cleans up workspace if the is no integrity."
@@ -75,7 +75,7 @@ checkIntegrity() {
 }
 
 if [ "$1" = "?" ]; then
-  reportUsage
+  printHelp
 elif [ "$1" = "integrity-check" ]; then
   checkIntegrity
 fi
