@@ -33,20 +33,24 @@ const story: StoryFn<AppNavbarComponent> = (args: Args) => ({
   },
 });
 
-export const primary = story.bind({});
-primary.args = {
-  logoSrc: 'assets/icons/icon-72x72.png',
-  buttons: [
-    routerButton('Home', 'home', () => false, [{ outlets: { primary: [''], sidebar: [] } }]),
-    routerButton('API info', 'api', () => false, [{ outlets: { primary: ['info'], sidebar: [] } }]),
-    routerButton('Chart examples', 'show_chart', () => false, [{ outlets: { primary: ['charts'], sidebar: [] } }]),
-    routerButton('Chat', 'chatbot', () => false, [{ outlets: { primary: ['chatbot'], sidebar: [] } }]),
-  ],
-};
-primary.parameters = {
-  /**
-   * Use legacy Angular renderer.
-   * See docs https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-angular-renderer
-   */
-  // angularLegacyRendering: true,
+export const primary = {
+  render: story,
+
+  args: {
+    logoSrc: 'assets/icons/icon-72x72.png',
+    buttons: [
+      routerButton('Home', 'home', () => false, [{ outlets: { primary: [''], sidebar: [] } }]),
+      routerButton('API info', 'api', () => false, [{ outlets: { primary: ['info'], sidebar: [] } }]),
+      routerButton('Chart examples', 'show_chart', () => false, [{ outlets: { primary: ['charts'], sidebar: [] } }]),
+      routerButton('Chat', 'chatbot', () => false, [{ outlets: { primary: ['chatbot'], sidebar: [] } }]),
+    ],
+  },
+
+  parameters: {
+    /**
+     * Use legacy Angular renderer.
+     * See docs https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#new-angular-renderer
+     */
+    // angularLegacyRendering: true,
+  },
 };
