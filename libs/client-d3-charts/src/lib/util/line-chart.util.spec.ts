@@ -1,8 +1,9 @@
+import { ILineChartOptions } from '../interfaces/line-chart.interface';
 import { defaultLineChartConfig } from './line-chart.util';
 
 describe('line-chart.util', () => {
   it('defaultLineChartConfig should match object', () => {
-    expect(defaultLineChartConfig).toMatchObject({
+    expect(defaultLineChartConfig).toMatchObject(<ILineChartOptions>{
       chartTitle: expect.any(String),
       width: expect.any(Number),
       height: expect.any(Number),
@@ -21,6 +22,7 @@ describe('line-chart.util', () => {
         y: expect.any(Number),
       },
       displayAxisLabels: expect.any(Boolean),
+      dateFormat: expect.any(String),
       labelTextWrapWidth: expect.any(Number),
       color: expect.any(Function),
     });
