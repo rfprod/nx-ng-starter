@@ -26,6 +26,7 @@ export const defaultLineChartConfig: ILineChartOptions = Object.freeze(<ILineCha
     y: 10,
   },
   displayAxisLabels: true,
+  dateFormat: 'default',
   labelTextWrapWidth: 20, // the number of pixels after which a label needs to be given a new line
   color: d3.scaleOrdinal(d3.schemeCategory10),
 });
@@ -161,7 +162,24 @@ const createAxisX = (
           const hour = hours < formattingOffset ? `0${hours}` : hours;
           const minutes = date.getMinutes();
           const minute = minutes < formattingOffset ? `0${minutes}` : minutes;
-          return `${dd}/${mm}/${yy} ${hour}:${minute}`;
+          let formattedDate = `${dd}/${mm}/${yy} ${hour}:${minute}`;
+          switch (config.dateFormat) {
+            case 'dd/mm/yyyy':
+              formattedDate = `${dd}/${mm}/${year}`;
+              break;
+            case 'dd/mm/yy':
+              formattedDate = `${dd}/${mm}/${yy}`;
+              break;
+            case 'mm/yyyy':
+              formattedDate = `${mm}/${year}`;
+              break;
+            case 'yyyy':
+              formattedDate = `${year}`;
+              break;
+            default:
+              break;
+          }
+          return formattedDate;
         }),
     )
     .append('text');

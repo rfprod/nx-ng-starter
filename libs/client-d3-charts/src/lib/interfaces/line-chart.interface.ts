@@ -7,6 +7,16 @@ export interface ILineChartDataNode {
 
 export type TLineChartData = ILineChartDataNode[];
 
+/**
+ * Date formats:
+ * - default: `${dd}/${mm}/${yy} ${hour}:${minute}`
+ * - 'dd/mm/yyyy': `${dd}/${mm}/${yyyy}`
+ * - 'dd/mm/yy': `${dd}/${mm}/${yy}`
+ * - 'mm/yyyy': `${mm}/${yyyy}`
+ * - 'yyyy': `${yyyy}`
+ */
+export type TDateFormat = 'default' | 'dd/mm/yyyy' | 'dd/mm/yy' | 'mm/yyyy' | 'yyyy';
+
 export interface ILineChartOptions {
   chartTitle: string;
   width: number;
@@ -26,6 +36,7 @@ export interface ILineChartOptions {
     y: number;
   };
   displayAxisLabels: boolean;
+  dateFormat: TDateFormat;
   labelTextWrapWidth: number;
   color: d3.ScaleOrdinal<string, string>;
 }

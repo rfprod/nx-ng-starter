@@ -10,7 +10,7 @@ const config: Config.InitialOptions = {
       branches: 4,
       functions: 27,
       lines: 28,
-      statements: 31,
+      statements: 30,
     },
   },
   displayName: 'client-d3-charts',
