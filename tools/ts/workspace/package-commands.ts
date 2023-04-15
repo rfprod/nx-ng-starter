@@ -49,7 +49,7 @@ ${COLORS.CYAN}%s${COLORS.DEFAULT} ${COLORS.YELLOW}%s${COLORS.DEFAULT}\n`,
  * @param scripts package scripts object.
  */
 const printPackageScripts = (scripts: Record<string, string>, cli: TCli) => {
-  const search = (<{ [key: string]: string }>argv).search;
+  const search = (<{ [key: string]: string | undefined }>argv).search?.replace(/[^a-z-]/g, '');
   const scriptKeys = typeof search !== 'string' ? Object.keys(scripts) : Object.keys(scripts).filter(key => new RegExp(search).test(key));
   for (const key of scriptKeys) {
     // eslint-disable-next-line no-console -- needed here to print output in the terminal
