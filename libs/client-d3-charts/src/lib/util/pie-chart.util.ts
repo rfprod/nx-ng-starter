@@ -7,7 +7,7 @@ import { generateConfiguration } from './configuration.util';
 /**
  * The pie chart default configuration.
  */
-export const defaultPieChartConfig: IPieChartOptions = Object.freeze({
+export const defaultPieChartConfig: IPieChartOptions = Object.freeze(<IPieChartOptions>{
   chartTitle: '',
   width: 600,
   height: 600,
@@ -18,6 +18,7 @@ export const defaultPieChartConfig: IPieChartOptions = Object.freeze({
     left: 20,
   },
   innerRadius: 0, // increase inner radius to render a donut chart
+  showLabels: true,
   labelRadiusModifier: 50,
   labelTextWrapWidth: 60,
   color: d3.scaleOrdinal(d3.schemeCategory10),
@@ -82,24 +83,26 @@ export const drawPieChart = (container: ElementRef<HTMLDivElement>, data: IPieCh
       d3.select('#tooltip').style('opacity', 0);
     });
 
-  const label = d3
-    .arc<d3.PieArcDatum<IPieChartDataNode>>()
-    .innerRadius(radius)
-    .outerRadius(radius + config.labelRadiusModifier);
-
   arcs
     .append('path')
     .attr('fill', (d, i) => config.color(i.toString()))
     .attr('d', arc);
 
-  const textDy = 5;
-  arcs
-    .append('text')
-    .attr('class', 'legend')
-    .attr('text-anchor', 'middle')
-    .attr('dy', textDy)
-    .attr('transform', d => `translate(${label.centroid(d)})`)
-    .text(d => d.data.y);
+  if (config.showLabels) {
+    const label = d3
+      .arc<d3.PieArcDatum<IPieChartDataNode>>()
+      .innerRadius(radius)
+      .outerRadius(radius + config.labelRadiusModifier);
+
+    const textDy = 5;
+    arcs
+      .append('text')
+      .attr('class', 'legend')
+      .attr('text-anchor', 'middle')
+      .attr('dy', textDy)
+      .attr('transform', d => `translate(${label.centroid(d)})`)
+      .text(d => d.data.y);
+  }
 
   return config;
 };
