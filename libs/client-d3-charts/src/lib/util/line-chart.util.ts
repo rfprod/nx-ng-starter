@@ -239,7 +239,7 @@ const onMouseOver = (
   const tooltipShift = 4;
   const tooltipDy = -10;
   g.append('text')
-    .attr('class', 'val')
+    .attr('class', 'chart-tooltip')
     .style('font-size', '11px')
     .attr('dx', () => (config.width - config.margin.left - config.margin.right) / tooltipShift)
     .attr('dy', () => tooltipDy)
@@ -256,7 +256,7 @@ const onMouseOut = (self: SVGCircleElement, config: ILineChartOptions) => {
   d3.select(self).attr('class', 'dot');
   d3.select(self).transition().duration(duration).attr('r', config.dotRadius);
 
-  d3.selectAll('.val').remove();
+  d3.selectAll('.chart-tooltip').remove();
 };
 
 /**
