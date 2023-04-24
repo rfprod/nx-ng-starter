@@ -15,6 +15,7 @@ describe('pie-chart.util', () => {
       innerRadius: expect.any(Number),
       labelRadiusModifier: expect.any(Number),
       labelTextWrapWidth: expect.any(Number),
+      transitionDuration: expect.any(Number),
       color: expect.any(Function),
     });
   });

@@ -25,6 +25,8 @@ export interface IPieChartOptions {
   labelTextWrapWidth: number;
   /** Whether to show labels next to the chart slices */
   showLabels: boolean;
+  /** Transition duration configuration. Used mainly for the chart tooltips. */
+  transitionDuration: number;
   /** The color scale for the chart */
   color: d3.ScaleOrdinal<string, string>;
 }

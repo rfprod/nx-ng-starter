@@ -203,7 +203,7 @@ const onMouseOver = (
     });
 
   g.append('text')
-    .attr('class', 'val')
+    .attr('class', 'chart-tooltip')
     .style('font-size', '11px')
     .attr('x', () => x(d.title) ?? '')
     .attr('y', function () {
@@ -236,7 +236,7 @@ const onMouseOut = (
     .attr('y', () => y(d.value) ?? 0)
     .attr('height', () => config.height - (y(d.value) ?? 0));
 
-  d3.selectAll('.val').remove();
+  d3.selectAll('.chart-tooltip').remove();
 };
 
 /**

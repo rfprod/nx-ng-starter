@@ -252,11 +252,20 @@ $extended-box-shadow-palette: (
     @include extended-background-color('.error');
   }
 
+  .app-tooltip {
+    @include extended-color('.basic-bg-text-inverse');
+    @include extended-background-color('.basic-inverse');
+  }
+
   .label {
     @include extended-background-color('.label');
   }
 
   .legend {
+    @include extended-fill('.basic-bg-text');
+  }
+
+  .chart-tooltip {
     @include extended-fill('.basic-bg-text');
   }
 }
