@@ -29,7 +29,7 @@
       "outputs": ["{workspaceRoot}/dist/stylelint/libs/client-grpc"]
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "libs/client-grpc/jest.config.ts",
         "passWithNoTests": true

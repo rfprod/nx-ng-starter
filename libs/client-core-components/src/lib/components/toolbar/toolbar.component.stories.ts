@@ -22,7 +22,7 @@ const story: StoryFn<AppToolbarComponent> = (args: Args) => ({
   },
 });
 
-export const primary = {
+export const Primary = {
   render: story,
 
   args: {

@@ -29,7 +29,7 @@
       "outputs": ["{workspaceRoot}/dist/stylelint/libs/client-translate"]
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "libs/client-translate/jest.config.ts",
         "passWithNoTests": true

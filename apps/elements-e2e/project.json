@@ -12,7 +12,7 @@
           "devServerTarget": "elements:serve:production"
         }
       },
-      "executor": "@nrwl/cypress:cypress",
+      "executor": "@nx/cypress:cypress",
       "options": {
         "cypressConfig": "apps/elements-e2e/cypress.config.js",
         "devServerTarget": "elements:serve",

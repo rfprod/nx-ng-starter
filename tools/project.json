@@ -1,6 +1,6 @@
 {
-  "name": "tools",
   "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "name": "tools",
   "projectType": "application",
   "sourceRoot": "tools",
   "tags": ["scope:tools", "type:workspace"],
@@ -22,6 +22,17 @@
         "commands": [
           {
             "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/actions/codeowners/codeowners.ts",
+            "forwardAllArgs": false
+          }
+        ]
+      }
+    },
+    "compile-executors": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "rm -rf ./tools/executors/**/*.js ./tools/executors/**/*.js.map && npx tsc -p ./tools/executors/tsconfig.executors.json",
             "forwardAllArgs": false
           }
         ]
@@ -65,7 +76,8 @@
       "options": {
         "commands": [
           {
-            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/package-commands.ts"
+            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/package-commands.ts",
+            "forwardAllArgs": true
           }
         ]
       }
@@ -160,7 +172,7 @@
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "tools/jest.config.ts",
         "passWithNoTests": true

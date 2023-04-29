@@ -1,4 +1,4 @@
-import { logger } from '@nrwl/devkit';
+import { logger } from '@nx/devkit';
 import { exec } from 'child_process';
 import { promisify } from 'util';
 

@@ -2,29 +2,16 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 module.exports = {
   core: {
-    builder: 'webpack5',
-    disableTelemetry: true
+    disableTelemetry: true,
   },
-  addons: [
-    {
-      name: '@storybook/addon-links',
-    },
-    {
-      name: '@storybook/addon-essentials',
-      options: {
-        actions: true,
-        backgrounds: true,
-        controls: true,
-        docs: false,
-        viewport: true,
-        toolbars: true,
-      },
-    },
-  ],
+  addons: [{ name: '@storybook/addon-controls' }],
   features: {
     postcss: true,
   },
-  framework: '@storybook/angular',
+  framework: {
+    name: '@storybook/angular',
+    options: {},
+  },
   plugins: [
     require('autoprefixer')({
       flexbox: 'no-2009',
@@ -35,7 +22,6 @@ module.exports = {
     const tsPaths = new TsconfigPathsPlugin({
       configFile: './tsconfig.base.json',
     });
-
     config.resolve.plugins ? config.resolve.plugins.push(tsPaths) : (config.resolve.plugins = [tsPaths]);
 
     // add your own webpack tweaks below if needed
@@ -52,9 +38,7 @@ module.exports = {
      *   exclude: /\.async\.html$/
      * },
      */
-    const rules = (config.module.rules ?? []).filter(
-      rule => !rule.loader?.includes('raw-loader'),
-    );
+    const rules = (config.module.rules ?? []).filter(rule => !rule.loader?.includes('raw-loader'));
     config.module.rules = [...rules];
 
     // adjust file size limits, see docs here https://webpack.js.org/configuration/performance/#performance-maxentrypointsize

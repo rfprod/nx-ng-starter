@@ -39,13 +39,13 @@
       "outputs": ["{options.outputFile}"]
     },
     "serve": {
-      "executor": "@nrwl/node:node",
+      "executor": "@nx/node:node",
       "options": {
         "buildTarget": "server-prod:build"
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "apps/server-prod/jest.config.ts",
         "passWithNoTests": true

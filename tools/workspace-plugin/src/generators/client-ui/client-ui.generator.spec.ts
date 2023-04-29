@@ -1,22 +1,22 @@
-import type { Tree } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import type { Tree } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
-import { defaultLibraryFilePaths, expectFileToExist } from '../testing/file-assertion.util';
-import { defaultTestSetupIncludes } from '../testing/test-setup-assertion.util';
-import { finalizeGenerator } from '../utils/finalizer.util';
-import * as generator from './client-feature.generator';
+import { defaultLibraryFilePaths, expectFileToExist } from '../../testing/file-assertion.util';
+import { defaultTestSetupIncludes } from '../../testing/test-setup-assertion.util';
+import { finalizeGenerator } from '../../utils/finalizer.util';
+import * as generator from './client-ui.generator';
 import type { ISchematicContext } from './schema.interface';
 
-jest.mock('../utils/finalizer.util', () => ({
+jest.mock('../../utils/finalizer.util', () => ({
   finalizeGenerator: jest.fn().mockReturnValue(new Promise(resolve => resolve(null))),
 }));
 
-describe('client-feature', () => {
+describe('client-ui', () => {
   let tree: Tree;
 
   const context: ISchematicContext = {
-    name: 'client-test',
-    tags: `scope:client-test,type:feature`,
+    name: 'client-ui-test',
+    tags: `scope:client-ui-test,type:ui`,
   };
 
   beforeEach(() => {
@@ -27,13 +27,13 @@ describe('client-feature', () => {
   });
 
   it('should throw error if a name is missing', async () => {
-    const expected = 'The name must start with client- and contain only lower case letters and dashes.';
+    const expected = 'The name must start with client-ui- and contain only lower case letters and dashes.';
     await expect(generator.default(tree, { ...context, name: '' })).rejects.toThrowError(expected);
   });
 
   it('should throw error if a name has incorrect format', async () => {
-    const expected = 'The name must start with client- and contain only lower case letters and dashes.';
-    await expect(generator.default(tree, { ...context, name: 'feature-client' })).rejects.toThrowError(expected);
+    const expected = 'The name must start with client-ui- and contain only lower case letters and dashes.';
+    await expect(generator.default(tree, { ...context, name: 'ui-client' })).rejects.toThrowError(expected);
   });
 
   const testTimeout = 10000;
@@ -52,7 +52,7 @@ describe('client-feature', () => {
       expectFileToExist(`/libs/${context.name}/src/index.ts`, tree);
       expectFileToExist(`/libs/${context.name}/src/test-setup.ts`, tree);
 
-      const kebabCaseName = context.name.replace('client-', '');
+      const kebabCaseName = context.name.replace('client-ui-', '');
 
       const barrel = tree.read(`/libs/${context.name}/src/index.ts`, 'utf-8');
       expect(barrel).toContain(`export * from './lib/${kebabCaseName}.module';`);
@@ -64,14 +64,7 @@ describe('client-feature', () => {
         expect(testSetup).toContain(include);
       }
 
-      expectFileToExist(`/libs/${context.name}/src/lib/${kebabCaseName}-routing.module.ts`, tree);
       expectFileToExist(`/libs/${context.name}/src/lib/${kebabCaseName}.module.ts`, tree);
-
-      expectFileToExist(`/libs/${context.name}/src/lib/services/${kebabCaseName}.service.spec.ts`, tree);
-      expectFileToExist(`/libs/${context.name}/src/lib/services/${kebabCaseName}.service.ts`, tree);
-
-      expectFileToExist(`/libs/${context.name}/src/lib/guards/${kebabCaseName}.guard.spec.ts`, tree);
-      expectFileToExist(`/libs/${context.name}/src/lib/guards/${kebabCaseName}.guard.ts`, tree);
 
       expectFileToExist(`/libs/${context.name}/src/lib/components/${kebabCaseName}/${kebabCaseName}.component.html`, tree);
       expectFileToExist(`/libs/${context.name}/src/lib/components/${kebabCaseName}/${kebabCaseName}.component.scss`, tree);

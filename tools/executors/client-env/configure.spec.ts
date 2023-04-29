@@ -1,7 +1,7 @@
 jest.mock('child_process');
 jest.mock('./env-client');
 
-import type { ExecutorContext } from '@nrwl/devkit';
+import type { ExecutorContext } from '@nx/devkit';
 
 import configure from './configure';
 import * as envClient from './env-client';

@@ -1,4 +1,4 @@
-import { ExecutorContext, getProjects, logger } from '@nrwl/devkit';
+import { ExecutorContext, getProjects, logger } from '@nx/devkit';
 import { execFileSync } from 'child_process';
 import { FsTree } from 'nx/src/generators/tree';
 

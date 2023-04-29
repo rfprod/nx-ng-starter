@@ -1,13 +1,13 @@
-import type { Tree } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import type { Tree } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
-import { defaultLibraryFilePaths, expectFileToExist } from '../testing/file-assertion.util';
-import { defaultTestSetupIncludes } from '../testing/test-setup-assertion.util';
-import { finalizeGenerator } from '../utils/finalizer.util';
+import { defaultLibraryFilePaths, expectFileToExist } from '../../testing/file-assertion.util';
+import { defaultTestSetupIncludes } from '../../testing/test-setup-assertion.util';
+import { finalizeGenerator } from '../../utils/finalizer.util';
 import * as generator from './client-store.generator';
 import type { ISchematicContext } from './schema.interface';
 
-jest.mock('../utils/finalizer.util', () => ({
+jest.mock('../../utils/finalizer.util', () => ({
   finalizeGenerator: jest.fn().mockReturnValue(new Promise(resolve => resolve(null))),
 }));
 

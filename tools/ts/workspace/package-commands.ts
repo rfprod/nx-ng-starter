@@ -1,4 +1,4 @@
-import { getProjects, ProjectConfiguration, TargetConfiguration } from '@nrwl/devkit';
+import { getProjects, ProjectConfiguration, TargetConfiguration } from '@nx/devkit';
 import * as fs from 'fs';
 import { FsTree } from 'nx/src/generators/tree';
 import { argv } from 'yargs';

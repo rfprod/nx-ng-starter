@@ -1,8 +1,8 @@
-jest.mock('@nrwl/devkit');
+jest.mock('@nx/devkit');
 jest.mock('nx/src/generators/tree');
 
-import type { ExecutorContext, ProjectConfiguration } from '@nrwl/devkit';
-import * as devkit from '@nrwl/devkit';
+import type { ExecutorContext, ProjectConfiguration } from '@nx/devkit';
+import * as devkit from '@nx/devkit';
 import * as nxTree from 'nx/src/generators/tree';
 
 import configure, { AppConfigureTscCheckExecutor } from './configure';

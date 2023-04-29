@@ -1,0 +1,73 @@
+{
+  "name": "workspace-plugin",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "tools/workspace-plugin/src",
+  "tags": ["scope:workspace-plugin", "type:workspace"],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "assets": [
+          {
+            "glob": "**/!(*.ts)",
+            "input": "./tools/workspace-plugin/src",
+            "output": "./src"
+          },
+          {
+            "glob": "**/*.d.ts",
+            "input": "./tools/workspace-plugin/src",
+            "output": "./src"
+          },
+          {
+            "glob": "generators.json",
+            "input": "./tools/workspace-plugin",
+            "output": "."
+          },
+          {
+            "glob": "executors.json",
+            "input": "./tools/workspace-plugin",
+            "output": "."
+          }
+        ],
+        "main": "tools/workspace-plugin/src/index.ts",
+        "outputPath": "dist/tools/workspace-plugin",
+        "tsConfig": "tools/workspace-plugin/tsconfig.lib.json"
+      },
+      "outputs": ["{options.outputPath}"]
+    },
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "eslintConfig": "tools/workspace-plugin/.eslintrc.json",
+        "lintFilePatterns": [
+          "tools/workspace-plugin/**/*.ts",
+          "tools/workspace-plugin/package.json",
+          "tools/workspace-plugin/generators.json"
+        ]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      },
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "tools/workspace-plugin/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"]
+    },
+    "tsc-check": {
+      "executor": "./tools/executors/tsc:check",
+      "options": {
+        "tsConfig": "tools/workspace-plugin/tsconfig.lib.json"
+      },
+      "outputs": ["{workspaceRoot}/dist/out-tsc/tools/workspace-plugin"]
+    }
+  }
+}

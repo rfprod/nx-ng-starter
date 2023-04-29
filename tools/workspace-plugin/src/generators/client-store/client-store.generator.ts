@@ -1,10 +1,10 @@
-import { libraryGenerator } from '@nrwl/angular/generators';
-import { generateFiles, joinPathFragments, ProjectConfiguration, readProjectConfiguration, Tree } from '@nrwl/devkit';
+import { libraryGenerator } from '@nx/angular/generators';
+import { generateFiles, joinPathFragments, ProjectConfiguration, readProjectConfiguration, Tree } from '@nx/devkit';
 
-import { cleanup } from '../utils/cleanup.util';
-import { finalizeGenerator } from '../utils/finalizer.util';
-import { generateFilesConfig } from '../utils/generate-files.config';
-import { updateProjectLinterConfig } from '../utils/project-configuration.util';
+import { cleanup } from '../../utils/cleanup.util';
+import { finalizeGenerator } from '../../utils/finalizer.util';
+import { generateFilesConfig } from '../../utils/generate-files.config';
+import { updateProjectLinterConfig } from '../../utils/project-configuration.util';
 import { ISchematicContext } from './schema.interface';
 
 /**

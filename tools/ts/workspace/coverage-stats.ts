@@ -1,4 +1,4 @@
-import { getJestProjects } from '@nrwl/jest';
+import { getJestProjects } from '@nx/jest';
 import { ExecException, execFile } from 'child_process';
 import * as fs from 'fs';
 import path from 'path';

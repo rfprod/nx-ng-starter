@@ -44,13 +44,13 @@
           "buildTarget": "server-dev:build:production"
         }
       },
-      "executor": "@nrwl/node:node",
+      "executor": "@nx/node:node",
       "options": {
         "buildTarget": "server-dev:build"
       }
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "apps/server-dev/jest.config.ts",
         "passWithNoTests": true

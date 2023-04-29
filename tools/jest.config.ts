@@ -4,7 +4,7 @@ const config: Config.InitialOptions = {
   coverageDirectory: '../coverage/tools',
   coverageThreshold: {
     global: {
-      branches: 81,
+      branches: 84,
       functions: 98,
       lines: 95,
       statements: 96,
@@ -12,7 +12,6 @@ const config: Config.InitialOptions = {
   },
   displayName: 'tools',
   preset: '../jest.preset.js',
-  globals: {},
 };
 
 export default config;

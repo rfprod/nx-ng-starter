@@ -12,7 +12,7 @@
           "devServerTarget": "client-diagnostics:storybook:ci"
         }
       },
-      "executor": "@nrwl/cypress:cypress",
+      "executor": "@nx/cypress:cypress",
       "options": {
         "cypressConfig": "apps/client-diagnostics-e2e/cypress.config.js",
         "devServerTarget": "client-diagnostics:storybook",

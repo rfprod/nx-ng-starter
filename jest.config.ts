@@ -1,4 +1,4 @@
-import { getJestProjects } from '@nrwl/jest';
+import { getJestProjects } from '@nx/jest';
 
 const config = { projects: getJestProjects() };
 
