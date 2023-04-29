@@ -34,6 +34,24 @@ const typeConstraints = [
     sourceTag: 'type:testing-unit',
     onlyDependOnLibsWithTags: ['type:util', 'type:ui'],
   },
+  {
+    sourceTag: 'type:workspace',
+    onlyDependOnLibsWithTags: [],
+  },
+];
+
+/**
+ * Workspace module boundary rules based on scopes.
+ */
+const workspaceConstraints = [
+  {
+    sourceTag: 'scope:tools',
+    onlyDependOnLibsWithTags: [],
+  },
+  {
+    sourceTag: 'scope:workspace-plugin',
+    onlyDependOnLibsWithTags: [],
+  },
 ];
 
 /**
@@ -375,5 +393,5 @@ const clientConstraints = [
 exports.nxModuleBoundaryRules = {
   enforceBuildableLibDependency: true,
   allow: [],
-  depConstraints: [...sharedConstraints, ...clientConstraints, ...backendConstraints, ...typeConstraints],
+  depConstraints: [...workspaceConstraints, ...sharedConstraints, ...clientConstraints, ...backendConstraints, ...typeConstraints],
 };

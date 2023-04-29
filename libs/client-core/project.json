@@ -29,7 +29,7 @@
       "outputs": ["{workspaceRoot}/dist/stylelint/libs/client-core"]
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "libs/client-core/jest.config.ts",
         "passWithNoTests": true

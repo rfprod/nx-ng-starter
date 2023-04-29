@@ -15,7 +15,7 @@
         }
       },
       "defaultConfiguration": "production",
-      "executor": "@nrwl/js:tsc",
+      "executor": "@nx/js:tsc",
       "options": {
         "outputPath": "dist/libs/backend-diagnostics",
         "packageJson": "libs/backend-diagnostics/package.json",
@@ -35,7 +35,7 @@
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "libs/backend-diagnostics/jest.config.ts",
         "passWithNoTests": true

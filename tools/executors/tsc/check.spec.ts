@@ -1,6 +1,6 @@
 jest.mock('child_process');
 
-import type { ExecutorContext } from '@nrwl/devkit';
+import type { ExecutorContext } from '@nx/devkit';
 import * as childProcess from 'child_process';
 import path from 'path';
 

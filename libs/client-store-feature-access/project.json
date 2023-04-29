@@ -15,7 +15,7 @@
       "outputs": ["{options.outputFile}"]
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "libs/client-store-feature-access/jest.config.ts",
         "passWithNoTests": true

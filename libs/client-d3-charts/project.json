@@ -45,7 +45,7 @@
       "outputs": ["{workspaceRoot}/dist/stylelint/libs/client-d3-charts"]
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "libs/client-d3-charts/jest.config.ts",
         "passWithNoTests": true

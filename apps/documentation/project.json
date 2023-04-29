@@ -211,7 +211,7 @@
       "outputs": ["{workspaceRoot}/dist/stylelint/apps/documentation"]
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "apps/documentation/jest.config.ts",
         "passWithNoTests": true

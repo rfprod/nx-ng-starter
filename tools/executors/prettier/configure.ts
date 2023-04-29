@@ -1,4 +1,4 @@
-import { ExecutorContext, getProjects, logger, ProjectConfiguration, updateProjectConfiguration } from '@nrwl/devkit';
+import { ExecutorContext, getProjects, logger, ProjectConfiguration, updateProjectConfiguration } from '@nx/devkit';
 import { flushChanges, FsTree } from 'nx/src/generators/tree';
 
 import { IExecutorOptions } from './schema';

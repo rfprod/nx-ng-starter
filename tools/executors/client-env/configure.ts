@@ -1,4 +1,4 @@
-import { ExecutorContext } from '@nrwl/devkit';
+import { ExecutorContext } from '@nx/devkit';
 
 import { AppBaseEnvConfig } from './env-base';
 import { AppClientEnvConfig } from './env-client';

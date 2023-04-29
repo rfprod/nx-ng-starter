@@ -1,6 +1,6 @@
 {
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "name": "client-pwa-offline",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "prefix": "app",
   "projectType": "library",
   "sourceRoot": "libs/client-pwa-offline/src",
@@ -29,7 +29,7 @@
       "outputs": ["{workspaceRoot}/dist/stylelint/libs/client-pwa-offline"]
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "options": {
         "jestConfig": "libs/client-pwa-offline/jest.config.ts",
         "passWithNoTests": true

@@ -1,8 +1,8 @@
-jest.mock('@nrwl/devkit');
+jest.mock('@nx/devkit');
 jest.mock('fs/promises');
 jest.mock('dotenv');
 
-import { ExecutorContext, logger } from '@nrwl/devkit';
+import { ExecutorContext, logger } from '@nx/devkit';
 import dotenv from 'dotenv';
 import { Abortable } from 'events';
 import { Mode, ObjectEncodingOptions, OpenMode, PathLike, StatOptions, Stats } from 'fs';

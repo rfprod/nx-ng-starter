@@ -12,7 +12,7 @@
           "devServerTarget": "client-core-components:storybook:ci"
         }
       },
-      "executor": "@nrwl/cypress:cypress",
+      "executor": "@nx/cypress:cypress",
       "options": {
         "cypressConfig": "apps/client-core-components-e2e/cypress.config.js",
         "devServerTarget": "client-core-components:storybook",

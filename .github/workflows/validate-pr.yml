@@ -82,7 +82,7 @@ jobs:
         run: npx nx affected --target build --base origin/main
 
       - name: Build storybook affected
-        run: npx nx affected --target build-storybook --base origin/main
+        run: npx nx affected --target build-storybook --base origin/main --parallel 1
 
       - name: Build global storybook
         if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' }}

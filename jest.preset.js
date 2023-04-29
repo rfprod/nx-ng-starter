@@ -1,4 +1,4 @@
-const nxPreset = require('@nrwl/jest/preset').default;
+const nxPreset = require('@nx/jest/preset').default;
 const { pathsToModuleNameMapper } = require('ts-jest');
 
 const { paths } = require('./tsconfig.base.json').compilerOptions;
@@ -18,7 +18,7 @@ module.exports = {
       },
     ],
   },
-  // resolver: '@nrwl/jest/plugins/resolver',
+  // resolver: '@nx/jest/plugins/resolver',
   resolver: 'jest-preset-angular/build/resolvers/ng-jest-resolver.js',
   moduleNameMapper: pathsToModuleNameMapper(paths, { prefix: '<rootDir>/../../' }),
   coverageReporters: ['html-spa', 'json-summary'],
