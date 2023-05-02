@@ -8,7 +8,7 @@ import {
   IForceDirectedChartOptions,
   IForceDirectedGraphEntity,
 } from '../../interfaces/force-directed-chart.interface';
-import { ILineChartOptions, TLineChartData } from '../../interfaces/line-chart.interface';
+import { ILineChartOptions, TDateFormat, TLineChartData } from '../../interfaces/line-chart.interface';
 import { IPieChartDataNode, IPieChartOptions } from '../../interfaces/pie-chart.interface';
 import { IRadarChartDataNode, IRadarChartOptions } from '../../interfaces/radar-chart.interface';
 
@@ -36,7 +36,7 @@ export class AppChartExamplesComponent {
    * Sample line chart data.
    */
   public get lineChartData() {
-    const increment = 10000;
+    const increment = 100000000;
     const multiplier = 2;
     return <TLineChartData>[
       { timestamp: new Date().getTime(), value: 1 },
@@ -161,7 +161,13 @@ export class AppChartExamplesComponent {
     switchMap(() =>
       timer(this.timeout).pipe(
         first(),
-        map(() => ({ data: this.lineChartData, options: this.lineChartOptions() })),
+        map(() => ({
+          data: this.lineChartData,
+          options: this.lineChartOptions(),
+          optionsDateDdMmYy: this.lineChartOptions('dd/mm/yy'),
+          optionsDateDdMmYyyy: this.lineChartOptions('dd/mm/yyyy'),
+          optionsDateMmYyyy: this.lineChartOptions('mm/yyyy'),
+        })),
       ),
     ),
   );
@@ -197,6 +203,9 @@ export class AppChartExamplesComponent {
 
   private readonly timeout = 100;
 
+  /**
+   * Example bar chart options.
+   */
   public barChartOptions() {
     return <Partial<IBarChartOptions>>{
       chartTitle: 'Example bar chart',
@@ -205,26 +214,40 @@ export class AppChartExamplesComponent {
     };
   }
 
-  public lineChartOptions() {
+  /**
+   * Example line chart options.
+   * @param dateFormat date format
+   */
+  public lineChartOptions(dateFormat: TDateFormat = 'default') {
     return <Partial<ILineChartOptions>>{
-      chartTitle: 'Example line chart',
+      chartTitle: `Example line chart, date format ${dateFormat}`,
       xAxisTitle: 'Date range',
       yAxisTitle: 'Value range',
+      dateFormat,
     };
   }
 
+  /**
+   * Example radar chart options.
+   */
   public radarChartOptions() {
     return <Partial<IRadarChartOptions>>{
       chartTitle: 'Example radar chart',
     };
   }
 
+  /**
+   * Example pie chart options.
+   */
   public pieChartOptions() {
     return <Partial<IPieChartOptions>>{
       chartTitle: 'Example pie chart',
     };
   }
 
+  /**
+   * Example force directed chart options.
+   */
   public forceDirectedChartOptions() {
     return <Partial<IForceDirectedChartOptions>>{
       chartTitle: 'Example force directed chart',
