@@ -34,7 +34,8 @@ describe('AppGlobalProgressBarComponent', () => {
 
   it('lineChartOptions should have expected structure', () => {
     expect(component.lineChartOptions()).toEqual({
-      chartTitle: 'Example line chart',
+      chartTitle: 'Example line chart, date format default',
+      dateFormat: 'default',
       xAxisTitle: 'Date range',
       yAxisTitle: 'Value range',
     });
