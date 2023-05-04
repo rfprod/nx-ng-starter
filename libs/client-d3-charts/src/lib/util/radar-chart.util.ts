@@ -104,32 +104,34 @@ const wrapSvgText = (svgText: d3.Selection<SVGTextElement, string, SVGGElement, 
   svgText.each(function (this: SVGTextElement) {
     const text = d3.select<SVGElement, string>(this);
     const words = text.text().split(/\s+/).reverse();
-    let line: string[] = [];
-    let lineNumber = 0;
-    const lineHeight = 1.4;
-    const y = text.attr('y');
-    const x = text.attr('x');
-    const dy = parseFloat(text.attr('dy') ?? 0);
-    let tspan = text.text(null).append('tspan').attr('x', x).attr('y', y).attr('dy', `${dy}em`);
+    if (words.length > 1) {
+      let line: string[] = [];
+      let lineNumber = 0;
+      const lineHeight = 1.4;
+      const y = text.attr('y');
+      const x = text.attr('x');
+      const dy = parseFloat(text.attr('dy') ?? 0);
+      let tspan = text.text(null).append('tspan').attr('x', x).attr('y', y).attr('dy', `${dy}em`);
 
-    let word = words.pop();
+      let word = words.pop();
 
-    while (typeof word !== 'undefined') {
-      line.push(word ?? '');
-      tspan.text(line.join(' '));
-      if ((tspan.node()?.getComputedTextLength() ?? 0) > width) {
-        line.pop();
+      while (typeof word !== 'undefined') {
+        line.push(word ?? '');
         tspan.text(line.join(' '));
-        line = [word ?? ''];
-        lineNumber += 1;
-        tspan = text
-          .append('tspan')
-          .attr('x', x)
-          .attr('y', y)
-          .attr('dy', `${lineNumber * lineHeight + dy}em`)
-          .text(word ?? '');
+        if ((tspan.node()?.getComputedTextLength() ?? 0) > width) {
+          line.pop();
+          tspan.text(line.join(' '));
+          line = [word ?? ''];
+          lineNumber += 1;
+          tspan = text
+            .append('tspan')
+            .attr('x', x)
+            .attr('y', y)
+            .attr('dy', `${lineNumber * lineHeight + dy}em`)
+            .text(word ?? '');
+        }
+        word = words.pop();
       }
-      word = words.pop();
     }
   });
 };
