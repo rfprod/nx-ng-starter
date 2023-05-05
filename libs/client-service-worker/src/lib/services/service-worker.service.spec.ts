@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { ApplicationRef, NgZone } from '@angular/core';
+import { ApplicationRef } from '@angular/core';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwUpdate, VersionEvent } from '@angular/service-worker';
@@ -31,12 +31,6 @@ describe('AppServiceWorkerService', () => {
           open: () => ({
             onAction: () => of(null),
           }),
-        },
-      },
-      {
-        provide: NgZone,
-        useValue: {
-          run: (fn: () => undefined) => fn(),
         },
       },
       {

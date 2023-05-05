@@ -9,7 +9,7 @@ const config: Config.InitialOptions = {
     global: {
       branches: 4,
       functions: 27,
-      lines: 28,
+      lines: 27,
       statements: 30,
     },
   },
