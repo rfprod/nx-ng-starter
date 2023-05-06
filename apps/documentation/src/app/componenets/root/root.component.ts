@@ -1,13 +1,12 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { AfterContentInit, ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, Component, DestroyRef, Inject, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Meta, Title } from '@angular/platform-browser';
 import { AppServiceWorkerService } from '@app/client-service-worker';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { map } from 'rxjs';
 
 import { DOCUMENTATION_ENVIRONMENT, IDocumentationEnvironment } from '../../interfaces/environment.interface';
 
-@UntilDestroy()
 @Component({
   selector: 'app-root',
   templateUrl: './root.component.html',
@@ -15,6 +14,8 @@ import { DOCUMENTATION_ENVIRONMENT, IDocumentationEnvironment } from '../../inte
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppDocRootComponent implements OnInit, AfterContentInit {
+  private readonly destroyRef = inject(DestroyRef);
+
   public readonly version = this.env.meta.version;
 
   public readonly config$ = this.bpObserver
@@ -46,6 +47,6 @@ export class AppDocRootComponent implements OnInit, AfterContentInit {
   }
 
   public ngAfterContentInit(): void {
-    void this.sw.subscribeToUpdates$.pipe(untilDestroyed(this)).subscribe();
+    void this.sw.subscribeToUpdates$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 }

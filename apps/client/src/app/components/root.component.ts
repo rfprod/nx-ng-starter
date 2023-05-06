@@ -1,4 +1,5 @@
-import { AfterContentInit, ChangeDetectionStrategy, Component, HostBinding, Inject, OnInit } from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, Component, DestroyRef, HostBinding, Inject, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Meta, Title } from '@angular/platform-browser';
 import { AppServiceWorkerService } from '@app/client-service-worker';
 import { chatbotActions, chatbotSelectors, IChatbotState } from '@app/client-store-chatbot';
@@ -6,7 +7,6 @@ import { routerActions } from '@app/client-store-router';
 import { ISidebarState, sidebarActions, sidebarSelectors } from '@app/client-store-sidebar';
 import { IThemeState, themeActions, themeSelectors } from '@app/client-store-theme';
 import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 
@@ -15,7 +15,6 @@ interface ILogoRef {
   light: 'assets/svg/logo-light.svg';
 }
 
-@UntilDestroy()
 @Component({
   selector: 'app-root',
   templateUrl: './root.component.html',
@@ -23,6 +22,8 @@ interface ILogoRef {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppRootComponent implements OnInit, AfterContentInit {
+  private readonly destroyRef = inject(DestroyRef);
+
   /**
    * Defines if UI should use alternative dark material theme.
    * This must be a flag. HostBinding should not use async pipes.
@@ -107,6 +108,6 @@ export class AppRootComponent implements OnInit, AfterContentInit {
   }
 
   public ngAfterContentInit(): void {
-    void this.sw.subscribeToUpdates$.pipe(untilDestroyed(this)).subscribe();
+    void this.sw.subscribeToUpdates$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 }

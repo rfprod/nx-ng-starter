@@ -1,12 +1,11 @@
-import { ChangeDetectionStrategy, Component, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DestroyRef, inject, ViewChild } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatSidenavContent } from '@angular/material/sidenav';
 import { NavigationEnd, Router } from '@angular/router';
 import { ISidebarState, sidebarActions, sidebarSelectors } from '@app/client-store-sidebar';
-import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Store } from '@ngrx/store';
 import { tap } from 'rxjs/operators';
 
-@UntilDestroy()
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
@@ -14,17 +13,19 @@ import { tap } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppContentComponent {
+  private readonly destroyRef = inject(DestroyRef);
+
   @ViewChild('content') public readonly content?: MatSidenavContent;
 
   public readonly sidebarOpen$ = this.store.select(sidebarSelectors.sidebarOpen);
 
   public readonly routerEvents$ = this.router.events.pipe(
+    takeUntilDestroyed(this.destroyRef),
     tap(event => {
       if (event instanceof NavigationEnd && typeof this.content !== 'undefined') {
         this.content.scrollTo({ top: 0 });
       }
     }),
-    untilDestroyed(this),
   );
 
   constructor(private readonly store: Store<ISidebarState>, private readonly router: Router) {
