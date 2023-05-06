@@ -36,19 +36,34 @@ export class AppChartExamplesComponent {
    * Sample line chart data.
    */
   public get lineChartData() {
-    const increment = 100000000;
-    const multiplier = 2;
-    return <TLineChartData>[
-      { timestamp: new Date().getTime(), value: 1 },
-      { timestamp: new Date().getTime() + increment, value: 10 },
-      { timestamp: new Date().getTime() + increment * multiplier, value: 3 },
-      { timestamp: new Date().getTime() + increment * Math.pow(multiplier, multiplier), value: 5 },
-      { timestamp: new Date().getTime() + increment * Math.pow(multiplier, multiplier) * multiplier, value: 4 },
-      { timestamp: new Date().getTime() + increment * Math.pow(multiplier, multiplier) * Math.pow(multiplier, multiplier), value: 7 },
-      {
-        timestamp: new Date().getTime() + increment * Math.pow(multiplier, multiplier) * Math.pow(multiplier, multiplier) * multiplier,
-        value: 8,
-      },
+    return <TLineChartData[]>[
+      [
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+      ].sort((a, b) => a.timestamp - b.timestamp),
+      [
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+      ].sort((a, b) => a.timestamp - b.timestamp),
+      [
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+        { timestamp: this.randomTimestamp(), value: this.randomValue() },
+      ].sort((a, b) => a.timestamp - b.timestamp),
     ];
   }
 
@@ -202,6 +217,16 @@ export class AppChartExamplesComponent {
   constructor(private readonly breakpointObserver: BreakpointObserver) {}
 
   private readonly timeout = 100;
+
+  public randomValue(range?: number) {
+    const defaultRange = 100;
+    return Math.floor(Math.random() * (range ?? defaultRange) + 1);
+  }
+
+  public randomTimestamp(range?: number) {
+    const defaultRange = 100000000;
+    return Math.floor(Math.random() * (range ?? defaultRange) + new Date().getTime());
+  }
 
   /**
    * Example bar chart options.

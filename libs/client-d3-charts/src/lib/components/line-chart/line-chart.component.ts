@@ -35,7 +35,7 @@ export class AppLineChartComponent implements AfterViewInit, OnChanges {
   /**
    * The chart data.
    */
-  @Input() public data: TLineChartData = [];
+  @Input() public data: TLineChartData[] = [];
 
   /**
    * The chart options.
@@ -59,20 +59,21 @@ export class AppLineChartComponent implements AfterViewInit, OnChanges {
       this.options.width ?? defaultLineChartConfig.width,
       this.doc.body.clientWidth - defaultLineChartConfig.margin.left - defaultLineChartConfig.margin.right - bodyWidthAdjustment,
     );
-    const xTicksScale = 50;
-    const ticks: ILineChartOptions['ticks'] = {
-      x: width / xTicksScale,
-      y: Math.max(...this.data.map(item => item.value)),
-    };
     const height = Math.min(
       this.options.height ?? width,
       this.doc.body.clientWidth - defaultLineChartConfig.margin.top - defaultLineChartConfig.margin.bottom - bodyWidthAdjustment,
     );
+    const xTicksScale = 75;
+    const yTicksScale = 25;
+    const ticks: ILineChartOptions['ticks'] = {
+      x: this.options.ticks?.x ?? width / xTicksScale,
+      y: this.options.ticks?.y ?? height / yTicksScale,
+    };
     const options: Partial<ILineChartOptions> = {
+      ...this.options,
       width,
       height,
       ticks,
-      ...this.options,
     };
     return options;
   }
@@ -83,7 +84,7 @@ export class AppLineChartComponent implements AfterViewInit, OnChanges {
   private drawChart() {
     if (typeof this.container !== 'undefined') {
       const options = this.chartOptions();
-      this.d3Factory.drawLineChart(this.container, this.data, options);
+      this.d3Factory.drawLineChart(this.container, [...this.data], options);
     }
   }
 

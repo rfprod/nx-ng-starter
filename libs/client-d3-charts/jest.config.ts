@@ -7,8 +7,8 @@ const config: Config.InitialOptions = {
   coverageThreshold: {
     // TODO: bump coverage thresholds
     global: {
-      branches: 4,
-      functions: 27,
+      branches: 8,
+      functions: 28,
       lines: 27,
       statements: 30,
     },
