@@ -245,7 +245,6 @@ const clientConstraints = [
       'scope:client-store-diagnostics',
       'scope:client-store-http-api',
       'scope:client-store-user',
-      'scope:client-store-websocket',
       'scope:client-testing-unit',
     ],
   },
