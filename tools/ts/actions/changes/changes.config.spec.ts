@@ -2,7 +2,7 @@ import { changesConfig } from './changes.config';
 
 describe('changesConfig', () => {
   it('should match an object', () => {
-    expect(changesConfig).toMatchObject({
+    const expectation = {
       dependencies: ['yarn.lock'],
       electron: ['.electron/**', 'index.js'],
       mobile: ['android/**', 'capacitor.config.json'],
@@ -29,6 +29,11 @@ describe('changesConfig', () => {
         '.stylelint*',
       ],
       storybook: ['.storybook/**', '*.stories.ts'],
+    };
+
+    expect(changesConfig).toMatchObject({
+      ...expectation,
+      deploy: [...expectation.dependencies, ...expectation.src, ...expectation.storybook],
     });
   });
 });
