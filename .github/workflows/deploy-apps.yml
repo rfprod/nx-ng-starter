@@ -3,6 +3,24 @@
 name: deploy-apps
 
 on:
+  workflow_dispatch:
+    inputs:
+      api:
+        type: boolean
+        description: 'Deploy the API application'
+        default: false
+      client:
+        type: boolean
+        description: 'Deploy the client application'
+        default: false
+      elements:
+        type: boolean
+        description: 'Deploy the elements application'
+        default: false
+      documentation:
+        type: boolean
+        description: 'Deploy the documentation application'
+        default: false
   workflow_call:
     inputs:
       api:

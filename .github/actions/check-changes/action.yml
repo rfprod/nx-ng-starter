@@ -37,7 +37,7 @@ runs:
     - name: Print changes
       shell: bash
       run: |
-        echo "deploy='$DEPLOY'" >> "$GITHUB_OUTPUT"
+        echo "deploy=$(echo ${DEPLOY})" >> $GITHUB_OUTPUT
         echo "### :rocket: Changes" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "- DEPENDENCIES: $DEPENDENCIES" >> $GITHUB_STEP_SUMMARY
