@@ -112,14 +112,14 @@ jobs:
 
   deploy-apps:
     needs: [checks, trunk]
-    if: ${{ needs.checks.outputs.origin == 'true' && needs.checks.outputs.deploy == 'true' }}
+    if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).deploy == 'true' }}
     uses: ./.github/workflows/deploy-apps.yml
     secrets: inherit
     with:
       api: false # This only works with a paid plan such as Blaze (https://firebase.google.com/pricing/)
       client: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' }}
       elements: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' }}
-      documentation: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' }}
+      documentation: ${{ fromJSON(needs.checks.outputs.changes).deploy == 'true' }}
 
   publish-packages:
     needs: [checks, trunk]
