@@ -37,7 +37,7 @@ runs:
     - name: Print changes
       shell: bash
       run: |
-        echo "deploy=$DEPLOY" >> "$GITHUB_OUTPUT"
+        echo "deploy='$DEPLOY'" >> "$GITHUB_OUTPUT"
         echo "### :rocket: Changes" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "- DEPENDENCIES: $DEPENDENCIES" >> $GITHUB_STEP_SUMMARY
@@ -58,4 +58,4 @@ runs:
         SHELLTOOLS: ${{ fromJSON(steps.check-changes.outputs.changes).shelltools }}
         SRC: ${{ fromJSON(steps.check-changes.outputs.changes).src }}
         STORYBOOK: ${{ fromJSON(steps.check-changes.outputs.changes).storybook }}
-        DEPLOY: ${{ fromJSON(steps.check-changes.outputs.changes).dependencies || fromJSON(steps.check-changes.outputs.changes).src || fromJSON(steps.check-changes.outputs.changes).storybook == 'true' }}
+        DEPLOY: ${{ fromJSON(steps.check-changes.outputs.changes).dependencies == 'true' || fromJSON(steps.check-changes.outputs.changes).src == 'true' || fromJSON(steps.check-changes.outputs.changes).storybook == 'true' }}
