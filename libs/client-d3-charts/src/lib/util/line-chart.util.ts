@@ -274,7 +274,7 @@ const drawLinesDotsAndSetPointerEvents = (
   x: d3.ScaleTime<number, number>,
   y: d3.ScaleLinear<number, number>,
   config: ILineChartOptions,
-  data: TLineChartData,
+  data: TLineChartData[],
 ) => {
   const line = d3
     .line<ILineChartDataNode>()
@@ -282,10 +282,21 @@ const drawLinesDotsAndSetPointerEvents = (
     .y(d => y(d.value))
     .curve(d3.curveMonotoneX);
 
-  g.append('path').attr('id', 'line').style('fill', 'none').style('stroke', 'red').style('stroke-width', '2px').attr('d', line(data));
+  const flatData = data.flat();
+
+  for (let c = 0, maxC = data.length; c < maxC; c += 1) {
+    const chunk = data[c];
+
+    g.append('path')
+      .attr('id', `line-${c}`)
+      .style('fill', 'none')
+      .style('stroke', config.color(c.toString()))
+      .style('stroke-width', '2px')
+      .attr('d', line(chunk));
+  }
 
   g.selectAll('.dot')
-    .data(data)
+    .data(flatData)
     .enter()
     .append('circle')
     .attr('class', 'dot')
@@ -321,13 +332,29 @@ const drawLinesDotsAndSetPointerEvents = (
  * @param options the chart options
  * @returns the chart configuration
  */
-export const drawLineChart = (container: ElementRef<HTMLDivElement>, data: TLineChartData, options?: Partial<ILineChartOptions>) => {
+export const drawLineChart = (container: ElementRef<HTMLDivElement>, data: TLineChartData[], options?: Partial<ILineChartOptions>) => {
   const config: ILineChartOptions = generateConfiguration<ILineChartOptions>(defaultLineChartConfig, options, {});
 
   const { g } = createContainer(container, config);
 
-  const x = d3.scaleTime([0, config.width]).domain([Math.min(...data.map(d => d.timestamp)), Math.max(...data.map(d => d.timestamp))]);
-  const y = d3.scaleLinear([config.height, 0]).domain([0, d3.max(data, d => d.value) ?? 1]);
+  const range = data.reduce(
+    (accumulator: { minTime: number; maxTime: number; maxValue: number }, arr) => {
+      const timestamps = arr.map(item => item.timestamp);
+      const minItem = Math.min(...timestamps);
+      const maxItem = Math.max(...timestamps);
+      const minTime = Math.min(minItem, accumulator.minTime);
+      const maxTime = Math.max(maxItem, accumulator.maxTime);
+
+      const values = arr.map(item => item.value);
+      const maxItemValue = Math.max(...values);
+      const maxValue = Math.max(maxItemValue, accumulator.maxValue);
+      return { minTime, maxTime, maxValue };
+    },
+    { minTime: Number(Infinity), maxTime: -Infinity, maxValue: -Infinity },
+  );
+
+  const x = d3.scaleTime([0, config.width]).domain([range.minTime, range.maxTime]);
+  const y = d3.scaleLinear([config.height, 0]).domain([0, range.maxValue ?? 1]);
 
   createAxisX(g, x, config);
 
