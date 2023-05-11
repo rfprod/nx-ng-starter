@@ -19,7 +19,7 @@ const namingConventionConfig = (options = { jestConfigs: false }) => ({
     },
     {
       selector: 'variable',
-      format: ['camelCase', 'UPPER_CASE', 'PascalCase'],
+      format: ['camelCase', 'UPPER_CASE'],
       leadingUnderscore: 'forbid',
       trailingUnderscore: 'forbid',
     },

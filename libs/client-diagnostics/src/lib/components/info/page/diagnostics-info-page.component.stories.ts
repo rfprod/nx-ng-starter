@@ -20,7 +20,7 @@ const story: StoryFn<AppDiagnosticsInfoPage> = (args: Args) => ({
   },
 });
 
-export const Primary = {
+export const primary = {
   render: story,
 
   args: {

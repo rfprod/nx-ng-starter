@@ -22,6 +22,7 @@ module.exports = {
     polyfills: ['fetch', 'Promise'],
   },
   rules: {
+    'storybook/prefer-pascal-case': 'off',
     'eslint-comments/no-unused-disable': 'error',
     'eslint-comments/no-use': [
       'error',
