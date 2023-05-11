@@ -19,8 +19,9 @@ const story: StoryFn<AppThemeToggleComponent> = (args: Args) => ({
   },
 });
 
-export const Primary = {
+export const primary = {
   render: story,
+
   args: {},
 
   parameters: {

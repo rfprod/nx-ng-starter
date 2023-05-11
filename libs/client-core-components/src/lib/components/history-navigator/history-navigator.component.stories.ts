@@ -20,8 +20,9 @@ const story: StoryFn<AppHistoryNavigatorComponent> = (args: Args) => ({
   },
 });
 
-export const Primary = {
+export const primary = {
   render: story,
+
   args: {},
 
   parameters: {
