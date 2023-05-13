@@ -84,11 +84,10 @@ export const drawPieChart = (container: ElementRef<HTMLDivElement>, data: IPieCh
       const tooltipText = `${d.data.key}: ${d.data.y}`;
 
       tooltip
-        .attr('class', 'chart-tooltip')
         .attr('x', x)
         .attr('y', y)
         .attr('dx', -config.width / (2 * 2 * 2))
-        .attr('dy', -config.margin.top / 2 - config.height / 2)
+        .attr('dy', config.height / 2 + config.margin.top)
         .text(tooltipText)
         .transition()
         .duration(config.transitionDuration)
@@ -117,6 +116,7 @@ export const drawPieChart = (container: ElementRef<HTMLDivElement>, data: IPieCh
       .attr('text-anchor', 'middle')
       .attr('dy', textDy)
       .attr('transform', d => `translate(${label.centroid(d)})`)
+      .style('font-size', '12px')
       .text(d => d.data.y);
   }
 

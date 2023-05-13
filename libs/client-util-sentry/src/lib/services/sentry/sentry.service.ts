@@ -1,8 +1,7 @@
 import { APP_INITIALIZER, ErrorHandler, Injectable, Provider } from '@angular/core';
 import { Router } from '@angular/router';
 import { IWebClientAppEnvironment, TSentryEnvironment } from '@app/client-util';
-import * as Sentry from '@sentry/angular';
-import { BrowserTracing } from '@sentry/tracing';
+import { BrowserTracing, createErrorHandler, init, routingInstrumentation, TraceService } from '@sentry/angular';
 
 /**
  * Sentry is disabled for the environments defined in this array.
@@ -16,7 +15,7 @@ const sentryDisabledEnvironments: TSentryEnvironment[] = ['unit-testing', 'devel
  */
 export const initializeSentry = (env: IWebClientAppEnvironment, release: string) => {
   if (!sentryDisabledEnvironments.includes(env.sentry.env)) {
-    Sentry.init({
+    init({
       environment: env.sentry.env,
       release,
       dsn: env.sentry.dsn,
@@ -28,7 +27,7 @@ export const initializeSentry = (env: IWebClientAppEnvironment, release: string)
          */
         new BrowserTracing({
           tracingOrigins: ['localhost', /^\//, ...env.sentry.tracingOrigins],
-          routingInstrumentation: Sentry.routingInstrumentation,
+          routingInstrumentation: routingInstrumentation,
         }),
       ],
 
@@ -53,18 +52,18 @@ export const sentryProviders: (env: IWebClientAppEnvironment) => Provider[] = en
     : [
         {
           provide: ErrorHandler,
-          useValue: Sentry.createErrorHandler({
+          useValue: createErrorHandler({
             showDialog: true,
           }),
         },
         {
-          provide: Sentry.TraceService,
+          provide: TraceService,
           deps: [Router],
         },
         {
           provide: APP_INITIALIZER,
           useFactory: () => () => ({}),
-          deps: [Sentry.TraceService],
+          deps: [TraceService],
           multi: true,
         },
       ];
@@ -77,5 +76,5 @@ export const sentryProviders: (env: IWebClientAppEnvironment) => Provider[] = en
   providedIn: 'root',
 })
 export class AppSentryService {
-  constructor(public readonly trace: Sentry.TraceService) {}
+  constructor(public readonly trace: TraceService) {}
 }
