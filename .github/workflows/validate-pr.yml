@@ -37,6 +37,9 @@ jobs:
           premerge: 'true'
           trunk: 'main'
 
+      - name: Validation contribution size
+        uses: ./.github/actions/validate-contribution-size
+
   premerge:
     needs: checks
     runs-on: ubuntu-latest

@@ -27,6 +27,17 @@
         ]
       }
     },
+    "action-contribution-size": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/actions/contribution-size/contribution-size.ts",
+            "forwardAllArgs": false
+          }
+        ]
+      }
+    },
     "compile-executors": {
       "executor": "nx:run-commands",
       "options": {

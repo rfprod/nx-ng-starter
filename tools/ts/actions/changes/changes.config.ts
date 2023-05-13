@@ -4,7 +4,7 @@ const mobile = ['android/**', 'capacitor.config.json'];
 const packageCharts = ['libs/client-d3-charts/package.json'];
 const packageEliza = ['libs/client-util-eliza/package.json'];
 const packageBackendDiagnostics = ['libs/backend-diagnostics/package.json'];
-const packages = ['libs/client-d3-charts/package.json', 'libs/client-util-eliza/package.json'];
+const packages = [...packageCharts, ...packageEliza, ...packageBackendDiagnostics];
 const shelltools = ['tools/shell/**'];
 const src = [
   'apps/**',
