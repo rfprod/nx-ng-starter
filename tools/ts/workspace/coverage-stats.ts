@@ -1,5 +1,5 @@
 import { getJestProjects } from '@nx/jest';
-import { ExecException, execFile } from 'child_process';
+import { execFile, ExecFileException } from 'child_process';
 import * as fs from 'fs';
 import path from 'path';
 
@@ -83,7 +83,7 @@ const writeAverageStats = () => {
     const command = 'yarn';
     const args = ['prettier', readmePath, '--write'];
 
-    execFile(command, args, (err: ExecException | null) => {
+    execFile(command, args, {}, (err: ExecFileException | null) => {
       if (err !== null) {
         logger.printError(err);
       }
