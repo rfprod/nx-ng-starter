@@ -9,7 +9,7 @@ describe('changesConfig', () => {
       packageCharts: ['libs/client-d3-charts/package.json'],
       packageEliza: ['libs/client-util-eliza/package.json'],
       packageBackendDiagnostics: ['libs/backend-diagnostics/package.json'],
-      packages: ['libs/client-d3-charts/package.json', 'libs/client-util-eliza/package.json'],
+      packages: ['libs/client-d3-charts/package.json', 'libs/client-util-eliza/package.json', 'libs/backend-diagnostics/package.json'],
       shelltools: ['tools/shell/**'],
       src: [
         'apps/**',

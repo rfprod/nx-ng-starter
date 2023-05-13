@@ -1,0 +1,67 @@
+# For more information see:
+# - https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+# - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
+
+# The action can be referenced in workflows like:
+# uses: rfprod/nx-ng-starter/.github/actions/validate-contribution-size@main
+# or
+# uses: ./.github/actions/validate-contribution-size
+
+name: validate-contribution-size
+description: Validates contibution size.
+
+inputs:
+  max-files:
+    description: Max changed files
+    default: '10'
+    required: true
+  insertions:
+    description: Max insertions
+    default: '150'
+    required: true
+  deletions:
+    description: Max deletions
+    default: '150'
+    required: true
+  trunk:
+    description: Trunk (default branch) name.
+    required: true
+    default: 'main'
+  reviewer:
+    description: Reviewer with elevated privileges.
+    required: true
+    default: 'rfprod'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install awk
+      shell: bash
+      run: |
+        sudo apt update
+        sudo apt install gawk
+
+    - name: Variables
+      id: variables
+      shell: bash
+      run: |
+        if [ "$REVIEWER" == true ]; then MAX_FILES='1000'; fi
+        if [ "$REVIEWER" == true ]; then INSERTIONS='10000'; fi
+        if [ "$REVIEWER" == true ]; then DELETIONS='10000'; fi
+        echo "max-files=$(echo ${MAX_FILES})" >> $GITHUB_OUTPUT
+        echo "insertions=$(echo ${INSERTIONS})" >> $GITHUB_OUTPUT
+        echo "deletions=$(echo ${DELETIONS})" >> $GITHUB_OUTPUT
+      env:
+        REVIEWER: ${{ github.actor == inputs.reviewer }}
+        MAX_FILES: ${{ inputs.max-files }}
+        INSERTIONS: ${{ inputs.insertions }}
+        DELETIONS: ${{ inputs.deletions }}
+
+    - name: Contribution size
+      shell: bash
+      run: npx nx run tools:action-contribution-size
+      env:
+        MAX_FILES: ${{ steps.variables.outputs.max-files }}
+        INSERTIONS: ${{ steps.variables.outputs.insertions }}
+        DELETIONS: ${{ steps.variables.outputs.deletions }}
+        ACTOR: ${{ github.actor }}

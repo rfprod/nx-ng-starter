@@ -1,0 +1,158 @@
+import { setFailed, summary } from '@actions/core';
+import { spawnSync } from 'child_process';
+import { env } from 'process';
+
+import { logger } from '../../utils/logger';
+
+const ENV = {
+  maxFiles: process.env.MAX_FILES ?? '0',
+  insertions: process.env.INSERTIONS ?? '0',
+  deletions: process.env.DELETIONS ?? '0',
+  trunk: process.env.TRUNK ?? 'main',
+  actor: process.env.ACTOR,
+};
+
+const thresholds = {
+  maxFiles: parseInt(ENV.maxFiles, 10),
+  insertions: parseInt(ENV.insertions, 10),
+  deletions: parseInt(ENV.deletions, 10),
+};
+
+thresholds.maxFiles = isNaN(thresholds.maxFiles) ? 0 : thresholds.maxFiles;
+thresholds.insertions = isNaN(thresholds.insertions) ? 0 : thresholds.insertions;
+thresholds.deletions = isNaN(thresholds.deletions) ? 0 : thresholds.deletions;
+
+const compareWith = `origin/${ENV.trunk}`;
+
+/**
+ * Changed file count getter.
+ * @returns changed files count
+ */
+const getChangedFiles = () => {
+  let result = Number(Infinity);
+  try {
+    const command = `git diff HEAD ${compareWith} --shortstat | grep -o -E [0-9]+ | awk 'FNR == 1 {print $1}'`;
+    const { stdout, stderr } = spawnSync(command, {
+      env: { ...env, FORCE_COLOR: 'true' },
+      stdio: 'pipe',
+      encoding: 'utf-8',
+      cwd: process.cwd(),
+      shell: true,
+    });
+    if (stderr.length === 0 && stdout.length > 0) {
+      result = parseInt(stdout, 10);
+    }
+  } catch (e) {
+    logger.printError(<Error>e, 'Error getting changed files count');
+  }
+  return result;
+};
+
+/**
+ * Insertions count getter.
+ * @returns insertions count
+ */
+const getInsertions = () => {
+  let result = Number(Infinity);
+  try {
+    const command = `git diff HEAD ${compareWith} --shortstat | grep -o -E [0-9]+ | awk 'FNR == 2 {print $1}'`;
+    const { stdout, stderr } = spawnSync(command, {
+      env: { ...env, FORCE_COLOR: 'true' },
+      stdio: 'pipe',
+      encoding: 'utf-8',
+      cwd: process.cwd(),
+      shell: true,
+    });
+    if (stderr.length === 0 && stdout.length > 0) {
+      result = parseInt(stdout, 10);
+    }
+  } catch (e) {
+    logger.printError(<Error>e, 'Error getting insertions count');
+  }
+  return result;
+};
+
+/**
+ * Deletions count getter.
+ * @returns deletions count
+ */
+const getDeletions = () => {
+  let result = Number(Infinity);
+  try {
+    const command = `git diff HEAD ${compareWith} --shortstat | grep -o -E [0-9]+ | awk 'FNR == 3 {print $1}'`;
+    const { stdout, stderr } = spawnSync(command, {
+      env: { ...env, FORCE_COLOR: 'true' },
+      stdio: 'pipe',
+      encoding: 'utf-8',
+      cwd: process.cwd(),
+      shell: true,
+    });
+    if (stderr.length === 0 && stdout.length > 0) {
+      result = parseInt(stdout, 10);
+    }
+  } catch (e) {
+    logger.printError(<Error>e, 'Error getting deletions count');
+  }
+  return result;
+};
+
+const changedFiles = getChangedFiles();
+const insertions = getInsertions();
+const deletions = getDeletions();
+
+logger.printInfo(changedFiles, 'Changed files');
+logger.printInfo(insertions, 'Insertions');
+logger.printInfo(deletions, 'Deletions');
+
+(async () => {
+  const headingLevel = 3;
+  summary.addHeading('👤 Actor', headingLevel);
+  summary.addLink(`${ENV.actor}`, `https://github.com/${ENV.actor}`);
+  summary.addHeading('📈 Pull request metrics', headingLevel);
+  summary.addTable([
+    [
+      { data: 'Metric', header: true },
+      { data: 'Value', header: true },
+      { data: 'Threshold', header: true },
+      { data: 'Status', header: true },
+    ],
+    [
+      { data: 'Changed files' },
+      { data: `${changedFiles}` },
+      { data: `${thresholds.maxFiles}` },
+      { data: changedFiles <= thresholds.maxFiles ? `OK ✅` : `Error ❌` },
+    ],
+    [
+      { data: 'Insertions' },
+      { data: `${insertions}` },
+      { data: `${thresholds.insertions}` },
+      { data: insertions <= thresholds.insertions ? `OK ✅` : `Error ❌` },
+    ],
+    [
+      { data: 'Deletions' },
+      { data: `${deletions}` },
+      { data: `${thresholds.deletions}` },
+      { data: deletions <= thresholds.deletions ? `OK ✅` : `Error ❌` },
+    ],
+  ]);
+  summary.addBreak();
+  await summary.write();
+  if (changedFiles > thresholds.maxFiles) {
+    setFailed(
+      `Exceeded file change threshold.\nMax file change threshold: ${thresholds.maxFiles}.\nActual files changed: ${changedFiles}.\nConsider breaking down the contribution into several pull requests.`,
+    );
+  }
+  if (insertions > thresholds.insertions) {
+    setFailed(
+      `Exceeded insertion threshold.\nMax insertions threshold: ${thresholds.insertions}.\nActual insertions: ${insertions}.\nConsider breaking down the contribution into several pull requests.`,
+    );
+  }
+  if (deletions > thresholds.deletions) {
+    setFailed(
+      `Exceeded deletion threshold.\nMax deletions threshold: ${thresholds.insertions}.\nActual deletions: ${insertions}.\nConsider breaking down the contribution into several pull requests.`,
+    );
+  }
+})().catch(error => {
+  logger.printError(error, 'Error writing action output');
+  setFailed('Something went wrong. Failed writing GitHub action summary.');
+});
