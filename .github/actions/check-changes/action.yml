@@ -30,32 +30,3 @@ runs:
       env:
         PREMERGE: ${{ inputs.premerge }}
         TRUNK: ${{ inputs.trunk }}
-
-    - name: Print changes
-      shell: bash
-      run: |
-        echo "### :rocket: Changes" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "| Scope | Change |" >> $GITHUB_STEP_SUMMARY
-        echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
-        echo "| DEPENDENCIES | $DEPENDENCIES |" >> $GITHUB_STEP_SUMMARY
-        echo "| ELECTRON | $ELECTRON |" >> $GITHUB_STEP_SUMMARY
-        echo "| MOBILE | $MOBILE |" >> $GITHUB_STEP_SUMMARY
-        echo "| PACKAGE_CHARTS | $PACKAGE_CHARTS |" >> $GITHUB_STEP_SUMMARY
-        echo "| PACKAGE_ELIZA | $PACKAGE_ELIZA |" >> $GITHUB_STEP_SUMMARY
-        echo "| PACKAGE_BACKEND_DIAGNOSTICS | $PACKAGE_BACKEND_DIAGNOSTICS |" >> $GITHUB_STEP_SUMMARY
-        echo "| SHELLTOOLS | $SHELLTOOLS |" >> $GITHUB_STEP_SUMMARY
-        echo "| SRC | $SRC |" >> $GITHUB_STEP_SUMMARY
-        echo "| STORYBOOK | $STORYBOOK |" >> $GITHUB_STEP_SUMMARY
-        echo "| DEPLOY | $DEPLOY |" >> $GITHUB_STEP_SUMMARY
-      env:
-        DEPENDENCIES: ${{ fromJSON(steps.check-changes.outputs.changes).dependencies }}
-        ELECTRON: ${{ fromJSON(steps.check-changes.outputs.changes).electron }}
-        MOBILE: ${{ fromJSON(steps.check-changes.outputs.changes).mobile }}
-        PACKAGE_CHARTS: ${{ fromJSON(steps.check-changes.outputs.changes).packageCharts }}
-        PACKAGE_ELIZA: ${{ fromJSON(steps.check-changes.outputs.changes).packageEliza }}
-        PACKAGE_BACKEND_DIAGNOSTICS: ${{ fromJSON(steps.check-changes.outputs.changes).packageBackendDiagnostics }}
-        SHELLTOOLS: ${{ fromJSON(steps.check-changes.outputs.changes).shelltools }}
-        SRC: ${{ fromJSON(steps.check-changes.outputs.changes).src }}
-        STORYBOOK: ${{ fromJSON(steps.check-changes.outputs.changes).storybook }}
-        DEPLOY: ${{ fromJSON(steps.check-changes.outputs.changes).deploy }}

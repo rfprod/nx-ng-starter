@@ -27,10 +27,6 @@ inputs:
     description: Trunk (default branch) name.
     required: true
     default: 'main'
-  reviewer:
-    description: Reviewer with elevated privileges.
-    required: true
-    default: 'rfprod'
 
 runs:
   using: 'composite'
@@ -41,27 +37,11 @@ runs:
         sudo apt update
         sudo apt install gawk
 
-    - name: Variables
-      id: variables
-      shell: bash
-      run: |
-        if [ "$REVIEWER" == true ]; then MAX_FILES='1000'; fi
-        if [ "$REVIEWER" == true ]; then INSERTIONS='10000'; fi
-        if [ "$REVIEWER" == true ]; then DELETIONS='10000'; fi
-        echo "max-files=$(echo ${MAX_FILES})" >> $GITHUB_OUTPUT
-        echo "insertions=$(echo ${INSERTIONS})" >> $GITHUB_OUTPUT
-        echo "deletions=$(echo ${DELETIONS})" >> $GITHUB_OUTPUT
-      env:
-        REVIEWER: ${{ github.actor == inputs.reviewer }}
-        MAX_FILES: ${{ inputs.max-files }}
-        INSERTIONS: ${{ inputs.insertions }}
-        DELETIONS: ${{ inputs.deletions }}
-
     - name: Contribution size
       shell: bash
       run: npx nx run tools:action-contribution-size
       env:
-        MAX_FILES: ${{ steps.variables.outputs.max-files }}
-        INSERTIONS: ${{ steps.variables.outputs.insertions }}
-        DELETIONS: ${{ steps.variables.outputs.deletions }}
+        MAX_FILES: ${{ inputs.max-files }}
+        INSERTIONS: ${{ inputs.insertions }}
+        DELETIONS: ${{ inputs.deletions }}
         ACTOR: ${{ github.actor }}
