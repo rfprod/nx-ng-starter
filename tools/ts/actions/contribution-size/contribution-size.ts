@@ -3,6 +3,8 @@ import { spawnSync } from 'child_process';
 import { env } from 'process';
 
 import { logger } from '../../utils/logger';
+import { actors, defaultThresholds } from './contribution-size.config';
+import { IThresholdsConfig } from './contribution-size.interface';
 
 const ENV = {
   maxFiles: process.env.MAX_FILES ?? '0',
@@ -12,17 +14,30 @@ const ENV = {
   actor: process.env.ACTOR,
 };
 
-const thresholds = {
-  maxFiles: parseInt(ENV.maxFiles, 10),
-  insertions: parseInt(ENV.insertions, 10),
-  deletions: parseInt(ENV.deletions, 10),
-};
+const actor = actors.find(item => item.actor === ENV.actor);
 
-thresholds.maxFiles = isNaN(thresholds.maxFiles) ? 0 : thresholds.maxFiles;
-thresholds.insertions = isNaN(thresholds.insertions) ? 0 : thresholds.insertions;
-thresholds.deletions = isNaN(thresholds.deletions) ? 0 : thresholds.deletions;
+const thresholds: IThresholdsConfig =
+  typeof actor !== 'undefined'
+    ? actor.thresholds
+    : {
+        maxFiles: parseInt(ENV.maxFiles, 10),
+        insertions: parseInt(ENV.insertions, 10),
+        deletions: parseInt(ENV.deletions, 10),
+      };
+
+thresholds.maxFiles = isNaN(thresholds.maxFiles) ? defaultThresholds.maxFiles : thresholds.maxFiles;
+thresholds.insertions = isNaN(thresholds.insertions) ? defaultThresholds.insertions : thresholds.insertions;
+thresholds.deletions = isNaN(thresholds.deletions) ? defaultThresholds.deletions : thresholds.deletions;
 
 const compareWith = `origin/${ENV.trunk}`;
+
+const spawnSyncOptions = Object.freeze({
+  env: { ...env, FORCE_COLOR: 'true' },
+  stdio: 'pipe',
+  encoding: 'utf-8',
+  cwd: process.cwd(),
+  shell: true,
+});
 
 /**
  * Changed file count getter.
@@ -32,13 +47,7 @@ const getChangedFiles = () => {
   let result = Number(Infinity);
   try {
     const command = `git diff HEAD ${compareWith} --shortstat | grep -o -E [0-9]+ | awk 'FNR == 1 {print $1}'`;
-    const { stdout, stderr } = spawnSync(command, {
-      env: { ...env, FORCE_COLOR: 'true' },
-      stdio: 'pipe',
-      encoding: 'utf-8',
-      cwd: process.cwd(),
-      shell: true,
-    });
+    const { stdout, stderr } = spawnSync(command, { ...spawnSyncOptions });
     if (stderr.length === 0 && stdout.length > 0) {
       result = parseInt(stdout, 10);
     }
@@ -56,13 +65,7 @@ const getInsertions = () => {
   let result = Number(Infinity);
   try {
     const command = `git diff HEAD ${compareWith} --shortstat | grep -o -E [0-9]+ | awk 'FNR == 2 {print $1}'`;
-    const { stdout, stderr } = spawnSync(command, {
-      env: { ...env, FORCE_COLOR: 'true' },
-      stdio: 'pipe',
-      encoding: 'utf-8',
-      cwd: process.cwd(),
-      shell: true,
-    });
+    const { stdout, stderr } = spawnSync(command, { ...spawnSyncOptions });
     if (stderr.length === 0 && stdout.length > 0) {
       result = parseInt(stdout, 10);
     }
@@ -80,13 +83,7 @@ const getDeletions = () => {
   let result = Number(Infinity);
   try {
     const command = `git diff HEAD ${compareWith} --shortstat | grep -o -E [0-9]+ | awk 'FNR == 3 {print $1}'`;
-    const { stdout, stderr } = spawnSync(command, {
-      env: { ...env, FORCE_COLOR: 'true' },
-      stdio: 'pipe',
-      encoding: 'utf-8',
-      cwd: process.cwd(),
-      shell: true,
-    });
+    const { stdout, stderr } = spawnSync(command, { ...spawnSyncOptions });
     if (stderr.length === 0 && stdout.length > 0) {
       result = parseInt(stdout, 10);
     }

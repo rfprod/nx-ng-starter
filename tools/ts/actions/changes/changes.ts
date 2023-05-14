@@ -1,4 +1,4 @@
-import { setOutput } from '@actions/core';
+import { setFailed, setOutput, summary } from '@actions/core';
 import { spawnSync } from 'child_process';
 
 import { logger } from '../../utils/logger';
@@ -44,13 +44,34 @@ const changes = patternKeys.reduce((accumulator: Record<string, string>, item) =
   return accumulator;
 }, {});
 
+const changesSummary: [{ data: string }, { data: string }][] = [];
+
 for (let i = 0, max = patternKeys.length; i < max; i += 1) {
   const patternKey = patternKeys[i];
   const patterns = changesConfig[patternKey];
   const change = patternChanges(patterns);
   changes[patternKey] = change;
+  const changeSummary: (typeof changesSummary)['0'] = [{ data: patternKey }, { data: change === 'true' ? `${change} ✅` : `${change} ❌` }];
+  changesSummary.unshift(changeSummary);
 }
 
 logger.printInfo(changes, 'changes');
 
-setOutput('changes', changes);
+(async () => {
+  const headingLevel = 3;
+  summary.addHeading('📋 Changes', headingLevel);
+  summary.addTable([
+    [
+      { data: 'Scope', header: true },
+      { data: 'Change', header: true },
+    ],
+    ...changesSummary,
+  ]);
+  summary.addBreak();
+  await summary.write();
+
+  setOutput('changes', changes);
+})().catch(error => {
+  logger.printError(error, 'Error writing action output');
+  setFailed('Something went wrong. Failed writing GitHub action summary.');
+});
