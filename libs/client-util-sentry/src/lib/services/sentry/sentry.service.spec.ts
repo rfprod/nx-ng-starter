@@ -1,7 +1,7 @@
 import { FactoryProvider } from '@angular/core';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { testingEnvironment } from '@app/client-testing-unit';
-import * as Sentry from '@sentry/angular';
+import * as Sentry from '@sentry/angular-ivy';
 
 import { AppSentryService, initializeSentry, sentryProviders } from './sentry.service';
 

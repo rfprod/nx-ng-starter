@@ -48,8 +48,8 @@ const getChangedFiles = () => {
   try {
     const command = `git diff HEAD ${compareWith} --shortstat | grep -o -E [0-9]+ | awk 'FNR == 1 {print $1}'`;
     const { stdout, stderr } = spawnSync(command, { ...spawnSyncOptions });
-    if (stderr.length === 0 && stdout.length > 0) {
-      result = parseInt(stdout, 10);
+    if (stderr.length === 0) {
+      result = stdout.length > 0 ? parseInt(stdout, 10) : 0;
     }
   } catch (e) {
     logger.printError(<Error>e, 'Error getting changed files count');
@@ -66,8 +66,8 @@ const getInsertions = () => {
   try {
     const command = `git diff HEAD ${compareWith} --shortstat | grep -o -E [0-9]+ | awk 'FNR == 2 {print $1}'`;
     const { stdout, stderr } = spawnSync(command, { ...spawnSyncOptions });
-    if (stderr.length === 0 && stdout.length > 0) {
-      result = parseInt(stdout, 10);
+    if (stderr.length === 0) {
+      result = stdout.length > 0 ? parseInt(stdout, 10) : 0;
     }
   } catch (e) {
     logger.printError(<Error>e, 'Error getting insertions count');
@@ -84,8 +84,8 @@ const getDeletions = () => {
   try {
     const command = `git diff HEAD ${compareWith} --shortstat | grep -o -E [0-9]+ | awk 'FNR == 3 {print $1}'`;
     const { stdout, stderr } = spawnSync(command, { ...spawnSyncOptions });
-    if (stderr.length === 0 && stdout.length > 0) {
-      result = parseInt(stdout, 10);
+    if (stderr.length === 0) {
+      result = stdout.length > 0 ? parseInt(stdout, 10) : 0;
     }
   } catch (e) {
     logger.printError(<Error>e, 'Error getting deletions count');
@@ -146,7 +146,7 @@ logger.printInfo(deletions, 'Deletions');
   }
   if (deletions > thresholds.deletions) {
     setFailed(
-      `Exceeded deletion threshold.\nMax deletions threshold: ${thresholds.insertions}.\nActual deletions: ${insertions}.\nConsider breaking down the contribution into several pull requests.`,
+      `Exceeded deletion threshold.\nMax deletions threshold: ${thresholds.deletions}.\nActual deletions: ${deletions}.\nConsider breaking down the contribution into several pull requests.`,
     );
   }
 })().catch(error => {

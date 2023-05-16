@@ -1,4 +1,4 @@
-import { setOutput } from '@actions/core';
+import { setFailed, setOutput, summary } from '@actions/core';
 import { readFileSync } from 'fs';
 
 import { logger } from '../../utils/logger';
@@ -19,4 +19,32 @@ const getCodeowners = (config: string) => {
 
 const codeowners = getCodeowners(codeownersFileContent);
 
-setOutput('matrix', codeowners);
+const codeownersSummary: [{ data: string }, { data: string }][] = codeowners.reduce(
+  (accumulator: [{ data: string }, { data: string }][], item) => {
+    const changeSummary: [{ data: string }, { data: string }] = [{ data: item }, { data: `https://github.com/${item}` }];
+    accumulator.unshift(changeSummary);
+    return accumulator;
+  },
+  [],
+);
+
+logger.printInfo(codeowners, 'codeowners');
+
+(async () => {
+  const headingLevel = 3;
+  summary.addHeading('📋 Changes', headingLevel);
+  summary.addTable([
+    [
+      { data: 'Username', header: true },
+      { data: 'Link', header: true },
+    ],
+    ...codeownersSummary,
+  ]);
+  summary.addBreak();
+  await summary.write();
+
+  setOutput('matrix', codeowners);
+})().catch(error => {
+  logger.printError(error, 'Error writing action output');
+  setFailed('Something went wrong. Failed writing GitHub action summary.');
+});
