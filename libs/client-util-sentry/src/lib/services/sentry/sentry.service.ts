@@ -1,7 +1,7 @@
 import { APP_INITIALIZER, ErrorHandler, Injectable, Provider } from '@angular/core';
 import { Router } from '@angular/router';
 import { IWebClientAppEnvironment, TSentryEnvironment } from '@app/client-util';
-import { BrowserTracing, createErrorHandler, init, routingInstrumentation, TraceService } from '@sentry/angular';
+import { BrowserTracing, createErrorHandler, init, routingInstrumentation, TraceService } from '@sentry/angular-ivy';
 
 /**
  * Sentry is disabled for the environments defined in this array.
