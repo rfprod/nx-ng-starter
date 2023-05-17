@@ -44,4 +44,4 @@ runs:
         MAX_FILES: ${{ inputs.max-files }}
         INSERTIONS: ${{ inputs.insertions }}
         DELETIONS: ${{ inputs.deletions }}
-        ACTOR: ${{ github.actor }}
+        ACTOR: ${{ github.triggering_actor }}

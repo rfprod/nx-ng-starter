@@ -276,8 +276,6 @@ const appendInvisibleTooltipCircles = (
 ) => {
   // wrapper for the invisible circles on top
   const blobCircleWrapper = g.selectAll('.radar-circle-wrapper').data(data).enter().append('g').attr('class', 'radar-circle-wrapper');
-  // set up the small tooltip for when you hover over a circle
-  const tooltip = g.append('text').attr('class', 'chart-tooltip').style('opacity', 0);
   // append a set of invisible circles on top for the mouseover pop-up
   const blobCircleWrapperRadiusMultiplier = 1.5;
   blobCircleWrapper
@@ -298,10 +296,22 @@ const appendInvisibleTooltipCircles = (
 
       const nodeData = (event.target as unknown as Record<string, IRadarChartDataNode>)['__data__'];
       const tooltipText = `${nodeData.value} ${nodeData.unit}`;
-      tooltip.attr('x', newX).attr('y', newY).text(tooltipText).transition().duration(config.transitionDuration).style('opacity', 1);
+      g.append('text')
+        .attr('class', 'chart-tooltip')
+        .style('opacity', 0)
+        .attr('x', newX)
+        .attr('y', newY)
+        .text(tooltipText)
+        .transition()
+        .duration(config.transitionDuration)
+        .style('opacity', 1);
     })
     .on('mouseout', () => {
-      tooltip.transition().duration(config.transitionDuration).style('opacity', 0);
+      d3.selectAll('.chart-tooltip')
+        .transition()
+        .duration(config.transitionDuration / 2)
+        .style('opacity', 0)
+        .remove();
     });
 };
 
