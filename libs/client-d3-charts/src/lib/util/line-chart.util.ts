@@ -245,7 +245,10 @@ const onMouseOver = (
     .style('font-size', '11px')
     .attr('dx', () => (config.width - config.margin.left - config.margin.right) / tooltipShift)
     .attr('dy', () => tooltipDy)
-    .text(() => `${d.value} (${new Date(d.timestamp).toUTCString()})`);
+    .text(() => `${d.value} (${new Date(d.timestamp).toUTCString()})`)
+    .transition()
+    .duration(config.transitionDuration)
+    .style('opacity', 1);
 };
 
 /**
@@ -257,8 +260,11 @@ const onMouseOut = (self: SVGCircleElement, config: ILineChartOptions) => {
   const duration = 400;
   d3.select(self).attr('class', 'dot');
   d3.select(self).transition().duration(duration).attr('r', config.dotRadius);
-
-  d3.selectAll('.chart-tooltip').remove();
+  d3.selectAll('.chart-tooltip')
+    .transition()
+    .duration(config.transitionDuration / 2)
+    .style('opacity', 0)
+    .remove();
 };
 
 /**

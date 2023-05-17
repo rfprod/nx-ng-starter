@@ -66,8 +66,6 @@ export const drawPieChart = (container: ElementRef<HTMLDivElement>, data: IPieCh
 
   const arc = d3.arc<d3.PieArcDatum<IPieChartDataNode>>().innerRadius(config.innerRadius).outerRadius(radius);
 
-  const tooltip = g.append('text').attr('class', 'chart-tooltip').style('opacity', 0);
-
   const arcs = g
     .selectAll('arc')
     .data(pie(data))
@@ -77,15 +75,11 @@ export const drawPieChart = (container: ElementRef<HTMLDivElement>, data: IPieCh
     .on('mouseover', function (this, event: MouseEvent, d) {
       this.style.opacity = '0.8';
 
-      const modifier = 10;
-      const x = parseFloat(d3.select(this).attr('cx')) - modifier;
-      const y = parseFloat(d3.select(this).attr('cy')) - modifier;
-
       const tooltipText = `${d.data.key}: ${d.data.y}`;
 
-      tooltip
-        .attr('x', x)
-        .attr('y', y)
+      g.append('text')
+        .attr('class', 'chart-tooltip')
+        .style('opacity', 0)
         .attr('dx', -config.width / (2 * 2 * 2))
         .attr('dy', config.height / 2 + config.margin.top)
         .text(tooltipText)
@@ -95,7 +89,11 @@ export const drawPieChart = (container: ElementRef<HTMLDivElement>, data: IPieCh
     })
     .on('mouseout', function (this, event, d) {
       this.style.opacity = 'unset';
-      tooltip.transition().duration(config.transitionDuration).style('opacity', 0);
+      d3.selectAll('.chart-tooltip')
+        .transition()
+        .duration(config.transitionDuration / 2)
+        .style('opacity', 0)
+        .remove();
     });
 
   arcs
