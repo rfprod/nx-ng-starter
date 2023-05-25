@@ -18,7 +18,6 @@ module.exports = {
       },
     ],
   },
-  // resolver: '@nx/jest/plugins/resolver',
   resolver: 'jest-preset-angular/build/resolvers/ng-jest-resolver.js',
   moduleNameMapper: pathsToModuleNameMapper(paths, { prefix: '<rootDir>/../../' }),
   coverageReporters: ['html-spa', 'json-summary'],
