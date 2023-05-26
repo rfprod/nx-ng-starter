@@ -1,4 +1,12 @@
 {
-  "extends": ["../../.eslintrc.js", "../../.eslintrc.angular.js"],
-  "ignorePatterns": ["!**/*"]
+  "extends": ["../../.eslintrc.js", "../../.eslintrc.angular.js", "plugin:storybook/recommended"],
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["*.stories.ts"],
+      "rules": {
+        "storybook/prefer-pascal-case": "off"
+      }
+    }
+  ]
 }
