@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { AppElizaModule } from '@app/client-util-eliza';
-import { tap } from 'rxjs';
 
 import { AppChatbotWidgetRootComponent } from './chatbot-widget-root.component';
 
@@ -30,14 +29,9 @@ describe('AppChatbotWidgetRootComponent', () => {
     expect(component).toBeDefined();
   });
 
-  it('messages$ should correct initial value', waitForAsync(() => {
-    void component.messages$
-      .pipe(
-        tap(messages => {
-          const expected = [{ bot: true, text: expect.any(String) }];
-          expect(messages).toEqual(expected);
-        }),
-      )
-      .subscribe();
-  }));
+  it('messages$ should correct initial value', () => {
+    const messages = component.messages$();
+    const expected = [{ bot: true, text: expect.any(String) }];
+    expect(messages).toEqual(expected);
+  });
 });

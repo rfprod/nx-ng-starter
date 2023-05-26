@@ -5,7 +5,7 @@
 <cdk-virtual-scroll-viewport itemSize="20" class="messages-list" appAutoscroll>
   <div
     class="message"
-    *cdkVirtualFor="let message of messages$ | async"
+    *cdkVirtualFor="let message of messages$()"
     [ngClass]="{ 'message--bot': message.bot, 'message--user': !message.bot }"
   >
     {{ message.text || 'Loading...' }}
