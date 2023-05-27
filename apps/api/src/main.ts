@@ -1,4 +1,3 @@
-import { dianosticEventsGatewayPort } from '@app/backend-diagnostics';
 import { backendGrpcClientOptions } from '@app/backend-grpc';
 import { INestApplication } from '@nestjs/common';
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
@@ -80,18 +79,7 @@ async function bootstrap(expressInstance: e.Express): Promise<INestApplication> 
   if (typeof process.env.FIREBASE_CONFIG === 'undefined' || process.env.FIREBASE_CONFIG === '') {
     const port = typeof process.env.port !== 'undefined' ? process.env.port : defaultPort;
     await app.listen(port, () => {
-      console.warn(`Listening at:
-    - http://localhost:${port}/${globalPrefix}/
-    - http://localhost:${port}/${globalPrefix}/diagnostics
-    - http://localhost:${port}/${globalPrefix}/diagnostics/static
-    - http://localhost:${port}/${globalPrefix}/auth
-      - http://localhost:${port}/${globalPrefix}/auth/signup
-      - http://localhost:${port}/${globalPrefix}/auth/login
-      - http://localhost:${port}/${globalPrefix}/auth/logout
-    - http://localhost:${port}/${globalPrefix}/graphql
-    - http://localhost:${port}/${globalPrefix}/grpc
-      - http://localhost:${port}/${globalPrefix}/grpc/:id
-    - ws://localhost:${dianosticEventsGatewayPort}/api/events`);
+      console.info(`Listening http://localhost:${port}/${globalPrefix}/`);
     });
   }
 

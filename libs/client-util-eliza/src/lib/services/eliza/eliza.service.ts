@@ -13,8 +13,7 @@
  * JavaScript source: https://github.com/natelewis/eliza-as-promised
  */
 
-import { Inject, Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Inject, Injectable, signal } from '@angular/core';
 
 import { ELIZA_DATA } from '../../config/data.config';
 import { elizaInitialConfig } from '../../config/eliza.config';
@@ -30,12 +29,12 @@ export class AppElizaService {
   /**
    * Eliza configuration.
    */
-  private readonly configSubject = new BehaviorSubject<IElizaConfig>({ ...elizaInitialConfig });
+  private readonly config = signal<IElizaConfig>({ ...elizaInitialConfig });
 
   /**
    * Publicly readable Eliza configuration.
    */
-  public readonly config$ = this.configSubject.asObservable();
+  public readonly config$ = this.config.asReadonly();
 
   private data?: IElizaData;
 
@@ -54,12 +53,12 @@ export class AppElizaService {
   /**
    * Conversation messages.
    */
-  private readonly messagesSubject = new BehaviorSubject<IChatMessage[]>([]);
+  private readonly messages = signal<IChatMessage[]>([]);
 
   /**
    * Publicly readable conversation messages.
    */
-  public readonly messages$ = this.messagesSubject.asObservable();
+  public readonly messages$ = this.messages.asReadonly();
 
   constructor(@Inject(ELIZA_DATA) public readonly elizaData: IElizaData) {
     this.setup(elizaData);
@@ -70,7 +69,7 @@ export class AppElizaService {
    * @param message chat message
    */
   public nextMessage(message: IChatMessage): void {
-    this.messagesSubject.next([...this.messagesSubject.value, message]);
+    this.messages.update(value => [...value, message]);
   }
 
   /**
@@ -78,7 +77,7 @@ export class AppElizaService {
    * @param config Eliza config
    */
   public nextConfig(config: Partial<IElizaConfig>): void {
-    this.configSubject.next({ ...this.configSubject.value, ...config });
+    this.config.update(value => ({ ...value, ...config }));
   }
 
   /**
@@ -110,7 +109,7 @@ export class AppElizaService {
         this.lastChoice[k][i] = -1;
       }
     }
-    this.messagesSubject.next([{ bot: true, text: this.getInitial(data) }]);
+    this.messages.set([{ bot: true, text: this.getInitial(data) }]);
   }
 
   // eslint-disable-next-line max-lines-per-function, complexity -- TODO refactor
@@ -239,7 +238,7 @@ export class AppElizaService {
 
   // eslint-disable-next-line max-lines-per-function, complexity -- TODO refactor
   private execRule(data: IElizaData, k: number, sentence: string): string {
-    const config = this.configSubject.value;
+    const config = this.config();
     const rules = data.keywords[k].rules;
     const paramRegExp = /\(([0-9]+)\)/;
     for (let i = 0; i < rules.length; i += 1) {
@@ -393,7 +392,7 @@ export class AppElizaService {
         data.postTransforms[i].searchValue.lastIndex = 0;
       }
     }
-    if (this.configSubject.value.capitalizeFirstLetter) {
+    if (this.config().capitalizeFirstLetter) {
       const match = result.match(/^([a-z])/);
       if (match) {
         result = match[0].toUpperCase() + result.substring(1);
@@ -413,14 +412,14 @@ export class AppElizaService {
 
   private memSave(input: string): void {
     this.mem.push(input);
-    if (this.mem.length > this.configSubject.value.memSize) {
+    if (this.mem.length > this.config().memSize) {
       this.mem.shift();
     }
   }
 
   private memGet(): string {
     if (this.mem.length > 0) {
-      if (this.configSubject.value.noRandom) {
+      if (this.config().noRandom) {
         return this.mem.shift() ?? '';
       }
       const n = Math.floor(Math.random() * this.mem.length);

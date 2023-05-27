@@ -1,5 +1,4 @@
-import { TestBed, waitForAsync } from '@angular/core/testing';
-import { concatMap, first, from, switchMap, tap } from 'rxjs';
+import { TestBed } from '@angular/core/testing';
 
 import { elizaData, elizaDataProvider } from '../../config/data.config';
 import { elizaInitialConfig } from '../../config/eliza.config';
@@ -29,18 +28,12 @@ describe('AppElizaService', () => {
       expect(service).toBeDefined();
     });
 
-    it('should use correct initial message', waitForAsync(() => {
-      void service.messages$
-        .pipe(
-          first(),
-          tap(messages => {
-            expect(messages.length).toEqual(1);
-            expect(messages[0].bot).toBeTruthy();
-            expect(elizaInitials.includes(messages[0].text)).toBeTruthy();
-          }),
-        )
-        .subscribe();
-    }));
+    it('should use correct initial message', () => {
+      const messages = service.messages$();
+      expect(messages.length).toEqual(1);
+      expect(messages[0].bot).toBeTruthy();
+      expect(elizaInitials.includes(messages[0].text)).toBeTruthy();
+    });
 
     it('should use correct final message', async () => {
       const response = await service.getResponse('bye');
@@ -48,41 +41,25 @@ describe('AppElizaService', () => {
       expect(elizaFinals.includes(response.reply)).toBeTruthy();
     });
 
-    it('nextMessage should push a message to the messages stack', waitForAsync(() => {
+    it('nextMessage should push a message to the messages stack', () => {
       const nextMessage: IChatMessage = { bot: false, text: 'next' };
-      void service.messages$
-        .pipe(
-          first(),
-          switchMap(messages => {
-            expect(messages.length).toEqual(1);
-            service.nextMessage(nextMessage);
-            return service.messages$.pipe(first());
-          }),
-          tap(messages => {
-            const expectedLength = 2;
-            expect(messages.length).toEqual(expectedLength);
-            expect(messages[messages.length - 1]).toEqual(nextMessage);
-          }),
-        )
-        .subscribe();
-    }));
+      let messages = service.messages$();
+      expect(messages.length).toEqual(1);
+      service.nextMessage(nextMessage);
+      messages = service.messages$();
+      const expectedLength = 2;
+      expect(messages.length).toEqual(expectedLength);
+      expect(messages[messages.length - 1]).toEqual(nextMessage);
+    });
 
-    it('nextConfig should update the Eliza config', waitForAsync(() => {
+    it('nextConfig should update the Eliza config', () => {
       const nextConfig: IElizaConfig = { ...elizaInitialConfig, debug: true };
-      void service.config$
-        .pipe(
-          first(),
-          switchMap(config => {
-            expect(config).toEqual(elizaInitialConfig);
-            service.nextConfig(nextConfig);
-            return service.config$.pipe(first());
-          }),
-          tap(config => {
-            expect(config).toEqual(nextConfig);
-          }),
-        )
-        .subscribe();
-    }));
+      let config = service.config$();
+      expect(config).toEqual(elizaInitialConfig);
+      service.nextConfig(nextConfig);
+      config = service.config$();
+      expect(config).toEqual(nextConfig);
+    });
   });
 
   describe('errors', () => {
@@ -143,19 +120,11 @@ describe('AppElizaService', () => {
       await setup({ ...elizaData, initials: [], finals: [] });
     });
 
-    it('should use the default initial message and default final message if initials and finals are not configured', waitForAsync(() => {
-      void service.messages$
-        .pipe(
-          first(),
-          tap(messages => {
-            expect(messages[0].text).toEqual(elizaInitialDefault);
-          }),
-          concatMap(() => from(service.getResponse('Bye'))),
-          tap(response => {
-            expect(response.reply).toEqual(elizaFinalDefault);
-          }),
-        )
-        .subscribe();
-    }));
+    it('should use the default initial message and default final message if initials and finals are not configured', async () => {
+      const messages = service.messages$();
+      expect(messages[0].text).toEqual(elizaInitialDefault);
+      const response = await service.getResponse('Bye');
+      expect(response.reply).toEqual(elizaFinalDefault);
+    });
   });
 });
