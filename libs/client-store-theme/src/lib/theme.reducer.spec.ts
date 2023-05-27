@@ -18,14 +18,11 @@ describe('AppThemeReducer', () => {
   let reducer: AppThemeReducer;
   let store: Store<IThemeState>;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        reducer = TestBed.inject(AppThemeReducer);
-        store = TestBed.inject(Store);
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    reducer = TestBed.inject(AppThemeReducer);
+    store = TestBed.inject(Store);
+  });
 
   it('should be defined', () => {
     expect(reducer).toBeDefined();

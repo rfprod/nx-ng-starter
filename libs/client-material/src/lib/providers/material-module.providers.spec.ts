@@ -1,5 +1,5 @@
 import { OverlayConfig } from '@angular/cdk/overlay';
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY, MatMomentDateAdapterOptions } from '@angular/material-moment-adapter';
@@ -21,18 +21,15 @@ describe('client-material-module-proviers', () => {
   let hammerGestureConfig: HammerGestureConfig;
   let overlayConfig: OverlayConfig;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        matIconsRegistry = TestBed.inject(MatIconRegistry);
-        matDateLocale = TestBed.inject(MAT_DATE_LOCALE) as string;
-        matMomentDateAdapter = TestBed.inject(MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY);
-        matDateFormats = TestBed.inject(MAT_DATE_FORMATS);
-        hammerGestureConfig = TestBed.inject(HAMMER_GESTURE_CONFIG);
-        overlayConfig = TestBed.inject(OverlayConfig);
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    matIconsRegistry = TestBed.inject(MatIconRegistry);
+    matDateLocale = TestBed.inject(MAT_DATE_LOCALE) as string;
+    matMomentDateAdapter = TestBed.inject(MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY);
+    matDateFormats = TestBed.inject(MAT_DATE_FORMATS);
+    hammerGestureConfig = TestBed.inject(HAMMER_GESTURE_CONFIG);
+    overlayConfig = TestBed.inject(OverlayConfig);
+  });
 
   it('appMaterialModuleProviders should provide expected providers', () => {
     expect(matIconsRegistry).toBeDefined();

@@ -1,6 +1,6 @@
 import { DOCUMENT } from '@angular/common';
 import { ApplicationRef } from '@angular/core';
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SwUpdate, VersionEvent } from '@angular/service-worker';
 import { of } from 'rxjs';
@@ -41,13 +41,10 @@ describe('AppServiceWorkerService', () => {
     ],
   };
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        service = TestBed.inject(AppServiceWorkerService);
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    service = TestBed.inject(AppServiceWorkerService);
+  });
 
   it('should be defined', () => {
     expect(service).toBeDefined();

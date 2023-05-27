@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { AppHttpHandlersService } from '@app/client-store-http-progress';
 import { flushHttpRequests, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
-import { of, tap } from 'rxjs';
+import { lastValueFrom, of } from 'rxjs';
 
 import { AppStaticDataService } from './static-data-api.service';
 
@@ -35,36 +35,27 @@ describe('AppStaticDataService', () => {
 
   let httpController: HttpTestingController;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        httpController = TestBed.inject(HttpTestingController);
-        service = TestBed.inject(AppStaticDataService);
-        httpHandlers = TestBed.inject(AppHttpHandlersService);
-        httpHandlersSpy = {
-          getEndpoint: jest.spyOn(httpHandlers, 'getEndpoint'),
-          pipeHttpResponse: jest.spyOn(httpHandlers, 'pipeHttpResponse'),
-        };
-        httpClient = TestBed.inject(HttpClient);
-        httpClientGetSpy = jest.spyOn(httpClient, 'get');
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    httpController = TestBed.inject(HttpTestingController);
+    service = TestBed.inject(AppStaticDataService);
+    httpHandlers = TestBed.inject(AppHttpHandlersService);
+    httpHandlersSpy = {
+      getEndpoint: jest.spyOn(httpHandlers, 'getEndpoint'),
+      pipeHttpResponse: jest.spyOn(httpHandlers, 'pipeHttpResponse'),
+    };
+    httpClient = TestBed.inject(HttpClient);
+    httpClientGetSpy = jest.spyOn(httpClient, 'get');
+  });
 
   afterEach(() => {
     flushHttpRequests(httpController, true);
   });
 
-  it('the ping method should work as expected', waitForAsync(() => {
-    void service
-      .staticData()
-      .pipe(
-        tap(() => {
-          expect(httpHandlersSpy.getEndpoint).toHaveBeenCalledWith('diagnostics/static');
-          expect(httpClientGetSpy).toHaveBeenCalledWith('http://diagnostics/static');
-          expect(httpHandlersSpy.pipeHttpResponse).toHaveBeenCalledTimes(1);
-        }),
-      )
-      .subscribe();
-  }));
+  it('the ping method should work as expected', async () => {
+    await lastValueFrom(service.staticData());
+    expect(httpHandlersSpy.getEndpoint).toHaveBeenCalledWith('diagnostics/static');
+    expect(httpClientGetSpy).toHaveBeenCalledWith('http://diagnostics/static');
+    expect(httpHandlersSpy.pipeHttpResponse).toHaveBeenCalledTimes(1);
+  });
 });

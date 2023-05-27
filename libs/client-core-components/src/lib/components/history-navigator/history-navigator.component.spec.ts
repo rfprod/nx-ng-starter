@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { newTestBedMetadata } from '@app/client-testing-unit';
 
 import { AppHistoryNavigatorComponent } from './history-navigator.component';
@@ -17,21 +17,16 @@ describe('AppHistoryNavigatorComponent', () => {
     forward: jest.SpyInstance;
   };
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(AppHistoryNavigatorComponent);
-        component = fixture.debugElement.componentInstance;
-
-        spy = {
-          back: jest.spyOn(component.nagivateBack, 'emit'),
-          forward: jest.spyOn(component.nagivateForward, 'emit'),
-        };
-
-        fixture.detectChanges();
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    fixture = TestBed.createComponent(AppHistoryNavigatorComponent);
+    component = fixture.debugElement.componentInstance;
+    spy = {
+      back: jest.spyOn(component.nagivateBack, 'emit'),
+      forward: jest.spyOn(component.nagivateForward, 'emit'),
+    };
+    fixture.detectChanges();
+  });
 
   it('should be defined', () => {
     expect(component).toBeDefined();

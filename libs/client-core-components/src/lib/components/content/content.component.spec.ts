@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppSidebarStoreModule, sidebarActions } from '@app/client-store-sidebar';
@@ -31,23 +31,17 @@ describe('AppContentComponent', () => {
   };
   let router: Router;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(AppContentComponent);
-        component = fixture.debugElement.componentInstance;
-
-        store = TestBed.inject(Store);
-        storeSpy = {
-          dispatch: jest.spyOn(store, 'dispatch').mockImplementation((action: unknown) => of(null)),
-        };
-
-        router = TestBed.inject(Router);
-
-        fixture.detectChanges();
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    fixture = TestBed.createComponent(AppContentComponent);
+    component = fixture.debugElement.componentInstance;
+    store = TestBed.inject(Store);
+    storeSpy = {
+      dispatch: jest.spyOn(store, 'dispatch').mockImplementation((action: unknown) => of(null)),
+    };
+    router = TestBed.inject(Router);
+    fixture.detectChanges();
+  });
 
   it('should be defined', () => {
     expect(component).toBeDefined();
@@ -58,10 +52,10 @@ describe('AppContentComponent', () => {
     expect(storeSpy.dispatch).toHaveBeenCalledWith(sidebarActions.close({ payload: { navigate: true } }));
   });
 
-  it('sidebarOpenHandler should call store dispatch', waitForAsync(() => {
+  it('sidebarOpenHandler should call store dispatch', () => {
     component.sidebarOpenHandler();
     expect(storeSpy.dispatch).toHaveBeenCalledWith(sidebarActions.open({ payload: { navigate: true } }));
-  }));
+  });
 
   it('should scroll content on router events', async () => {
     expect(component.content).toBeDefined();

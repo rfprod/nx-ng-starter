@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { newTestBedMetadata } from '@app/client-testing-unit';
 import { of } from 'rxjs';
@@ -25,19 +25,14 @@ describe('AppNavbarComponent', () => {
   let router: Router;
   let routerIsActiveSpy: jest.SpyInstance;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(AppNavbarComponent);
-        component = fixture.debugElement.componentInstance;
-
-        router = TestBed.inject(Router);
-        routerIsActiveSpy = jest.spyOn(router, 'isActive');
-
-        fixture.detectChanges();
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    fixture = TestBed.createComponent(AppNavbarComponent);
+    component = fixture.debugElement.componentInstance;
+    router = TestBed.inject(Router);
+    routerIsActiveSpy = jest.spyOn(router, 'isActive');
+    fixture.detectChanges();
+  });
 
   it('should be defined', () => {
     expect(component).toBeDefined();

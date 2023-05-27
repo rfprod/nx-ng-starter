@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { newTestBedMetadata } from '@app/client-testing-unit';
 
@@ -13,16 +13,12 @@ describe('AppThemeToggleComponent', () => {
   let fixture: ComponentFixture<AppThemeToggleComponent>;
   let component: AppThemeToggleComponent;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(AppThemeToggleComponent);
-        component = fixture.debugElement.componentInstance;
-
-        fixture.detectChanges();
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    fixture = TestBed.createComponent(AppThemeToggleComponent);
+    component = fixture.debugElement.componentInstance;
+    fixture.detectChanges();
+  });
 
   it('should be defined', () => {
     expect(component).toBeDefined();

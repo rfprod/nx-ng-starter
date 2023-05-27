@@ -18,14 +18,11 @@ describe('AppHttpApiReducer', () => {
   let reducer: AppHttpApiReducer;
   let store: Store<IHttpApiState>;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        reducer = TestBed.inject(AppHttpApiReducer);
-        store = TestBed.inject(Store);
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    reducer = TestBed.inject(AppHttpApiReducer);
+    store = TestBed.inject(Store);
+  });
 
   it('should be defined', () => {
     expect(reducer).toBeDefined();

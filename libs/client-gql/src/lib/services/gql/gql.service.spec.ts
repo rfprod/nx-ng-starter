@@ -34,15 +34,12 @@ describe('AppClientGqlService', () => {
   let apollo: Apollo;
   const clientName: TGqlClient = 'graphql';
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        service = TestBed.inject(AppGqlService);
-        handlers = TestBed.inject(AppHttpHandlersService);
-        apollo = TestBed.inject(Apollo);
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    service = TestBed.inject(AppGqlService);
+    handlers = TestBed.inject(AppHttpHandlersService);
+    apollo = TestBed.inject(Apollo);
+  });
 
   it('should be defined', () => {
     expect(service).toBeDefined();

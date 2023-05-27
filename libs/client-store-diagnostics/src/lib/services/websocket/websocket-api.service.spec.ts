@@ -27,15 +27,12 @@ describe('AppWebsocketApiService correct connection', () => {
 
   let httpController: HttpTestingController;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        httpController = TestBed.inject(HttpTestingController);
-        service = TestBed.inject(AppWebsocketApiService);
-        wsConfig = TestBed.inject(WS_CONFIG);
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    httpController = TestBed.inject(HttpTestingController);
+    service = TestBed.inject(AppWebsocketApiService);
+    wsConfig = TestBed.inject(WS_CONFIG);
+  });
 
   afterEach(() => {
     flushHttpRequests(httpController, true);
@@ -101,15 +98,12 @@ describe('AppWebsocketApiService incorrect connection', () => {
 
   let httpController: HttpTestingController;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        httpController = TestBed.inject(HttpTestingController);
-        service = TestBed.inject(AppWebsocketApiService);
-        wsConfig = TestBed.inject(WS_CONFIG);
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    httpController = TestBed.inject(HttpTestingController);
+    service = TestBed.inject(AppWebsocketApiService);
+    wsConfig = TestBed.inject(WS_CONFIG);
+  });
 
   afterEach(() => {
     flushHttpRequests(httpController, true);

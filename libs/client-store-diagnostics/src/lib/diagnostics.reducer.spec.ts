@@ -18,14 +18,11 @@ describe('AppDiagnosticsReducer', () => {
   let reducer: AppDiagnosticsReducer;
   let store: Store<IDiagnosticsState>;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        reducer = TestBed.inject(AppDiagnosticsReducer);
-        store = TestBed.inject(Store);
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    reducer = TestBed.inject(AppDiagnosticsReducer);
+    store = TestBed.inject(Store);
+  });
 
   it('should be defined', () => {
     expect(reducer).toBeDefined();

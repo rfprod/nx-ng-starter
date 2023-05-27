@@ -1,4 +1,4 @@
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppTestingComponent, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
@@ -33,15 +33,12 @@ describe('routerSelectors', () => {
   let store: Store<IRouterState>;
   let router: Router;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        store = TestBed.inject(Store);
-        router = TestBed.inject(Router);
-        return router.navigate(['root'], { queryParams: { test: 'test' } });
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    store = TestBed.inject(Store);
+    router = TestBed.inject(Router);
+    await router.navigate(['root'], { queryParams: { test: 'test' } });
+  });
 
   it('data', async () => {
     const data = await firstValueFrom(store.select(routerSelectors.data).pipe(first()));

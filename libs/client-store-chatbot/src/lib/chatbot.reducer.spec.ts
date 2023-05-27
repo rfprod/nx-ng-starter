@@ -1,7 +1,7 @@
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store, StoreModule } from '@ngrx/store';
-import { first, switchMap, tap } from 'rxjs';
+import { first, lastValueFrom } from 'rxjs';
 
 import { chatbotActions } from './chatbot.actions';
 import { chatbotReducerConfig, IChatbotState, IChatbotStateModel } from './chatbot.interface';
@@ -18,14 +18,11 @@ describe('AppChatbotReducer', () => {
   let reducer: AppChatbotReducer;
   let store: Store<IChatbotState>;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        reducer = TestBed.inject(AppChatbotReducer);
-        store = TestBed.inject(Store);
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    reducer = TestBed.inject(AppChatbotReducer);
+    store = TestBed.inject(Store);
+  });
 
   it('should be defined', () => {
     expect(reducer).toBeDefined();
@@ -37,21 +34,13 @@ describe('AppChatbotReducer', () => {
     expect(initialState).toEqual(expectation);
   });
 
-  it('should process the open/close action correctly', waitForAsync(() => {
+  it('should process the open/close action correctly', async () => {
     store.dispatch(chatbotActions.open());
-    void store
-      .select(chatbotSelectors.chatbotOpen)
-      .pipe(
-        first(),
-        tap(chatbotOpen => {
-          expect(chatbotOpen).toBeTruthy();
-          store.dispatch(chatbotActions.close());
-        }),
-        switchMap(() => store.select(chatbotSelectors.chatbotOpen)),
-        tap(chatbotOpen => {
-          expect(chatbotOpen).toBeFalsy();
-        }),
-      )
-      .subscribe();
-  }));
+    let chatbotOpen = await lastValueFrom(store.select(chatbotSelectors.chatbotOpen).pipe(first()));
+    expect(chatbotOpen).toBeTruthy();
+
+    store.dispatch(chatbotActions.close());
+    chatbotOpen = await lastValueFrom(store.select(chatbotSelectors.chatbotOpen).pipe(first()));
+    expect(chatbotOpen).toBeFalsy();
+  });
 });

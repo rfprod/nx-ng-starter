@@ -36,8 +36,8 @@ describe('AppFeatureFlagDirective', () => {
 
   let store: Store;
 
-  beforeEach(() => {
-    void TestBed.configureTestingModule(testBedConfig);
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
 
     fixture = TestBed.createComponent(AppFeatureFlagTestComponent);
     component = fixture.componentInstance;

@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { diagnosticsActions } from '@app/client-store-diagnostics';
 import { newTestBedMetadata } from '@app/client-testing-unit';
 import { Store } from '@ngrx/store';
@@ -25,17 +25,14 @@ describe('AppDiagnosticsIndexComponent', () => {
   let store: Store;
   let storeDispatchSpy: jest.SpyInstance;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        store = TestBed.inject(Store);
-        storeDispatchSpy = jest.spyOn(store, 'dispatch');
-        fixture = TestBed.createComponent(AppDiagnosticsIndexComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    store = TestBed.inject(Store);
+    storeDispatchSpy = jest.spyOn(store, 'dispatch');
+    fixture = TestBed.createComponent(AppDiagnosticsIndexComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
   it('should be defined', () => {
     expect(component).toBeDefined();

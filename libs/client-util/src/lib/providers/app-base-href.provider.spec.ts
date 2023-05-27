@@ -1,5 +1,5 @@
 import { APP_BASE_HREF } from '@angular/common';
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, TestModuleMetadata } from '@angular/core/testing';
 
 import { appBaseHrefProvider } from './app-base-href.provider';
 
@@ -10,13 +10,10 @@ describe('appBaseHrefProvider', () => {
 
   let provider: string;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        provider = TestBed.inject(APP_BASE_HREF);
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    provider = TestBed.inject(APP_BASE_HREF);
+  });
 
   it('should be defined', () => {
     expect(provider).toEqual('/');

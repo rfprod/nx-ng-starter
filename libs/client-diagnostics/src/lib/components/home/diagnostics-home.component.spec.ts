@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { newTestBedMetadata } from '@app/client-testing-unit';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
@@ -28,16 +28,12 @@ describe('AppDiagnosticsHomeComponent', () => {
   let fixture: ComponentFixture<AppDiagnosticsHomeComponent>;
   let component: AppDiagnosticsHomeComponent;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(AppDiagnosticsHomeComponent);
-        component = fixture.componentInstance;
-
-        fixture.detectChanges();
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    fixture = TestBed.createComponent(AppDiagnosticsHomeComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
   it('should be defined', () => {
     expect(component).toBeDefined();

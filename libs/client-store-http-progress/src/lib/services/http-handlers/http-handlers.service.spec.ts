@@ -41,31 +41,28 @@ describe('AppHttpHandlersService', () => {
   let router: Router;
   let routerNavigateSpy: jest.SpyInstance;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        service = TestBed.inject(AppHttpHandlersService);
-        serviceSpies = {
-          checkErrorStatusAndRedirect: jest.spyOn(service, 'checkErrorStatusAndRedirect'),
-          handleGqlError: jest.spyOn(service, 'handleGqlError'),
-          handleError: jest.spyOn(service, 'handleError'),
-        };
-        toaster = TestBed.inject(AppToasterService);
-        httpTestingController = TestBed.inject(HttpTestingController);
-        apollo = TestBed.inject(Apollo);
-        env = TestBed.inject(WEB_CLIENT_APP_ENV);
-        store = TestBed.inject(Store);
-        storeDispatchSpy = jest.spyOn(store, 'dispatch');
-        router = TestBed.inject(Router);
-        routerNavigateSpy = jest.spyOn(router, 'navigate').mockImplementation(
-          () =>
-            new Promise<boolean>(resolve => {
-              resolve(true);
-            }),
-        );
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    service = TestBed.inject(AppHttpHandlersService);
+    serviceSpies = {
+      checkErrorStatusAndRedirect: jest.spyOn(service, 'checkErrorStatusAndRedirect'),
+      handleGqlError: jest.spyOn(service, 'handleGqlError'),
+      handleError: jest.spyOn(service, 'handleError'),
+    };
+    toaster = TestBed.inject(AppToasterService);
+    httpTestingController = TestBed.inject(HttpTestingController);
+    apollo = TestBed.inject(Apollo);
+    env = TestBed.inject(WEB_CLIENT_APP_ENV);
+    store = TestBed.inject(Store);
+    storeDispatchSpy = jest.spyOn(store, 'dispatch');
+    router = TestBed.inject(Router);
+    routerNavigateSpy = jest.spyOn(router, 'navigate').mockImplementation(
+      () =>
+        new Promise<boolean>(resolve => {
+          resolve(true);
+        }),
+    );
+  });
 
   afterEach(() => {
     flushHttpRequests(httpTestingController, true);

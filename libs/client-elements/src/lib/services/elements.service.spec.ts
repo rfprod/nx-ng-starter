@@ -1,5 +1,5 @@
 import { Injector } from '@angular/core';
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { newTestBedMetadata } from '@app/client-testing-unit';
 import { WINDOW, windowProvider } from '@app/client-util';
 
@@ -14,14 +14,11 @@ describe('AppElementsService', () => {
 
   let win: Window;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        service = TestBed.inject(AppElementsService);
-        win = TestBed.inject(WINDOW);
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    service = TestBed.inject(AppElementsService);
+    win = TestBed.inject(WINDOW);
+  });
 
   it('should be defined', () => {
     expect(service).toBeDefined();
