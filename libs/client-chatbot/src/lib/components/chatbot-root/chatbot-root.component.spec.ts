@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { AppElizaModule } from '@app/client-util-eliza';
 
@@ -14,16 +14,12 @@ describe('AppChatbotRootComponent', () => {
   let fixture: ComponentFixture<AppChatbotRootComponent>;
   let component: AppChatbotRootComponent;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(AppChatbotRootComponent);
-        component = fixture.debugElement.componentInstance;
-
-        fixture.detectChanges();
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    fixture = TestBed.createComponent(AppChatbotRootComponent);
+    component = fixture.debugElement.componentInstance;
+    fixture.detectChanges();
+  });
 
   it('should be defined', () => {
     expect(component).toBeDefined();

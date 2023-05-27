@@ -41,15 +41,12 @@ describe('AppHttpProgressEffects', () => {
   let progressService: AppHttpProgressService;
   let toasterService: AppToasterService;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        store = TestBed.inject(Store);
-        progressService = TestBed.inject(AppHttpProgressService);
-        toasterService = TestBed.inject(AppToasterService);
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    store = TestBed.inject(Store);
+    progressService = TestBed.inject(AppHttpProgressService);
+    toasterService = TestBed.inject(AppToasterService);
+  });
 
   it('should call global progress hander start when the start action is dispatched with payload { mainView: true }', waitForAsync(() => {
     store.dispatch(httpProgressActions.start({ payload: { mainView: true } }));

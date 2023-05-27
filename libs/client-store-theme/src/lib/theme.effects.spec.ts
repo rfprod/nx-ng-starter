@@ -22,14 +22,11 @@ describe('AppThemeEffects', () => {
   let store: Store<IThemeState>;
   let overlay: OverlayContainer;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        store = TestBed.inject(Store);
-        overlay = TestBed.inject(OverlayContainer);
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    store = TestBed.inject(Store);
+    overlay = TestBed.inject(OverlayContainer);
+  });
 
   it('should add "unicorn-dark-theme" class to the overlay container when the enableDarkTheme action is dispatched', waitForAsync(() => {
     const addSpy = jest.spyOn(overlay.getContainerElement().classList, 'add');

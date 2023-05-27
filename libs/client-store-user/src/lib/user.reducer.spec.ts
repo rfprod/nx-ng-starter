@@ -18,14 +18,11 @@ describe('AppUserReducer', () => {
   let reducer: AppUserReducer;
   let store: Store<IUserState>;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        reducer = TestBed.inject(AppUserReducer);
-        store = TestBed.inject(Store);
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    reducer = TestBed.inject(AppUserReducer);
+    store = TestBed.inject(Store);
+  });
 
   it('should be defined', () => {
     expect(reducer).toBeDefined();

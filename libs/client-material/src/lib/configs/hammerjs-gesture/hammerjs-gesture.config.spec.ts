@@ -1,4 +1,4 @@
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { HammerGestureConfig } from '@angular/platform-browser';
 
 import { AppHammerGestureConfig } from './hammerjs-gesture.config';
@@ -10,13 +10,10 @@ describe('AppHammerGestureConfig', () => {
 
   let hammerGestureConfig: HammerGestureConfig;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        hammerGestureConfig = TestBed.inject(AppHammerGestureConfig);
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    hammerGestureConfig = TestBed.inject(AppHammerGestureConfig);
+  });
 
   it('should have expected properties', () => {
     const expectedOverrides = {

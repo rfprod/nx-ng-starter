@@ -14,14 +14,11 @@ describe('AppHttpProgressService', () => {
   let service: AppHttpProgressService;
   let overlayRef: OverlayRef;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        service = TestBed.inject(AppHttpProgressService);
-        overlayRef = service['progressRef'];
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    service = TestBed.inject(AppHttpProgressService);
+    overlayRef = service['progressRef'];
+  });
 
   it('should be defined', () => {
     expect(service).toBeDefined();

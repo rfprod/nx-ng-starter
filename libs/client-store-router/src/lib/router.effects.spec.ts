@@ -29,17 +29,14 @@ describe('AppRouterEffects', () => {
   let routerNavigateSpy: jest.SpyInstance;
   let location: Location;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        store = TestBed.inject(Store);
-        router = TestBed.inject(Router);
-        routerNavigateSpy = jest.spyOn(router, 'navigate').mockImplementation(() => new Promise<boolean>(resolve => resolve(true)));
-        location = TestBed.inject(Location);
-        (<jest.Mock>location.historyGo).mockClear();
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    store = TestBed.inject(Store);
+    router = TestBed.inject(Router);
+    routerNavigateSpy = jest.spyOn(router, 'navigate').mockImplementation(() => new Promise<boolean>(resolve => resolve(true)));
+    location = TestBed.inject(Location);
+    (<jest.Mock>location.historyGo).mockClear();
+  });
 
   it('should call router.navigate when the navigate action is dispatched', waitForAsync(() => {
     const payload = { path: [{ outlets: { primary: ['test'] } }] };

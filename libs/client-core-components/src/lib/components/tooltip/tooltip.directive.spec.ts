@@ -1,6 +1,6 @@
 import { OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppMaterialModule } from '@app/client-material';
 import { AppTestingComponent } from '@app/client-testing-unit';
@@ -12,8 +12,8 @@ describe('AppTooltipDirective', () => {
   let debugElement: DebugElement;
   let directive: AppTooltipDirective;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       imports: [AppMaterialModule.forRoot()],
       declarations: [AppTestingComponent, AppTooltipDirective],
       providers: [
@@ -22,17 +22,12 @@ describe('AppTooltipDirective', () => {
           useFactory: () => new OverlayConfig(),
         },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(AppTestingComponent);
-        debugElement = fixture.debugElement.query(By.directive(AppTooltipDirective));
-
-        directive = debugElement.injector.get(AppTooltipDirective);
-
-        fixture.detectChanges();
-      });
-  }));
+    }).compileComponents();
+    fixture = TestBed.createComponent(AppTestingComponent);
+    debugElement = fixture.debugElement.query(By.directive(AppTooltipDirective));
+    directive = debugElement.injector.get(AppTooltipDirective);
+    fixture.detectChanges();
+  });
 
   it('should be defined', () => {
     expect(directive).toBeDefined();

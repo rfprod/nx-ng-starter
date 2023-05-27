@@ -32,14 +32,11 @@ describe('AppHttpApiEffects', () => {
   let store: Store<IHttpApiState>;
   let service: AppHttpApiService;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        store = TestBed.inject(Store);
-        service = TestBed.inject(AppHttpApiService);
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    store = TestBed.inject(Store);
+    service = TestBed.inject(AppHttpApiService);
+  });
 
   it('should call http api service when the ping action is dispatched', waitForAsync(() => {
     const response: IPingResponse = { message: 'test' };

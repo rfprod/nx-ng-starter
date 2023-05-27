@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppHttpProgressStoreModule } from '@app/client-store-http-progress';
@@ -37,20 +37,17 @@ describe('AppSidebarRootComponent', () => {
   let router: Router;
   let routerNavigateSpy: jest.SpyInstance;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(AppSidebarRootComponent);
-        component = fixture.componentInstance;
-        store = TestBed.inject(Store);
-        storeDispatchSpy = jest.spyOn(store, 'dispatch');
-        sidebarCloseHandlerSpy = jest.spyOn(component, 'sidebarCloseHandler');
-        router = TestBed.inject(Router);
-        routerNavigateSpy = jest.spyOn(router, 'navigate');
-        fixture.detectChanges();
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    fixture = TestBed.createComponent(AppSidebarRootComponent);
+    component = fixture.componentInstance;
+    store = TestBed.inject(Store);
+    storeDispatchSpy = jest.spyOn(store, 'dispatch');
+    sidebarCloseHandlerSpy = jest.spyOn(component, 'sidebarCloseHandler');
+    router = TestBed.inject(Router);
+    routerNavigateSpy = jest.spyOn(router, 'navigate');
+    fixture.detectChanges();
+  });
 
   it('should be defined', () => {
     expect(component).toBeDefined();

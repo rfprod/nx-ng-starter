@@ -1,5 +1,5 @@
 import { FactoryProvider } from '@angular/core';
-import { TestBed, waitForAsync } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 import { testingEnvironment } from '@app/client-testing-unit';
 import * as Sentry from '@sentry/angular-ivy';
 
@@ -8,8 +8,8 @@ import { AppSentryService, initializeSentry, sentryProviders } from './sentry.se
 describe('AppSentryService', () => {
   let service: AppSentryService;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       providers: [
         {
           provide: Sentry.TraceService,
@@ -21,12 +21,9 @@ describe('AppSentryService', () => {
           deps: [Sentry.TraceService],
         },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        service = TestBed.inject(AppSentryService);
-      });
-  }));
+    }).compileComponents();
+    service = TestBed.inject(AppSentryService);
+  });
 
   it('should exist', () => {
     expect(service).toBeTruthy();

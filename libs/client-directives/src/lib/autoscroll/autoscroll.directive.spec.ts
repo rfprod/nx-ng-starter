@@ -12,18 +12,15 @@ describe('AppAutoscrollDirective', () => {
   let debugElement: DebugElement;
   let directive: AppAutoscrollDirective;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule({
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
       declarations: [AppTestingComponent, AppAutoscrollDirective],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(AppTestingComponent);
-        debugElement = fixture.debugElement.query(By.directive(AppAutoscrollDirective));
-        directive = debugElement.injector.get(AppAutoscrollDirective);
-        // fixture.detectChanges();
-      });
-  }));
+    }).compileComponents();
+    fixture = TestBed.createComponent(AppTestingComponent);
+    debugElement = fixture.debugElement.query(By.directive(AppAutoscrollDirective));
+    directive = debugElement.injector.get(AppAutoscrollDirective);
+    // fixture.detectChanges();
+  });
 
   it('should compile successfully', () => {
     expect(directive).toBeDefined();

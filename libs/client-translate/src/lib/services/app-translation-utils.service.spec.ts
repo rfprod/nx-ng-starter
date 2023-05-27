@@ -32,31 +32,27 @@ describe('AppTranslationUtilsService', () => {
     };
   };
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        service = TestBed.inject(AppTranslationUtilsService);
-        translate = TestBed.inject(TranslateService);
-        dateAdapter = TestBed.inject(DateAdapter);
-        win = TestBed.inject(WINDOW);
-
-        spy = {
-          service: {
-            languageChanges: jest.spyOn((service as any).languageChangesSubject, 'next'),
-          },
-          translate: {
-            onLangChange: jest.spyOn(translate.onLangChange, 'subscribe'),
-            setDefaultLang: jest.spyOn(translate, 'setDefaultLang'),
-            setTranslation: jest.spyOn(translate, 'setTranslation'),
-            use: jest.spyOn(translate, 'use'),
-          },
-          dateAdapter: {
-            setLocale: jest.spyOn(dateAdapter, 'setLocale'),
-          },
-        };
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    service = TestBed.inject(AppTranslationUtilsService);
+    translate = TestBed.inject(TranslateService);
+    dateAdapter = TestBed.inject(DateAdapter);
+    win = TestBed.inject(WINDOW);
+    spy = {
+      service: {
+        languageChanges: jest.spyOn((service as any).languageChangesSubject, 'next'),
+      },
+      translate: {
+        onLangChange: jest.spyOn(translate.onLangChange, 'subscribe'),
+        setDefaultLang: jest.spyOn(translate, 'setDefaultLang'),
+        setTranslation: jest.spyOn(translate, 'setTranslation'),
+        use: jest.spyOn(translate, 'use'),
+      },
+      dateAdapter: {
+        setLocale: jest.spyOn(dateAdapter, 'setLocale'),
+      },
+    };
+  });
 
   it('should exist and have variables and methods defined', () => {
     expect(service).toBeDefined();

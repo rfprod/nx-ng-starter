@@ -1,11 +1,11 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { httpApiSelectors, IHttpApiState } from '@app/client-store-http-api';
 import { newTestBedMetadata } from '@app/client-testing-unit';
 import { Store } from '@ngrx/store';
-import { combineLatest, first, of, tap } from 'rxjs';
+import { first, lastValueFrom, of } from 'rxjs';
 
 import { AppDiagnosticsInfoComponent } from './diagnostics-info.component';
 
@@ -29,29 +29,22 @@ describe('AppDiagnosticsInfoComponent', () => {
   let component: AppDiagnosticsInfoComponent;
   let store: Store<IHttpApiState>;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(AppDiagnosticsInfoComponent);
-        component = fixture.componentInstance;
-        store = TestBed.inject(Store);
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    fixture = TestBed.createComponent(AppDiagnosticsInfoComponent);
+    component = fixture.componentInstance;
+    store = TestBed.inject(Store);
+  });
 
   it('should be defined', () => {
     expect(component).toBeDefined();
   });
 
-  it('state should return the whole ping state', waitForAsync(() => {
-    void combineLatest([component.ping$.pipe(first()), store.select(httpApiSelectors.ping).pipe(first())])
-      .pipe(
-        tap(([ping, pingState]) => {
-          expect(ping).toEqual(pingState);
-        }),
-      )
-      .subscribe();
-  }));
+  it('state should return the whole ping state', async () => {
+    const ping = await lastValueFrom(component.ping$.pipe(first()));
+    const pingState = await lastValueFrom(store.select(httpApiSelectors.ping).pipe(first()));
+    expect(ping).toEqual(pingState);
+  });
 
   it('should dispatch one event on init', () => {
     const spy = jest.spyOn(store, 'dispatch');

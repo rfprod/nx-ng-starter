@@ -23,15 +23,12 @@ describe('AppUserEffects', () => {
   let router: Router;
   let routerNavigateSpy: jest.SpyInstance;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        store = TestBed.inject(Store);
-        router = TestBed.inject(Router);
-        routerNavigateSpy = jest.spyOn(router, 'navigate').mockImplementation(() => new Promise<boolean>(resolve => resolve(true)));
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    store = TestBed.inject(Store);
+    router = TestBed.inject(Router);
+    routerNavigateSpy = jest.spyOn(router, 'navigate').mockImplementation(() => new Promise<boolean>(resolve => resolve(true)));
+  });
 
   it('should call router.navigate when the login action is dispatched', waitForAsync(() => {
     store.dispatch(userActions.login({ payload: { email: 'test@test.test' } }));

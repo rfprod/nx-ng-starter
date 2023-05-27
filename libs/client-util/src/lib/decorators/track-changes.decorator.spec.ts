@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
-import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 
 import { trackChanges } from './track-changes.decorator';
 
@@ -38,14 +38,11 @@ describe('trackChanges', () => {
   let fixture: ComponentFixture<AppTrackChangesTestingComponent>;
   let component: AppTrackChangesTestingComponent;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(AppTrackChangesTestingComponent);
-        component = fixture.componentInstance;
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    fixture = TestBed.createComponent(AppTrackChangesTestingComponent);
+    component = fixture.componentInstance;
+  });
 
   it('should process changes as expected when the input value change is defined', () => {
     expect(component.input).toBeUndefined();

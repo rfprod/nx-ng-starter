@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 
 import { AppChartExamplesComponent } from './chart-examples.component';
 
@@ -10,15 +10,12 @@ describe('AppGlobalProgressBarComponent', () => {
   let fixture: ComponentFixture<AppChartExamplesComponent>;
   let component: AppChartExamplesComponent;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(AppChartExamplesComponent);
-        component = fixture.debugElement.componentInstance;
-        fixture.detectChanges();
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    fixture = TestBed.createComponent(AppChartExamplesComponent);
+    component = fixture.debugElement.componentInstance;
+    fixture.detectChanges();
+  });
 
   it('should be defined', () => {
     expect(component).toBeDefined();

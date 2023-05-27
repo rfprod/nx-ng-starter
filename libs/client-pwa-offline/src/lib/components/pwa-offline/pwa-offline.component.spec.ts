@@ -1,21 +1,23 @@
 import { CommonModule, Location } from '@angular/common';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 
 import { AppPwaOfflineComponent } from './pwa-offline.component';
 
 describe('AppPwaOfflineComponent', () => {
+  const testBedMetadata: TestModuleMetadata = {
+    imports: [CommonModule, MatIconModule, MatButtonModule],
+    declarations: [AppPwaOfflineComponent],
+    providers: [Location],
+  };
+
   let component: AppPwaOfflineComponent;
   let fixture: ComponentFixture<AppPwaOfflineComponent>;
   let location: Location;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [CommonModule, MatIconModule, MatButtonModule],
-      declarations: [AppPwaOfflineComponent],
-      providers: [Location],
-    }).compileComponents();
+    await TestBed.configureTestingModule(testBedMetadata).compileComponents();
 
     location = TestBed.inject(Location);
     fixture = TestBed.createComponent(AppPwaOfflineComponent);

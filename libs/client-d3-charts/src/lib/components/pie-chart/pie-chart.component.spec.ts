@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 
@@ -24,16 +24,13 @@ describe('AppPieChartComponent', () => {
   let fixture: ComponentFixture<AppPieChartComponent>;
   let component: AppPieChartComponent;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(AppPieChartComponent);
-        component = fixture.debugElement.componentInstance;
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    fixture = TestBed.createComponent(AppPieChartComponent);
+    component = fixture.debugElement.componentInstance;
 
-        // fixture.detectChanges();
-      });
-  }));
+    // fixture.detectChanges();
+  });
 
   it('should be defined', () => {
     expect(component).toBeDefined();

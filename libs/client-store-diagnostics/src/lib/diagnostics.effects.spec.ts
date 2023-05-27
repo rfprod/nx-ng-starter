@@ -34,14 +34,11 @@ describe('AppDiagnosticsEffects', () => {
   let store: Store<IDiagnosticsState>;
   let api: AppWebsocketApiService;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        store = TestBed.inject(Store);
-        api = TestBed.inject(AppWebsocketApiService);
-      });
-  }));
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
+    store = TestBed.inject(Store);
+    api = TestBed.inject(AppWebsocketApiService);
+  });
 
   it('should call api service connect method when the connect action is dispatched, payload #1', waitForAsync(() => {
     const connectSpy = jest.spyOn(api, 'connect');
