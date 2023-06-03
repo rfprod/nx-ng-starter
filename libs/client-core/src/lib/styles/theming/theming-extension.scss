@@ -268,5 +268,33 @@ $extended-box-shadow-palette: (
   .chart-tooltip {
     @include extended-fill('.basic-bg-text');
   }
+
+  .custom-overlay {
+    @include extended-color('.basic-bg-text');
+    @include extended-background-color('.basic');
+
+    &--primary-bg {
+      @include extended-color('.primary-bg-text');
+      @include extended-background-color('.primary');
+    }
+  }
 }
 @include custom-general-coloring-classes();
+
+@mixin custom-density-classes() {
+  .density-1 {
+    @include mat.form-field-density(-1);
+    @include mat.input-density(-1);
+  }
+
+  .density-2 {
+    @include mat.form-field-density(-2);
+    @include mat.input-density(-2);
+  }
+
+  .density-3 {
+    @include mat.form-field-density(-3);
+    @include mat.input-density(-3);
+  }
+}
+@include custom-density-classes();
