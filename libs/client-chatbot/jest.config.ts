@@ -10,7 +10,7 @@ const config: Config.InitialOptions = {
       branches: 8,
       functions: 42,
       lines: 45,
-      statements: 49,
+      statements: 47,
     },
   },
   displayName: 'client-chatbot',

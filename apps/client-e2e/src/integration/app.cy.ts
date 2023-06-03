@@ -21,13 +21,13 @@ describe('nx-ng-starter', () => {
     cy.getToolbars().should('have.length', expectedLength);
   });
 
-  it('first toolbar should have 6 buttons', () => {
-    const expectedLength = 6;
+  it('first toolbar should have 7 buttons', () => {
+    const expectedLength = 7;
     cy.getTopToolbar().get('button').should('have.length', expectedLength);
   });
 
-  it('last toolbar should have 6 buttons', () => {
-    const expectedLength = 6;
+  it('last toolbar should have 7 buttons', () => {
+    const expectedLength = 7;
     cy.getBottomToolbar().get('button').should('have.length', expectedLength);
   });
 

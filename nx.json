@@ -14,22 +14,6 @@
     }
   },
   "generators": {
-    "@nx/angular:application": {
-      "style": "scss",
-      "linter": "eslint",
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
-    },
-    "@nx/angular:component": {
-      "style": "scss",
-      "changeDetection": "OnPush",
-      "inlineStyle": false,
-      "inlineTemplate": false
-    },
-    "@nx/angular:library": {
-      "linter": "eslint",
-      "unitTestRunner": "jest"
-    },
     "@nrwl/schematics:application": {
       "framework": "angular",
       "style": "scss",
@@ -49,10 +33,31 @@
       "linter": "eslint",
       "style": "scss",
       "unitTestRunner": "jest"
+    },
+    "@nx/angular:application": {
+      "e2eTestRunner": "cypress",
+      "linter": "eslint",
+      "style": "scss",
+      "unitTestRunner": "jest"
+    },
+    "@nx/angular:component": {
+      "changeDetection": "OnPush",
+      "inlineStyle": false,
+      "inlineTemplate": false,
+      "style": "scss"
+    },
+    "@nx/angular:library": {
+      "linter": "eslint",
+      "unitTestRunner": "jest"
     }
   },
   "namedInputs": {
-    "default": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.scss", "{projectRoot}/**/*.html", "sharedGlobals"],
+    "default": [
+      "{projectRoot}/**/*.ts",
+      "{projectRoot}/**/*.scss",
+      "{projectRoot}/**/*.html",
+      "sharedGlobals"
+    ],
     "prod": [
       "default",
       "!{projectRoot}/**/*.stories.ts",
@@ -65,8 +70,14 @@
       "!{projectRoot}/jest.config.ts",
       "!{projectRoot}/.eslintrc.json"
     ],
-    "projectLinterConfig": ["{projectRoot}/tsconfig.spec.json", "{projectRoot}/jest.config.ts"],
-    "projectTestConfig": ["{projectRoot}/tsconfig.eslint.json", "{projectRoot}/.eslintrc.json"],
+    "projectLinterConfig": [
+      "{projectRoot}/tsconfig.spec.json",
+      "{projectRoot}/jest.config.ts"
+    ],
+    "projectTestConfig": [
+      "{projectRoot}/tsconfig.eslint.json",
+      "{projectRoot}/.eslintrc.json"
+    ],
     "rootLinterConfig": [
       "{workspaceRoot}/.eslintignore",
       "{workspaceRoot}/.eslintrc.js",
@@ -74,35 +85,79 @@
       "{workspaceRoot}/.prettierignore",
       "{workspaceRoot}/.prettierrc"
     ],
-    "rootTestConfig": ["{workspaceRoot}/jest.config.ts", "{workspaceRoot}/jest.preset.js"],
-    "sharedGlobals": ["{workspaceRoot}/babel.config.json", "{workspaceRoot}/nx.json", "{workspaceRoot}/tsconfig.base.json"]
+    "rootTestConfig": [
+      "{workspaceRoot}/jest.config.ts",
+      "{workspaceRoot}/jest.preset.js"
+    ],
+    "sharedGlobals": [
+      "{workspaceRoot}/babel.config.json",
+      "{workspaceRoot}/nx.json",
+      "{workspaceRoot}/tsconfig.base.json"
+    ]
   },
   "newProjectRoot": "",
+  "npmScope": "app",
   "targetDefaults": {
     "build": {
-      "dependsOn": ["^build"],
-      "inputs": ["default", "^prod"]
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "default",
+        "^prod"
+      ]
     },
     "build-storybook": {
-      "inputs": ["default", "^prod", "{workspaceRoot}/.storybook/**/*", "{projectRoot}/.storybook/**/*", "{projectRoot}/**/*.stories.ts"]
+      "inputs": [
+        "default",
+        "^prod",
+        "{workspaceRoot}/.storybook/**/*",
+        "{projectRoot}/.storybook/**/*",
+        "{projectRoot}/**/*.stories.ts"
+      ]
     },
     "e2e": {
-      "inputs": ["default", "^prod", "{projectRoot}/tsconfig.e2e.json"]
+      "inputs": [
+        "default",
+        "^prod",
+        "{projectRoot}/tsconfig.e2e.json"
+      ]
     },
     "lint": {
-      "inputs": ["default", "^prod", "projectLinterConfig", "rootLinterConfig"]
+      "inputs": [
+        "default",
+        "^prod",
+        "projectLinterConfig",
+        "rootLinterConfig"
+      ]
     },
     "test": {
-      "inputs": ["default", "^prod", "projectTestConfig", "rootTestConfig"]
+      "inputs": [
+        "default",
+        "^prod",
+        "projectTestConfig",
+        "rootTestConfig"
+      ]
     }
   },
   "tasksRunnerOptions": {
     "default": {
       "options": {
         "cacheDirectory": "/tmp/nx/nx-ng-starter",
-        "cacheableOperations": ["build", "lint", "test", "e2e", "tsc-check", "prettier-check", "stylelint-check"],
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e",
+          "tsc-check",
+          "prettier-check",
+          "stylelint-check"
+        ],
         "parallel": 1,
-        "runtimeCacheInputs": ["node -v", "echo $IMPORTANT_ENV_VAR"]
+        "runtimeCacheInputs": [
+          "node -v",
+          "echo $IMPORTANT_ENV_VAR"
+        ]
       },
       "runner": "nx/tasks-runners/default"
     }
