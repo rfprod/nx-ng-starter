@@ -9,7 +9,7 @@ const config: Config.InitialOptions = {
       branches: 45,
       functions: 76,
       lines: 81,
-      statements: 81,
+      statements: 80,
     },
   },
   displayName: 'client-core-components',

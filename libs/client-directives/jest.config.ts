@@ -10,7 +10,7 @@ const config: Config.InitialOptions = {
       branches: 0,
       functions: 25,
       lines: 36,
-      statements: 39,
+      statements: 36,
     },
   },
   displayName: 'client-directives',

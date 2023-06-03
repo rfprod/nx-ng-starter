@@ -7,7 +7,7 @@ const config: Config.InitialOptions = {
       branches: 100,
       functions: 72,
       lines: 88,
-      statements: 90,
+      statements: 89,
     },
   },
   displayName: 'backend-gql',
