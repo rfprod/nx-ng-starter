@@ -1,3 +1,4 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { newTestBedMetadata } from '@app/client-testing-unit';
@@ -17,6 +18,7 @@ describe('AppNavbarComponent', () => {
         },
       },
     ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
   });
 
   let fixture: ComponentFixture<AppNavbarComponent>;

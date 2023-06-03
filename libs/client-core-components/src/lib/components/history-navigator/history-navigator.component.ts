@@ -7,6 +7,8 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angul
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppHistoryNavigatorComponent {
+  public showSearch = false;
+
   @Output() public readonly nagivateBack = new EventEmitter<void>();
 
   @Output() public readonly nagivateForward = new EventEmitter<void>();

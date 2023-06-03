@@ -1,4 +1,6 @@
 /* Angular Material Theme, and Typography customization */
+
+/* Documentation: https://github.com/angular/components/blob/main/guides/theming.md */
 @use '@angular/material' as mat;
 @use 'node_modules/@angular/material/_theming.scss';
 
@@ -19,8 +21,8 @@ $custom-typography: mat.define-typography-config(
 @include mat.core();
 
 /* Define a custom light theme. */
-$candy-app-primary: mat.define-palette(mat.$green-palette, 600);
-$candy-app-accent: mat.define-palette(mat.$deep-orange-palette, 500);
+$candy-app-primary: mat.define-palette(mat.$green-palette, 700);
+$candy-app-accent: mat.define-palette(mat.$light-green-palette, 400);
 $candy-app-warn: mat.define-palette(mat.$red-palette, 800);
 $candy-app-theme: mat.define-light-theme(
   (
@@ -29,7 +31,7 @@ $candy-app-theme: mat.define-light-theme(
       accent: $candy-app-accent,
       warn: $candy-app-warn,
     ),
-    /* typography: $custom-typography,*/ density: 0,
+    density: 0,
   )
 );
 
@@ -49,7 +51,7 @@ $unicorn-dark-theme: mat.define-dark-theme(
       accent: $unicorn-dark-accent,
       warn: $unicorn-dark-warn,
     ),
-    /* typography: $custom-typography,*/ density: 0,
+    density: 0,
   )
 );
 

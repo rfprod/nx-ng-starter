@@ -14,8 +14,10 @@
   <mat-icon>navigate_before</mat-icon>
 </button>
 
-<mat-icon
-  appTooltip="Navigate history"
+<button
+  mat-icon-button
+  (click)="showSearch = !showSearch"
+  appTooltip="Route navigator"
   [flexibleConnectedPositions]="[
     {
       originX: 'center',
@@ -24,8 +26,11 @@
       overlayY: 'top'
     }
   ]"
-  >explore</mat-icon
+  cdkOverlayOrigin
+  #searchTrigger="cdkOverlayOrigin"
 >
+  <mat-icon>explore</mat-icon>
+</button>
 
 <button
   mat-icon-button
@@ -42,3 +47,19 @@
 >
   <mat-icon>navigate_next</mat-icon>
 </button>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="searchTrigger"
+  [cdkConnectedOverlayOpen]="showSearch"
+  [cdkConnectedOverlayPositions]="[
+    {
+      originX: 'center',
+      originY: 'bottom',
+      overlayX: 'center',
+      overlayY: 'top'
+    }
+  ]"
+>
+  <app-search class="search custom-overlay custom-overlay--primary-bg"></app-search>
+</ng-template>
