@@ -1,12 +1,11 @@
 {
-  "name": "@rfprodz/backend-diagnostics",
-  "version": "1.0.11",
-  "description": "NestJS API diagnostics module.",
+  "name": "@rfprodz/client-pwa-offline",
+  "version": "1.0.0",
+  "description": "PWA offline feature for Angular clients.",
   "keywords": [
-    "nestjs-controller",
-    "nestjs-service",
-    "nestjs-module",
-    "nestjs-events-gateway"
+    "angular-module",
+    "angular-interceptor",
+    "angular-component"
   ],
   "homepage": "https://github.com/rfprod/nx-ng-starter",
   "bugs": {
@@ -22,10 +21,9 @@
     "tslib": "2.5.3"
   },
   "peerDependencies": {
-    "@nestjs/common": "9.4.2",
-    "@nestjs/platform-ws": "9.4.2",
-    "@nestjs/websockets": "9.4.2",
-    "dotenv": "16.1.4",
-    "rxjs": "7.8.1"
+    "@angular/common": "16.0.4",
+    "@angular/core": "16.0.4",
+    "@angular/material": "16.0.4",
+    "@angular/router": "16.0.4"
   }
 }
