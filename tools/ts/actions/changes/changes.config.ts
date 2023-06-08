@@ -3,6 +3,7 @@ const electron = ['.electron/**', 'index.js'];
 const mobile = ['android/**', 'capacitor.config.json'];
 const packageCharts = ['libs/client-d3-charts/package.json'];
 const packageEliza = ['libs/client-util-eliza/package.json'];
+const packagePwaOffline = ['libs/client-pwa-offline/package.json'];
 const packageBackendDiagnostics = ['libs/backend-diagnostics/package.json'];
 const packages = [...packageCharts, ...packageEliza, ...packageBackendDiagnostics];
 const shelltools = ['tools/shell/**'];
@@ -31,6 +32,7 @@ export const changesConfig = {
   mobile,
   packageCharts,
   packageEliza,
+  packagePwaOffline,
   packageBackendDiagnostics,
   packages,
   shelltools,
