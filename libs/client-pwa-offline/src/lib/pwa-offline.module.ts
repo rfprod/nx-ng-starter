@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { AppPwaOfflineComponent } from './components/pwa-offline/pwa-offline.component';
 import { AppPwaOfflineInterceptor } from './interceptors/pwa-offline.interceptor';
+import { navigatorProvider } from './providers/navigator.provider';
 import { AppPwaOfflineRoutingModule } from './pwa-offline-routing.module';
 
 /**
@@ -21,6 +22,7 @@ import { AppPwaOfflineRoutingModule } from './pwa-offline-routing.module';
       useClass: AppPwaOfflineInterceptor,
       multi: true,
     },
+    navigatorProvider,
   ],
 })
 export class AppPwaOfflineModule {}

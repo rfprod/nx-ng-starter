@@ -3,9 +3,9 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { NavigationBehaviorOptions, Router, UrlTree } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { WINDOW } from '@app/client-util';
 import { NEVER, of, tap } from 'rxjs';
 
+import { NAVIGATOR } from '../providers/navigator.provider';
 import { AppPwaOfflineInterceptor } from './pwa-offline.interceptor';
 
 describe('AppPwaOfflineInterceptor', () => {
@@ -13,21 +13,15 @@ describe('AppPwaOfflineInterceptor', () => {
   let router: Router;
   let routerSpy: jest.SpyInstance;
 
-  const configureTestBed = (
-    windowMock = {
-      navigator: {
-        onLine: true,
-      },
-    },
-  ) => {
+  const configureTestBed = (navigatorMock = { onLine: true }) => {
     beforeEach(async () => {
       await TestBed.configureTestingModule({
         imports: [HttpClientTestingModule, RouterTestingModule],
         providers: [
           AppPwaOfflineInterceptor,
           {
-            provide: WINDOW,
-            useValue: windowMock,
+            provide: NAVIGATOR,
+            useValue: navigatorMock,
           },
         ],
       }).compileComponents();
@@ -67,7 +61,7 @@ describe('AppPwaOfflineInterceptor', () => {
   });
 
   describe('offline', () => {
-    configureTestBed({ navigator: { onLine: false } });
+    configureTestBed({ onLine: false });
 
     it('should be defined', () => {
       expect(interceptor).toBeDefined();
