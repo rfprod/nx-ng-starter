@@ -148,7 +148,7 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:client-pwa-offline',
-    onlyDependOnLibsWithTags: ['scope:client-util'],
+    onlyDependOnLibsWithTags: [],
   },
   {
     sourceTag: 'scope:client-core',

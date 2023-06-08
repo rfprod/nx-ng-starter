@@ -6,6 +6,22 @@
   "sourceRoot": "libs/client-pwa-offline/src",
   "tags": ["scope:client-pwa-offline", "type:feature"],
   "targets": {
+    "build": {
+      "configurations": {
+        "development": {
+          "tsConfig": "libs/client-pwa-offline/tsconfig.lib.json"
+        },
+        "production": {
+          "tsConfig": "libs/client-pwa-offline/tsconfig.lib.prod.json"
+        }
+      },
+      "defaultConfiguration": "production",
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "options": {
+        "project": "libs/client-pwa-offline/ng-package.json"
+      },
+      "outputs": ["{workspaceRoot}/dist/libs/client-pwa-offline"]
+    },
     "lint": {
       "executor": "@angular-eslint/builder:lint",
       "options": {
