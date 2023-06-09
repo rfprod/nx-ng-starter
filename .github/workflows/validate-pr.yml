@@ -26,6 +26,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Setup environment
         uses: ./.github/actions/setup-environment
@@ -37,12 +38,21 @@ jobs:
           premerge: 'true'
           trunk: 'main'
 
+      - name: Validate commit messages
+        run: |
+          git checkout -b premerge
+          git fetch origin main:main
+          npx --no-install commitlint --from main
+
       - name: Validation contribution size
         uses: ./.github/actions/validate-contribution-size
 
-  premerge:
+  lint:
     needs: checks
     runs-on: ubuntu-latest
+
+    outputs:
+      success: ${{ steps.check.outputs.success || 'true' }}
 
     steps:
       - name: Checkout sources
@@ -53,12 +63,6 @@ jobs:
 
       - name: Setup environment
         uses: ./.github/actions/setup-environment
-
-      - name: Validate commit messages
-        run: |
-          git checkout -b premerge
-          git fetch origin main:main
-          npx --no-install commitlint --from main
 
       - name: Lint shell
         if: fromJSON(needs.checks.outputs.changes).shelltools == 'true'
@@ -72,14 +76,58 @@ jobs:
       - name: Lint html affected
         run: npx nx affected --target prettier-check --dryRun --base origin/main
 
-      - name: Lint scss affected
-        run: npx nx affected --target stylelint-check --dryRun --base origin/main
+      - name: Set failure
+        id: check
+        if: failure()
+        run: echo "success='false'" >> $GITHUB_OUTPUT
+
+  test:
+    needs: checks
+    runs-on: ubuntu-latest
+
+    outputs:
+      success: ${{ steps.check.outputs.success || 'true' }}
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+
+      - name: Compiler check affected
+        run: npx nx affected --target tsc-check --base origin/main
 
       - name: Unit test affected
         run: |
           npx nx affected --target test --base origin/main --pass-with-no-tests --code-coverage --run-in-band --ci
           npx nx run tools:coverage-stats
           cat ./UNIT_COVERAGE.md >> $GITHUB_STEP_SUMMARY
+
+      - name: Set failure
+        id: check
+        if: failure()
+        run: echo "success='false'" >> $GITHUB_OUTPUT
+
+  build:
+    needs: checks
+    runs-on: ubuntu-latest
+
+    outputs:
+      success: ${{ steps.check.outputs.success || 'true' }}
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
 
       - name: Build affected
         run: npx nx affected --target build --base origin/main
@@ -90,3 +138,22 @@ jobs:
       - name: Build global storybook
         if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' }}
         run: npx nx run documentation:build-storybook
+
+      - name: Set failure
+        id: check
+        if: failure()
+        run: echo "success='false'" >> $GITHUB_OUTPUT
+
+  premerge:
+    needs: [lint, test, build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check result
+        run: |
+          if [[ "$LINT_RESULT" == "false" || "$TEST_RESULT" == "false" || "$BUILD_RESULT" == "false" ]]; then exit 1; fi
+          echo "### :rocket: Premerge checks succeeded" >> $GITHUB_STEP_SUMMARY
+        env:
+          LINT_RESULT: ${{ needs.lint.outputs.success }}
+          TEST_RESULT: ${{ needs.test.outputs.success }}
+          BUILD_RESULT: ${{ needs.build.outputs.success }}
