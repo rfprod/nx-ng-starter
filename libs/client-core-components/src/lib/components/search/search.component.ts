@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, HostBinding, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { Route, Router, Routes } from '@angular/router';
@@ -23,6 +23,11 @@ export class AppSearchComponent implements AfterViewInit {
    * The autocomplete input.
    */
   @ViewChild(MatInput) public matInput!: MatInput;
+
+  /**
+   * Event emitter to notify the parent component that an option has been selected.
+   */
+  @Output() public readonly optionSelected = new EventEmitter<void>();
 
   /**
    * The autocomplete input form control.
@@ -110,6 +115,15 @@ export class AppSearchComponent implements AfterViewInit {
       await Promise.all(resolvers);
     }
     return [...new Set(result)];
+  }
+
+  /**
+   * Select option handler.
+   * @param routerLink the option's router link
+   */
+  public selectOption(routerLink: string) {
+    this.optionSelected.emit();
+    void this.router.navigate([routerLink]);
   }
 
   public ngAfterViewInit(): void {
