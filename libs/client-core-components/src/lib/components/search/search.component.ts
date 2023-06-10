@@ -1,7 +1,14 @@
-import { ChangeDetectionStrategy, Component, HostBinding } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, HostBinding, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatInput } from '@angular/material/input';
 import { Route, Router, Routes } from '@angular/router';
-import { defer, forkJoin, from, map, of, startWith, switchMap } from 'rxjs';
+import { BehaviorSubject, combineLatest, defer, forkJoin, from, map, of, startWith, switchMap } from 'rxjs';
+
+interface ISearchOptions {
+  name: string;
+  value: string;
+  routerLink: string;
+}
 
 @Component({
   selector: 'app-search',
@@ -9,16 +16,29 @@ import { defer, forkJoin, from, map, of, startWith, switchMap } from 'rxjs';
   styleUrls: ['./search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppSearchComponent {
+export class AppSearchComponent implements AfterViewInit {
   @HostBinding('class.density-3') public density = true;
 
+  /**
+   * The autocomplete input.
+   */
+  @ViewChild(MatInput) public matInput!: MatInput;
+
+  /**
+   * The autocomplete input form control.
+   */
   public control = new FormControl('', { nonNullable: true });
 
-  public options: { name: string; value: string; routerLink: string }[] = [];
+  /**
+   * The search options state.
+   */
+  private readonly optionsSubject = new BehaviorSubject<ISearchOptions[]>([]);
 
-  public readonly filteredOptions = this.control.valueChanges.pipe(
-    startWith(''),
-    map(value => this.options.filter(item => item.value.includes(value))),
+  /**
+   * The options value for the autocomplete.
+   */
+  public readonly filteredOptions = combineLatest([this.control.valueChanges.pipe(startWith('')), this.optionsSubject.asObservable()]).pipe(
+    map(([value, options]) => options.filter(item => item.value.includes(value))),
   );
 
   constructor(private readonly router: Router) {
@@ -44,7 +64,7 @@ export class AppSearchComponent {
             value: item,
             routerLink: item.replace(/\s/g, '/'),
           }));
-        this.options = options;
+        this.optionsSubject.next(options);
         return options;
       }),
     );
@@ -90,5 +110,11 @@ export class AppSearchComponent {
       await Promise.all(resolvers);
     }
     return [...new Set(result)];
+  }
+
+  public ngAfterViewInit(): void {
+    setTimeout(() => {
+      this.matInput.focus();
+    });
   }
 }

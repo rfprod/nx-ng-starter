@@ -16,8 +16,8 @@
 
 <button
   mat-icon-button
-  (click)="showSearch = !showSearch"
-  appTooltip="Route navigator"
+  (click)="toggleSearch()"
+  appTooltip="Route navigator, CTRL + SHIFT + S"
   [flexibleConnectedPositions]="[
     {
       originX: 'center',
@@ -51,7 +51,8 @@
 <ng-template
   cdkConnectedOverlay
   [cdkConnectedOverlayOrigin]="searchTrigger"
-  [cdkConnectedOverlayOpen]="showSearch"
+  [cdkConnectedOverlayOpen]="showSearch()"
+  [cdkConnectedOverlayHasBackdrop]="true"
   [cdkConnectedOverlayPositions]="[
     {
       originX: 'center',
@@ -61,5 +62,5 @@
     }
   ]"
 >
-  <app-search class="search custom-overlay custom-overlay--primary-bg"></app-search>
+  <app-search class="search custom-overlay"></app-search>
 </ng-template>
