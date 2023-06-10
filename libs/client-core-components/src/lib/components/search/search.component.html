@@ -1,7 +1,10 @@
 <mat-form-field appearance="outline" subscriptSizing="dynamic" color="accent">
   <mat-label>Search</mat-label>
+
   <input matInput [formControl]="control" [matAutocomplete]="auto" (click)="control.reset()" />
+
   <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+
   <mat-autocomplete #auto="matAutocomplete">
     <mat-option *ngFor="let option of filteredOptions | async" [value]="option.value" [routerLink]="option.routerLink">
       {{ option.name }}

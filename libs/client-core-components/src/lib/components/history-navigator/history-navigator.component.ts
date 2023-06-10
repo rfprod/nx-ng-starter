@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Output, signal } from '@angular/core';
 
 @Component({
   selector: 'app-history-navigator',
@@ -7,7 +7,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angul
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppHistoryNavigatorComponent {
-  public showSearch = false;
+  public showSearch = signal(false);
 
   @Output() public readonly nagivateBack = new EventEmitter<void>();
 
@@ -19,5 +19,19 @@ export class AppHistoryNavigatorComponent {
 
   public forward(): void {
     this.nagivateForward.emit();
+  }
+
+  public toggleSearch() {
+    this.showSearch.update(value => !value);
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  public keyDown(event: KeyboardEvent): void {
+    if (event.ctrlKey && event.shiftKey && event.key === 'S') {
+      this.toggleSearch();
+    }
+    if (event.key === 'Escape') {
+      this.showSearch.set(false);
+    }
   }
 }
