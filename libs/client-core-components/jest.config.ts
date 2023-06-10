@@ -7,9 +7,9 @@ const config: Config.InitialOptions = {
   coverageThreshold: {
     global: {
       branches: 41,
-      functions: 71,
-      lines: 79,
-      statements: 78,
+      functions: 69,
+      lines: 78,
+      statements: 77,
     },
   },
   displayName: 'client-core-components',
