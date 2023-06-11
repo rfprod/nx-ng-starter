@@ -18,10 +18,12 @@ const routes: Route[] = [
       {
         path: 'info',
         component: AppDiagnosticsInfoComponent,
+        data: { feature: 'info', icon: 'api' },
       },
       {
         path: 'charts',
         component: AppChartExamplesComponent,
+        data: { feature: 'chart examples', icon: 'show_chart' },
       },
     ],
   },

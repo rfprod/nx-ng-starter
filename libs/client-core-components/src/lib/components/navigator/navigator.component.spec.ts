@@ -3,17 +3,17 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { newTestBedMetadata } from '@app/client-testing-unit';
 
-import { AppHistoryNavigatorComponent } from './history-navigator.component';
+import { AppNavigatorComponent } from './navigator.component';
 
-describe('AppHistoryNavigatorComponent', () => {
+describe('AppNavigatorComponent', () => {
   const testBedConfig: TestModuleMetadata = newTestBedMetadata({
     imports: [OverlayModule],
-    declarations: [AppHistoryNavigatorComponent],
+    declarations: [AppNavigatorComponent],
     schemas: [NO_ERRORS_SCHEMA],
   });
 
-  let fixture: ComponentFixture<AppHistoryNavigatorComponent>;
-  let component: AppHistoryNavigatorComponent;
+  let fixture: ComponentFixture<AppNavigatorComponent>;
+  let component: AppNavigatorComponent;
   let spy: {
     back: jest.SpyInstance;
     forward: jest.SpyInstance;
@@ -21,7 +21,7 @@ describe('AppHistoryNavigatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule(testBedConfig).compileComponents();
-    fixture = TestBed.createComponent(AppHistoryNavigatorComponent);
+    fixture = TestBed.createComponent(AppNavigatorComponent);
     component = fixture.debugElement.componentInstance;
     spy = {
       back: jest.spyOn(component.nagivateBack, 'emit'),

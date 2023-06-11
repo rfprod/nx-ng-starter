@@ -14,12 +14,13 @@ export const routes: Route[] = [
   {
     path: 'dashboards',
     canActivate: [AppFeatureAccessInitGuard, AppFeatureAccessGuard],
-    data: { feature: 'dashboards' },
+    data: { feature: 'dashboards', icon: 'dashboard' },
     loadChildren: () => import('@app/client-dashboards').then(mod => mod.AppDashboardsModule),
   },
   {
     path: 'chatbot',
     canActivate: [AppFeatureAccessInitGuard],
+    data: { feature: 'chatbot', icon: 'chat' },
     loadChildren: () => import('@app/client-chatbot').then(mod => mod.AppChatbotModule),
   },
   {

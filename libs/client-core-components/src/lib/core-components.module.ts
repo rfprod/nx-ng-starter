@@ -6,8 +6,8 @@ import { AppMaterialModule } from '@app/client-material';
 import { AppFeatureAccessDirectivesModule } from '@app/client-store-feature-access';
 
 import { AppContentComponent } from './components/content/content.component';
-import { AppHistoryNavigatorComponent } from './components/history-navigator/history-navigator.component';
 import { AppNavbarComponent } from './components/navbar/navbar.component';
+import { AppNavigatorComponent } from './components/navigator/navigator.component';
 import { AppSearchComponent } from './components/search/search.component';
 import { AppThemeToggleComponent } from './components/theme-toggle/theme-toggle.component';
 import { AppToolbarComponent } from './components/toolbar/toolbar.component';
@@ -18,7 +18,7 @@ import { AppTooltipDirective } from './components/tooltip/tooltip.directive';
   imports: [CommonModule, FormsModule, ReactiveFormsModule, AppMaterialModule, RouterModule, AppFeatureAccessDirectivesModule],
   declarations: [
     AppContentComponent,
-    AppHistoryNavigatorComponent,
+    AppNavigatorComponent,
     AppNavbarComponent,
     AppToolbarComponent,
     AppThemeToggleComponent,
