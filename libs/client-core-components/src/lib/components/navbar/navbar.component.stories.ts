@@ -5,7 +5,7 @@ import { routerButton } from '@app/client-util';
 import { Args, Meta, StoryFn } from '@storybook/angular';
 import { of } from 'rxjs';
 
-import { AppHistoryNavigatorComponent } from '../history-navigator/history-navigator.component';
+import { AppHistoryNavigatorComponent } from '../navigator/navigator.component';
 import { AppTooltipDirective } from '../tooltip/tooltip.directive';
 import { AppNavbarComponent } from './navbar.component';
 

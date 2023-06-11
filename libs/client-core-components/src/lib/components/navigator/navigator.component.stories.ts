@@ -3,17 +3,17 @@ import { AppMaterialModule } from '@app/client-material';
 import { Args, Meta, StoryFn } from '@storybook/angular';
 
 import { AppTooltipDirective } from '../tooltip/tooltip.directive';
-import { AppHistoryNavigatorComponent } from './history-navigator.component';
+import { AppNavigatorComponent } from './navigator.component';
 
 export default {
-  title: 'AppHistoryNavigatorComponent',
-  component: AppHistoryNavigatorComponent,
+  title: 'AppNavigatorComponent',
+  component: AppNavigatorComponent,
 } as Meta;
 
-const story: StoryFn<AppHistoryNavigatorComponent> = (args: Args) => ({
+const story: StoryFn<AppNavigatorComponent> = (args: Args) => ({
   moduleMetadata: {
     imports: [BrowserAnimationsModule, AppMaterialModule.forRoot()],
-    declarations: [AppHistoryNavigatorComponent, AppTooltipDirective],
+    declarations: [AppNavigatorComponent, AppTooltipDirective],
   },
   props: {
     ...args,

@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Output, signal } from '@angular/core';
 
 @Component({
-  selector: 'app-history-navigator',
-  templateUrl: './history-navigator.component.html',
-  styleUrls: ['./history-navigator.component.scss'],
+  selector: 'app-navigator',
+  templateUrl: './navigator.component.html',
+  styleUrls: ['./navigator.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppHistoryNavigatorComponent {
+export class AppNavigatorComponent {
   public showSearch = signal(false);
 
   @Output() public readonly nagivateBack = new EventEmitter<void>();

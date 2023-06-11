@@ -1,13 +1,19 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
-import { Route, Router, Routes } from '@angular/router';
+import { Data, Route, Router, Routes } from '@angular/router';
 import { BehaviorSubject, combineLatest, defer, forkJoin, from, map, of, startWith, switchMap } from 'rxjs';
 
 interface ISearchOptions {
   name: string;
+  icon?: string;
   value: string;
   routerLink: string;
+}
+
+interface IParsedRoute {
+  path: string;
+  data?: Data;
 }
 
 @Component({
@@ -60,15 +66,20 @@ export class AppSearchComponent implements AfterViewInit {
         const r = routes.flatMap(item => (typeof item.outlet !== 'undefined' ? of([]) : defer(() => from(this.parseRoute(item)))));
         return forkJoin(r);
       }),
-      map(result => {
-        const options = result
+      map(routes => {
+        const options = routes
           .flat(1)
-          .filter(path => path !== '' && !path.includes('*') && !path.includes(':') && path !== 'offline')
-          .map(item => ({
-            name: `${item.slice(0, 1).toUpperCase()}${item.slice(1, item.length)}`,
-            value: item,
-            routerLink: item.replace(/\s/g, '/'),
-          }));
+          .filter(route => route.path !== '' && !route.path.includes('*') && !route.path.includes(':') && route.path !== 'offline')
+          .map(route => {
+            const data = route.data;
+            const feature = typeof data?.feature === 'string' && data.feature.length > 0 ? data.feature : route.path;
+            return {
+              name: `${feature.slice(0, 1).toUpperCase()}${feature.slice(1, feature.length)}`,
+              value: route.path,
+              icon: route.data?.icon,
+              routerLink: route.path.replace(/\s/g, '/'),
+            };
+          });
         this.optionsSubject.next(options);
         return options;
       }),
@@ -78,15 +89,17 @@ export class AppSearchComponent implements AfterViewInit {
   /**
    * Child route configuration parser.
    * @param root root path / parent path
+   * @param data root path data / parent path data
    * @param routes child routes
    * @returns the array with routes, route segment separator is space
    */
-  private parseChildRoutes(root = '', routes?: Routes): string[] {
+  private parseChildRoutes(root = '', data?: Data, routes?: Routes): IParsedRoute[] {
     return typeof routes === 'undefined'
-      ? [root.trim()]
+      ? [{ path: root.trim(), data }]
       : routes.flatMap(child => {
-          const path = `${root} ${child.path}`.trim();
-          return this.parseChildRoutes(path, child.children);
+          const childPath = `${root} ${child.path}`.trim();
+          const childData = child.data;
+          return this.parseChildRoutes(childPath, childData, child.children);
         });
   }
 
@@ -95,10 +108,10 @@ export class AppSearchComponent implements AfterViewInit {
    * @param root root route
    * @returns the array with routes, route segment separator is space
    */
-  private async parseRoute(root: Route): Promise<string[]> {
+  private async parseRoute(root: Route): Promise<IParsedRoute[]> {
     const route = { ...root };
     const rootPath = (route.path ?? '').trim();
-    const result: string[] = [rootPath];
+    const result: IParsedRoute[] = [{ path: rootPath, data: root.data }];
     let children: Routes = route.children ?? [];
     if (children.length === 0 && typeof route.loadChildren !== 'undefined') {
       await route.loadChildren();
@@ -106,15 +119,22 @@ export class AppSearchComponent implements AfterViewInit {
       children = typeof loadedRoutes !== 'undefined' ? [...loadedRoutes] : children;
     }
     const resolvers = children.flatMap(async child => {
-      const path = `${rootPath} ${child.path}`.trim();
-      const expandRoutes = this.parseChildRoutes(path, child.children);
+      const childPath = `${rootPath} ${child.path}`.trim();
+      const childData = child.data;
+      const expandRoutes = this.parseChildRoutes(childPath, childData, child.children);
       result.push(...expandRoutes);
       return result;
     });
     if (typeof resolvers !== 'undefined') {
       await Promise.all(resolvers);
     }
-    return [...new Set(result)];
+    return result.reduce((accumulator: IParsedRoute[], record) => {
+      const exists = accumulator.findIndex(item => item.path === record.path);
+      if (exists === -1) {
+        accumulator.push(record);
+      }
+      return accumulator;
+    }, []);
   }
 
   /**
