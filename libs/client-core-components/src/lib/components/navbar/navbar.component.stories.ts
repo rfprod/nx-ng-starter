@@ -5,7 +5,7 @@ import { routerButton } from '@app/client-util';
 import { Args, Meta, StoryFn } from '@storybook/angular';
 import { of } from 'rxjs';
 
-import { AppHistoryNavigatorComponent } from '../navigator/navigator.component';
+import { AppNavigatorComponent } from '../navigator/navigator.component';
 import { AppTooltipDirective } from '../tooltip/tooltip.directive';
 import { AppNavbarComponent } from './navbar.component';
 
@@ -26,7 +26,7 @@ const story: StoryFn<AppNavbarComponent> = (args: Args) => ({
         },
       },
     ],
-    declarations: [AppNavbarComponent, AppHistoryNavigatorComponent, AppTooltipDirective],
+    declarations: [AppNavbarComponent, AppNavigatorComponent, AppTooltipDirective],
   },
   props: {
     ...args,
