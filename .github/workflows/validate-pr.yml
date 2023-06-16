@@ -146,12 +146,13 @@ jobs:
 
   premerge:
     needs: [lint, test, build]
+    if: always()
     runs-on: ubuntu-latest
 
     steps:
       - name: Check result
         run: |
-          if [[ "$LINT_RESULT" == "false" || "$TEST_RESULT" == "false" || "$BUILD_RESULT" == "false" ]]; then exit 1; fi
+          if [[ "$LINT_RESULT" != "true" || "$TEST_RESULT" != "true" || "$BUILD_RESULT" != "true" ]]; then exit 1; fi
           echo "### :rocket: Premerge checks succeeded" >> $GITHUB_STEP_SUMMARY
         env:
           LINT_RESULT: ${{ needs.lint.outputs.success }}

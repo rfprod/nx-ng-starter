@@ -1,13 +1,5 @@
 function setupGlobalFetchMock() {
-  Object.defineProperty(global, 'fetch', {
-    value: jest.fn(async () => {
-      const promise: Promise<boolean> = new Promise(resolve => {
-        resolve(true);
-      });
-      return promise;
-    }),
-    writable: false,
-  });
+  global.fetch = jest.fn().mockReturnValue(Promise.resolve<Response>(<Response>{}));
 }
 
 function setupGlobalUrlMock() {

@@ -9,7 +9,7 @@ describe('setupJsdomGlobalMocks', () => {
   });
 
   it('setupJsdomGlobalMocks should define 3 object properties for jest tests', () => {
-    const expectedCalls = 3;
+    const expectedCalls = 2;
     expect(definePropertySpy).toHaveBeenCalledTimes(expectedCalls);
   });
 
@@ -20,7 +20,7 @@ describe('setupJsdomGlobalMocks', () => {
 
   it('should set up expected fetch mock', async () => {
     const query = await window.fetch('test');
-    expect(query).toEqual(true);
+    expect(query).toEqual({});
   });
 
   it('should set up expected mutationObserver mock', () => {
