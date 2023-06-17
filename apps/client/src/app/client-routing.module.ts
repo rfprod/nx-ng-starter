@@ -9,6 +9,7 @@ export const routes: Route[] = [
   {
     path: '',
     canActivate: [AppFeatureAccessInitGuard],
+    data: { feature: 'home', icon: 'home' },
     loadChildren: () => import('@app/client-diagnostics').then(mod => mod.AppDiagnosticsModule),
   },
   {

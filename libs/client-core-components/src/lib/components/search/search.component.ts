@@ -9,10 +9,12 @@ interface ISearchOptions {
   icon?: string;
   value: string;
   routerLink: string;
+  isActive: () => ReturnType<Router['isActive']>;
 }
 
 interface IParsedRoute {
   path: string;
+  outlet?: string;
   data?: Data;
 }
 
@@ -69,7 +71,19 @@ export class AppSearchComponent implements AfterViewInit {
       map(routes => {
         const options = routes
           .flat(1)
-          .filter(route => route.path !== '' && !route.path.includes('*') && !route.path.includes(':') && route.path !== 'offline')
+          .filter(
+            route =>
+              /** Routes with emoty paths that do not have Router data defining a feature are ignored by the application global search.  */
+              (route.path !== '' || (route.path === '' && typeof route.data !== 'undefined' && 'feature' in route.data)) &&
+              /** Routes that defined redirects are ignored by the application global search.  */
+              !route.path.includes('*') &&
+              /** Routes that require path parameters are ignored by the application global search.  */
+              !route.path.includes(':') &&
+              /** Routes with defined outlets are ignored by the application global search.  */
+              typeof route.outlet === 'undefined' &&
+              /** PWA offline route is ignored by the application global search. */
+              route.path !== 'offline',
+          )
           .map(route => {
             const data = route.data;
             const feature = typeof data?.feature === 'string' && data.feature.length > 0 ? data.feature : route.path;
@@ -78,6 +92,13 @@ export class AppSearchComponent implements AfterViewInit {
               value: route.path,
               icon: route.data?.icon,
               routerLink: route.path.replace(/\s/g, '/'),
+              isActive: () =>
+                this.router.isActive(route.path, {
+                  matrixParams: 'ignored',
+                  queryParams: 'ignored',
+                  paths: 'exact',
+                  fragment: 'ignored',
+                }),
             };
           });
         this.optionsSubject.next(options);
@@ -90,16 +111,18 @@ export class AppSearchComponent implements AfterViewInit {
    * Child route configuration parser.
    * @param root root path / parent path
    * @param data root path data / parent path data
+   * @param outlet router outlet for the given route
    * @param routes child routes
    * @returns the array with routes, route segment separator is space
    */
-  private parseChildRoutes(root = '', data?: Data, routes?: Routes): IParsedRoute[] {
+  private parseChildRoutes(root = '', data?: Data, outlet?: string, routes?: Routes): IParsedRoute[] {
     return typeof routes === 'undefined'
-      ? [{ path: root.trim(), data }]
+      ? [{ path: root.trim(), data, outlet }]
       : routes.flatMap(child => {
           const childPath = `${root} ${child.path}`.trim();
           const childData = child.data;
-          return this.parseChildRoutes(childPath, childData, child.children);
+          const childOutlet = child.outlet;
+          return this.parseChildRoutes(childPath, childData, childOutlet, child.children);
         });
   }
 
@@ -111,7 +134,7 @@ export class AppSearchComponent implements AfterViewInit {
   private async parseRoute(root: Route): Promise<IParsedRoute[]> {
     const route = { ...root };
     const rootPath = (route.path ?? '').trim();
-    const result: IParsedRoute[] = [{ path: rootPath, data: root.data }];
+    const result: IParsedRoute[] = [{ path: rootPath, data: root.data, outlet: route.outlet }];
     let children: Routes = route.children ?? [];
     if (children.length === 0 && typeof route.loadChildren !== 'undefined') {
       await route.loadChildren();
@@ -121,7 +144,8 @@ export class AppSearchComponent implements AfterViewInit {
     const resolvers = children.flatMap(async child => {
       const childPath = `${rootPath} ${child.path}`.trim();
       const childData = child.data;
-      const expandRoutes = this.parseChildRoutes(childPath, childData, child.children);
+      const childOutlet = child.outlet;
+      const expandRoutes = this.parseChildRoutes(childPath, childData, childOutlet, child.children);
       result.push(...expandRoutes);
       return result;
     });

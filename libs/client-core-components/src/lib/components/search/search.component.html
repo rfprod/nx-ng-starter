@@ -6,7 +6,12 @@
   <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
 
   <mat-autocomplete #auto="matAutocomplete">
-    <mat-option *ngFor="let option of filteredOptions | async" [value]="option.value" (onSelectionChange)="selectOption(option.routerLink)">
+    <mat-option
+      *ngFor="let option of filteredOptions | async"
+      [value]="option.value"
+      [disabled]="option.isActive()"
+      (onSelectionChange)="selectOption(option.routerLink)"
+    >
       <mat-icon *ngIf="option.icon">{{ option.icon }}</mat-icon> {{ option.name }}
     </mat-option>
   </mat-autocomplete>
