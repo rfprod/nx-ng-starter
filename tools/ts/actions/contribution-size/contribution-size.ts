@@ -64,7 +64,7 @@ const getChangedFiles = () => {
 const getInsertions = () => {
   let result = Number(Infinity);
   try {
-    const command = `git diff HEAD ${compareWith} --shortstat | grep -o -E [0-9]+ | awk 'FNR == 2 {print $1}'`;
+    const command = `git diff HEAD ${compareWith} --shortstat | grep -o -E [0-9]+ | awk 'FNR == 3 {print $1}'`;
     const { stdout, stderr } = spawnSync(command, { ...spawnSyncOptions });
     if (stderr.length === 0) {
       result = stdout.length > 0 ? parseInt(stdout, 10) : 0;
@@ -82,7 +82,7 @@ const getInsertions = () => {
 const getDeletions = () => {
   let result = Number(Infinity);
   try {
-    const command = `git diff HEAD ${compareWith} --shortstat | grep -o -E [0-9]+ | awk 'FNR == 3 {print $1}'`;
+    const command = `git diff HEAD ${compareWith} --shortstat | grep -o -E [0-9]+ | awk 'FNR == 2 {print $1}'`;
     const { stdout, stderr } = spawnSync(command, { ...spawnSyncOptions });
     if (stderr.length === 0) {
       result = stdout.length > 0 ? parseInt(stdout, 10) : 0;
