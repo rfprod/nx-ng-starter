@@ -16,8 +16,7 @@
       "options": {
         "cypressConfig": "apps/documentation-e2e/cypress.config.js",
         "devServerTarget": "documentation:serve",
-        "testingType": "e2e",
-        "tsConfig": "apps/documentation-e2e/tsconfig.e2e.json"
+        "testingType": "e2e"
       }
     },
     "lint": {
@@ -31,7 +30,7 @@
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
-        "tsConfig": "apps/documentation-e2e/tsconfig.e2e.json"
+        "tsConfig": "apps/documentation-e2e/tsconfig.json"
       },
       "outputs": ["{workspaceRoot}/dist/out-tsc/apps/documentation-e2e"]
     }

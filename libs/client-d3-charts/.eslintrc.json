@@ -10,13 +10,20 @@
           {
             "ignoreNumericLiteralTypes": true,
             "ignoreReadonlyClassProperties": true,
-            "ignore": [-1, 0, 1, 2], // ignore -1, binary, and 2 as a common divider/multiplier
-            "ignoreEnums": true // ignore enumerators so that numeric values can be grouped via enums instead of constants,
+            "ignore": [-1, 0, 1, 2],
+            "ignoreEnums": true
           }
         ],
-        "max-lines-per-function": ["error", { "max": 70, "skipBlankLines": true, "skipComments": true }],
+        "max-lines-per-function": [
+          "error",
+          {
+            "max": 70,
+            "skipBlankLines": true,
+            "skipComments": true
+          }
+        ],
         "@typescript-eslint/naming-convention": [
-          "error", // rule reference https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/naming-convention.md
+          "error",
           {
             "selector": "default",
             "format": ["camelCase"],

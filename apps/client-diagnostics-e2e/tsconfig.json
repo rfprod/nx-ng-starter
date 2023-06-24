@@ -1,13 +1,12 @@
 {
   "extends": "../../tsconfig.base.json",
   "files": [],
-  "include": [],
-  "references": [
-    {
-      "path": "./tsconfig.e2e.json"
-    },
-    {
-      "path": "./tsconfig.eslint.json"
-    }
-  ]
+  "include": ["src/**/*.ts"],
+  "compilerOptions": {
+    "sourceMap": false,
+    "allowJs": true,
+    "outDir": "../../dist/out-tsc",
+    "types": ["cypress", "node"]
+  },
+  "exclude": []
 }
