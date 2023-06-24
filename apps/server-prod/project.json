@@ -39,7 +39,7 @@
       "outputs": ["{options.outputFile}"]
     },
     "serve": {
-      "executor": "@nx/node:node",
+      "executor": "@nx/js:node",
       "options": {
         "buildTarget": "server-prod:build"
       }
