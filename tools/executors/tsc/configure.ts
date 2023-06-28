@@ -65,10 +65,12 @@ export class AppConfigureTscCheckExecutor {
       throw new Error(`The project ${project.name} does not have the 'targets' configuration option defined.`);
     }
     if (typeof config.targets['tsc-check'] === 'undefined' && (/\/src$/.test(src) || src === 'tools')) {
+      const fullSuffix = suffix === 'e2e' ? '' : `${suffix}.`;
+
       config.targets['tsc-check'] = {
         executor: './tools/executors/tsc:check',
         options: {
-          tsConfig: src === 'tools' ? `${src}/tsconfig.${suffix}.json` : `${src.replace(/src$/, `tsconfig.${suffix}.json`)}`,
+          tsConfig: src === 'tools' ? `${src}/tsconfig.${fullSuffix}json` : `${src.replace(/src$/, `tsconfig.${fullSuffix}json`)}`,
         },
         outputs: [`{workspaceRoot}/dist/out-tsc/${src.replace(/\/src$/, '')}`],
       };
