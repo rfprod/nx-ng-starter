@@ -27,7 +27,7 @@ export class AppNavigatorComponent {
 
   @HostListener('window:keydown', ['$event'])
   public keyDown(event: KeyboardEvent): void {
-    if (event.ctrlKey && event.shiftKey && event.key === 'S') {
+    if (event.ctrlKey && event.shiftKey && event.key === '~') {
       this.toggleSearch();
     }
     if (event.key === 'Escape') {
