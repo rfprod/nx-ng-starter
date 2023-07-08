@@ -236,7 +236,7 @@ const clientConstraints = [
   },
   {
     sourceTag: 'scope:client-dashboards',
-    onlyDependOnLibsWithTags: ['scope:client-testing-unit', 'scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-directives', 'scope:client-testing-unit', 'scope:client-util'],
   },
   {
     sourceTag: 'scope:client-diagnostics',

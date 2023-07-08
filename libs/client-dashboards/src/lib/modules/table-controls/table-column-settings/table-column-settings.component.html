@@ -1,0 +1,16 @@
+<button mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon>view_column</mat-icon>
+</button>
+
+<mat-menu #menu="matMenu" [xPosition]="'before'" [yPosition]="'above'">
+  <mat-selection-list [multiple]="true" (selectionChange)="changeVisibleColumns($event)">
+    <mat-list-option
+      *ngFor="let column of allColumns"
+      (click)="$event.preventDefault(); $event.stopImmediatePropagation()"
+      [value]="column"
+      [selected]="displayedColumns.includes(column)"
+    >
+      {{ column }}
+    </mat-list-option>
+  </mat-selection-list>
+</mat-menu>

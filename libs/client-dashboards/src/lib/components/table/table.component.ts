@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 
 export interface IPeriodicElement {
   name: string;
@@ -14,7 +14,9 @@ export interface IPeriodicElement {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppTableComponent {
-  public displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  public allColumns: string[] = ['expand', 'position', 'name', 'weight', 'symbol'];
+
+  public displayedColumns = signal([...this.allColumns]);
 
   public dataSource: IPeriodicElement[] = [
     { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
@@ -28,4 +30,8 @@ export class AppTableComponent {
     { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
     { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
   ];
+
+  public columnVisibilityChange(columns: string[]) {
+    this.displayedColumns.set(columns);
+  }
 }

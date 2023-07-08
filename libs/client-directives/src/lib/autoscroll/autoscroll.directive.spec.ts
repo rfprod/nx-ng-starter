@@ -19,7 +19,6 @@ describe('AppAutoscrollDirective', () => {
     fixture = TestBed.createComponent(AppTestingComponent);
     debugElement = fixture.debugElement.query(By.directive(AppAutoscrollDirective));
     directive = debugElement.injector.get(AppAutoscrollDirective);
-    // fixture.detectChanges();
   });
 
   it('should compile successfully', () => {
