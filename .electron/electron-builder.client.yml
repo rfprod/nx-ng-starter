@@ -18,7 +18,10 @@ win:
         - ia32
 
 files:
-  - ./dist/apps/client/**
-  - ./.electron/**
-  - ./LICENSE
-  - ./package.json
+  - '!./dist/libs/**'
+  - './dist/apps/client/**'
+  - './LICENSE'
+  - './package.json'
+  - from: './.electron/'
+    filter:
+      - '*.js'
