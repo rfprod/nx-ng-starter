@@ -17,5 +17,8 @@ export class AppHttpApiEffects {
     ),
   );
 
-  constructor(private readonly actions$: Actions, private readonly api: AppHttpApiService) {}
+  constructor(
+    private readonly actions$: Actions,
+    private readonly api: AppHttpApiService,
+  ) {}
 }

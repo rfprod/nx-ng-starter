@@ -16,5 +16,8 @@ export class AppFeatureAccessEffects {
     ),
   );
 
-  constructor(private readonly actions$: Actions, @Inject(WEB_CLIENT_APP_ENV) private readonly env: IWebClientAppEnvironment) {}
+  constructor(
+    private readonly actions$: Actions,
+    @Inject(WEB_CLIENT_APP_ENV) private readonly env: IWebClientAppEnvironment,
+  ) {}
 }

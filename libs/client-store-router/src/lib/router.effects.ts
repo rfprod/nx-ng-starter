@@ -43,5 +43,9 @@ export class AppRouterEffects {
     { dispatch: false },
   );
 
-  constructor(private readonly action$: Actions, private readonly router: Router, private readonly location: Location) {}
+  constructor(
+    private readonly action$: Actions,
+    private readonly router: Router,
+    private readonly location: Location,
+  ) {}
 }

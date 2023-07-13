@@ -13,14 +13,9 @@ export function trackChanges<TargetClass = Record<string, unknown>, Value = unkn
     const source: OnChanges[typeof functionName] = descriptor.value;
 
     descriptor.value = function (changes: SimpleChanges) {
-      const currentValue: Value | undefined | null = changes[key]?.currentValue;
+      const currentValue: Value | null = changes[key]?.currentValue ?? null;
       const method: Method | undefined = (<Record<string, Method | undefined>>targetClass)[methodName];
-      if (
-        typeof changes[key] !== 'undefined' &&
-        typeof currentValue !== 'undefined' &&
-        currentValue !== null &&
-        typeof method === 'function'
-      ) {
+      if (typeof changes[key] !== 'undefined' && currentValue !== null && typeof method === 'function') {
         method.call(this, currentValue);
       }
 

@@ -13,7 +13,10 @@ import { NAVIGATOR } from '../providers/navigator.provider';
   providedIn: 'root',
 })
 export class AppPwaOfflineInterceptor implements HttpInterceptor {
-  constructor(@Inject(NAVIGATOR) private readonly navigator: Navigator, private readonly router: Router) {}
+  constructor(
+    @Inject(NAVIGATOR) private readonly navigator: Navigator,
+    private readonly router: Router,
+  ) {}
 
   public intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const routeLoaded = this.router.url.includes('offline');

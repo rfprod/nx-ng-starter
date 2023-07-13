@@ -7,7 +7,10 @@ import { WINDOW } from '@app/client-util';
   providedIn: 'root',
 })
 export class AppElementsService {
-  constructor(private readonly injector: Injector, @Inject(WINDOW) private readonly window: Window) {}
+  constructor(
+    private readonly injector: Injector,
+    @Inject(WINDOW) private readonly window: Window,
+  ) {}
 
   public registerElements(): void {
     this.registerChatbotWidget();

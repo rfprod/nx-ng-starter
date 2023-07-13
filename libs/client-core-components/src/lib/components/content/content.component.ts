@@ -28,7 +28,10 @@ export class AppContentComponent {
     }),
   );
 
-  constructor(private readonly store: Store<ISidebarState>, private readonly router: Router) {
+  constructor(
+    private readonly store: Store<ISidebarState>,
+    private readonly router: Router,
+  ) {
     void this.routerEvents$.subscribe();
   }
 
