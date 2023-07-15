@@ -14,7 +14,10 @@ import { map } from 'rxjs';
 export class AppSidebarRootComponent {
   public readonly loading$ = this.store.select(httpProgressSelectors.sidebar).pipe(map(state => state.loading));
 
-  constructor(private readonly store: Store<IHttpProgressState>, private readonly router: Router) {}
+  constructor(
+    private readonly store: Store<IHttpProgressState>,
+    private readonly router: Router,
+  ) {}
 
   /**
    * Sidebar close handler.

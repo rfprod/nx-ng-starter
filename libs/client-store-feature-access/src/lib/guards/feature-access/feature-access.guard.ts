@@ -10,7 +10,10 @@ import { featureAccessSelectors } from '../../feature-access.selectors';
   providedIn: 'root',
 })
 export class AppFeatureAccessGuard {
-  constructor(private readonly router: Router, private readonly store: Store<IFeatureAccessState>) {}
+  constructor(
+    private readonly router: Router,
+    private readonly store: Store<IFeatureAccessState>,
+  ) {}
 
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
     const value: string | undefined = (<{ feature?: string }>state.root.data).feature;

@@ -47,7 +47,10 @@ import { AppRootComponent } from './components/root.component';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppClientModule {
-  constructor(private readonly grpc: AppGrpcService, private readonly store: Store<IDiagnosticsState>) {
+  constructor(
+    private readonly grpc: AppGrpcService,
+    private readonly store: Store<IDiagnosticsState>,
+  ) {
     void this.grpc.getEntityById().subscribe();
     this.store.dispatch(diagnosticsActions.connect());
   }

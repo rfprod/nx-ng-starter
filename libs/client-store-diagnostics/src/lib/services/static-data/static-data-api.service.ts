@@ -8,7 +8,10 @@ import { TDiagnosticData } from '../../diagnostics.interface';
   providedIn: 'root',
 })
 export class AppStaticDataService {
-  constructor(private readonly http: HttpClient, private readonly handlers: AppHttpHandlersService) {}
+  constructor(
+    private readonly http: HttpClient,
+    private readonly handlers: AppHttpHandlersService,
+  ) {}
 
   /**
    * Gets serverstatic diagnostic data.

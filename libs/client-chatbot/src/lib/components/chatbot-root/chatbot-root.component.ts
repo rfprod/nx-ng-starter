@@ -36,7 +36,10 @@ export class AppChatbotRootComponent {
     message: [''],
   });
 
-  constructor(private readonly fb: FormBuilder, private readonly eliza: AppElizaService) {}
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly eliza: AppElizaService,
+  ) {}
 
   public resetBot() {
     this.eliza.reset();

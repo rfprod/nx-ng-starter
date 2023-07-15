@@ -41,5 +41,9 @@ export class AppSidebarEffects {
     ),
   );
 
-  constructor(private readonly actions$: Actions, private readonly store: Store<ISidebarState>, private readonly router: Router) {}
+  constructor(
+    private readonly actions$: Actions,
+    private readonly store: Store<ISidebarState>,
+    private readonly router: Router,
+  ) {}
 }

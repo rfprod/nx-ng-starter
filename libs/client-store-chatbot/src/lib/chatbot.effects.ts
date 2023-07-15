@@ -28,5 +28,8 @@ export class AppChatbotEffects {
     { dispatch: false },
   );
 
-  constructor(private readonly actions$: Actions, private readonly router: Router) {}
+  constructor(
+    private readonly actions$: Actions,
+    private readonly router: Router,
+  ) {}
 }

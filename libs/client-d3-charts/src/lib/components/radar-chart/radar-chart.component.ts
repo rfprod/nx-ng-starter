@@ -47,7 +47,10 @@ export class AppRadarChartComponent implements AfterViewInit, OnChanges {
    */
   @ViewChild('container') private readonly container?: ElementRef<HTMLDivElement>;
 
-  constructor(@Inject(DOCUMENT) private readonly doc: Document, @Inject(D3_CHART_FACTORY) private readonly d3Factory: ID3ChartFactory) {}
+  constructor(
+    @Inject(DOCUMENT) private readonly doc: Document,
+    @Inject(D3_CHART_FACTORY) private readonly d3Factory: ID3ChartFactory,
+  ) {}
 
   /**
    * The chart options constructor.
