@@ -2,10 +2,13 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { Meta, Title } from '@angular/platform-browser';
 import { AppServiceWorkerService } from '@app/client-service-worker';
+import { chatbotActions } from '@app/client-store-chatbot';
+import { routerActions } from '@app/client-store-router';
+import { sidebarActions } from '@app/client-store-sidebar';
 import { testingEnvironment } from '@app/client-testing-unit';
 import { WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngrx/store';
-import { of } from 'rxjs';
+import { lastValueFrom, of } from 'rxjs';
 
 import { AppRootComponent } from './root.component';
 
@@ -42,6 +45,7 @@ describe('AppRootComponent', () => {
   let setTitleSpy: jest.SpyInstance;
   let meta: Meta;
   let updateTagSpy: jest.SpyInstance;
+  let store: Store;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule(testBedConfig).compileComponents();
@@ -51,7 +55,12 @@ describe('AppRootComponent', () => {
     setTitleSpy = jest.spyOn(title, 'setTitle');
     meta = TestBed.inject(Meta);
     updateTagSpy = jest.spyOn(meta, 'updateTag');
+    store = TestBed.inject(Store);
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should be defined', () => {
@@ -66,5 +75,55 @@ describe('AppRootComponent', () => {
     expect(component.darkTheme).toBeTruthy();
     component.toggleTheme(false);
     expect(component.darkTheme).toBeFalsy();
+  });
+
+  it('logoSrc$ should return dark logo reference based on the value of the darkTheme state', async () => {
+    expect(component.darkTheme).toBeFalsy();
+    const darkLogoRef = await lastValueFrom(component.logoSrc$);
+    expect(darkLogoRef).toContain('logo.svg');
+    expect(darkLogoRef).not.toContain('logo-light.svg');
+  });
+
+  it('toggleSidebar should call store dispatch', () => {
+    const storeSpy = jest.spyOn(store, 'dispatch');
+    component.toggleSidebar();
+    expect(storeSpy).toHaveBeenCalledTimes(1);
+    expect(storeSpy).toHaveBeenCalledWith(sidebarActions.toggle());
+  });
+
+  it('toggleChatbot should call store dispatch events depending on the parameter', () => {
+    const storeSpy = jest.spyOn(store, 'dispatch');
+    component.toggleChatbot(true);
+    const calls = {
+      first: 1,
+      second: 2,
+    };
+    expect(storeSpy).toHaveBeenCalledTimes(calls.first);
+    expect(storeSpy).toHaveBeenNthCalledWith(calls.first, chatbotActions.open());
+
+    component.toggleChatbot(false);
+    expect(storeSpy).toHaveBeenCalledTimes(calls.second);
+    expect(storeSpy).toHaveBeenNthCalledWith(calls.second, chatbotActions.close());
+  });
+
+  it('navButtonClick should call store dispatch', () => {
+    const storeSpy = jest.spyOn(store, 'dispatch');
+    component.navButtonClick();
+    expect(storeSpy).toHaveBeenCalledTimes(1);
+    expect(storeSpy).toHaveBeenCalledWith(sidebarActions.close({ payload: { navigate: false } }));
+  });
+
+  it('navigateBack should call store dispatch', () => {
+    const storeSpy = jest.spyOn(store, 'dispatch');
+    component.navigateBack();
+    expect(storeSpy).toHaveBeenCalledTimes(1);
+    expect(storeSpy).toHaveBeenCalledWith(routerActions.back());
+  });
+
+  it('navigateForward should call store dispatch', () => {
+    const storeSpy = jest.spyOn(store, 'dispatch');
+    component.navigateForward();
+    expect(storeSpy).toHaveBeenCalledTimes(1);
+    expect(storeSpy).toHaveBeenCalledWith(routerActions.forward());
   });
 });

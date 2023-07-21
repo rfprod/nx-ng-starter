@@ -6,10 +6,10 @@ const config: Config.InitialOptions = {
   coverageDirectory: '../../coverage/apps/client',
   coverageThreshold: {
     global: {
-      branches: 25,
-      functions: 44,
-      lines: 82,
-      statements: 82,
+      branches: 75,
+      functions: 100,
+      lines: 100,
+      statements: 100,
     },
   },
   displayName: 'client',
