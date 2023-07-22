@@ -71,7 +71,7 @@ describe('AppAuthController', () => {
 
   it('ping method should return "Auth service is online. Public methods: login, logout, signup."', () => {
     expect(authController.ping()).toEqual({
-      message: 'Auth service is online. Public methods: login, logout, signup.',
+      message: `${AppAuthService.name} is online.`,
     });
   });
 
