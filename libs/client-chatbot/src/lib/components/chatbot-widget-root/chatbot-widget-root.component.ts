@@ -47,10 +47,13 @@ export class AppChatbotWidgetRootComponent {
   }
 
   public userMessage() {
-    const message: IChatMessage = { bot: false, text: this.form.controls.message.value ?? '' };
-    this.nextUserMessageSubject.next(message);
-    this.eliza.nextMessage(message);
-    this.form.reset();
+    const text = this.form.controls.message.value;
+    if (text !== null && text !== '') {
+      const message: IChatMessage = { bot: false, text };
+      this.nextUserMessageSubject.next(message);
+      this.eliza.nextMessage(message);
+      this.form.reset();
+    }
   }
 
   public botResponse(text: string) {
