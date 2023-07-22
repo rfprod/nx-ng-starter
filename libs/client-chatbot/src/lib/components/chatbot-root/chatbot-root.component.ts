@@ -47,8 +47,9 @@ export class AppChatbotRootComponent {
   }
 
   public userMessage() {
-    if (this.form.controls.message.value !== null && this.form.controls.message.value.length > 0) {
-      const message: IChatMessage = { bot: false, text: this.form.controls.message.value };
+    const text = this.form.controls.message.value;
+    if (text !== null && text !== '') {
+      const message: IChatMessage = { bot: false, text };
       this.nextUserMessageSubject.next(message);
       this.eliza.nextMessage(message);
       this.form.reset();

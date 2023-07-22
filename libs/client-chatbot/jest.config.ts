@@ -7,10 +7,10 @@ const config: Config.InitialOptions = {
   coverageThreshold: {
     // TODO: bump unit test coverage and remove this override
     global: {
-      branches: 8,
-      functions: 42,
-      lines: 45,
-      statements: 47,
+      branches: 81,
+      functions: 100,
+      lines: 90,
+      statements: 90,
     },
   },
   displayName: 'client-chatbot',
