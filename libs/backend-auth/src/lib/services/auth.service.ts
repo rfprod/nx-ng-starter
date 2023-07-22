@@ -22,7 +22,7 @@ export class AppAuthService implements IAuthService {
 
   public ping(): AppMessage {
     return new AppMessage({
-      message: 'Auth service is online. Public methods: login, logout, signup.',
+      message: `${AppAuthService.name} is online.`,
     });
   }
 

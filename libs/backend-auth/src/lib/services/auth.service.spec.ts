@@ -56,7 +56,7 @@ describe('AppAuthService', () => {
 
   it('ping should return "Welcome to api!"', () => {
     expect(authService.ping()).toEqual({
-      message: 'Auth service is online. Public methods: login, logout, signup.',
+      message: `${AppAuthService.name} is online.`,
     });
   });
 
