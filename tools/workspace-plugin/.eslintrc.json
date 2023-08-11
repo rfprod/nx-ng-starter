@@ -8,6 +8,20 @@
       "rules": {
         "@nx/nx-plugin-checks": "error"
       }
+    },
+    {
+      "files": ["module-boundaries.generator.ts"],
+      "rules": {
+        "@typescript-eslint/no-require-imports": "off",
+        "max-lines-per-function": [
+          "error",
+          {
+            "max": 55,
+            "skipBlankLines": true,
+            "skipComments": true
+          }
+        ]
+      }
     }
   ]
 }

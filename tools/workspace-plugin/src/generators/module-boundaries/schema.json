@@ -1,0 +1,21 @@
+{
+  "$id": "module-boundaries",
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "properties": {
+    "configDir": {
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "description": "The directory with configuration of the module boundaries.",
+      "type": "string"
+    },
+    "verbose": {
+      "description": "The instruction to print detailed program output in the terminal.",
+      "type": "boolean"
+    }
+  },
+  "required": [],
+  "type": "object"
+}
