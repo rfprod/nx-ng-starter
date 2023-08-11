@@ -121,6 +121,12 @@ npx nx generate client-store client-store-<feature-name> --tags=scope:client-sto
 npx nx generate client-util client-util-<feature-name> --tags=scope:client-util-<feature-name>,type:util
 ```
 
+### Audit module boundaries
+
+```bash
+npx nx generate module-boundaries
+```
+
 ## General Tooling
 
 This project was generated using [Nx](https://nx.dev).
