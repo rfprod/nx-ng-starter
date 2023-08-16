@@ -27,7 +27,11 @@
     "extendedDiagnostics": false,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
-    "lib": ["ES2022", "DOM", "ESNext.AsyncIterable"],
+    "lib": [
+      "ES2022",
+      "DOM",
+      "ESNext.AsyncIterable"
+    ],
     "module": "ESNext",
     "moduleResolution": "Node",
     "noEmit": false,
@@ -36,55 +40,141 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "paths": {
-      "@app/backend-auth": ["libs/backend-auth/src/index.ts"],
-      "@app/backend-diagnostics": ["libs/backend-diagnostics/src/index.ts"],
-      "@app/backend-gql": ["libs/backend-gql/src/index.ts"],
-      "@app/backend-grpc": ["libs/backend-grpc/src/index.ts"],
-      "@app/backend-interfaces": ["libs/backend-interfaces/src/index.ts"],
-      "@app/backend-logger": ["libs/backend-logger/src/index.ts"],
-      "@app/client-chatbot": ["libs/client-chatbot/src/index.ts"],
-      "@app/client-core": ["libs/client-core/src/index.ts"],
-      "@app/client-core-components": ["libs/client-core-components/src/index.ts"],
-      "@app/client-d3-charts": ["libs/client-d3-charts/src/index.ts"],
-      "@app/client-dashboards": ["libs/client-dashboards/src/index.ts"],
-      "@app/client-diagnostics": ["libs/client-diagnostics/src/index.ts"],
-      "@app/client-directives": ["libs/client-directives/src/index.ts"],
-      "@app/client-elements": ["libs/client-elements/src/index.ts"],
-      "@app/client-gql": ["libs/client-gql/src/index.ts"],
-      "@app/client-grpc": ["libs/client-grpc/src/index.ts"],
-      "@app/client-material": ["libs/client-material/src/index.ts"],
-      "@app/client-pwa-offline": ["libs/client-pwa-offline/src/index.ts"],
-      "@app/client-service-worker": ["libs/client-service-worker/src/index.ts"],
-      "@app/client-sidebar": ["libs/client-sidebar/src/index.ts"],
-      "@app/client-store": ["libs/client-store/src/index.ts"],
-      "@app/client-store-chatbot": ["libs/client-store-chatbot/src/index.ts"],
-      "@app/client-store-diagnostics": ["libs/client-store-diagnostics/src/index.ts"],
-      "@app/client-store-feature-access": ["libs/client-store-feature-access/src/index.ts"],
-      "@app/client-store-http-api": ["libs/client-store-http-api/src/index.ts"],
-      "@app/client-store-http-progress": ["libs/client-store-http-progress/src/index.ts"],
-      "@app/client-store-router": ["libs/client-store-router/src/index.ts"],
-      "@app/client-store-sidebar": ["libs/client-store-sidebar/src/index.ts"],
-      "@app/client-store-theme": ["libs/client-store-theme/src/index.ts"],
-      "@app/client-store-user": ["libs/client-store-user/src/index.ts"],
-      "@app/client-testing-e2e": ["libs/client-testing-e2e/src/index.ts"],
-      "@app/client-testing-unit": ["libs/client-testing-unit/src/index.ts"],
-      "@app/client-translate": ["libs/client-translate/src/index.ts"],
-      "@app/client-util": ["libs/client-util/src/index.ts"],
-      "@app/client-util-eliza": ["libs/client-util-eliza/src/index.ts"],
-      "@app/client-util-ngrx": ["libs/client-util-ngrx/src/index.ts"],
-      "@app/client-util-sentry": ["libs/client-util-sentry/src/index.ts"],
-      "@app/proto": ["libs/proto/src/index.ts"],
-      "@app/workspace-plugin": ["tools/workspace-plugin/src/index.ts"],
-      "@rfprodz/backend-diagnostics": ["libs/backend-diagnostics/src/index.ts"],
-      "@rfprodz/client-util-eliza": ["libs/client-util-eliza/src/index.ts"],
-      "@rfprodz/d3-charts": ["libs/client-d3-charts/src/index.ts"]
+      "@app/backend-auth": [
+        "libs/backend-auth/src/index.ts"
+      ],
+      "@app/backend-diagnostics": [
+        "libs/backend-diagnostics/src/index.ts"
+      ],
+      "@app/backend-gql": [
+        "libs/backend-gql/src/index.ts"
+      ],
+      "@app/backend-grpc": [
+        "libs/backend-grpc/src/index.ts"
+      ],
+      "@app/backend-interfaces": [
+        "libs/backend-interfaces/src/index.ts"
+      ],
+      "@app/backend-logger": [
+        "libs/backend-logger/src/index.ts"
+      ],
+      "@app/client-chatbot": [
+        "libs/client-chatbot/src/index.ts"
+      ],
+      "@app/client-core": [
+        "libs/client-core/src/index.ts"
+      ],
+      "@app/client-core-components": [
+        "libs/client-core-components/src/index.ts"
+      ],
+      "@app/client-d3-charts": [
+        "libs/client-d3-charts/src/index.ts"
+      ],
+      "@app/client-dashboards": [
+        "libs/client-dashboards/src/index.ts"
+      ],
+      "@app/client-diagnostics": [
+        "libs/client-diagnostics/src/index.ts"
+      ],
+      "@app/client-directives": [
+        "libs/client-directives/src/index.ts"
+      ],
+      "@app/client-elements": [
+        "libs/client-elements/src/index.ts"
+      ],
+      "@app/client-gql": [
+        "libs/client-gql/src/index.ts"
+      ],
+      "@app/client-grpc": [
+        "libs/client-grpc/src/index.ts"
+      ],
+      "@app/client-material": [
+        "libs/client-material/src/index.ts"
+      ],
+      "@app/client-pwa-offline": [
+        "libs/client-pwa-offline/src/index.ts"
+      ],
+      "@app/client-service-worker": [
+        "libs/client-service-worker/src/index.ts"
+      ],
+      "@app/client-sidebar": [
+        "libs/client-sidebar/src/index.ts"
+      ],
+      "@app/client-store": [
+        "libs/client-store/src/index.ts"
+      ],
+      "@app/client-store-chatbot": [
+        "libs/client-store-chatbot/src/index.ts"
+      ],
+      "@app/client-store-diagnostics": [
+        "libs/client-store-diagnostics/src/index.ts"
+      ],
+      "@app/client-store-feature-access": [
+        "libs/client-store-feature-access/src/index.ts"
+      ],
+      "@app/client-store-http-api": [
+        "libs/client-store-http-api/src/index.ts"
+      ],
+      "@app/client-store-http-progress": [
+        "libs/client-store-http-progress/src/index.ts"
+      ],
+      "@app/client-store-router": [
+        "libs/client-store-router/src/index.ts"
+      ],
+      "@app/client-store-sidebar": [
+        "libs/client-store-sidebar/src/index.ts"
+      ],
+      "@app/client-store-theme": [
+        "libs/client-store-theme/src/index.ts"
+      ],
+      "@app/client-store-user": [
+        "libs/client-store-user/src/index.ts"
+      ],
+      "@app/client-testing-e2e": [
+        "libs/client-testing-e2e/src/index.ts"
+      ],
+      "@app/client-testing-unit": [
+        "libs/client-testing-unit/src/index.ts"
+      ],
+      "@app/client-translate": [
+        "libs/client-translate/src/index.ts"
+      ],
+      "@app/client-util": [
+        "libs/client-util/src/index.ts"
+      ],
+      "@app/client-util-eliza": [
+        "libs/client-util-eliza/src/index.ts"
+      ],
+      "@app/client-util-ngrx": [
+        "libs/client-util-ngrx/src/index.ts"
+      ],
+      "@app/client-util-sentry": [
+        "libs/client-util-sentry/src/index.ts"
+      ],
+      "@app/proto": [
+        "libs/proto/src/index.ts"
+      ],
+      "@app/workspace-plugin": [
+        "tools/workspace-plugin/src/index.ts"
+      ],
+      "@rfprodz/backend-diagnostics": [
+        "libs/backend-diagnostics/src/index.ts"
+      ],
+      "@rfprodz/client-util-eliza": [
+        "libs/client-util-eliza/src/index.ts"
+      ],
+      "@rfprodz/d3-charts": [
+        "libs/client-d3-charts/src/index.ts"
+      ]
     },
     "rootDir": ".",
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "strict": true,
     "target": "ES2022",
-    "typeRoots": ["node_modules/@types"],
+    "typeRoots": [
+      "node_modules/@types"
+    ],
     "useDefineForClassFields": false
   },
   "exclude": [
