@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { firstValueFrom, of } from 'rxjs';
 
-import { featureAccessSelectors } from '../../feature-access.selectors';
+import { featureAccessSelector } from '../../feature-access.selectors';
 import { AppFeatureAccessGuard } from '../feature-access/feature-access.guard';
 
 describe('AppFeatureAccessGuard', () => {
@@ -28,7 +28,7 @@ describe('AppFeatureAccessGuard', () => {
     const route = <ActivatedRouteSnapshot>{};
     const state = { root: { data: { feature: void 0 } } } as unknown as RouterStateSnapshot;
     const result = await firstValueFrom(guard.canActivate(route, state));
-    expect(storeSelectSpy).toHaveBeenCalledWith(featureAccessSelectors.enable);
+    expect(storeSelectSpy).toHaveBeenCalledWith(featureAccessSelector.enable);
     expect(result instanceof UrlTree).toBeTruthy();
   });
 
@@ -37,7 +37,7 @@ describe('AppFeatureAccessGuard', () => {
     const route = <ActivatedRouteSnapshot>{};
     const state = { root: { data: { feature: void 0 } } } as unknown as RouterStateSnapshot;
     const result = await firstValueFrom(guard.canActivate(route, state));
-    expect(storeSelectSpy).toHaveBeenCalledWith(featureAccessSelectors.enable);
+    expect(storeSelectSpy).toHaveBeenCalledWith(featureAccessSelector.enable);
     expect(typeof result === 'boolean').toBeTruthy();
   });
 
@@ -46,7 +46,7 @@ describe('AppFeatureAccessGuard', () => {
     const route = <ActivatedRouteSnapshot>{};
     const state = { root: { data: { feature: 'test' } } } as unknown as RouterStateSnapshot;
     const result = await firstValueFrom(guard.canActivate(route, state));
-    expect(storeSelectSpy).not.toHaveBeenCalledWith(featureAccessSelectors.enable);
+    expect(storeSelectSpy).not.toHaveBeenCalledWith(featureAccessSelector.enable);
     expect(storeSelectSpy).toHaveBeenCalledTimes(1);
     expect(result instanceof UrlTree).toBeTruthy();
   });
@@ -56,7 +56,7 @@ describe('AppFeatureAccessGuard', () => {
     const route = <ActivatedRouteSnapshot>{};
     const state = { root: { data: { feature: 'test' } } } as unknown as RouterStateSnapshot;
     const result = await firstValueFrom(guard.canActivate(route, state));
-    expect(storeSelectSpy).not.toHaveBeenCalledWith(featureAccessSelectors.enable);
+    expect(storeSelectSpy).not.toHaveBeenCalledWith(featureAccessSelector.enable);
     expect(storeSelectSpy).toHaveBeenCalledTimes(1);
     expect(typeof result === 'boolean').toBeTruthy();
   });

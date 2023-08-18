@@ -1,7 +1,7 @@
 import { Injectable, Provider } from '@angular/core';
 import { createReducer, on } from '@ngrx/store';
 
-import { sidebarActions } from './sidebar.actions';
+import { sidebarAction } from './sidebar.actions';
 import { sidebarReducerConfig } from './sidebar.interface';
 
 @Injectable({
@@ -11,9 +11,9 @@ export class AppSidebarReducer {
   public createReducer() {
     return createReducer(
       sidebarReducerConfig.initialState,
-      on(sidebarActions.open, () => ({ sidebarOpen: true })),
-      on(sidebarActions.close, () => ({ sidebarOpen: false })),
-      on(sidebarActions.toggle, state => ({ sidebarOpen: !state.sidebarOpen })),
+      on(sidebarAction.open, () => ({ sidebarOpen: true })),
+      on(sidebarAction.close, () => ({ sidebarOpen: false })),
+      on(sidebarAction.toggle, state => ({ sidebarOpen: !state.sidebarOpen })),
     );
   }
 }

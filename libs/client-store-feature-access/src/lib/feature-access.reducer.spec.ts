@@ -3,10 +3,10 @@ import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store, StoreModule } from '@ngrx/store';
 import { first, tap } from 'rxjs';
 
-import { featureAccessActions } from './feature-access.actions';
+import { featureAccessAction } from './feature-access.actions';
 import { featureAccessReducerConfig, IFeatureAccessState, IFeatureAccessStateModel } from './feature-access.interface';
 import { AppFeatureAccessReducer, featureAccessReducerProvider } from './feature-access.reducer';
-import { featureAccessSelectors } from './feature-access.selectors';
+import { featureAccessSelector } from './feature-access.selectors';
 
 describe('AppFeatureAccessReducer', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
@@ -39,9 +39,9 @@ describe('AppFeatureAccessReducer', () => {
 
   it('should process the setEnvironment action correctly', waitForAsync(() => {
     const payload = { production: true };
-    store.dispatch(featureAccessActions.setEnvironment({ payload }));
+    store.dispatch(featureAccessAction.setEnvironment({ payload }));
     void store
-      .select(featureAccessSelectors.enable)
+      .select(featureAccessSelector.enable)
       .pipe(
         first(),
         tap(enable => {

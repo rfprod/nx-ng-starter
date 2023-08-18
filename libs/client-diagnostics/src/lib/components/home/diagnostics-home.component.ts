@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { diagnosticsSelectors, IDiagnosticsState } from '@app/client-store-diagnostics';
+import { diagnosticsSelector, IDiagnosticsState } from '@app/client-store-diagnostics';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -9,11 +9,11 @@ import { Store } from '@ngrx/store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppDiagnosticsHomeComponent {
-  public readonly staticData$ = this.store.select(diagnosticsSelectors.staticData);
+  public readonly staticData$ = this.store.select(diagnosticsSelector.staticData);
 
-  public readonly dynamicData$ = this.store.select(diagnosticsSelectors.dynamicData);
+  public readonly dynamicData$ = this.store.select(diagnosticsSelector.dynamicData);
 
-  public readonly users$ = this.store.select(diagnosticsSelectors.users);
+  public readonly users$ = this.store.select(diagnosticsSelector.users);
 
   constructor(private readonly store: Store<IDiagnosticsState>) {}
 }

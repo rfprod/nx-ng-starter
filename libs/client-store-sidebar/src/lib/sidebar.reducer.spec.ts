@@ -3,10 +3,10 @@ import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store, StoreModule } from '@ngrx/store';
 import { first, lastValueFrom } from 'rxjs';
 
-import { sidebarActions } from './sidebar.actions';
+import { sidebarAction } from './sidebar.actions';
 import { ISidebarState, ISidebarStateModel, sidebarReducerConfig } from './sidebar.interface';
 import { AppSidebarReducer, sidebarReducerProvider } from './sidebar.reducer';
-import { sidebarSelectors } from './sidebar.selectors';
+import { sidebarSelector } from './sidebar.selectors';
 
 describe('AppSidebarReducer', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
@@ -35,26 +35,26 @@ describe('AppSidebarReducer', () => {
   });
 
   it('should process the open action correctly', async () => {
-    store.dispatch(sidebarActions.open({ payload: { navigate: false } }));
-    const sidebarOpen = await lastValueFrom(store.select(sidebarSelectors.sidebarOpen).pipe(first()));
+    store.dispatch(sidebarAction.open({ payload: { navigate: false } }));
+    const sidebarOpen = await lastValueFrom(store.select(sidebarSelector.sidebarOpen).pipe(first()));
     expect(sidebarOpen).toBeTruthy();
   });
 
   it('should process the close action correctly', async () => {
-    store.dispatch(sidebarActions.open({ payload: { navigate: false } }));
-    let sidebarOpen = await lastValueFrom(store.select(sidebarSelectors.sidebarOpen).pipe(first()));
+    store.dispatch(sidebarAction.open({ payload: { navigate: false } }));
+    let sidebarOpen = await lastValueFrom(store.select(sidebarSelector.sidebarOpen).pipe(first()));
     expect(sidebarOpen).toBeTruthy();
-    store.dispatch(sidebarActions.close({ payload: { navigate: false } }));
-    sidebarOpen = await lastValueFrom(store.select(sidebarSelectors.sidebarOpen).pipe(first()));
+    store.dispatch(sidebarAction.close({ payload: { navigate: false } }));
+    sidebarOpen = await lastValueFrom(store.select(sidebarSelector.sidebarOpen).pipe(first()));
     expect(sidebarOpen).toBeFalsy();
   });
 
   it('should process the toggle action correctly', async () => {
-    store.dispatch(sidebarActions.toggle());
-    let sidebarOpen = await lastValueFrom(store.select(sidebarSelectors.sidebarOpen).pipe(first()));
+    store.dispatch(sidebarAction.toggle());
+    let sidebarOpen = await lastValueFrom(store.select(sidebarSelector.sidebarOpen).pipe(first()));
     expect(sidebarOpen).toBeTruthy();
-    store.dispatch(sidebarActions.toggle());
-    sidebarOpen = await lastValueFrom(store.select(sidebarSelectors.sidebarOpen).pipe(first()));
+    store.dispatch(sidebarAction.toggle());
+    sidebarOpen = await lastValueFrom(store.select(sidebarSelector.sidebarOpen).pipe(first()));
     expect(sidebarOpen).toBeFalsy();
   });
 });

@@ -2,9 +2,9 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { Meta, Title } from '@angular/platform-browser';
 import { AppServiceWorkerService } from '@app/client-service-worker';
-import { chatbotActions } from '@app/client-store-chatbot';
-import { routerActions } from '@app/client-store-router';
-import { sidebarActions } from '@app/client-store-sidebar';
+import { chatbotAction } from '@app/client-store-chatbot';
+import { routerAction } from '@app/client-store-router';
+import { sidebarAction } from '@app/client-store-sidebar';
 import { testingEnvironment } from '@app/client-testing-unit';
 import { WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngrx/store';
@@ -88,7 +88,7 @@ describe('AppRootComponent', () => {
     const storeSpy = jest.spyOn(store, 'dispatch');
     component.toggleSidebar();
     expect(storeSpy).toHaveBeenCalledTimes(1);
-    expect(storeSpy).toHaveBeenCalledWith(sidebarActions.toggle());
+    expect(storeSpy).toHaveBeenCalledWith(sidebarAction.toggle());
   });
 
   it('toggleChatbot should call store dispatch events depending on the parameter', () => {
@@ -99,31 +99,31 @@ describe('AppRootComponent', () => {
       second: 2,
     };
     expect(storeSpy).toHaveBeenCalledTimes(calls.first);
-    expect(storeSpy).toHaveBeenNthCalledWith(calls.first, chatbotActions.open());
+    expect(storeSpy).toHaveBeenNthCalledWith(calls.first, chatbotAction.open());
 
     component.toggleChatbot(false);
     expect(storeSpy).toHaveBeenCalledTimes(calls.second);
-    expect(storeSpy).toHaveBeenNthCalledWith(calls.second, chatbotActions.close());
+    expect(storeSpy).toHaveBeenNthCalledWith(calls.second, chatbotAction.close());
   });
 
   it('navButtonClick should call store dispatch', () => {
     const storeSpy = jest.spyOn(store, 'dispatch');
     component.navButtonClick();
     expect(storeSpy).toHaveBeenCalledTimes(1);
-    expect(storeSpy).toHaveBeenCalledWith(sidebarActions.close({ payload: { navigate: false } }));
+    expect(storeSpy).toHaveBeenCalledWith(sidebarAction.close({ payload: { navigate: false } }));
   });
 
   it('navigateBack should call store dispatch', () => {
     const storeSpy = jest.spyOn(store, 'dispatch');
     component.navigateBack();
     expect(storeSpy).toHaveBeenCalledTimes(1);
-    expect(storeSpy).toHaveBeenCalledWith(routerActions.back());
+    expect(storeSpy).toHaveBeenCalledWith(routerAction.back());
   });
 
   it('navigateForward should call store dispatch', () => {
     const storeSpy = jest.spyOn(store, 'dispatch');
     component.navigateForward();
     expect(storeSpy).toHaveBeenCalledTimes(1);
-    expect(storeSpy).toHaveBeenCalledWith(routerActions.forward());
+    expect(storeSpy).toHaveBeenCalledWith(routerAction.forward());
   });
 });

@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { from } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
-import { userActions } from './user.actions';
+import { userAction } from './user.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ export class AppUserEffects {
   public readonly login$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(userActions.login.type),
+        ofType(userAction.login.type),
         mergeMap(() => from(this.router.navigate([{ outlets: { primary: ['user'], sidebar: [''] } }]))),
       ),
     { dispatch: false },
@@ -22,7 +22,7 @@ export class AppUserEffects {
   public readonly logout$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(userActions.logout.type),
+        ofType(userAction.logout.type),
         mergeMap(() => from(this.router.navigate([{ outlets: { primary: [''], sidebar: [''] } }]))),
       ),
     { dispatch: false },
@@ -31,7 +31,7 @@ export class AppUserEffects {
   public readonly signup$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(userActions.signup.type),
+        ofType(userAction.signup.type),
         mergeMap(() => from(this.router.navigate([{ outlets: { primary: ['login'], sidebar: [''] } }]))),
       ),
     { dispatch: false },

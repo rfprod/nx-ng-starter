@@ -1,7 +1,7 @@
 import { Injectable, Provider } from '@angular/core';
 import { createReducer, on } from '@ngrx/store';
 
-import { httpApiActions } from './http-api.actions';
+import { httpApiAction } from './http-api.actions';
 import { httpApiReducerConfig } from './http-api.interface';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class AppHttpApiReducer {
   public createReducer() {
     return createReducer(
       httpApiReducerConfig.initialState,
-      on(httpApiActions.pingSuccess, (state, { payload }) => ({ ping: payload.message })),
+      on(httpApiAction.pingSuccess, (state, { payload }) => ({ ping: payload.message })),
     );
   }
 }

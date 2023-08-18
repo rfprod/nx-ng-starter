@@ -1,7 +1,7 @@
 import { Injectable, Provider } from '@angular/core';
 import { createReducer, on } from '@ngrx/store';
 
-import { httpProgressActions } from './http-progress.actions';
+import { httpProgressAction } from './http-progress.actions';
 import { httpProgressReducerConfig, IHttpProgressStateModel } from './http-progress.interface';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class AppHttpProgressReducer {
   public createReducer() {
     return createReducer(
       httpProgressReducerConfig.initialState,
-      on(httpProgressActions.start, (state, { payload }) => {
+      on(httpProgressAction.start, (state, { payload }) => {
         const nextState = { mainView: { ...state.mainView }, sidebar: { ...state.sidebar }, toaster: { ...state.toaster } };
         const keys = Object.keys(payload).length === 0 ? ['mainView'] : Object.keys(payload);
         for (const key of keys) {
@@ -25,7 +25,7 @@ export class AppHttpProgressReducer {
         }
         return nextState;
       }),
-      on(httpProgressActions.stop, (state, { payload }) => {
+      on(httpProgressAction.stop, (state, { payload }) => {
         const nextState = { mainView: { ...state.mainView }, sidebar: { ...state.sidebar }, toaster: { ...state.toaster } };
         const keys = Object.keys(payload).length === 0 ? ['mainView'] : Object.keys(payload);
         for (const key of keys) {
@@ -39,7 +39,7 @@ export class AppHttpProgressReducer {
         }
         return nextState;
       }),
-      on(httpProgressActions.displayToast, (state, { payload }) => ({ ...state, toaster: { ...payload } })),
+      on(httpProgressAction.displayToast, (state, { payload }) => ({ ...state, toaster: { ...payload } })),
     );
   }
 }

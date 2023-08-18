@@ -1,7 +1,7 @@
 import { Injectable, Provider } from '@angular/core';
 import { createReducer, on } from '@ngrx/store';
 
-import { diagnosticsActions } from './diagnostics.actions';
+import { diagnosticsAction } from './diagnostics.actions';
 import { diagnosticsReducerConfig } from './diagnostics.interface';
 
 @Injectable({
@@ -11,13 +11,13 @@ export class AppDiagnosticsReducer {
   public createReducer() {
     return createReducer(
       diagnosticsReducerConfig.initialState,
-      on(diagnosticsActions.connected, (state, { payload }) => ({
+      on(diagnosticsAction.connected, (state, { payload }) => ({
         ...state,
         events: [...state.events, ...(payload.events ?? [])],
       })),
-      on(diagnosticsActions.staticDataSuccess, (state, { payload }) => ({ ...state, staticData: payload })),
-      on(diagnosticsActions.dynamicDataSuccess, (state, { payload }) => ({ ...state, dynamicData: payload })),
-      on(diagnosticsActions.userDataSuccess, (state, { payload }) => ({ ...state, users: payload })),
+      on(diagnosticsAction.staticDataSuccess, (state, { payload }) => ({ ...state, staticData: payload })),
+      on(diagnosticsAction.dynamicDataSuccess, (state, { payload }) => ({ ...state, dynamicData: payload })),
+      on(diagnosticsAction.userDataSuccess, (state, { payload }) => ({ ...state, users: payload })),
     );
   }
 }

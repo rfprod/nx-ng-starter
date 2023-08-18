@@ -3,10 +3,10 @@ import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store, StoreModule } from '@ngrx/store';
 import { first, tap } from 'rxjs';
 
-import { httpApiActions } from './http-api.actions';
+import { httpApiAction } from './http-api.actions';
 import { httpApiReducerConfig, IHttpApiState, IHttpApiStateModel } from './http-api.interface';
 import { AppHttpApiReducer, httpApiReducerProvider } from './http-api.reducer';
-import { httpApiSelectors } from './http-api.selectors';
+import { httpApiSelector } from './http-api.selectors';
 
 describe('AppHttpApiReducer', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
@@ -36,9 +36,9 @@ describe('AppHttpApiReducer', () => {
 
   it('should process the pingSuccess action correctly', waitForAsync(() => {
     const payload = { message: 'test' };
-    store.dispatch(httpApiActions.pingSuccess({ payload }));
+    store.dispatch(httpApiAction.pingSuccess({ payload }));
     void store
-      .select(httpApiSelectors.ping)
+      .select(httpApiSelector.ping)
       .pipe(
         first(),
         tap(ping => {

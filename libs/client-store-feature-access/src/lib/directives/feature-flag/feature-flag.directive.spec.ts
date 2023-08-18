@@ -4,7 +4,7 @@ import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 
-import { featureAccessActions } from '../../feature-access.actions';
+import { featureAccessAction } from '../../feature-access.actions';
 import { AppFeatureAccessEffects } from '../../feature-access.effects';
 import { featureAccessReducerConfig, IFeatureAccessState } from '../../feature-access.interface';
 import { featureAccessReducerProvider } from '../../feature-access.reducer';
@@ -50,7 +50,7 @@ describe('AppFeatureFlagDirective', () => {
   });
 
   it('should display span in a production environment if the flag value is null', waitForAsync(() => {
-    store.dispatch(featureAccessActions.setEnvironment({ payload: { production: true } }));
+    store.dispatch(featureAccessAction.setEnvironment({ payload: { production: true } }));
     expect(component.flag).toBeNull();
     fixture.detectChanges();
     const spans = (<HTMLElement>fixture.debugElement.nativeElement).getElementsByTagName('span');
@@ -58,7 +58,7 @@ describe('AppFeatureFlagDirective', () => {
   }));
 
   it('should not display span in a production environment if the flag value is undefined', waitForAsync(() => {
-    store.dispatch(featureAccessActions.setEnvironment({ payload: { production: true } }));
+    store.dispatch(featureAccessAction.setEnvironment({ payload: { production: true } }));
     component.flag = void 0;
     expect(component.flag).toBeUndefined();
     fixture.detectChanges();
@@ -67,7 +67,7 @@ describe('AppFeatureFlagDirective', () => {
   }));
 
   it('should not display span in a production environment if the flag value is en empty string', waitForAsync(() => {
-    store.dispatch(featureAccessActions.setEnvironment({ payload: { production: true } }));
+    store.dispatch(featureAccessAction.setEnvironment({ payload: { production: true } }));
     component.flag = '';
     expect(component.flag).toEqual('');
     fixture.detectChanges();
@@ -76,7 +76,7 @@ describe('AppFeatureFlagDirective', () => {
   }));
 
   it('should not display span in a production environment if the flag value is a feature name and the feature flag is not defined', waitForAsync(() => {
-    store.dispatch(featureAccessActions.setEnvironment({ payload: { production: true } }));
+    store.dispatch(featureAccessAction.setEnvironment({ payload: { production: true } }));
     component.flag = 'test';
     expect(component.flag).toEqual('test');
     fixture.detectChanges();
@@ -85,7 +85,7 @@ describe('AppFeatureFlagDirective', () => {
   }));
 
   it('should display span in a production environment if the flag value is a feature name and the feature is disabled', waitForAsync(() => {
-    store.dispatch(featureAccessActions.setFeatureFlags({ payload: { test: false } }));
+    store.dispatch(featureAccessAction.setFeatureFlags({ payload: { test: false } }));
     component.flag = 'test';
     expect(component.flag).toEqual('test');
     fixture.detectChanges();
@@ -94,8 +94,8 @@ describe('AppFeatureFlagDirective', () => {
   }));
 
   it('should not display span in a production environment if the flag value is a feature name and the feature is disabled', waitForAsync(() => {
-    store.dispatch(featureAccessActions.setEnvironment({ payload: { production: true } }));
-    store.dispatch(featureAccessActions.setFeatureFlags({ payload: { test: false } }));
+    store.dispatch(featureAccessAction.setEnvironment({ payload: { production: true } }));
+    store.dispatch(featureAccessAction.setFeatureFlags({ payload: { test: false } }));
     component.flag = 'test';
     expect(component.flag).toEqual('test');
     fixture.detectChanges();
@@ -104,7 +104,7 @@ describe('AppFeatureFlagDirective', () => {
   }));
 
   it('should display span in a production environment if the flag value is a feature name and the feature is enabled', waitForAsync(() => {
-    store.dispatch(featureAccessActions.setFeatureFlags({ payload: { test: true } }));
+    store.dispatch(featureAccessAction.setFeatureFlags({ payload: { test: true } }));
     component.flag = 'test';
     expect(component.flag).toEqual('test');
     fixture.detectChanges();
@@ -113,8 +113,8 @@ describe('AppFeatureFlagDirective', () => {
   }));
 
   it('should display span in a production environment if the flag value is a feature name and the feature is enabled', waitForAsync(() => {
-    store.dispatch(featureAccessActions.setEnvironment({ payload: { production: true } }));
-    store.dispatch(featureAccessActions.setFeatureFlags({ payload: { test: true } }));
+    store.dispatch(featureAccessAction.setEnvironment({ payload: { production: true } }));
+    store.dispatch(featureAccessAction.setFeatureFlags({ payload: { test: true } }));
     component.flag = 'test';
     expect(component.flag).toEqual('test');
     fixture.detectChanges();

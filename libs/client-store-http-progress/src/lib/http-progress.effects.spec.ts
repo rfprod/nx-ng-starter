@@ -3,7 +3,7 @@ import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 
-import { httpProgressActions } from './http-progress.actions';
+import { httpProgressAction } from './http-progress.actions';
 import { AppHttpProgressEffects } from './http-progress.effects';
 import { httpProgressReducerConfig, IHttpProgressState, IShowToastPayload } from './http-progress.interface';
 import { httpProgressReducerProvider } from './http-progress.reducer';
@@ -49,19 +49,19 @@ describe('AppHttpProgressEffects', () => {
   });
 
   it('should call global progress hander start when the start action is dispatched with payload { mainView: true }', waitForAsync(() => {
-    store.dispatch(httpProgressActions.start({ payload: { mainView: true } }));
+    store.dispatch(httpProgressAction.start({ payload: { mainView: true } }));
     expect(progressService.globalProgressHandler.start).toHaveBeenCalled();
   }));
 
   it('should call global progress hander stop when the start action is dispatched with payload { mainView: false }', waitForAsync(() => {
-    store.dispatch(httpProgressActions.start({ payload: { mainView: true } }));
-    store.dispatch(httpProgressActions.stop({ payload: { mainView: true } }));
+    store.dispatch(httpProgressAction.start({ payload: { mainView: true } }));
+    store.dispatch(httpProgressAction.stop({ payload: { mainView: true } }));
     expect(progressService.globalProgressHandler.stop).toHaveBeenCalled();
   }));
 
   it('should call displayToast start when the displayToast action is dispatched', waitForAsync(() => {
     const payload: IShowToastPayload = { message: 'test', type: 'accent', duration: 1000 };
-    store.dispatch(httpProgressActions.displayToast({ payload }));
+    store.dispatch(httpProgressAction.displayToast({ payload }));
     expect(toasterService.showToaster).toHaveBeenCalledWith(payload.message, payload.type, payload.duration);
   }));
 });

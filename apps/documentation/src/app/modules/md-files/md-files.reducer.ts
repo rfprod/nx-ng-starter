@@ -1,7 +1,7 @@
 import { Injectable, Provider } from '@angular/core';
 import { createReducer, on } from '@ngrx/store';
 
-import { mdFilesActions } from './md-files.actions';
+import { mdFilesAction } from './md-files.actions';
 import { mdFilesReducerConfig } from './md-files.interface';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class AppMdFilesReducer {
   public createReducer() {
     return createReducer(
       mdFilesReducerConfig.initialState,
-      on(mdFilesActions.showReadme, (state, { filePath }) => ({ ...state, filePath })),
+      on(mdFilesAction.showReadme, (state, { filePath }) => ({ ...state, filePath })),
     );
   }
 }

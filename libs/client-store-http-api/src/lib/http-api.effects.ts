@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap } from 'rxjs/operators';
 
-import { httpApiActions } from './http-api.actions';
+import { httpApiAction } from './http-api.actions';
 import { AppHttpApiService } from './services/http-api/http-api.service';
 
 @Injectable({
@@ -11,9 +11,9 @@ import { AppHttpApiService } from './services/http-api/http-api.service';
 export class AppHttpApiEffects {
   public readonly ping$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(httpApiActions.ping.type),
+      ofType(httpApiAction.ping.type),
       mergeMap(() => this.api.ping()),
-      map(payload => httpApiActions.pingSuccess({ payload })),
+      map(payload => httpApiAction.pingSuccess({ payload })),
     ),
   );
 

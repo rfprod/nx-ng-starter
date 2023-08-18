@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
 
-import { featureAccessActions } from '../../feature-access.actions';
+import { featureAccessAction } from '../../feature-access.actions';
 import { AppFeatureAccessInitGuard } from './feature-access-init.guard';
 
 describe('AppFeatureAccessInitGuard', () => {
@@ -24,6 +24,6 @@ describe('AppFeatureAccessInitGuard', () => {
 
   it('canActivate should dispatch a store event', () => {
     guard.canActivate();
-    expect(storeDispatchSpy).toHaveBeenCalledWith(featureAccessActions.initialize());
+    expect(storeDispatchSpy).toHaveBeenCalledWith(featureAccessAction.initialize());
   });
 });

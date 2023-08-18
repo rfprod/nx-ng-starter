@@ -5,9 +5,9 @@ import { Store } from '@ngrx/store';
 import { from, of } from 'rxjs';
 import { map, mergeMap, withLatestFrom } from 'rxjs/operators';
 
-import { sidebarActions } from './sidebar.actions';
+import { sidebarAction } from './sidebar.actions';
 import { ISidebarState } from './sidebar.interface';
-import { sidebarSelectors } from './sidebar.selectors';
+import { sidebarSelector } from './sidebar.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,7 @@ export class AppSidebarEffects {
   public readonly open$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(sidebarActions.open),
+        ofType(sidebarAction.open),
         mergeMap(({ payload }) => (payload.navigate ? from(this.router.navigate([{ outlets: { sidebar: ['root'] } }])) : of(null))),
       ),
     { dispatch: false },
@@ -25,7 +25,7 @@ export class AppSidebarEffects {
   public readonly close$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(sidebarActions.close),
+        ofType(sidebarAction.close),
         mergeMap(({ payload }) => (payload.navigate ? from(this.router.navigate([{ outlets: { sidebar: [] } }])) : of(null))),
       ),
     { dispatch: false },
@@ -33,10 +33,10 @@ export class AppSidebarEffects {
 
   public readonly toggle$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(sidebarActions.toggle.type),
-      withLatestFrom(this.store.select(sidebarSelectors.sidebarOpen)),
+      ofType(sidebarAction.toggle.type),
+      withLatestFrom(this.store.select(sidebarSelector.sidebarOpen)),
       map(([action, sidebarOpen]) =>
-        sidebarOpen ? sidebarActions.open({ payload: { navigate: true } }) : sidebarActions.close({ payload: { navigate: true } }),
+        sidebarOpen ? sidebarAction.open({ payload: { navigate: true } }) : sidebarAction.close({ payload: { navigate: true } }),
       ),
     ),
   );

@@ -7,7 +7,7 @@ import { Store, StoreModule } from '@ngrx/store';
 import { MarkdownModule, MarkdownModuleConfig, MarkedOptions } from 'ngx-markdown';
 
 import { testingProviders } from '../../../testing/testing-providers.mock';
-import { mdFilesActions } from '../../modules/md-files/md-files.actions';
+import { mdFilesAction } from '../../modules/md-files/md-files.actions';
 import { IMdFilesState, mdFilesReducerConfig } from '../../modules/md-files/md-files.interface';
 import { mdFilesReducerProvider } from '../../modules/md-files/md-files.reducer';
 import { AppDocMarkdownReferenceTreeComponent } from './md-reference-tree.component';
@@ -62,6 +62,6 @@ describe('AppDocMarkdownReferenceTreeComponent', () => {
   it('showReadme should call store.dispatch', () => {
     const filePath = '/README.md';
     component.showReadme(filePath);
-    expect(storeDispatchSpy).toHaveBeenCalledWith(mdFilesActions.showReadme({ filePath }));
+    expect(storeDispatchSpy).toHaveBeenCalledWith(mdFilesAction.showReadme({ filePath }));
   });
 });

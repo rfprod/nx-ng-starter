@@ -2,10 +2,10 @@ import { AfterContentInit, ChangeDetectionStrategy, Component, DestroyRef, HostB
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Meta, Title } from '@angular/platform-browser';
 import { AppServiceWorkerService } from '@app/client-service-worker';
-import { chatbotActions, chatbotSelectors, IChatbotState } from '@app/client-store-chatbot';
-import { routerActions } from '@app/client-store-router';
-import { ISidebarState, sidebarActions, sidebarSelectors } from '@app/client-store-sidebar';
-import { IThemeState, themeActions, themeSelectors } from '@app/client-store-theme';
+import { chatbotAction, chatbotSelector, IChatbotState } from '@app/client-store-chatbot';
+import { routerAction } from '@app/client-store-router';
+import { ISidebarState, sidebarAction, sidebarSelector } from '@app/client-store-sidebar';
+import { IThemeState, themeAction, themeSelector } from '@app/client-store-theme';
 import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
@@ -47,11 +47,11 @@ export class AppRootComponent implements OnInit, AfterContentInit {
    */
   public readonly version = this.env.meta.version;
 
-  public readonly sidebarOpen$ = this.store.select(sidebarSelectors.sidebarOpen);
+  public readonly sidebarOpen$ = this.store.select(sidebarSelector.sidebarOpen);
 
-  public readonly chatbotOpen$ = this.store.select(chatbotSelectors.chatbotOpen);
+  public readonly chatbotOpen$ = this.store.select(chatbotSelector.chatbotOpen);
 
-  public readonly darkThemeEnabled$ = this.store.select(themeSelectors.darkThemeEnabled);
+  public readonly darkThemeEnabled$ = this.store.select(themeSelector.darkThemeEnabled);
 
   public readonly logoSrc$ = this.darkThemeEnabled$.pipe(
     map(darkThemeEnabled => {
@@ -68,32 +68,32 @@ export class AppRootComponent implements OnInit, AfterContentInit {
   ) {}
 
   public toggleSidebar(): void {
-    this.store.dispatch(sidebarActions.toggle());
+    this.store.dispatch(sidebarAction.toggle());
   }
 
   public toggleChatbot(event: boolean): void {
     if (event) {
-      this.store.dispatch(chatbotActions.open());
+      this.store.dispatch(chatbotAction.open());
     } else {
-      this.store.dispatch(chatbotActions.close());
+      this.store.dispatch(chatbotAction.close());
     }
   }
 
   public toggleTheme(darkThemeEnabled: boolean): void {
     this.darkTheme = darkThemeEnabled;
-    this.store.dispatch(themeActions.toggleDarkTheme());
+    this.store.dispatch(themeAction.toggleDarkTheme());
   }
 
   public navButtonClick(): void {
-    this.store.dispatch(sidebarActions.close({ payload: { navigate: false } }));
+    this.store.dispatch(sidebarAction.close({ payload: { navigate: false } }));
   }
 
   public navigateBack(): void {
-    this.store.dispatch(routerActions.back());
+    this.store.dispatch(routerAction.back());
   }
 
   public navigateForward(): void {
-    this.store.dispatch(routerActions.forward());
+    this.store.dispatch(routerAction.forward());
   }
 
   /**

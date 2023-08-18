@@ -1,7 +1,7 @@
 import { Injectable, Provider } from '@angular/core';
 import { createReducer, on } from '@ngrx/store';
 
-import { themeActions } from './theme.actions';
+import { themeAction } from './theme.actions';
 import { themeReducerConfig } from './theme.interface';
 
 @Injectable({
@@ -11,8 +11,8 @@ export class AppThemeReducer {
   public createReducer() {
     return createReducer(
       themeReducerConfig.initialState,
-      on(themeActions.enableDarkTheme, () => ({ darkThemeEnabled: true })),
-      on(themeActions.disableDarkTheme, () => ({ darkThemeEnabled: false })),
+      on(themeAction.enableDarkTheme, () => ({ darkThemeEnabled: true })),
+      on(themeAction.disableDarkTheme, () => ({ darkThemeEnabled: false })),
     );
   }
 }

@@ -14,7 +14,7 @@ import { GraphQLError } from 'graphql';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
 
-import { httpProgressActions } from '../../http-progress.actions';
+import { httpProgressAction } from '../../http-progress.actions';
 import { AppHttpProgressStoreModule } from '../../http-progress.module';
 import { AppToasterService, toasterServiceProvider } from '../toaster/toaster.service';
 import { AppHttpHandlersService } from './http-handlers.service';
@@ -335,10 +335,10 @@ describe('AppHttpHandlersService', () => {
         .pipe(
           tap(() => {
             expect(serviceSpies.handleError).not.toHaveBeenCalled();
-            expect(storeDispatchSpy).toHaveBeenCalledWith(httpProgressActions.start({ payload: { mainView: true } }));
+            expect(storeDispatchSpy).toHaveBeenCalledWith(httpProgressAction.start({ payload: { mainView: true } }));
           }),
           finalize(() => {
-            expect(storeDispatchSpy).toHaveBeenCalledWith(httpProgressActions.stop({ payload: { mainView: true } }));
+            expect(storeDispatchSpy).toHaveBeenCalledWith(httpProgressAction.stop({ payload: { mainView: true } }));
           }),
         )
         .subscribe();
@@ -352,7 +352,7 @@ describe('AppHttpHandlersService', () => {
         .pipe(
           tap(() => {
             expect(serviceSpies.handleError).toHaveBeenCalledWith(error, true);
-            expect(storeDispatchSpy).toHaveBeenCalledWith(httpProgressActions.start({ payload: { mainView: true } }));
+            expect(storeDispatchSpy).toHaveBeenCalledWith(httpProgressAction.start({ payload: { mainView: true } }));
           }),
         )
         .subscribe();

@@ -1,7 +1,7 @@
 import { Injectable, Provider } from '@angular/core';
 import { createReducer, on } from '@ngrx/store';
 
-import { chatbotActions } from './chatbot.actions';
+import { chatbotAction } from './chatbot.actions';
 import { chatbotReducerConfig } from './chatbot.interface';
 
 @Injectable({
@@ -11,8 +11,8 @@ export class AppChatbotReducer {
   public createReducer() {
     return createReducer(
       chatbotReducerConfig.initialState,
-      on(chatbotActions.open, () => ({ chatbotOpen: true })),
-      on(chatbotActions.close, () => ({ chatbotOpen: false })),
+      on(chatbotAction.open, () => ({ chatbotOpen: true })),
+      on(chatbotAction.close, () => ({ chatbotOpen: false })),
     );
   }
 }

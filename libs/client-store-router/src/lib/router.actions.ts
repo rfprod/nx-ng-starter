@@ -5,23 +5,17 @@ import { createAction, props } from '@ngrx/store';
 
 import { featureName } from './router.interface';
 
-const navigate = createAction(
-  actionType(featureName, 'navigate'),
-  props<{
-    payload: {
-      path: TRouterCommands;
-      query?: Record<string, unknown>;
-      extras?: NavigationExtras;
-    };
-  }>(),
-);
-
-const back = createAction(actionType(featureName, 'back'));
-
-const forward = createAction(actionType(featureName, 'forward'));
-
-export const routerActions = {
-  navigate,
-  back,
-  forward,
+export const routerAction = {
+  navigate: createAction(
+    actionType(featureName, 'navigate'),
+    props<{
+      payload: {
+        path: TRouterCommands;
+        query?: Record<string, unknown>;
+        extras?: NavigationExtras;
+      };
+    }>(),
+  ),
+  back: createAction(actionType(featureName, 'back')),
+  forward: createAction(actionType(featureName, 'forward')),
 };
