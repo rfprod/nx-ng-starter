@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/tes
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppHttpProgressStoreModule } from '@app/client-store-http-progress';
-import { sidebarActions } from '@app/client-store-sidebar';
+import { sidebarAction } from '@app/client-store-sidebar';
 import { AppTestingComponent, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store } from '@ngrx/store';
 
@@ -55,7 +55,7 @@ describe('AppSidebarRootComponent', () => {
 
   it('sidebarCloseHandler should call store dispatch', () => {
     component.sidebarCloseHandler();
-    expect(storeDispatchSpy).toHaveBeenCalledWith(sidebarActions.close({ payload: { navigate: true } }));
+    expect(storeDispatchSpy).toHaveBeenCalledWith(sidebarAction.close({ payload: { navigate: true } }));
   });
 
   it('navigateToInfoPage should call store dispatch', () => {

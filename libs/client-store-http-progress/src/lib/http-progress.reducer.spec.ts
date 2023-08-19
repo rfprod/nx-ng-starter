@@ -3,10 +3,10 @@ import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store, StoreModule } from '@ngrx/store';
 import { first, switchMap, tap } from 'rxjs';
 
-import { httpProgressActions } from './http-progress.actions';
+import { httpProgressAction } from './http-progress.actions';
 import { httpProgressReducerConfig, IHttpProgressState, IHttpProgressStateModel, IShowToastPayload } from './http-progress.interface';
 import { AppHttpProgressReducer, httpProgressReducerProvider } from './http-progress.reducer';
-import { httpProgressSelectors } from './http-progress.selectors';
+import { httpProgressSelector } from './http-progress.selectors';
 
 describe('AppHttpProgressReducer', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
@@ -49,17 +49,17 @@ describe('AppHttpProgressReducer', () => {
   });
 
   it('should process the start action correctly (mainView)', waitForAsync(() => {
-    store.dispatch(httpProgressActions.start({ payload: { mainView: true } }));
+    store.dispatch(httpProgressAction.start({ payload: { mainView: true } }));
     void store
-      .select(httpProgressSelectors.mainView)
+      .select(httpProgressSelector.mainView)
       .pipe(
         first(),
         tap(mainView => {
           expect(mainView.counter).toEqual(1);
           expect(mainView.loading).toBeTruthy();
-          store.dispatch(httpProgressActions.start({ payload: { mainView: true } }));
+          store.dispatch(httpProgressAction.start({ payload: { mainView: true } }));
         }),
-        switchMap(() => store.select(httpProgressSelectors.mainView).pipe(first())),
+        switchMap(() => store.select(httpProgressSelector.mainView).pipe(first())),
         tap(mainView => {
           const expectedCount = 2;
           expect(mainView.counter).toEqual(expectedCount);
@@ -70,17 +70,17 @@ describe('AppHttpProgressReducer', () => {
   }));
 
   it('should process the start action correctly (sidebar)', waitForAsync(() => {
-    store.dispatch(httpProgressActions.start({ payload: { sidebar: true } }));
+    store.dispatch(httpProgressAction.start({ payload: { sidebar: true } }));
     void store
-      .select(httpProgressSelectors.sidebar)
+      .select(httpProgressSelector.sidebar)
       .pipe(
         first(),
         tap(sidebar => {
           expect(sidebar.counter).toEqual(1);
           expect(sidebar.loading).toBeTruthy();
-          store.dispatch(httpProgressActions.start({ payload: { sidebar: true } }));
+          store.dispatch(httpProgressAction.start({ payload: { sidebar: true } }));
         }),
-        switchMap(() => store.select(httpProgressSelectors.sidebar).pipe(first())),
+        switchMap(() => store.select(httpProgressSelector.sidebar).pipe(first())),
         tap(sidebar => {
           const expectedCount = 2;
           expect(sidebar.counter).toEqual(expectedCount);
@@ -91,30 +91,30 @@ describe('AppHttpProgressReducer', () => {
   }));
 
   it('should process the stop action correctly (mainView)', waitForAsync(() => {
-    store.dispatch(httpProgressActions.start({ payload: { mainView: true } }));
+    store.dispatch(httpProgressAction.start({ payload: { mainView: true } }));
     void store
-      .select(httpProgressSelectors.mainView)
+      .select(httpProgressSelector.mainView)
       .pipe(
         first(),
         tap(mainView => {
           expect(mainView.counter).toEqual(1);
           expect(mainView.loading).toBeTruthy();
-          store.dispatch(httpProgressActions.start({ payload: { mainView: true } }));
+          store.dispatch(httpProgressAction.start({ payload: { mainView: true } }));
         }),
-        switchMap(() => store.select(httpProgressSelectors.mainView).pipe(first())),
+        switchMap(() => store.select(httpProgressSelector.mainView).pipe(first())),
         tap(mainView => {
           const expectedCount = 2;
           expect(mainView.counter).toEqual(expectedCount);
           expect(mainView.loading).toBeTruthy();
-          store.dispatch(httpProgressActions.stop({ payload: { mainView: true } }));
+          store.dispatch(httpProgressAction.stop({ payload: { mainView: true } }));
         }),
-        switchMap(() => store.select(httpProgressSelectors.mainView).pipe(first())),
+        switchMap(() => store.select(httpProgressSelector.mainView).pipe(first())),
         tap(mainView => {
           expect(mainView.counter).toEqual(1);
           expect(mainView.loading).toBeTruthy();
-          store.dispatch(httpProgressActions.stop({ payload: { mainView: true } }));
+          store.dispatch(httpProgressAction.stop({ payload: { mainView: true } }));
         }),
-        switchMap(() => store.select(httpProgressSelectors.mainView).pipe(first())),
+        switchMap(() => store.select(httpProgressSelector.mainView).pipe(first())),
         tap(mainView => {
           expect(mainView.counter).toEqual(0);
           expect(mainView.loading).toBeFalsy();
@@ -124,30 +124,30 @@ describe('AppHttpProgressReducer', () => {
   }));
 
   it('should process the stop action correctly (sidebar)', waitForAsync(() => {
-    store.dispatch(httpProgressActions.start({ payload: { sidebar: true } }));
+    store.dispatch(httpProgressAction.start({ payload: { sidebar: true } }));
     void store
-      .select(httpProgressSelectors.sidebar)
+      .select(httpProgressSelector.sidebar)
       .pipe(
         first(),
         tap(sidebar => {
           expect(sidebar.counter).toEqual(1);
           expect(sidebar.loading).toBeTruthy();
-          store.dispatch(httpProgressActions.start({ payload: { sidebar: true } }));
+          store.dispatch(httpProgressAction.start({ payload: { sidebar: true } }));
         }),
-        switchMap(() => store.select(httpProgressSelectors.sidebar).pipe(first())),
+        switchMap(() => store.select(httpProgressSelector.sidebar).pipe(first())),
         tap(sidebar => {
           const expectedCount = 2;
           expect(sidebar.counter).toEqual(expectedCount);
           expect(sidebar.loading).toBeTruthy();
-          store.dispatch(httpProgressActions.stop({ payload: { sidebar: true } }));
+          store.dispatch(httpProgressAction.stop({ payload: { sidebar: true } }));
         }),
-        switchMap(() => store.select(httpProgressSelectors.sidebar).pipe(first())),
+        switchMap(() => store.select(httpProgressSelector.sidebar).pipe(first())),
         tap(sidebar => {
           expect(sidebar.counter).toEqual(1);
           expect(sidebar.loading).toBeTruthy();
-          store.dispatch(httpProgressActions.stop({ payload: { sidebar: true } }));
+          store.dispatch(httpProgressAction.stop({ payload: { sidebar: true } }));
         }),
-        switchMap(() => store.select(httpProgressSelectors.sidebar).pipe(first())),
+        switchMap(() => store.select(httpProgressSelector.sidebar).pipe(first())),
         tap(sidebar => {
           expect(sidebar.counter).toEqual(0);
           expect(sidebar.loading).toBeFalsy();
@@ -158,9 +158,9 @@ describe('AppHttpProgressReducer', () => {
 
   it('should process the displayToast action correctly', waitForAsync(() => {
     const payload: IShowToastPayload = { message: 'test', type: 'accent', duration: 1000 };
-    store.dispatch(httpProgressActions.displayToast({ payload }));
+    store.dispatch(httpProgressAction.displayToast({ payload }));
     void store
-      .select(httpProgressSelectors.toaster)
+      .select(httpProgressSelector.toaster)
       .pipe(
         first(),
         tap(toaster => {

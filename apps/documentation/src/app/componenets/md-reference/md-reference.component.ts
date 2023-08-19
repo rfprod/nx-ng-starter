@@ -5,7 +5,7 @@ import { map } from 'rxjs';
 
 import { DOCUMENTATION_ENVIRONMENT, IDocumentationEnvironment } from '../../interfaces/environment.interface';
 import { IMdFilesState } from '../../modules/md-files/md-files.interface';
-import { mdFilesSelectors } from '../../modules/md-files/md-files.selectors';
+import { mdFilesSelector } from '../../modules/md-files/md-files.selectors';
 
 @Component({
   selector: 'app-documentation-md-reference',
@@ -18,7 +18,7 @@ export class AppDocMarkdownReferenceComponent {
    * Selected markdown file path.
    */
   public readonly filePath$ = this.store
-    .select(mdFilesSelectors.filePath)
+    .select(mdFilesSelector.filePath)
     .pipe(map(filePath => this.sanitizer.sanitize(SecurityContext.HTML, filePath)));
 
   public readonly useEmoji = !this.env.testing;

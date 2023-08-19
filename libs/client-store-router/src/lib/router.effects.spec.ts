@@ -6,7 +6,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { routerReducer } from '@ngrx/router-store';
 import { Store, StoreModule } from '@ngrx/store';
 
-import { routerActions } from './router.actions';
+import { routerAction } from './router.actions';
 import { AppRouterEffects } from './router.effects';
 import { featureName, IRouterState } from './router.interface';
 
@@ -40,17 +40,17 @@ describe('AppRouterEffects', () => {
 
   it('should call router.navigate when the navigate action is dispatched', waitForAsync(() => {
     const payload = { path: [{ outlets: { primary: ['test'] } }] };
-    store.dispatch(routerActions.navigate({ payload }));
+    store.dispatch(routerAction.navigate({ payload }));
     expect(routerNavigateSpy).toHaveBeenCalledWith(payload.path, { queryParams: void 0 });
   }));
 
   it('should call location.back when the back action is dispatched', waitForAsync(() => {
-    store.dispatch(routerActions.back());
+    store.dispatch(routerAction.back());
     expect(location.historyGo).toHaveBeenCalledTimes(1);
   }));
 
   it('should call location.forward when the forward action is dispatched', waitForAsync(() => {
-    store.dispatch(routerActions.forward());
+    store.dispatch(routerAction.forward());
     expect(location.historyGo).toHaveBeenCalledTimes(1);
   }));
 });

@@ -3,10 +3,10 @@ import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store, StoreModule } from '@ngrx/store';
 import { first, lastValueFrom } from 'rxjs';
 
-import { chatbotActions } from './chatbot.actions';
+import { chatbotAction } from './chatbot.actions';
 import { chatbotReducerConfig, IChatbotState, IChatbotStateModel } from './chatbot.interface';
 import { AppChatbotReducer, chatbotReducerProvider } from './chatbot.reducer';
-import { chatbotSelectors } from './chatbot.selectors';
+import { chatbotSelector } from './chatbot.selectors';
 
 describe('AppChatbotReducer', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
@@ -35,12 +35,12 @@ describe('AppChatbotReducer', () => {
   });
 
   it('should process the open/close action correctly', async () => {
-    store.dispatch(chatbotActions.open());
-    let chatbotOpen = await lastValueFrom(store.select(chatbotSelectors.chatbotOpen).pipe(first()));
+    store.dispatch(chatbotAction.open());
+    let chatbotOpen = await lastValueFrom(store.select(chatbotSelector.chatbotOpen).pipe(first()));
     expect(chatbotOpen).toBeTruthy();
 
-    store.dispatch(chatbotActions.close());
-    chatbotOpen = await lastValueFrom(store.select(chatbotSelectors.chatbotOpen).pipe(first()));
+    store.dispatch(chatbotAction.close());
+    chatbotOpen = await lastValueFrom(store.select(chatbotSelector.chatbotOpen).pipe(first()));
     expect(chatbotOpen).toBeFalsy();
   });
 });

@@ -3,10 +3,10 @@ import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store, StoreModule } from '@ngrx/store';
 import { first, tap } from 'rxjs';
 
-import { userActions } from './user.actions';
+import { userAction } from './user.actions';
 import { IUserState, IUserStateModel, userReducerConfig } from './user.interface';
 import { AppUserReducer, userReducerProvider } from './user.reducer';
-import { userSelectors } from './user.selectors';
+import { userSelector } from './user.selectors';
 
 describe('AppUserReducer', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
@@ -36,9 +36,9 @@ describe('AppUserReducer', () => {
 
   it('should process the login action correctly', waitForAsync(() => {
     const payload = { email: 'test@test.test' };
-    store.dispatch(userActions.login({ payload }));
+    store.dispatch(userAction.login({ payload }));
     void store
-      .select(userSelectors.email)
+      .select(userSelector.email)
       .pipe(
         first(),
         tap(email => {
@@ -50,10 +50,10 @@ describe('AppUserReducer', () => {
 
   it('should process the logout action correctly', waitForAsync(() => {
     const payload = { email: 'test@test.test' };
-    store.dispatch(userActions.login({ payload }));
-    store.dispatch(userActions.logout());
+    store.dispatch(userAction.login({ payload }));
+    store.dispatch(userAction.logout());
     void store
-      .select(userSelectors.email)
+      .select(userSelector.email)
       .pipe(
         first(),
         tap(email => {
@@ -65,9 +65,9 @@ describe('AppUserReducer', () => {
 
   it('should process the signup action correctly', waitForAsync(() => {
     const payload = { email: 'test@test.test' };
-    store.dispatch(userActions.signup({ payload }));
+    store.dispatch(userAction.signup({ payload }));
     void store
-      .select(userSelectors.email)
+      .select(userSelector.email)
       .pipe(
         first(),
         tap(email => {

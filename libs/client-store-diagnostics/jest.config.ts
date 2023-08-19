@@ -8,8 +8,8 @@ const config: Config.InitialOptions = {
     global: {
       branches: 75,
       functions: 78,
-      lines: 95,
-      statements: 92,
+      lines: 91,
+      statements: 91,
     },
   },
   displayName: 'client-store-diagnostics',

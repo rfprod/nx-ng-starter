@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppSidebarStoreModule, sidebarActions } from '@app/client-store-sidebar';
+import { AppSidebarStoreModule, sidebarAction } from '@app/client-store-sidebar';
 import { AppTestingComponent, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
@@ -49,12 +49,12 @@ describe('AppContentComponent', () => {
 
   it('sidebarCloseHandler should call store dispatch', () => {
     component.sidebarCloseHandler();
-    expect(storeSpy.dispatch).toHaveBeenCalledWith(sidebarActions.close({ payload: { navigate: true } }));
+    expect(storeSpy.dispatch).toHaveBeenCalledWith(sidebarAction.close({ payload: { navigate: true } }));
   });
 
   it('sidebarOpenHandler should call store dispatch', () => {
     component.sidebarOpenHandler();
-    expect(storeSpy.dispatch).toHaveBeenCalledWith(sidebarActions.open({ payload: { navigate: true } }));
+    expect(storeSpy.dispatch).toHaveBeenCalledWith(sidebarAction.open({ payload: { navigate: true } }));
   });
 
   it('should scroll content on router events', async () => {

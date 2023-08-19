@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { featureAccessActions } from '../../feature-access.actions';
+import { featureAccessAction } from '../../feature-access.actions';
 import { IFeatureAccessState } from '../../feature-access.interface';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class AppFeatureAccessInitGuard {
   constructor(private readonly store: Store<IFeatureAccessState>) {}
 
   public canActivate(): boolean {
-    this.store.dispatch(featureAccessActions.initialize());
+    this.store.dispatch(featureAccessAction.initialize());
     return true;
   }
 }

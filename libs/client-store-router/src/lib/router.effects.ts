@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
 
-import { routerActions } from './router.actions';
+import { routerAction } from './router.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ export class AppRouterEffects {
   public readonly navigate$ = createEffect(
     () =>
       this.action$.pipe(
-        ofType(routerActions.navigate),
+        ofType(routerAction.navigate),
         tap(({ payload: { path, query: queryParams, extras } }) => {
           void this.router.navigate(path, { queryParams, ...extras });
         }),
@@ -24,7 +24,7 @@ export class AppRouterEffects {
   public readonly back$ = createEffect(
     () =>
       this.action$.pipe(
-        ofType(routerActions.back),
+        ofType(routerAction.back),
         tap(() => {
           this.location.historyGo(-1);
         }),
@@ -35,7 +35,7 @@ export class AppRouterEffects {
   public readonly forward$ = createEffect(
     () =>
       this.action$.pipe(
-        ofType(routerActions.forward),
+        ofType(routerAction.forward),
         tap(() => {
           this.location.historyGo(1);
         }),

@@ -4,7 +4,7 @@ import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 
-import { themeActions } from './theme.actions';
+import { themeAction } from './theme.actions';
 import { AppThemeEffects } from './theme.effects';
 import { IThemeState, themeReducerConfig } from './theme.interface';
 import { themeReducerProvider } from './theme.reducer';
@@ -30,22 +30,22 @@ describe('AppThemeEffects', () => {
 
   it('should add "unicorn-dark-theme" class to the overlay container when the enableDarkTheme action is dispatched', waitForAsync(() => {
     const addSpy = jest.spyOn(overlay.getContainerElement().classList, 'add');
-    store.dispatch(themeActions.enableDarkTheme());
+    store.dispatch(themeAction.enableDarkTheme());
     expect(addSpy).toHaveBeenCalledWith('unicorn-dark-theme');
   }));
 
   it('should remove "unicorn-dark-theme" class to the overlay container when the disableDarkTheme action is dispatched', waitForAsync(() => {
     const removeSpy = jest.spyOn(overlay.getContainerElement().classList, 'remove');
-    store.dispatch(themeActions.disableDarkTheme());
+    store.dispatch(themeAction.disableDarkTheme());
     expect(removeSpy).toHaveBeenCalledWith('unicorn-dark-theme');
   }));
 
   it('should add/remove "unicorn-dark-theme" class to/from the overlay container when the toggleDarkTheme action is dispatched', waitForAsync(() => {
     const addSpy = jest.spyOn(overlay.getContainerElement().classList, 'add');
     const removeSpy = jest.spyOn(overlay.getContainerElement().classList, 'remove');
-    store.dispatch(themeActions.toggleDarkTheme());
+    store.dispatch(themeAction.toggleDarkTheme());
     expect(addSpy).toHaveBeenCalledWith('unicorn-dark-theme');
-    store.dispatch(themeActions.toggleDarkTheme());
+    store.dispatch(themeAction.toggleDarkTheme());
     expect(removeSpy).toHaveBeenCalledWith('unicorn-dark-theme');
   }));
 });

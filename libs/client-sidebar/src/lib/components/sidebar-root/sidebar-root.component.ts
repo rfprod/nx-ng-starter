@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { httpProgressSelectors, IHttpProgressState } from '@app/client-store-http-progress';
-import { sidebarActions } from '@app/client-store-sidebar';
+import { httpProgressSelector, IHttpProgressState } from '@app/client-store-http-progress';
+import { sidebarAction } from '@app/client-store-sidebar';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 
@@ -12,7 +12,7 @@ import { map } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppSidebarRootComponent {
-  public readonly loading$ = this.store.select(httpProgressSelectors.sidebar).pipe(map(state => state.loading));
+  public readonly loading$ = this.store.select(httpProgressSelector.sidebar).pipe(map(state => state.loading));
 
   constructor(
     private readonly store: Store<IHttpProgressState>,
@@ -24,7 +24,7 @@ export class AppSidebarRootComponent {
    * Propagates sidebar close event from UI to state store.
    */
   public sidebarCloseHandler(): void {
-    this.store.dispatch(sidebarActions.close({ payload: { navigate: true } }));
+    this.store.dispatch(sidebarAction.close({ payload: { navigate: true } }));
   }
 
   /**

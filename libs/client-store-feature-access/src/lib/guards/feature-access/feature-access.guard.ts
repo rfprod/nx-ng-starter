@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { first, map, Observable } from 'rxjs';
 
 import { IFeatureAccessState } from '../../feature-access.interface';
-import { featureAccessSelectors } from '../../feature-access.selectors';
+import { featureAccessSelector } from '../../feature-access.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class AppFeatureAccessGuard {
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
     const value: string | undefined = (<{ feature?: string }>state.root.data).feature;
     const featureSelector =
-      typeof value === 'undefined' || value === '' ? featureAccessSelectors.enable : featureAccessSelectors.enableFeature(value);
+      typeof value === 'undefined' || value === '' ? featureAccessSelector.enable : featureAccessSelector.enableFeature(value);
     return this.store.select(featureSelector).pipe(
       first(),
       map(enable => (enable ? enable : this.router.createUrlTree(['']))),

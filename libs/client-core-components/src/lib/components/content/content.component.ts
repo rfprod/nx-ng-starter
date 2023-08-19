@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, DestroyRef, inject, ViewChild } fro
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatSidenavContent } from '@angular/material/sidenav';
 import { NavigationEnd, Router } from '@angular/router';
-import { ISidebarState, sidebarActions, sidebarSelectors } from '@app/client-store-sidebar';
+import { ISidebarState, sidebarAction, sidebarSelector } from '@app/client-store-sidebar';
 import { Store } from '@ngrx/store';
 import { tap } from 'rxjs/operators';
 
@@ -17,7 +17,7 @@ export class AppContentComponent {
 
   @ViewChild('content') public readonly content?: MatSidenavContent;
 
-  public readonly sidebarOpen$ = this.store.select(sidebarSelectors.sidebarOpen);
+  public readonly sidebarOpen$ = this.store.select(sidebarSelector.sidebarOpen);
 
   public readonly routerEvents$ = this.router.events.pipe(
     takeUntilDestroyed(this.destroyRef),
@@ -36,10 +36,10 @@ export class AppContentComponent {
   }
 
   public sidebarCloseHandler(): void {
-    this.store.dispatch(sidebarActions.close({ payload: { navigate: true } }));
+    this.store.dispatch(sidebarAction.close({ payload: { navigate: true } }));
   }
 
   public sidebarOpenHandler(): void {
-    this.store.dispatch(sidebarActions.open({ payload: { navigate: true } }));
+    this.store.dispatch(sidebarAction.open({ payload: { navigate: true } }));
   }
 }

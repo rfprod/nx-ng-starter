@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApolloClient, ApolloClientOptions, InMemoryCache, NormalizedCacheObject } from '@apollo/client/core';
 import { AppHttpHandlersService, TGqlClient } from '@app/client-store-http-progress';
-import { IUserState, userSelectors } from '@app/client-store-user';
+import { IUserState, userSelector } from '@app/client-store-user';
 import { Store } from '@ngrx/store';
 import { Apollo } from 'apollo-angular';
 import { DocumentNode } from 'graphql';
@@ -15,7 +15,7 @@ import { first, map, switchMap, tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AppGqlService {
-  private readonly userToken$ = this.store.select(userSelectors.token).pipe(first());
+  private readonly userToken$ = this.store.select(userSelector.token).pipe(first());
 
   constructor(
     private readonly apollo: Apollo,

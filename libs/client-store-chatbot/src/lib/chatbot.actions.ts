@@ -3,11 +3,7 @@ import { createAction } from '@ngrx/store';
 
 import { chatbotReducerConfig } from './chatbot.interface';
 
-const open = createAction(actionType(chatbotReducerConfig.featureName, 'open'));
-
-const close = createAction(actionType(chatbotReducerConfig.featureName, 'close'));
-
-export const chatbotActions = {
-  open,
-  close,
+export const chatbotAction = {
+  open: createAction(actionType(chatbotReducerConfig.featureName, 'open')),
+  close: createAction(actionType(chatbotReducerConfig.featureName, 'close')),
 };

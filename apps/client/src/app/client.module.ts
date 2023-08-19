@@ -7,7 +7,7 @@ import { AppGqlModule } from '@app/client-gql';
 import { AppGrpcModule, AppGrpcService } from '@app/client-grpc';
 import { AppMaterialModule } from '@app/client-material';
 import { AppPwaOfflineModule } from '@app/client-pwa-offline';
-import { AppDiagnosticsStoreModule, diagnosticsActions, IDiagnosticsState } from '@app/client-store-diagnostics';
+import { AppDiagnosticsStoreModule, diagnosticsAction, IDiagnosticsState } from '@app/client-store-diagnostics';
 import { AppRouterStoreModule } from '@app/client-store-router';
 import { AppTranslateModule } from '@app/client-translate';
 import { AppElizaModule } from '@app/client-util-eliza';
@@ -52,6 +52,6 @@ export class AppClientModule {
     private readonly store: Store<IDiagnosticsState>,
   ) {
     void this.grpc.getEntityById().subscribe();
-    this.store.dispatch(diagnosticsActions.connect());
+    this.store.dispatch(diagnosticsAction.connect());
   }
 }

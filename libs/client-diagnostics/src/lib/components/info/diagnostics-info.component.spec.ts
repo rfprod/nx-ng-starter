@@ -2,7 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { httpApiSelectors, IHttpApiState } from '@app/client-store-http-api';
+import { httpApiSelector, IHttpApiState } from '@app/client-store-http-api';
 import { newTestBedMetadata } from '@app/client-testing-unit';
 import { Store } from '@ngrx/store';
 import { first, lastValueFrom, of } from 'rxjs';
@@ -42,7 +42,7 @@ describe('AppDiagnosticsInfoComponent', () => {
 
   it('state should return the whole ping state', async () => {
     const ping = await lastValueFrom(component.ping$.pipe(first()));
-    const pingState = await lastValueFrom(store.select(httpApiSelectors.ping).pipe(first()));
+    const pingState = await lastValueFrom(store.select(httpApiSelector.ping).pipe(first()));
     expect(ping).toEqual(pingState);
   });
 

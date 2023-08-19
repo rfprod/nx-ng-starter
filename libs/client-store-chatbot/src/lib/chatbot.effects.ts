@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { from } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
-import { chatbotActions } from './chatbot.actions';
+import { chatbotAction } from './chatbot.actions';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +13,7 @@ export class AppChatbotEffects {
   public readonly open$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(chatbotActions.open.type),
+        ofType(chatbotAction.open.type),
         mergeMap(() => from(this.router.navigate([{ outlets: { chatbot: ['root'] } }]))),
       ),
     { dispatch: false },
@@ -22,7 +22,7 @@ export class AppChatbotEffects {
   public readonly close$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(chatbotActions.close.type),
+        ofType(chatbotAction.close.type),
         mergeMap(() => from(this.router.navigate([{ outlets: { chatbot: [] } }]))),
       ),
     { dispatch: false },

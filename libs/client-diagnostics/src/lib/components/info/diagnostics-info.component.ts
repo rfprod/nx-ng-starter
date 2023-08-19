@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { httpApiActions, httpApiSelectors, IHttpApiState } from '@app/client-store-http-api';
+import { httpApiAction, httpApiSelector, IHttpApiState } from '@app/client-store-http-api';
 import { Store } from '@ngrx/store';
 
 @Component({
@@ -12,11 +12,11 @@ export class AppDiagnosticsInfoComponent implements OnInit {
   /**
    * Ping result.
    */
-  public readonly ping$ = this.store.select(httpApiSelectors.ping);
+  public readonly ping$ = this.store.select(httpApiSelector.ping);
 
   constructor(private readonly store: Store<IHttpApiState>) {}
 
   public ngOnInit(): void {
-    this.store.dispatch(httpApiActions.ping());
+    this.store.dispatch(httpApiAction.ping());
   }
 }

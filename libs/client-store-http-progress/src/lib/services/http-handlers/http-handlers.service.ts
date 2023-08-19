@@ -22,7 +22,7 @@ import memo from 'memo-decorator';
 import { MonoTypeOperatorFunction, Observable, of } from 'rxjs';
 import { catchError, finalize, map, tap, timeout } from 'rxjs/operators';
 
-import { httpProgressActions } from '../../http-progress.actions';
+import { httpProgressAction } from '../../http-progress.actions';
 import { IHttpProgressState } from '../../http-progress.interface';
 import { AppToasterService } from '../toaster/toaster.service';
 
@@ -78,13 +78,13 @@ export class AppHttpHandlersService {
    * @returns a piped observable
    */
   public pipeHttpResponse<T>(observable: Observable<T>) {
-    this.store.dispatch(httpProgressActions.start({ payload: { mainView: true } }));
+    this.store.dispatch(httpProgressAction.start({ payload: { mainView: true } }));
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
       this.tapError<T>(),
       catchError(err => this.handleError(err)),
       finalize(() => {
-        this.store.dispatch(httpProgressActions.stop({ payload: { mainView: true } }));
+        this.store.dispatch(httpProgressAction.stop({ payload: { mainView: true } }));
       }),
     );
   }
@@ -99,14 +99,14 @@ export class AppHttpHandlersService {
    * @returns a piped observable
    */
   public pipeGqlResponse<T>(observable: Observable<ApolloQueryResult<T> | FetchResult<T> | MutationResult<T>>) {
-    this.store.dispatch(httpProgressActions.start({ payload: { mainView: true } }));
+    this.store.dispatch(httpProgressAction.start({ payload: { mainView: true } }));
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
       this.tapError(),
       map(result => ('data' in result ? result.data : result)),
       catchError(err => this.handleGqlError(err)),
       finalize(() => {
-        this.store.dispatch(httpProgressActions.stop({ payload: { mainView: true } }));
+        this.store.dispatch(httpProgressAction.stop({ payload: { mainView: true } }));
       }),
     );
   }

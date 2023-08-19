@@ -4,7 +4,7 @@ import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { Store } from '@ngrx/store';
 
 import { DOCUMENTATION_ENVIRONMENT, IDocumentationEnvironment } from '../../interfaces/environment.interface';
-import { mdFilesActions } from '../../modules/md-files/md-files.actions';
+import { mdFilesAction } from '../../modules/md-files/md-files.actions';
 import { IMdFilesState } from '../../modules/md-files/md-files.interface';
 
 /**
@@ -55,6 +55,6 @@ export class AppDocMarkdownReferenceTreeComponent {
     typeof node.children !== 'undefined' && node.children.length > 0;
 
   public showReadme(filePath: string): void {
-    this.store.dispatch(mdFilesActions.showReadme({ filePath }));
+    this.store.dispatch(mdFilesAction.showReadme({ filePath }));
   }
 }

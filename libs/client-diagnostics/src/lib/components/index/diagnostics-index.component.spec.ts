@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
-import { diagnosticsActions } from '@app/client-store-diagnostics';
+import { diagnosticsAction } from '@app/client-store-diagnostics';
 import { newTestBedMetadata } from '@app/client-testing-unit';
 import { Store } from '@ngrx/store';
 
@@ -44,8 +44,8 @@ describe('AppDiagnosticsIndexComponent', () => {
       second: 2,
       third: 3,
     };
-    expect(storeDispatchSpy).toHaveBeenNthCalledWith(calls.first, diagnosticsActions.staticData());
-    expect(storeDispatchSpy).toHaveBeenNthCalledWith(calls.second, diagnosticsActions.startEvents());
-    expect(storeDispatchSpy).toHaveBeenNthCalledWith(calls.third, diagnosticsActions.stopEvents());
+    expect(storeDispatchSpy).toHaveBeenNthCalledWith(calls.first, diagnosticsAction.staticData());
+    expect(storeDispatchSpy).toHaveBeenNthCalledWith(calls.second, diagnosticsAction.startEvents());
+    expect(storeDispatchSpy).toHaveBeenNthCalledWith(calls.third, diagnosticsAction.stopEvents());
   });
 });

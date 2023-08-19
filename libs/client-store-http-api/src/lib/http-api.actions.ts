@@ -3,11 +3,7 @@ import { createAction, props } from '@ngrx/store';
 
 import { httpApiReducerConfig, IPingResponse } from './http-api.interface';
 
-const ping = createAction(actionType(httpApiReducerConfig.featureName, 'ping'));
-
-const pingSuccess = createAction(actionType(httpApiReducerConfig.featureName, 'ping success'), props<{ payload: IPingResponse }>());
-
-export const httpApiActions = {
-  ping,
-  pingSuccess,
+export const httpApiAction = {
+  ping: createAction(actionType(httpApiReducerConfig.featureName, 'ping')),
+  pingSuccess: createAction(actionType(httpApiReducerConfig.featureName, 'ping success'), props<{ payload: IPingResponse }>()),
 };

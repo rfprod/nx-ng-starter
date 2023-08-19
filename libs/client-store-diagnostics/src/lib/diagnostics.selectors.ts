@@ -4,14 +4,9 @@ import { IDiagnosticsState, IDiagnosticsStateModel } from './diagnostics.interfa
 
 const selectFeature = (state: IDiagnosticsState) => state.diagnostics;
 
-const events = createSelector(selectFeature, (state: IDiagnosticsStateModel) => state.events);
-const users = createSelector(selectFeature, (state: IDiagnosticsStateModel) => state.users);
-const dynamicData = createSelector(selectFeature, (state: IDiagnosticsStateModel) => state.dynamicData);
-const staticData = createSelector(selectFeature, (state: IDiagnosticsStateModel) => state.staticData);
-
-export const diagnosticsSelectors = {
-  events,
-  users,
-  dynamicData,
-  staticData,
+export const diagnosticsSelector = {
+  events: createSelector(selectFeature, (state: IDiagnosticsStateModel) => state.events),
+  users: createSelector(selectFeature, (state: IDiagnosticsStateModel) => state.users),
+  dynamicData: createSelector(selectFeature, (state: IDiagnosticsStateModel) => state.dynamicData),
+  staticData: createSelector(selectFeature, (state: IDiagnosticsStateModel) => state.staticData),
 };

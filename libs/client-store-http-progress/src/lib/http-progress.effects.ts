@@ -3,9 +3,9 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { tap, withLatestFrom } from 'rxjs/operators';
 
-import { httpProgressActions } from './http-progress.actions';
+import { httpProgressAction } from './http-progress.actions';
 import { IHttpProgressState } from './http-progress.interface';
-import { httpProgressSelectors } from './http-progress.selectors';
+import { httpProgressSelector } from './http-progress.selectors';
 import { AppHttpProgressService } from './services/http-progress/http-progress.service';
 import { AppToasterService } from './services/toaster/toaster.service';
 
@@ -16,8 +16,8 @@ export class AppHttpProgressEffects {
   public readonly start$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(httpProgressActions.start.type),
-        withLatestFrom(this.store.select(httpProgressSelectors.mainView)),
+        ofType(httpProgressAction.start.type),
+        withLatestFrom(this.store.select(httpProgressSelector.mainView)),
         tap(([action, mainView]) => {
           if (mainView.loading) {
             this.service.globalProgressHandler.start();
@@ -30,8 +30,8 @@ export class AppHttpProgressEffects {
   public readonly stop$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(httpProgressActions.stop.type),
-        withLatestFrom(this.store.select(httpProgressSelectors.mainView)),
+        ofType(httpProgressAction.stop.type),
+        withLatestFrom(this.store.select(httpProgressSelector.mainView)),
         tap(([action, mainView]) => {
           if (!mainView.loading) {
             this.service.globalProgressHandler.stop();
@@ -44,8 +44,8 @@ export class AppHttpProgressEffects {
   public readonly displayToast$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(httpProgressActions.displayToast.type),
-        withLatestFrom(this.store.select(httpProgressSelectors.toaster)),
+        ofType(httpProgressAction.displayToast.type),
+        withLatestFrom(this.store.select(httpProgressSelector.toaster)),
         tap(([action, toaster]) => {
           this.toaster.showToaster(toaster.message, toaster.type, toaster.duration);
         }),

@@ -8,9 +8,9 @@ import { first, firstValueFrom } from 'rxjs';
 
 import { AppRouteSerializer } from './route.serializer';
 import { IRouterState } from './router.interface';
-import { routerSelectors } from './router.selectors';
+import { routerSelector } from './router.selectors';
 
-describe('routerSelectors', () => {
+describe('routerSelector', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     imports: [
       RouterTestingModule.withRoutes([
@@ -41,22 +41,22 @@ describe('routerSelectors', () => {
   });
 
   it('data', async () => {
-    const data = await firstValueFrom(store.select(routerSelectors.data).pipe(first()));
+    const data = await firstValueFrom(store.select(routerSelector.data).pipe(first()));
     expect(data).not.toBeUndefined();
   });
 
   it('queryParams', async () => {
-    const data = await firstValueFrom(store.select(routerSelectors.queryParams).pipe(first()));
+    const data = await firstValueFrom(store.select(routerSelector.queryParams).pipe(first()));
     expect(data).not.toBeUndefined();
   });
 
   it('params', async () => {
-    const data = await firstValueFrom(store.select(routerSelectors.params).pipe(first()));
+    const data = await firstValueFrom(store.select(routerSelector.params).pipe(first()));
     expect(data).not.toBeUndefined();
   });
 
   it('url', async () => {
-    const data = await firstValueFrom(store.select(routerSelectors.url).pipe(first()));
+    const data = await firstValueFrom(store.select(routerSelector.url).pipe(first()));
     expect(data).not.toBeUndefined();
   });
 });

@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { tap } from 'rxjs/operators';
 
 import { IFeatureAccessState } from '../../feature-access.interface';
-import { featureAccessSelectors } from '../../feature-access.selectors';
+import { featureAccessSelector } from '../../feature-access.selectors';
 
 interface IInputChanges extends SimpleChanges {
   appFeatureFlag: SimpleChange;
@@ -28,7 +28,7 @@ export class AppFeatureFlagDirective implements OnChanges {
       return;
     }
     const featureSelector =
-      typeof value === 'undefined' || value === '' ? featureAccessSelectors.enable : featureAccessSelectors.enableFeature(value);
+      typeof value === 'undefined' || value === '' ? featureAccessSelector.enable : featureAccessSelector.enableFeature(value);
     void this.store
       .select(featureSelector)
       .pipe(

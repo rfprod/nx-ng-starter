@@ -4,11 +4,11 @@ import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 import { first, of, tap } from 'rxjs';
 
-import { httpApiActions } from './http-api.actions';
+import { httpApiAction } from './http-api.actions';
 import { AppHttpApiEffects } from './http-api.effects';
 import { httpApiReducerConfig, IHttpApiState, IPingResponse } from './http-api.interface';
 import { httpApiReducerProvider } from './http-api.reducer';
-import { httpApiSelectors } from './http-api.selectors';
+import { httpApiSelector } from './http-api.selectors';
 import { AppHttpApiService } from './services/http-api/http-api.service';
 
 describe('AppHttpApiEffects', () => {
@@ -41,9 +41,9 @@ describe('AppHttpApiEffects', () => {
   it('should call http api service when the ping action is dispatched', waitForAsync(() => {
     const response: IPingResponse = { message: 'test' };
     const pingSpy = jest.spyOn(service, 'ping').mockReturnValue(of(response));
-    store.dispatch(httpApiActions.ping());
+    store.dispatch(httpApiAction.ping());
     void store
-      .select(httpApiSelectors.ping)
+      .select(httpApiSelector.ping)
       .pipe(
         first(),
         tap(ping => {

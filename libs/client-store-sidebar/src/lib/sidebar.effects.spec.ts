@@ -4,7 +4,7 @@ import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 
-import { sidebarActions } from './sidebar.actions';
+import { sidebarAction } from './sidebar.actions';
 import { AppSidebarEffects } from './sidebar.effects';
 import { ISidebarState, sidebarReducerConfig } from './sidebar.interface';
 import { sidebarReducerProvider } from './sidebar.reducer';
@@ -31,29 +31,29 @@ describe('AppSidebarEffects', () => {
   });
 
   it('should call router.navigate when the open action is dispatched with payload { navigate: true }', waitForAsync(() => {
-    store.dispatch(sidebarActions.open({ payload: { navigate: true } }));
+    store.dispatch(sidebarAction.open({ payload: { navigate: true } }));
     expect(routerNavigateSpy).toHaveBeenCalledWith([{ outlets: { sidebar: ['root'] } }]);
   }));
 
   it('should not call router.navigate when the open action is dispatched with payload { navigate: false }', waitForAsync(() => {
-    store.dispatch(sidebarActions.open({ payload: { navigate: false } }));
+    store.dispatch(sidebarAction.open({ payload: { navigate: false } }));
     expect(routerNavigateSpy).not.toHaveBeenCalledWith([{ outlets: { sidebar: ['root'] } }]);
   }));
 
   it('should call router.navigate when the close action is dispatched with payload { navigate: true }', waitForAsync(() => {
-    store.dispatch(sidebarActions.close({ payload: { navigate: true } }));
+    store.dispatch(sidebarAction.close({ payload: { navigate: true } }));
     expect(routerNavigateSpy).toHaveBeenCalledWith([{ outlets: { sidebar: [] } }]);
   }));
 
   it('should not call router.navigate when the close action is dispatched with payload { navigate: false }', waitForAsync(() => {
-    store.dispatch(sidebarActions.close({ payload: { navigate: false } }));
+    store.dispatch(sidebarAction.close({ payload: { navigate: false } }));
     expect(routerNavigateSpy).not.toHaveBeenCalledWith([{ outlets: { sidebar: [] } }]);
   }));
 
   it('should call router.navigate when either open or close action is dispatched', waitForAsync(() => {
-    store.dispatch(sidebarActions.toggle());
+    store.dispatch(sidebarAction.toggle());
     expect(routerNavigateSpy).toHaveBeenNthCalledWith(1, [{ outlets: { sidebar: ['root'] } }]);
-    store.dispatch(sidebarActions.toggle());
+    store.dispatch(sidebarAction.toggle());
     const expectedCalls = 2;
     expect(routerNavigateSpy).toHaveBeenCalledTimes(expectedCalls);
     expect(routerNavigateSpy).toHaveBeenNthCalledWith(expectedCalls, [{ outlets: { sidebar: [] } }]);

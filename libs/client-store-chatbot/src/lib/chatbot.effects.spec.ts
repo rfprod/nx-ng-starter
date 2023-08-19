@@ -4,7 +4,7 @@ import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 
-import { chatbotActions } from './chatbot.actions';
+import { chatbotAction } from './chatbot.actions';
 import { AppChatbotEffects } from './chatbot.effects';
 import { chatbotReducerConfig, IChatbotState } from './chatbot.interface';
 import { chatbotReducerProvider } from './chatbot.reducer';
@@ -31,12 +31,12 @@ describe('AppChatbotEffects', () => {
   });
 
   it('should call router.navigate when the open action is dispatched', waitForAsync(() => {
-    store.dispatch(chatbotActions.open());
+    store.dispatch(chatbotAction.open());
     expect(routerNavigateSpy).toHaveBeenCalledWith([{ outlets: { chatbot: ['root'] } }]);
   }));
 
   it('should call router.navigate when the close action is dispatched', waitForAsync(() => {
-    store.dispatch(chatbotActions.close());
+    store.dispatch(chatbotAction.close());
     expect(routerNavigateSpy).toHaveBeenCalledWith([{ outlets: { chatbot: [] } }]);
   }));
 });

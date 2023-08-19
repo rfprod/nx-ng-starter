@@ -3,10 +3,10 @@ import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store, StoreModule } from '@ngrx/store';
 import { first, switchMap, tap } from 'rxjs';
 
-import { themeActions } from './theme.actions';
+import { themeAction } from './theme.actions';
 import { IThemeState, IThemeStateModel, themeReducerConfig } from './theme.interface';
 import { AppThemeReducer, themeReducerProvider } from './theme.reducer';
-import { themeSelectors } from './theme.selectors';
+import { themeSelector } from './theme.selectors';
 
 describe('AppThemeReducer', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
@@ -35,9 +35,9 @@ describe('AppThemeReducer', () => {
   });
 
   it('should process the enableDarkTheme action correctly', waitForAsync(() => {
-    store.dispatch(themeActions.enableDarkTheme());
+    store.dispatch(themeAction.enableDarkTheme());
     void store
-      .select(themeSelectors.darkThemeEnabled)
+      .select(themeSelector.darkThemeEnabled)
       .pipe(
         first(),
         tap(darkThemeEnabled => {
@@ -48,16 +48,16 @@ describe('AppThemeReducer', () => {
   }));
 
   it('should process the disableDarkTheme action correctly', waitForAsync(() => {
-    store.dispatch(themeActions.enableDarkTheme());
+    store.dispatch(themeAction.enableDarkTheme());
     void store
-      .select(themeSelectors.darkThemeEnabled)
+      .select(themeSelector.darkThemeEnabled)
       .pipe(
         first(),
         tap(darkThemeEnabled => {
           expect(darkThemeEnabled).toBeTruthy();
-          store.dispatch(themeActions.disableDarkTheme());
+          store.dispatch(themeAction.disableDarkTheme());
         }),
-        switchMap(() => store.select(themeSelectors.darkThemeEnabled)),
+        switchMap(() => store.select(themeSelector.darkThemeEnabled)),
         tap(darkThemeEnabled => {
           expect(darkThemeEnabled).toBeFalsy();
         }),

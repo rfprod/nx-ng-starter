@@ -4,9 +4,9 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { map, tap, withLatestFrom } from 'rxjs/operators';
 
-import { themeActions } from './theme.actions';
+import { themeAction } from './theme.actions';
 import { IThemeState } from './theme.interface';
-import { themeSelectors } from './theme.selectors';
+import { themeSelector } from './theme.selectors';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class AppThemeEffects {
   public readonly enableDarkTheme$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(themeActions.enableDarkTheme.type),
+        ofType(themeAction.enableDarkTheme.type),
         tap(() => {
           this.overlayContainer.getContainerElement().classList.add('unicorn-dark-theme');
         }),
@@ -26,7 +26,7 @@ export class AppThemeEffects {
   public readonly disableDarkTheme$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(themeActions.disableDarkTheme.type),
+        ofType(themeAction.disableDarkTheme.type),
         tap(() => {
           this.overlayContainer.getContainerElement().classList.remove('unicorn-dark-theme');
         }),
@@ -36,9 +36,9 @@ export class AppThemeEffects {
 
   public readonly toggleDarkTheme$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(themeActions.toggleDarkTheme.type),
-      withLatestFrom(this.store.select(themeSelectors.darkThemeEnabled)),
-      map(([action, darkThemeEnabled]) => (darkThemeEnabled ? themeActions.disableDarkTheme() : themeActions.enableDarkTheme())),
+      ofType(themeAction.toggleDarkTheme.type),
+      withLatestFrom(this.store.select(themeSelector.darkThemeEnabled)),
+      map(([action, darkThemeEnabled]) => (darkThemeEnabled ? themeAction.disableDarkTheme() : themeAction.enableDarkTheme())),
     ),
   );
 

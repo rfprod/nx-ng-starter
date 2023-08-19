@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap, tap } from 'rxjs/operators';
 
-import { diagnosticsActions } from './diagnostics.actions';
+import { diagnosticsAction } from './diagnostics.actions';
 import { IDiagnosticsStateModel, TDiagnosticData } from './diagnostics.interface';
 import { AppStaticDataService } from './services/static-data/static-data-api.service';
 import { AppWebsocketApiService } from './services/websocket/websocket-api.service';
@@ -13,23 +13,23 @@ import { AppWebsocketApiService } from './services/websocket/websocket-api.servi
 export class AppDiagnosticsEffects {
   public readonly connect$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(diagnosticsActions.connect.type),
+      ofType(diagnosticsAction.connect.type),
       mergeMap(() => this.wsApi.connect<TDiagnosticData[]>()),
       map(event => {
         const payload: Pick<IDiagnosticsStateModel, 'events'> = { events: [event] };
-        return diagnosticsActions.connected({ payload });
+        return diagnosticsAction.connected({ payload });
       }),
     ),
   );
 
   public readonly connected$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(diagnosticsActions.connected),
+      ofType(diagnosticsAction.connected),
       map(({ payload }) => {
         const event = payload.events[0];
         return event.event === 'users'
-          ? diagnosticsActions.userDataSuccess({ payload: event.data.reduce((acc: number, item) => acc + <number>item.value, 0) })
-          : diagnosticsActions.dynamicDataSuccess({ payload: event.data });
+          ? diagnosticsAction.userDataSuccess({ payload: event.data.reduce((acc: number, item) => acc + <number>item.value, 0) })
+          : diagnosticsAction.dynamicDataSuccess({ payload: event.data });
       }),
     ),
   );
@@ -37,7 +37,7 @@ export class AppDiagnosticsEffects {
   public readonly startEvents$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(diagnosticsActions.startEvents.type),
+        ofType(diagnosticsAction.startEvents.type),
         tap(() => {
           this.wsApi.startDiagEvents();
         }),
@@ -48,7 +48,7 @@ export class AppDiagnosticsEffects {
   public readonly stopEvents$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(diagnosticsActions.stopEvents.type),
+        ofType(diagnosticsAction.stopEvents.type),
         tap(() => {
           this.wsApi.stopDiagEvents();
         }),
@@ -58,9 +58,9 @@ export class AppDiagnosticsEffects {
 
   public readonly staticData$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(diagnosticsActions.staticData.type),
+      ofType(diagnosticsAction.staticData.type),
       mergeMap(() => this.staticApi.staticData()),
-      map(payload => diagnosticsActions.staticDataSuccess({ payload })),
+      map(payload => diagnosticsAction.staticDataSuccess({ payload })),
     ),
   );
 

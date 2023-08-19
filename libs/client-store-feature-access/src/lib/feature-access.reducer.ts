@@ -1,7 +1,7 @@
 import { Injectable, Provider } from '@angular/core';
 import { createReducer, on } from '@ngrx/store';
 
-import { featureAccessActions } from './feature-access.actions';
+import { featureAccessAction } from './feature-access.actions';
 import { featureAccessReducerConfig } from './feature-access.interface';
 
 @Injectable({
@@ -11,8 +11,8 @@ export class AppFeatureAccessReducer {
   public createReducer() {
     return createReducer(
       featureAccessReducerConfig.initialState,
-      on(featureAccessActions.setEnvironment, (state, { payload }) => ({ ...state, environment: payload })),
-      on(featureAccessActions.setFeatureFlags, (state, { payload }) => ({ ...state, featureFlags: payload })),
+      on(featureAccessAction.setEnvironment, (state, { payload }) => ({ ...state, environment: payload })),
+      on(featureAccessAction.setFeatureFlags, (state, { payload }) => ({ ...state, featureFlags: payload })),
     );
   }
 }

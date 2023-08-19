@@ -3,10 +3,10 @@ import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store, StoreModule } from '@ngrx/store';
 import { first, tap } from 'rxjs';
 
-import { diagnosticsActions } from './diagnostics.actions';
+import { diagnosticsAction } from './diagnostics.actions';
 import { diagnosticsReducerConfig, IDiagnosticsState, IDiagnosticsStateModel } from './diagnostics.interface';
 import { AppDiagnosticsReducer, diagnosticsReducerProvider } from './diagnostics.reducer';
-import { diagnosticsSelectors } from './diagnostics.selectors';
+import { diagnosticsSelector } from './diagnostics.selectors';
 
 describe('AppDiagnosticsReducer', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
@@ -36,9 +36,9 @@ describe('AppDiagnosticsReducer', () => {
 
   it('should process the connected action correctly (push events, "users")', waitForAsync(() => {
     const payload: IDiagnosticsStateModel = { events: [{ data: [], event: 'users' }], users: 0, dynamicData: [], staticData: [] };
-    store.dispatch(diagnosticsActions.connected({ payload }));
+    store.dispatch(diagnosticsAction.connected({ payload }));
     void store
-      .select(diagnosticsSelectors.events)
+      .select(diagnosticsSelector.events)
       .pipe(
         first(),
         tap(events => {
