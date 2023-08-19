@@ -1,0 +1,7 @@
+<div class="container" *ngIf="radarChartConfig$ | async as config">
+  <app-radar-chart [chartId]="'radar-example-1'" [data]="[config.data[0]]" [options]="config.options"></app-radar-chart>
+
+  <app-radar-chart [chartId]="'radar-example-2'" [data]="[config.data[1]]" [options]="config.options"></app-radar-chart>
+
+  <app-radar-chart [chartId]="'radar-example-3'" [data]="config.data" [options]="config.options"></app-radar-chart>
+</div>

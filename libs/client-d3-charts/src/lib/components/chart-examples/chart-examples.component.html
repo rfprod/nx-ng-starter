@@ -1,45 +1,17 @@
-<div class="container" *ngIf="barChartConfig$ | async as config">
-  <app-bar-chart [chartId]="'bar-example-1'" [data]="config.data" [options]="config.options"></app-bar-chart>
-</div>
+<app-chart-examples-bar></app-chart-examples-bar>
 
 <hr [ngStyle]="{ width: '100%' }" />
 
-<div class="container" *ngIf="lineChartConfig$ | async as config">
-  <app-line-chart [chartId]="'line-example-1'" [data]="[config.data[0]]" [options]="config.options"></app-line-chart>
-
-  <app-line-chart [chartId]="'line-example-2'" [data]="[config.data[1]]" [options]="config.optionsDateDdMmYy"></app-line-chart>
-
-  <app-line-chart
-    [chartId]="'line-example-3'"
-    [data]="[config.data[1], config.data[2]]"
-    [options]="config.optionsDateDdMmYyyy"
-  ></app-line-chart>
-
-  <app-line-chart [chartId]="'line-example-4'" [data]="config.data" [options]="config.optionsDateMmYyyy"></app-line-chart>
-</div>
+<app-chart-examples-line></app-chart-examples-line>
 
 <hr [ngStyle]="{ width: '100%' }" />
 
-<div class="container" *ngIf="radarChartConfig$ | async as config">
-  <app-radar-chart [chartId]="'radar-example-1'" [data]="[config.data[0]]" [options]="config.options"></app-radar-chart>
-
-  <app-radar-chart [chartId]="'radar-example-2'" [data]="[config.data[1]]" [options]="config.options"></app-radar-chart>
-
-  <app-radar-chart [chartId]="'radar-example-3'" [data]="config.data" [options]="config.options"></app-radar-chart>
-</div>
+<app-chart-examples-radar></app-chart-examples-radar>
 
 <hr [ngStyle]="{ width: '100%' }" />
 
-<div class="container" *ngIf="pieChartConfig$ | async as config">
-  <app-pie-chart [chartId]="'pie-example-1'" [data]="config.data" [options]="config.options"></app-pie-chart>
-</div>
+<app-chart-examples-pie></app-chart-examples-pie>
 
 <hr [ngStyle]="{ width: '100%' }" />
 
-<div class="container" *ngIf="forceDirectedChartConfig$ | async as config">
-  <app-force-directed-chart
-    [chartId]="'force-directed-example-1'"
-    [data]="config.data"
-    [options]="config.options"
-  ></app-force-directed-chart>
-</div>
+<app-chart-examples-force-directed></app-chart-examples-force-directed>

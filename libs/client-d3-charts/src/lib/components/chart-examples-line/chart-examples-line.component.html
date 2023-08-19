@@ -1,0 +1,13 @@
+<div class="container" *ngIf="lineChartConfig$ | async as config">
+  <app-line-chart [chartId]="'line-example-1'" [data]="[config.data[0]]" [options]="config.options"></app-line-chart>
+
+  <app-line-chart [chartId]="'line-example-2'" [data]="[config.data[1]]" [options]="config.optionsDateDdMmYy"></app-line-chart>
+
+  <app-line-chart
+    [chartId]="'line-example-3'"
+    [data]="[config.data[1], config.data[2]]"
+    [options]="config.optionsDateDdMmYyyy"
+  ></app-line-chart>
+
+  <app-line-chart [chartId]="'line-example-4'" [data]="config.data" [options]="config.optionsDateMmYyyy"></app-line-chart>
+</div>

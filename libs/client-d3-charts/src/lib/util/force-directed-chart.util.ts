@@ -245,20 +245,15 @@ const createNodes = (
   force: d3.Simulation<IForceDirectedChartDataNode, undefined>,
   config: IForceDirectedChartOptions,
 ) => {
+  const base = 5;
   return svg
     .selectAll('.node')
     .data(data.nodes)
     .enter()
     .append('circle')
     .attr('class', 'node')
-    .attr('r', val => {
-      const base = 5;
-      return base + (val.value ?? 0) + (val.linksCount ?? 0) * 2;
-    })
-    .style('stroke-width', val => {
-      const base = 5;
-      return base + (val.value ?? 0) + (val.linksCount ?? 0) * 2;
-    })
+    .attr('r', val => base + (val.value ?? 1) * (val.linksCount ?? 1))
+    .style('stroke-width', val => base + (val.value ?? 1) + (val.linksCount ?? 1))
     .style('fill', val => (typeof val.img === 'undefined' || val.img === '' ? '#f00000' : `url(${val.img})`))
     .call(
       d3
