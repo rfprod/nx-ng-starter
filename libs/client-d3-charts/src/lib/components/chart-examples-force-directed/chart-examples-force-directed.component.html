@@ -1,0 +1,7 @@
+<div class="container" *ngIf="forceDirectedChartConfig$ | async as config">
+  <app-force-directed-chart
+    [chartId]="'force-directed-example-1'"
+    [data]="config.data"
+    [options]="config.options"
+  ></app-force-directed-chart>
+</div>

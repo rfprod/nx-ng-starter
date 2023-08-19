@@ -1,10 +1,12 @@
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 
 import { AppChartExamplesComponent } from './chart-examples.component';
 
-describe('AppGlobalProgressBarComponent', () => {
+describe('AppChartExamplesComponent', () => {
   const testBedConfig: TestModuleMetadata = {
     declarations: [AppChartExamplesComponent],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
   };
 
   let fixture: ComponentFixture<AppChartExamplesComponent>;
@@ -19,40 +21,5 @@ describe('AppGlobalProgressBarComponent', () => {
 
   it('should be defined', () => {
     expect(component).toBeDefined();
-  });
-
-  it('barChartOptions should have expected structure', () => {
-    expect(component.barChartOptions()).toEqual({
-      chartTitle: 'Example bar chart',
-      xAxisTitle: 'long x axis title',
-      yAxisTitle: 'long y axis title',
-    });
-  });
-
-  it('lineChartOptions should have expected structure', () => {
-    expect(component.lineChartOptions()).toEqual({
-      chartTitle: 'Example line chart, date format default',
-      dateFormat: 'default',
-      xAxisTitle: 'Date range',
-      yAxisTitle: 'Value range',
-    });
-  });
-
-  it('radarChartOptions should have expected structure', () => {
-    expect(component.radarChartOptions()).toEqual({
-      chartTitle: 'Example radar chart',
-    });
-  });
-
-  it('pieChartOptions should have expected structure', () => {
-    expect(component.pieChartOptions()).toEqual({
-      chartTitle: 'Example pie chart',
-    });
-  });
-
-  it('forceDirectedChartOptions should have expected structure', () => {
-    expect(component.forceDirectedChartOptions()).toEqual({
-      chartTitle: 'Example force directed chart',
-    });
   });
 });
