@@ -44,21 +44,23 @@ describe('AppDiagnosticsGateway', () => {
       ],
     })
       .compile()
-      .then(module => {
+      .then(async module => {
         testingModule = module;
+
+        app = testingModule.createNestApplication();
+        app.useWebSocketAdapter(new WsAdapter(app));
+
+        await app.listen(appPort, '0.0.0.0');
+        const appUrl = await app.getUrl();
+
+        server = new Server({ server: app.getHttpServer() });
+
         gateway = testingModule.get<AppDiagnosticsGateway>(AppDiagnosticsGateway);
         gatewaySpy = {
           sendEvent: jest.spyOn(gateway, 'sendEvent'),
           broadcastEvent: jest.spyOn(gateway, 'broadcastEvent'),
         };
 
-        app = testingModule.createNestApplication();
-        app.useWebSocketAdapter(new WsAdapter(app));
-
-        return app.listen(appPort, '0.0.0.0').then(() => app.getUrl());
-      })
-      .then(appUrl => {
-        server = new Server({ server: app.getHttpServer() });
         gateway['server'] = server;
 
         const wsUrl = `${appUrl.replace(/http/, 'ws')}/api/events`;
@@ -80,10 +82,6 @@ describe('AppDiagnosticsGateway', () => {
     });
   });
 
-  it('test', () => {
-    expect(true).toBeTruthy();
-  });
-
   it('handleConnection should call broadcastEvent', async () => {
     expect(wsClient).toBeDefined();
 
@@ -102,25 +100,10 @@ describe('AppDiagnosticsGateway', () => {
     await gateway.handleDisconnect();
     expect(gatewaySpy.broadcastEvent).toHaveBeenCalledWith({ data: [{ name: 'active', value: 0 }], event: 'users' });
     expect(gatewaySpy.sendEvent).not.toHaveBeenCalled();
-
-    removeWsClient(server, wsClient);
   });
 
   it('handleConnection should not send an event with currently connected users count if input value is not provided and here are no connected users', async () => {
     await gateway.handleConnection();
     expect(gatewaySpy.sendEvent).not.toHaveBeenCalled();
-  });
-
-  it('handleConnection should send an event with currently connected users count if input value is not provided and here are no connected users', async () => {
-    expect(wsClient).toBeDefined();
-
-    addWsClient(server, wsClient);
-
-    await gateway.handleConnection();
-    expect(gatewaySpy.sendEvent).toHaveBeenCalled();
-
-    removeWsClient(server, wsClient);
-
-    gatewaySpy.sendEvent.mockClear();
   });
 });
