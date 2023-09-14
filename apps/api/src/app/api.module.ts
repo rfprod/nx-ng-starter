@@ -8,7 +8,7 @@ import { HttpModule } from '@nestjs/axios';
 import { CacheModule } from '@nestjs/cache-manager';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ThrottlerModule } from '@nestjs/throttler';
+import { ThrottlerModule, ThrottlerModuleOptions } from '@nestjs/throttler';
 
 import { environment } from '../environments/environment';
 
@@ -37,17 +37,16 @@ const caching = () => {
  * @returns throttling module configuration
  */
 const throttling = () => {
-  const defaultConfig = {
-    limit: 60,
-    ttl: 60,
-  };
   return ThrottlerModule.forRootAsync({
     imports: [ConfigModule],
     inject: [ConfigService],
-    useFactory: (config: ConfigService) => ({
-      limit: config.get('THROTTLE_LIMIT') ?? defaultConfig.limit,
-      ttl: config.get('THROTTLE_TTL') ?? defaultConfig.ttl,
-    }),
+    useFactory: (config: ConfigService) => {
+      const defaults = { limit: 60, ttl: 60 };
+      const options: ThrottlerModuleOptions = [
+        { limit: config.get('THROTTLE_LIMIT') ?? defaults.limit, ttl: config.get('THROTTLE_TTL') ?? defaults.ttl },
+      ];
+      return options;
+    },
   });
 };
 
