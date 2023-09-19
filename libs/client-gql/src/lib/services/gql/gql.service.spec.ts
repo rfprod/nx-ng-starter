@@ -6,7 +6,7 @@ import { getTestBedConfig } from '@app/client-testing-unit';
 import { Apollo, ApolloBase, ApolloModule } from 'apollo-angular';
 import { DocumentNode } from 'graphql';
 import { cold, getTestScheduler } from 'jasmine-marbles';
-import { Observable, of, tap } from 'rxjs';
+import { lastValueFrom, Observable, of, tap } from 'rxjs';
 
 import { matcompMutations } from '../../graphql/matcomp/matcomp.mutations';
 import { matcompQueries } from '../../graphql/matcomp/matcomp.queries';
@@ -156,31 +156,19 @@ describe('AppClientGqlService', () => {
         );
       });
 
-      it('should call apollo use twise and call client.resetStore if client exists with the default client name', waitForAsync(() => {
-        void service
-          .resetApolloClient()
-          .pipe(
-            tap(() => {
-              const expectation = 2;
-              expect(useApolloSpy).toHaveBeenCalledTimes(expectation);
-              expect(useApolloSpy).toHaveBeenCalledWith(clientName);
-            }),
-          )
-          .subscribe();
-      }));
+      it('should call apollo use twise and call client.resetStore if client exists with the default client name', async () => {
+        await lastValueFrom(service.resetApolloClient());
+        const expectation = 2;
+        expect(useApolloSpy).toHaveBeenCalledTimes(expectation);
+        expect(useApolloSpy).toHaveBeenCalledWith(clientName);
+      });
 
-      it('should call apollo use twise and call client.resetStore if client exists when the client name is specified', waitForAsync(() => {
-        void service
-          .resetApolloClient(clientName)
-          .pipe(
-            tap(() => {
-              const expectation = 2;
-              expect(useApolloSpy).toHaveBeenCalledTimes(expectation);
-              expect(useApolloSpy).toHaveBeenCalledWith(clientName);
-            }),
-          )
-          .subscribe();
-      }));
+      it('should call apollo use twise and call client.resetStore if client exists when the client name is specified', async () => {
+        await lastValueFrom(service.resetApolloClient(clientName));
+        const expectation = 2;
+        expect(useApolloSpy).toHaveBeenCalledTimes(expectation);
+        expect(useApolloSpy).toHaveBeenCalledWith(clientName);
+      });
 
       it('should reset apollo client if it was previously created', () => {
         const apolloBase = new Object({
