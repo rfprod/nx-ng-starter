@@ -39,6 +39,7 @@ jobs:
           trunk: 'main'
 
       - name: Validate commit messages
+        if: ${{ github.event.pull_request.user.login != 'dependabot[bot]' }}
         run: |
           git checkout -b premerge
           git fetch origin main:main
