@@ -46,6 +46,7 @@ jobs:
           npx --no-install commitlint --from main
 
       - name: Validation contribution size
+        if: ${{ github.event.pull_request.user.login != 'dependabot[bot]' }}
         uses: ./.github/actions/validate-contribution-size
 
   lint:
