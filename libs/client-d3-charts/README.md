@@ -51,6 +51,8 @@ import { AppD3ChartsModule } from '@rfprodz/client-d3-charts';
 <app-line-chart></app-line-chart>
 <!-- pie chart -->
 <app-pie-chart></app-pie-chart>
+<!-- pie chart -->
+<app-gauge-chart></app-gauge-chart>
 <!-- radar chart -->
 <app-radar-chart></app-radar-chart>
 <!-- force-directed chart -->
@@ -61,11 +63,12 @@ import { AppD3ChartsModule } from '@rfprodz/client-d3-charts';
 
 ```typescript
 import {
+  AppBarChartComponent,
+  AppForceDirectedChartComponent,
+  AppGaugeChartComponent,
+  AppLineChartComponent,
   AppPieChartComponent,
   AppRadarChartComponent,
-  AppForceDirectedChartComponent,
-  AppBarChartComponent,
-  AppLineChartComponent,
 } from '@rfprodz/client-d3-charts';
 ```
 

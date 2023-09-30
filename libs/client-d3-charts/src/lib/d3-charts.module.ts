@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
+import { AppGaugeChartComponent } from './components';
 import { AppBarChartComponent } from './components/bar-chart/bar-chart.component';
 import { AppChartExamplesComponent } from './components/chart-examples/chart-examples.component';
 import { AppChartExamplesBarComponent } from './components/chart-examples-bar/chart-examples-bar.component';
 import { AppChartExamplesForceDirectedComponent } from './components/chart-examples-force-directed/chart-examples-force-directed.component';
+import { AppChartExamplesGaugeComponent } from './components/chart-examples-gauge/chart-examples-gauge.component';
 import { AppChartExamplesLineComponent } from './components/chart-examples-line/chart-examples-line.component';
 import { AppChartExamplesPieComponent } from './components/chart-examples-pie/chart-examples-pie.component';
 import { AppChartExamplesRadaraComponent } from './components/chart-examples-radar/chart-examples-radar.component';
@@ -16,6 +18,7 @@ import { AppRadarChartComponent } from './components/radar-chart/radar-chart.com
 @NgModule({
   imports: [CommonModule],
   declarations: [
+    AppGaugeChartComponent,
     AppPieChartComponent,
     AppRadarChartComponent,
     AppForceDirectedChartComponent,
@@ -26,9 +29,11 @@ import { AppRadarChartComponent } from './components/radar-chart/radar-chart.com
     AppChartExamplesRadaraComponent,
     AppChartExamplesBarComponent,
     AppChartExamplesPieComponent,
+    AppChartExamplesGaugeComponent,
     AppChartExamplesForceDirectedComponent,
   ],
   exports: [
+    AppGaugeChartComponent,
     AppPieChartComponent,
     AppRadarChartComponent,
     AppForceDirectedChartComponent,
