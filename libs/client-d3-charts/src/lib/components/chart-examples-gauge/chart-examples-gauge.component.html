@@ -1,0 +1,22 @@
+<div class="container" *ngIf="gaugeChartConfig$ | async as config">
+  <app-gauge-chart
+    [chartId]="'gauge-example-1'"
+    [data]="config.data.first"
+    [options]="config.options.first"
+    [value]="value.first"
+  ></app-gauge-chart>
+
+  <app-gauge-chart
+    [chartId]="'gauge-example-2'"
+    [data]="config.data.second"
+    [options]="config.options.second"
+    [value]="value.second"
+  ></app-gauge-chart>
+
+  <app-gauge-chart
+    [chartId]="'gauge-example-3'"
+    [data]="config.data.second"
+    [options]="config.options.third"
+    [value]="value.third"
+  ></app-gauge-chart>
+</div>
