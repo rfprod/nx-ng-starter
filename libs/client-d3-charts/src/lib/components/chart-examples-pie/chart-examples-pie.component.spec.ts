@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 import { firstValueFrom } from 'rxjs';
 
+import { IPieChartOptions } from '../../interfaces/pie-chart.interface';
 import { AppChartExamplesPieComponent } from './chart-examples-pie.component';
 
 describe('AppChartExamplesPieComponent', () => {
@@ -25,7 +26,13 @@ describe('AppChartExamplesPieComponent', () => {
   it('the chart options should have expected structure', async () => {
     const config = await firstValueFrom(component.pieChartConfig$);
     expect(config.options).toEqual({
-      chartTitle: 'Example pie chart',
+      first: <Partial<IPieChartOptions>>{
+        chartTitle: 'Example pie chart 1',
+      },
+      second: <Partial<IPieChartOptions>>{
+        chartTitle: 'Example pie chart 2',
+        innerRadius: 75,
+      },
     });
   });
 });
