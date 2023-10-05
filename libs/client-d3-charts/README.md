@@ -51,7 +51,7 @@ import { AppD3ChartsModule } from '@rfprodz/client-d3-charts';
 <app-line-chart></app-line-chart>
 <!-- pie chart -->
 <app-pie-chart></app-pie-chart>
-<!-- pie chart -->
+<!-- gauge chart -->
 <app-gauge-chart></app-gauge-chart>
 <!-- radar chart -->
 <app-radar-chart></app-radar-chart>
@@ -80,7 +80,7 @@ See the chart eamples components
 import { AppChartExamplesComponent } from '@rfprodz/client-d3-charts';
 ```
 
-or the [source code](https://github.com/rfprod/nx-ng-starter/blob/main/libs/client-d3-charts/src/lib/components/chart-examples/chart-examples.component.ts) of the chart examples component
+or the [source code](https://github.com/rfprod/nx-ng-starter/blob/main/libs/client-d3-charts/src/lib/components/chart-examples/) of the chart examples component
 
 ## Developer commands reference
 

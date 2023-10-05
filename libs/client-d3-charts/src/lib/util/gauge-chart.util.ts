@@ -42,7 +42,7 @@ const createContainer = (container: ElementRef<HTMLDivElement>, config: IGaugeCh
     .select(`#${id}`)
     .append('svg')
     .attr('width', config.width + config.margin.left + config.margin.right)
-    .attr('height', config.height + config.margin.top + config.margin.bottom)
+    .attr('height', config.height / 2 + config.margin.top + config.margin.bottom)
     .attr('class', id);
   const g = svg
     .append('g')
@@ -51,16 +51,37 @@ const createContainer = (container: ElementRef<HTMLDivElement>, config: IGaugeCh
   return { svg, g };
 };
 
+/**
+ * Percentage to degrees converter.
+ * @param perc percentage
+ */
 const percToDeg = (perc: number) => {
   const mod = 360;
   return perc * mod;
 };
+
+/**
+ * Degrees to percentage converter.
+ * @param deg degrees
+ */
 const degToRad = (deg: number) => {
   const mod = 180;
   return (deg * Math.PI) / mod;
 };
+
+/**
+ * Repcentage to radians converter.
+ * @param perc percentage
+ */
 const percToRad = (perc: number) => degToRad(percToDeg(perc));
 
+/**
+ * Draws the gauge chart sections.
+ * @param config the chart config
+ * @param arc the charts's arc
+ * @param arcs the chart's arc sections
+ * @param data the chart's data
+ */
 const drawSections = (
   config: IGaugeChartOptions,
   arc: d3.Arc<unknown, d3.PieArcDatum<IGaugeChartDataNode>>,
@@ -90,6 +111,12 @@ const drawSections = (
     });
 };
 
+/**
+ * Draws the guage chart labels
+ * @param arc the charts's arc
+ * @param arcs the chart's arc sections
+ * @param data the chart's data
+ */
 const drawLabels = (
   arc: d3.Arc<unknown, d3.PieArcDatum<IGaugeChartDataNode>>,
   arcs: d3.Selection<SVGGElement, d3.PieArcDatum<IGaugeChartDataNode>, SVGGElement, unknown>,
@@ -119,6 +146,12 @@ const drawLabels = (
     .text(d => d.data.y);
 };
 
+/**
+ * Draws the gauge chart value.
+ * @param config the chart config
+ * @param g the gauge chart container
+ * @param radius the chart radius
+ */
 const drawValue = (config: IGaugeChartOptions, g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>, radius: number) => {
   const mod = 20;
   g.append('text')
@@ -126,8 +159,8 @@ const drawValue = (config: IGaugeChartOptions, g: d3.Selection<SVGGElement, unkn
     .attr('text-anchor', 'middle')
     .attr('dx', radius / mod)
     .attr('dy', radius / mod)
-    .style('font-size', '12px')
-    .text(() => config.value);
+    .style('font-size', '18px')
+    .text(() => `${config.value}%`);
 };
 
 /**
@@ -170,7 +203,7 @@ export const drawGaugeChart = (
           .attr('class', 'chart-tooltip')
           .style('opacity', 0)
           .attr('dx', -config.width / (2 * 2 * 2))
-          .attr('dy', config.height / 2 + config.margin.top)
+          .attr('dy', radius / 2 - config.margin.top - config.margin.bottom)
           .text(tooltipText)
           .transition()
           .duration(config.transitionDuration)

@@ -48,8 +48,18 @@ export class AppChartExamplesPieComponent {
    * Example pie chart options.
    */
   private pieChartOptions() {
-    return <Partial<IPieChartOptions>>{
-      chartTitle: 'Example pie chart',
+    const options: {
+      first: Partial<IPieChartOptions>;
+      second: Partial<IPieChartOptions>;
+    } = {
+      first: <Partial<IPieChartOptions>>{
+        chartTitle: 'Example pie chart 1',
+      },
+      second: <Partial<IPieChartOptions>>{
+        chartTitle: 'Example pie chart 2',
+        innerRadius: 75,
+      },
     };
+    return options;
   }
 }
