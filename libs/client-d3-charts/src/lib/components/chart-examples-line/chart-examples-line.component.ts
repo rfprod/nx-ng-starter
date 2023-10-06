@@ -4,9 +4,7 @@ import { first, map, switchMap, timer } from 'rxjs';
 
 import { ILineChartOptions, TDateFormat, TLineChartData } from '../../interfaces/line-chart.interface';
 
-/**
- * Line chart examples.
- */
+/** Line chart example. */
 @Component({
   selector: 'app-chart-examples-line',
   templateUrl: './chart-examples-line.component.html',
@@ -14,10 +12,8 @@ import { ILineChartOptions, TDateFormat, TLineChartData } from '../../interfaces
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppChartExamplesLineComponent {
-  /**
-   * Sample line chart data.
-   */
-  private get lineChartData() {
+  /** The chart data. */
+  private get chartData() {
     return <TLineChartData[]>[
       [
         { timestamp: this.randomTimestamp(), value: this.randomValue() },
@@ -49,17 +45,19 @@ export class AppChartExamplesLineComponent {
     ];
   }
 
+  /** The breakpoint observer stream. */
   private readonly breakpoint$ = this.breakpointObserver
     .observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
     .pipe(map(result => Object.keys(result.breakpoints).find(item => result.breakpoints[item]) ?? 'unknown'));
 
-  public readonly lineChartConfig$ = this.breakpoint$.pipe(
+  /** The chart configuration stream. */
+  public readonly chartConfig$ = this.breakpoint$.pipe(
     switchMap(() => {
       const timeout = 100;
       return timer(timeout).pipe(
         first(),
         map(() => ({
-          data: this.lineChartData,
+          data: this.chartData,
           options: this.lineChartOptions(),
           optionsDateDdMmYy: this.lineChartOptions('dd/mm/yy'),
           optionsDateDdMmYyyy: this.lineChartOptions('dd/mm/yyyy'),
@@ -71,11 +69,19 @@ export class AppChartExamplesLineComponent {
 
   constructor(private readonly breakpointObserver: BreakpointObserver) {}
 
+  /**
+   * Random value generator.
+   * @param range value range
+   */
   private randomValue(range?: number) {
     const defaultRange = 100;
     return Math.floor(Math.random() * (range ?? defaultRange) + 1);
   }
 
+  /**
+   * Random timestamp generator.
+   * @param range value range
+   */
   private randomTimestamp(range?: number) {
     const defaultRange = 100000000;
     return Math.floor(Math.random() * (range ?? defaultRange) + new Date().getTime());

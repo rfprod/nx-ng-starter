@@ -23,7 +23,7 @@ describe('AppChartExamplesForceDirectedComponent', () => {
   });
 
   it('the chart options should have expected structure', async () => {
-    const config = await firstValueFrom(component.forceDirectedChartConfig$);
+    const config = await firstValueFrom(component.chartConfig$);
     expect(config.options).toEqual({
       chartTitle: 'Example force directed chart',
     });

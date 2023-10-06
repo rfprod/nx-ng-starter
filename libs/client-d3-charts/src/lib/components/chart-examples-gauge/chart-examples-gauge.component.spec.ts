@@ -24,7 +24,7 @@ describe('AppChartExamplesGaugeComponent', () => {
   });
 
   it('the chart options should have expected structure', async () => {
-    const config = await firstValueFrom(component.gaugeChartConfig$);
+    const config = await firstValueFrom(component.chartConfig$);
     expect(config.options).toEqual({
       first: <Partial<IGaugeChartOptions>>{
         chartTitle: 'Example gauge chart 1',

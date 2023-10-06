@@ -1,23 +1,9 @@
 import { DOCUMENT } from '@angular/common';
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Inject,
-  Input,
-  OnChanges,
-  SimpleChange,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Inject, Input, OnChanges, ViewChild } from '@angular/core';
 
+import { IChartInputChanges } from '../../interfaces/chart-component.interface';
 import { IPieChartDataNode, IPieChartOptions } from '../../interfaces/pie-chart.interface';
 import { D3_CHART_FACTORY, ID3ChartFactory } from '../../providers/d3-chart-factory.provider';
-
-interface IInputChanges {
-  data?: SimpleChange | null;
-  options?: SimpleChange | null;
-}
 
 @Component({
   selector: 'app-pie-chart',
@@ -93,7 +79,7 @@ export class AppPieChartComponent implements AfterViewInit, OnChanges {
   /**
    * Redraws the chart on changes.
    */
-  public ngOnChanges(changes: IInputChanges): void {
+  public ngOnChanges(changes: IChartInputChanges): void {
     const data: IPieChartDataNode[] | undefined = changes.data?.currentValue;
     const options: Partial<IPieChartOptions> = changes.options?.currentValue;
     if ((typeof data !== 'undefined' && data !== null) || (typeof options !== 'undefined' && options !== null)) {

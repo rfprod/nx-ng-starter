@@ -30,9 +30,13 @@ export const defaultForceDirectedChartConfig: IForceDirectedChartOptions = Objec
     bottom: 20,
     left: 20,
   },
-  strokeWidth: 1.5,
+  linkStrokeColor: 'gray',
+  linkStrokeWidth: 1.5,
   labelTextWrapWidth: 60,
   color: d3.scaleOrdinal(d3.schemeCategory10),
+  nodeColor: '#f00000',
+  nodeStrokeColor: 'lightgray',
+  nodeStrokeWidth: 1,
 });
 
 /**
@@ -146,8 +150,8 @@ const createLinks = (
     .enter()
     .append('line')
     .attr('class', 'link')
-    .style('stroke', '#000000')
-    .style('stroke-width', config.strokeWidth);
+    .style('stroke', config.linkStrokeColor)
+    .style('stroke-width', config.linkStrokeWidth);
 };
 
 /**
@@ -252,9 +256,10 @@ const createNodes = (
     .enter()
     .append('circle')
     .attr('class', 'node')
-    .attr('r', val => base + (val.value ?? 1) * (val.linksCount ?? 1))
-    .style('stroke-width', val => base + (val.value ?? 1) + (val.linksCount ?? 1))
-    .style('fill', val => (typeof val.img === 'undefined' || val.img === '' ? '#f00000' : `url(${val.img})`))
+    .attr('r', node => base + ((node.value ?? 1) + (node.linksCount ?? 1)))
+    .style('stroke-width', config.nodeStrokeWidth)
+    .style('stroke', config.nodeStrokeColor)
+    .style('fill', node => (typeof node.img === 'undefined' || node.img === '' ? config.nodeColor : `url(${node.img})`))
     .call(
       d3
         .drag<SVGCircleElement, IForceDirectedChartDataNode>()
@@ -305,7 +310,7 @@ const createText = (svg: d3.Selection<SVGSVGElement, unknown, HTMLElement, unkno
     .enter()
     .append('text')
     .attr('class', 'legend')
-    .text(val => val.name ?? `N/A (id. ${val.index})`);
+    .text(node => node.name ?? `N/A (id. ${node.index})`);
 };
 
 /**

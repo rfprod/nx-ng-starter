@@ -23,7 +23,7 @@ describe('AppChartExamplesRadaraComponent', () => {
   });
 
   it('the chart options should have expected structure', async () => {
-    const config = await firstValueFrom(component.radarChartConfig$);
+    const config = await firstValueFrom(component.chartConfig$);
     expect(config.options).toEqual({
       chartTitle: 'Example radar chart',
     });
