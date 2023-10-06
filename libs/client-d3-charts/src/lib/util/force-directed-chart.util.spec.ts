@@ -21,9 +21,13 @@ describe('force-directed-chart.util', () => {
         bottom: expect.any(Number),
         left: expect.any(Number),
       },
-      strokeWidth: expect.any(Number),
+      linkStrokeColor: expect.any(String),
+      linkStrokeWidth: expect.any(Number),
       labelTextWrapWidth: expect.any(Number),
       color: expect.any(Function),
+      nodeColor: expect.any(String),
+      nodeStrokeColor: expect.any(String),
+      nodeStrokeWidth: expect.any(Number),
     });
   });
 });

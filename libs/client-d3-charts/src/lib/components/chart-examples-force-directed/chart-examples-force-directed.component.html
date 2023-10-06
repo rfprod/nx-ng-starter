@@ -1,4 +1,4 @@
-<div class="container" *ngIf="forceDirectedChartConfig$ | async as config">
+<div class="container" *ngIf="chartConfig$ | async as config">
   <app-force-directed-chart
     [chartId]="'force-directed-example-1'"
     [data]="config.data"

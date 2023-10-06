@@ -1,23 +1,9 @@
 import { DOCUMENT } from '@angular/common';
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Inject,
-  Input,
-  OnChanges,
-  SimpleChange,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Inject, Input, OnChanges, ViewChild } from '@angular/core';
 
+import { IChartInputChanges } from '../../interfaces/chart-component.interface';
 import { IForceDirectedChartData, IForceDirectedChartOptions } from '../../interfaces/force-directed-chart.interface';
 import { D3_CHART_FACTORY, ID3ChartFactory } from '../../providers/d3-chart-factory.provider';
-
-interface IInputChanges {
-  data?: SimpleChange | null;
-  options?: SimpleChange | null;
-}
 
 @Component({
   selector: 'app-force-directed-chart',
@@ -93,7 +79,7 @@ export class AppForceDirectedChartComponent implements AfterViewInit, OnChanges 
   /**
    * Redraws the chart on changes.
    */
-  public ngOnChanges(changes: IInputChanges): void {
+  public ngOnChanges(changes: IChartInputChanges): void {
     const prevData: IForceDirectedChartData | undefined = changes.data?.previousValue;
     const nextData: IForceDirectedChartData | undefined = changes.data?.currentValue;
     const options: Partial<IForceDirectedChartOptions> = changes.options?.currentValue;

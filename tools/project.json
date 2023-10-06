@@ -60,6 +60,17 @@
         ]
       }
     },
+    "compodoc-coverage-test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "compodoc -p tsconfig.compodoc.json -d ./dist/compodoc  --coverageTest 34",
+            "forwardAllArgs": false
+          }
+        ]
+      }
+    },
     "compodoc-serve": {
       "executor": "nx:run-commands",
       "options": {

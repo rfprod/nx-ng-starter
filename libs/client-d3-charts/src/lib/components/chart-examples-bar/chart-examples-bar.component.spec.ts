@@ -23,7 +23,7 @@ describe('AppChartExamplesBarComponent', () => {
   });
 
   it('the chart options should have expected structure', async () => {
-    const config = await firstValueFrom(component.barChartConfig$);
+    const config = await firstValueFrom(component.chartConfig$);
     expect(config.options).toEqual({
       chartTitle: 'Example bar chart',
       xAxisTitle: 'long x axis title',

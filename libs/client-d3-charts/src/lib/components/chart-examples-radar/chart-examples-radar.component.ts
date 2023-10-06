@@ -4,9 +4,7 @@ import { first, map, switchMap, timer } from 'rxjs';
 
 import { IRadarChartDataNode, IRadarChartOptions } from '../../interfaces/radar-chart.interface';
 
-/**
- * Radar chart examples.
- */
+/** Radar chart example. */
 @Component({
   selector: 'app-chart-examples-radar',
   templateUrl: './chart-examples-radar.component.html',
@@ -14,10 +12,8 @@ import { IRadarChartDataNode, IRadarChartOptions } from '../../interfaces/radar-
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppChartExamplesRadaraComponent {
-  /**
-   * Sample radar chart data.
-   */
-  private get radarChartData() {
+  /** The chart data. */
+  private get chartData() {
     return <IRadarChartDataNode[][]>[
       [
         { axis: 'one', value: 1, unit: 'x' },
@@ -44,28 +40,28 @@ export class AppChartExamplesRadaraComponent {
     ];
   }
 
+  /** The chart options. */
+  private get chartOptions() {
+    return <Partial<IRadarChartOptions>>{
+      chartTitle: 'Example radar chart',
+    };
+  }
+
+  /** The breakpoint observer stream. */
   private readonly breakpoint$ = this.breakpointObserver
     .observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Medium, Breakpoints.Large, Breakpoints.XLarge])
     .pipe(map(result => Object.keys(result.breakpoints).find(item => result.breakpoints[item]) ?? 'unknown'));
 
-  public readonly radarChartConfig$ = this.breakpoint$.pipe(
+  /** The chart configuration stream. */
+  public readonly chartConfig$ = this.breakpoint$.pipe(
     switchMap(() => {
       const timeout = 100;
       return timer(timeout).pipe(
         first(),
-        map(() => ({ data: this.radarChartData, options: this.radarChartOptions() })),
+        map(() => ({ data: this.chartData, options: this.chartOptions })),
       );
     }),
   );
 
   constructor(private readonly breakpointObserver: BreakpointObserver) {}
-
-  /**
-   * Example radar chart options.
-   */
-  private radarChartOptions() {
-    return <Partial<IRadarChartOptions>>{
-      chartTitle: 'Example radar chart',
-    };
-  }
 }

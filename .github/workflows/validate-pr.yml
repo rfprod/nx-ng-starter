@@ -99,9 +99,14 @@ jobs:
 
       - name: Setup environment
         uses: ./.github/actions/setup-environment
+        with:
+          compodoc: true
 
       - name: Compiler check affected
         run: npx nx affected --target tsc-check --base origin/main
+
+      - name: Documentation coverage
+        run: npx nx run tools:compodoc-coverage-test
 
       - name: Unit test affected
         run: |

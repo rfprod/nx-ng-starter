@@ -155,7 +155,7 @@ const drawLabels = (
 const drawValue = (config: IGaugeChartOptions, g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>, radius: number) => {
   const mod = 20;
   g.append('text')
-    .attr('class', 'value')
+    .attr('class', 'legend')
     .attr('text-anchor', 'middle')
     .attr('dx', radius / mod)
     .attr('dy', radius / mod)

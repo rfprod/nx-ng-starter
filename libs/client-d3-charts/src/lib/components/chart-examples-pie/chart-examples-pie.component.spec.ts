@@ -24,7 +24,7 @@ describe('AppChartExamplesPieComponent', () => {
   });
 
   it('the chart options should have expected structure', async () => {
-    const config = await firstValueFrom(component.pieChartConfig$);
+    const config = await firstValueFrom(component.chartConfig$);
     expect(config.options).toEqual({
       first: <Partial<IPieChartOptions>>{
         chartTitle: 'Example pie chart 1',

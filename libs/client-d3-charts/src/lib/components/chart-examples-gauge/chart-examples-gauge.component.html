@@ -1,4 +1,4 @@
-<div class="container" *ngIf="gaugeChartConfig$ | async as config">
+<div class="container" *ngIf="chartConfig$ | async as config">
   <app-gauge-chart
     [chartId]="'gauge-example-1'"
     [data]="config.data.first"

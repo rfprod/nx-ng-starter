@@ -1,24 +1,10 @@
 import { DOCUMENT } from '@angular/common';
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  Component,
-  ElementRef,
-  Inject,
-  Input,
-  OnChanges,
-  SimpleChange,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Inject, Input, OnChanges, ViewChild } from '@angular/core';
 
+import { IChartInputChanges } from '../../interfaces/chart-component.interface';
 import { ILineChartDataNode, ILineChartOptions, TLineChartData } from '../../interfaces/line-chart.interface';
 import { D3_CHART_FACTORY, ID3ChartFactory } from '../../providers/d3-chart-factory.provider';
-import { defaultLineChartConfig } from '../../util';
-
-interface IInputChanges {
-  data?: SimpleChange | null;
-  options?: SimpleChange | null;
-}
+import { defaultLineChartConfig } from '../../util/line-chart.util';
 
 @Component({
   selector: 'app-line-chart',
@@ -101,7 +87,7 @@ export class AppLineChartComponent implements AfterViewInit, OnChanges {
   /**
    * Redraws the chart on changes.
    */
-  public ngOnChanges(changes: IInputChanges): void {
+  public ngOnChanges(changes: IChartInputChanges): void {
     const data: ILineChartDataNode[][] = changes.data?.currentValue;
     const options: Partial<ILineChartOptions> = changes.options?.currentValue;
     if ((typeof data !== 'undefined' && data !== null) || (typeof options !== 'undefined' && options !== null)) {
