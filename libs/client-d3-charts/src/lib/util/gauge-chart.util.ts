@@ -26,6 +26,9 @@ export const defaultGaugeChartConfig: IGaugeChartOptions = Object.freeze(<IGauge
   color: 'green',
   defaultColor: 'lightgray',
   value: 10,
+  padRad: 0.01,
+  labelFontSize: 12,
+  valueFontSize: 18,
 });
 
 /**
@@ -90,7 +93,6 @@ const drawSections = (
 ) => {
   let startAt = 0.75; // Start at 270deg
   const sectionPercentage = 1 / data.length / 2;
-  const padRad = 0.01;
 
   arcs
     .append('path')
@@ -105,26 +107,27 @@ const drawSections = (
       const arcEndRad = arcStartRad + percToRad(sectionPercentage);
       startAt += sectionPercentage;
 
-      const startPadRad = datum.index === 0 ? 0 : padRad / 2;
-      const endPadRad = datum.index === data.length ? 0 : padRad / 2;
+      const startPadRad = datum.index === 0 ? 0 : config.padRad / 2;
+      const endPadRad = datum.index === data.length ? 0 : config.padRad / 2;
       return arc.startAngle(arcStartRad + startPadRad).endAngle(arcEndRad - endPadRad)(datum);
     });
 };
 
 /**
  * Draws the guage chart labels
+ * @param config the chart config
  * @param arc the charts's arc
  * @param arcs the chart's arc sections
  * @param data the chart's data
  */
 const drawLabels = (
+  config: IGaugeChartOptions,
   arc: d3.Arc<unknown, d3.PieArcDatum<IGaugeChartDataNode>>,
   arcs: d3.Selection<SVGGElement, d3.PieArcDatum<IGaugeChartDataNode>, SVGGElement, unknown>,
   data: IGaugeChartDataNode[],
 ) => {
   let startAt = 0.75; // Start at 270deg
   const sectionPercentage = 1 / data.length / 2;
-  const padRad = 0.01;
   const textDy = 5;
 
   arcs
@@ -137,12 +140,12 @@ const drawLabels = (
       const arcEndRad = arcStartRad + percToRad(sectionPercentage);
       startAt += sectionPercentage;
 
-      const startPadRad = datum.index === 0 ? 0 : padRad / 2;
-      const endPadRad = datum.index === data.length ? 0 : padRad / 2;
+      const startPadRad = datum.index === 0 ? 0 : config.padRad / 2;
+      const endPadRad = datum.index === data.length ? 0 : config.padRad / 2;
       const a = arc.startAngle(arcStartRad + startPadRad).endAngle(arcEndRad - endPadRad);
       return `translate(${a.centroid(datum)})`;
     })
-    .style('font-size', '12px')
+    .style('font-size', `${config.labelFontSize}px`)
     .text(d => d.data.y);
 };
 
@@ -158,8 +161,8 @@ const drawValue = (config: IGaugeChartOptions, g: d3.Selection<SVGGElement, unkn
     .attr('class', 'legend')
     .attr('text-anchor', 'middle')
     .attr('dx', radius / mod)
-    .attr('dy', radius / mod)
-    .style('font-size', '18px')
+    .attr('dy', -(radius / mod))
+    .style('font-size', `${config.valueFontSize}px`)
     .text(() => `${config.value}%`);
 };
 
@@ -222,7 +225,7 @@ export const drawGaugeChart = (
   drawSections(config, arc, arcs, data);
 
   if (config.showLabels) {
-    drawLabels(arc, arcs, data);
+    drawLabels(config, arc, arcs, data);
   }
 
   drawValue(config, g, radius);

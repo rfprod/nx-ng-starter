@@ -39,6 +39,12 @@ describe('AppChartExamplesGaugeComponent', () => {
         showTooltips: false,
         defaultColor: 'red',
       },
+      fourth: <Partial<IGaugeChartOptions>>{
+        chartTitle: 'Example gauge chart 2',
+        showLabels: false,
+        valueFontSize: 30,
+        padRad: 0,
+      },
     });
   });
 });
