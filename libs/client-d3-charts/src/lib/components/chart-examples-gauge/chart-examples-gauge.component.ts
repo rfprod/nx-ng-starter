@@ -54,6 +54,7 @@ export class AppChartExamplesGaugeComponent {
       first: Partial<IGaugeChartOptions>;
       second: Partial<IGaugeChartOptions>;
       third: Partial<IGaugeChartOptions>;
+      fourth: Partial<IGaugeChartOptions>;
     } = {
       first: <Partial<IGaugeChartOptions>>{
         chartTitle: 'Example gauge chart 1',
@@ -67,6 +68,12 @@ export class AppChartExamplesGaugeComponent {
         showLabels: false,
         showTooltips: false,
         defaultColor: 'red',
+      },
+      fourth: <Partial<IGaugeChartOptions>>{
+        chartTitle: 'Example gauge chart 2',
+        showLabels: false,
+        valueFontSize: 30,
+        padRad: 0,
       },
     };
     return options;

@@ -35,4 +35,10 @@ export interface IGaugeChartOptions {
   defaultColor: string;
   /** The value of the gauge chart */
   value: number;
+  /** The padding between slices in radians. Set to 0 to have a solid arc. */
+  padRad: number;
+  /** The font size of the chart labels. */
+  labelFontSize: number;
+  /** The font size of the chart value. */
+  valueFontSize: number;
 }
