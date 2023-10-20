@@ -3,6 +3,7 @@
   "affected": {
     "defaultBase": "main"
   },
+  "cacheDirectory": "/tmp/nx/nx-ng-starter",
   "cli": {
     "cache": {
       "enabled": true,
@@ -78,9 +79,10 @@
     "sharedGlobals": ["{workspaceRoot}/babel.config.json", "{workspaceRoot}/nx.json", "{workspaceRoot}/tsconfig.base.json"]
   },
   "newProjectRoot": "",
-  "npmScope": "app",
+  "parallel": 1,
   "targetDefaults": {
     "build": {
+      "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["default", "^prod"]
     },
@@ -95,24 +97,32 @@
       ]
     },
     "e2e": {
+      "cache": true,
       "inputs": ["default", "^prod", "{projectRoot}/tsconfig.e2e.json"]
     },
     "lint": {
+      "cache": true,
       "inputs": ["default", "^prod", "projectLinterConfig", "rootLinterConfig"]
     },
+    "prettier-check": {
+      "cache": true
+    },
+    "stylelint-check": {
+      "cache": true
+    },
     "test": {
+      "cache": true,
       "inputs": ["default", "^prod", "projectTestConfig", "rootTestConfig"]
+    },
+    "tsc-check": {
+      "cache": true
     }
   },
   "tasksRunnerOptions": {
     "default": {
       "options": {
-        "cacheDirectory": "/tmp/nx/nx-ng-starter",
-        "cacheableOperations": ["build", "lint", "test", "e2e", "tsc-check", "prettier-check", "stylelint-check"],
-        "parallel": 1,
         "runtimeCacheInputs": ["node -v", "echo $IMPORTANT_ENV_VAR"]
-      },
-      "runner": "nx/tasks-runners/default"
+      }
     }
   },
   "workspaceLayout": {
