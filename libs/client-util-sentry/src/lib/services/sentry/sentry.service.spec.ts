@@ -1,7 +1,7 @@
 import { FactoryProvider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { testingEnvironment } from '@app/client-testing-unit';
-import * as Sentry from '@sentry/angular-ivy';
+import * as sentry from '@sentry/angular-ivy';
 
 import { AppSentryService, initializeSentry, sentryProviders } from './sentry.service';
 
@@ -12,13 +12,13 @@ describe('AppSentryService', () => {
     await TestBed.configureTestingModule({
       providers: [
         {
-          provide: Sentry.TraceService,
+          provide: sentry.TraceService,
           useValue: {},
         },
         {
           provide: AppSentryService,
-          useFactory: (trace: Sentry.TraceService) => new AppSentryService(trace),
-          deps: [Sentry.TraceService],
+          useFactory: (trace: sentry.TraceService) => new AppSentryService(trace),
+          deps: [sentry.TraceService],
         },
       ],
     }).compileComponents();
@@ -37,7 +37,6 @@ describe('AppSentryService', () => {
     });
 
     it('should not initialize Sentry for unit testing and development environments', () => {
-      const sentry = Sentry;
       const initSpy = jest.spyOn(sentry, 'init');
       expect(env.sentry.env).toEqual('unit-testing');
       initializeSentry(env, env.meta.version);
@@ -49,7 +48,6 @@ describe('AppSentryService', () => {
     });
 
     it('should initialize Sentry for the production environment', () => {
-      const sentry = Sentry;
       const initSpy = jest.spyOn(sentry, 'init');
       env.sentry.env = 'production';
       initializeSentry(env, env.meta.version);
