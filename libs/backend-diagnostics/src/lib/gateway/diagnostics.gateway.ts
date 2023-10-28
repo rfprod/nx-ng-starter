@@ -7,7 +7,7 @@ import {
   WsResponse,
 } from '@nestjs/websockets';
 import { Subscription, tap, timer } from 'rxjs';
-import WebSocket, { Server } from 'ws';
+import { Server, WebSocket } from 'ws';
 
 import { dianosticEventsGatewayPort, IUserCountEvent, TDiagData } from '../interfaces/diagnostics.interface';
 import { AppDiagnosticsService } from '../services/diagnostics.service';
@@ -32,7 +32,7 @@ export class AppDiagnosticsGateway implements OnGatewayConnection, OnGatewayDisc
    * @param client web socket client
    * @param data stringified event data
    */
-  public sendEvent(client: WebSocket.WebSocket, data: string) {
+  public sendEvent(client: WebSocket, data: string) {
     client.send(data);
   }
 
