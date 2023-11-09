@@ -2,7 +2,7 @@ import { AppMessage, AppUser, AppUserLoginCredentials, AppUserLogoutCredentials,
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
-import { IAuthPayload, IAuthService, IAuthTokenObject } from '../interfaces/auth.interface';
+import { IAuthPayload, IAuthService } from '../interfaces/auth.interface';
 
 export const AUTH_SERVICE_TOKEN = Symbol('AUTH_SERVICE_TOKEN');
 
@@ -16,7 +16,7 @@ export class AppAuthService implements IAuthService {
   }
 
   public decodeJWToken(token: string) {
-    const result = <IAuthTokenObject>this.jwt.decode(token);
+    const result = this.jwt.decode(token);
     return result;
   }
 
