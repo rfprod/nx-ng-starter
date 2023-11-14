@@ -7,7 +7,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppMaterialModule } from '@app/client-material';
 import { AppServiceWorkerService } from '@app/client-service-worker';
-import { MarkdownModule, MarkdownModuleConfig, MarkedOptions } from 'ngx-markdown';
+import { MarkdownModule, MarkdownModuleConfig, MARKED_OPTIONS, MarkedOptions } from 'ngx-markdown';
 import { of, tap } from 'rxjs';
 
 import { testingProviders } from '../../../testing/testing-providers.mock';
@@ -17,8 +17,8 @@ import { AppDocRootComponent } from './root.component';
 describe('AppDocRootComponent', () => {
   const markdownModuleConfig: MarkdownModuleConfig = {
     markedOptions: {
-      provide: MarkedOptions,
-      useValue: {
+      provide: MARKED_OPTIONS,
+      useValue: <MarkedOptions>{
         gfm: true,
         breaks: false,
         pedantic: false,
