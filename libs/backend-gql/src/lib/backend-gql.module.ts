@@ -23,8 +23,8 @@ export class AppGqlModule {
       autoSchemaFile: environment.firebase
         ? false
         : environment.production
-        ? join(process.cwd(), 'schema.gql')
-        : join(process.cwd(), 'libs/backend-gql/schema.gql'),
+          ? join(process.cwd(), 'schema.gql')
+          : join(process.cwd(), 'libs/backend-gql/schema.gql'),
       typePaths: environment.firebase ? [join(process.cwd(), 'schema.gql')] : void 0,
       sortSchema: true,
       subscriptions: {

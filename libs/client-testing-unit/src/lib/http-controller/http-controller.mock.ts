@@ -24,8 +24,8 @@ export function flushHttpRequests<T>(
     return produceError === true
       ? req.error(new ProgressEvent('error', { total: 1, loaded: 1, cancelable: true }))
       : !req.cancelled
-      ? req.flush(responseData)
-      : null;
+        ? req.flush(responseData)
+        : null;
   });
   if (verify) {
     httpController.verify();

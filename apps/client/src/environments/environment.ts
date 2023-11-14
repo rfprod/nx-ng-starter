@@ -28,8 +28,8 @@ export const environment: IWebClientAppEnvironment = {
     platform !== 'web'
       ? 'https://nx-ng-starter.web.app/api'
       : window.location.origin.includes('localhost')
-      ? 'http://localhost:8080/api'
-      : `${window.location.origin}/api`,
+        ? 'http://localhost:8080/api'
+        : `${window.location.origin}/api`,
   envoyUrl: window.location.origin.includes('localhost') ? `${window.location.origin}/grpc` : 'https://envoy-is-not-deployed',
   sentry: sentryEnvFactory({ production: false }),
   ...appEnvFactory(),

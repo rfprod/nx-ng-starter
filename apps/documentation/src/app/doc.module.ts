@@ -9,7 +9,7 @@ import { documentProvider, windowProvider } from '@app/client-util';
 import { metaReducers } from '@app/client-util-ngrx';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
-import { MarkdownModule, MarkdownModuleConfig, MarkedOptions } from 'ngx-markdown';
+import { MarkdownModule, MarkdownModuleConfig, MARKED_OPTIONS, MarkedOptions } from 'ngx-markdown';
 
 import { environment } from '../environments/environment';
 import { AppDocMarkdownReferenceComponent } from './componenets/md-reference/md-reference.component';
@@ -25,8 +25,8 @@ import { AppMdFilesStoreModule } from './modules/md-files/md-files.module';
 const markdownModuleConfig: MarkdownModuleConfig = {
   loader: HttpClient,
   markedOptions: {
-    provide: MarkedOptions,
-    useValue: {
+    provide: MARKED_OPTIONS,
+    useValue: <MarkedOptions>{
       gfm: true,
       breaks: false,
       pedantic: false,

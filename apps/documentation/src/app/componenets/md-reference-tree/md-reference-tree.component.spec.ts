@@ -4,7 +4,7 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppMaterialModule } from '@app/client-material';
 import { Store, StoreModule } from '@ngrx/store';
-import { MarkdownModule, MarkdownModuleConfig, MarkedOptions } from 'ngx-markdown';
+import { MarkdownModule, MarkdownModuleConfig, MARKED_OPTIONS, MarkedOptions } from 'ngx-markdown';
 
 import { testingProviders } from '../../../testing/testing-providers.mock';
 import { mdFilesAction } from '../../modules/md-files/md-files.actions';
@@ -15,8 +15,8 @@ import { AppDocMarkdownReferenceTreeComponent } from './md-reference-tree.compon
 describe('AppDocMarkdownReferenceTreeComponent', () => {
   const markdownModuleConfig: MarkdownModuleConfig = {
     markedOptions: {
-      provide: MarkedOptions,
-      useValue: {
+      provide: MARKED_OPTIONS,
+      useValue: <MarkedOptions>{
         gfm: true,
         breaks: false,
         pedantic: false,
