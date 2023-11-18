@@ -3,15 +3,14 @@
  */
 exports.constraints = [
   {
+    onlyDependOnLibsWithTags: [],
     sourceTag: 'scope:server-dev',
-    onlyDependOnLibsWithTags: [],
   },
   {
+    onlyDependOnLibsWithTags: [],
     sourceTag: 'scope:server-prod',
-    onlyDependOnLibsWithTags: [],
   },
   {
-    sourceTag: 'scope:api',
     onlyDependOnLibsWithTags: [
       'scope:backend-auth',
       'scope:backend-diagnostics',
@@ -21,29 +20,30 @@ exports.constraints = [
       'scope:backend-logger',
       'scope:proto',
     ],
+    sourceTag: 'scope:api',
   },
   {
+    onlyDependOnLibsWithTags: ['scope:backend-interfaces', 'scope:proto'],
     sourceTag: 'scope:backend-auth',
-    onlyDependOnLibsWithTags: ['scope:backend-interfaces', 'scope:proto'],
   },
   {
+    onlyDependOnLibsWithTags: [],
     sourceTag: 'scope:backend-diagnostics',
-    onlyDependOnLibsWithTags: [],
   },
   {
-    sourceTag: 'scope:backend-grpc',
     onlyDependOnLibsWithTags: ['scope:backend-interfaces', 'scope:proto'],
+    sourceTag: 'scope:backend-grpc',
   },
   {
-    sourceTag: 'scope:backend-gql',
     onlyDependOnLibsWithTags: ['scope:backend-interfaces'],
+    sourceTag: 'scope:backend-gql',
   },
   {
-    sourceTag: 'scope:backend-interfaces',
     onlyDependOnLibsWithTags: [],
+    sourceTag: 'scope:backend-interfaces',
   },
   {
-    sourceTag: 'scope:backend-logger',
     onlyDependOnLibsWithTags: ['scope:proto'],
+    sourceTag: 'scope:backend-logger',
   },
 ];
