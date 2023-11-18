@@ -1,0 +1,32 @@
+{
+  "name": "client-util-decorators",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/client-util-decorators/src",
+  "prefix": "app",
+  "tags": ["scope:client-util-decorators", "type:util"],
+  "projectType": "library",
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/client-util-decorators/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/client-util-decorators/**/*.ts"],
+        "eslintConfig": "libs/client-util-decorators/.eslintrc.json"
+      }
+    },
+    "tsc-check": {
+      "executor": "./tools/executors/tsc:check",
+      "options": {
+        "tsConfig": "libs/client-util-decorators/tsconfig.lib.json"
+      },
+      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-util-decorators"]
+    }
+  }
+}

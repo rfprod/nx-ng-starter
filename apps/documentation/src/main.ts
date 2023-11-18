@@ -2,7 +2,7 @@ import 'hammerjs';
 
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { applicationIsFramed } from '@app/client-util';
+import { applicationIsFramed } from '@app/client-util-security';
 
 import { AppDocModule } from './app/doc.module';
 import { environment } from './environments/environment';

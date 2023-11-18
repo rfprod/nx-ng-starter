@@ -2,7 +2,7 @@ import 'hammerjs';
 
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { applicationIsFramed } from '@app/client-util';
+import { applicationIsFramed } from '@app/client-util-security';
 import { initializeSentry } from '@app/client-util-sentry';
 
 import { AppClientModule } from './app/client.module';
