@@ -8,7 +8,11 @@
           <span class="separator"></span>
 
           <button mat-icon-button (click)="fullScreen.toggle()">
-            <mat-icon>fullscreen</mat-icon>
+            @if (fullScreen.enabled$()) {
+              <mat-icon>close_fullscreen</mat-icon>
+            } @else {
+              <mat-icon>open_in_full</mat-icon>
+            }
           </button>
 
           <app-table-column-settings
