@@ -1,8 +1,12 @@
+/** The pie chart data node. */
 export interface IPieChartDataNode {
+  /** The pie chart slice label. */
   key: string;
+  /** The pie chart slice value. */
   y: number;
 }
 
+/** The pie chart options. */
 export interface IPieChartOptions {
   /** The chart title */
   chartTitle: string;
