@@ -7,6 +7,7 @@ import { drawLineChart } from '../util/line-chart.util';
 import { drawPieChart } from '../util/pie-chart.util';
 import { drawRadarChart } from '../util/radar-chart.util';
 
+/** D3 chart factory. */
 export interface ID3ChartFactory {
   drawGaugeChart: typeof drawGaugeChart;
   drawPieChart: typeof drawPieChart;
@@ -16,6 +17,7 @@ export interface ID3ChartFactory {
   drawForceDirectedChart: typeof drawForceDirectedChart;
 }
 
+/** D3 chart factory */
 export const d3ChartFactory = (): ID3ChartFactory => ({
   drawGaugeChart,
   drawPieChart,
@@ -25,6 +27,7 @@ export const d3ChartFactory = (): ID3ChartFactory => ({
   drawForceDirectedChart,
 });
 
+/** D3 chart factory provider. */
 export const D3_CHART_FACTORY = new InjectionToken('D3_CHART_FACTORY', {
   providedIn: 'root',
   factory: d3ChartFactory,

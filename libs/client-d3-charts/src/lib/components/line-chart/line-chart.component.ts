@@ -2,47 +2,47 @@ import { DOCUMENT } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Inject, Input, OnChanges, ViewChild } from '@angular/core';
 
 import { IChartInputChanges } from '../../interfaces/chart-component.interface';
-import { ILineChartDataNode, ILineChartOptions, TLineChartData } from '../../interfaces/line-chart.interface';
+import { ILineChartOptions, TLineChartData } from '../../interfaces/line-chart.interface';
 import { D3_CHART_FACTORY, ID3ChartFactory } from '../../providers/d3-chart-factory.provider';
 import { defaultLineChartConfig } from '../../util/line-chart.util';
+import { AppD3ChartBase } from '../_base/chart.base';
 
+type TLineData = TLineChartData[];
+type TLineOptions = Partial<ILineChartOptions>;
+
+/** The line chart component. */
 @Component({
   selector: 'app-line-chart',
   templateUrl: './line-chart.component.html',
   styleUrls: ['./line-chart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppLineChartComponent implements AfterViewInit, OnChanges {
-  /**
-   * The chart id.
-   */
+export class AppLineChartComponent extends AppD3ChartBase<TLineData, TLineOptions> implements AfterViewInit, OnChanges {
+  /** The chart id. */
   @Input() public chartId = 'line-0';
 
-  /**
-   * The chart data.
-   */
-  @Input() public data: TLineChartData[] = [];
+  /** The chart data. */
+  @Input() public data: TLineData = [];
+
+  /** The chart options. */
+  @Input() public options: TLineOptions = {};
+
+  /** D3 chart view child reference. */
+  @ViewChild('container') public readonly container?: ElementRef<HTMLDivElement>;
 
   /**
-   * The chart options.
+   * @param doc The web page's Document object.
+   * @param d3Factory D3 chart factory.
    */
-  @Input() public options: Partial<ILineChartOptions> = {};
-
-  /**
-   * D3 chart view child reference.
-   */
-  @ViewChild('container') private readonly container?: ElementRef<HTMLDivElement>;
-
   constructor(
     @Inject(DOCUMENT) private readonly doc: Document,
     @Inject(D3_CHART_FACTORY) private readonly d3Factory: ID3ChartFactory,
-  ) {}
+  ) {
+    super();
+  }
 
-  /**
-   * The chart options constructor.
-   * @returns chart options
-   */
-  private chartOptions() {
+  /** The chart options constructor. */
+  protected chartOptions(): TLineOptions {
     const bodyWidthAdjustment = 10;
     const width = Math.min(
       this.options.width ?? defaultLineChartConfig.width,
@@ -54,11 +54,11 @@ export class AppLineChartComponent implements AfterViewInit, OnChanges {
     );
     const xTicksScale = 75;
     const yTicksScale = 25;
-    const ticks: ILineChartOptions['ticks'] = {
+    const ticks: TLineOptions['ticks'] = {
       x: this.options.ticks?.x ?? width / xTicksScale,
       y: this.options.ticks?.y ?? height / yTicksScale,
     };
-    const options: Partial<ILineChartOptions> = {
+    const options: TLineOptions = {
       ...this.options,
       width,
       height,
@@ -67,29 +67,23 @@ export class AppLineChartComponent implements AfterViewInit, OnChanges {
     return options;
   }
 
-  /**
-   * Draws the chart.
-   */
-  private drawChart() {
+  /** Draws the chart. */
+  protected drawChart(): void {
     if (typeof this.container !== 'undefined') {
       const options = this.chartOptions();
       this.d3Factory.drawLineChart(this.container, [...this.data], options);
     }
   }
 
-  /**
-   * Actually draws the chart after the component view is initialized.
-   */
+  /** Actually draws the chart after the component view is initialized. */
   public ngAfterViewInit(): void {
     this.drawChart();
   }
 
-  /**
-   * Redraws the chart on changes.
-   */
+  /** Redraws the chart on changes. */
   public ngOnChanges(changes: IChartInputChanges): void {
-    const data: ILineChartDataNode[][] = changes.data?.currentValue;
-    const options: Partial<ILineChartOptions> = changes.options?.currentValue;
+    const data: TLineData = changes.data?.currentValue;
+    const options: TLineOptions = changes.options?.currentValue;
     if ((typeof data !== 'undefined' && data !== null) || (typeof options !== 'undefined' && options !== null)) {
       this.drawChart();
     }
