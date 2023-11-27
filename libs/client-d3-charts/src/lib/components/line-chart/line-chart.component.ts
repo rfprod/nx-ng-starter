@@ -24,6 +24,9 @@ export class AppLineChartComponent extends AppD3ChartBase<TLineData, TLineOption
   /** The chart data. */
   @Input() public data: TLineData = [];
 
+  /** Labels for the chart datasets. */
+  @Input() public datasetLabels: string[] = [];
+
   /** The chart options. */
   @Input() public options: TLineOptions = {};
 
@@ -71,7 +74,7 @@ export class AppLineChartComponent extends AppD3ChartBase<TLineData, TLineOption
   protected drawChart(): void {
     if (typeof this.container !== 'undefined') {
       const options = this.chartOptions();
-      this.d3Factory.drawLineChart(this.container, [...this.data], options);
+      this.d3Factory.drawLineChart(this.container, [...this.data], [...this.datasetLabels], options);
     }
   }
 

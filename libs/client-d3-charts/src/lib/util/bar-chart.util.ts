@@ -75,13 +75,13 @@ const wrapSvgText = (svgText: d3.Selection<d3.BaseType, unknown, SVGGElement, un
           line.pop();
           tspan.text(line.join(' '));
           line = [word ?? ''];
-          lineNumber += 1;
           tspan = text
             .append('tspan')
             .attr('x', 0)
             .attr('y', y)
             .attr('dy', `${lineNumber * lineHeight + dy}em`)
             .text(word ?? '');
+          lineNumber += 1;
         }
         word = words.pop();
       }

@@ -58,6 +58,7 @@ export class AppChartExamplesLineComponent {
         first(),
         map(() => ({
           data: this.chartData,
+          datasetLabels: Array.from(new Array(this.chartData.length)).map((item, index) => `Dataset ${index}`),
           options: this.lineChartOptions(),
           optionsDateDdMmYy: this.lineChartOptions('dd/mm/yy'),
           optionsDateDdMmYyyy: this.lineChartOptions('dd/mm/yyyy'),
