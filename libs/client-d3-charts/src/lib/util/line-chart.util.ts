@@ -4,9 +4,7 @@ import * as d3 from 'd3';
 import { ILineChartDataNode, ILineChartOptions, TLineChartData } from '../interfaces/line-chart.interface';
 import { generateConfiguration } from './configuration.util';
 
-/**
- * The line chart default configuration.
- */
+/** The line chart default configuration. */
 export const defaultLineChartConfig: ILineChartOptions = Object.freeze(<ILineChartOptions>{
   chartTitle: '',
   width: 350,
@@ -79,13 +77,13 @@ const wrapSvgText = (svgText: d3.Selection<d3.BaseType, unknown, SVGGElement, un
           line.pop();
           tspan.text(line.join(' '));
           line = [word ?? ''];
-          lineNumber += 1;
           tspan = text
             .append('tspan')
             .attr('x', 0)
             .attr('y', y)
             .attr('dy', `${lineNumber * lineHeight + dy}em`)
             .text(word ?? '');
+          lineNumber += 1;
         }
         word = words.pop();
       }
@@ -105,8 +103,8 @@ const createLegend = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown
       .append('text')
       .style('font-size', '12px')
       .attr('class', 'legend')
-      .attr('dx', '1.5em')
-      .attr('dy', '1em')
+      .attr('dx', '0.5em')
+      .attr('dy', '0em')
       .text(`x - ${config.xAxisTitle}`);
   }
 
@@ -116,8 +114,8 @@ const createLegend = (g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown
       .append('text')
       .style('font-size', '12px')
       .attr('class', 'legend')
-      .attr('dx', '1.5em')
-      .attr('dy', '2.5em')
+      .attr('dx', '0.5em')
+      .attr('dy', '1.5em')
       .text(`y - ${config.yAxisTitle}`);
   }
 
@@ -274,6 +272,7 @@ const onMouseOut = (self: SVGCircleElement, config: ILineChartOptions) => {
  * @param y the y axis scale
  * @param config the chart configuration
  * @param data the chart data
+ * @param datasetLabels the set of labels for the chart's dataset
  */
 const drawLinesDotsAndSetPointerEvents = (
   g: d3.Selection<SVGGElement, unknown, HTMLElement, unknown>,
@@ -281,6 +280,7 @@ const drawLinesDotsAndSetPointerEvents = (
   y: d3.ScaleLinear<number, number>,
   config: ILineChartOptions,
   data: TLineChartData[],
+  datasetLabels: string[],
 ) => {
   const line = d3
     .line<ILineChartDataNode>()
@@ -299,6 +299,29 @@ const drawLinesDotsAndSetPointerEvents = (
       .style('stroke', config.color(c.toString()))
       .style('stroke-width', '2px')
       .attr('d', line(chunk));
+
+    const datasetLabelText = datasetLabels[c];
+    const datasetLabel = g.append('g').attr('transform', `translate(0, ${config.height + config.margin.bottom})`);
+
+    const markerShiftY = { multiplier: 12, modifier: 4 };
+    datasetLabel
+      .append('line')
+      .attr('id', `legend-line-${c}`)
+      .style('fill', 'none')
+      .style('stroke', config.color(c.toString()))
+      .style('stroke-width', '2px')
+      .attr('x1', '6.75em')
+      .attr('y1', c * markerShiftY.multiplier - markerShiftY.modifier)
+      .attr('x2', '7.25em')
+      .attr('y2', c * markerShiftY.multiplier - markerShiftY.modifier);
+
+    datasetLabel
+      .append('text')
+      .style('font-size', '12px')
+      .attr('class', 'legend')
+      .attr('dx', '10em')
+      .attr('dy', `${c}em`)
+      .text(datasetLabelText);
   }
 
   g.selectAll('.dot')
@@ -338,7 +361,12 @@ const drawLinesDotsAndSetPointerEvents = (
  * @param options the chart options
  * @returns the chart configuration
  */
-export const drawLineChart = (container: ElementRef<HTMLDivElement>, data: TLineChartData[], options?: Partial<ILineChartOptions>) => {
+export const drawLineChart = (
+  container: ElementRef<HTMLDivElement>,
+  data: TLineChartData[],
+  datasetLabels: string[],
+  options?: Partial<ILineChartOptions>,
+) => {
   const config: ILineChartOptions = generateConfiguration<ILineChartOptions>(defaultLineChartConfig, options, {});
 
   const { g } = createContainer(container, config);
@@ -368,7 +396,7 @@ export const drawLineChart = (container: ElementRef<HTMLDivElement>, data: TLine
 
   createLegend(g, config);
 
-  drawLinesDotsAndSetPointerEvents(g, x, y, config, data);
+  drawLinesDotsAndSetPointerEvents(g, x, y, config, data, datasetLabels);
 
   return config;
 };
