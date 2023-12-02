@@ -10,8 +10,9 @@ exports.constraints = [
       'scope:client-testing-unit',
       'scope:client-service-worker',
       'scope:client-util',
+      'scope:client-util-decorators',
       'scope:client-util-ngrx',
-      'scope:client-util-security'
+      'scope:client-util-security',
     ],
     sourceTag: 'scope:documentation',
   },

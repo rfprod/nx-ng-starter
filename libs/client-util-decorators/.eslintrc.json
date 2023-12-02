@@ -1,4 +1,12 @@
 {
   "extends": ["../../.eslintrc.js", "../../.eslintrc.angular.js"],
-  "ignorePatterns": ["!**/*"]
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["log-method.decorator.ts"],
+      "rules": {
+        "no-console": "off"
+      }
+    }
+  ]
 }
