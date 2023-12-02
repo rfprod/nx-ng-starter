@@ -1,4 +1,12 @@
 {
   "extends": ["../.eslintrc.js"],
-  "ignorePatterns": ["!**/*"]
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["*logger*.ts"],
+      "rules": {
+        "no-console": "off"
+      }
+    }
+  ]
 }

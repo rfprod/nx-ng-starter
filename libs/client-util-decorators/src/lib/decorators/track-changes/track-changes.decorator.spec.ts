@@ -1,11 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
 
 import { trackChanges } from './track-changes.decorator';
-
-interface IInputChanges extends SimpleChanges {
-  input: SimpleChange;
-}
 
 const controlSuffix = 'Changes';
 
@@ -21,7 +17,7 @@ class AppTrackChangesTestingComponent implements OnChanges {
 
   @trackChanges<AppTrackChangesTestingComponent, string | undefined>('noinput', 'inputChangeHandler')
   @trackChanges<AppTrackChangesTestingComponent, string | undefined>('input', 'inputChangeHandler')
-  public ngOnChanges(changes: IInputChanges) {
+  public ngOnChanges(changes: SimpleChanges) {
     return changes;
   }
 
