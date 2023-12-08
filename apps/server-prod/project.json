@@ -19,14 +19,15 @@
           "optimization": true
         }
       },
-      "executor": "@nrwl/webpack:webpack",
+      "executor": "@nx/webpack:webpack",
       "options": {
         "assets": ["apps/server-prod/src/assets"],
         "compiler": "tsc",
         "main": "apps/server-prod/src/main.ts",
         "outputPath": "dist/apps/server-prod",
         "target": "node",
-        "tsConfig": "apps/server-prod/tsconfig.app.json"
+        "tsConfig": "apps/server-prod/tsconfig.app.json",
+        "webpackConfig": "apps/server-prod/webpack.config.js"
       },
       "outputs": ["{options.outputPath}"]
     },

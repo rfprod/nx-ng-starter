@@ -30,7 +30,7 @@ export const defaultForceDirectedChartConfig: IForceDirectedChartOptions = Objec
     bottom: 20,
     left: 20,
   },
-  linkStrokeColor: 'gray',
+  linkStrokeColor: 'lightgray',
   linkStrokeWidth: 1.5,
   labelTextWrapWidth: 60,
   color: d3.scaleOrdinal(d3.schemeCategory10),
