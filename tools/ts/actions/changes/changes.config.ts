@@ -6,7 +6,7 @@ const packageEliza = ['libs/client-util-eliza/package.json'];
 const packageGuidedTour = ['libs/client-guided-tour/package.json'];
 const packagePwaOffline = ['libs/client-pwa-offline/package.json'];
 const packageBackendDiagnostics = ['libs/backend-diagnostics/package.json'];
-const packages = [...packageCharts, ...packageEliza, ...packageBackendDiagnostics];
+const packages = [...packageCharts, ...packageEliza, ...packageGuidedTour, ...packageBackendDiagnostics];
 const shelltools = ['tools/shell/**'];
 const src = [
   'apps/**',

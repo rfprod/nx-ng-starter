@@ -102,7 +102,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "client:build"
+        "buildTarget": "client:build"
       }
     },
     "lint": {
@@ -123,12 +123,12 @@
     "serve": {
       "configurations": {
         "production": {
-          "browserTarget": "client:build:production"
+          "buildTarget": "client:build:production"
         }
       },
       "executor": "@angular-devkit/build-angular:dev-server",
       "options": {
-        "browserTarget": "client:build",
+        "buildTarget": "client:build",
         "proxyConfig": "apps/client/proxy.conf.json"
       }
     },
