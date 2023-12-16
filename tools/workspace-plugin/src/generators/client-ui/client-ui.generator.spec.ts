@@ -15,8 +15,8 @@ describe('client-ui', () => {
   let tree: Tree;
 
   const context: ISchematicContext = {
-    name: 'client-ui-test',
-    tags: `scope:client-ui-test,type:ui`,
+    name: 'client-test',
+    tags: `scope:client-test,type:ui`,
   };
 
   beforeEach(() => {
@@ -27,13 +27,13 @@ describe('client-ui', () => {
   });
 
   it('should throw error if a name is missing', async () => {
-    const expected = 'The name must start with client-ui- and contain only lower case letters and dashes.';
-    await expect(generator.default(tree, { ...context, name: '' })).rejects.toThrowError(expected);
+    const expected = 'The name must start with client- and contain only lower case letters and dashes.';
+    await expect(generator.default(tree, { ...context, name: '' })).rejects.toThrow(expected);
   });
 
   it('should throw error if a name has incorrect format', async () => {
-    const expected = 'The name must start with client-ui- and contain only lower case letters and dashes.';
-    await expect(generator.default(tree, { ...context, name: 'ui-client' })).rejects.toThrowError(expected);
+    const expected = 'The name must start with client- and contain only lower case letters and dashes.';
+    await expect(generator.default(tree, { ...context, name: 'ui-client' })).rejects.toThrow(expected);
   });
 
   const testTimeout = 10000;
@@ -52,7 +52,7 @@ describe('client-ui', () => {
       expectFileToExist(`/libs/${context.name}/src/index.ts`, tree);
       expectFileToExist(`/libs/${context.name}/src/test-setup.ts`, tree);
 
-      const kebabCaseName = context.name.replace('client-ui-', '');
+      const kebabCaseName = context.name.replace('client-', '');
 
       const barrel = tree.read(`/libs/${context.name}/src/index.ts`, 'utf-8');
       expect(barrel).toContain(`export * from './lib/${kebabCaseName}.module';`);

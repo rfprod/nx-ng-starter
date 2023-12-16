@@ -14,7 +14,7 @@ const addFiles = (schema: ISchematicContext, tree: Tree) => {
   const config: ProjectConfiguration = readProjectConfiguration(tree, schema.name);
   const root = config.root;
 
-  const generateFilesConf = generateFilesConfig(schema.name, 'client-ui-');
+  const generateFilesConf = generateFilesConfig(schema.name, 'client-');
 
   generateFiles(tree, joinPathFragments(__dirname, './files'), root, {
     ...generateFilesConf,
@@ -25,8 +25,8 @@ export default async function (tree: Tree, schema: ISchematicContext) {
   const name = schema.name;
   const tags = schema.tags;
 
-  if (!/^client-ui-[a-z-]+$/.test(name)) {
-    const message = 'The name must start with client-ui- and contain only lower case letters and dashes.';
+  if (!/^client-[a-z-]+$/.test(name)) {
+    const message = 'The name must start with client- and contain only lower case letters and dashes.';
     throw new Error(message);
   }
 

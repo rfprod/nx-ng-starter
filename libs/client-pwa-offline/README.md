@@ -34,7 +34,7 @@ export class AppModule {}
 Install the package
 
 ```bash
-yarn add @rfprodz/client-pwa-offline @angular/material
+yarn add @rfprodz/client-pwa-offline @angular/common @angular/core @angular/material @angular/router
 ```
 
 Import the module

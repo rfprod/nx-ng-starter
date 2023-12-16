@@ -28,12 +28,12 @@ describe('client-feature', () => {
 
   it('should throw error if a name is missing', async () => {
     const expected = 'The name must start with client- and contain only lower case letters and dashes.';
-    await expect(generator.default(tree, { ...context, name: '' })).rejects.toThrowError(expected);
+    await expect(generator.default(tree, { ...context, name: '' })).rejects.toThrow(expected);
   });
 
   it('should throw error if a name has incorrect format', async () => {
     const expected = 'The name must start with client- and contain only lower case letters and dashes.';
-    await expect(generator.default(tree, { ...context, name: 'feature-client' })).rejects.toThrowError(expected);
+    await expect(generator.default(tree, { ...context, name: 'feature-client' })).rejects.toThrow(expected);
   });
 
   const testTimeout = 10000;

@@ -38,6 +38,10 @@ exports.constraints = [
   },
   {
     onlyDependOnLibsWithTags: [],
+    sourceTag: 'scope:client-guided-tour',
+  },
+  {
+    onlyDependOnLibsWithTags: [],
     sourceTag: 'scope:client-pwa-offline',
   },
   {
@@ -221,6 +225,7 @@ exports.constraints = [
       'scope:client-diagnostics',
       'scope:client-gql',
       'scope:client-grpc',
+      'scope:client-guided-tour',
       'scope:client-material',
       'scope:client-pwa-offline',
       'scope:client-service-worker',

@@ -25,6 +25,11 @@ export const routes: Route[] = [
     loadChildren: () => import('@app/client-chatbot').then(mod => mod.AppChatbotModule),
   },
   {
+    path: 'guided-tour',
+    data: { feature: 'guided-tour', icon: 'tour' },
+    loadChildren: () => import('@app/client-guided-tour').then(mod => mod.AppGuidedTourExampleModule),
+  },
+  {
     path: '',
     outlet: 'sidebar',
     loadChildren: () => import('@app/client-sidebar').then(mod => mod.AppSidebarModule),

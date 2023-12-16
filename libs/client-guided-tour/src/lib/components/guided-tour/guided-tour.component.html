@@ -1,0 +1,27 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ data.title }}</mat-card-title>
+    <mat-card-subtitle>{{ data.subtitle }}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <p>{{ data.description }}</p>
+  </mat-card-content>
+
+  <mat-card-actions class="actions">
+    <button mat-button [disabled]="data.first" (click)="tour.previous()" color="primary">
+      <mat-icon>chevron_left</mat-icon>
+      Previous
+    </button>
+
+    <button mat-button (click)="tour.end()" color="warn">
+      <mat-icon>close</mat-icon>
+      End
+    </button>
+
+    <button mat-button [disabled]="data.last" (click)="tour.next()" color="primary">
+      Next
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

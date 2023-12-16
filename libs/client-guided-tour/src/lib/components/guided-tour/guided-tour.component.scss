@@ -1,0 +1,9 @@
+:host {
+  display: block;
+}
+
+.actions {
+  & > *:not(:first-child):not(:last-child) {
+    margin: 0 6px;
+  }
+}

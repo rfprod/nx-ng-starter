@@ -19,8 +19,8 @@ import { AppTableControlsModule } from './modules/table-controls/table-controls.
     MatButtonModule,
     MatIconModule,
     AppTableControlsModule,
-    AppDashboardsRoutingModule,
     AppDirectivesModule,
+    AppDashboardsRoutingModule,
   ],
   declarations: [AppDashboardsComponent, AppTableComponent],
 })
