@@ -106,7 +106,7 @@ npx nx generate client-feature client-<feature-name> --tags=scope:client-<featur
 #### `ui` library
 
 ```bash
-npx nx generate client-ui client-ui-<feature-name> --tags=scope:client-ui-<feature-name>,type:ui
+npx nx generate client-ui client-<feature-name> --tags=scope:client-<feature-name>,type:ui
 ```
 
 #### `data-access` library

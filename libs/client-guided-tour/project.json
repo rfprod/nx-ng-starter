@@ -1,0 +1,62 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "client-guided-tour",
+  "prefix": "app",
+  "projectType": "library",
+  "sourceRoot": "libs/client-guided-tour/src",
+  "tags": ["scope:client-guided-tour", "type:ui"],
+  "targets": {
+    "build": {
+      "configurations": {
+        "development": {
+          "tsConfig": "libs/client-guided-tour/tsconfig.lib.json"
+        },
+        "production": {
+          "tsConfig": "libs/client-guided-tour/tsconfig.lib.prod.json"
+        }
+      },
+      "defaultConfiguration": "production",
+      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "options": {
+        "project": "libs/client-guided-tour/ng-package.json"
+      },
+      "outputs": ["{workspaceRoot}/dist/libs/client-guided-tour"]
+    },
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "eslintConfig": "libs/client-guided-tour/.eslintrc.json",
+        "lintFilePatterns": ["libs/client-guided-tour/**/*.ts"]
+      },
+      "outputs": ["{options.outputFile}"]
+    },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-guided-tour"]
+    },
+    "stylelint-check": {
+      "executor": "./tools/executors/stylelint:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/stylelint/libs/client-guided-tour"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/client-guided-tour/jest.config.ts"
+      },
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"]
+    },
+    "tsc-check": {
+      "executor": "./tools/executors/tsc:check",
+      "options": {
+        "tsConfig": "libs/client-guided-tour/tsconfig.lib.json"
+      },
+      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-guided-tour"]
+    }
+  }
+}

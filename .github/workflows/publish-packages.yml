@@ -63,6 +63,28 @@ jobs:
           library-name: client-d3-charts
           npm-automation-token: ${{ secrets.NPM_AUTOMATION_TOKEN }}
 
+  publish-client-guided-tour:
+    needs: checks
+    if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packageGuidedTour == 'true' }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v3
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+        with:
+          compodoc: false
+          cypress: false
+          firebase-tools: false
+
+      - name: NPM publish
+        uses: ./.github/actions/npm-publish
+        with:
+          library-name: client-guided-tour
+          npm-automation-token: ${{ secrets.NPM_AUTOMATION_TOKEN }}
+
   publish-client-pwa-offline:
     needs: checks
     if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packagePwaOffline == 'true' }}
