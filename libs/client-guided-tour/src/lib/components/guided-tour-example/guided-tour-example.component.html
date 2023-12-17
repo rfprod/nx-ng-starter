@@ -1,7 +1,33 @@
-<p>... Some content ...</p>
+@if (!tour.active) {
+  <button mat-raised-button color="accent" (click)="tour.next()">Start tour</button>
+} @else {
+  <button mat-raised-button color="warn" (click)="tour.end()">End tour</button>
+}
 
 <ng-container *ngIf="tourConig$() as config">
+  <p>... Some content ...</p>
+
+  <p>... Some content ...</p>
+
+  <p>... Some content ...</p>
+
+  <p>... Some content ...</p>
+
+  <p>... Some content ...</p>
+
+  <p>... Some content ...</p>
+
   <div [appGuidedTour]="config.at(1)" [highlightElement]="true">second item to explain</div>
+
+  <p>... Some content ...</p>
+
+  <p>... Some content ...</p>
+
+  <p>... Some content ...</p>
+
+  <p>... Some content ...</p>
+
+  <p>... Some content ...</p>
 
   <p>... Some content ...</p>
 
@@ -9,13 +35,27 @@
 
   <p>... Some content ...</p>
 
+  <p>... Some content ...</p>
+
+  <p>... Some content ...</p>
+
+  <p>... Some content ...</p>
+
+  <p>... Some content ...</p>
+
+  <p>... Some content ...</p>
+
   <div [appGuidedTour]="config.at(0)">first item to explain</div>
+
+  <p>... Some content ...</p>
+
+  <p>... Some content ...</p>
+
+  <p>... Some content ...</p>
+
+  <p>... Some content ...</p>
+
+  <p>... Some content ...</p>
+
+  <p>... Some content ...</p>
 </ng-container>
-
-<p>... Some content ...</p>
-
-@if (!tour.active) {
-  <button mat-raised-button color="accent" (click)="tour.next()">Start tour</button>
-} @else {
-  <button mat-raised-button color="warn" (click)="tour.end()">End tour</button>
-}

@@ -165,11 +165,15 @@ export class AppGuidedTourDirective implements AfterContentInit, OnDestroy {
 
   private decorateNativeEl(reset?: boolean) {
     if (typeof this.nativeElement !== 'undefined' && this.highlightElement) {
+      const elevationClass = 'mat-elevation-z2';
       if (reset === true) {
         this.nativeElement.style.border = 'unset';
+        this.nativeElement.className = this.nativeElement.className.replace(` ${elevationClass}`, '');
         return;
       }
+      this.nativeElement.scrollIntoView({ behavior: 'smooth' });
       this.nativeElement.style.border = '1px dotted black';
+      this.nativeElement.className += ` ${elevationClass}`;
     }
   }
 

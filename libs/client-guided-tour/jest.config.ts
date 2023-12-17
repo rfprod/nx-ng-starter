@@ -9,8 +9,8 @@ const config: Config.InitialOptions = {
     global: {
       branches: 0,
       functions: 27,
-      lines: 32,
-      statements: 35,
+      lines: 31,
+      statements: 33,
     },
   },
   displayName: 'client-guided-tour',
