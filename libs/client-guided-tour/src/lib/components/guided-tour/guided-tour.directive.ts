@@ -172,7 +172,6 @@ export class AppGuidedTourDirective implements AfterContentInit, OnDestroy {
         return;
       }
       this.nativeElement.scrollIntoView({ behavior: 'smooth' });
-      this.nativeElement.style.border = '1px dotted black';
       this.nativeElement.className += ` ${elevationClass}`;
     }
   }
