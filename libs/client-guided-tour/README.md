@@ -1,10 +1,10 @@
 # Guided Tour Module for Angular
 
-Guided tour feature for Angular clients.
+This library was generated with [Nx](https://nx.dev).
 
 ## Description
 
-TBD
+Guided tour feature for Angular clients.
 
 ## Usage
 
@@ -29,13 +29,13 @@ export class AppModule {}
 
 ### As an external package
 
-Install the package
+#### Install the package
 
 ```bash
 yarn add @rfprodz/client-guided-tour @angular/cdk @angular/common @angular/core @angular/material
 ```
 
-Import the module
+#### Import the module
 
 ```typescript
 ...
@@ -52,7 +52,7 @@ import { AppGuidedTourModule } from '@rfprodz/client-guided-tour';
 export class AppModule {}
 ```
 
-Use in components
+#### Use in components
 
 ```html
 ...
@@ -103,6 +103,11 @@ export class GuidedComponent implements AfterViewInit {
   }
 }
 ```
+
+#### Full example
+
+- [module](https://github.com/rfprod/nx-ng-starter/blob/main/libs/client-guided-tour/src/lib/guided-tour-example.module.ts)
+- [component](https://github.com/rfprod/nx-ng-starter/tree/main/libs/client-guided-tour/src/lib/components/guided-tour-example)
 
 ## Developer commands reference
 
