@@ -6,6 +6,7 @@ import { App<%= pascalCaseName %>Effects } from './<%= kebabCaseName %>.effects'
 import { <%= camelCaseName %>ReducerConfig, I<%= pascalCaseName %>State } from './<%= kebabCaseName %>.interface';
 import { <%= camelCaseName %>ReducerProvider } from './<%= kebabCaseName %>.reducer';
 
+/** <%= pascalCaseName %> module. */
 @NgModule({
   imports: [StoreModule.forFeature<I<%= pascalCaseName %>State>(<%= camelCaseName %>ReducerConfig.featureName, <%= camelCaseName %>ReducerConfig.token), EffectsModule.forFeature([App<%= pascalCaseName %>Effects])],
 })

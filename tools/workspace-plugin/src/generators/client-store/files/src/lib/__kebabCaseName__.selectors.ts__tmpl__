@@ -2,10 +2,13 @@ import { createSelector } from '@ngrx/store';
 
 import { I<%= pascalCaseName %>State, I<%= pascalCaseName %>StateModel } from './<%= kebabCaseName %>.interface';
 
+/** <%= pascalCaseName %> feature selector. */
 const selectFeature = (state: I<%= pascalCaseName %>State) => state.<%= camelCaseName %>;
 
+/** <%= pascalCaseName %> selector creator. */
 const <%= camelCaseName %> = createSelector(selectFeature, (state: I<%= pascalCaseName %>StateModel) => state.<%= camelCaseName %>);
 
+/** <%= pascalCaseName %> selectors. */
 export const <%= camelCaseName %>Selectors = {
   <%= camelCaseName %>, // TODO
 };

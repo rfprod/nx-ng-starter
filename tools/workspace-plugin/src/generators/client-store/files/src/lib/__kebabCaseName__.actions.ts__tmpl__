@@ -3,8 +3,10 @@ import { createAction } from '@ngrx/store';
 
 import { <%= camelCaseName %>ReducerConfig } from './<%= kebabCaseName %>.interface';
 
+/** <%= pascalCaseName %> action creator. */
 const action = createAction(actionType(<%= camelCaseName %>ReducerConfig.featureName, 'action')); // TODO
 
+/** <%= pascalCaseName %> actions. */
 export const <%= camelCaseName %>Actions = {
   action,
 };

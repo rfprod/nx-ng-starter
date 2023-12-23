@@ -4,6 +4,7 @@ import { createReducer, on } from '@ngrx/store';
 import { <%= camelCaseName %>Actions } from './<%= kebabCaseName %>.actions';
 import { <%= camelCaseName %>ReducerConfig, I<%= pascalCaseName %>StateModel } from './<%= kebabCaseName %>.interface';
 
+/** <%= pascalCaseName %> reducer. */
 @Injectable({
   providedIn: 'root',
 })
