@@ -27,29 +27,19 @@ interface IParsedRoute {
 export class AppSearchComponent implements AfterViewInit {
   @HostBinding('class.density-3') public density = true;
 
-  /**
-   * The autocomplete input.
-   */
+  /** The autocomplete input. */
   @ViewChild(MatInput) public matInput!: MatInput;
 
-  /**
-   * Event emitter to notify the parent component that an option has been selected.
-   */
+  /** Event emitter to notify the parent component that an option has been selected. */
   @Output() public readonly optionSelected = new EventEmitter<void>();
 
-  /**
-   * The autocomplete input form control.
-   */
+  /** The autocomplete input form control. */
   public control = new FormControl('', { nonNullable: true });
 
-  /**
-   * The search options state.
-   */
+  /** The search options state. */
   private readonly optionsSubject = new BehaviorSubject<ISearchOptions[]>([]);
 
-  /**
-   * The options value for the autocomplete.
-   */
+  /** The options value for the autocomplete. */
   public readonly filteredOptions = combineLatest([this.control.valueChanges.pipe(startWith('')), this.optionsSubject.asObservable()]).pipe(
     map(([value, options]) => options.filter(item => item.value.includes(value))),
   );

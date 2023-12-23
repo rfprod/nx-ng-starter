@@ -1,8 +1,14 @@
 <div class="container" appFullScreen #fullScreen="fullScreen">
-  <table mat-table appTableColumnReorder [dataSource]="dataSource" class="mat-elevation-z8">
-    <ng-container matColumnDef="expand">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">-</td>
+  <table mat-table appTableColumnReorder [dataSource]="dataSource()" class="mat-elevation-z8">
+    <ng-container matColumnDef="controls">
+      <th mat-header-cell *matHeaderCellDef [ngStyle]="{ width: '75px' }"></th>
+      <td mat-cell *matCellDef="let element" [ngStyle]="{ width: '75px' }">
+        @if (options().length) {
+          <app-table-row-menu [options]="options()" (optionSelected)="optionSelected($event)"></app-table-row-menu>
+        } @else {
+          -
+        }
+      </td>
       <td mat-footer-cell *matFooterCellDef [attr.colspan]="displayedColumns().length" [ngStyle]="{ padding: 0 }">
         <mat-toolbar>
           <span class="separator"></span>
@@ -16,7 +22,7 @@
           </button>
 
           <app-table-column-settings
-            [allColumns]="allColumns"
+            [columns]="columns()"
             [displayedColumns]="displayedColumns()"
             (columnVisibilityChange)="columnVisibilityChange($event)"
           ></app-table-column-settings>
@@ -46,6 +52,6 @@
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns(); sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns()"></tr>
-    <tr mat-footer-row *matFooterRowDef="['expand']; sticky: true"></tr>
+    <tr mat-footer-row *matFooterRowDef="['controls']; sticky: true"></tr>
   </table>
 </div>

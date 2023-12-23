@@ -5,8 +5,8 @@ import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { AppTableComponent } from './table.component';
 
 describe('AppTableComponent', () => {
-  let component: AppTableComponent;
-  let fixture: ComponentFixture<AppTableComponent>;
+  let component: AppTableComponent<Record<string, string>>;
+  let fixture: ComponentFixture<AppTableComponent<Record<string, string>>>;
 
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     imports: [AppDirectivesModule],
@@ -16,7 +16,7 @@ describe('AppTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule(testBedConfig).compileComponents();
-    fixture = TestBed.createComponent(AppTableComponent);
+    fixture = TestBed.createComponent(AppTableComponent<Record<string, string>>);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
