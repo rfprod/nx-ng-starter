@@ -41,7 +41,12 @@ export class AppSearchComponent implements AfterViewInit {
 
   /** The options value for the autocomplete. */
   public readonly filteredOptions = combineLatest([this.control.valueChanges.pipe(startWith('')), this.optionsSubject.asObservable()]).pipe(
-    map(([value, options]) => options.filter(item => item.value.includes(value))),
+    map(([value, options]) =>
+      options.filter(item => {
+        const searchTerm = value.toLowerCase();
+        return item.name.toLowerCase().includes(searchTerm) || item.value.toLowerCase().includes(searchTerm);
+      }),
+    ),
   );
 
   constructor(private readonly router: Router) {
@@ -63,7 +68,7 @@ export class AppSearchComponent implements AfterViewInit {
           .flat(1)
           .filter(
             route =>
-              /** Routes with emoty paths that do not have Router data defining a feature are ignored by the application global search.  */
+              /** Routes with empty paths that do not have Router data defining a feature are ignored by the application global search.  */
               (route.path !== '' || (route.path === '' && typeof route.data !== 'undefined' && 'feature' in route.data)) &&
               /** Routes that defined redirects are ignored by the application global search.  */
               !route.path.includes('*') &&
@@ -77,8 +82,12 @@ export class AppSearchComponent implements AfterViewInit {
           .map(route => {
             const data = route.data;
             const feature = typeof data?.feature === 'string' && data.feature.length > 0 ? data.feature : route.path;
+            const name =
+              typeof data?.title === 'string' && data.title.length > 0
+                ? data.title
+                : `${feature.slice(0, 1).toUpperCase()}${feature.slice(1, feature.length)}`;
             return {
-              name: `${feature.slice(0, 1).toUpperCase()}${feature.slice(1, feature.length)}`,
+              name,
               value: route.path,
               icon: route.data?.icon,
               routerLink: route.path.replace(/\s/g, '/'),

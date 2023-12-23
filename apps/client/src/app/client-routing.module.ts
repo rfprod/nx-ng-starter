@@ -9,24 +9,24 @@ export const routes: Route[] = [
   {
     path: '',
     canActivate: [AppFeatureAccessInitGuard],
-    data: { feature: 'home', icon: 'home' },
+    data: { feature: 'home', title: 'Home', icon: 'home' },
     loadChildren: () => import('@app/client-diagnostics').then(mod => mod.AppDiagnosticsModule),
   },
   {
     path: 'dashboards',
     canActivate: [AppFeatureAccessInitGuard, AppFeatureAccessGuard],
-    data: { feature: 'dashboards', icon: 'dashboard' },
+    data: { feature: 'dashboards', title: 'Dashboards', icon: 'dashboard' },
     loadChildren: () => import('@app/client-dashboards').then(mod => mod.AppDashboardsModule),
   },
   {
     path: 'chatbot',
     canActivate: [AppFeatureAccessInitGuard],
-    data: { feature: 'chatbot', icon: 'chat' },
+    data: { feature: 'chatbot', title: 'Chatbot', icon: 'chat' },
     loadChildren: () => import('@app/client-chatbot').then(mod => mod.AppChatbotModule),
   },
   {
     path: 'guided-tour',
-    data: { feature: 'guided-tour', icon: 'tour' },
+    data: { feature: 'guided-tour', title: 'Guided Tour', icon: 'tour' },
     loadChildren: () => import('@app/client-guided-tour').then(mod => mod.AppGuidedTourExampleModule),
   },
   {
