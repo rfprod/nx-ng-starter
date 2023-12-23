@@ -2,16 +2,17 @@ import { InjectionToken } from '@angular/core';
 import { IReducerConfig } from '@app/client-util-ngrx';
 import { ActionReducer } from '@ngrx/store';
 
+/** <%= pascalCaseName %> state model. */
 export interface I<%= pascalCaseName %>StateModel {
   <%= camelCaseName %>: boolean; // TODO
 }
 
+/** <%= pascalCaseName %> state. */
 export interface I<%= pascalCaseName %>State {
   <%= camelCaseName %>: I<%= pascalCaseName %>StateModel;
 }
 
-export const featureName: keyof I<%= pascalCaseName %>State = '<%= camelCaseName %>';
-
+/** <%= pascalCaseName %> reducer configuration. */
 export const <%= camelCaseName %>ReducerConfig: IReducerConfig<keyof I<%= pascalCaseName %>State, I<%= pascalCaseName %>StateModel> = {
   featureName: '<%= camelCaseName %>',
   token: new InjectionToken<ActionReducer<I<%= pascalCaseName %>StateModel>>('<%= camelCaseName %> reducer'),

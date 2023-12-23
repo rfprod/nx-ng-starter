@@ -14,6 +14,7 @@ export interface IWebsocketResponseEvent<T = unknown> {
 
 export type TDiagnosticData = Record<string, string | number>;
 
+/** Diagnostics state model. */
 export interface IDiagnosticsStateModel {
   users: number;
   events: IWebsocketResponseEvent<TDiagnosticData[]>[];
@@ -21,6 +22,7 @@ export interface IDiagnosticsStateModel {
   dynamicData: TDiagnosticData[];
 }
 
+/** Diagnostics state. */
 export interface IDiagnosticsState {
   diagnostics: IDiagnosticsStateModel;
 }
@@ -33,6 +35,7 @@ export type TWsConfigToken = InjectionToken<IWebsocketConfig>;
 
 export const WS_CONFIG: TWsConfigToken = new InjectionToken<IWebsocketConfig>('WS_CONFIG');
 
+/** Diagnostics reducer configuration. */
 export const diagnosticsReducerConfig: IReducerConfig<keyof IDiagnosticsState, IDiagnosticsStateModel> = {
   featureName: 'diagnostics',
   token: new InjectionToken<ActionReducer<IDiagnosticsStateModel>>('diagnostics reducer'),

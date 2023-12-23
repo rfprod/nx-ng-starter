@@ -5,6 +5,7 @@ import { AppServiceWorkerService } from '@app/client-service-worker';
 import { chatbotAction } from '@app/client-store-chatbot';
 import { routerAction } from '@app/client-store-router';
 import { sidebarAction } from '@app/client-store-sidebar';
+import { IThemeStateModel, themeSelector } from '@app/client-store-theme';
 import { testingEnvironment } from '@app/client-testing-unit';
 import { WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngrx/store';
@@ -45,7 +46,7 @@ describe('AppRootComponent', () => {
   let setTitleSpy: jest.SpyInstance;
   let meta: Meta;
   let updateTagSpy: jest.SpyInstance;
-  let store: Store;
+  let store: Store<{ theme: IThemeStateModel }>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule(testBedConfig).compileComponents();
@@ -78,10 +79,12 @@ describe('AppRootComponent', () => {
   });
 
   it('logoSrc$ should return dark logo reference based on the value of the darkTheme state', async () => {
-    expect(component.darkTheme).toBeFalsy();
-    const darkLogoRef = await lastValueFrom(component.logoSrc$);
-    expect(darkLogoRef).toContain('logo.svg');
-    expect(darkLogoRef).not.toContain('logo-light.svg');
+    jest.spyOn(store, 'select').mockImplementation(() => of(false));
+    const darkThemeState = await lastValueFrom(store.select(themeSelector.darkThemeEnabled));
+    expect(darkThemeState).toBeFalsy();
+    const logoRef = await lastValueFrom(component.logoSrc$);
+    expect(logoRef).toContain('logo.svg');
+    expect(logoRef).not.toContain('logo-light.svg');
   });
 
   it('toggleSidebar should call store dispatch', () => {

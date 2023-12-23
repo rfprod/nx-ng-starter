@@ -1,6 +1,7 @@
 import { ActivatedRouteSnapshot, Data, Params } from '@angular/router';
 import { RouterReducerState } from '@ngrx/router-store';
 
+/** Router state model. */
 export interface IRouterStateModel {
   url: string;
   params: Params;
@@ -9,8 +10,10 @@ export interface IRouterStateModel {
   data: Data;
 }
 
+/** Router state. */
 export interface IRouterState {
   router: RouterReducerState<IRouterStateModel>;
 }
 
+/** Router feature name. */
 export const featureName: keyof IRouterState = 'router';

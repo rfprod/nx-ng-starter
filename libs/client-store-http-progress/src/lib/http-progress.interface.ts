@@ -9,6 +9,7 @@ export interface IViewProgress {
   loading: boolean;
 }
 
+/** Http progress state model. */
 export interface IHttpProgressStateModel {
   mainView: IViewProgress;
   sidebar: IViewProgress;
@@ -19,6 +20,7 @@ export interface IHttpProgressStateModel {
   };
 }
 
+/** Http progress state. */
 export interface IHttpProgressState {
   httpProgress: IHttpProgressStateModel;
 }
@@ -40,6 +42,7 @@ export interface IHttpProgressHandler {
   tapStopperObservable<T>(): MonoTypeOperatorFunction<T>;
 }
 
+/** Http progress reducer configuration. */
 export const httpProgressReducerConfig: IReducerConfig<keyof IHttpProgressState, IHttpProgressStateModel> = {
   featureName: 'httpProgress',
   token: new InjectionToken<ActionReducer<IHttpProgressStateModel>>('httpProgress reducer'),
