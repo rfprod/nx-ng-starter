@@ -6,21 +6,21 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 
-import { AppTableColumnSettingsComponent } from './table-column-settings.component';
+import { AppTableRowMenuComponent } from './table-row-menu.component';
 
-describe('AppTableColumnSettingsComponent', () => {
-  let component: AppTableColumnSettingsComponent<Record<string, string>>;
-  let fixture: ComponentFixture<AppTableColumnSettingsComponent<Record<string, string>>>;
+describe('AppTableRowMenuComponent', () => {
+  let component: AppTableRowMenuComponent<Record<string, string>>;
+  let fixture: ComponentFixture<AppTableRowMenuComponent<Record<string, string>>>;
 
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     imports: [CommonModule, MatButtonModule, MatIconModule, MatMenuModule, MatListModule],
-    declarations: [AppTableColumnSettingsComponent],
+    declarations: [AppTableRowMenuComponent],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule(testBedConfig).compileComponents();
-    fixture = TestBed.createComponent(AppTableColumnSettingsComponent);
+    fixture = TestBed.createComponent(AppTableRowMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

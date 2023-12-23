@@ -53,6 +53,7 @@
   [cdkConnectedOverlayOrigin]="searchTrigger"
   [cdkConnectedOverlayOpen]="showSearch()"
   [cdkConnectedOverlayHasBackdrop]="true"
+  (backdropClick)="toggleSearch()"
   [cdkConnectedOverlayPositions]="[
     {
       originX: 'center',

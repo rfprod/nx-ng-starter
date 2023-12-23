@@ -6,10 +6,11 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 
 import { AppTableColumnSettingsComponent } from './table-column-settings/table-column-settings.component';
+import { AppTableRowMenuComponent } from './table-row-menu/table-row-menu.component';
 
 @NgModule({
   imports: [CommonModule, MatButtonModule, MatIconModule, MatMenuModule, MatListModule],
-  declarations: [AppTableColumnSettingsComponent],
-  exports: [AppTableColumnSettingsComponent],
+  declarations: [AppTableColumnSettingsComponent, AppTableRowMenuComponent],
+  exports: [AppTableColumnSettingsComponent, AppTableRowMenuComponent],
 })
 export class AppTableControlsModule {}

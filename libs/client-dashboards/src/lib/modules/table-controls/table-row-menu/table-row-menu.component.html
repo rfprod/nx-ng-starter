@@ -1,0 +1,10 @@
+<button mat-icon-button [matMenuTriggerFor]="menu">
+  <mat-icon>more_horiz</mat-icon>
+</button>
+
+<mat-menu #menu="matMenu" [xPosition]="'after'">
+  <button mat-menu-item *ngFor="let option of options" (click)="selectionChange(option.value)">
+    <mat-icon>{{ option.icon }}</mat-icon>
+    <span>{{ option.title }}</span>
+  </button>
+</mat-menu>

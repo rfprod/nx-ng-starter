@@ -7,10 +7,10 @@ const config: Config.InitialOptions = {
   coverageThreshold: {
     // TODO: bump unit test coverage and remove this override
     global: {
-      branches: 0,
-      functions: 0,
-      lines: 0,
-      statements: 0,
+      branches: 100,
+      functions: 33,
+      lines: 62,
+      statements: 64,
     },
   },
   displayName: 'client-dashboards',

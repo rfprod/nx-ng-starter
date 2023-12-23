@@ -1,4 +1,7 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+
+import { IDashboardTableConfig } from '../../interfaces/table-config.interface';
+import { AppTableBase } from '../_base/table/table.base';
 
 export interface IPeriodicElement {
   name: string;
@@ -13,25 +16,18 @@ export interface IPeriodicElement {
   styleUrls: ['./table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppTableComponent {
-  public allColumns: string[] = ['expand', 'position', 'name', 'weight', 'symbol'];
+export class AppTableComponent<T> extends AppTableBase<T> {
+  @Input() public set config(config: IDashboardTableConfig<T>) {
+    super.config = config;
+  }
 
-  public displayedColumns = signal([...this.allColumns]);
+  constructor() {
+    super();
+  }
 
-  public dataSource: IPeriodicElement[] = [
-    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-    { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-    { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-    { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-    { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-    { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-    { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-  ];
-
-  public columnVisibilityChange(columns: string[]) {
-    this.displayedColumns.set(columns);
+  public optionSelected(value: string): void {
+    /**
+     * @todo Implement this method.
+     */
   }
 }
