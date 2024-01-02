@@ -17,7 +17,7 @@ import { HTTP_STATUS, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/
 import { Store } from '@ngrx/store';
 import { MutationResult } from 'apollo-angular';
 import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
-import { createUploadLink } from 'apollo-upload-client';
+import createUploadLink from 'apollo-upload-client/createUploadLink.mjs';
 import memo from 'memo-decorator';
 import { MonoTypeOperatorFunction, Observable, of } from 'rxjs';
 import { catchError, finalize, map, tap, timeout } from 'rxjs/operators';

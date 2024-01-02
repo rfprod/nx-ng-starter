@@ -8,7 +8,7 @@ const camelCaseRegExpInput = '([a-z]+([A-Z])?[a-z]*)([A-Z][a-z]+|A11y|URL){0,}([
  * @param {jestConfigs: boolean} options configuration options
  * @returns @typescript-eslint/naming-convention configuration
  */
-const namingConventionConfig = (options = { jestConfigs: false }) => ({
+const namingConventionConfig = (options = { jestConfigs: false, testSetup: false }) => ({
   '@typescript-eslint/naming-convention': [
     'error', // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/naming-convention.md
     {
@@ -46,12 +46,13 @@ const namingConventionConfig = (options = { jestConfigs: false }) => ({
        * > databaseURL
        */
       format: null, // ['camelCase', 'UPPER_CASE', 'PascalCase'],
-      leadingUnderscore: 'forbid',
+      leadingUnderscore: options.testSetup ? 'allow' : 'forbid',
       trailingUnderscore: 'forbid',
       custom: {
-        regex: options.jestConfigs
-          ? `^(${camelCaseRegExpInput}|ts-jest|[^0-9]+)$` // [^0-9]+ expression negates all numeric characters, allowing any other characters
-          : `^(${camelCaseRegExpInput}|FORCE_COLOR|Authorization|Content-Type|Cache-Control|Expires|Pragma|graphql-ws|subscriptions-transport-ws|graphQLErrors)$`,
+        regex:
+          options.jestConfigs || options.testSetup
+            ? `^(${camelCaseRegExpInput}|ts-jest|[^0-9]+)$` // [^0-9]+ expression negates all numeric characters, allowing any other characters
+            : `^(${camelCaseRegExpInput}|FORCE_COLOR|Authorization|Content-Type|Cache-Control|Expires|Pragma|graphql-ws|subscriptions-transport-ws|graphQLErrors)$`,
         match: true,
       },
     },
