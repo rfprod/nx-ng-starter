@@ -202,7 +202,7 @@ module.exports = {
         'max-lines-per-function': [
           'error',
           {
-            max: 97,
+            max: 100,
             skipBlankLines: true,
             skipComments: true,
           },
@@ -509,14 +509,19 @@ module.exports = {
     },
     {
       // jest configs may be converted from js to ts, but it still has to use some js language features
+      files: ['apollo.mock.ts'],
+      rules: {
+        ...namingConventionConfig({ testSetup: true }),
+      },
+    },
+    {
+      // jest configs may be converted from js to ts, but it still has to use some js language features
       files: ['**/jest.config.ts', '**/jest.preset.ts'],
       rules: {
         '@typescript-eslint/no-require-imports': 'off',
         '@typescript-eslint/no-var-requires': 'off',
         '@typescript-eslint/no-unsafe-member-access': 'off',
-        ...namingConventionConfig({
-          jestConfigs: true,
-        }),
+        ...namingConventionConfig({ jestConfigs: true }),
       },
     },
   ],

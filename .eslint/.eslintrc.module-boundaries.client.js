@@ -45,7 +45,7 @@ exports.constraints = [
     sourceTag: 'scope:client-pwa-offline',
   },
   {
-    onlyDependOnLibsWithTags: ['scope:client-store', 'scope:client-util'],
+    onlyDependOnLibsWithTags: ['scope:client-store', 'scope:client-testing-unit', 'scope:client-util'],
     sourceTag: 'scope:client-core',
   },
   {
