@@ -4,10 +4,10 @@ const config: Config.InitialOptions = {
   coverageDirectory: '../coverage/tools',
   coverageThreshold: {
     global: {
-      branches: 69,
+      branches: 71,
       functions: 79,
-      lines: 81,
-      statements: 80,
+      lines: 82,
+      statements: 81,
     },
   },
   displayName: 'tools',
