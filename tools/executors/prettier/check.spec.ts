@@ -45,7 +45,7 @@ describe('check', () => {
     return { context, options };
   };
 
-  describe('errors, no projectName', () => {
+  describe('errors', () => {
     afterEach(() => jest.clearAllMocks());
 
     it('should throw an error if context.projectName is undefined', async () => {
@@ -64,12 +64,53 @@ describe('check', () => {
         expect((<Error>e).message).toEqual('Project name is not defined.');
       }
     });
+
+    it('should throw an error if context.projectName does not exist', async () => {
+      const { context, options } = setup('does-not-exist');
+
+      try {
+        const result = await check(options, context);
+        expect(result).not.toMatchObject({ success: true });
+      } catch (e) {
+        expect(childProcess.execFileSync).not.toHaveBeenCalledWith('npx', expect.any(Array), {
+          stdio: 'inherit',
+          cwd: process.cwd(),
+          env: process.env,
+          shell: true,
+        });
+        expect((<Error>e).message).toEqual('Project does not exist.');
+      }
+    });
+
+    it("should throw an error if a project's sourceRoot is undefined", async () => {
+      const { context, options } = setup('test');
+
+      const workspace = context.workspace;
+      Object.keys(workspace?.projects ?? {}).map(key => {
+        if (typeof workspace !== 'undefined') {
+          workspace.projects[key].sourceRoot = void 0;
+        }
+      });
+
+      try {
+        const result = await check(options, context);
+        expect(result).not.toMatchObject({ success: true });
+      } catch (e) {
+        expect(childProcess.execFileSync).not.toHaveBeenCalledWith('npx', expect.any(Array), {
+          stdio: 'inherit',
+          cwd: process.cwd(),
+          env: process.env,
+          shell: true,
+        });
+        expect((<Error>e).message).toEqual('Project root does not exist.');
+      }
+    });
   });
 
-  describe('errors, no source directory', () => {
+  describe('no errors', () => {
     afterEach(() => jest.clearAllMocks());
 
-    it('should throw an error if source directory does not exist', async () => {
+    it('should throw an error if a source directory does not exist', async () => {
       const { context, options } = setup('test');
 
       try {
