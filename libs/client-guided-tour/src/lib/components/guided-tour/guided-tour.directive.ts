@@ -163,11 +163,11 @@ export class AppGuidedTourDirective implements AfterContentInit, OnDestroy {
     }
   }
 
+  /** Adds elevation to the DOM element and scrolls the element into view. */
   private decorateNativeEl(reset?: boolean) {
     if (typeof this.nativeElement !== 'undefined' && this.highlightElement) {
       const elevationClass = 'mat-elevation-z2';
       if (reset === true) {
-        this.nativeElement.style.border = 'unset';
         this.nativeElement.className = this.nativeElement.className.replace(` ${elevationClass}`, '');
         return;
       }
