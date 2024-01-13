@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup environment
         uses: ./.github/actions/setup-environment
@@ -41,7 +41,7 @@ jobs:
 
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Validate a codeowner
         uses: ./.github/actions/validate-codeowner

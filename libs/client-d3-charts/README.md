@@ -31,7 +31,7 @@ import { AppD3ChartsModule } from '@app/client-d3-charts';
 Install the package
 
 ```bash
-yarn add @rfprodz/client-d3-charts d3 @types/d3
+yarn add @rfprodz/client-d3-charts @angular/common @angular/core @types/d3 d3
 ```
 
 Import the charts module

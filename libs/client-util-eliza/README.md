@@ -27,7 +27,7 @@ Example [client.module.ts](https://github.com/rfprod/nx-ng-starter/blob/main/app
 Install the package
 
 ```bash
-yarn add @rfprodz/client-util-eliza
+yarn add @rfprodz/client-util-eliza @angular/core
 ```
 
 #### With the default configuration

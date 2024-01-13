@@ -32,7 +32,7 @@ export class AppModule {}
 #### Install the package
 
 ```bash
-yarn add @rfprodz/client-guided-tour @angular/cdk @angular/common @angular/core @angular/material
+yarn add @rfprodz/client-guided-tour @angular/cdk @angular/common @angular/core @angular/material @angular/router
 ```
 
 #### Import the module

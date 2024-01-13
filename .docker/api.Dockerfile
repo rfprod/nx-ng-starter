@@ -13,5 +13,7 @@ COPY /dist/apps/api ./dist
 USER appuser
 # Configure exposed port.
 EXPOSE 8080 8082
+# Set up health check.
+HEALTHCHECK --interval=10s --timeout=3s CMD curl --fail http://localhost:8080 || exit 1
 # Define startup command.
 CMD [ "node", "./dist/main.js" ]
