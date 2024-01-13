@@ -13,6 +13,7 @@ node_modules
 .vscode
 android
 apps
+!apps/**/package.json
 changelog
 coverage
 dist/apps/*-e2e
@@ -21,6 +22,7 @@ functions
 !functions/package.json
 !functions/package-lock.json
 libs
+!libs/backend-gql/schema.gql
 tools
 !tools/proto
 *.log

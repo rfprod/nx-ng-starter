@@ -34,7 +34,7 @@ RUN echo "Runner CI: default"; \
   apt-get -y autoclean; \
   sleep 1; \
   echo "Installing global dependencies..."; \
-  bash ./tools/shell/docker-task.sh install-docker-ci; \
+  bash ./tools/shell/docker/task.sh install-docker-ci; \
   sleep 1; \
   echo "Setting /tmp directory permissions..."; \
   find /tmp -type f -exec chmod 644 {} \; && find /tmp -type d -exec chmod 755 {} \; && chmod -R o+rw /tmp; \

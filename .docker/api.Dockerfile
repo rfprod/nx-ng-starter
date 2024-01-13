@@ -9,11 +9,16 @@ WORKDIR /app
 # Copy sources.
 COPY /tools/proto ./tools/proto
 COPY /dist/apps/api ./dist
+COPY /libs/backend-gql/schema.gql ./
+COPY /apps/api/package.json .
+# Install dependencies.
+RUN npm i --production --legacy-peer-deps ; \
+  npm cache clean --force
 # Set user.
 USER appuser
 # Configure exposed port.
 EXPOSE 8080 8082
-# Set up health check.
-HEALTHCHECK --interval=10s --timeout=3s CMD curl --fail http://localhost:8080 || exit 1
+# Set up a health check.
+HEALTHCHECK --interval=5m --timeout=3s CMD curl --fail http://localhost:8080 || exit 1
 # Define startup command.
 CMD [ "node", "./dist/main.js" ]
