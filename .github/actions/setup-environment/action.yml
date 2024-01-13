@@ -26,7 +26,7 @@ inputs:
   node-version:
     description: NodeJS version
     required: true
-    default: 18.x
+    default: 20.11.x
 
 runs:
   using: 'composite'
@@ -35,7 +35,7 @@ runs:
       uses: ./.github/actions/disable-session-history
 
     - name: Use Node.js ${{ inputs.node-version }}
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node-version }}
         check-latest: true
