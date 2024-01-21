@@ -1,6 +1,7 @@
 import { ConnectedPosition, Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { AfterContentInit, Directive, ElementRef, Injector, Input, OnDestroy, ViewContainerRef } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { AfterContentInit, Directive, ElementRef, Inject, Injector, Input, OnDestroy, ViewContainerRef } from '@angular/core';
 
 import { OVERLAY_REFERENCE } from '../../providers/overlay.provider';
 import { AppGuidedTourService } from '../../services/guided-tour/guided-tour.service';
@@ -19,7 +20,7 @@ export class AppGuidedTourDirective implements AfterContentInit, OnDestroy {
 
   /** Connected positions configuration. */
   @Input() public flexibleConnectedPositions: ConnectedPosition[] = [
-    // below origin
+    // below the origin
     {
       originX: 'center',
       originY: 'bottom',
@@ -38,7 +39,7 @@ export class AppGuidedTourDirective implements AfterContentInit, OnDestroy {
       overlayX: 'start',
       overlayY: 'top',
     },
-    // above origin
+    // above the origin
     {
       originX: 'center',
       originY: 'top',
@@ -54,6 +55,44 @@ export class AppGuidedTourDirective implements AfterContentInit, OnDestroy {
     {
       originX: 'center',
       originY: 'top',
+      overlayX: 'start',
+      overlayY: 'bottom',
+    },
+    // to the left of the origin
+    {
+      originX: 'start',
+      originY: 'top',
+      overlayX: 'end',
+      overlayY: 'top',
+    },
+    {
+      originX: 'start',
+      originY: 'center',
+      overlayX: 'end',
+      overlayY: 'center',
+    },
+    {
+      originX: 'start',
+      originY: 'bottom',
+      overlayX: 'end',
+      overlayY: 'bottom',
+    },
+    // to the right of the origin
+    {
+      originX: 'end',
+      originY: 'top',
+      overlayX: 'start',
+      overlayY: 'top',
+    },
+    {
+      originX: 'end',
+      originY: 'center',
+      overlayX: 'start',
+      overlayY: 'center',
+    },
+    {
+      originX: 'end',
+      originY: 'bottom',
       overlayX: 'start',
       overlayY: 'bottom',
     },
@@ -64,6 +103,12 @@ export class AppGuidedTourDirective implements AfterContentInit, OnDestroy {
 
   /** Native element ref. */
   private nativeElement?: HTMLElement;
+
+  /** Original position of the native element. */
+  private nativeElementOriginalPosition?: string;
+
+  /** Native element frame. */
+  private readonly nativeElementFrame: HTMLElement = this.doc.createElement('div');
 
   /** Overlay reference. */
   private overlayRef: OverlayRef | null = null;
@@ -80,6 +125,7 @@ export class AppGuidedTourDirective implements AfterContentInit, OnDestroy {
     private readonly overlay: Overlay,
     private readonly overlayConfig: OverlayConfig,
     private readonly viewContainerRef: ViewContainerRef,
+    @Inject(DOCUMENT) private readonly doc: Document,
     private readonly tour: AppGuidedTourService,
   ) {}
 
@@ -158,7 +204,8 @@ export class AppGuidedTourDirective implements AfterContentInit, OnDestroy {
         ],
       });
       const portal = new ComponentPortal(AppGuidedTourComponent, this.viewContainerRef, context);
-      void this.overlayRef?.attach(portal);
+      const ref = this.overlayRef?.attach(portal);
+      ref?.changeDetectorRef.detectChanges();
       this.decorateNativeEl();
     }
   }
@@ -166,13 +213,25 @@ export class AppGuidedTourDirective implements AfterContentInit, OnDestroy {
   /** Adds elevation to the DOM element and scrolls the element into view. */
   private decorateNativeEl(reset?: boolean) {
     if (typeof this.nativeElement !== 'undefined' && this.highlightElement) {
-      const elevationClass = 'mat-elevation-z2';
+      const rect = this.nativeElement.getBoundingClientRect();
+      this.nativeElementOriginalPosition = this.nativeElement.style.position;
+      this.nativeElement.style.position = 'relative';
+      this.nativeElementFrame.style.position = 'absolute';
+      this.nativeElementFrame.style.width = `${rect.width}px`;
+      this.nativeElementFrame.style.height = `${rect.height}px`;
+      this.nativeElementFrame.style.top = '0px';
+      this.nativeElementFrame.style.left = '0px';
+      this.nativeElementFrame.style.zIndex = '999';
+      this.nativeElementFrame.style.boxShadow = '0 0 0 1000px rgba(0,0,0,0.3)';
+      this.nativeElementFrame.style.boxShadow = '0 0 0 1000vmax rgba(0,0,0,0.3)';
+      this.nativeElementFrame.style.pointerEvents = 'none';
       if (reset === true) {
-        this.nativeElement.className = this.nativeElement.className.replace(` ${elevationClass}`, '');
+        this.nativeElement.removeChild(this.nativeElementFrame);
+        this.nativeElement.style.position = this.nativeElementOriginalPosition;
         return;
       }
       this.nativeElement.scrollIntoView({ behavior: 'smooth' });
-      this.nativeElement.className += ` ${elevationClass}`;
+      this.nativeElement.appendChild(this.nativeElementFrame);
     }
   }
 

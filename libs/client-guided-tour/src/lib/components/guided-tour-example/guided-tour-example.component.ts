@@ -38,7 +38,23 @@ export class AppGuidedTourExampleComponent implements AfterViewInit {
       index: 2,
       title: 'third',
       subtitle: 'Third step',
-      description: 'The final step. Highlighting enabled.',
+      description: 'The third step. Highlighting enabled.',
+      first: false,
+      last: false,
+    },
+    {
+      index: 3,
+      title: 'fourth',
+      subtitle: 'Fourth step',
+      description: 'The fourth step. Highlighting enabled.',
+      first: false,
+      last: false,
+    },
+    {
+      index: 4,
+      title: 'fifth',
+      subtitle: 'Fifth step',
+      description: 'The fifth and the final step. Highlighting enabled.',
       first: false,
       last: true,
     },
@@ -50,6 +66,6 @@ export class AppGuidedTourExampleComponent implements AfterViewInit {
   constructor(public readonly tour: AppGuidedTourService) {}
 
   public ngAfterViewInit(): void {
-    this.tour.configuration = this.steps;
+    this.tour.configuration = [...this.steps];
   }
 }

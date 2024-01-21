@@ -1,4 +1,4 @@
-import { Injectable, QueryList } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { AppGuidedTourDirective } from '../../components/guided-tour/guided-tour.directive';
 
@@ -14,8 +14,8 @@ export class AppGuidedTourService {
   private steps: AppGuidedTourDirective[] = [];
 
   /** Guided tour step configuration. */
-  public set configuration(stepsQuery: QueryList<AppGuidedTourDirective>) {
-    this.steps = stepsQuery.toArray().sort((x, y) => (x.appGuidedTour?.index ?? 0) - (y.appGuidedTour?.index ?? 0));
+  public set configuration(steps: AppGuidedTourDirective[]) {
+    this.steps = steps.sort((x, y) => (x.appGuidedTour?.index ?? 0) - (y.appGuidedTour?.index ?? 0));
   }
 
   /** Active step. */
