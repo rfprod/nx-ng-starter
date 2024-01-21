@@ -5,6 +5,11 @@
 }
 
 <ng-container *ngIf="tourConig$() as config">
+  <div [ngStyle]="{ width: '100%' }">
+    <span [ngStyle]="{ display: 'inline-block', width: '80%' }">... Some content ...</span>
+    <span [appGuidedTour]="config.at(4)" [highlightElement]="true">fifth item to explain</span>
+  </div>
+
   <p>... Some content ...</p>
 
   <p>... Some content ...</p>
@@ -58,4 +63,9 @@
   <p>... Some content ...</p>
 
   <p>... Some content ...</p>
+
+  <div [ngStyle]="{ width: '100%' }">
+    <span [ngStyle]="{ display: 'inline-block', width: '80%' }">... Some content ...</span>
+    <span [appGuidedTour]="config.at(3)" [highlightElement]="true">fourth item to explain</span>
+  </div>
 </ng-container>
