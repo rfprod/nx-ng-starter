@@ -4,10 +4,6 @@
 exports.constraints = [
   {
     onlyDependOnLibsWithTags: [],
-    sourceTag: 'scope:server-dev',
-  },
-  {
-    onlyDependOnLibsWithTags: [],
     sourceTag: 'scope:server-prod',
   },
   {

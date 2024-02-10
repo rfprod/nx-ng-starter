@@ -8,7 +8,11 @@ import * as generator from './client-util.generator';
 import type { ISchematicContext } from './schema.interface';
 
 jest.mock('../../utils/finalizer.util', () => ({
-  finalizeGenerator: jest.fn().mockReturnValue(new Promise(resolve => resolve(null))),
+  finalizeGenerator: jest.fn().mockImplementation(() => new Promise(resolve => resolve({ success: true }))),
+}));
+
+jest.mock('../../utils/project-configuration.util', () => ({
+  updateProjectLinterConfig: jest.fn().mockImplementation(() => void 0),
 }));
 
 describe('client-util', () => {

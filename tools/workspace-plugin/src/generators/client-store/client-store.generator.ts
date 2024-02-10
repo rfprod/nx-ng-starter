@@ -35,6 +35,7 @@ export default async function (tree: Tree, schema: ISchematicContext) {
     prefix: 'app',
     routing: false,
     skipModule: true,
+    standalone: false,
     tags,
   });
 

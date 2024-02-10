@@ -132,6 +132,20 @@
         "proxyConfig": "apps/client/proxy.conf.json"
       }
     },
+    "serve-with-api": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx nx serve api"
+          },
+          {
+            "command": "npx nx serve client"
+          }
+        ],
+        "parallel": true
+      }
+    },
     "stylelint-check": {
       "executor": "./tools/executors/stylelint:check",
       "options": {
