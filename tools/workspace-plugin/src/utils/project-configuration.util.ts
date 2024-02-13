@@ -6,6 +6,9 @@ import { ProjectConfiguration, readProjectConfiguration, Tree, updateProjectConf
 export const updateProjectLinterConfig = <T = Record<string, string>>(schema: T & { name: string }, tree: Tree) => {
   const projectConfig: ProjectConfiguration = readProjectConfiguration(tree, schema.name);
   if (typeof projectConfig.targets !== 'undefined') {
+    if (typeof projectConfig.targets.lint === 'undefined') {
+      Object.defineProperty(projectConfig.targets, 'lint', {});
+    }
     projectConfig.targets.lint.executor = '@angular-eslint/builder:lint';
     projectConfig.targets.lint.options = {
       ...(projectConfig.targets.lint.options ?? {}),

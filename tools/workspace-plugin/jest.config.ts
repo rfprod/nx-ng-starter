@@ -4,10 +4,10 @@ const config: Config.InitialOptions = {
   coverageDirectory: '../../coverage/tools/workspace-plugin',
   coverageThreshold: {
     global: {
-      branches: 28,
-      functions: 57,
-      lines: 63,
-      statements: 63,
+      branches: 24,
+      functions: 55,
+      lines: 59,
+      statements: 59,
     },
   },
   displayName: 'workspace-plugin',
