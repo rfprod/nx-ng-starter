@@ -2,7 +2,7 @@ import { DOCUMENT } from '@angular/common';
 import { ApplicationRef, Inject, Injectable, NgZone } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { SwUpdate } from '@angular/service-worker';
-import { catchError, combineLatest, concat, filter, first, from, interval, map, of, switchMap, tap } from 'rxjs';
+import { catchError, combineLatest, concat, defer, filter, first, from, interval, map, of, skip, switchMap, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -43,7 +43,6 @@ export class AppServiceWorkerService {
           this.displaySnackBar(`Failed to install app version '${event.version.hash}': ${event.error}`);
           return null;
         case 'VERSION_READY':
-          this.displaySnackBar(`Current app version: ${event.currentVersion.hash}`);
           this.displaySnackBar(`New app version ready for use: ${event.latestVersion.hash}`);
           return event;
         default:
@@ -57,19 +56,18 @@ export class AppServiceWorkerService {
    * Checks for available update and prompts the user to update the application.
    */
   private readonly checkForUpdates$ = concat(this.appStable$, this.updateInterval$).pipe(
-    switchMap(() => from(this.service.checkForUpdate())),
+    switchMap(() => from(defer(() => this.service.checkForUpdate()))),
     catchError((error: Error) => {
       this.displaySnackBar(`Failed to check for updates. ${error.message}`, void 0);
       return of(false);
     }),
     filter(update => update),
+    skip(1),
     tap(() => {
       this.displaySnackBar(
         'There is an application update available. It is recommended to update to avoid unexpected behavior.',
         'Update',
-        {
-          duration: Number(Infinity),
-        },
+        { duration: Number(Infinity) },
         true,
       );
     }),
