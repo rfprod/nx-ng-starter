@@ -1,50 +1,50 @@
-<div class="root" *ngIf="config$ | async as config">
-  <mat-toolbar color="primary" class="root__toolbar">
-    <button mat-icon-button disabled>
-      <mat-icon>recycling</mat-icon>
-    </button>
-
-    <span class="flex--full"></span>
-
-    <button mat-icon-button [matMenuTriggerFor]="mobileMenuTop">
-      <mat-icon>menu</mat-icon>
-    </button>
-    <mat-menu #mobileMenuTop="matMenu">
-      <a mat-menu-item href="https://nx.dev" target="_blank" rel="noreferrer"> <mat-icon>library_books</mat-icon> Nx Reference </a>
-      <a mat-menu-item href="https://cli.angular.io/reference.pdf" target="_blank" rel="noreferrer">
-        <mat-icon>build</mat-icon> Angular CLI Reference
-      </a>
-      <a mat-menu-item href="https://material.angular.io/" target="_blank" rel="noreferrer">
-        <mat-icon>change_history</mat-icon> Angular Material
-      </a>
-      <a mat-menu-item href="https://material.io/icons/" target="_blank" rel="noreferrer">
-        <mat-icon>info_outline</mat-icon> Material Icons
-      </a>
-    </mat-menu>
-  </mat-toolbar>
-
-  <mat-sidenav-container class="flex--full" [hasBackdrop]="false" [autosize]="true">
-    <mat-sidenav #sidenav mode="side" [opened]="config.sidenavOpen">
-      <app-documentation-md-reference-tree></app-documentation-md-reference-tree>
-    </mat-sidenav>
-
-    <mat-sidenav-content>
-      <div class="root__content">
-        <router-outlet></router-outlet>
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-
-  <mat-toolbar color="primary" class="root__toolbar">
-    <button mat-icon-button (click)="sidenav.toggle()">
-      <mat-icon title="open sidenav" *ngIf="!sidenav.opened"> flip_to_front </mat-icon>
-      <mat-icon title="open sidenav" *ngIf="sidenav.opened"> flip_to_back </mat-icon>
-    </button>
-
-    <span class="flex--full"></span>
-
-    <div *ngIf="version">
-      <small>{{ version }}</small>
-    </div>
-  </mat-toolbar>
-</div>
+@if (config$ | async; as config) {
+  <div class="root">
+    <mat-toolbar color="primary" class="root__toolbar">
+      <button mat-icon-button disabled>
+        <mat-icon>recycling</mat-icon>
+      </button>
+      <span class="flex--full"></span>
+      <button mat-icon-button [matMenuTriggerFor]="mobileMenuTop">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #mobileMenuTop="matMenu">
+        <a mat-menu-item href="https://nx.dev" target="_blank" rel="noreferrer"> <mat-icon>library_books</mat-icon> Nx Reference </a>
+        <a mat-menu-item href="https://cli.angular.io/reference.pdf" target="_blank" rel="noreferrer">
+          <mat-icon>build</mat-icon> Angular CLI Reference
+        </a>
+        <a mat-menu-item href="https://material.angular.io/" target="_blank" rel="noreferrer">
+          <mat-icon>change_history</mat-icon> Angular Material
+        </a>
+        <a mat-menu-item href="https://material.io/icons/" target="_blank" rel="noreferrer">
+          <mat-icon>info_outline</mat-icon> Material Icons
+        </a>
+      </mat-menu>
+    </mat-toolbar>
+    <mat-sidenav-container class="flex--full" [hasBackdrop]="false" [autosize]="true">
+      <mat-sidenav #sidenav mode="side" [opened]="config.sidenavOpen">
+        <app-documentation-md-reference-tree></app-documentation-md-reference-tree>
+      </mat-sidenav>
+      <mat-sidenav-content>
+        <div class="root__content">
+          <router-outlet></router-outlet>
+        </div>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
+    <mat-toolbar color="primary" class="root__toolbar">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        @if (!sidenav.opened) {
+          <mat-icon title="open sidenav"> flip_to_front </mat-icon>
+        } @else {
+          <mat-icon title="open sidenav"> flip_to_back </mat-icon>
+        }
+      </button>
+      <span class="flex--full"></span>
+      @if (version) {
+        <div>
+          <small>{{ version }}</small>
+        </div>
+      }
+    </mat-toolbar>
+  </div>
+}

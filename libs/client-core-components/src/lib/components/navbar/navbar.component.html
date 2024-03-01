@@ -1,28 +1,27 @@
-<mat-toolbar color="primary" class="toolbar" *ngIf="routerEvents$ | async">
-  <img
-    class="toolbar--logo"
-    [src]="logoSrc"
-    alt="{{ appName }}"
-    title="{{ appName }}"
-    [routerLink]="buttons[0].routerLink"
-    [ngClass]="{ 'toolbar--actionable': !buttons[0].routeActive() }"
-  />
-
-  <span class="flex--full"></span>
-
-  <app-navigator (nagivateBack)="navigateBack()" (nagivateForward)="navigateForward()"></app-navigator>
-
-  <span class="flex--full"></span>
-
-  <button mat-icon-button [matMenuTriggerFor]="mobileMenuTop">
-    <mat-icon>menu</mat-icon>
-  </button>
-
-  <mat-menu #mobileMenuTop="matMenu">
-    <ng-template *ngFor="let button of buttons" [appFeatureFlag]="button.title !== 'Dashboards' ? null : 'dashboards'">
-      <a mat-menu-item [routerLink]="button.routerLink" [disabled]="button.routeActive()" (click)="navButtonClick()">
-        <mat-icon>{{ button.icon }}</mat-icon> {{ button.title }}
-      </a>
-    </ng-template>
-  </mat-menu>
-</mat-toolbar>
+@if (routerEvents$ | async) {
+  <mat-toolbar color="primary" class="toolbar">
+    <img
+      class="toolbar--logo"
+      [src]="logoSrc"
+      alt="{{ appName }}"
+      title="{{ appName }}"
+      [routerLink]="buttons[0].routerLink"
+      [ngClass]="{ 'toolbar--actionable': !buttons[0].routeActive() }"
+    />
+    <span class="flex--full"></span>
+    <app-navigator (nagivateBack)="navigateBack()" (nagivateForward)="navigateForward()"></app-navigator>
+    <span class="flex--full"></span>
+    <button mat-icon-button [matMenuTriggerFor]="mobileMenuTop">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #mobileMenuTop="matMenu">
+      @for (button of buttons; track button) {
+        <ng-template [appFeatureFlag]="button.title !== 'Dashboards' ? null : 'dashboards'">
+          <a mat-menu-item [routerLink]="button.routerLink" [disabled]="button.routeActive()" (click)="navButtonClick()">
+            <mat-icon>{{ button.icon }}</mat-icon> {{ button.title }}
+          </a>
+        </ng-template>
+      }
+    </mat-menu>
+  </mat-toolbar>
+}

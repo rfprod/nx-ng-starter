@@ -1,5 +1,6 @@
-<div class="container" *ngIf="chartConfig$ | async as config">
-  <app-pie-chart [chartId]="'pie-example-1'" [data]="config.data" [options]="config.options.first"></app-pie-chart>
-
-  <app-pie-chart [chartId]="'pie-example-2'" [data]="config.data" [options]="config.options.second"></app-pie-chart>
-</div>
+@if (chartConfig$ | async; as config) {
+  <div class="container">
+    <app-pie-chart [chartId]="'pie-example-1'" [data]="config.data" [options]="config.options.first"></app-pie-chart>
+    <app-pie-chart [chartId]="'pie-example-2'" [data]="config.data" [options]="config.options.second"></app-pie-chart>
+  </div>
+}

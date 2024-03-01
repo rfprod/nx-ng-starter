@@ -3,8 +3,10 @@
 </button>
 
 <mat-menu #menu="matMenu" [xPosition]="'after'">
-  <button mat-menu-item *ngFor="let option of options" (click)="selectionChange(option.value)">
-    <mat-icon>{{ option.icon }}</mat-icon>
-    <span>{{ option.title }}</span>
-  </button>
+  @for (option of options; track option) {
+    <button mat-menu-item (click)="selectionChange(option.value)">
+      <mat-icon>{{ option.icon }}</mat-icon>
+      <span>{{ option.title }}</span>
+    </button>
+  }
 </mat-menu>
