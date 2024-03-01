@@ -14,9 +14,11 @@
   </button>
 
   <mat-menu #mobileMenuBottom="matMenu">
-    <a mat-menu-item *ngFor="let anchor of anchors" [href]="anchor.href" target="_blank" rel="noreferrer">
-      <mat-icon>{{ anchor.icon }}</mat-icon> {{ anchor.title }}
-    </a>
+    @for (anchor of anchors; track anchor) {
+      <a mat-menu-item [href]="anchor.href" target="_blank" rel="noreferrer">
+        <mat-icon>{{ anchor.icon }}</mat-icon> {{ anchor.title }}
+      </a>
+    }
 
     <mat-divider></mat-divider>
 
@@ -24,10 +26,12 @@
 
     <mat-divider></mat-divider>
 
-    <div mat-menu-item disabled *ngIf="version">
-      <mat-icon>new_releases</mat-icon>
-      {{ version }}
-    </div>
+    @if (version) {
+      <div mat-menu-item disabled>
+        <mat-icon>new_releases</mat-icon>
+        {{ version }}
+      </div>
+    }
   </mat-menu>
 </mat-toolbar>
 

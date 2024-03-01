@@ -4,13 +4,14 @@
 
 <mat-menu #menu="matMenu" [xPosition]="'before'" [yPosition]="'above'">
   <mat-selection-list [multiple]="true" (selectionChange)="changeVisibleColumns($event)">
-    <mat-list-option
-      *ngFor="let column of columns"
-      (click)="$event.preventDefault(); $event.stopImmediatePropagation()"
-      [value]="column"
-      [selected]="displayedColumns.includes(column.name)"
-    >
-      {{ column.name }}
-    </mat-list-option>
+    @for (column of columns; track column) {
+      <mat-list-option
+        (click)="$event.preventDefault(); $event.stopImmediatePropagation()"
+        [value]="column"
+        [selected]="displayedColumns.includes(column.name)"
+      >
+        {{ column.name }}
+      </mat-list-option>
+    }
   </mat-selection-list>
 </mat-menu>

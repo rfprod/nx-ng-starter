@@ -1,3 +1,5 @@
-<div class="container" *ngIf="chartConfig$ | async as config">
-  <app-bar-chart [chartId]="'bar-example-1'" [data]="config.data" [options]="config.options"></app-bar-chart>
-</div>
+@if (chartConfig$ | async; as config) {
+  <div class="container">
+    <app-bar-chart [chartId]="'bar-example-1'" [data]="config.data" [options]="config.options"></app-bar-chart>
+  </div>
+}

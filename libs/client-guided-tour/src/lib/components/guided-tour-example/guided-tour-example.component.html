@@ -4,68 +4,40 @@
   <button mat-raised-button color="warn" (click)="tour.end()">End tour</button>
 }
 
-<ng-container *ngIf="tourConig$() as config">
+@if (tourConig$(); as config) {
   <div [ngStyle]="{ width: '100%' }">
     <span [ngStyle]="{ display: 'inline-block', width: '80%' }">... Some content ...</span>
     <span [appGuidedTour]="config.at(4)" [highlightElement]="true">fifth item to explain</span>
   </div>
-
   <p>... Some content ...</p>
-
   <p>... Some content ...</p>
-
   <p>... Some content ...</p>
-
   <p>... Some content ...</p>
-
   <p>... Some content ...</p>
-
   <p>... Some content ...</p>
-
   <div [appGuidedTour]="config.at(1)" [highlightElement]="true">second item to explain</div>
-
   <p>... Some content ...</p>
-
   <p>... Some content ...</p>
-
   <p>... Some content ...</p>
-
   <p>... Some content ...</p>
-
   <p>... Some content ...</p>
-
   <p>... Some content ...</p>
-
   <div [appGuidedTour]="config.at(2)" [highlightElement]="true">third item to explain</div>
-
   <p>... Some content ...</p>
-
   <p>... Some content ...</p>
-
   <p>... Some content ...</p>
-
   <p>... Some content ...</p>
-
   <p>... Some content ...</p>
-
   <p>... Some content ...</p>
-
   <div [appGuidedTour]="config.at(0)">first item to explain</div>
-
   <p>... Some content ...</p>
-
   <p>... Some content ...</p>
-
   <p>... Some content ...</p>
-
   <p>... Some content ...</p>
-
   <p>... Some content ...</p>
-
   <p>... Some content ...</p>
-
   <div [ngStyle]="{ width: '100%' }">
     <span [ngStyle]="{ display: 'inline-block', width: '80%' }">... Some content ...</span>
     <span [appGuidedTour]="config.at(3)" [highlightElement]="true">fourth item to explain</span>
   </div>
-</ng-container>
+}
