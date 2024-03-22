@@ -33,6 +33,13 @@
         "tsConfig": "apps/elements-e2e/tsconfig.json"
       },
       "outputs": ["{workspaceRoot}/dist/out-tsc/apps/elements-e2e"]
+    },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/apps/elements-e2e"]
     }
   }
 }

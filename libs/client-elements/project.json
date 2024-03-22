@@ -33,6 +33,13 @@
         "tsConfig": "libs/client-elements/tsconfig.lib.json"
       },
       "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-elements"]
+    },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-elements"]
     }
   },
   "tags": ["scope:client-elements", "type:feature"]

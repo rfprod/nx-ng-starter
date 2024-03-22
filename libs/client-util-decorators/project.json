@@ -27,6 +27,13 @@
         "tsConfig": "libs/client-util-decorators/tsconfig.lib.json"
       },
       "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-util-decorators"]
+    },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-util-decorators"]
     }
   }
 }

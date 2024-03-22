@@ -96,8 +96,11 @@ describe('AppConfigurePrettierCheckExecutor', () => {
     return { context, options, projects };
   };
 
-  const prefixes = ['client', 'elements', 'documentation'];
+  const prefixes = ['api', 'client', 'backend', 'elements', 'documentation', 'server'];
   const prefixOptions = prefixes.join(', ').trim();
+
+  const suffixes = ['e2e'];
+  const suffixOptions = suffixes.join(', ').trim();
 
   describe('errors', () => {
     afterEach(() => jest.clearAllMocks());
@@ -194,16 +197,18 @@ describe('AppConfigurePrettierCheckExecutor', () => {
       executor.configure();
 
       const expectedLoggerMessages = [
-        `backend-app: only client applications and libraries need this executor. Client application and libraries have the following prefixes in their directory names: ${prefixOptions}.`,
-        `test-e2e: applications with e2e tests don't need this executor.`,
-        `backend-lib: only client applications and libraries need this executor. Client application and libraries have the following prefixes in their directory names: ${prefixOptions}.`,
-        `tools: only client applications and libraries need this executor. Client application and libraries have the following prefixes in their directory names: ${prefixOptions}.`,
+        `tools: this executor is required for apps and libs with the following prefixes or suffixes in their names.`,
+        ` - prefixes: ${prefixOptions}`,
+        ` - suffixes: ${suffixOptions}`,
       ];
       expect(devkit.logger.log).toHaveBeenCalledTimes(expectedLoggerMessages.length);
       for (let i = 1, max = expectedLoggerMessages.length; i <= max; i += 1) {
         expect(devkit.logger.log).toHaveBeenNthCalledWith(i, expectedLoggerMessages[i - 1]);
       }
-      expect(devkit.updateProjectConfiguration).toHaveBeenCalledTimes(Object.keys(projectsInput).length - expectedLoggerMessages.length);
+      const loggerMessagesPerSkip = 3;
+      expect(devkit.updateProjectConfiguration).toHaveBeenCalledTimes(
+        Object.keys(projectsInput).length - expectedLoggerMessages.length / loggerMessagesPerSkip,
+      );
 
       expect(treeListChangesSpy).not.toHaveBeenCalled();
       expect(nxTree.flushChanges).not.toHaveBeenCalled();
@@ -226,16 +231,18 @@ describe('AppConfigurePrettierCheckExecutor', () => {
       executor.configure();
 
       const expectedLoggerMessages = [
-        `backend-app: only client applications and libraries need this executor. Client application and libraries have the following prefixes in their directory names: ${prefixOptions}.`,
-        `test-e2e: applications with e2e tests don't need this executor.`,
-        `backend-lib: only client applications and libraries need this executor. Client application and libraries have the following prefixes in their directory names: ${prefixOptions}.`,
-        `tools: only client applications and libraries need this executor. Client application and libraries have the following prefixes in their directory names: ${prefixOptions}.`,
+        `tools: this executor is required for apps and libs with the following prefixes or suffixes in their names.`,
+        ` - prefixes: ${prefixOptions}`,
+        ` - suffixes: ${suffixOptions}`,
       ];
       expect(devkit.logger.log).toHaveBeenCalledTimes(expectedLoggerMessages.length);
       for (let i = 1, max = expectedLoggerMessages.length; i <= max; i += 1) {
         expect(devkit.logger.log).toHaveBeenNthCalledWith(i, expectedLoggerMessages[i - 1]);
       }
-      expect(devkit.updateProjectConfiguration).toHaveBeenCalledTimes(Object.keys(projectsInput).length - expectedLoggerMessages.length);
+      const loggerMessagesPerSkip = 3;
+      expect(devkit.updateProjectConfiguration).toHaveBeenCalledTimes(
+        Object.keys(projectsInput).length - expectedLoggerMessages.length / loggerMessagesPerSkip,
+      );
 
       expect(treeListChangesSpy).toHaveBeenCalledTimes(1);
       expect(nxTree.flushChanges).toHaveBeenCalledTimes(1);

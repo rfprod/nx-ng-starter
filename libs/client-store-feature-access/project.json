@@ -28,6 +28,13 @@
         "tsConfig": "libs/client-store-feature-access/tsconfig.lib.json"
       },
       "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-store-feature-access"]
+    },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-store-feature-access"]
     }
   }
 }

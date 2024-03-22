@@ -27,6 +27,13 @@
         "tsConfig": "libs/client-util-animations/tsconfig.lib.json"
       },
       "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-util-animations"]
+    },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-util-animations"]
     }
   }
 }

@@ -34,6 +34,13 @@
         "tsConfig": "libs/client-service-worker/tsconfig.lib.json"
       },
       "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-service-worker"]
+    },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-service-worker"]
     }
   }
 }

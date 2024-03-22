@@ -123,7 +123,7 @@ describe('check', () => {
           env: process.env,
           shell: true,
         });
-        expect((<Error>e).message).toEqual('Source directory test/app/src does not exist');
+        expect((<Error>e).message).toEqual('Source directory apps/test does not exist');
       }
     });
   });
