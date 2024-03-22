@@ -1,8 +1,5 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "affected": {
-    "defaultBase": "main"
-  },
   "cacheDirectory": "/tmp/nx/nx-ng-starter",
   "cli": {
     "cache": {
@@ -14,6 +11,7 @@
       "versionMismatch": false
     }
   },
+  "defaultBase": "main",
   "generators": {
     "@nrwl/schematics:application": {
       "framework": "angular",
@@ -36,16 +34,16 @@
       "unitTestRunner": "jest"
     },
     "@nx/angular:application": {
-      "style": "scss",
+      "e2eTestRunner": "cypress",
       "linter": "eslint",
-      "unitTestRunner": "jest",
-      "e2eTestRunner": "cypress"
+      "style": "scss",
+      "unitTestRunner": "jest"
     },
     "@nx/angular:component": {
-      "style": "scss",
       "changeDetection": "OnPush",
       "inlineStyle": false,
-      "inlineTemplate": false
+      "inlineTemplate": false,
+      "style": "scss"
     },
     "@nx/angular:library": {
       "linter": "eslint",

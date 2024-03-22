@@ -34,45 +34,32 @@ export class AppConfigurePrettierCheckExecutor {
     this.tree = new FsTree(this.context.root, false);
   }
 
-  private mapSuffix(project: IProjectMetadata) {
-    const suffix = project.name.includes('-e2e')
-      ? 'e2e'
-      : project.config.projectType === 'library'
-      ? 'lib'
-      : project.config.projectType === 'application'
-      ? 'app'
-      : '';
-    return suffix;
-  }
-
   private addExecutorConfiguration(tree: FsTree, project: IProjectMetadata) {
     const srcRoot = project.config.sourceRoot;
     if (typeof srcRoot === 'undefined') {
       throw new Error(`The project ${project.name} does not have the 'sourceRoot' configuration option defined.`);
     }
 
-    const suffix = this.mapSuffix(project);
-
-    if (suffix === '') {
-      throw new Error(`Could not determine a suffix for the project: ${project.name}.`);
-    }
-
-    if (suffix === 'e2e') {
-      logger.log(`${project.name}: applications with e2e tests don't need this executor.`);
-      return;
-    }
-
-    const prefixes = ['client', 'elements', 'documentation'];
-    const correctPrefix = prefixes.reduce((accumulator, prefix) => {
-      const correct = new RegExp(`^${prefix}(-)?`).test(project.name);
+    const prefixes = ['api', 'client', 'backend', 'elements', 'documentation', 'server'];
+    const correctPrefix = prefixes.reduce((accumulator, value) => {
+      const correct = new RegExp(`^${value}(-)?`).test(project.name);
       return accumulator || correct;
     }, false);
 
-    if (!correctPrefix) {
+    const suffixes = ['e2e'];
+    const correctSuffix = suffixes.reduce((accumulator, value) => {
+      const correct = new RegExp(`(-)?${value}$`).test(project.name);
+      return accumulator || correct;
+    }, false);
+
+    const addExecutor = correctPrefix || correctSuffix;
+
+    if (!addExecutor) {
       const prefixOptions = prefixes.join(', ').trim();
-      logger.log(
-        `${project.name}: only client applications and libraries need this executor. Client application and libraries have the following prefixes in their directory names: ${prefixOptions}.`,
-      );
+      const suffixOptions = suffixes.join(', ').trim();
+      logger.log(`${project.name}: this executor is required for apps and libs with the following prefixes or suffixes in their names.`);
+      logger.log(` - prefixes: ${prefixOptions}`);
+      logger.log(` - suffixes: ${suffixOptions}`);
       return;
     }
 

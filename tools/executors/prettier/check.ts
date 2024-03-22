@@ -3,7 +3,7 @@ import { execFileSync } from 'child_process';
 import { FsTree } from 'nx/src/generators/tree';
 
 import { IExecutorOptions } from './schema';
-import { findHtmlFiles } from './utils/find-html-files.util';
+import { findFiles } from './utils/find-html-files.util';
 
 /**
  * Execute prettier checks.
@@ -29,10 +29,22 @@ export default async function check(options: IExecutorOptions, context: Executor
     throw new Error('Project root does not exist.');
   }
 
-  const files = findHtmlFiles(tree, src);
+  const htmlFiles = findFiles(tree, src);
 
-  if (files.stdout.length > 0) {
-    const input = files.stdout.split(' ');
+  if (htmlFiles.stderr.length !== 0) {
+    throw new Error(htmlFiles.stderr);
+  }
+
+  const jsonFiles = findFiles(tree, `${src}/..`, '.json');
+
+  if (jsonFiles.stderr.length !== 0) {
+    throw new Error(jsonFiles.stderr);
+  }
+
+  const files = `${htmlFiles.stdout} ${jsonFiles.stdout}`.trim();
+
+  if (files.length > 0) {
+    const input = files.split(' ');
     logger.log('files', input);
     const cmd = 'npx';
     const args =
@@ -42,9 +54,5 @@ export default async function check(options: IExecutorOptions, context: Executor
     execFileSync(cmd, args, { stdio: 'inherit', cwd: process.cwd(), env: process.env, shell: true });
   }
 
-  if (files.stdout.length === 0 && files.stderr.length === 0) {
-    logger.info(`${src} does not contain html files.`);
-  }
-
-  return { success: files.stderr === '' };
+  return { success: htmlFiles.stderr === '' && jsonFiles.stderr === '' };
 }

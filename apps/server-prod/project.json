@@ -59,6 +59,13 @@
         "tsConfig": "apps/server-prod/tsconfig.app.json"
       },
       "outputs": ["{workspaceRoot}/dist/out-tsc/apps/server-prod"]
+    },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/apps/server-prod"]
     }
   }
 }

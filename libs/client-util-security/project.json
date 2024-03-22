@@ -3,30 +3,21 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/client-util-security/src",
   "prefix": "app",
-  "tags": [
-    "scope:client-util-security",
-    "type:util"
-  ],
+  "tags": ["scope:client-util-security", "type:util"],
   "projectType": "library",
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectRoot}"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "libs/client-util-security/jest.config.ts"
       }
     },
     "lint": {
       "executor": "@angular-eslint/builder:lint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "libs/client-util-security/**/*.ts"
-        ],
+        "lintFilePatterns": ["libs/client-util-security/**/*.ts"],
         "eslintConfig": "libs/client-util-security/.eslintrc.json"
       }
     },
@@ -35,9 +26,14 @@
       "options": {
         "tsConfig": "libs/client-util-security/tsconfig.lib.json"
       },
-      "outputs": [
-        "{workspaceRoot}/dist/out-tsc/libs/client-util-security"
-      ]
+      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-util-security"]
+    },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-util-security"]
     }
   }
 }

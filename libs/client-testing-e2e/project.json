@@ -19,6 +19,13 @@
         "tsConfig": "libs/client-testing-e2e/tsconfig.lib.json"
       },
       "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-testing-e2e"]
+    },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-testing-e2e"]
     }
   }
 }
