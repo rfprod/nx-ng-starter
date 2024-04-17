@@ -59,7 +59,18 @@ module.exports = {
     {
       files: ['**/*.html'],
       extends: ['plugin:@angular-eslint/template/recommended'],
-      rules: {},
+      rules: {
+        '@angular-eslint/template/accessibility-alt-text': 'error',
+        '@angular-eslint/template/accessibility-elements-content': 'error',
+        '@angular-eslint/template/accessibility-label-for': 'error',
+        '@angular-eslint/template/no-positive-tabindex': 'error',
+        '@angular-eslint/template/accessibility-table-scope': 'error',
+        '@angular-eslint/template/accessibility-valid-aria': 'error',
+        '@angular-eslint/template/click-events-have-key-events': 'error',
+        '@angular-eslint/template/mouse-events-have-key-events': 'error',
+        '@angular-eslint/template/no-autofocus': 'error',
+        '@angular-eslint/template/no-distracting-elements': 'error',
+      },
     },
     {
       files: ['**/*.html'],
@@ -68,6 +79,16 @@ module.exports = {
       rules: {
         // NOTE: WE ARE OVERRIDING THE DEFAULT CONFIG TO ALWAYS SET THE PARSER TO ANGULAR (SEE BELOW)
         'prettier/prettier': ['error', { parser: 'angular' }],
+        '@angular-eslint/template/accessibility-alt-text': 'error',
+        '@angular-eslint/template/accessibility-elements-content': 'error',
+        '@angular-eslint/template/accessibility-label-for': 'error',
+        '@angular-eslint/template/no-positive-tabindex': 'error',
+        '@angular-eslint/template/accessibility-table-scope': 'error',
+        '@angular-eslint/template/accessibility-valid-aria': 'error',
+        '@angular-eslint/template/click-events-have-key-events': 'error',
+        '@angular-eslint/template/mouse-events-have-key-events': 'error',
+        '@angular-eslint/template/no-autofocus': 'error',
+        '@angular-eslint/template/no-distracting-elements': 'error',
       },
     },
   ],
