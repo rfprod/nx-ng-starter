@@ -8,11 +8,11 @@
 # uses: ./.github/actions/use-yarn-v1
 
 name: use-yarn-v1
-description: Use yarn v1.22.19. This is mandatory, yarn v2 does not have integrity check which is needed for the pipeline.
+description: Use yarn v1.22.22. This is mandatory, yarn v2 does not have integrity check which is needed for the pipeline.
 
 runs:
   using: 'composite'
   steps:
-    - name: Use yarn v1.22.19 (required for integrity check)
+    - name: Use yarn v1.22.22 (required for integrity check)
       shell: bash
-      run: npm i -g yarn@1.22.19
+      run: npm i -g yarn@1.22.22
