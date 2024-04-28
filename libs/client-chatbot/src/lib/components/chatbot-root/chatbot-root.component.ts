@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, HostListener } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, HostListener, signal } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AppElizaService, IChatMessage } from '@app/client-util-eliza';
-import { BehaviorSubject, from, of, switchMap, tap } from 'rxjs';
 
 @Component({
   selector: 'app-chatbot-root',
@@ -12,25 +11,19 @@ import { BehaviorSubject, from, of, switchMap, tap } from 'rxjs';
 export class AppChatbotRootComponent {
   public readonly messages$ = this.eliza.messages$;
 
-  private readonly nextUserMessageSubject = new BehaviorSubject<IChatMessage | null>(null);
+  private readonly nextUserMessage$ = signal<IChatMessage | null>(null);
 
-  public readonly respond$ = this.nextUserMessageSubject.asObservable().pipe(
-    switchMap(message => {
-      if (message !== null && !message.bot) {
-        const text = message.text;
-        return from(this.eliza.getResponse(text));
+  public readonly respond$ = computed(async () => {
+    const message = this.nextUserMessage$();
+    if (message !== null && !message.bot) {
+      const text = message.text;
+      const response = await this.eliza.getResponse(text);
+      this.botResponse(response.reply);
+      if (response.final) {
+        this.form.disable();
       }
-      return of(null);
-    }),
-    tap(response => {
-      if (response !== null) {
-        this.botResponse(response.reply);
-        if (response.final) {
-          this.form.disable();
-        }
-      }
-    }),
-  );
+    }
+  });
 
   public readonly form = this.fb.group({
     message: [''],
@@ -50,7 +43,7 @@ export class AppChatbotRootComponent {
     const text = this.form.controls.message.value;
     if (text !== null && text !== '') {
       const message: IChatMessage = { bot: false, text };
-      this.nextUserMessageSubject.next(message);
+      this.nextUserMessage$.set(message);
       this.eliza.nextMessage(message);
       this.form.reset();
     }
