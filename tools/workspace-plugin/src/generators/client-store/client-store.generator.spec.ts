@@ -1,3 +1,5 @@
+import { libraryGenerator } from '@nx/angular/generators';
+import { Schema } from '@nx/angular/src/generators/library/schema';
 import type { Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
@@ -13,6 +15,17 @@ jest.mock('../../utils/finalizer.util', () => ({
 
 jest.mock('../../utils/project-configuration.util', () => ({
   updateProjectLinterConfig: jest.fn().mockImplementation(() => void 0),
+}));
+
+jest.mock('@nx/angular/generators', () => ({
+  libraryGenerator: jest.fn().mockImplementation((tree: Tree, schema: Schema) => {
+    const p = new Promise(resolve => {
+      const path = `libs/${schema.name}/project.json`;
+      tree.write(path, '{}');
+      resolve(void 0);
+    });
+    return p;
+  }),
 }));
 
 describe('client-store', () => {
@@ -82,6 +95,8 @@ describe('client-store', () => {
       expectFileToExist(`/libs/${context.name}/src/lib/${kebabCaseName}.selectors.ts`, tree);
 
       await result();
+
+      expect(libraryGenerator).toHaveBeenCalled();
 
       expect(finalizeGenerator).toHaveBeenCalled();
     },
