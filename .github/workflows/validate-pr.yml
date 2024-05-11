@@ -11,7 +11,7 @@ defaults:
     shell: bash
 
 concurrency:
-  group: ${{ github.head_ref }}.${{ github.sha }}.validate-pr
+  group: ${{ github.ref }}.validate-pr
   cancel-in-progress: true
 
 jobs:
