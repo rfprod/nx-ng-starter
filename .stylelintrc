@@ -1,14 +1,13 @@
 {
   "extends": [
     "stylelint-config-rational-order",
-    "stylelint-config-prettier",
-    "stylelint-prettier/recommended",
-    "./node_modules/prettier-stylelint/config.js"
+    "stylelint-prettier/recommended"
   ],
-  "plugins": ["stylelint-prettier"],
+  "plugins": [
+    "stylelint-prettier"
+  ],
   "rules": {
     "prettier/prettier": true,
-    "indentation": 2,
     "color-hex-length": "long",
     "comment-empty-line-before": "always",
     "comment-whitespace-inside": "always",
@@ -17,19 +16,23 @@
     "font-family-name-quotes": "always-unless-keyword",
     "font-weight-notation": "named-where-possible",
     "function-name-case": "lower",
-    "function-url-quotes": ["always", { "except": ["empty"] }],
+    "function-url-quotes": [
+      "always",
+      {
+        "except": [
+          "empty"
+        ]
+      }
+    ],
     "length-zero-no-unit": true,
-    "rule-empty-line-before": ["always-multi-line", { "except": ["after-single-line-comment", "first-nested"] }],
-    "selector-combinator-space-after": "always",
-    "selector-attribute-operator-space-before": "never",
-    "selector-attribute-operator-space-after": "never",
-    "selector-pseudo-class-parentheses-space-inside": "never",
-    "string-quotes": "single",
-    "unit-case": "lower",
-    "unicode-bom": "never",
-    "value-keyword-case": "lower",
-    "value-list-comma-space-after": "always-single-line",
-    "value-list-comma-space-before": "never",
-    "value-list-max-empty-lines": 0
+    "rule-empty-line-before": [
+      "always-multi-line",
+      {
+        "except": [
+          "after-single-line-comment",
+          "first-nested"
+        ]
+      }
+    ]
   }
 }

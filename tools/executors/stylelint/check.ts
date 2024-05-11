@@ -35,10 +35,9 @@ export default async function check(options: IExecutorOptions, context: Executor
     const input = files.stdout.split(' ');
     logger.log('files', input);
     const cmd = 'npx';
-    const args =
-      options.dryRun === true
-        ? ['stylelint', '--config', options.config, '--custom-syntax', options.customSyntax ?? 'postcss-scss', ...input]
-        : ['stylelint', '--config', options.config, '--custom-syntax', options.customSyntax ?? 'postcss-scss', '--fix', ...input];
+    const config = options.config !== '' ? `--config ${options.config}` : '';
+    const defaultArgs = ['stylelint', ...input, config, '--custom-syntax', options.customSyntax ?? 'postcss-scss'];
+    const args = options.dryRun === true ? defaultArgs : defaultArgs.concat(['--fix']);
     execFileSync(cmd, args, { stdio: 'inherit', cwd: process.cwd(), env: process.env, shell: true });
   }
 
