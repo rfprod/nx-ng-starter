@@ -3,7 +3,10 @@
   "$schema": "../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "tools",
-  "tags": ["scope:tools", "type:workspace"],
+  "tags": [
+    "scope:tools",
+    "type:workspace"
+  ],
   "targets": {
     "action-changes": {
       "executor": "nx:run-commands",
@@ -33,6 +36,17 @@
         "commands": [
           {
             "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/actions/contribution-size/contribution-size.ts",
+            "forwardAllArgs": false
+          }
+        ]
+      }
+    },
+    "action-projects": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/actions/projects/projects.ts",
             "forwardAllArgs": false
           }
         ]
@@ -108,9 +122,16 @@
       "executor": "@angular-eslint/builder:lint",
       "options": {
         "eslintConfig": "tools/.eslintrc.json",
-        "lintFilePatterns": ["tools/generators/**/*.ts", "tools/ts/**/*.ts", "tools/js/**/*.js", "/*.*.js"]
+        "lintFilePatterns": [
+          "tools/generators/**/*.ts",
+          "tools/ts/**/*.ts",
+          "tools/js/**/*.js",
+          "/*.*.js"
+        ]
       },
-      "outputs": ["{options.outputFile}"]
+      "outputs": [
+        "{options.outputFile}"
+      ]
     },
     "lint-shell": {
       "executor": "nx:run-commands",
@@ -199,14 +220,18 @@
         "jestConfig": "tools/jest.config.ts",
         "passWithNoTests": true
       },
-      "outputs": ["{workspaceRoot}/coverage/tools"]
+      "outputs": [
+        "{workspaceRoot}/coverage/tools"
+      ]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
         "tsConfig": "tools/tsconfig.tools.json"
       },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/tools"]
+      "outputs": [
+        "{workspaceRoot}/dist/out-tsc/tools"
+      ]
     },
     "tsc-configure": {
       "executor": "./tools/executors/tsc:configure",

@@ -1,0 +1,44 @@
+# For more information see:
+# - https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+# - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
+
+# The action can be referenced in workflows like:
+# uses: rfprod/nx-ng-starter/.github/actions/check-projects@main
+# or
+# uses: ./.github/actions/check-projects
+
+# Explanation:
+# This action should be used to collect information about the workspace projects.
+
+name: check-projects
+description: Find workspace projects using Nx CLI.
+
+inputs:
+  affected:
+    description: Only find affected projects.
+    required: true
+    default: ''
+  batch-size:
+    description: Customize batch size for splitting projects
+    required: true
+    default: '10'
+  with-target:
+    description: Search or projects that support a specified target
+    required: true
+    default: ''
+outputs:
+  projects:
+    description: JSON array with strings containing project names grouped in chunks.
+    value: ${{ steps.check-projects.outputs.projects }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Check projects
+      id: check-projects
+      shell: bash
+      run: npx nx run tools:action-projects
+      env:
+        AFFECTED: ${{ inputs.affected }}
+        BATCH_SIZE: ${{ inputs.batch-size }}
+        WITH_TARGET: ${{ inputs.with-target }}

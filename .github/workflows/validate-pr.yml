@@ -19,6 +19,9 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
+      projects: ${{ steps.check-projects.outputs.projects }}
+      projects-build: ${{ steps.check-projects-build.outputs.projects }}
+      projects-build-storybook: ${{ steps.check-projects-build-storybook.outputs.projects }}
       changes: ${{ steps.check-changes.outputs.changes }}
 
     steps:
@@ -31,13 +34,6 @@ jobs:
       - name: Setup environment
         uses: ./.github/actions/setup-environment
 
-      - name: Check changes
-        id: check-changes
-        uses: ./.github/actions/check-changes
-        with:
-          premerge: 'true'
-          trunk: 'main'
-
       - name: Validate commit messages
         if: ${{ github.event.pull_request.user.login != 'dependabot[bot]' }}
         run: |
@@ -48,6 +44,35 @@ jobs:
       - name: Validation contribution size
         if: ${{ github.event.pull_request.user.login != 'dependabot[bot]' }}
         uses: ./.github/actions/validate-contribution-size
+
+      - name: Check affected projects with target `build`
+        id: check-projects-build
+        uses: ./.github/actions/check-projects
+        with:
+          affected: 'true'
+          batch-size: '3'
+          with-target: 'build'
+
+      - name: Check affected projects with target `build-storybook`
+        id: check-projects-build-storybook
+        uses: ./.github/actions/check-projects
+        with:
+          affected: 'true'
+          batch-size: '3'
+          with-target: 'build-storybook'
+
+      - name: Check affected projects
+        id: check-projects
+        uses: ./.github/actions/check-projects
+        with:
+          affected: 'true'
+
+      - name: Check changes
+        id: check-changes
+        uses: ./.github/actions/check-changes
+        with:
+          premerge: 'true'
+          trunk: 'main'
 
   lint:
     needs: checks
@@ -72,11 +97,41 @@ jobs:
           sudo apt install shellcheck
           npx nx run tools:lint-shell
 
-      - name: Lint ts affected
-        run: npx nx affected --target lint --base origin/main
+      - name: Set failure
+        id: check
+        if: failure()
+        run: echo "success='false'" >> $GITHUB_OUTPUT
 
-      - name: Lint html affected
-        run: npx nx affected --target prettier-check --dryRun --base origin/main
+  lint-affected:
+    needs: checks
+    if: needs.checks.outputs.projects != '[]'
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        projects: ${{ fromJSON(needs.checks.outputs.projects) }}
+
+    outputs:
+      success: ${{ steps.check.outputs.success || 'true' }}
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+
+      - name: Lint ts
+        run: npx nx run-many --target lint --projects ${{ matrix.projects }}
+
+      - name: Lint html
+        run: npx nx run-many --target prettier-check --dryRun --projects ${{ matrix.projects }}
+
+      - name: Lint scss
+        run: npx nx run-many --target stylelint-check --dryRun --projects ${{ matrix.projects }}
 
       - name: Set failure
         id: check
@@ -102,17 +157,41 @@ jobs:
         with:
           compodoc: true
 
-      - name: Compiler check affected
-        run: npx nx affected --target tsc-check --base origin/main
-
       - name: Documentation coverage
         run: npx nx run tools:compodoc-coverage-test
 
-      - name: Unit test affected
-        run: |
-          npx nx affected --target test --base origin/main --pass-with-no-tests --code-coverage --run-in-band --ci
-          npx nx run tools:coverage-stats
-          cat ./UNIT_COVERAGE.md >> $GITHUB_STEP_SUMMARY
+      - name: Set failure
+        id: check
+        if: failure()
+        run: echo "success='false'" >> $GITHUB_OUTPUT
+
+  test-affected:
+    needs: checks
+    if: needs.checks.outputs.projects != '[]'
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        projects: ${{ fromJSON(needs.checks.outputs.projects) }}
+
+    outputs:
+      success: ${{ steps.check.outputs.success || 'true' }}
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+
+      - name: Compiler check affected
+        run: npx nx run-many --target tsc-check --projects ${{ matrix.projects }}
+
+      - name: Unit test
+        run: npx nx run-many --target test --pass-with-no-tests --code-coverage --run-in-band --ci --projects ${{ matrix.projects }}
 
       - name: Set failure
         id: check
@@ -136,15 +215,72 @@ jobs:
       - name: Setup environment
         uses: ./.github/actions/setup-environment
 
-      - name: Build affected
-        run: npx nx affected --target build --base origin/main
-
-      - name: Build storybook affected
-        run: npx nx affected --target build-storybook --base origin/main --parallel 1
-
       - name: Build global storybook
         if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' }}
         run: npx nx run documentation:build-storybook
+
+      - name: Set failure
+        id: check
+        if: failure()
+        run: echo "success='false'" >> $GITHUB_OUTPUT
+
+  build-affected:
+    needs: checks
+    if: needs.checks.outputs.projects-build != '[]'
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        projects: ${{ fromJSON(needs.checks.outputs.projects-build) }}
+
+    outputs:
+      success: ${{ steps.check.outputs.success || 'true' }}
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+
+      - name: Build affected
+        run: npx nx run-many --target build --projects ${{ matrix.projects }}
+
+      - name: Set failure
+        id: check
+        if: failure()
+        run: echo "success='false'" >> $GITHUB_OUTPUT
+
+  build-affected-storybook:
+    needs: checks
+    if: needs.checks.outputs.projects-build-storybook != '[]'
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        projects: ${{ fromJSON(needs.checks.outputs.projects-build-storybook) }}
+
+    outputs:
+      success: ${{ steps.check.outputs.success || 'true' }}
+
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+
+      - name: Build affected
+        run: npx nx run-many --target build --projects origin/main
+
+      - name: Build storybook affected
+        run: npx nx run-many --target build-storybook --projects ${{ matrix.projects }}
 
       - name: Set failure
         id: check
@@ -159,9 +295,13 @@ jobs:
     steps:
       - name: Check result
         run: |
-          if [[ "$LINT_RESULT" != "true" || "$TEST_RESULT" != "true" || "$BUILD_RESULT" != "true" ]]; then exit 1; fi
+          if [[ "$LINT_RESULT" != "true" || "$LINT_AFFECTED_RESULT" != "true" || "$TEST_RESULT" != "true" || "$TEST_AFFECTED_RESULT" != "true" || "$BUILD_RESULT" != "true" || "$BUILD_AFFECTED_RESULT" != "true" || "$BUILD_AFFECTED_STORYBOOK_RESULT" != "true" ]]; then exit 1; fi
           echo "### :rocket: Premerge checks succeeded" >> $GITHUB_STEP_SUMMARY
         env:
           LINT_RESULT: ${{ needs.lint.outputs.success }}
+          LINT_AFFECTED_RESULT: ${{ needs.lint-affected.outputs.success || 'true' }}
           TEST_RESULT: ${{ needs.test.outputs.success }}
+          TEST_AFFECTED_RESULT: ${{ needs.test-affected.outputs.success || 'true' }}
           BUILD_RESULT: ${{ needs.build.outputs.success }}
+          BUILD_AFFECTED_RESULT: ${{ needs.build-affected.outputs.success || 'true' }}
+          BUILD_AFFECTED_STORYBOOK_RESULT: ${{ needs.build-affected-storybook.outputs.success || 'true' }}
