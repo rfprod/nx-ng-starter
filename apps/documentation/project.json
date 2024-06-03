@@ -4,10 +4,7 @@
   "prefix": "app",
   "projectType": "application",
   "sourceRoot": "apps/documentation/src",
-  "tags": [
-    "scope:documentation",
-    "type:application"
-  ],
+  "tags": ["scope:documentation", "type:application"],
   "targets": {
     "build": {
       "configurations": {
@@ -55,11 +52,7 @@
       },
       "executor": "@nx/angular:application",
       "options": {
-        "allowedCommonJsDependencies": [
-          "hammerjs",
-          "memo-decorator",
-          "moment"
-        ],
+        "allowedCommonJsDependencies": ["hammerjs", "memo-decorator", "moment"],
         "aot": true,
         "assets": [
           "apps/documentation/src/favicon.ico",
@@ -116,9 +109,7 @@
         },
         "outputHashing": "none",
         "outputPath": "dist/apps/documentation",
-        "polyfills": [
-          "apps/documentation/src/polyfills.ts"
-        ],
+        "polyfills": ["apps/documentation/src/polyfills.ts"],
         "scripts": [
           "node_modules/dompurify/dist/purify.min.js",
           "tools/js/trusted-types.policy.js",
@@ -175,23 +166,16 @@
       "executor": "@angular-eslint/builder:lint",
       "options": {
         "eslintConfig": "apps/documentation/.eslintrc.json",
-        "lintFilePatterns": [
-          "apps/documentation/**/*.ts",
-          "apps/documentation/**/*.html"
-        ]
+        "lintFilePatterns": ["apps/documentation/**/*.ts", "apps/documentation/**/*.html"]
       },
-      "outputs": [
-        "{options.outputFile}"
-      ]
+      "outputs": ["{options.outputFile}"]
     },
     "prettier-check": {
       "executor": "./tools/executors/prettier:check",
       "options": {
         "config": ""
       },
-      "outputs": [
-        "{workspaceRoot}/dist/prettier/apps/documentation"
-      ]
+      "outputs": ["{workspaceRoot}/dist/prettier/apps/documentation"]
     },
     "serve": {
       "configurations": {
@@ -218,9 +202,7 @@
       "options": {
         "config": ""
       },
-      "outputs": [
-        "{workspaceRoot}/dist/stylelint/apps/documentation"
-      ]
+      "outputs": ["{workspaceRoot}/dist/stylelint/apps/documentation"]
     },
     "test": {
       "executor": "@nx/jest:jest",
@@ -228,18 +210,14 @@
         "jestConfig": "apps/documentation/jest.config.ts",
         "passWithNoTests": true
       },
-      "outputs": [
-        "{workspaceRoot}/coverage/apps/documentation"
-      ]
+      "outputs": ["{workspaceRoot}/coverage/apps/documentation"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
         "tsConfig": "apps/documentation/tsconfig.app.json"
       },
-      "outputs": [
-        "{workspaceRoot}/dist/out-tsc/apps/documentation"
-      ]
+      "outputs": ["{workspaceRoot}/dist/out-tsc/apps/documentation"]
     }
   }
 }
