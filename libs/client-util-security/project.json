@@ -1,32 +1,18 @@
 {
-  "name": "client-util-security",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/client-util-security/src",
+  "name": "client-util-security",
   "prefix": "app",
-  "tags": ["scope:client-util-security", "type:util"],
   "projectType": "library",
+  "sourceRoot": "libs/client-util-security/src",
+  "tags": ["scope:client-util-security", "type:util"],
   "targets": {
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "libs/client-util-security/jest.config.ts"
-      }
-    },
     "lint": {
       "executor": "@angular-eslint/builder:lint",
-      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["libs/client-util-security/**/*.ts"],
-        "eslintConfig": "libs/client-util-security/.eslintrc.json"
-      }
-    },
-    "tsc-check": {
-      "executor": "./tools/executors/tsc:check",
-      "options": {
-        "tsConfig": "libs/client-util-security/tsconfig.lib.json"
+        "eslintConfig": "libs/client-util-security/.eslintrc.json",
+        "lintFilePatterns": ["libs/client-util-security/**/*.ts"]
       },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-util-security"]
+      "outputs": ["{options.outputFile}"]
     },
     "prettier-check": {
       "executor": "./tools/executors/prettier:check",
@@ -34,6 +20,20 @@
         "config": ""
       },
       "outputs": ["{workspaceRoot}/dist/prettier/libs/client-util-security"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "jestConfig": "libs/client-util-security/jest.config.ts"
+      },
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"]
+    },
+    "tsc-check": {
+      "executor": "./tools/executors/tsc:check",
+      "options": {
+        "tsConfig": "libs/client-util-security/tsconfig.lib.json"
+      },
+      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-util-security"]
     }
   }
 }

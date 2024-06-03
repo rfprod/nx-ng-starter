@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /app
 # Copy dist.
 COPY /dist/apps/server-prod ./dist
-COPY /dist/apps/client ./dist/assets
+COPY /dist/apps/client/browser ./dist/assets
 COPY /apps/server-prod/package.json .
 # Install dependencies.
 RUN npm i --production --legacy-peer-deps ; \

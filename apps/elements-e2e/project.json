@@ -1,7 +1,7 @@
 {
-  "name": "elements-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "implicitDependencies": ["elements"],
+  "name": "elements-e2e",
   "projectType": "application",
   "sourceRoot": "apps/elements-e2e/src",
   "tags": ["scope:elements-e2e", "type:e2e"],
@@ -27,19 +27,19 @@
       },
       "outputs": ["{options.outputFile}"]
     },
-    "tsc-check": {
-      "executor": "./tools/executors/tsc:check",
-      "options": {
-        "tsConfig": "apps/elements-e2e/tsconfig.json"
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/apps/elements-e2e"]
-    },
     "prettier-check": {
       "executor": "./tools/executors/prettier:check",
       "options": {
         "config": ""
       },
       "outputs": ["{workspaceRoot}/dist/prettier/apps/elements-e2e"]
+    },
+    "tsc-check": {
+      "executor": "./tools/executors/tsc:check",
+      "options": {
+        "tsConfig": "apps/elements-e2e/tsconfig.json"
+      },
+      "outputs": ["{workspaceRoot}/dist/out-tsc/apps/elements-e2e"]
     }
   }
 }

@@ -1,6 +1,6 @@
 {
-  "name": "backend-grpc",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "backend-grpc",
   "projectType": "library",
   "sourceRoot": "libs/backend-grpc/src",
   "tags": ["scope:backend-grpc", "type:feature"],
@@ -12,6 +12,13 @@
         "lintFilePatterns": ["libs/backend-grpc/**/*.ts"]
       },
       "outputs": ["{options.outputFile}"]
+    },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/backend-grpc"]
     },
     "test": {
       "executor": "@nx/jest:jest",
@@ -27,13 +34,6 @@
         "tsConfig": "libs/backend-grpc/tsconfig.lib.json"
       },
       "outputs": ["{workspaceRoot}/dist/out-tsc/libs/backend-grpc"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/prettier/libs/backend-grpc"]
     }
   }
 }

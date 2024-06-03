@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -41,9 +41,9 @@ const markdownModuleConfig: MarkdownModuleConfig = {
  */
 @NgModule({
   declarations: [AppDocRootComponent, AppDocMarkdownReferenceTreeComponent, AppDocMarkdownReferenceComponent],
+  bootstrap: [AppDocRootComponent],
   imports: [
     BrowserAnimationsModule,
-    HttpClientModule,
     MarkdownModule.forRoot(markdownModuleConfig),
     StoreModule.forRoot({}, { metaReducers: metaReducers(environment.production) }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
@@ -54,7 +54,11 @@ const markdownModuleConfig: MarkdownModuleConfig = {
     AppDocRoutingModule,
     AppRouterStoreModule.forRoot(),
   ],
-  providers: [windowProvider, documentProvider, { provide: DOCUMENTATION_ENVIRONMENT, useValue: environment }],
-  bootstrap: [AppDocRootComponent],
+  providers: [
+    windowProvider,
+    documentProvider,
+    { provide: DOCUMENTATION_ENVIRONMENT, useValue: environment },
+    provideHttpClient(withInterceptorsFromDi()),
+  ],
 })
 export class AppDocModule {}

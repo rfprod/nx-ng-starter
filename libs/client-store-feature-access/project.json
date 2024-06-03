@@ -1,6 +1,6 @@
 {
-  "name": "client-store-feature-access",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "client-store-feature-access",
   "prefix": "app",
   "projectType": "library",
   "sourceRoot": "libs/client-store-feature-access/src",
@@ -13,6 +13,13 @@
         "lintFilePatterns": ["libs/client-store-feature-access/**/*.ts"]
       },
       "outputs": ["{options.outputFile}"]
+    },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-store-feature-access"]
     },
     "test": {
       "executor": "@nx/jest:jest",
@@ -28,13 +35,6 @@
         "tsConfig": "libs/client-store-feature-access/tsconfig.lib.json"
       },
       "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-store-feature-access"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-store-feature-access"]
     }
   }
 }

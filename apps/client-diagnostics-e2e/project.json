@@ -1,7 +1,7 @@
 {
-  "name": "client-diagnostics-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "implicitDependencies": ["client-diagnostics"],
+  "name": "client-diagnostics-e2e",
   "projectType": "application",
   "sourceRoot": "apps/client-diagnostics-e2e/src",
   "tags": ["scope:client-diagnostics-e2e", "type:e2e"],
@@ -27,19 +27,19 @@
       },
       "outputs": ["{options.outputFile}"]
     },
-    "tsc-check": {
-      "executor": "./tools/executors/tsc:check",
-      "options": {
-        "tsConfig": "apps/client-diagnostics-e2e/tsconfig.json"
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/apps/client-diagnostics-e2e"]
-    },
     "prettier-check": {
       "executor": "./tools/executors/prettier:check",
       "options": {
         "config": ""
       },
       "outputs": ["{workspaceRoot}/dist/prettier/apps/client-diagnostics-e2e"]
+    },
+    "tsc-check": {
+      "executor": "./tools/executors/tsc:check",
+      "options": {
+        "tsConfig": "apps/client-diagnostics-e2e/tsconfig.json"
+      },
+      "outputs": ["{workspaceRoot}/dist/out-tsc/apps/client-diagnostics-e2e"]
     }
   }
 }

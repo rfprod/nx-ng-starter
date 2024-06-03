@@ -8,7 +8,7 @@
  * Define a custom typography config that overrides font-family, and all levels.
  */
 
-$custom-typography: mat.define-typography-config(
+$custom-typography: mat.m2-define-typography-config(
   $font-family: 'Roboto, monospace, "Helvetica Neue", sans-serif',
 );
 
@@ -21,10 +21,10 @@ $custom-typography: mat.define-typography-config(
 @include mat.core();
 
 /* Define a custom light theme. */
-$candy-app-primary: mat.define-palette(mat.$green-palette, 700);
-$candy-app-accent: mat.define-palette(mat.$light-green-palette, 400);
-$candy-app-warn: mat.define-palette(mat.$red-palette, 800);
-$candy-app-theme: mat.define-light-theme(
+$candy-app-primary: mat.m2-define-palette(mat.$m2-green-palette, 700);
+$candy-app-accent: mat.m2-define-palette(mat.$m2-light-green-palette, 400);
+$candy-app-warn: mat.m2-define-palette(mat.$m2-red-palette, 800);
+$candy-app-theme: mat.m2-define-light-theme(
   (
     color: (
       primary: $candy-app-primary,
@@ -41,10 +41,10 @@ $candy-app-theme: mat.define-light-theme(
 @include mat.all-component-typographies($custom-typography);
 
 /* Define an alternate dark theme. */
-$unicorn-dark-primary: mat.define-palette(mat.$deep-orange-palette, 800);
-$unicorn-dark-accent: mat.define-palette(mat.$yellow-palette, 400);
-$unicorn-dark-warn: mat.define-palette(mat.$orange-palette, 300);
-$unicorn-dark-theme: mat.define-dark-theme(
+$unicorn-dark-primary: mat.m2-define-palette(mat.$m2-deep-orange-palette, 800);
+$unicorn-dark-accent: mat.m2-define-palette(mat.$m2-yellow-palette, 400);
+$unicorn-dark-warn: mat.m2-define-palette(mat.$m2-orange-palette, 300);
+$unicorn-dark-theme: mat.m2-define-dark-theme(
   (
     color: (
       primary: $unicorn-dark-primary,

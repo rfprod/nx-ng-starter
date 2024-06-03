@@ -4,39 +4,39 @@
 /* Extended palette variables */
 
 /* Tight theme */
-$primary: mat.get-color-from-palette($candy-app-primary);
-$primary-mild: mat.get-color-from-palette(mat.$cyan-palette, 400);
-$primary-extra-mild: mat.get-color-from-palette(mat.$cyan-palette, 200);
-$accent: mat.get-color-from-palette($candy-app-accent);
-$warn: mat.get-color-from-palette($candy-app-warn);
+$primary: mat.m2-get-color-from-palette($candy-app-primary);
+$primary-mild: mat.m2-get-color-from-palette(mat.$m2-cyan-palette, 400);
+$primary-extra-mild: mat.m2-get-color-from-palette(mat.$m2-cyan-palette, 200);
+$accent: mat.m2-get-color-from-palette($candy-app-accent);
+$warn: mat.m2-get-color-from-palette($candy-app-warn);
 
-$success: mat.get-color-from-palette(mat.$green-palette, 900);
-$error: mat.get-color-from-palette(mat.$red-palette, 900);
+$success: mat.m2-get-color-from-palette(mat.$m2-green-palette, 900);
+$error: mat.m2-get-color-from-palette(mat.$m2-red-palette, 900);
 
 /* Dark theme */
-$dark-primary: mat.get-color-from-palette($unicorn-dark-primary);
-$dark-primary-mild: mat.get-color-from-palette(mat.$deep-orange-palette, 300);
-$dark-primary-extra-mild: mat.get-color-from-palette(mat.$brown-palette, 100);
-$dark-accent: mat.get-color-from-palette($unicorn-dark-accent);
-$dark-warn: mat.get-color-from-palette($unicorn-dark-warn);
+$dark-primary: mat.m2-get-color-from-palette($unicorn-dark-primary);
+$dark-primary-mild: mat.m2-get-color-from-palette(mat.$m2-deep-orange-palette, 300);
+$dark-primary-extra-mild: mat.m2-get-color-from-palette(mat.$m2-brown-palette, 100);
+$dark-accent: mat.m2-get-color-from-palette($unicorn-dark-accent);
+$dark-warn: mat.m2-get-color-from-palette($unicorn-dark-warn);
 
-$dark-success: mat.get-color-from-palette(mat.$green-palette, 500);
-$dark-error: mat.get-color-from-palette(mat.$red-palette, 500);
+$dark-success: mat.m2-get-color-from-palette(mat.$m2-green-palette, 500);
+$dark-error: mat.m2-get-color-from-palette(mat.$m2-red-palette, 500);
 
 /* General purpose */
 $black: #000000;
 $white: #ffffff;
-$darkgrey: mat.get-color-from-palette(mat.$grey-palette, 900);
-$grey: mat.get-color-from-palette(mat.$grey-palette, 400);
-$lightgrey: mat.get-color-from-palette(mat.$grey-palette, 200);
-$extralightgrey: mat.get-color-from-palette(mat.$grey-palette, 100);
+$darkgrey: mat.m2-get-color-from-palette(mat.$m2-grey-palette, 900);
+$grey: mat.m2-get-color-from-palette(mat.$m2-grey-palette, 400);
+$lightgrey: mat.m2-get-color-from-palette(mat.$m2-grey-palette, 200);
+$extralightgrey: mat.m2-get-color-from-palette(mat.$m2-grey-palette, 100);
 
 /* Extended palette maps */
 
 $extended-bg-palette: (
   light: (
-    '.basic': map-get(mat.$light-theme-background-palette, background),
-    '.basic-inverse': map-get(mat.$dark-theme-background-palette, background),
+    '.basic': map-get(mat.$m2-light-theme-background-palette, background),
+    '.basic-inverse': map-get(mat.$m2-dark-theme-background-palette, background),
     '.primary': $primary,
     '.primary-mild': $primary-mild,
     '.accent': $accent,
@@ -49,8 +49,8 @@ $extended-bg-palette: (
     '::webkit-scrollbar': $white,
   ),
   dark: (
-    '.basic': map-get(mat.$dark-theme-background-palette, background),
-    '.basic-inverse': map-get(mat.$light-theme-background-palette, background),
+    '.basic': map-get(mat.$m2-dark-theme-background-palette, background),
+    '.basic-inverse': map-get(mat.$m2-light-theme-background-palette, background),
     '.primary': $dark-primary,
     '.primary-mild': $dark-primary-mild,
     '.accent': $dark-accent,
@@ -65,10 +65,10 @@ $extended-bg-palette: (
 );
 $extended-text-palette: (
   light: (
-    '.basic-bg-text': map-get(mat.$light-theme-foreground-palette, text),
-    '.basic-bg-text-inverse': map-get(mat.$dark-theme-foreground-palette, text),
+    '.basic-bg-text': map-get(mat.$m2-light-theme-foreground-palette, text),
+    '.basic-bg-text-inverse': map-get(mat.$m2-dark-theme-foreground-palette, text),
     '.primary': $primary,
-    '.primary-bg-text': map-get(mat.$dark-theme-foreground-palette, text),
+    '.primary-bg-text': map-get(mat.$m2-dark-theme-foreground-palette, text),
     '.accent': $accent,
     '.warn': $warn,
     '.success': $success,
@@ -78,10 +78,10 @@ $extended-text-palette: (
     'form.legend': $darkgrey,
   ),
   dark: (
-    '.basic-bg-text': map-get(mat.$dark-theme-foreground-palette, text),
-    '.basic-bg-text-inverse': map-get(mat.$light-theme-foreground-palette, text),
+    '.basic-bg-text': map-get(mat.$m2-dark-theme-foreground-palette, text),
+    '.basic-bg-text-inverse': map-get(mat.$m2-light-theme-foreground-palette, text),
     '.primary': $dark-primary,
-    '.primary-bg-text': map-get(mat.$dark-theme-foreground-palette, text),
+    '.primary-bg-text': map-get(mat.$m2-dark-theme-foreground-palette, text),
     '.accent': $dark-accent,
     '.warn': $dark-warn,
     '.success': $dark-success,
