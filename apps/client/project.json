@@ -4,10 +4,7 @@
   "prefix": "app",
   "projectType": "application",
   "sourceRoot": "apps/client/src",
-  "tags": [
-    "scope:client",
-    "type:application"
-  ],
+  "tags": ["scope:client", "type:application"],
   "targets": {
     "build": {
       "configurations": {
@@ -80,13 +77,8 @@
         "optimization": false,
         "outputHashing": "none",
         "outputPath": "dist/apps/client",
-        "polyfills": [
-          "apps/client/src/polyfills.ts"
-        ],
-        "scripts": [
-          "node_modules/dompurify/dist/purify.min.js",
-          "tools/js/trusted-types.policy.js"
-        ],
+        "polyfills": ["apps/client/src/polyfills.ts"],
+        "scripts": ["node_modules/dompurify/dist/purify.min.js", "tools/js/trusted-types.policy.js"],
         "sourceMap": true,
         "styles": [
           "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
@@ -113,23 +105,16 @@
       "executor": "@angular-eslint/builder:lint",
       "options": {
         "eslintConfig": "apps/client/.eslintrc.json",
-        "lintFilePatterns": [
-          "apps/client/**/*.ts",
-          "apps/client/**/*.html"
-        ]
+        "lintFilePatterns": ["apps/client/**/*.ts", "apps/client/**/*.html"]
       },
-      "outputs": [
-        "{options.outputFile}"
-      ]
+      "outputs": ["{options.outputFile}"]
     },
     "prettier-check": {
       "executor": "./tools/executors/prettier:check",
       "options": {
         "config": ""
       },
-      "outputs": [
-        "{workspaceRoot}/dist/prettier/apps/client"
-      ]
+      "outputs": ["{workspaceRoot}/dist/prettier/apps/client"]
     },
     "serve": {
       "configurations": {
@@ -162,9 +147,7 @@
       "options": {
         "config": ""
       },
-      "outputs": [
-        "{workspaceRoot}/dist/stylelint/apps/client"
-      ]
+      "outputs": ["{workspaceRoot}/dist/stylelint/apps/client"]
     },
     "test": {
       "executor": "@nx/jest:jest",
@@ -172,18 +155,14 @@
         "jestConfig": "apps/client/jest.config.ts",
         "passWithNoTests": true
       },
-      "outputs": [
-        "{workspaceRoot}/coverage/libs/client"
-      ]
+      "outputs": ["{workspaceRoot}/coverage/libs/client"]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
         "tsConfig": "apps/client/tsconfig.app.json"
       },
-      "outputs": [
-        "{workspaceRoot}/dist/out-tsc/apps/client"
-      ]
+      "outputs": ["{workspaceRoot}/dist/out-tsc/apps/client"]
     }
   }
 }
