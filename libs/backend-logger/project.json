@@ -1,6 +1,6 @@
 {
-  "name": "backend-logger",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "backend-logger",
   "projectType": "library",
   "sourceRoot": "libs/backend-logger/src",
   "tags": ["scope:backend-logger", "type:feature"],
@@ -12,6 +12,13 @@
         "lintFilePatterns": ["libs/backend-logger/**/*.ts"]
       },
       "outputs": ["{options.outputFile}"]
+    },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/backend-logger"]
     },
     "test": {
       "executor": "@nx/jest:jest",
@@ -27,13 +34,6 @@
         "tsConfig": "libs/backend-logger/tsconfig.lib.json"
       },
       "outputs": ["{workspaceRoot}/dist/out-tsc/libs/backend-logger"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/prettier/libs/backend-logger"]
     }
   }
 }

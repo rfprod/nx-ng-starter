@@ -1,6 +1,6 @@
 {
-  "name": "api",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "api",
   "projectType": "application",
   "sourceRoot": "apps/api/src",
   "tags": ["scope:api", "type:application"],
@@ -57,6 +57,13 @@
       },
       "outputs": ["{options.outputFile}"]
     },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/apps/api"]
+    },
     "serve": {
       "configurations": {
         "firebase": {
@@ -85,13 +92,6 @@
         "tsConfig": "apps/api/tsconfig.app.json"
       },
       "outputs": ["{workspaceRoot}/dist/out-tsc/apps/api"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/prettier/apps/api"]
     }
   }
 }

@@ -1,10 +1,11 @@
 import { APP_BASE_HREF } from '@angular/common';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ModuleWithProviders, NgModule, NgZone, Provider } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { RouterModule } from '@angular/router';
 import { AppMaterialModule } from '@app/client-material';
 import { documentProvider, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV, windowProvider } from '@app/client-util';
 import { EffectsModule } from '@ngrx/effects';
@@ -57,13 +58,22 @@ export const mocksCoreModuleProviders: Provider[] = [
 ];
 
 @NgModule({
+  declarations: [AppTestingComponent],
+  exports: [
+    BrowserDynamicTestingModule,
+    NoopAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppMaterialModule,
+    RouterModule,
+    AppTestingComponent,
+  ],
   imports: [
     BrowserDynamicTestingModule,
     NoopAnimationsModule,
-    HttpClientTestingModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterTestingModule,
+    RouterModule.forRoot([]),
     AppMaterialModule.forRoot(),
     StoreModule.forRoot({ router: routerReducer }),
     EffectsModule.forRoot(),
@@ -71,17 +81,7 @@ export const mocksCoreModuleProviders: Provider[] = [
       navigationActionTiming: NavigationActionTiming.PostActivation,
     }),
   ],
-  declarations: [AppTestingComponent],
-  exports: [
-    BrowserDynamicTestingModule,
-    NoopAnimationsModule,
-    HttpClientTestingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AppMaterialModule,
-    RouterTestingModule,
-    AppTestingComponent,
-  ],
+  providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
 })
 export class AppMocksCoreModule {
   public static forRoot(): ModuleWithProviders<AppMocksCoreModule> {

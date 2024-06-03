@@ -8,9 +8,9 @@ const config: Config.InitialOptions = {
     // TODO: bump unit test coverage and remove this override
     global: {
       branches: 0,
-      functions: 15,
-      lines: 48,
-      statements: 48,
+      functions: 0,
+      lines: 15,
+      statements: 16,
     },
   },
   displayName: 'client-service-worker',

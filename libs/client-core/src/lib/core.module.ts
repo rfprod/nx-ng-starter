@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppStoreModule } from '@app/client-store';
@@ -10,8 +10,9 @@ import { appCoreModuleProviders } from './providers/core-module.providers';
  * Client core module.
  */
 @NgModule({
-  imports: [FormsModule, ReactiveFormsModule, HttpClientModule, AppStoreModule],
-  exports: [FormsModule, ReactiveFormsModule, HttpClientModule, AppStoreModule],
+  exports: [FormsModule, ReactiveFormsModule, AppStoreModule],
+  imports: [FormsModule, ReactiveFormsModule, AppStoreModule],
+  providers: [provideHttpClient(withInterceptorsFromDi())],
 })
 export class AppCoreModule {
   /**

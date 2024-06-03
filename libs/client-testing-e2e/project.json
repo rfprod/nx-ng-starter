@@ -1,6 +1,6 @@
 {
-  "name": "client-testing-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "client-testing-e2e",
   "projectType": "library",
   "sourceRoot": "libs/client-testing-e2e/src",
   "tags": ["scope:client-testing-e2e", "type:testing-e2e"],
@@ -13,19 +13,19 @@
       },
       "outputs": ["{options.outputFile}"]
     },
-    "tsc-check": {
-      "executor": "./tools/executors/tsc:check",
-      "options": {
-        "tsConfig": "libs/client-testing-e2e/tsconfig.lib.json"
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-testing-e2e"]
-    },
     "prettier-check": {
       "executor": "./tools/executors/prettier:check",
       "options": {
         "config": ""
       },
       "outputs": ["{workspaceRoot}/dist/prettier/libs/client-testing-e2e"]
+    },
+    "tsc-check": {
+      "executor": "./tools/executors/tsc:check",
+      "options": {
+        "tsConfig": "libs/client-testing-e2e/tsconfig.lib.json"
+      },
+      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-testing-e2e"]
     }
   }
 }

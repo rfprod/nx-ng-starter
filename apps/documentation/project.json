@@ -1,15 +1,17 @@
 {
-  "name": "documentation",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "documentation",
   "prefix": "app",
   "projectType": "application",
   "sourceRoot": "apps/documentation/src",
-  "tags": ["scope:documentation", "type:application"],
+  "tags": [
+    "scope:documentation",
+    "type:application"
+  ],
   "targets": {
     "build": {
       "configurations": {
         "analyze-bundle": {
-          "buildOptimizer": true,
           "fileReplacements": [
             {
               "replace": "apps/documentation/src/environments/environment.ts",
@@ -20,20 +22,17 @@
           "outputHashing": "all"
         },
         "production": {
-          "buildOptimizer": true,
           "fileReplacements": [
             {
               "replace": "apps/documentation/src/environments/environment.ts",
               "with": "apps/documentation/src/environments/environment.prod.ts"
             }
           ],
-          "ngswConfigPath": "apps/documentation/ngsw-config.json",
           "namedChunks": false,
+          "serviceWorker": "apps/documentation/ngsw-config.json",
           "optimization": true,
           "outputHashing": "all",
-          "serviceWorker": true,
-          "sourceMap": false,
-          "vendorChunk": false
+          "sourceMap": false
         },
         "storybook": {
           "assets": [
@@ -43,7 +42,7 @@
               "output": "assets"
             }
           ],
-          "polyfills": "",
+          "polyfills": [],
           "scripts": [],
           "styles": [
             "apps/documentation/src/styles.scss",
@@ -54,9 +53,13 @@
           "tsConfig": "apps/documentation/.storybook/tsconfig.json"
         }
       },
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@nx/angular:application",
       "options": {
-        "allowedCommonJsDependencies": ["hammerjs", "memo-decorator", "moment"],
+        "allowedCommonJsDependencies": [
+          "hammerjs",
+          "memo-decorator",
+          "moment"
+        ],
         "aot": true,
         "assets": [
           "apps/documentation/src/favicon.ico",
@@ -100,9 +103,8 @@
             "type": "anyComponentStyle"
           }
         ],
-        "buildOptimizer": false,
         "index": "apps/documentation/src/index.html",
-        "main": "apps/documentation/src/main.ts",
+        "browser": "apps/documentation/src/main.ts",
         "namedChunks": true,
         "optimization": {
           "fonts": false,
@@ -114,7 +116,9 @@
         },
         "outputHashing": "none",
         "outputPath": "dist/apps/documentation",
-        "polyfills": "apps/documentation/src/polyfills.ts",
+        "polyfills": [
+          "apps/documentation/src/polyfills.ts"
+        ],
         "scripts": [
           "node_modules/dompurify/dist/purify.min.js",
           "tools/js/trusted-types.policy.js",
@@ -138,8 +142,7 @@
           "node_modules/prismjs/plugins/line-highlight/prism-line-highlight.css",
           "node_modules/katex/dist/katex.min.css"
         ],
-        "tsConfig": "apps/documentation/tsconfig.app.json",
-        "vendorChunk": true
+        "tsConfig": "apps/documentation/tsconfig.app.json"
       }
     },
     "build-storybook": {
@@ -172,16 +175,23 @@
       "executor": "@angular-eslint/builder:lint",
       "options": {
         "eslintConfig": "apps/documentation/.eslintrc.json",
-        "lintFilePatterns": ["apps/documentation/**/*.ts", "apps/documentation/**/*.html"]
+        "lintFilePatterns": [
+          "apps/documentation/**/*.ts",
+          "apps/documentation/**/*.html"
+        ]
       },
-      "outputs": ["{options.outputFile}"]
+      "outputs": [
+        "{options.outputFile}"
+      ]
     },
     "prettier-check": {
       "executor": "./tools/executors/prettier:check",
       "options": {
         "config": ""
       },
-      "outputs": ["{workspaceRoot}/dist/prettier/apps/documentation"]
+      "outputs": [
+        "{workspaceRoot}/dist/prettier/apps/documentation"
+      ]
     },
     "serve": {
       "configurations": {
@@ -208,7 +218,9 @@
       "options": {
         "config": ""
       },
-      "outputs": ["{workspaceRoot}/dist/stylelint/apps/documentation"]
+      "outputs": [
+        "{workspaceRoot}/dist/stylelint/apps/documentation"
+      ]
     },
     "test": {
       "executor": "@nx/jest:jest",
@@ -216,14 +228,18 @@
         "jestConfig": "apps/documentation/jest.config.ts",
         "passWithNoTests": true
       },
-      "outputs": ["{workspaceRoot}/coverage/apps/documentation"]
+      "outputs": [
+        "{workspaceRoot}/coverage/apps/documentation"
+      ]
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
         "tsConfig": "apps/documentation/tsconfig.app.json"
       },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/apps/documentation"]
+      "outputs": [
+        "{workspaceRoot}/dist/out-tsc/apps/documentation"
+      ]
     }
   }
 }

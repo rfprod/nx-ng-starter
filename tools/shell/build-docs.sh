@@ -20,7 +20,7 @@ buildDocumentation() {
   yarn generate:unit-test-coverage-index || exit 1
 
   npx nx run tools:compodoc-build || exit 1
-  cp -r ./dist/compodoc ./dist/apps/documentation/assets || exit 1
+  cp -r ./dist/compodoc ./dist/apps/documentation/browser/assets || exit 1
 
   yarn generate:changelog || exit 1
   npx nx run-many --target e2e --all
@@ -28,7 +28,7 @@ buildDocumentation() {
   yarn generate:e2e-test-report-index || exit 1
 
   npx nx run documentation:build-storybook || exit 1
-  cp -r ./dist/storybook/documentation ./dist/apps/documentation/assets/storybook || exit 1
+  cp -r ./dist/storybook/documentation ./dist/apps/documentation/browser/assets/storybook || exit 1
 }
 
 buildDocumentation

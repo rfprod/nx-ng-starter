@@ -1,6 +1,6 @@
 {
-  "name": "backend-interfaces",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "backend-interfaces",
   "projectType": "library",
   "sourceRoot": "libs/backend-interfaces/src",
   "tags": ["scope:backend-interfaces", "type:util"],
@@ -24,6 +24,13 @@
       },
       "outputs": ["{options.outputFile}"]
     },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/backend-interfaces"]
+    },
     "test": {
       "executor": "@nx/jest:jest",
       "options": {
@@ -38,13 +45,6 @@
         "tsConfig": "libs/backend-interfaces/tsconfig.lib.json"
       },
       "outputs": ["{workspaceRoot}/dist/out-tsc/libs/backend-interfaces"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/prettier/libs/backend-interfaces"]
     }
   }
 }

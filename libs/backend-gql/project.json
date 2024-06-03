@@ -1,6 +1,6 @@
 {
-  "name": "backend-gql",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "backend-gql",
   "projectType": "library",
   "sourceRoot": "libs/backend-gql/src",
   "tags": ["scope:backend-gql", "type:feature"],
@@ -12,6 +12,13 @@
         "lintFilePatterns": ["libs/backend-gql/**/*.ts"]
       },
       "outputs": ["{options.outputFile}"]
+    },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/backend-gql"]
     },
     "test": {
       "executor": "@nx/jest:jest",
@@ -27,13 +34,6 @@
         "tsConfig": "libs/backend-gql/tsconfig.lib.json"
       },
       "outputs": ["{workspaceRoot}/dist/out-tsc/libs/backend-gql"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/prettier/libs/backend-gql"]
     }
   }
 }

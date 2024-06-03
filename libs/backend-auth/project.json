@@ -1,6 +1,6 @@
 {
-  "name": "backend-auth",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "backend-auth",
   "projectType": "library",
   "sourceRoot": "libs/backend-auth/src",
   "tags": ["scope:backend-auth", "type:feature"],
@@ -12,6 +12,13 @@
         "lintFilePatterns": ["libs/backend-auth/**/*.ts"]
       },
       "outputs": ["{options.outputFile}"]
+    },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/libs/backend-auth"]
     },
     "test": {
       "executor": "@nx/jest:jest",
@@ -27,13 +34,6 @@
         "tsConfig": "libs/backend-auth/tsconfig.lib.json"
       },
       "outputs": ["{workspaceRoot}/dist/out-tsc/libs/backend-auth"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/prettier/libs/backend-auth"]
     }
   }
 }

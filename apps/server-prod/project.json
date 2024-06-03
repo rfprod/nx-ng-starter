@@ -1,6 +1,6 @@
 {
-  "name": "server-prod",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "server-prod",
   "projectType": "application",
   "sourceRoot": "apps/server-prod/src",
   "tags": ["scope:server-prod", "type:application"],
@@ -39,6 +39,13 @@
       },
       "outputs": ["{options.outputFile}"]
     },
+    "prettier-check": {
+      "executor": "./tools/executors/prettier:check",
+      "options": {
+        "config": ""
+      },
+      "outputs": ["{workspaceRoot}/dist/prettier/apps/server-prod"]
+    },
     "serve": {
       "executor": "@nx/js:node",
       "options": {
@@ -59,13 +66,6 @@
         "tsConfig": "apps/server-prod/tsconfig.app.json"
       },
       "outputs": ["{workspaceRoot}/dist/out-tsc/apps/server-prod"]
-    },
-    "prettier-check": {
-      "executor": "./tools/executors/prettier:check",
-      "options": {
-        "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/prettier/apps/server-prod"]
     }
   }
 }
