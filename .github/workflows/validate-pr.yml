@@ -288,7 +288,7 @@ jobs:
         run: echo "success='false'" >> $GITHUB_OUTPUT
 
   premerge:
-    needs: [lint, test, build]
+    needs: [checks, lint, test, build]
     if: always()
     runs-on: ubuntu-latest
 
@@ -299,9 +299,9 @@ jobs:
           echo "### :rocket: Premerge checks succeeded" >> $GITHUB_STEP_SUMMARY
         env:
           LINT_RESULT: ${{ needs.lint.outputs.success }}
-          LINT_AFFECTED_RESULT: ${{ needs.lint-affected.outputs.success || 'true' }}
+          LINT_AFFECTED_RESULT: ${{ needs.lint-affected.outputs.success || needs.checks.outputs.projects != '[]' }}
           TEST_RESULT: ${{ needs.test.outputs.success }}
-          TEST_AFFECTED_RESULT: ${{ needs.test-affected.outputs.success || 'true' }}
+          TEST_AFFECTED_RESULT: ${{ needs.test-affected.outputs.success || needs.checks.outputs.projects != '[]' }}
           BUILD_RESULT: ${{ needs.build.outputs.success }}
-          BUILD_AFFECTED_RESULT: ${{ needs.build-affected.outputs.success || 'true' }}
-          BUILD_AFFECTED_STORYBOOK_RESULT: ${{ needs.build-affected-storybook.outputs.success || 'true' }}
+          BUILD_AFFECTED_RESULT: ${{ needs.build-affected.outputs.success || needs.checks.outputs.projects-build != '[]' }}
+          BUILD_AFFECTED_STORYBOOK_RESULT: ${{ needs.build-affected-storybook.outputs.success || needs.checks.outputs.projects-build-storybook != '[]' }}
