@@ -45,9 +45,7 @@ import { AppRootComponent } from './components/root.component';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppClientModule {
-  constructor(
-    private readonly store: Store<IDiagnosticsState>,
-  ) {
+  constructor(private readonly store: Store<IDiagnosticsState>) {
     this.store.dispatch(diagnosticsAction.connect());
   }
 }
