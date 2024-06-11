@@ -161,10 +161,6 @@ exports.constraints = [
     sourceTag: 'scope:client-gql',
   },
   {
-    onlyDependOnLibsWithTags: ['scope:client-testing-unit', 'scope:client-util', 'scope:proto'],
-    sourceTag: 'scope:client-grpc',
-  },
-  {
     onlyDependOnLibsWithTags: [
       'scope:client-directives',
       'scope:client-material',
@@ -224,7 +220,6 @@ exports.constraints = [
       'scope:client-dashboards',
       'scope:client-diagnostics',
       'scope:client-gql',
-      'scope:client-grpc',
       'scope:client-guided-tour',
       'scope:client-material',
       'scope:client-pwa-offline',

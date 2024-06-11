@@ -4,7 +4,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { AppCoreModule } from '@app/client-core';
 import { AppCoreComponentsModule } from '@app/client-core-components';
 import { AppGqlModule } from '@app/client-gql';
-import { AppGrpcModule, AppGrpcService } from '@app/client-grpc';
 import { AppMaterialModule } from '@app/client-material';
 import { AppPwaOfflineModule } from '@app/client-pwa-offline';
 import { AppDiagnosticsStoreModule, diagnosticsAction, IDiagnosticsState } from '@app/client-store-diagnostics';
@@ -35,7 +34,6 @@ import { AppRootComponent } from './components/root.component';
     AppMaterialModule.forRoot(),
     AppTranslateModule.forRoot(),
     AppGqlModule.forRoot(environment),
-    AppGrpcModule.forRoot(environment),
     AppElizaModule.forRoot(),
     AppPwaOfflineModule,
     AppClientRoutingModule,
@@ -48,10 +46,8 @@ import { AppRootComponent } from './components/root.component';
 })
 export class AppClientModule {
   constructor(
-    private readonly grpc: AppGrpcService,
     private readonly store: Store<IDiagnosticsState>,
   ) {
-    void this.grpc.getEntityById().subscribe();
     this.store.dispatch(diagnosticsAction.connect());
   }
 }
