@@ -122,7 +122,7 @@
           "buildTarget": "client:build:production"
         }
       },
-      "executor": "@angular-devkit/build-angular:dev-server",
+      "executor": "@nx/angular:dev-server",
       "options": {
         "buildTarget": "client:build",
         "proxyConfig": "apps/client/proxy.conf.json"

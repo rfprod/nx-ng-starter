@@ -114,7 +114,7 @@
           "proxyConfig": "apps/elements/proxy.conf.json"
         }
       },
-      "executor": "@angular-devkit/build-angular:dev-server",
+      "executor": "@nx/angular:dev-server",
       "options": {
         "buildTarget": "elements:build"
       }
