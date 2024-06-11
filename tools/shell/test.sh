@@ -45,7 +45,7 @@ copyReportsToDist() {
   # Coverage root path.
   ##
   local COVERAGE_DIST_ROOT
-  COVERAGE_DIST_ROOT=${DOCUMENTATION_APP_DIST_PATH}/assets
+  COVERAGE_DIST_ROOT=${DOCUMENTATION_APP_DIST_PATH}/browser/assets
 
   if [ -d ${COVERAGE_DIST_ROOT} ]; then
     printSuccessMessage "directory $COVERAGE_DIST_ROOT exists, proceeding"

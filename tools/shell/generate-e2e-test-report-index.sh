@@ -47,7 +47,7 @@ generateReportIndex() {
     local E2E_INDEX_FILE_PATHS
     E2E_INDEX_FILE_PATHS=()
     while IFS= read -r -d $'\0'; do
-      E2E_INDEX_FILE_PATHS+=("${REPLY//"$E2E_DIST_PATH/"/}") # remove ./dist/documentation/assets/cypress substring from file paths to form correct relative links
+      E2E_INDEX_FILE_PATHS+=("${REPLY//"$E2E_DIST_PATH/"/}") # remove ./dist/documentation/browser/assets/cypress substring from file paths to form correct relative links
     done < <(find "$E2E_DIST_PATH" -maxdepth 5 -name "mochawesome.html" -not -path "*/lib/*" -not -path "*/src/*" -not -path "*/mobile/.*" -not -path "*/app" -not -path "*/environments" -print0)
 
     # To debug found index.html files uncomment next line.
@@ -59,7 +59,7 @@ generateReportIndex() {
     local VIDEO_RECORDING_FILE_PATHS
     VIDEO_RECORDING_FILE_PATHS=()
     while IFS= read -r -d $'\0'; do
-      VIDEO_RECORDING_FILE_PATHS+=("${REPLY//"$E2E_DIST_PATH/"/}") # remove ./dist/documentation/assets/cypress substring from file paths to form correct relative links
+      VIDEO_RECORDING_FILE_PATHS+=("${REPLY//"$E2E_DIST_PATH/"/}") # remove ./dist/documentation/browser/assets/cypress substring from file paths to form correct relative links
     done < <(find "$E2E_DIST_PATH" -maxdepth 5 -name "*.mp4" -print0)
 
     # To debug found *.mp4 files uncomment next line.
@@ -71,7 +71,7 @@ generateReportIndex() {
     local SCREENSHOTS_FILE_PATHS
     SCREENSHOTS_FILE_PATHS=()
     while IFS= read -r -d $'\0'; do
-      SCREENSHOTS_FILE_PATHS+=("${REPLY//"$E2E_DIST_PATH/"/}") # remove ./dist/documentation/assets/cypress substring from file paths to form correct relative links
+      SCREENSHOTS_FILE_PATHS+=("${REPLY//"$E2E_DIST_PATH/"/}") # remove ./dist/documentation/browser/assets/cypress substring from file paths to form correct relative links
     done < <(find "$E2E_DIST_PATH" -maxdepth 5 -name "*.png" -print0)
 
     # To debug found *.png files uncomment next line.
@@ -124,7 +124,7 @@ generateReportIndex() {
 }
 
 declare -A REPORT_INDEXES=(
-  ["documentation"]="${PROJECT_ROOT}"/dist/apps/documentation/assets/cypress
+  ["documentation"]="${PROJECT_ROOT}"/dist/apps/documentation/browser/assets/cypress
 )
 
 generate() {

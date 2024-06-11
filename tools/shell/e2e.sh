@@ -36,7 +36,7 @@ copyReportToDist() {
   # E2E root paths.
   ##
   local -A E2E_DIST_ROOTS=(
-    ["${PROJECT_ROOT}/dist/apps/documentation/assets/cypress"]="${PROJECT_ROOT}"/dist/apps/documentation/assets/cypress
+    ["${PROJECT_ROOT}/dist/apps/documentation/browser/assets/cypress"]="${PROJECT_ROOT}"/dist/apps/documentation/browser/assets/cypress
   )
 
   ##

@@ -24,7 +24,7 @@ generateReportIndex() {
   # Documentation unit coverage reports dist path.
   ##
   local DOCUMENTATION_UNIT_COVERAGE_DIST_PATH
-  DOCUMENTATION_UNIT_COVERAGE_DIST_PATH=${PROJECT_ROOT}/dist/apps/documentation/assets/coverage
+  DOCUMENTATION_UNIT_COVERAGE_DIST_PATH=${PROJECT_ROOT}/dist/apps/documentation/browser/assets/coverage
 
   if [ ! -d ${DOCUMENTATION_UNIT_COVERAGE_DIST_PATH} ]; then
     printErrorTitle "<< ERROR >>"
@@ -45,7 +45,7 @@ generateReportIndex() {
   local COVERAGE_INDEX_FILE_PATHS
   COVERAGE_INDEX_FILE_PATHS=()
   while IFS= read -r -d $'\0'; do
-    COVERAGE_INDEX_FILE_PATHS+=("${REPLY//"$DOCUMENTATION_UNIT_COVERAGE_DIST_PATH/"/}") # remove ./dist/documentation/assets/coverage substring from file paths to form correct relative links
+    COVERAGE_INDEX_FILE_PATHS+=("${REPLY//"$DOCUMENTATION_UNIT_COVERAGE_DIST_PATH/"/}") # remove ./dist/documentation/browser/assets/coverage substring from file paths to form correct relative links
   done < <(find "$DOCUMENTATION_UNIT_COVERAGE_DIST_PATH" -maxdepth 5 -name "index.html" -not -path "*/lib/*" -not -path "*/src/*" -not -path "*/mobile/.*" -not -path "*/app" -not -path "*/environments" -print0)
 
   # To debug found index.html files uncomment next line.
