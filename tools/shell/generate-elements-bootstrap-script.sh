@@ -37,8 +37,8 @@ generateBootstrapScript() {
 
   local BOOTSTRAP_SCRIPT_DIST_PATH="$1/$2"
   local EMELENT_PROJECT_NAME="$2"
-  local DIST_INDEX_HTML_PATH="$BOOTSTRAP_SCRIPT_DIST_PATH/index.html"
-  local BOOTSTRAP_SCRIPT_FILE_PATH="$BOOTSTRAP_SCRIPT_DIST_PATH/bootstrap.js"
+  local DIST_INDEX_HTML_PATH="$BOOTSTRAP_SCRIPT_DIST_PATH/browser/index.html"
+  local BOOTSTRAP_SCRIPT_FILE_PATH="$BOOTSTRAP_SCRIPT_DIST_PATH/browser/bootstrap.js"
 
   printNameAndValue "boostrap script file path" "$BOOTSTRAP_SCRIPT_FILE_PATH"
   printGap
