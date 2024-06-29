@@ -30,7 +30,7 @@ runs:
         echo "commitsha=$(echo ${GITHUB_SHA})" >> $GITHUB_OUTPUT
 
     - name: Workspace cache (node_modules, nx, jest, angular)
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       id: workspace-cache
       with:
         path: |
