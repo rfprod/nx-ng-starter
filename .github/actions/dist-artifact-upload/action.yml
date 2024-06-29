@@ -37,7 +37,7 @@ runs:
       run: tar -cvf dist.tar ./dist
 
     - name: Upload dist artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ inputs.artifact-name }}
         path: dist.tar
