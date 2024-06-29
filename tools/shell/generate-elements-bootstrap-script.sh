@@ -49,9 +49,9 @@ generateBootstrapScript() {
   printInfoTitle "<< Files from latest dist >>"
   printGap
 
-  # styles bundle
+  # styles bundle (find and remove duplicates)
   local STYLES_REF
-  STYLES_REF=$(find "$DIST_INDEX_HTML_PATH" -print0 | xargs -0 grep '[^"]*styles[^"]*.css' -o)
+  STYLES_REF=$(find "$DIST_INDEX_HTML_PATH" -print0 | xargs -0 grep '[^"]*styles[^"]*.css' -o | xargs -n1 | sort -u | xargs)
   echo "STYLES_REF:" "$STYLES_REF"
 
   # runtime bundle
