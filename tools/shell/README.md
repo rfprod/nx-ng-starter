@@ -17,7 +17,6 @@ This folder contains utility shell scripts.
 - `e2e.sh` - process e2e test reports and copy to dist
 - `firebase-deploy.sh` - firebase deployment script
 - `generate-e2e-test-report-index.sh` - generates an index page that lists all generated e2e test report index pages
-- `generate-elements-bootstrap-script.sh` - generates web elements bootstrap script that should be loaded once by consumer of the web elements app
 - `generate-proto.sh` - grpc and ts definitions generation script
 - `generate-unit-test-coverage-index.sh` - generates an index page that lists all generated unit test coverage report index pages
 - `git-extension.sh` - git-extension script (detects changed files so that linting/testing can be preformed for changed files only)

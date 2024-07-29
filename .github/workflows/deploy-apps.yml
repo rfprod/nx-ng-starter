@@ -182,9 +182,7 @@ jobs:
         uses: ./.github/actions/dist-artifact-download
 
       - name: Deploy elements
-        run: |
-          bash tools/shell/generate-elements-bootstrap-script.sh ./dist/apps elements
-          yarn firebase:deploy:ci:elements || exit 1
+        run: yarn firebase:deploy:ci:elements || exit 1
         env:
           FIREBASE_DEPLOY_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
 
