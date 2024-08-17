@@ -4,20 +4,26 @@ module.exports = {
   core: {
     disableTelemetry: true,
   },
+
   addons: [{ name: '@storybook/addon-controls' }],
+
   features: {
     postcss: true,
   },
+
   framework: {
     name: '@storybook/angular',
     options: {},
   },
+
   plugins: [
     require('autoprefixer')({
       flexbox: 'no-2009',
     }),
   ],
+
   stories: [],
+
   webpackFinal: async config => {
     const tsPaths = new TsconfigPathsPlugin({
       configFile: './tsconfig.base.json',
@@ -49,4 +55,8 @@ module.exports = {
 
     return config;
   },
+
+  docs: {
+    autodocs: true
+  }
 };
