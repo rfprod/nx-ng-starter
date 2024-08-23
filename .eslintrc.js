@@ -14,6 +14,7 @@ module.exports = {
   plugins: [
     'prettier',
     '@nx/eslint-plugin',
+    '@stylistic',
     'unicorn', // https://www.npmjs.com/package/eslint-plugin-unicorn
   ],
 
@@ -239,9 +240,13 @@ module.exports = {
       ],
       rules: {
         '@nx/enforce-module-boundaries': ['error', nxModuleBoundaryRules],
+        '@stylistic/brace-style': 'error',
+        '@stylistic/comma-spacing': ['error', { before: false, after: true }],
+        '@stylistic/lines-between-class-members': ['error', 'always', { exceptAfterOverload: true }],
+        '@stylistic/quotes': ['error', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
         '@typescript-eslint/await-thenable': 'error',
         '@typescript-eslint/ban-ts-comment': 'error',
-        '@typescript-eslint/ban-types': [
+        '@typescript-eslint/no-restricted-types': [
           'error',
           {
             types: {
@@ -253,8 +258,6 @@ module.exports = {
             },
           },
         ],
-        '@typescript-eslint/brace-style': ['error'],
-        '@typescript-eslint/comma-spacing': ['error'],
         '@typescript-eslint/consistent-type-definitions': 'error',
         '@typescript-eslint/default-param-last': ['error'],
         '@typescript-eslint/explicit-function-return-type': 'off', // keep off
@@ -263,13 +266,6 @@ module.exports = {
           'error',
           {
             ignoredMethodNames: ['constructor'],
-          },
-        ],
-        '@typescript-eslint/lines-between-class-members': [
-          'error',
-          'always',
-          {
-            exceptAfterOverload: true,
           },
         ],
         '@typescript-eslint/member-ordering': [
@@ -325,7 +321,6 @@ module.exports = {
         '@typescript-eslint/no-for-in-array': 'error',
         '@typescript-eslint/no-shadow': 'error',
         '@typescript-eslint/no-this-alias': 'error',
-        '@typescript-eslint/no-throw-literal': 'error',
         '@typescript-eslint/no-unnecessary-type-arguments': 'error',
         '@typescript-eslint/no-unnecessary-type-assertion': [
           'error',
@@ -392,14 +387,6 @@ module.exports = {
           'off', // keep of for now
           {
             ignoreStatic: true,
-          },
-        ],
-        '@typescript-eslint/quotes': [
-          'error',
-          'single',
-          {
-            avoidEscape: true,
-            allowTemplateLiterals: true,
           },
         ],
         'rxjs/ban-observables': 'off', // keep off
