@@ -3,14 +3,14 @@ import { HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { ApolloLink, Operation, ServerError, ServerParseError } from '@apollo/client/core';
-import { GraphQLErrors, NetworkError } from '@apollo/client/errors';
+import { NetworkError } from '@apollo/client/errors';
 import { ErrorResponse } from '@apollo/client/link/error';
 import { flushHttpRequests, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { AppTranslateModule } from '@app/client-translate';
 import { HTTP_STATUS, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngrx/store';
 import { Apollo, ApolloModule, gql } from 'apollo-angular';
-import { GraphQLError } from 'graphql';
+import { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
 
@@ -200,7 +200,7 @@ describe('AppHttpHandlersService', () => {
         },
       };
       const errorRes = <ErrorResponse>{
-        graphQLErrors: <GraphQLErrors>[testErrorNoCode, testError],
+        graphQLErrors: <ReadonlyArray<GraphQLFormattedError>>[testErrorNoCode, testError],
         networkError: void 0,
       };
       service.gqlErrorLinkHandler(errorRes);

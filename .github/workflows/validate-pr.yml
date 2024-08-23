@@ -23,6 +23,7 @@ jobs:
       projects-build: ${{ steps.check-projects-build.outputs.projects }}
       projects-build-storybook: ${{ steps.check-projects-build-storybook.outputs.projects }}
       changes: ${{ steps.check-changes.outputs.changes }}
+      success: ${{ steps.check.outputs.success || 'true' }}
 
     steps:
       - name: Checkout sources
@@ -74,6 +75,11 @@ jobs:
           premerge: 'true'
           trunk: 'main'
 
+      - name: Set failure
+        id: check
+        if: failure()
+        run: echo "success=$(echo 'false')" >> $GITHUB_OUTPUT
+
   lint:
     needs: checks
     runs-on: ubuntu-latest
@@ -100,7 +106,7 @@ jobs:
       - name: Set failure
         id: check
         if: failure()
-        run: echo "success='false'" >> $GITHUB_OUTPUT
+        run: echo "success=$(echo 'false')" >> $GITHUB_OUTPUT
 
   lint-affected:
     needs: checks
@@ -108,6 +114,8 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
+      max-parallel: 40
       matrix:
         projects: ${{ fromJSON(needs.checks.outputs.projects) }}
 
@@ -136,7 +144,7 @@ jobs:
       - name: Set failure
         id: check
         if: failure()
-        run: echo "success='false'" >> $GITHUB_OUTPUT
+        run: echo "success=$(echo 'false')" >> $GITHUB_OUTPUT
 
   test:
     needs: checks
@@ -163,7 +171,7 @@ jobs:
       - name: Set failure
         id: check
         if: failure()
-        run: echo "success='false'" >> $GITHUB_OUTPUT
+        run: echo "success=(echo 'false')" >> $GITHUB_OUTPUT
 
   test-affected:
     needs: checks
@@ -171,6 +179,8 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
+      max-parallel: 40
       matrix:
         projects: ${{ fromJSON(needs.checks.outputs.projects) }}
 
@@ -196,7 +206,7 @@ jobs:
       - name: Set failure
         id: check
         if: failure()
-        run: echo "success='false'" >> $GITHUB_OUTPUT
+        run: echo "success=(echo 'false')" >> $GITHUB_OUTPUT
 
   build:
     needs: checks
@@ -222,7 +232,7 @@ jobs:
       - name: Set failure
         id: check
         if: failure()
-        run: echo "success='false'" >> $GITHUB_OUTPUT
+        run: echo "success=(echo 'false')" >> $GITHUB_OUTPUT
 
   build-affected:
     needs: checks
@@ -230,6 +240,8 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
+      max-parallel: 40
       matrix:
         projects: ${{ fromJSON(needs.checks.outputs.projects-build) }}
 
@@ -252,7 +264,7 @@ jobs:
       - name: Set failure
         id: check
         if: failure()
-        run: echo "success='false'" >> $GITHUB_OUTPUT
+        run: echo "success=(echo 'false')" >> $GITHUB_OUTPUT
 
   build-affected-storybook:
     needs: checks
@@ -260,6 +272,8 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
+      max-parallel: 40
       matrix:
         projects: ${{ fromJSON(needs.checks.outputs.projects-build-storybook) }}
 
@@ -276,16 +290,13 @@ jobs:
       - name: Setup environment
         uses: ./.github/actions/setup-environment
 
-      - name: Build affected
-        run: npx nx run-many --target build --projects origin/main
-
       - name: Build storybook affected
         run: npx nx run-many --target build-storybook --projects ${{ matrix.projects }}
 
       - name: Set failure
         id: check
         if: failure()
-        run: echo "success='false'" >> $GITHUB_OUTPUT
+        run: echo "success=(echo 'false')" >> $GITHUB_OUTPUT
 
   premerge:
     needs: [checks, lint, lint-affected, test, test-affected, build, build-affected, build-affected-storybook]
@@ -295,9 +306,10 @@ jobs:
     steps:
       - name: Check result
         run: |
-          if [[ "$LINT_RESULT" != "true" || "$LINT_AFFECTED_RESULT" != "true" || "$TEST_RESULT" != "true" || "$TEST_AFFECTED_RESULT" != "true" || "$BUILD_RESULT" != "true" || "$BUILD_AFFECTED_RESULT" != "true" || "$BUILD_AFFECTED_STORYBOOK_RESULT" != "true" ]]; then exit 1; fi
+          if [[ "$CHECKS_RESULT" != "true" || "$LINT_RESULT" != "true" || "$LINT_AFFECTED_RESULT" != "true" || "$TEST_RESULT" != "true" || "$TEST_AFFECTED_RESULT" != "true" || "$BUILD_RESULT" != "true" || "$BUILD_AFFECTED_RESULT" != "true" || "$BUILD_AFFECTED_STORYBOOK_RESULT" != "true" ]]; then exit 1; fi
           echo "### :rocket: Premerge checks succeeded" >> $GITHUB_STEP_SUMMARY
         env:
+          CHECKS_RESULT: ${{ needs.checks.outputs.success }}
           LINT_RESULT: ${{ needs.lint.outputs.success }}
           LINT_AFFECTED_RESULT: ${{ needs.lint-affected.outputs.success || 'true' }}
           TEST_RESULT: ${{ needs.test.outputs.success }}
