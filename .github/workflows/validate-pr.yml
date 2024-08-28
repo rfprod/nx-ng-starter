@@ -114,7 +114,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: false
+      fail-fast: true
       max-parallel: 40
       matrix:
         projects: ${{ fromJSON(needs.checks.outputs.projects) }}
@@ -179,7 +179,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: false
+      fail-fast: true
       max-parallel: 40
       matrix:
         projects: ${{ fromJSON(needs.checks.outputs.projects) }}
@@ -240,7 +240,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: false
+      fail-fast: true
       max-parallel: 40
       matrix:
         projects: ${{ fromJSON(needs.checks.outputs.projects-build) }}
@@ -272,7 +272,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: false
+      fail-fast: true
       max-parallel: 40
       matrix:
         projects: ${{ fromJSON(needs.checks.outputs.projects-build-storybook) }}
@@ -311,9 +311,9 @@ jobs:
         env:
           CHECKS_RESULT: ${{ needs.checks.outputs.success }}
           LINT_RESULT: ${{ needs.lint.outputs.success }}
-          LINT_AFFECTED_RESULT: ${{ needs.lint-affected.outputs.success || 'true' }}
+          LINT_AFFECTED_RESULT: ${{ needs.lint-affected.outputs.success || needs.checks.outputs.projects == '[]' }}
           TEST_RESULT: ${{ needs.test.outputs.success }}
-          TEST_AFFECTED_RESULT: ${{ needs.test-affected.outputs.success || 'true' }}
+          TEST_AFFECTED_RESULT: ${{ needs.test-affected.outputs.success || needs.checks.outputs.projects == '[]' }}
           BUILD_RESULT: ${{ needs.build.outputs.success }}
-          BUILD_AFFECTED_RESULT: ${{ needs.build-affected.outputs.success || 'true' }}
-          BUILD_AFFECTED_STORYBOOK_RESULT: ${{ needs.build-affected-storybook.outputs.success || 'true' }}
+          BUILD_AFFECTED_RESULT: ${{ needs.build-affected.outputs.success || needs.checks.outputs.projects-build == '[]' }}
+          BUILD_AFFECTED_STORYBOOK_RESULT: ${{ needs.build-affected-storybook.outputs.success || needs.checks.outputs.projects-build-storybook == '[]' }}
