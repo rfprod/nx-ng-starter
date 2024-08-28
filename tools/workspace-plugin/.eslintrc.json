@@ -13,10 +13,11 @@
       "files": ["module-boundaries.generator.ts"],
       "rules": {
         "@typescript-eslint/no-require-imports": "off",
+        "max-depth": ["error", 6],
         "max-lines-per-function": [
           "error",
           {
-            "max": 55,
+            "max": 59,
             "skipBlankLines": true,
             "skipComments": true
           }

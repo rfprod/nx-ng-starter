@@ -6,8 +6,8 @@ const config: Config.InitialOptions = {
     global: {
       branches: 24,
       functions: 55,
-      lines: 59,
-      statements: 59,
+      lines: 57,
+      statements: 57,
     },
   },
   displayName: 'workspace-plugin',

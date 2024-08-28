@@ -26,9 +26,15 @@ const depConstraints = (configDir: string, verbose?: boolean) => {
   if (!configExists) {
     throw new Error(`The directory with the module boundary configurations does not exist: ${configDir}.`);
   }
-  verbose === true ? logger.log('configDir', configDir) : void 0;
+  if (verbose === true) {
+    logger.log('configDir', configDir);
+  }
+
   const configFiles = findFiles(configDir, '.js');
-  verbose === true ? logger.log('configFiles', configFiles) : void 0;
+  if (verbose === true) {
+    logger.log('configFiles', configFiles);
+  }
+
   const files = configFiles.stdout.length > 0 ? configFiles.stdout.split(' ') : [];
   const configs = files.map(file => {
     const config: {
@@ -75,7 +81,9 @@ const projectSourceRoots = (
     return accumulator;
   }, []);
 
-  verbose === true ? logger.log('scopes with constraints', scopes) : void 0;
+  if (verbose === true) {
+    logger.log('scopes with constraints', scopes);
+  }
 
   const projects = scopes.reduce((accumulator: ProjectConfiguration[], scope) => {
     const result = entries.find(entry => entry.tags?.includes(scope));
@@ -85,7 +93,9 @@ const projectSourceRoots = (
     return accumulator;
   }, []);
 
-  verbose === true ? logger.log('projects with constraints', projects) : void 0;
+  if (verbose === true) {
+    logger.log('projects with constraints', projects);
+  }
 
   const allBoundaryConfigs = constraints.reduce((accumulator: Array<TModuleBoundaryConfig['0'] & { file: string }>, item) => {
     const result = item.constraints.map(record => ({
@@ -96,7 +106,9 @@ const projectSourceRoots = (
     return accumulator;
   }, []);
 
-  verbose === true ? logger.log('all boundary configs', allBoundaryConfigs) : void 0;
+  if (verbose === true) {
+    logger.log('all boundary configs', allBoundaryConfigs);
+  }
 
   const sourceRoots = projects
     .map(project => ({
@@ -115,7 +127,9 @@ const projectSourceRoots = (
       return result;
     });
 
-  verbose === true ? logger.log('project source roots', sourceRoots) : void 0;
+  if (verbose === true) {
+    logger.log('project source roots', sourceRoots);
+  }
 
   return sourceRoots;
 };
@@ -128,7 +142,9 @@ export default async function (tree: Tree, schema: ISchematicContext) {
 
   const constraints = depConstraints(configDir);
 
-  schema.verbose === true ? logger.log('constraints', constraints) : void 0;
+  if (schema.verbose === true) {
+    logger.log('constraints', constraints);
+  }
 
   const sourceRoots = projectSourceRoots(tree, entries, constraints, schema.verbose);
 
@@ -146,13 +162,17 @@ export default async function (tree: Tree, schema: ISchematicContext) {
         const args = [src, '-type', 'f', '-name', '"*.ts"', '|', 'xargs', 'grep', `"${partialImportPath}"`, '--color=always'];
         try {
           execFileSync(cmd, args, { stdio: 'inherit', cwd: process.cwd(), env: process.env, shell: true });
-        } catch (e) {
+        } catch {
           const exception = {
             file: config.file,
             message: `The scope '${config.scope}' does not depend on the tag '${tag}'.`,
             sourceRoot: config.sourceRoot,
           };
-          schema.verbose === true ? logger.error(exception.message) : void 0;
+
+          if (schema.verbose === true) {
+            logger.error(exception.message);
+          }
+
           exceptions.push(exception);
         }
       }
