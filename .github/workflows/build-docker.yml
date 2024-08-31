@@ -45,7 +45,7 @@ jobs:
 
       - name: Build all (production)
         run: |
-          yarn generate:env:documentation
+          SKIP_FORMAT="true" yarn generate:env:documentation
           npx nx run-many --target configure-env --all
           npx nx run-many --target build --all --configuration production
           npx nx run-many --target configure-env --all --reset

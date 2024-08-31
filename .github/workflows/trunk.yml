@@ -84,7 +84,7 @@ jobs:
       - name: Build
         if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' }}
         run: |
-          yarn generate:env:documentation
+          SKIP_FORMAT="true" yarn generate:env:documentation
           npx nx run-many --target configure-env --all --parallel 1
           npx nx run-many --target build --all --parallel 1 --configuration production
           npx nx run-many --target configure-env --all --parallel 1 --reset
