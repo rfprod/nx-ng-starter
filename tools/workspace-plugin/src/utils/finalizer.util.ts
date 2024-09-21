@@ -1,6 +1,7 @@
-import { logger } from '@nx/devkit';
 import { exec } from 'child_process';
 import { promisify } from 'util';
+
+import { logger } from './logger';
 
 /**
  * A generator finalizer:
@@ -10,12 +11,12 @@ import { promisify } from 'util';
  */
 export const finalizeGenerator = async <T>(schema: T) => {
   const tscConfigure = await promisify(exec)(`npx nx run tools:tsc-configure`);
-  logger.log(tscConfigure.stdout);
-  logger.error(tscConfigure.stderr);
+  logger.printInfo(void 0, tscConfigure.stdout);
+  logger.printError(void 0, tscConfigure.stderr);
 
   const lint = await promisify(exec)(`npx nx lint ${(<Record<string, string>>schema).name} --fix`);
-  logger.log(lint.stdout);
-  logger.error(lint.stderr);
+  logger.printInfo(void 0, lint.stdout);
+  logger.printError(void 0, lint.stderr);
 
   return { success: tscConfigure.stderr === '' && lint.stderr === '' };
 };
