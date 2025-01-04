@@ -1,16 +1,16 @@
-import { IActorConfig, IThresholdsConfig } from './contribution-size.interface';
+import type { IActorConfig, IThresholdsConfig } from './contribution-size.interface';
 
 /**
  * Actors configuration.
  */
-export const actors: Readonly<IActorConfig[]> = Object.freeze([
+export const actors: readonly IActorConfig[] = Object.freeze([
   {
     actor: 'rfprod',
-    thresholds: <IThresholdsConfig>{
+    thresholds: {
       maxFiles: Number(Infinity),
       deletions: Number(Infinity),
       insertions: Number(Infinity),
-    },
+    } as IThresholdsConfig,
   },
 ]);
 

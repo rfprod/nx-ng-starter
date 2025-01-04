@@ -12,6 +12,7 @@ interface IStyleConfiguration {
 @Directive({
   selector: '[appFullScreen]',
   exportAs: 'fullScreen',
+  standalone: false,
 })
 export class AppFullScreenDirective {
   /** Original styles of the component. */

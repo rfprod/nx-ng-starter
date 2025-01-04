@@ -1,8 +1,8 @@
 import { InjectionToken } from '@angular/core';
-import { TToastType } from '@app/client-util';
-import { IReducerConfig } from '@app/client-util-ngrx';
-import { ActionReducer } from '@ngrx/store';
-import { MonoTypeOperatorFunction } from 'rxjs';
+import type { TToastType } from '@app/client-util';
+import type { IReducerConfig } from '@app/client-util-ngrx';
+import type { ActionReducer } from '@ngrx/store';
+import type { MonoTypeOperatorFunction } from 'rxjs';
 
 export interface IViewProgress {
   counter: number;

@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, ErrorHandler, Injectable, Provider } from '@angular/core';
+import { EnvironmentProviders, ErrorHandler, inject, Injectable, provideAppInitializer, Provider } from '@angular/core';
 import { Router } from '@angular/router';
 import { IWebClientAppEnvironment, TSentryEnvironment } from '@app/client-util';
 import { BrowserTracing, createErrorHandler, init, routingInstrumentation, TraceService } from '@sentry/angular-ivy';
@@ -46,7 +46,7 @@ export const initializeSentry = (env: IWebClientAppEnvironment, release: string)
  * @param env web client environment
  * @returns Sentry providers
  */
-export const sentryProviders: (env: IWebClientAppEnvironment) => Provider[] = env => {
+export const sentryProviders: (env: IWebClientAppEnvironment) => Array<Provider | EnvironmentProviders> = env => {
   return sentryDisabledEnvironments.includes(env.sentry.env)
     ? []
     : [
@@ -60,12 +60,9 @@ export const sentryProviders: (env: IWebClientAppEnvironment) => Provider[] = en
           provide: TraceService,
           deps: [Router],
         },
-        {
-          provide: APP_INITIALIZER,
-          useFactory: () => () => ({}),
-          deps: [TraceService],
-          multi: true,
-        },
+        provideAppInitializer(() => {
+          inject(TraceService);
+        }),
       ];
 };
 

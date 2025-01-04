@@ -1,5 +1,5 @@
-import { MatDateFormats } from '@angular/material/core';
-import { MatMomentDateAdapterOptions } from '@angular/material-moment-adapter';
+import type { MatDateFormats } from '@angular/material/core';
+import type { MatMomentDateAdapterOptions } from '@angular/material-moment-adapter';
 
 /**
  * Material moment date adapter options factory.

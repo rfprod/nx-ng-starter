@@ -1,4 +1,4 @@
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { EffectsModule } from '@ngrx/effects';
@@ -6,7 +6,7 @@ import { Store, StoreModule } from '@ngrx/store';
 
 import { userAction } from './user.actions';
 import { AppUserEffects } from './user.effects';
-import { IUserState, userReducerConfig } from './user.interface';
+import { type IUserState, userReducerConfig } from './user.interface';
 import { userReducerProvider } from './user.reducer';
 
 describe('AppUserEffects', () => {

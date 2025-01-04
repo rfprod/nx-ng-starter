@@ -1,4 +1,4 @@
-import { IWebClientAppEnvironment } from '@app/client-util';
+import type { IWebClientAppEnvironment } from '@app/client-util';
 
 /**
  * Sentry environment configuration factory.

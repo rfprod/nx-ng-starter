@@ -54,7 +54,7 @@ const splitProjects = () => {
 const projects = splitProjects();
 
 /** Summary about collected projects. */
-const chunkSummary: [{ data: string }, { data: string }][] = [];
+const chunkSummary: Array<[{ data: string }, { data: string }]> = [];
 
 for (let i = 0, max = projects.length; i < max; i += 1) {
   const chunk = projects[i];

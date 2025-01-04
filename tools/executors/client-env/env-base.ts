@@ -1,9 +1,9 @@
-import { ExecutorContext, logger } from '@nx/devkit';
+import { type ExecutorContext, logger } from '@nx/devkit';
 import dotenv from 'dotenv';
 import { constants } from 'fs';
 import { access, readFile, stat, writeFile } from 'fs/promises';
 
-import { IExecutorOptions, TSupportedApp } from './schema';
+import type { IExecutorOptions, TSupportedApp } from './schema';
 
 export interface IEnvConfig {
   version: string;
@@ -27,9 +27,14 @@ export abstract class AppBaseEnvConfig<T = IEnvConfig> {
     cwd: process.cwd(),
     isVerbose: false,
     root: '/root',
-    workspace: {
+    projectsConfigurations: {
       version: 1,
       projects: {},
+    },
+    nxJsonConfiguration: {},
+    projectGraph: {
+      nodes: {},
+      dependencies: {},
     },
     configurationName: '',
     projectName: '',
@@ -45,9 +50,9 @@ export abstract class AppBaseEnvConfig<T = IEnvConfig> {
   /**
    * The environment configuration file initial value.
    */
-  protected defaultEnv: T = <T>(<unknown>{
+  protected defaultEnv: T = {
     version: 'N/A',
-  });
+  } as unknown as T;
 
   constructor(options: IExecutorOptions, context: ExecutorContext) {
     this.options = { ...options };
@@ -103,7 +108,7 @@ export abstract class AppBaseEnvConfig<T = IEnvConfig> {
  */
 export const appEnvFactory = () => ({
   meta: {
-    version: '${(<Record<string, unknown>>options).version}',
+    version: '${(options as Record<string, unknown>).version}',
   },
 });
 `;
@@ -166,9 +171,9 @@ export const appEnvFactory = () => ({
   protected async getEnvValues(): Promise<T> {
     const version = await this.getPackageVersion();
 
-    const env = <T>(<unknown>{
+    const env = {
       version,
-    });
+    } as unknown as T;
     return env;
   }
 }

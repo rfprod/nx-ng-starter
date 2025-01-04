@@ -1,5 +1,5 @@
-import { OverlayRef } from '@angular/cdk/overlay';
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import type { OverlayRef } from '@angular/cdk/overlay';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { catchError, of, throwError } from 'rxjs';
 

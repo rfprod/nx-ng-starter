@@ -1,7 +1,8 @@
 import { APP_BASE_HREF, DOCUMENT, LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import { documentFactory, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@app/client-util';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { documentFactory, type IWebClientAppEnvironment, WEB_CLIENT_APP_ENV, WINDOW, windowFactory } from '@app/client-util';
 import { HttpLink } from 'apollo-angular/http';
 
 import { appCoreModuleProviders } from './core-module.providers';
@@ -26,8 +27,7 @@ describe('core-module-proviers', () => {
   };
 
   const testBedConfig: TestModuleMetadata = {
-    imports: [HttpClientTestingModule],
-    providers: [...appCoreModuleProviders(testingEnvironment)],
+    providers: [...appCoreModuleProviders(testingEnvironment), provideHttpClientTesting(), provideHttpClient()],
   };
 
   let locationStrategy: LocationStrategy;

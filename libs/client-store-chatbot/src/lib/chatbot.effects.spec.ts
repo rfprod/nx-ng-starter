@@ -1,4 +1,4 @@
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { EffectsModule } from '@ngrx/effects';
@@ -6,7 +6,7 @@ import { Store, StoreModule } from '@ngrx/store';
 
 import { chatbotAction } from './chatbot.actions';
 import { AppChatbotEffects } from './chatbot.effects';
-import { chatbotReducerConfig, IChatbotState } from './chatbot.interface';
+import { chatbotReducerConfig, type IChatbotState } from './chatbot.interface';
 import { chatbotReducerProvider } from './chatbot.reducer';
 
 describe('AppChatbotEffects', () => {

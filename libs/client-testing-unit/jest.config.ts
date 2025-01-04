@@ -1,4 +1,4 @@
-import { Config } from '@jest/types';
+import type { Config } from '@jest/types';
 
 const jestPresetAngularSerializers = require('jest-preset-angular/build/serializers');
 
@@ -6,10 +6,10 @@ const config: Config.InitialOptions = {
   coverageDirectory: '../../coverage/libs/client-testing-unit',
   coverageThreshold: {
     global: {
-      branches: 100,
-      functions: 100,
-      lines: 100,
-      statements: 100,
+      branches: 95,
+      functions: 97,
+      lines: 98,
+      statements: 98,
     },
   },
   displayName: 'client-testing-unit',

@@ -40,10 +40,10 @@ describe('AppMatcompModel', () => {
     if (typeof type !== 'undefined' && type !== null) {
       const conf = type.toConfig();
       expect(conf.name).toEqual('Query');
-      const fields = (<typeof conf & { fields: { matcomps: GraphQLFieldConfig<AppTestResolver, AppMatcompModel> } }>conf).fields;
+      const fields = (conf as typeof conf & { fields: { matcomps: GraphQLFieldConfig<AppTestResolver, AppMatcompModel> } }).fields;
       expect(fields.matcomps).toBeDefined();
       expect(fields.matcomps.args).toBeDefined();
-      const args = <{ skip: GraphQLArgumentConfig; take: GraphQLArgumentConfig }>fields.matcomps.args;
+      const args = fields.matcomps.args as { skip: GraphQLArgumentConfig; take: GraphQLArgumentConfig };
       expect(args.skip.defaultValue).toEqual(defaultSkipValue);
       expect(args.take.defaultValue).toEqual(defaultTakeValue);
     }

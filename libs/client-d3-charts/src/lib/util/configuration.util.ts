@@ -9,7 +9,7 @@ export const generateConfiguration = <T>(
   options: Partial<T & Record<string, unknown>> | undefined,
   result: Record<string, unknown>,
 ) => {
-  const defaultConfiguration = <Record<string, unknown>>config;
+  const defaultConfiguration = config as Record<string, unknown>;
 
   if (typeof options === 'undefined') {
     return config;
@@ -24,10 +24,10 @@ export const generateConfiguration = <T>(
     } else if (defaultValue instanceof Function) {
       result[typedKey] = defaultValue;
     } else if (typeof defaultValue === 'object' && defaultValue !== null) {
-      const nestedDefaultObject = <Record<string, unknown>>defaultValue;
-      const nestedObject = <Record<string, unknown>>value;
+      const nestedDefaultObject = defaultValue as Record<string, unknown>;
+      const nestedObject = value as Record<string, unknown>;
       result[typedKey] = generateConfiguration(nestedDefaultObject, nestedObject, {});
     }
   }
-  return <T>result;
+  return result as T;
 };

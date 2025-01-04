@@ -15,6 +15,12 @@
       "rules": {
         "max-lines": ["error", 1060]
       }
+    },
+    {
+      "files": ["*.ts"],
+      "rules": {
+        "@angular-eslint/prefer-standalone": "off"
+      }
     }
   ]
 }

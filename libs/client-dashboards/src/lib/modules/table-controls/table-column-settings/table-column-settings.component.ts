@@ -8,6 +8,7 @@ import { IDashboardTableConfig } from '../../../interfaces/table-config.interfac
   templateUrl: './table-column-settings.component.html',
   styleUrls: ['./table-column-settings.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppTableColumnSettingsComponent<T> {
   @Input() public columns: IDashboardTableConfig<T>['columns'] = [
@@ -21,7 +22,7 @@ export class AppTableColumnSettingsComponent<T> {
 
   public changeVisibleColumns(event: MatSelectionListChange) {
     const value = event.source.selectedOptions.selected
-      .map(item => <IDashboardTableConfig<T>['columns']['0']>item.value)
+      .map(item => item.value as IDashboardTableConfig<T>['columns']['0'])
       .sort((x, y) => x.order - y.order);
     this.columnVisibilityChange.emit(value);
   }

@@ -1,7 +1,7 @@
-import { ExecutorContext, getProjects, logger, ProjectConfiguration, updateProjectConfiguration } from '@nx/devkit';
+import { type ExecutorContext, getProjects, logger, type ProjectConfiguration, updateProjectConfiguration } from '@nx/devkit';
 import { flushChanges, FsTree } from 'nx/src/generators/tree';
 
-import { IExecutorOptions } from './schema';
+import type { IExecutorOptions } from './schema';
 
 export interface IProjectMetadata {
   name: string;
@@ -20,9 +20,14 @@ export class AppConfigureStylelintCheckExecutor {
     cwd: process.cwd(),
     isVerbose: false,
     root: '/root',
-    workspace: {
+    projectsConfigurations: {
       version: 2,
       projects: {},
+    },
+    nxJsonConfiguration: {},
+    projectGraph: {
+      nodes: {},
+      dependencies: {},
     },
   };
 
@@ -38,10 +43,10 @@ export class AppConfigureStylelintCheckExecutor {
     const suffix = project.name.includes('-e2e')
       ? 'e2e'
       : project.config.projectType === 'library'
-      ? 'lib'
-      : project.config.projectType === 'application'
-      ? 'app'
-      : '';
+        ? 'lib'
+        : project.config.projectType === 'application'
+          ? 'app'
+          : '';
     return suffix;
   }
 

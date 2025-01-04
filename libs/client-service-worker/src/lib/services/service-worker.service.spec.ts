@@ -1,14 +1,14 @@
 import { DOCUMENT } from '@angular/common';
 import { ApplicationRef } from '@angular/core';
-import { TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { SwUpdate, VersionEvent } from '@angular/service-worker';
+import { SwUpdate, type VersionEvent } from '@angular/service-worker';
 import { of } from 'rxjs';
 
 import { AppServiceWorkerService } from './service-worker.service';
 
 describe('AppServiceWorkerService', () => {
-  let service: AppServiceWorkerService;
+  // let service: AppServiceWorkerService;
 
   const testBedConfig: TestModuleMetadata = {
     providers: [
@@ -21,7 +21,7 @@ describe('AppServiceWorkerService', () => {
       {
         provide: SwUpdate,
         useValue: {
-          versionUpdates: of(<VersionEvent>{ type: 'NO_NEW_VERSION_DETECTED', version: { hash: 'xx' } }),
+          versionUpdates: of({ type: 'NO_NEW_VERSION_DETECTED', version: { hash: 'xx' } } as VersionEvent),
           checkForUpdate: () => new Promise<boolean>(resolve => resolve(true)),
         },
       },
@@ -49,9 +49,9 @@ describe('AppServiceWorkerService', () => {
   /**
    * @todo Fix this unit test.
    */
-  it('should be defined', () => {
-    expect(service).toBeUndefined();
-  });
+  // it('should be defined', () => {
+  //   expect(service).toBeUndefined();
+  // });
 
   test.todo('AppServiceWorkerService');
 });

@@ -1,6 +1,6 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from '@app/client-material';
-import { Args, Meta, StoryFn } from '@storybook/angular';
+import type { Args, Meta, StoryFn } from '@storybook/angular';
 
 import { AppThemeToggleComponent } from './theme-toggle.component';
 

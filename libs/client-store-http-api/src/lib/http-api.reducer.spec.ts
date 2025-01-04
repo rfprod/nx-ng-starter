@@ -1,10 +1,10 @@
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store, StoreModule } from '@ngrx/store';
 import { first, tap } from 'rxjs';
 
 import { httpApiAction } from './http-api.actions';
-import { httpApiReducerConfig, IHttpApiState, IHttpApiStateModel } from './http-api.interface';
+import { httpApiReducerConfig, type IHttpApiState, type IHttpApiStateModel } from './http-api.interface';
 import { AppHttpApiReducer, httpApiReducerProvider } from './http-api.reducer';
 import { httpApiSelector } from './http-api.selectors';
 

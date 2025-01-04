@@ -1,6 +1,6 @@
-import { OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
-import { DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { OverlayConfig, type OverlayRef } from '@angular/cdk/overlay';
+import type { DebugElement } from '@angular/core';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppMaterialModule } from '@app/client-material';
 import { AppTestingComponent } from '@app/client-testing-unit';

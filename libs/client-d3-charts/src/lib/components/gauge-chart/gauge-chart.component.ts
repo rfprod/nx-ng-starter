@@ -15,6 +15,7 @@ type TGaugeOptions = Partial<IGaugeChartOptions>;
   templateUrl: './gauge-chart.component.html',
   styleUrls: ['./gauge-chart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppGaugeChartComponent extends AppD3ChartBase<TGaugeData, TGaugeOptions> implements AfterViewInit, OnChanges {
   /** The chart id. */

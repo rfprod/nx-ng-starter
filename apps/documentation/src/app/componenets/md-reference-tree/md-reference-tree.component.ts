@@ -1,4 +1,3 @@
-import { NestedTreeControl } from '@angular/cdk/tree';
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { logMethod } from '@app/client-util-decorators';
@@ -23,11 +22,12 @@ interface IMarkdownReferenceNode {
   templateUrl: './md-reference-tree.component.html',
   styleUrls: ['./md-reference-tree.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppDocMarkdownReferenceTreeComponent {
-  public readonly treeControl = new NestedTreeControl<IMarkdownReferenceNode>(node => node.children);
-
   public readonly dataSource = new MatTreeNestedDataSource<IMarkdownReferenceNode>();
+
+  public readonly childrenAccessor = (dataNode: IMarkdownReferenceNode) => dataNode.children ?? [];
 
   @logMethod()
   private treeData() {

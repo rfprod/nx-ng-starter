@@ -1,4 +1,4 @@
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
@@ -6,7 +6,7 @@ import { first, switchMap, tap } from 'rxjs';
 
 import { featureAccessAction } from './feature-access.actions';
 import { AppFeatureAccessEffects } from './feature-access.effects';
-import { featureAccessReducerConfig, IFeatureAccessState } from './feature-access.interface';
+import { featureAccessReducerConfig, type IFeatureAccessState } from './feature-access.interface';
 import { featureAccessReducerProvider } from './feature-access.reducer';
 import { featureAccessSelector } from './feature-access.selectors';
 

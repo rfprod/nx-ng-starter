@@ -1,7 +1,7 @@
 import { actionType } from '@app/client-util-ngrx';
 import { createAction, props } from '@ngrx/store';
 
-import { IMdFilesStateModel, mdFilesReducerConfig } from './md-files.interface';
+import { type IMdFilesStateModel, mdFilesReducerConfig } from './md-files.interface';
 
 export const mdFilesAction = {
   showReadme: createAction(

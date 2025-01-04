@@ -1,11 +1,11 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { Meta, Title } from '@angular/platform-browser';
 import { AppServiceWorkerService } from '@app/client-service-worker';
 import { chatbotAction } from '@app/client-store-chatbot';
 import { routerAction } from '@app/client-store-router';
 import { sidebarAction } from '@app/client-store-sidebar';
-import { IThemeStateModel, themeSelector } from '@app/client-store-theme';
+import { type IThemeStateModel, themeSelector } from '@app/client-store-theme';
 import { testingEnvironment } from '@app/client-testing-unit';
 import { WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngrx/store';

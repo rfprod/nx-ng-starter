@@ -1,7 +1,7 @@
 import { actionType } from '@app/client-util-ngrx';
 import { createAction, props } from '@ngrx/store';
 
-import { diagnosticsReducerConfig, IDiagnosticsStateModel, TDiagnosticData } from './diagnostics.interface';
+import { diagnosticsReducerConfig, type IDiagnosticsStateModel, type TDiagnosticData } from './diagnostics.interface';
 
 export const diagnosticsAction = {
   connect: createAction(actionType(diagnosticsReducerConfig.featureName, 'connect')),

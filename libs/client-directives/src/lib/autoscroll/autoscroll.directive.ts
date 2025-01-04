@@ -7,6 +7,7 @@ const defaultVerticalOffsetLock = 10;
  */
 @Directive({
   selector: '[appAutoscroll]',
+  standalone: false,
 })
 export class AppAutoscrollDirective implements AfterContentInit, OnDestroy {
   @Input() public verticalOffsetLock = defaultVerticalOffsetLock;

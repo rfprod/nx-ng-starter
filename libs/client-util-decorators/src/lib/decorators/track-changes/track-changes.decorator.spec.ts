@@ -9,6 +9,7 @@ const controlSuffix = 'Changes';
   selector: 'app-track-changes-testing-component',
   template: `<div></div>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 class AppTrackChangesTestingComponent implements OnChanges {
   @Input() public input?: string;

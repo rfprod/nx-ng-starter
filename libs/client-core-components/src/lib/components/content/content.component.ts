@@ -11,6 +11,7 @@ import { tap } from 'rxjs/operators';
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppContentComponent {
   private readonly destroyRef = inject(DestroyRef);

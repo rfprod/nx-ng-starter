@@ -1,4 +1,4 @@
-import { Provider } from '@nestjs/common';
+import type { Provider } from '@nestjs/common';
 
 import { initializeClassProperties } from '../utils/class.util';
 

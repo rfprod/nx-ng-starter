@@ -38,9 +38,9 @@ describe('AppFileUploadInputDto', () => {
       const conf = type.toConfig();
       expect(conf.name).toEqual('AppFileUploadInputDto');
 
-      const fields = (<typeof conf & { fields: Record<keyof AppFileUploadInputDto, GraphQLFieldConfig<AppTestResolver, AppMatcompModel>> }>(
-        conf
-      )).fields;
+      const fields = (
+        conf as typeof conf & { fields: Record<keyof AppFileUploadInputDto, GraphQLFieldConfig<AppTestResolver, AppMatcompModel>> }
+      ).fields;
       expect(fields.filename).toBeDefined();
       expect(fields.mimetype).toBeDefined();
       expect(fields.encoding).toBeDefined();

@@ -1,39 +1,37 @@
-import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { fakeAsync, TestBed, TestModuleMetadata, tick, waitForAsync } from '@angular/core/testing';
-import { catchError, Observable, of } from 'rxjs';
+import { HttpClient, HttpErrorResponse, provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { TestBed, type TestModuleMetadata } from '@angular/core/testing';
+import { catchError, lastValueFrom, Observable, of } from 'rxjs';
 import { throttleTime, timeout } from 'rxjs/operators';
 
 import { flushHttpRequests } from './http-controller.mock';
 
 describe('flushHttpRequests', () => {
   const testBedConfig: TestModuleMetadata = {
-    imports: [HttpClientTestingModule],
+    providers: [provideHttpClientTesting(), provideHttpClient()],
   };
 
   let http: HttpClient;
   let controller: HttpTestingController;
   let verifySpy: jest.SpyInstance;
 
-  beforeEach(waitForAsync(() => {
-    void TestBed.configureTestingModule(testBedConfig)
-      .compileComponents()
-      .then(() => {
-        http = TestBed.inject(HttpClient);
-        controller = TestBed.inject(HttpTestingController);
-        verifySpy = jest.spyOn(controller, 'verify');
+  beforeEach(async () => {
+    await TestBed.configureTestingModule(testBedConfig).compileComponents();
 
-        void http
-          .get('test-req')
-          .pipe(
-            catchError((error, caught) => {
-              expect(caught).toBeInstanceOf(Observable);
-              return of(null);
-            }),
-          )
-          .subscribe();
-      });
-  }));
+    http = TestBed.inject(HttpClient);
+    controller = TestBed.inject(HttpTestingController);
+    verifySpy = jest.spyOn(controller, 'verify');
+
+    void http
+      .get('test-req')
+      .pipe(
+        catchError((error, caught) => {
+          expect(caught).toBeInstanceOf(Observable);
+          return of(null);
+        }),
+      )
+      .subscribe();
+  });
 
   afterEach(() => {
     flushHttpRequests(controller, true);
@@ -53,52 +51,30 @@ describe('flushHttpRequests', () => {
     expect(verifySpy).toHaveBeenCalled();
   });
 
-  it('should call process actual http requests correctly', waitForAsync(() => {
-    void http
-      .get('test')
-      .pipe(
-        catchError((error, caught) => {
-          expect(caught).toBeInstanceOf(Observable);
-          return of(null);
-        }),
-      )
-      .subscribe();
+  it('should call process actual http requests correctly', async () => {
+    await lastValueFrom(http.get('test')).catch(error => {
+      expect(error).toBeInstanceOf(HttpErrorResponse);
+    });
     flushHttpRequests(controller, true);
     expect(verifySpy).toHaveBeenCalled();
-  }));
+  });
 
-  it('should produce error on demand', waitForAsync(() => {
-    void http
-      .get('test')
-      .pipe(
-        catchError((error, caught) => {
-          expect(caught).toBeInstanceOf(Observable);
-          return of(null);
-        }),
-      )
-      .subscribe();
+  it('should produce error on demand', async () => {
+    await lastValueFrom(http.get('test')).catch(error => {
+      expect(error).toBeInstanceOf(HttpErrorResponse);
+    });
     flushHttpRequests(controller, true, req => true, {}, true);
     expect(verifySpy).toHaveBeenCalled();
-  }));
+  });
 
-  it('should process calcelled requests correctly', fakeAsync(() => {
+  it('should process calcelled requests correctly', async () => {
     const timeoutValue = 100;
     const throttleValue = 500;
-    void http
-      .get('test')
-      .pipe(
-        timeout(timeoutValue),
-        throttleTime(throttleValue),
-        catchError((error, caught) => {
-          expect(caught).toBeInstanceOf(Observable);
-          return of(null);
-        }),
-      )
-      .subscribe();
-    const tickValue = 500;
-    tick(tickValue);
+
+    await lastValueFrom(http.get('test').pipe(timeout(timeoutValue), throttleTime(throttleValue))).catch(error => {
+      expect(error).toBeInstanceOf(HttpErrorResponse);
+    });
     flushHttpRequests(controller, true, req => true, {});
     expect(verifySpy).toHaveBeenCalled();
-    tick(tickValue);
-  }));
+  });
 });

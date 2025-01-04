@@ -1,5 +1,5 @@
-import { AppApiEnvironment } from '@app/backend-interfaces';
-import { ClientOptions, Transport } from '@nestjs/microservices';
+import type { AppApiEnvironment } from '@app/backend-interfaces';
+import { type ClientOptions, Transport } from '@nestjs/microservices';
 import { existsSync } from 'fs';
 import { join } from 'path';
 

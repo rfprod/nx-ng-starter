@@ -1,7 +1,7 @@
 import { actionType } from '@app/client-util-ngrx';
 import { createAction, props } from '@ngrx/store';
 
-import { httpApiReducerConfig, IPingResponse } from './http-api.interface';
+import { httpApiReducerConfig, type IPingResponse } from './http-api.interface';
 
 export const httpApiAction = {
   ping: createAction(actionType(httpApiReducerConfig.featureName, 'ping')),

@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 
-import { IUserState, IUserStateModel } from './user.interface';
+import type { IUserState, IUserStateModel } from './user.interface';
 
 const selectFeature = (state: IUserState) => state.user;
 

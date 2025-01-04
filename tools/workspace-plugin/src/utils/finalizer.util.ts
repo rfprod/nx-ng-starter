@@ -14,7 +14,7 @@ export const finalizeGenerator = async <T>(schema: T) => {
   logger.printInfo(void 0, tscConfigure.stdout);
   logger.printError(void 0, tscConfigure.stderr);
 
-  const lint = await promisify(exec)(`npx nx lint ${(<Record<string, string>>schema).name} --fix`);
+  const lint = await promisify(exec)(`npx nx lint ${(schema as Record<string, string>).name} --fix`);
   logger.printInfo(void 0, lint.stdout);
   logger.printError(void 0, lint.stderr);
 

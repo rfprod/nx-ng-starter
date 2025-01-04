@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 
-import { IDiagnosticsState, IDiagnosticsStateModel } from './diagnostics.interface';
+import type { IDiagnosticsState, IDiagnosticsStateModel } from './diagnostics.interface';
 
 const selectFeature = (state: IDiagnosticsState) => state.diagnostics;
 

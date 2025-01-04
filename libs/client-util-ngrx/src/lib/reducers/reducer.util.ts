@@ -1,5 +1,5 @@
-import { InjectionToken } from '@angular/core';
-import { ActionReducer } from '@ngrx/store';
+import type { InjectionToken } from '@angular/core';
+import type { ActionReducer } from '@ngrx/store';
 
 export interface IReducerConfig<T = string, M = Record<string, unknown>> {
   featureName: T;

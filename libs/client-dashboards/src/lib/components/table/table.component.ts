@@ -15,6 +15,7 @@ export interface IPeriodicElement {
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppTableComponent<T> extends AppTableBase<T> {
   @Input() public set config(config: IDashboardTableConfig<T>) {

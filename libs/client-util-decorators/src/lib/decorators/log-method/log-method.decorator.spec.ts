@@ -7,6 +7,7 @@ import { logMethod } from './log-method.decorator';
   selector: 'app-log-method-testing-component',
   template: `<div></div>`,
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 class AppLogMethodTestingComponent {
   @logMethod(true)

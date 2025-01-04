@@ -11,6 +11,7 @@ interface IInputChanges extends SimpleChanges {
 
 @Directive({
   selector: '[appFeatureFlag]',
+  standalone: false,
 })
 export class AppFeatureFlagDirective implements OnChanges {
   @Input() public appFeatureFlag?: string | null;

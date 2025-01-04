@@ -1,4 +1,4 @@
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 
 import { diagnosticsAction } from './diagnostics.actions';
 import { AppDiagnosticsEffects } from './diagnostics.effects';
-import { diagnosticsReducerConfig, IDiagnosticsState } from './diagnostics.interface';
+import { diagnosticsReducerConfig, type IDiagnosticsState } from './diagnostics.interface';
 import { diagnosticsReducerProvider } from './diagnostics.reducer';
 import { AppWebsocketApiService } from './services/websocket/websocket-api.service';
 

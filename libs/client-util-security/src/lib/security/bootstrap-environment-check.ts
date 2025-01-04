@@ -12,7 +12,7 @@ type TExtendedWindow = typeof window & {
 export const applicationIsFramed = (
   self = window.self,
   top = window.top,
-  cypress = (<TExtendedWindow>window).Cypress,
+  cypress = (window as TExtendedWindow).Cypress,
   origin = window.location.origin,
 ): boolean => {
   const framed = self !== top;

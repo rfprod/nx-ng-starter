@@ -2,7 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppMaterialModule } from '@app/client-material';
 import { anchorButton } from '@app/client-util';
-import { Args, Meta, StoryFn } from '@storybook/angular';
+import type { Args, Meta, StoryFn } from '@storybook/angular';
 
 import { AppToolbarComponent } from './toolbar.component';
 

@@ -1,10 +1,10 @@
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store, StoreModule } from '@ngrx/store';
 import { first, switchMap, tap } from 'rxjs';
 
 import { themeAction } from './theme.actions';
-import { IThemeState, IThemeStateModel, themeReducerConfig } from './theme.interface';
+import { type IThemeState, type IThemeStateModel, themeReducerConfig } from './theme.interface';
 import { AppThemeReducer, themeReducerProvider } from './theme.reducer';
 import { themeSelector } from './theme.selectors';
 

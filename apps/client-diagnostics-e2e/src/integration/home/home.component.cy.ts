@@ -1,4 +1,4 @@
-import { TCypressCustomCommands } from '@app/client-testing-e2e';
+import type { TCypressCustomCommands } from '@app/client-testing-e2e';
 
 declare const cy: TCypressCustomCommands;
 

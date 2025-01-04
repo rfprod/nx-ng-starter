@@ -1,9 +1,9 @@
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { DateAdapter } from '@angular/material/core';
 import { documentProvider, WINDOW } from '@app/client-util';
-import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { type LangChangeEvent, TranslateService } from '@ngx-translate/core';
 
-import { ISupportedLanguage, TLangCode, uiLanguages } from '../interfaces/ui-languages.interface';
+import { type ISupportedLanguage, type TLangCode, uiLanguages } from '../interfaces/ui-languages.interface';
 import { AppTranslateModule } from '../translate.module';
 import { AppTranslationUtilsService } from './app-translation-utils.service';
 

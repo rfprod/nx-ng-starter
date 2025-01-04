@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 
-import { IMdFilesState, IMdFilesStateModel } from './md-files.interface';
+import type { IMdFilesState, IMdFilesStateModel } from './md-files.interface';
 
 const selectMdFilesFeature = (state: IMdFilesState) => state.mdFiles;
 

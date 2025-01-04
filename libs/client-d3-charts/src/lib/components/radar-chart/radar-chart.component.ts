@@ -16,6 +16,7 @@ type TRadarOptions = Partial<IRadarChartOptions>;
   templateUrl: './radar-chart.component.html',
   styleUrls: ['./radar-chart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppRadarChartComponent extends AppD3ChartBase<TRadarData, TRadarOptions> implements AfterViewInit, OnChanges {
   /** The chart id. */

@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+import type * as d3 from 'd3';
 
 /** Force directed chart graph domain. */
 export interface IForceDirectedGraphDomain {
@@ -44,7 +44,7 @@ export interface IForceDirectedChartDataNode extends d3.SimulationNodeDatum {
 export interface IForceDirectedChartData {
   domains: IForceDirectedGraphDomain[];
   entities: IForceDirectedGraphEntity[];
-  links: d3.SimulationLinkDatum<IForceDirectedChartDataNode>[];
+  links: Array<d3.SimulationLinkDatum<IForceDirectedChartDataNode>>;
   nodes: IForceDirectedChartDataNode[];
 }
 

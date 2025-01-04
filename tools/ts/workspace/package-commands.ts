@@ -1,4 +1,4 @@
-import { getProjects, ProjectConfiguration, TargetConfiguration } from '@nx/devkit';
+import { getProjects, type ProjectConfiguration, type TargetConfiguration } from '@nx/devkit';
 import * as fs from 'fs';
 import { FsTree } from 'nx/src/generators/tree';
 import { argv } from 'yargs';
@@ -30,7 +30,7 @@ type TCli = 'yarn' | 'nx';
  * Prints arguments usage tip if no applicable arguments were used.
  */
 const printSearchArgumentTip = () => {
-  const search = (<{ [key: string]: string }>argv).search;
+  const search = (argv as { [key: string]: string }).search;
   if (typeof search !== 'string') {
     // eslint-disable-next-line no-console -- needed here to print output in the terminal
     console.log(
@@ -49,7 +49,7 @@ ${COLORS.CYAN}%s${COLORS.DEFAULT} ${COLORS.YELLOW}%s${COLORS.DEFAULT}\n`,
  * @param scripts package scripts object.
  */
 const printPackageScripts = (scripts: Record<string, string>, cli: TCli) => {
-  const search = (<{ [key: string]: string | undefined }>argv).search?.replace(/[^a-z-]/g, '');
+  const search = (argv as { [key: string]: string | undefined }).search?.replace(/[^a-z-]/g, '');
   const scriptKeys = typeof search !== 'string' ? Object.keys(scripts) : Object.keys(scripts).filter(key => new RegExp(search).test(key));
   for (const key of scriptKeys) {
     // eslint-disable-next-line no-console -- needed here to print output in the terminal
@@ -111,7 +111,7 @@ const printNxCommands = () => {
         .filter(key => targets[key].executor === 'nx:run-commands')
         .reduce((acc: Record<string, string>, key) => {
           const target: TargetConfiguration<{
-            commands?: { command: string }[];
+            commands?: Array<{ command: string }>;
           }> = targets[key];
           const commandsConfig = target.options?.commands;
           acc[`run ${projectName}:${key}`] = typeof commandsConfig !== 'undefined' ? commandsConfig[0].command : '';

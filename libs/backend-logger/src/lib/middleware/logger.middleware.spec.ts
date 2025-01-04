@@ -1,5 +1,5 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { Request, request, Response, response } from 'express';
+import { Test, type TestingModule } from '@nestjs/testing';
+import { type Request, request, type Response, response } from 'express';
 
 import { AppLoggerMiddleware } from './logger.middleware';
 

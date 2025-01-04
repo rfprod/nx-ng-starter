@@ -1,4 +1,3 @@
-import { FactoryProvider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { testingEnvironment } from '@app/client-testing-unit';
 import * as sentry from '@sentry/angular-ivy';
@@ -77,10 +76,6 @@ describe('AppSentryService', () => {
       const providers = sentryProviders(env);
       const expectedLength = 3;
       expect(providers.length).toEqual(expectedLength);
-      const initializerIndex = 2;
-      const initializer = <FactoryProvider>providers[initializerIndex];
-      const factory = initializer.useFactory();
-      expect(factory()).toEqual({});
     });
   });
 });

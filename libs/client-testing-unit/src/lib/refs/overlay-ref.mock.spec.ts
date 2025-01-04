@@ -1,7 +1,7 @@
 import { OverlayRef } from '@angular/cdk/overlay';
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 
-import { AppOverlayRefMock, overlayRefMockProvider } from './overlay-ref.mock';
+import { type AppOverlayRefMock, overlayRefMockProvider } from './overlay-ref.mock';
 
 describe('AppOverlayRefMock', () => {
   const testBedConfig: TestModuleMetadata = {

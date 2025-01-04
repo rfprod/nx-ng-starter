@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
   templateUrl: './diagnostics-home.component.html',
   styleUrls: ['./diagnostics-home.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppDiagnosticsHomeComponent {
   public readonly staticData$ = this.store.select(diagnosticsSelector.staticData);

@@ -1,5 +1,5 @@
 import { AppMatcomp, AppMatcompArgs, AppMatcompInput } from '@app/backend-interfaces';
-import { Test, TestingModule } from '@nestjs/testing';
+import { Test, type TestingModule } from '@nestjs/testing';
 
 import { AppMatcompService } from './matcomp.service';
 

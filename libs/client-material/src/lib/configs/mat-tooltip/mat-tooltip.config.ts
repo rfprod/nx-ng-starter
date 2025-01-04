@@ -1,4 +1,4 @@
-import { MatTooltipDefaultOptions } from '@angular/material/tooltip';
+import type { MatTooltipDefaultOptions } from '@angular/material/tooltip';
 
 export function matTooltipOptionsFactory(): MatTooltipDefaultOptions {
   return {

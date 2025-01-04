@@ -1,9 +1,9 @@
 import { OverlayConfig } from '@angular/cdk/overlay';
-import { TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatIconRegistry } from '@angular/material/icon';
-import { MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY, MatMomentDateAdapterOptions } from '@angular/material-moment-adapter';
-import { HAMMER_GESTURE_CONFIG, HammerGestureConfig } from '@angular/platform-browser';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY, type MatMomentDateAdapterOptions } from '@angular/material-moment-adapter';
+import { HAMMER_GESTURE_CONFIG, type HammerGestureConfig } from '@angular/platform-browser';
 
 import { AppHammerGestureConfig } from '../configs/hammerjs-gesture/hammerjs-gesture.config';
 import { CUSTOM_DATE_FORMATS, matMomentDateAdapterOptionsFactory } from '../configs/mat-date/mat-date.config';

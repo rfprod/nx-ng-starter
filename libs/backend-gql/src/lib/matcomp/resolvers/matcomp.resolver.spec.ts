@@ -1,6 +1,6 @@
 import { AppMatcomp, AppMatcompArgs, AppMatcompInputDto, AppMatcompSubscription } from '@app/backend-interfaces';
 import { NotFoundException } from '@nestjs/common';
-import { Test, TestingModule } from '@nestjs/testing';
+import { Test, type TestingModule } from '@nestjs/testing';
 import { PubSub } from 'graphql-subscriptions';
 
 import { AppMatcompService, MATCOMP_SERVICE_TOKEN } from '../services/matcomp.service';
@@ -79,8 +79,8 @@ describe('AppMatcompResolver', () => {
     expect(pubSubSpy).toHaveBeenCalledWith('matcompCreated', expectedSubscription);
   });
 
-  it('matcompCreated should call pubSub.asyncIterator with args', () => {
-    const pubSubSpy = jest.spyOn(pubSub, 'asyncIterator');
+  it('matcompCreated should call pubSub.asyncIterableIterator with args', () => {
+    const pubSubSpy = jest.spyOn(pubSub, 'asyncIterableIterator');
     resolver.matcompCreated();
     expect(pubSubSpy).toHaveBeenCalledWith('matcompCreated');
   });
@@ -113,8 +113,8 @@ describe('AppMatcompResolver', () => {
     });
   });
 
-  it('matcompRemoved should call pubSub.asyncIterator with args', () => {
-    const pubSubSpy = jest.spyOn(pubSub, 'asyncIterator');
+  it('matcompRemoved should call pubSub.asyncIterableIterator with args', () => {
+    const pubSubSpy = jest.spyOn(pubSub, 'asyncIterableIterator');
     resolver.matcompRemoved();
     expect(pubSubSpy).toHaveBeenCalledWith('matcompRemoved');
   });

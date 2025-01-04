@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 
-import { IThemeState, IThemeStateModel } from './theme.interface';
+import type { IThemeState, IThemeStateModel } from './theme.interface';
 
 const selectFeature = (state: IThemeState) => state.theme;
 

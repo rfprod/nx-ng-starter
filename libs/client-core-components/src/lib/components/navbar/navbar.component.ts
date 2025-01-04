@@ -7,6 +7,7 @@ import { IRouterButton, routerButton } from '@app/client-util';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppNavbarComponent {
   @Input() public appName: string | null = null;

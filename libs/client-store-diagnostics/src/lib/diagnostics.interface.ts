@@ -1,7 +1,7 @@
 import { InjectionToken } from '@angular/core';
-import { IReducerConfig } from '@app/client-util-ngrx';
-import { ActionReducer } from '@ngrx/store';
-import { WebSocketSubjectConfig } from 'rxjs/webSocket';
+import type { IReducerConfig } from '@app/client-util-ngrx';
+import type { ActionReducer } from '@ngrx/store';
+import type { WebSocketSubjectConfig } from 'rxjs/webSocket';
 
 export interface IWebsocketRequestEvent {
   event: string;
@@ -17,7 +17,7 @@ export type TDiagnosticData = Record<string, string | number>;
 /** Diagnostics state model. */
 export interface IDiagnosticsStateModel {
   users: number;
-  events: IWebsocketResponseEvent<TDiagnosticData[]>[];
+  events: Array<IWebsocketResponseEvent<TDiagnosticData[]>>;
   staticData: TDiagnosticData[];
   dynamicData: TDiagnosticData[];
 }

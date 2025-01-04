@@ -1,4 +1,4 @@
-import { Provider } from '@angular/core';
+import type { Provider } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { EN, EN_DICTIONARY } from '../dictionaries/en';

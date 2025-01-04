@@ -1,4 +1,4 @@
-import { MetaReducer } from '@ngrx/store';
+import type { MetaReducer } from '@ngrx/store';
 
 import { storeLogger } from './logger.reducer';
 

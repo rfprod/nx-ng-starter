@@ -1,5 +1,5 @@
-import { DebugElement } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import type { DebugElement } from '@angular/core';
+import { type ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AppTestingComponent } from '@app/client-testing-unit';
 import { timer } from 'rxjs';

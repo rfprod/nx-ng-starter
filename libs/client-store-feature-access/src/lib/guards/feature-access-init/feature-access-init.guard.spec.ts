@@ -15,7 +15,7 @@ describe('AppFeatureAccessInitGuard', () => {
     });
     guard = TestBed.inject(AppFeatureAccessInitGuard);
     store = TestBed.inject(Store);
-    storeDispatchSpy = jest.spyOn(store, 'dispatch').mockImplementation(() => void 0);
+    storeDispatchSpy = jest.spyOn(store, 'dispatch');
   });
 
   it('should be created', () => {

@@ -1,7 +1,7 @@
 import { signal } from '@angular/core';
-import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
-import { AppElizaService, IChatMessage } from '@app/client-util-eliza';
+import { AppElizaService, type IChatMessage } from '@app/client-util-eliza';
 
 import { AppChatbotRootComponent } from './chatbot-root.component';
 

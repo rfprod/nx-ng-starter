@@ -1,18 +1,16 @@
-import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angular/core/testing';
+import { provideRouter, Router } from '@angular/router';
 import { AppSidebarStoreModule, sidebarAction } from '@app/client-store-sidebar';
 import { AppTestingComponent, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store } from '@ngrx/store';
-import { of } from 'rxjs';
 
 import { AppContentComponent } from './content.component';
 
 describe('AppContentComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [
-      AppSidebarStoreModule.forRoot(),
-      RouterTestingModule.withRoutes([
+    imports: [AppSidebarStoreModule.forRoot()],
+    providers: [
+      provideRouter([
         {
           path: '',
           component: AppTestingComponent,
@@ -37,7 +35,7 @@ describe('AppContentComponent', () => {
     component = fixture.debugElement.componentInstance;
     store = TestBed.inject(Store);
     storeSpy = {
-      dispatch: jest.spyOn(store, 'dispatch').mockImplementation((action: unknown) => of(null)),
+      dispatch: jest.spyOn(store, 'dispatch').mockImplementation((action: unknown) => ({ destroy: () => void 0 })),
     };
     router = TestBed.inject(Router);
     fixture.detectChanges();

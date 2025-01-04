@@ -1,8 +1,8 @@
-import { ExecutorContext, getProjects, logger } from '@nx/devkit';
+import { type ExecutorContext, getProjects, logger } from '@nx/devkit';
 import { execFileSync } from 'child_process';
 import { FsTree } from 'nx/src/generators/tree';
 
-import { IExecutorOptions } from './schema';
+import type { IExecutorOptions } from './schema';
 import { findFiles } from './utils/find-html-files.util';
 
 /**

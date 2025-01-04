@@ -79,7 +79,14 @@ export class AppGrpcController implements OnModuleInit {
     const onComplete = () => {
       entitySubject.complete();
     };
-    void data$.subscribe(onNext, null, onComplete);
+    void data$.subscribe({
+      next(value) {
+        return onNext(value);
+      },
+      complete() {
+        return onComplete();
+      },
+    });
 
     return entitySubject.asObservable();
   }

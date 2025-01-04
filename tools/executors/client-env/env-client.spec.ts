@@ -2,15 +2,15 @@ jest.mock('@nx/devkit');
 jest.mock('fs/promises');
 jest.mock('dotenv');
 
-import { ExecutorContext, logger } from '@nx/devkit';
+import { type ExecutorContext, logger } from '@nx/devkit';
 import dotenv from 'dotenv';
-import { Abortable } from 'events';
-import { Mode, ObjectEncodingOptions, OpenMode, PathLike, StatOptions, Stats } from 'fs';
+import type { Abortable } from 'events';
+import type { Mode, ObjectEncodingOptions, OpenMode, PathLike, StatOptions, Stats } from 'fs';
 import * as fsPromises from 'fs/promises';
-import { Stream } from 'stream';
+import type { Stream } from 'stream';
 
 import { AppClientEnvConfig } from './env-client';
-import { IExecutorOptions, TSupportedApp } from './schema';
+import type { IExecutorOptions, TSupportedApp } from './schema';
 
 describe('AppClientEnvConfig', () => {
   const setup = (
@@ -20,12 +20,12 @@ describe('AppClientEnvConfig', () => {
     mockStat?: boolean,
     mockwriteFile?: boolean,
   ) => {
-    const accessMock = <jest.Mock>fsPromises.access;
+    const accessMock = fsPromises.access as jest.Mock;
     if (mockAccess === true) {
       accessMock.mockImplementation((path: PathLike, mode?: number) => new Promise<void>(resolve => resolve()));
     }
 
-    const readFileMock = <jest.Mock>fsPromises.readFile;
+    const readFileMock = fsPromises.readFile as jest.Mock;
     if (mockReadFile === true) {
       readFileMock.mockImplementation(
         (
@@ -40,7 +40,7 @@ describe('AppClientEnvConfig', () => {
       );
     }
 
-    const statMock = <jest.Mock>fsPromises.stat;
+    const statMock = fsPromises.stat as jest.Mock;
     if (mockStat === true) {
       statMock.mockImplementation(
         (
@@ -81,7 +81,7 @@ describe('AppClientEnvConfig', () => {
       );
     }
 
-    const writeFileMock = <jest.Mock>fsPromises.writeFile;
+    const writeFileMock = fsPromises.writeFile as jest.Mock;
     if (mockwriteFile === true) {
       writeFileMock.mockImplementation(
         (
@@ -107,9 +107,14 @@ describe('AppClientEnvConfig', () => {
       cwd: process.cwd(),
       isVerbose: false,
       root: '/root',
-      workspace: {
+      projectsConfigurations: {
         version: 1,
         projects: {},
+      },
+      nxJsonConfiguration: {},
+      projectGraph: {
+        nodes: {},
+        dependencies: {},
       },
       configurationName: '',
       projectName: app,
@@ -135,7 +140,7 @@ describe('AppClientEnvConfig', () => {
       try {
         await executor.execute();
       } catch (e) {
-        expect((<Error>e).message).toEqual(`The application is not supported.\nSupported apps: ${executor.supportedApps.join(' ')}`);
+        expect((e as Error).message).toEqual(`The application is not supported.\nSupported apps: ${executor.supportedApps.join(' ')}`);
       }
 
       expect(dotenvSpy).toHaveBeenCalledTimes(1);
@@ -167,7 +172,7 @@ describe('AppClientEnvConfig', () => {
       try {
         await executor.execute();
       } catch (e) {
-        expect((<Error>e).message).toEqual(error.message);
+        expect((e as Error).message).toEqual(error.message);
       }
 
       expect(dotenvSpy).toHaveBeenCalledTimes(1);
@@ -188,7 +193,7 @@ describe('AppClientEnvConfig', () => {
       try {
         await executor.execute();
       } catch (e) {
-        expect((<Error>e).message).toEqual(`Unable to write the environment configuration file:\n${error.message}`);
+        expect((e as Error).message).toEqual(`Unable to write the environment configuration file:\n${error.message}`);
       }
 
       expect(dotenvSpy).toHaveBeenCalledTimes(1);
@@ -216,7 +221,7 @@ describe('AppClientEnvConfig', () => {
       try {
         await executor.execute();
       } catch (e) {
-        expect((<Error>e).message).toEqual(`Unable to stat environment file:\n${error.message}`);
+        expect((e as Error).message).toEqual(`Unable to stat environment file:\n${error.message}`);
       }
 
       expect(dotenvSpy).toHaveBeenCalledTimes(1);
@@ -255,7 +260,7 @@ describe('AppClientEnvConfig', () => {
       try {
         await executor.execute();
       } catch (e) {
-        expect((<Error>e).message).toEqual(`Unable to write environment file:\n${error.message}`);
+        expect((e as Error).message).toEqual(`Unable to write environment file:\n${error.message}`);
       }
 
       expect(dotenvSpy).toHaveBeenCalledTimes(1);

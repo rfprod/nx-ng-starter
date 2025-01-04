@@ -12,6 +12,7 @@ import { DOCUMENTATION_ENVIRONMENT, IDocumentationEnvironment } from '../../inte
   templateUrl: './root.component.html',
   styleUrls: ['./root.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppDocRootComponent implements OnInit, AfterContentInit {
   private readonly destroyRef = inject(DestroyRef);

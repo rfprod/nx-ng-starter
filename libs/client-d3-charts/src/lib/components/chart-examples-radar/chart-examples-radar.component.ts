@@ -10,11 +10,12 @@ import { IRadarChartDataNode, IRadarChartOptions } from '../../interfaces/radar-
   templateUrl: './chart-examples-radar.component.html',
   styleUrls: ['./chart-examples-radar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppChartExamplesRadaraComponent {
   /** The chart data. */
   private get chartData() {
-    return <IRadarChartDataNode[][]>[
+    return [
       [
         { axis: 'one', value: 1, unit: 'x' },
         { axis: 'two', value: 2, unit: 'x' },
@@ -37,14 +38,14 @@ export class AppChartExamplesRadaraComponent {
         { axis: 'eight', value: 2, unit: 'y' },
         { axis: 'nine (long labels are wrapped)', value: 1, unit: 'y' },
       ],
-    ];
+    ] as IRadarChartDataNode[][];
   }
 
   /** The chart options. */
   private get chartOptions() {
-    return <Partial<IRadarChartOptions>>{
+    return {
       chartTitle: 'Example radar chart',
-    };
+    } as Partial<IRadarChartOptions>;
   }
 
   /** The breakpoint observer stream. */

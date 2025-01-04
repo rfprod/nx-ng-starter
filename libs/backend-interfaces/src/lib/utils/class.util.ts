@@ -5,8 +5,8 @@
  */
 export const initializeClassProperties = <T = Record<string, unknown>>(self: T, input?: T) => {
   if (typeof input !== 'undefined') {
-    const typedSelf = <Record<string, unknown>>self;
-    const typedInput = <Record<string, unknown>>input;
+    const typedSelf = self as Record<string, unknown>;
+    const typedInput = input as Record<string, unknown>;
     const keys = Object.keys(typedInput);
     for (const key of keys) {
       const inputValue = typedInput[key];

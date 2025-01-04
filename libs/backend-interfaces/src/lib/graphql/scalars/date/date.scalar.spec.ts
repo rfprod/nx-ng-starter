@@ -44,7 +44,7 @@ describe('AppDateScalar', () => {
     if (typeof type !== 'undefined') {
       const conf = type.toConfig();
       expect(conf.name).toEqual('Date');
-      const fields = <typeof conf & AppDateScalar>conf;
+      const fields = conf as typeof conf & AppDateScalar;
       expect(fields.description).toBeDefined();
       expect(fields.parseLiteral).toBeDefined();
       expect(fields.parseValue).toBeDefined();

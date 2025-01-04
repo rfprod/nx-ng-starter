@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { firstValueFrom } from 'rxjs';
 
-import { IPieChartOptions } from '../../interfaces/pie-chart.interface';
+import type { IPieChartOptions } from '../../interfaces/pie-chart.interface';
 import { AppChartExamplesPieComponent } from './chart-examples-pie.component';
 
 describe('AppChartExamplesPieComponent', () => {
@@ -26,13 +26,13 @@ describe('AppChartExamplesPieComponent', () => {
   it('the chart options should have expected structure', async () => {
     const config = await firstValueFrom(component.chartConfig$);
     expect(config.options).toEqual({
-      first: <Partial<IPieChartOptions>>{
+      first: {
         chartTitle: 'Example pie chart 1',
-      },
-      second: <Partial<IPieChartOptions>>{
+      } as Partial<IPieChartOptions>,
+      second: {
         chartTitle: 'Example pie chart 2',
         innerRadius: 75,
-      },
+      } as Partial<IPieChartOptions>,
     });
   });
 });

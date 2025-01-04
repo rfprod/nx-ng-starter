@@ -1,8 +1,7 @@
-import { HttpHandler, HttpRequest } from '@angular/common/http';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { type HttpHandler, HttpRequest, provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
-import { NavigationBehaviorOptions, Router, UrlTree } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { type NavigationBehaviorOptions, provideRouter, Router, type UrlTree } from '@angular/router';
 import { NEVER, of, tap } from 'rxjs';
 
 import { NAVIGATOR } from '../providers/navigator.provider';
@@ -16,13 +15,15 @@ describe('AppPwaOfflineInterceptor', () => {
   const configureTestBed = (navigatorMock = { onLine: true }) => {
     beforeEach(async () => {
       await TestBed.configureTestingModule({
-        imports: [HttpClientTestingModule, RouterTestingModule],
         providers: [
           AppPwaOfflineInterceptor,
           {
             provide: NAVIGATOR,
             useValue: navigatorMock,
           },
+          provideHttpClientTesting(),
+          provideHttpClient(),
+          provideRouter([]),
         ],
       }).compileComponents();
 

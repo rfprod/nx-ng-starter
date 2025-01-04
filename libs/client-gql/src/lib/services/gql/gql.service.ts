@@ -43,7 +43,7 @@ export class AppGqlService {
     return this.getApolloClientOptions(name).pipe(
       switchMap(options => {
         const newClient = new ApolloClient(options);
-        const client = <ApolloClient<NormalizedCacheObject> | undefined>this.apollo.use(name).client;
+        const client = this.apollo.use(name).client as ApolloClient<NormalizedCacheObject> | undefined;
         return this.clearClient(client).pipe(
           tap(() => {
             this.apollo.use(name).client = newClient;

@@ -1,4 +1,4 @@
-import { Test, TestingModule } from '@nestjs/testing';
+import { Test, type TestingModule } from '@nestjs/testing';
 
 import { API_ENV, apiAppEnvProvider, AppApiEnvironment } from './api-environment';
 

@@ -1,6 +1,6 @@
-import { ContextType, ExecutionContext, Type } from '@nestjs/common';
-import { HttpArgumentsHost, RpcArgumentsHost, WsArgumentsHost } from '@nestjs/common/interfaces';
-import { Test, TestingModule } from '@nestjs/testing';
+import type { ContextType, ExecutionContext, Type } from '@nestjs/common';
+import type { HttpArgumentsHost, RpcArgumentsHost, WsArgumentsHost } from '@nestjs/common/interfaces';
+import { Test, type TestingModule } from '@nestjs/testing';
 
 import { AppMatcompGuard } from './matcomp.guard';
 
@@ -23,7 +23,7 @@ describe('AppMatcompGuard', () => {
     const context: ExecutionContext = {
       getClass: <T>() =>
         function (...args: unknown[]) {
-          return <T>{};
+          return {} as T;
         } as unknown as Type<T>,
       getHandler: () =>
         function () {
@@ -41,7 +41,7 @@ describe('AppMatcompGuard', () => {
         throw new Error('Function not implemented.');
       },
       getType: function <TypeContext extends string = ContextType>(): TypeContext {
-        return <TypeContext>'type';
+        return 'type' as TypeContext;
       },
     };
     expect(guard.canActivate(context)).toEqual(true);

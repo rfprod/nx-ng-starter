@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { AppDirectivesModule } from '@app/client-directives';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 

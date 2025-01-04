@@ -151,7 +151,7 @@ export class AppHttpHandlersService {
 
     graphQLErrors?.map(({ message, extensions }) => {
       console.error('Apollo linkHandler [GraphQL error]: ', message);
-      const code = <string>extensions?.code;
+      const code = extensions?.code as string;
       const result = `[GraphQL error ${code}]: ${message}`;
       errorMessage += result;
     });
@@ -162,7 +162,7 @@ export class AppHttpHandlersService {
       if (networkError instanceof HttpErrorResponse) {
         errorMessage += (networkError.error as { detail: string }).detail;
       } else {
-        const code = (<(ServerParseError & ServerError) | null>networkError)?.statusCode;
+        const code = (networkError as (ServerParseError & ServerError) | null)?.statusCode;
         const result = `[Network error ${code}]: ${networkError?.message}`;
         errorMessage += result;
       }

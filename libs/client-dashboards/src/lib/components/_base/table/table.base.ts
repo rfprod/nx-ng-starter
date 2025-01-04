@@ -1,6 +1,6 @@
 import { signal } from '@angular/core';
 
-import { IDashboardTableConfig } from '../../../interfaces/table-config.interface';
+import type { IDashboardTableConfig } from '../../../interfaces/table-config.interface';
 
 /** Base class for table components. */
 export abstract class AppTableBase<T> {

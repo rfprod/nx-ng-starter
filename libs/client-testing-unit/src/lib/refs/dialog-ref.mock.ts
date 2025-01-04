@@ -9,7 +9,7 @@ export interface IAppDialogRefMockCloseEvent {
 
 @Injectable()
 export class AppDialogRefMock {
-  private readonly afterClosedSubject: Subject<IAppDialogRefMockCloseEvent> = new Subject();
+  private readonly afterClosedSubject = new Subject<IAppDialogRefMockCloseEvent>();
 
   public close(event: IAppDialogRefMockCloseEvent = { action: 'close', data: {} }): boolean {
     this.afterClosedSubject.next(event);

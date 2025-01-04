@@ -10,6 +10,7 @@ import { AppFullScreenDirective } from './full-screen.directive';
 @Component({
   selector: 'app-testing-component',
   template: '<span appFullScreen #fullScreen="fullScreen">dummy component</span>',
+  standalone: false,
 })
 class AppTestingComponent {}
 

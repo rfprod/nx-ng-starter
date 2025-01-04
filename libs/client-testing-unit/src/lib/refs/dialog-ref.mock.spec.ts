@@ -1,7 +1,7 @@
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material/dialog';
 
-import { AppDialogRefMock, dialogRefMockProvider } from './dialog-ref.mock';
+import { type AppDialogRefMock, dialogRefMockProvider } from './dialog-ref.mock';
 
 describe('AppDialogRefMock', () => {
   const testBedConfig: TestModuleMetadata = {

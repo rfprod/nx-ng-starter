@@ -1,12 +1,12 @@
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import { ApolloLink } from '@apollo/client/core';
-import { AppHttpHandlersService, TGqlClient } from '@app/client-store-http-progress';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { ApolloLink, InMemoryCache } from '@apollo/client/core';
+import { AppHttpHandlersService, type TGqlClient } from '@app/client-store-http-progress';
 import { AppUserStoreModule } from '@app/client-store-user';
 import { getTestBedConfig } from '@app/client-testing-unit';
-import { Apollo, ApolloBase, ApolloModule } from 'apollo-angular';
-import { DocumentNode } from 'graphql';
+import { Apollo, type ApolloBase, provideApollo } from 'apollo-angular';
+import type { DocumentNode } from 'graphql';
 import { cold, getTestScheduler } from 'jasmine-marbles';
-import { lastValueFrom, Observable, of, tap } from 'rxjs';
+import { lastValueFrom, type Observable, of, tap } from 'rxjs';
 
 import { matcompMutations } from '../../graphql/matcomp/matcomp.mutations';
 import { matcompQueries } from '../../graphql/matcomp/matcomp.queries';
@@ -16,8 +16,9 @@ type TTestSuccessMethodParams = [node: DocumentNode, name?: TGqlClient, variable
 
 describe('AppClientGqlService', () => {
   const testBedConfig: TestModuleMetadata = getTestBedConfig({
-    imports: [ApolloModule, AppUserStoreModule.forRoot()],
+    imports: [AppUserStoreModule.forRoot()],
     providers: [
+      provideApollo(() => ({ cache: new InMemoryCache() })),
       AppGqlService,
       {
         provide: AppHttpHandlersService,
@@ -87,7 +88,7 @@ describe('AppClientGqlService', () => {
       });
 
       it('should return proper value after graphQL service mutate call', () => {
-        const params: TTestSuccessMethodParams = [<DocumentNode>{}];
+        const params: TTestSuccessMethodParams = [{} as DocumentNode];
         testSuccessMethod(pipeResponseSpy, 'query', params);
       });
 
@@ -122,7 +123,7 @@ describe('AppClientGqlService', () => {
       });
 
       it('should return proper value after shared graphQL service mutate call', () => {
-        const params: TTestSuccessMethodParams = [<DocumentNode>{}];
+        const params: TTestSuccessMethodParams = [{} as DocumentNode];
         testSuccessMethod(pipeResponseSpy, 'mutate', params);
       });
 

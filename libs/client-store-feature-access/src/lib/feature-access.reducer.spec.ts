@@ -1,10 +1,10 @@
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store, StoreModule } from '@ngrx/store';
 import { first, tap } from 'rxjs';
 
 import { featureAccessAction } from './feature-access.actions';
-import { featureAccessReducerConfig, IFeatureAccessState, IFeatureAccessStateModel } from './feature-access.interface';
+import { featureAccessReducerConfig, type IFeatureAccessState, type IFeatureAccessStateModel } from './feature-access.interface';
 import { AppFeatureAccessReducer, featureAccessReducerProvider } from './feature-access.reducer';
 import { featureAccessSelector } from './feature-access.selectors';
 

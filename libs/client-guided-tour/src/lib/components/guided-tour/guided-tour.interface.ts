@@ -1,4 +1,4 @@
-import { InjectionToken, Provider } from '@angular/core';
+import { InjectionToken, type Provider } from '@angular/core';
 
 /** Guided tour step data. */
 export interface IGuidedTourData {
@@ -16,12 +16,12 @@ export const GUIDED_TOUR_DATA = new InjectionToken<IGuidedTourData>('GUIDED_TOUR
 /** Guided tour step data provider. */
 export const guidedTourDataProvider: Provider = {
   provide: GUIDED_TOUR_DATA,
-  useValue: <IGuidedTourData>{
+  useValue: {
     index: 0,
     title: '',
     subtitle: '',
     description: '',
     first: true,
     last: true,
-  },
+  } as IGuidedTourData,
 };

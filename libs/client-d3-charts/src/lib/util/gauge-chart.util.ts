@@ -1,13 +1,13 @@
-import { ElementRef } from '@angular/core';
+import type { ElementRef } from '@angular/core';
 import * as d3 from 'd3';
 
-import { IGaugeChartDataNode, IGaugeChartOptions } from '../interfaces/gauge-chart.interface';
+import type { IGaugeChartDataNode, IGaugeChartOptions } from '../interfaces/gauge-chart.interface';
 import { generateConfiguration } from './configuration.util';
 
 /**
  * The gauge chart default configuration.
  */
-export const defaultGaugeChartConfig: IGaugeChartOptions = Object.freeze(<IGaugeChartOptions>{
+export const defaultGaugeChartConfig: IGaugeChartOptions = Object.freeze({
   chartTitle: '',
   width: 600,
   height: 600,
@@ -29,7 +29,7 @@ export const defaultGaugeChartConfig: IGaugeChartOptions = Object.freeze(<IGauge
   padRad: 0.01,
   labelFontSize: 12,
   valueFontSize: 18,
-});
+} as IGaugeChartOptions);
 
 /**
  * Creates a container for the gauge chart.

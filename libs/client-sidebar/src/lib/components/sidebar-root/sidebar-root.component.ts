@@ -10,6 +10,7 @@ import { map } from 'rxjs';
   templateUrl: './sidebar-root.component.html',
   styleUrls: ['./sidebar-root.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppSidebarRootComponent {
   public readonly loading$ = this.store.select(httpProgressSelector.sidebar).pipe(map(state => state.loading));

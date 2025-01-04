@@ -10,6 +10,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './pwa-offline.component.html',
   styleUrls: ['./pwa-offline.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppPwaOfflineComponent {
   constructor(public readonly location: Location) {}

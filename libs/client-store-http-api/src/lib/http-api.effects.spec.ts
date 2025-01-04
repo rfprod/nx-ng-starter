@@ -1,4 +1,4 @@
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
@@ -6,7 +6,7 @@ import { first, of, tap } from 'rxjs';
 
 import { httpApiAction } from './http-api.actions';
 import { AppHttpApiEffects } from './http-api.effects';
-import { httpApiReducerConfig, IHttpApiState, IPingResponse } from './http-api.interface';
+import { httpApiReducerConfig, type IHttpApiState, type IPingResponse } from './http-api.interface';
 import { httpApiReducerProvider } from './http-api.reducer';
 import { httpApiSelector } from './http-api.selectors';
 import { AppHttpApiService } from './services/http-api/http-api.service';
@@ -22,7 +22,7 @@ describe('AppHttpApiEffects', () => {
       {
         provide: AppHttpApiService,
         useValue: {
-          ping: () => of(<IPingResponse>{ message: 'test' }),
+          ping: () => of({ message: 'test' } as IPingResponse),
         },
       },
     ],

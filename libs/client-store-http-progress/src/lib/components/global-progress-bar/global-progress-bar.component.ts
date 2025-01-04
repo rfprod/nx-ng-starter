@@ -6,6 +6,7 @@ import { MatProgressBar } from '@angular/material/progress-bar';
   templateUrl: './global-progress-bar.component.html',
   styleUrls: ['./global-progress-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppGlobalProgressBarComponent implements AfterViewInit {
   @ViewChild(MatProgressBar) public progressBar?: MatProgressBar;

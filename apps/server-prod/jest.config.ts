@@ -1,4 +1,4 @@
-import { Config } from '@jest/types';
+import type { Config } from '@jest/types';
 
 const config: Config.InitialOptions = {
   coverageDirectory: '../../coverage/apps/server-prod',

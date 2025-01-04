@@ -1,6 +1,6 @@
-import { TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata } from '@angular/core/testing';
 
-import { IWebClientAppEnvironment } from '../interfaces/environment.interface';
+import type { IWebClientAppEnvironment } from '../interfaces/environment.interface';
 import { environmentProvider, WEB_CLIENT_APP_ENV } from './environment.provider';
 
 describe('environmentProvider', () => {

@@ -23,6 +23,7 @@ interface IParsedRoute {
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppSearchComponent implements AfterViewInit {
   @HostBinding('class.density-3') public density = true;
@@ -137,7 +138,7 @@ export class AppSearchComponent implements AfterViewInit {
     let children: Routes = route.children ?? [];
     if (children.length === 0 && typeof route.loadChildren !== 'undefined') {
       await route.loadChildren();
-      const loadedRoutes = (<Route & Record<'_loadedRoutes' | string, Route['children']>>route)._loadedRoutes;
+      const loadedRoutes = (route as Route & Record<'_loadedRoutes' | string, Route['children']>)._loadedRoutes;
       children = typeof loadedRoutes !== 'undefined' ? [...loadedRoutes] : children;
     }
     const resolvers = children.flatMap(async child => {

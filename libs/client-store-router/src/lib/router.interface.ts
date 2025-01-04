@@ -1,5 +1,5 @@
-import { ActivatedRouteSnapshot, Data, Params } from '@angular/router';
-import { RouterReducerState } from '@ngrx/router-store';
+import type { ActivatedRouteSnapshot, Data, Params } from '@angular/router';
+import type { RouterReducerState } from '@ngrx/router-store';
 
 /** Router state model. */
 export interface IRouterStateModel {

@@ -1,5 +1,5 @@
 import { initializeClassProperties } from '../utils/class.util';
-import { IUser } from './user.interface';
+import type { IUser } from './user.interface';
 import { AppUserName } from './user-name';
 
 export class AppUser implements IUser {

@@ -1,7 +1,7 @@
-import { RouterStateSnapshot } from '@angular/router';
-import { RouterStateSerializer } from '@ngrx/router-store';
+import type { RouterStateSnapshot } from '@angular/router';
+import type { RouterStateSerializer } from '@ngrx/router-store';
 
-import { IRouterStateModel } from './router.interface';
+import type { IRouterStateModel } from './router.interface';
 
 /**
  * Returns an object with a partial router state instead of the full router state snapshot.

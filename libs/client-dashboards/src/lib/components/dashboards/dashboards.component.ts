@@ -14,6 +14,7 @@ interface ITableData {
   templateUrl: './dashboards.component.html',
   styleUrls: ['./dashboards.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppDashboardsComponent {
   public readonly tableConfig: IDashboardTableConfig<ITableData> = {

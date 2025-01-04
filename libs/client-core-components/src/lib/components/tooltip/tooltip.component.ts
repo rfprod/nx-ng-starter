@@ -7,6 +7,7 @@ import { ITooltipData, TOOLTIP_DATA } from './tooltip.interface';
   templateUrl: './tooltip.component.html',
   styleUrls: ['./tooltip.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppTooltipComponent {
   constructor(@Inject(TOOLTIP_DATA) public readonly data: ITooltipData) {}

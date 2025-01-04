@@ -1,4 +1,4 @@
-import { SimpleChange } from '@angular/core';
+import type { SimpleChange } from '@angular/core';
 
 /** Chart component input changes. */
 export interface IChartInputChanges {

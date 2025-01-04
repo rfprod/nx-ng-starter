@@ -6,7 +6,7 @@ import { AppDocMarkdownReferenceComponent } from './componenets/md-reference/md-
 /**
  * The documentation application routes.
  */
-const routes: Array<Route> = [
+const routes: Route[] = [
   {
     path: '',
     component: AppDocMarkdownReferenceComponent,

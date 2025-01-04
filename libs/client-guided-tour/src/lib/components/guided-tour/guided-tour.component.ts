@@ -9,6 +9,7 @@ import { GUIDED_TOUR_DATA, IGuidedTourData } from './guided-tour.interface';
   templateUrl: './guided-tour.component.html',
   styleUrls: ['./guided-tour.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppGuidedTourComponent {
   /**

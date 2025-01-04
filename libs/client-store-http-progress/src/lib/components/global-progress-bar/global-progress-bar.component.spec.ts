@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { AppGlobalProgressBarComponent } from './global-progress-bar.component';

@@ -1,14 +1,14 @@
-import { getProjects, joinPathFragments, logger, ProjectConfiguration, Tree } from '@nx/devkit';
+import { getProjects, joinPathFragments, logger, type ProjectConfiguration, type Tree } from '@nx/devkit';
 import { execFileSync } from 'child_process';
 import { directoryExists } from 'nx/src/utils/fileutils';
 
-import { ISchematicContext } from './schema.interface';
+import type { ISchematicContext } from './schema.interface';
 import { findFiles } from './utils/find-files.util';
 
-type TModuleBoundaryConfig = {
+type TModuleBoundaryConfig = Array<{
   sourceTag: string;
   onlyDependOnLibsWithTags: string[];
-}[];
+}>;
 
 interface IAuditException {
   file: string;
@@ -53,7 +53,7 @@ const depConstraints = (configDir: string, verbose?: boolean) => {
       config.constraints = [...constraints];
       return config;
     } catch (e) {
-      throw <Error>e;
+      throw e as Error;
     }
   });
   return configs;
@@ -69,10 +69,10 @@ const depConstraints = (configDir: string, verbose?: boolean) => {
 const projectSourceRoots = (
   tree: Tree,
   entries: ProjectConfiguration[],
-  constraints: {
+  constraints: Array<{
     file: string;
     constraints: TModuleBoundaryConfig;
-  }[],
+  }>,
   verbose?: boolean,
 ) => {
   const scopes = constraints.reduce((accumulator: string[], item) => {
@@ -86,7 +86,7 @@ const projectSourceRoots = (
   }
 
   const projects = scopes.reduce((accumulator: ProjectConfiguration[], scope) => {
-    const result = entries.find(entry => entry.tags?.includes(scope));
+    const result = entries.find(entry => (entry.tags ?? []).includes(scope));
     if (typeof result !== 'undefined') {
       accumulator.push(result);
     }
@@ -112,7 +112,7 @@ const projectSourceRoots = (
 
   const sourceRoots = projects
     .map(project => ({
-      scope: project.tags?.find(tag => tag.includes('scope')) ?? <string>'',
+      scope: project.tags?.find(tag => tag.includes('scope')) ?? ('' as string),
       sourceRoot: project.sourceRoot ?? '',
     }))
     .filter(record => record.scope !== '' && record.sourceRoot !== '')

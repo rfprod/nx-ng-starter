@@ -1,5 +1,5 @@
 import { Injector } from '@angular/core';
-import { TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { newTestBedMetadata } from '@app/client-testing-unit';
 import { WINDOW, windowProvider } from '@app/client-util';
 

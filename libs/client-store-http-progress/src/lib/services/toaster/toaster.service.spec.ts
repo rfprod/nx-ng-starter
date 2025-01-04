@@ -1,6 +1,6 @@
-import { TestBed, TestModuleMetadata } from '@angular/core/testing';
-import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
-import { TToastType } from '@app/client-util';
+import { TestBed, type TestModuleMetadata } from '@angular/core/testing';
+import { MatSnackBar, type MatSnackBarRef, type SimpleSnackBar } from '@angular/material/snack-bar';
+import type { TToastType } from '@app/client-util';
 
 import { AppToasterService, toasterServiceProvider } from './toaster.service';
 

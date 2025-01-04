@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, InjectionToken } from '@angular/core';
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 
 import { AppMocksCoreModule } from '../testing-unit.module';
 import { getTestBedConfig, newTestBedMetadata } from './test-bed-config.mock';
