@@ -2,7 +2,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { AppMaterialModule } from '@app/client-material';
 import { routerButton } from '@app/client-util';
-import { Args, Meta, StoryFn } from '@storybook/angular';
+import type { Args, Meta, StoryFn } from '@storybook/angular';
 import { of } from 'rxjs';
 
 import { AppNavigatorComponent } from '../navigator/navigator.component';

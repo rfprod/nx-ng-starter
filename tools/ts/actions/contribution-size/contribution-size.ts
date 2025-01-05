@@ -4,7 +4,7 @@ import { env } from 'process';
 
 import { logger } from '../../utils/logger';
 import { actors, defaultThresholds } from './contribution-size.config';
-import { IThresholdsConfig } from './contribution-size.interface';
+import type { IThresholdsConfig } from './contribution-size.interface';
 
 const ENV = {
   maxFiles: process.env.MAX_FILES ?? '0',
@@ -52,7 +52,7 @@ const getChangedFiles = () => {
       result = stdout.length > 0 ? parseInt(stdout, 10) : 0;
     }
   } catch (e) {
-    logger.printError(<Error>e, 'Error getting changed files count');
+    logger.printError(e as Error, 'Error getting changed files count');
   }
   return result;
 };
@@ -70,7 +70,7 @@ const getInsertions = () => {
       result = stdout.length > 0 ? parseInt(stdout, 10) : 0;
     }
   } catch (e) {
-    logger.printError(<Error>e, 'Error getting insertions count');
+    logger.printError(e as Error, 'Error getting insertions count');
   }
   return result;
 };
@@ -88,7 +88,7 @@ const getDeletions = () => {
       result = stdout.length > 0 ? parseInt(stdout, 10) : 0;
     }
   } catch (e) {
-    logger.printError(<Error>e, 'Error getting deletions count');
+    logger.printError(e as Error, 'Error getting deletions count');
   }
   return result;
 };

@@ -1,4 +1,4 @@
-import { ITestingCredentials } from '../interfaces/testing-credentials.interface';
+import type { ITestingCredentials } from '../interfaces/testing-credentials.interface';
 
 /**
  * Gets testing creadentials from fixture.

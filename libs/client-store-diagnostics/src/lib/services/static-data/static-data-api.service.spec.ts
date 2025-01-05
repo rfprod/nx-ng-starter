@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { AppHttpHandlersService } from '@app/client-store-http-progress';
 import { flushHttpRequests, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { lastValueFrom, of } from 'rxjs';
@@ -9,7 +9,6 @@ import { AppStaticDataService } from './static-data-api.service';
 
 describe('AppStaticDataService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [HttpClientTestingModule],
     providers: [
       AppStaticDataService,
       {
@@ -19,6 +18,8 @@ describe('AppStaticDataService', () => {
           pipeHttpResponse: () => of(null),
         },
       },
+      provideHttpClientTesting(),
+      provideHttpClient(),
     ],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);

@@ -1,16 +1,16 @@
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { HttpTestingController } from '@angular/common/http/testing';
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { ApolloLink, Operation, ServerError, ServerParseError } from '@apollo/client/core';
-import { NetworkError } from '@apollo/client/errors';
-import { ErrorResponse } from '@apollo/client/link/error';
+import { ApolloLink, InMemoryCache, type Operation, type ServerError, type ServerParseError } from '@apollo/client/core';
+import type { NetworkError } from '@apollo/client/errors';
+import type { ErrorResponse } from '@apollo/client/link/error';
 import { flushHttpRequests, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { AppTranslateModule } from '@app/client-translate';
-import { HTTP_STATUS, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
+import { HTTP_STATUS, type IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngrx/store';
-import { Apollo, ApolloModule, gql } from 'apollo-angular';
-import { GraphQLError, GraphQLFormattedError } from 'graphql';
+import { Apollo, gql, provideApollo } from 'apollo-angular';
+import type { GraphQLError, GraphQLFormattedError } from 'graphql';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
 
@@ -21,8 +21,8 @@ import { AppHttpHandlersService } from './http-handlers.service';
 
 describe('AppHttpHandlersService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [ApolloModule, AppTranslateModule.forRoot(), AppHttpProgressStoreModule.forRoot()],
-    providers: [toasterServiceProvider],
+    imports: [AppTranslateModule.forRoot(), AppHttpProgressStoreModule.forRoot()],
+    providers: [toasterServiceProvider, provideApollo(() => ({ cache: new InMemoryCache() }))],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
@@ -106,7 +106,7 @@ describe('AppHttpHandlersService', () => {
 
   describe('pipeGqlResponse', () => {
     it('pipeGraphQlResponse should check error for 401 status', waitForAsync(() => {
-      const observable$ = <Observable<never>>of({ networkError: { status: HTTP_STATUS.BAD_REQUEST } });
+      const observable$ = of({ networkError: { status: HTTP_STATUS.BAD_REQUEST } }) as Observable<never>;
       void service
         .pipeGqlResponse(observable$)
         .pipe(
@@ -147,9 +147,9 @@ describe('AppHttpHandlersService', () => {
           }
         }
       `;
-      const operation = <Operation>{
+      const operation = {
         query,
-      };
+      } as Operation;
       const splitTest = service.gqlLinkSplitTest();
       const result = splitTest(operation);
       expect(result).toBeFalsy();
@@ -164,9 +164,9 @@ describe('AppHttpHandlersService', () => {
           }
         }
       `;
-      const operation = <Operation>{
+      const operation = {
         query,
-      };
+      } as Operation;
       const splitTest = service.gqlLinkSplitTest();
       const result = splitTest(operation);
       expect(result).toBeTruthy();
@@ -181,28 +181,28 @@ describe('AppHttpHandlersService', () => {
     });
 
     it('should process errors as expected: no errors', () => {
-      const errorRes = <ErrorResponse>{
+      const errorRes = {
         graphQLErrors: void 0,
         networkError: void 0,
-      };
+      } as ErrorResponse;
       service.gqlErrorLinkHandler(errorRes);
       expect(showToasterSpy).toHaveBeenCalledWith('Graphql request error', 'error');
     });
 
     it('should process errors as expected: graphQLErrors', () => {
-      const testErrorNoCode = <GraphQLError>{
+      const testErrorNoCode = {
         message: 'gql error 1',
-      };
-      const testError = <GraphQLError>{
+      } as GraphQLError;
+      const testError = {
         message: 'gql error 2',
-        extensions: <GraphQLError['extensions']>{
+        extensions: {
           code: '400',
-        },
-      };
-      const errorRes = <ErrorResponse>{
-        graphQLErrors: <ReadonlyArray<GraphQLFormattedError>>[testErrorNoCode, testError],
+        } as GraphQLError['extensions'],
+      } as GraphQLError;
+      const errorRes = {
+        graphQLErrors: [testErrorNoCode, testError] as readonly GraphQLFormattedError[],
         networkError: void 0,
-      };
+      } as ErrorResponse;
       service.gqlErrorLinkHandler(errorRes);
       const expectedMessage = `[GraphQL error ${testErrorNoCode.extensions?.code}]: ${testErrorNoCode.message}[GraphQL error ${testError.extensions.code}]: ${testError.message}`;
       expect(showToasterSpy).toHaveBeenCalledWith(expectedMessage, 'error');
@@ -213,7 +213,7 @@ describe('AppHttpHandlersService', () => {
         bodyText: '',
         message: '',
         name: '',
-        response: <Response>{
+        response: {
           body: null,
           bodyUsed: false,
           headers: {},
@@ -222,16 +222,16 @@ describe('AppHttpHandlersService', () => {
           statusText: 'err',
           type: 'error',
           url: 'https://test',
-        },
+        } as Response,
         result: {},
         statusCode: 400,
       };
-      const errorRes = <ErrorResponse>{
+      const errorRes = {
         graphQLErrors: void 0,
         networkError,
-      };
+      } as ErrorResponse;
       service.gqlErrorLinkHandler(errorRes);
-      const err = <(ServerParseError & ServerError) | null>networkError;
+      const err = networkError as (ServerParseError & ServerError) | null;
       const expectedMessage = `[Network error ${err?.statusCode}]: ${err?.message}`;
       expect(showToasterSpy).toHaveBeenCalledWith(expectedMessage, 'error');
     });
@@ -292,31 +292,31 @@ describe('AppHttpHandlersService', () => {
   it('gqlUriFunction should return expected URI function', () => {
     const uri = 'https://test';
     const uriFn = service.gqlUriFunction(uri);
-    const operation = <Operation>{
+    const operation = {
       operationName: 'test',
-    };
+    } as Operation;
     const result = uriFn(operation);
     expect(result).toEqual(`${uri}?operation=${operation.operationName}`);
   });
 
   describe('getErrorMessage', () => {
     it('should process an error as expected if the message property is present', () => {
-      const error = <HttpErrorResponse>{ message: 'test' };
+      const error = { message: 'test' } as HttpErrorResponse;
       expect(service.getErrorMessage(error)).toEqual(error.message);
     });
 
     it('should process an error as expected if the error property is present', () => {
-      const error = <HttpErrorResponse>{ error: 'test' };
+      const error = { error: 'test' } as HttpErrorResponse;
       expect(service.getErrorMessage(error)).toEqual(error.error);
     });
 
     it('should process an error as expected if the status property is present', () => {
-      const error = <HttpErrorResponse>{ status: 400, statusText: 'test' };
+      const error = { status: 400, statusText: 'test' } as HttpErrorResponse;
       expect(service.getErrorMessage(error)).toEqual(`${error.status} - ${error.statusText}`);
     });
 
     it('should process an error as expected if non of the expected properties are present', () => {
-      const error = <HttpErrorResponse>{};
+      const error = {} as HttpErrorResponse;
       expect(service.getErrorMessage(error)).toEqual('Server error');
     });
   });

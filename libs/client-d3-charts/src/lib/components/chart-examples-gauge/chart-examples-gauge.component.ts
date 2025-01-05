@@ -10,6 +10,7 @@ import { IGaugeChartDataNode, IGaugeChartOptions } from '../../interfaces/gauge-
   templateUrl: './chart-examples-gauge.component.html',
   styleUrls: ['./chart-examples-gauge.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppChartExamplesGaugeComponent {
   /** The chat values. */
@@ -31,16 +32,16 @@ export class AppChartExamplesGaugeComponent {
     } = {
       first: Array.from(Array(chunks.first).keys()).map(item => {
         const mod = 10;
-        return <IGaugeChartDataNode>{
+        return {
           key: 'value',
           y: (item + 1) * mod,
-        };
+        } as IGaugeChartDataNode;
       }),
       second: Array.from(Array(chunks.second).keys()).map(item => {
-        return <IGaugeChartDataNode>{
+        return {
           key: 'value',
           y: item + 1,
-        };
+        } as IGaugeChartDataNode;
       }),
     };
     return data;
@@ -56,25 +57,25 @@ export class AppChartExamplesGaugeComponent {
       third: Partial<IGaugeChartOptions>;
       fourth: Partial<IGaugeChartOptions>;
     } = {
-      first: <Partial<IGaugeChartOptions>>{
+      first: {
         chartTitle: 'Example gauge chart 1',
-      },
-      second: <Partial<IGaugeChartOptions>>{
+      } as Partial<IGaugeChartOptions>,
+      second: {
         chartTitle: 'Example gauge chart 2',
         showLabels: false,
-      },
-      third: <Partial<IGaugeChartOptions>>{
+      } as Partial<IGaugeChartOptions>,
+      third: {
         chartTitle: 'Example gauge chart 3',
         showLabels: false,
         showTooltips: false,
         defaultColor: 'red',
-      },
-      fourth: <Partial<IGaugeChartOptions>>{
+      } as Partial<IGaugeChartOptions>,
+      fourth: {
         chartTitle: 'Example gauge chart 2',
         showLabels: false,
         valueFontSize: 30,
         padRad: 0,
-      },
+      } as Partial<IGaugeChartOptions>,
     };
     return options;
   }

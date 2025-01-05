@@ -244,8 +244,17 @@ module.exports = {
         '@stylistic/comma-spacing': ['error', { before: false, after: true }],
         '@stylistic/lines-between-class-members': ['error', 'always', { exceptAfterOverload: true }],
         '@stylistic/quotes': ['error', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
+        '@typescript-eslint/adjacent-overload-signatures': 'error',
+        '@typescript-eslint/array-type': ['error', { default: 'array-simple' }],
         '@typescript-eslint/await-thenable': 'error',
         '@typescript-eslint/ban-ts-comment': 'error',
+        '@typescript-eslint/ban-tslint-comment': 'error',
+        '@typescript-eslint/consistent-generic-constructors': 'error',
+        '@typescript-eslint/consistent-type-assertions': 'error',
+        '@typescript-eslint/consistent-type-definitions': 'error',
+        '@typescript-eslint/consistent-type-exports': 'error',
+        '@typescript-eslint/consistent-type-imports': 'error',
+        '@typescript-eslint/no-deprecated': 'error',
         '@typescript-eslint/no-restricted-types': [
           'error',
           {
@@ -258,7 +267,6 @@ module.exports = {
             },
           },
         ],
-        '@typescript-eslint/consistent-type-definitions': 'error',
         '@typescript-eslint/default-param-last': ['error'],
         '@typescript-eslint/explicit-function-return-type': 'off', // keep off
         '@typescript-eslint/explicit-module-boundary-types': 'off', // keep off

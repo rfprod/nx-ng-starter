@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { firstValueFrom } from 'rxjs';
 
 import { AppChartExamplesLineComponent } from './chart-examples-line.component';

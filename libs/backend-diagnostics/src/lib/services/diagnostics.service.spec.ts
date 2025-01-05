@@ -1,5 +1,5 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ExecException } from 'child_process';
+import { Test, type TestingModule } from '@nestjs/testing';
+import type { ExecException } from 'child_process';
 import { firstValueFrom } from 'rxjs';
 
 import { AppDiagnosticsService, CHILD_PROCESS_EXEC } from './diagnostics.service';

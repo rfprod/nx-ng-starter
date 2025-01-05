@@ -1,8 +1,8 @@
-import { spawnSync, SpawnSyncOptionsWithStringEncoding, SpawnSyncReturns } from 'child_process';
+import { spawnSync, type SpawnSyncOptionsWithStringEncoding, type SpawnSyncReturns } from 'child_process';
 import * as fs from 'fs';
 import { env } from 'process';
 import readlineSync from 'readline-sync';
-import { Observable, Subscriber, timer } from 'rxjs';
+import { Observable, type Subscriber, timer } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 import { argv } from 'yargs';
 
@@ -372,14 +372,14 @@ const removeUnneededFiles = () => {
  * Reads input, and follows control flow.
  */
 function readInputAndRun(): void {
-  const check = (<{ [key: string]: boolean | undefined }>argv).check;
-  const cleanup = (<{ [key: string]: boolean | undefined }>argv).cleanup;
-  const migrate = (<{ [key: string]: string | undefined }>argv).migrate;
-  const bulkUserChoice = (<{ [key: string]: boolean | undefined }>argv).bulkUserChoice;
+  const check = (argv as { [key: string]: boolean | undefined }).check;
+  const cleanup = (argv as { [key: string]: boolean | undefined }).cleanup;
+  const migrate = (argv as { [key: string]: string | undefined }).migrate;
+  const bulkUserChoice = (argv as { [key: string]: boolean | undefined }).bulkUserChoice;
   if (cleanup === true) {
     removeUnneededFiles();
   } else if (check === true) {
-    const jsonUpgraded = (<{ [key: string]: boolean | undefined }>argv).jsonUpgraded;
+    const jsonUpgraded = (argv as { [key: string]: boolean | undefined }).jsonUpgraded;
     checkForUpdates(jsonUpgraded);
   } else if (migrate === 'update') {
     updateAndMigratePackages(bulkUserChoice);

@@ -1,10 +1,10 @@
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store, StoreModule } from '@ngrx/store';
 import { first, tap } from 'rxjs';
 
 import { userAction } from './user.actions';
-import { IUserState, IUserStateModel, userReducerConfig } from './user.interface';
+import { type IUserState, type IUserStateModel, userReducerConfig } from './user.interface';
 import { AppUserReducer, userReducerProvider } from './user.reducer';
 import { userSelector } from './user.selectors';
 

@@ -1,5 +1,5 @@
 import { initializeClassProperties } from '../../utils/class.util';
-import { AppMatcompInputDto } from './dto/new-matcomp-input.dto';
+import type { AppMatcompInputDto } from './dto/new-matcomp-input.dto';
 
 export class AppMatcompInput implements AppMatcompInputDto {
   public name = '';

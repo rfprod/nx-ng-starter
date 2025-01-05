@@ -1,11 +1,11 @@
-import { ElementRef } from '@angular/core';
+import type { ElementRef } from '@angular/core';
 import * as d3 from 'd3';
 
-import { ILineChartDataNode, ILineChartOptions, TLineChartData } from '../interfaces/line-chart.interface';
+import type { ILineChartDataNode, ILineChartOptions, TLineChartData } from '../interfaces/line-chart.interface';
 import { generateConfiguration } from './configuration.util';
 
 /** The line chart default configuration. */
-export const defaultLineChartConfig: ILineChartOptions = Object.freeze(<ILineChartOptions>{
+export const defaultLineChartConfig: ILineChartOptions = Object.freeze({
   chartTitle: '',
   width: 350,
   height: 350,
@@ -27,7 +27,7 @@ export const defaultLineChartConfig: ILineChartOptions = Object.freeze(<ILineCha
   dateFormat: 'default',
   labelTextWrapWidth: 20, // the number of pixels after which a label needs to be given a new line
   color: d3.scaleOrdinal(d3.schemeCategory10),
-});
+} as ILineChartOptions);
 
 /**
  * Creates a container for the line chart.

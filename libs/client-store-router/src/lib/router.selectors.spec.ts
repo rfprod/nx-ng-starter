@@ -1,19 +1,24 @@
-import { TestBed, TestModuleMetadata } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { TestBed, type TestModuleMetadata } from '@angular/core/testing';
+import { provideRouter, Router } from '@angular/router';
 import { AppTestingComponent, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { NavigationActionTiming, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { Store } from '@ngrx/store';
 import { first, firstValueFrom } from 'rxjs';
 
 import { AppRouteSerializer } from './route.serializer';
-import { IRouterState } from './router.interface';
+import type { IRouterState } from './router.interface';
 import { routerSelector } from './router.selectors';
 
 describe('routerSelector', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     imports: [
-      RouterTestingModule.withRoutes([
+      StoreRouterConnectingModule.forRoot({
+        serializer: AppRouteSerializer,
+        navigationActionTiming: NavigationActionTiming.PostActivation,
+      }),
+    ],
+    providers: [
+      provideRouter([
         {
           path: 'root',
           component: AppTestingComponent,
@@ -22,10 +27,6 @@ describe('routerSelector', () => {
           },
         },
       ]),
-      StoreRouterConnectingModule.forRoot({
-        serializer: AppRouteSerializer,
-        navigationActionTiming: NavigationActionTiming.PostActivation,
-      }),
     ],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);

@@ -1,12 +1,12 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 
 import { themeAction } from './theme.actions';
 import { AppThemeEffects } from './theme.effects';
-import { IThemeState, themeReducerConfig } from './theme.interface';
+import { type IThemeState, themeReducerConfig } from './theme.interface';
 import { themeReducerProvider } from './theme.reducer';
 
 describe('AppThemeEffects', () => {

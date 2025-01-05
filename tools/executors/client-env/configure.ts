@@ -1,8 +1,8 @@
-import { ExecutorContext } from '@nx/devkit';
+import type { ExecutorContext } from '@nx/devkit';
 
-import { AppBaseEnvConfig } from './env-base';
+import type { AppBaseEnvConfig } from './env-base';
 import { AppClientEnvConfig } from './env-client';
-import { IExecutorOptions } from './schema';
+import type { IExecutorOptions } from './schema';
 
 /**
  * Configure client-env executor.

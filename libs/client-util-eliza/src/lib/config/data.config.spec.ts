@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { IElizaData, IElizaKeywordRule } from '../interfaces/eliza.interface';
+import type { IElizaData, IElizaKeywordRule } from '../interfaces/eliza.interface';
 import { ELIZA_DATA, elizaData, elizaDataProvider } from './data.config';
 
 describe('elizaData', () => {

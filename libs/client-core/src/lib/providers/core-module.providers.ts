@@ -1,9 +1,9 @@
-import { Provider } from '@angular/core';
+import type { Provider } from '@angular/core';
 import {
   appBaseHrefProvider,
   documentProvider,
   environmentProvider,
-  IWebClientAppEnvironment,
+  type IWebClientAppEnvironment,
   pathLocationStrategyProvider,
   windowProvider,
 } from '@app/client-util';

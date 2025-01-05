@@ -15,6 +15,7 @@ type TForceOptions = Partial<IForceDirectedChartOptions>;
   templateUrl: './force-directed-chart.component.html',
   styleUrls: ['./force-directed-chart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppForceDirectedChartComponent extends AppD3ChartBase<TForceData, TForceOptions> implements AfterViewInit, OnChanges {
   /** The chart identifier. */

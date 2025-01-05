@@ -6,6 +6,7 @@ import { TDiagnosticData } from '@app/client-store-diagnostics';
   templateUrl: './diagnostics-home-page.component.html',
   styleUrls: ['./diagnostics-home-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppDiagnosticsHomePage {
   @Input() public users: number | null = null;

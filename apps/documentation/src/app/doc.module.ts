@@ -26,13 +26,13 @@ const markdownModuleConfig: MarkdownModuleConfig = {
   loader: HttpClient,
   markedOptions: {
     provide: MARKED_OPTIONS,
-    useValue: <MarkedOptions>{
+    useValue: {
       gfm: true,
       breaks: false,
       pedantic: false,
       smartLists: true,
       smartypants: false,
-    },
+    } as MarkedOptions,
   },
 };
 

@@ -1,15 +1,15 @@
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { flushHttpRequests, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
-import { Observable, of, tap } from 'rxjs';
+import { type Observable, of, tap } from 'rxjs';
 import { WebSocketSubject } from 'rxjs/webSocket';
 
-import { IWebsocketConfig, IWebsocketResponseEvent, WS_CONFIG } from '../../diagnostics.interface';
+import { type IWebsocketConfig, type IWebsocketResponseEvent, WS_CONFIG } from '../../diagnostics.interface';
 import { AppWebsocketApiService } from './websocket-api.service';
 
 describe('AppWebsocketApiService correct connection', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [HttpClientTestingModule],
     providers: [
       AppWebsocketApiService,
       {
@@ -18,6 +18,8 @@ describe('AppWebsocketApiService correct connection', () => {
           url: 'ws://localhost:8081/api/events',
         },
       },
+      provideHttpClientTesting(),
+      provideHttpClient(),
     ],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
@@ -80,7 +82,6 @@ describe('AppWebsocketApiService correct connection', () => {
 
 describe('AppWebsocketApiService incorrect connection', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [HttpClientTestingModule],
     providers: [
       AppWebsocketApiService,
       {
@@ -89,6 +90,8 @@ describe('AppWebsocketApiService incorrect connection', () => {
           url: '',
         },
       },
+      provideHttpClientTesting(),
+      provideHttpClient(),
     ],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);

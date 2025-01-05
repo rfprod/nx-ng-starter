@@ -15,6 +15,7 @@ type TPieOptions = Partial<IPieChartOptions>;
   templateUrl: './pie-chart.component.html',
   styleUrls: ['./pie-chart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppPieChartComponent extends AppD3ChartBase<TPieData, TPieOptions> implements AfterViewInit, OnChanges {
   /** The chart id. */

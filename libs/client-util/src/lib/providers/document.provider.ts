@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { Provider } from '@angular/core';
+import type { Provider } from '@angular/core';
 
 export function documentFactory() {
   return window.document;

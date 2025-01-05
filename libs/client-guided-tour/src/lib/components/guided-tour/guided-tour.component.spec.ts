@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { type ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AppGuidedTourComponent } from './guided-tour.component';
-import { GUIDED_TOUR_DATA, IGuidedTourData } from './guided-tour.interface';
+import { GUIDED_TOUR_DATA, type IGuidedTourData } from './guided-tour.interface';
 
 describe('AppGuidedTourComponent', () => {
   let component: AppGuidedTourComponent;
@@ -13,14 +13,14 @@ describe('AppGuidedTourComponent', () => {
       providers: [
         {
           provide: GUIDED_TOUR_DATA,
-          useValue: <IGuidedTourData>{
+          useValue: {
             index: 0,
             title: 'title',
             subtitle: 'subtitle',
             description: 'description',
             first: true,
             last: true,
-          },
+          } as IGuidedTourData,
         },
       ],
     }).compileComponents();

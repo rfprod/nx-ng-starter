@@ -1,10 +1,10 @@
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store, StoreModule } from '@ngrx/store';
 import { first, tap } from 'rxjs';
 
 import { diagnosticsAction } from './diagnostics.actions';
-import { diagnosticsReducerConfig, IDiagnosticsState, IDiagnosticsStateModel } from './diagnostics.interface';
+import { diagnosticsReducerConfig, type IDiagnosticsState, type IDiagnosticsStateModel } from './diagnostics.interface';
 import { AppDiagnosticsReducer, diagnosticsReducerProvider } from './diagnostics.reducer';
 import { diagnosticsSelector } from './diagnostics.selectors';
 

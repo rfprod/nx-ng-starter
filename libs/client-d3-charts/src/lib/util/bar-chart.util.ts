@@ -1,13 +1,13 @@
-import { ElementRef } from '@angular/core';
+import type { ElementRef } from '@angular/core';
 import * as d3 from 'd3';
 
-import { IBarChartDataNode, IBarChartOptions, TBarChartData } from '../interfaces/bar-chart.interface';
+import type { IBarChartDataNode, IBarChartOptions, TBarChartData } from '../interfaces/bar-chart.interface';
 import { generateConfiguration } from './configuration.util';
 
 /**
  * The bar chart default configuration.
  */
-export const defaultBarChartConfig: IBarChartOptions = Object.freeze(<IBarChartOptions>{
+export const defaultBarChartConfig: IBarChartOptions = Object.freeze({
   chartTitle: '',
   width: 350,
   height: 350,
@@ -25,7 +25,7 @@ export const defaultBarChartConfig: IBarChartOptions = Object.freeze(<IBarChartO
   displayAxisLabels: true,
   labelTextWrapWidth: 60, // the number of pixels after which a label needs to be given a new line
   color: d3.scaleOrdinal(d3.schemeCategory10),
-});
+} as IBarChartOptions);
 
 /**
  * Creates a container for the bar chart.

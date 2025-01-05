@@ -12,6 +12,7 @@ import { mdFilesSelector } from '../../modules/md-files/md-files.selectors';
   templateUrl: './md-reference.component.html',
   styleUrls: ['./md-reference.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppDocMarkdownReferenceComponent {
   /**

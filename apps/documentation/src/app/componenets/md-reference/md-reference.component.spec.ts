@@ -1,13 +1,14 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { AppMaterialModule } from '@app/client-material';
 import { StoreModule } from '@ngrx/store';
-import { MarkdownModule, MarkdownModuleConfig, MARKED_OPTIONS, MarkedOptions } from 'ngx-markdown';
+import { MarkdownModule, type MarkdownModuleConfig, MARKED_OPTIONS, type MarkedOptions } from 'ngx-markdown';
 
 import { testingProviders } from '../../../testing/testing-providers.mock';
-import { IMdFilesState, mdFilesReducerConfig } from '../../modules/md-files/md-files.interface';
+import { type IMdFilesState, mdFilesReducerConfig } from '../../modules/md-files/md-files.interface';
 import { mdFilesReducerProvider } from '../../modules/md-files/md-files.reducer';
 import { AppDocMarkdownReferenceComponent } from './md-reference.component';
 
@@ -15,28 +16,26 @@ describe('AppDocMarkdownReferenceComponent', () => {
   const markdownModuleConfig: MarkdownModuleConfig = {
     markedOptions: {
       provide: MARKED_OPTIONS,
-      useValue: <MarkedOptions>{
+      useValue: {
         gfm: true,
         breaks: false,
         pedantic: false,
         smartLists: true,
         smartypants: false,
-      },
+      } as MarkedOptions,
     },
   };
 
   const testBedConfig: TestModuleMetadata = {
     imports: [
       NoopAnimationsModule,
-      HttpClientTestingModule,
-      RouterTestingModule,
       AppMaterialModule.forRoot(),
       StoreModule.forRoot({}),
       StoreModule.forFeature<IMdFilesState>(mdFilesReducerConfig.featureName, mdFilesReducerConfig.token),
       MarkdownModule.forRoot(markdownModuleConfig),
     ],
     declarations: [AppDocMarkdownReferenceComponent],
-    providers: [...testingProviders, mdFilesReducerProvider],
+    providers: [...testingProviders, mdFilesReducerProvider, provideHttpClientTesting(), provideHttpClient(), provideRouter([])],
   };
 
   let fixture: ComponentFixture<AppDocMarkdownReferenceComponent>;

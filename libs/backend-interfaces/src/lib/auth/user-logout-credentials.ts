@@ -1,5 +1,5 @@
 import { initializeClassProperties } from '../utils/class.util';
-import { IUserLogoutCredentials } from './user.interface';
+import type { IUserLogoutCredentials } from './user.interface';
 
 export class AppUserLogoutCredentials implements IUserLogoutCredentials {
   public token = '';

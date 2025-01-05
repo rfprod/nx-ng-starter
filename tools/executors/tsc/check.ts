@@ -1,8 +1,8 @@
-import { ExecutorContext } from '@nx/devkit';
+import type { ExecutorContext } from '@nx/devkit';
 import { execFileSync } from 'child_process';
 import path from 'path';
 
-import { IExecutorOptions } from './schema';
+import type { IExecutorOptions } from './schema';
 
 export default async function check(options: IExecutorOptions, context: ExecutorContext): Promise<{ success: boolean }> {
   const projectName = context.projectName;

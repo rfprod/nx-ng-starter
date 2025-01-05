@@ -1,4 +1,4 @@
-import { ActionReducer } from '@ngrx/store';
+import type { ActionReducer } from '@ngrx/store';
 
 /**
  * Store logger.

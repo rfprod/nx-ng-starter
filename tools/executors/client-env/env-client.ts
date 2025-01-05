@@ -1,7 +1,7 @@
-import { ExecutorContext } from '@nx/devkit';
+import type { ExecutorContext } from '@nx/devkit';
 
 import { AppBaseEnvConfig } from './env-base';
-import { IExecutorOptions, TSupportedApp } from './schema';
+import type { IExecutorOptions, TSupportedApp } from './schema';
 
 /**
  * Environment configurator for applications:

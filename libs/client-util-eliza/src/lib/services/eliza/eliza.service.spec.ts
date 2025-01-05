@@ -4,8 +4,8 @@ import { elizaData, elizaDataProvider } from '../../config/data.config';
 import { elizaInitialConfig } from '../../config/eliza.config';
 import { elizaFinalDefault, elizaFinals } from '../../config/finals.config';
 import { elizaInitialDefault, elizaInitials } from '../../config/initials.config';
-import { IChatMessage } from '../../interfaces/chat.interface';
-import { IElizaConfig, IElizaData } from '../../interfaces/eliza.interface';
+import type { IChatMessage } from '../../interfaces/chat.interface';
+import type { IElizaConfig, IElizaData } from '../../interfaces/eliza.interface';
 import { AppElizaService } from './eliza.service';
 
 describe('AppElizaService', () => {
@@ -78,7 +78,7 @@ describe('AppElizaService', () => {
       try {
         service.setup({ ...elizaData, keywords: [] });
       } catch (e) {
-        expect((<Error>e).message).toEqual(noKeywordsError.message);
+        expect((e as Error).message).toEqual(noKeywordsError.message);
       }
     });
 
@@ -86,7 +86,7 @@ describe('AppElizaService', () => {
       try {
         service.setup({ ...elizaData, pres: [] });
       } catch (e) {
-        expect((<Error>e).message).toEqual(noPresError.message);
+        expect((e as Error).message).toEqual(noPresError.message);
       }
     });
 
@@ -94,7 +94,7 @@ describe('AppElizaService', () => {
       try {
         service.setup({ ...elizaData, posts: [] });
       } catch (e) {
-        expect((<Error>e).message).toEqual(noPostsError.message);
+        expect((e as Error).message).toEqual(noPostsError.message);
       }
     });
 
@@ -102,7 +102,7 @@ describe('AppElizaService', () => {
       try {
         service.reset();
       } catch (e) {
-        expect((<Error>e).message).toEqual(notInitializedError.message);
+        expect((e as Error).message).toEqual(notInitializedError.message);
       }
     });
 
@@ -110,7 +110,7 @@ describe('AppElizaService', () => {
       try {
         await service.getResponse('');
       } catch (e) {
-        expect((<Error>e).message).toEqual(notInitializedError.message);
+        expect((e as Error).message).toEqual(notInitializedError.message);
       }
     });
   });

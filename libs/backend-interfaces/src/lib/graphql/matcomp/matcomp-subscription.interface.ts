@@ -1,5 +1,5 @@
 import { initializeClassProperties } from '../../utils/class.util';
-import { AppMatcomp } from './matcomp.interface';
+import type { AppMatcomp } from './matcomp.interface';
 
 export class AppMatcompSubscription {
   public matcomp?: AppMatcomp;

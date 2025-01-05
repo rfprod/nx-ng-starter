@@ -1,6 +1,6 @@
-import { Router } from '@angular/router';
+import type { Router } from '@angular/router';
 
-export type TRouterCommands = { outlets: { [key: string]: string[] } }[];
+export type TRouterCommands = Array<{ outlets: { [key: string]: string[] } }>;
 
 export interface IRouterButton {
   routerLink: TRouterCommands;
@@ -18,7 +18,7 @@ export interface IRouterButton {
  * @returns router button object
  */
 export const routerButton = (title: string, icon: string, routeActive: Router['isActive'], routerLink: TRouterCommands) =>
-  <IRouterButton>{ title, icon, routeActive, routerLink };
+  ({ title, icon, routeActive, routerLink }) as IRouterButton;
 
 export interface IAnchorButton {
   href: string;
@@ -33,4 +33,4 @@ export interface IAnchorButton {
  * @param href link href
  * @returns anchor button object
  */
-export const anchorButton = (title: string, icon: string, href: string) => <IAnchorButton>{ title, icon, href };
+export const anchorButton = (title: string, icon: string, href: string) => ({ title, icon, href }) as IAnchorButton;

@@ -1,5 +1,5 @@
 import { LocationStrategy, PathLocationStrategy } from '@angular/common';
-import { TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata } from '@angular/core/testing';
 
 import { appBaseHrefProvider } from './app-base-href.provider';
 import { pathLocationStrategyProvider } from './location-strategy.provider';

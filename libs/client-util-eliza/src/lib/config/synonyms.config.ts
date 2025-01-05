@@ -1,4 +1,4 @@
-import { TElisaSynonyms } from '../interfaces/eliza.interface';
+import type { TElisaSynonyms } from '../interfaces/eliza.interface';
 
 /**
  * Synonyms mapping.

@@ -1,4 +1,4 @@
-import { TElisaInitials } from '../interfaces/eliza.interface';
+import type { TElisaInitials } from '../interfaces/eliza.interface';
 
 /**
  * Initial expressions.

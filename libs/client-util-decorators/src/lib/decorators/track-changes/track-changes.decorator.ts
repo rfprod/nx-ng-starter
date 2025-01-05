@@ -1,4 +1,4 @@
-import { OnChanges, SimpleChanges } from '@angular/core';
+import type { OnChanges, SimpleChanges } from '@angular/core';
 
 /**
  * The track changes decorator.
@@ -14,7 +14,7 @@ export function trackChanges<TargetClass = Record<string, unknown>, Value = unkn
 
     descriptor.value = function (changes: SimpleChanges) {
       const currentValue: Value | null = changes[key]?.currentValue ?? null;
-      const method: Method | undefined = (<Record<string, Method | undefined>>targetClass)[methodName];
+      const method: Method | undefined = (targetClass as Record<string, Method | undefined>)[methodName];
       if (typeof changes[key] !== 'undefined' && currentValue !== null && typeof method === 'function') {
         method.call(this, currentValue);
       }

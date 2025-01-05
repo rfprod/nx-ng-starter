@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { newTestBedMetadata } from '@app/client-testing-unit';

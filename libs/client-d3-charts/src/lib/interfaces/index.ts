@@ -1,7 +1,7 @@
-export * from './bar-chart.interface';
-export * from './chart-component.interface';
-export * from './force-directed-chart.interface';
-export * from './gauge-chart.interface';
-export * from './line-chart.interface';
-export * from './pie-chart.interface';
-export * from './radar-chart.interface';
+export type * from './bar-chart.interface';
+export type * from './chart-component.interface';
+export type * from './force-directed-chart.interface';
+export type * from './gauge-chart.interface';
+export type * from './line-chart.interface';
+export type * from './pie-chart.interface';
+export type * from './radar-chart.interface';

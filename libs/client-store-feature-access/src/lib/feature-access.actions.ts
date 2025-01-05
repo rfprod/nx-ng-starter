@@ -1,7 +1,7 @@
 import { actionType } from '@app/client-util-ngrx';
 import { createAction, props } from '@ngrx/store';
 
-import { featureAccessReducerConfig, IFeatureAccessStateModel } from './feature-access.interface';
+import { featureAccessReducerConfig, type IFeatureAccessStateModel } from './feature-access.interface';
 
 export const featureAccessAction = {
   initialize: createAction(actionType(featureAccessReducerConfig.featureName, 'init')),

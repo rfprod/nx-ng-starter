@@ -1,4 +1,4 @@
-import { ElementRef } from '@angular/core';
+import type { ElementRef } from '@angular/core';
 
 /** D3 chart base class. */
 export abstract class AppD3ChartBase<T, O> {

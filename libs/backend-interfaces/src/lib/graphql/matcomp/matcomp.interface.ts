@@ -1,7 +1,7 @@
 import { initializeClassProperties } from '../../utils/class.util';
-import { AppMatcompArgs } from './dto/matcomp.args';
-import { AppMatcompInput } from './matcomp-input.interface';
-import { AppMatcompModel } from './model/matcomp.model';
+import type { AppMatcompArgs } from './dto/matcomp.args';
+import type { AppMatcompInput } from './matcomp-input.interface';
+import type { AppMatcompModel } from './model/matcomp.model';
 
 /**
  * Matcomp query interface.

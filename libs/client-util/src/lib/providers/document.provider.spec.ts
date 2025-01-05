@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata } from '@angular/core/testing';
 
 import { documentProvider } from './document.provider';
 

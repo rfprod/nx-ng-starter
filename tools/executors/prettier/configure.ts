@@ -1,7 +1,7 @@
-import { ExecutorContext, getProjects, logger, ProjectConfiguration, updateProjectConfiguration } from '@nx/devkit';
+import { type ExecutorContext, getProjects, logger, type ProjectConfiguration, updateProjectConfiguration } from '@nx/devkit';
 import { flushChanges, FsTree } from 'nx/src/generators/tree';
 
-import { IExecutorOptions } from './schema';
+import type { IExecutorOptions } from './schema';
 
 export interface IProjectMetadata {
   name: string;
@@ -20,9 +20,14 @@ export class AppConfigurePrettierCheckExecutor {
     cwd: process.cwd(),
     isVerbose: false,
     root: '/root',
-    workspace: {
+    projectsConfigurations: {
       version: 2,
       projects: {},
+    },
+    nxJsonConfiguration: {},
+    projectGraph: {
+      nodes: {},
+      dependencies: {},
     },
   };
 

@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 
-import { IRouterState } from './router.interface';
+import type { IRouterState } from './router.interface';
 
 const selectFeature = (state: IRouterState) => state.router;
 

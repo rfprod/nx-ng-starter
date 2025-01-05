@@ -1,6 +1,5 @@
-import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
-import { Router } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angular/core/testing';
+import { provideRouter, Router } from '@angular/router';
 import { AppHttpProgressStoreModule } from '@app/client-store-http-progress';
 import { sidebarAction } from '@app/client-store-sidebar';
 import { AppTestingComponent, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
@@ -11,9 +10,9 @@ import { AppSidebarRootComponent } from './sidebar-root.component';
 describe('AppSidebarRootComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     declarations: [AppSidebarRootComponent],
-    imports: [
-      AppHttpProgressStoreModule.forRoot(),
-      RouterTestingModule.withRoutes([
+    imports: [AppHttpProgressStoreModule.forRoot()],
+    providers: [
+      provideRouter([
         {
           path: 'info',
           component: AppTestingComponent,

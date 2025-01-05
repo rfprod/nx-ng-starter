@@ -36,7 +36,7 @@ describe('AppMatcompModel', () => {
     if (typeof type !== 'undefined') {
       const conf = type.toConfig();
       expect(conf.name).toEqual('AppMatcompModel');
-      const fields = (<typeof conf & { fields: Record<keyof AppMatcompModel, GraphQLFieldConfig<AppTestResolver, AppMatcompModel>> }>conf)
+      const fields = (conf as typeof conf & { fields: Record<keyof AppMatcompModel, GraphQLFieldConfig<AppTestResolver, AppMatcompModel>> })
         .fields;
       expect(fields.id).toBeDefined();
       expect(fields.name).toBeDefined();

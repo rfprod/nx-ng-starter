@@ -1,4 +1,4 @@
-import { ProjectConfiguration, readProjectConfiguration, Tree, updateProjectConfiguration } from '@nx/devkit';
+import { type ProjectConfiguration, readProjectConfiguration, type Tree, updateProjectConfiguration } from '@nx/devkit';
 
 /**
  * Replaces linter executor in the project.json file, uses @angular-eslint.

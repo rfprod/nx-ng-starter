@@ -1,6 +1,6 @@
 import { AppMessage, AppUser, AppUserLoginCredentials, AppUserLogoutCredentials } from '@app/backend-interfaces';
 import { JwtModule } from '@nestjs/jwt';
-import { Test, TestingModule } from '@nestjs/testing';
+import { Test, type TestingModule } from '@nestjs/testing';
 
 import { authModuleProviders } from '../backend-auth.module';
 import { AppAuthService } from '../services/auth.service';

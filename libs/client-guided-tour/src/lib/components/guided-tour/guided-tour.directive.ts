@@ -11,6 +11,7 @@ import { GUIDED_TOUR_DATA, IGuidedTourData } from './guided-tour.interface';
 /** Guided tour directive. */
 @Directive({
   selector: '[appGuidedTour]',
+  standalone: false,
 })
 export class AppGuidedTourDirective implements AfterContentInit, OnDestroy {
   /** Guided tour step configuration. */

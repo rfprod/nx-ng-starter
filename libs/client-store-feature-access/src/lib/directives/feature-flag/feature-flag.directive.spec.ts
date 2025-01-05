@@ -15,6 +15,7 @@ import { AppFeatureFlagDirective } from './feature-flag.directive';
   template: `<ng-template [appFeatureFlag]="flag">
     <span>test</span>
   </ng-template> `,
+  standalone: false,
 })
 class AppFeatureFlagTestComponent {
   public flag?: string | null = null;
@@ -53,7 +54,7 @@ describe('AppFeatureFlagDirective', () => {
     store.dispatch(featureAccessAction.setEnvironment({ payload: { production: true } }));
     expect(component.flag).toBeNull();
     fixture.detectChanges();
-    const spans = (<HTMLElement>fixture.debugElement.nativeElement).getElementsByTagName('span');
+    const spans = (fixture.debugElement.nativeElement as HTMLElement).getElementsByTagName('span');
     expect(spans.length).toEqual(1);
   }));
 
@@ -62,7 +63,7 @@ describe('AppFeatureFlagDirective', () => {
     component.flag = void 0;
     expect(component.flag).toBeUndefined();
     fixture.detectChanges();
-    const spans = (<HTMLElement>fixture.debugElement.nativeElement).getElementsByTagName('span');
+    const spans = (fixture.debugElement.nativeElement as HTMLElement).getElementsByTagName('span');
     expect(spans.length).toEqual(0);
   }));
 
@@ -71,7 +72,7 @@ describe('AppFeatureFlagDirective', () => {
     component.flag = '';
     expect(component.flag).toEqual('');
     fixture.detectChanges();
-    const spans = (<HTMLElement>fixture.debugElement.nativeElement).getElementsByTagName('span');
+    const spans = (fixture.debugElement.nativeElement as HTMLElement).getElementsByTagName('span');
     expect(spans.length).toEqual(0);
   }));
 
@@ -80,7 +81,7 @@ describe('AppFeatureFlagDirective', () => {
     component.flag = 'test';
     expect(component.flag).toEqual('test');
     fixture.detectChanges();
-    const spans = (<HTMLElement>fixture.debugElement.nativeElement).getElementsByTagName('span');
+    const spans = (fixture.debugElement.nativeElement as HTMLElement).getElementsByTagName('span');
     expect(spans.length).toEqual(0);
   }));
 
@@ -89,7 +90,7 @@ describe('AppFeatureFlagDirective', () => {
     component.flag = 'test';
     expect(component.flag).toEqual('test');
     fixture.detectChanges();
-    const spans = (<HTMLElement>fixture.debugElement.nativeElement).getElementsByTagName('span');
+    const spans = (fixture.debugElement.nativeElement as HTMLElement).getElementsByTagName('span');
     expect(spans.length).toEqual(1);
   }));
 
@@ -99,7 +100,7 @@ describe('AppFeatureFlagDirective', () => {
     component.flag = 'test';
     expect(component.flag).toEqual('test');
     fixture.detectChanges();
-    const spans = (<HTMLElement>fixture.debugElement.nativeElement).getElementsByTagName('span');
+    const spans = (fixture.debugElement.nativeElement as HTMLElement).getElementsByTagName('span');
     expect(spans.length).toEqual(0);
   }));
 
@@ -108,7 +109,7 @@ describe('AppFeatureFlagDirective', () => {
     component.flag = 'test';
     expect(component.flag).toEqual('test');
     fixture.detectChanges();
-    const spans = (<HTMLElement>fixture.debugElement.nativeElement).getElementsByTagName('span');
+    const spans = (fixture.debugElement.nativeElement as HTMLElement).getElementsByTagName('span');
     expect(spans.length).toEqual(1);
   }));
 
@@ -118,7 +119,7 @@ describe('AppFeatureFlagDirective', () => {
     component.flag = 'test';
     expect(component.flag).toEqual('test');
     fixture.detectChanges();
-    const spans = (<HTMLElement>fixture.debugElement.nativeElement).getElementsByTagName('span');
+    const spans = (fixture.debugElement.nativeElement as HTMLElement).getElementsByTagName('span');
     expect(spans.length).toEqual(1);
   }));
 });

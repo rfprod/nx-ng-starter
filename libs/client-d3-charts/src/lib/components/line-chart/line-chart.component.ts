@@ -16,6 +16,7 @@ type TLineOptions = Partial<ILineChartOptions>;
   templateUrl: './line-chart.component.html',
   styleUrls: ['./line-chart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppLineChartComponent extends AppD3ChartBase<TLineData, TLineOptions> implements AfterViewInit, OnChanges {
   /** The chart id. */

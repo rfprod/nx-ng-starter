@@ -1,4 +1,4 @@
-import { IApiEnvironment } from '@app/backend-interfaces';
+import type { IApiEnvironment } from '@app/backend-interfaces';
 
 /**
  * Development environment variables.

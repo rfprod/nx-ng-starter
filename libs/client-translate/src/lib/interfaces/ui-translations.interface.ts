@@ -1,4 +1,4 @@
-import { IUiDictionary } from './ui-dictionary.interface';
+import type { IUiDictionary } from './ui-dictionary.interface';
 
 /**
  * Translations interface.

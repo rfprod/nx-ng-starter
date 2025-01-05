@@ -28,7 +28,7 @@ export class AppDiagnosticsEffects {
       map(({ payload }) => {
         const event = payload.events[0];
         return event.event === 'users'
-          ? diagnosticsAction.userDataSuccess({ payload: event.data.reduce((acc: number, item) => acc + <number>item.value, 0) })
+          ? diagnosticsAction.userDataSuccess({ payload: event.data.reduce((acc: number, item) => acc + (item.value as number), 0) })
           : diagnosticsAction.dynamicDataSuccess({ payload: event.data });
       }),
     ),

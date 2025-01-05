@@ -10,26 +10,27 @@ import { IBarChartOptions, TBarChartData } from '../../interfaces/bar-chart.inte
   templateUrl: './chart-examples-bar.component.html',
   styleUrls: ['./chart-examples-bar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppChartExamplesBarComponent {
   /** The chart data. */
   private get chartData() {
-    return <TBarChartData>[
+    return [
       { title: 'one', value: 1 },
       { title: 'two', value: 2 },
       { title: 'three', value: 3 },
       { title: 'four', value: 4 },
       { title: 'five', value: 5 },
-    ];
+    ] as TBarChartData;
   }
 
   /** The chart options. */
   private get chartOptions() {
-    return <Partial<IBarChartOptions>>{
+    return {
       chartTitle: 'Example bar chart',
       xAxisTitle: 'long x axis title',
       yAxisTitle: 'long y axis title',
-    };
+    } as Partial<IBarChartOptions>;
   }
 
   /** The breakpoint observer stream. */

@@ -1,4 +1,4 @@
-import { TSentryEnvironment } from './sentry.interface';
+import type { TSentryEnvironment } from './sentry.interface';
 
 /**
  * Application name type.

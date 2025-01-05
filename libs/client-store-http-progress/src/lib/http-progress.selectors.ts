@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 
-import { IHttpProgressState, IHttpProgressStateModel } from './http-progress.interface';
+import type { IHttpProgressState, IHttpProgressStateModel } from './http-progress.interface';
 
 const selectFeature = (state: IHttpProgressState) => state.httpProgress;
 

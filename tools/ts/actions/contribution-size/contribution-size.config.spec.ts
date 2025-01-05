@@ -1,16 +1,16 @@
 import { actors, defaultThresholds } from './contribution-size.config';
-import { IActorConfig, IThresholdsConfig } from './contribution-size.interface';
+import type { IActorConfig, IThresholdsConfig } from './contribution-size.interface';
 
 describe('contribution-size.config', () => {
   it('actors should have expected value', () => {
-    const expectation: Readonly<IActorConfig[]> = Object.freeze([
+    const expectation: readonly IActorConfig[] = Object.freeze([
       {
         actor: 'rfprod',
-        thresholds: <IThresholdsConfig>{
+        thresholds: {
           maxFiles: Number(Infinity),
           deletions: Number(Infinity),
           insertions: Number(Infinity),
-        },
+        } as IThresholdsConfig,
       },
     ]);
     expect(actors).toEqual(expectation);

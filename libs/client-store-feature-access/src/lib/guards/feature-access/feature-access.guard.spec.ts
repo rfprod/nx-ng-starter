@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { type ActivatedRouteSnapshot, provideRouter, type RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Store, StoreModule } from '@ngrx/store';
 import { firstValueFrom, of } from 'rxjs';
 
@@ -13,7 +12,8 @@ describe('AppFeatureAccessGuard', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, StoreModule.forRoot({})],
+      imports: [StoreModule.forRoot({})],
+      providers: [provideRouter([])],
     });
     guard = TestBed.inject(AppFeatureAccessGuard);
     store = TestBed.inject(Store);
@@ -25,7 +25,7 @@ describe('AppFeatureAccessGuard', () => {
 
   it('canActivate should select `enable` state from store and return an url tree', async () => {
     const storeSelectSpy = jest.spyOn(store, 'select').mockImplementation(() => of(false));
-    const route = <ActivatedRouteSnapshot>{};
+    const route = {} as ActivatedRouteSnapshot;
     const state = { root: { data: { feature: void 0 } } } as unknown as RouterStateSnapshot;
     const result = await firstValueFrom(guard.canActivate(route, state));
     expect(storeSelectSpy).toHaveBeenCalledWith(featureAccessSelector.enable);
@@ -34,7 +34,7 @@ describe('AppFeatureAccessGuard', () => {
 
   it('canActivate should select `enable` state from store and return a boolean', async () => {
     const storeSelectSpy = jest.spyOn(store, 'select').mockImplementation(() => of(true));
-    const route = <ActivatedRouteSnapshot>{};
+    const route = {} as ActivatedRouteSnapshot;
     const state = { root: { data: { feature: void 0 } } } as unknown as RouterStateSnapshot;
     const result = await firstValueFrom(guard.canActivate(route, state));
     expect(storeSelectSpy).toHaveBeenCalledWith(featureAccessSelector.enable);
@@ -43,7 +43,7 @@ describe('AppFeatureAccessGuard', () => {
 
   it('canActivate should select `enableFeature` state from store and return an url tree', async () => {
     const storeSelectSpy = jest.spyOn(store, 'select').mockImplementation(() => of(false));
-    const route = <ActivatedRouteSnapshot>{};
+    const route = {} as ActivatedRouteSnapshot;
     const state = { root: { data: { feature: 'test' } } } as unknown as RouterStateSnapshot;
     const result = await firstValueFrom(guard.canActivate(route, state));
     expect(storeSelectSpy).not.toHaveBeenCalledWith(featureAccessSelector.enable);
@@ -53,7 +53,7 @@ describe('AppFeatureAccessGuard', () => {
 
   it('canActivate should select `enableFeature` state from store and return a boolean', async () => {
     const storeSelectSpy = jest.spyOn(store, 'select').mockImplementation(() => of(true));
-    const route = <ActivatedRouteSnapshot>{};
+    const route = {} as ActivatedRouteSnapshot;
     const state = { root: { data: { feature: 'test' } } } as unknown as RouterStateSnapshot;
     const result = await firstValueFrom(guard.canActivate(route, state));
     expect(storeSelectSpy).not.toHaveBeenCalledWith(featureAccessSelector.enable);

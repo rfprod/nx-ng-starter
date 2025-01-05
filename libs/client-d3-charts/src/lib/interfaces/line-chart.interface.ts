@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+import type * as d3 from 'd3';
 
 /** The line chart data node. */
 export interface ILineChartDataNode {

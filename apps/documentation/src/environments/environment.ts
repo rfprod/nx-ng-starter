@@ -1,4 +1,4 @@
-import { IDocumentationEnvironment } from '../app/interfaces/environment.interface';
+import type { IDocumentationEnvironment } from '../app/interfaces/environment.interface';
 import { appEnvFactory } from './environment.config';
 
 /**

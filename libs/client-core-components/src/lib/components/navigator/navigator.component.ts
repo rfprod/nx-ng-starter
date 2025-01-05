@@ -5,6 +5,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Output,
   templateUrl: './navigator.component.html',
   styleUrls: ['./navigator.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppNavigatorComponent {
   public showSearch = signal(false);

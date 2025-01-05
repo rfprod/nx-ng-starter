@@ -4,7 +4,7 @@ import { spawnSync } from 'child_process';
 import { logger } from '../../utils/logger';
 import { changesConfig } from './changes.config';
 
-const patternKeys = <(keyof typeof changesConfig)[]>Object.keys(changesConfig);
+const patternKeys = Object.keys(changesConfig) as Array<keyof typeof changesConfig>;
 
 const env = {
   premerge: Boolean(process.env.PREMERGE),
@@ -44,7 +44,7 @@ const changes = patternKeys.reduce((accumulator: Record<string, string>, item) =
   return accumulator;
 }, {});
 
-const changesSummary: [{ data: string }, { data: string }][] = [];
+const changesSummary: Array<[{ data: string }, { data: string }]> = [];
 
 for (let i = 0, max = patternKeys.length; i < max; i += 1) {
   const patternKey = patternKeys[i];

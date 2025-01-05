@@ -5,7 +5,7 @@ import { logger } from '../../utils/logger';
 
 const codeownersConfig = `${process.cwd()}/.github/CODEOWNERS`;
 
-const codeownersFileContent = <NodeJS.ErrnoException | string>readFileSync(codeownersConfig, 'utf8');
+const codeownersFileContent = readFileSync(codeownersConfig, 'utf8') as NodeJS.ErrnoException | string;
 if (typeof codeownersFileContent !== 'string') {
   logger.printError(codeownersFileContent);
 
@@ -19,8 +19,8 @@ const getCodeowners = (config: string) => {
 
 const codeowners = getCodeowners(codeownersFileContent);
 
-const codeownersSummary: [{ data: string }, { data: string }][] = codeowners.reduce(
-  (accumulator: [{ data: string }, { data: string }][], item) => {
+const codeownersSummary: Array<[{ data: string }, { data: string }]> = codeowners.reduce(
+  (accumulator: Array<[{ data: string }, { data: string }]>, item) => {
     const changeSummary: [{ data: string }, { data: string }] = [{ data: item }, { data: `https://github.com/${item}` }];
     accumulator.unshift(changeSummary);
     return accumulator;

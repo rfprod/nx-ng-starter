@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
-import { IReducerConfig } from '@app/client-util-ngrx';
-import { ActionReducer } from '@ngrx/store';
+import type { IReducerConfig } from '@app/client-util-ngrx';
+import type { ActionReducer } from '@ngrx/store';
 
 /** Sidebar state model. */
 export interface ISidebarStateModel {

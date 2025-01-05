@@ -1,7 +1,7 @@
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-import { AppMatSnackbarRefMock, matSnackbarRefMockProvider } from './snackbar-ref.mock';
+import { type AppMatSnackbarRefMock, matSnackbarRefMockProvider } from './snackbar-ref.mock';
 
 describe('AppMatSnackbarRefMock', () => {
   const testBedConfig: TestModuleMetadata = {

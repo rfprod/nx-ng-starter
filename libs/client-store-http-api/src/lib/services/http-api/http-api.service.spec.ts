@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { AppHttpHandlersService } from '@app/client-store-http-progress';
 import { flushHttpRequests, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { lastValueFrom, of } from 'rxjs';
@@ -9,7 +9,6 @@ import { AppHttpApiService } from './http-api.service';
 
 describe('AppHttpApiService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [HttpClientTestingModule],
     providers: [
       AppHttpApiService,
       {
@@ -19,11 +18,13 @@ describe('AppHttpApiService', () => {
             const endpoints = {
               auth: 'http://auth',
             };
-            return endpoints[<keyof typeof endpoints>endpoint];
+            return endpoints[endpoint as keyof typeof endpoints];
           },
           pipeHttpResponse: () => of(null),
         },
       },
+      provideHttpClientTesting(),
+      provideHttpClient(),
     ],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);

@@ -1,4 +1,4 @@
-import { IWebClientAppEnvironment } from '@app/client-util';
+import type { IWebClientAppEnvironment } from '@app/client-util';
 
 import { appEnvFactory } from './environment.config';
 import { sentryEnvFactory } from './sentry.config';

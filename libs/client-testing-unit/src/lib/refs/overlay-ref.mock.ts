@@ -1,5 +1,5 @@
 import { OverlayRef } from '@angular/cdk/overlay';
-import { Provider } from '@angular/core';
+import type { Provider } from '@angular/core';
 
 export class AppOverlayRefMock {
   public hasAttached(): boolean {

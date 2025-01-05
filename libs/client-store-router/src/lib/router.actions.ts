@@ -1,5 +1,5 @@
-import { NavigationExtras } from '@angular/router';
-import { TRouterCommands } from '@app/client-util';
+import type { NavigationExtras } from '@angular/router';
+import type { TRouterCommands } from '@app/client-util';
 import { actionType } from '@app/client-util-ngrx';
 import { createAction, props } from '@ngrx/store';
 

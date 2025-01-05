@@ -1,4 +1,4 @@
-import { IWebClientAppEnvironment, TCapacitorPlatform } from '@app/client-util';
+import type { IWebClientAppEnvironment, TCapacitorPlatform } from '@app/client-util';
 import { Capacitor } from '@capacitor/core';
 
 import { appEnvFactory } from './environment.config';

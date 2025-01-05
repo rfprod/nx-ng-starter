@@ -1,5 +1,5 @@
-import { getJestProjects } from '@nx/jest';
-import { execFile, ExecFileException } from 'child_process';
+import { getJestProjectsAsync } from '@nx/jest';
+import { execFile, type ExecFileException } from 'child_process';
 import * as fs from 'fs';
 import path from 'path';
 
@@ -9,11 +9,6 @@ import { logger } from '../utils/logger';
  * Project root directory.
  */
 const root = process.cwd();
-
-/**
- * Jest projects array.
- */
-const jestProjects = <string[]>[...getJestProjects()];
 
 interface ICoverageSummary {
   total: number;
@@ -103,7 +98,7 @@ const projectsCount: Record<keyof ICoverageSummaryObj, number> = {
 };
 const projectsCountKeys = Object.keys(projectsCount) as Array<keyof ICoverageSummaryObj>;
 
-const parseSummary = (summary: ICoverageSummaryObj, summaryKeys: (keyof ICoverageSummaryObj)[]) => {
+const parseSummary = (summary: ICoverageSummaryObj, summaryKeys: Array<keyof ICoverageSummaryObj>) => {
   const zeroCoverage: Record<keyof ICoverageSummaryObj, number> = {
     branches: 0,
     functions: 0,
@@ -114,7 +109,7 @@ const parseSummary = (summary: ICoverageSummaryObj, summaryKeys: (keyof ICoverag
 
   for (const summaryKey of summaryKeys) {
     const summarySection = summary[summaryKey];
-    const summarySectionKeys = Object.keys(summarySection) as (keyof ICoverageSummary)[];
+    const summarySectionKeys = Object.keys(summarySection) as Array<keyof ICoverageSummary>;
     for (const summarySectionKey of summarySectionKeys) {
       const value = summarySection[summarySectionKey];
       const currentValue = totalCoverage[summaryKey][summarySectionKey];
@@ -148,33 +143,40 @@ const recalculateStats = () => {
   }
 };
 
-const readFileCallback = (error: NodeJS.ErrnoException | null, data?: Buffer) => {
-  if (error !== null) {
-    logger.printError(new Error('No coverage summary for the project'));
+void (async () => {
+  /**
+   * Jest projects array.
+   */
+  const jestProjects = await getJestProjectsAsync();
+
+  const readFileCallback = (error: NodeJS.ErrnoException | null, data?: Buffer) => {
+    if (error !== null) {
+      logger.printError(new Error('No coverage summary for the project'));
+    }
+
+    if (typeof data !== 'undefined') {
+      const json: ICoverageSummaryJson = JSON.parse(data.toString());
+
+      logger.printSuccess(`Total:\n ${JSON.stringify(json.total)}`);
+
+      const summary = json.total;
+      const summaryKeys = Object.keys(summary) as Array<keyof ICoverageSummaryObj>;
+
+      parseSummary(summary, summaryKeys);
+    }
+
+    readFiles += 1;
+
+    if (readFiles === jestProjects.length) {
+      recalculateStats();
+      writeAverageStats();
+    }
+  };
+
+  for (const project of jestProjects) {
+    const projectPath = project.replace(/<rootDir>/, '').replace('jest.config.ts', '');
+    const filePath = path.join(root, 'coverage', projectPath, 'coverage-summary.json');
+
+    fs.readFile(filePath, readFileCallback);
   }
-
-  if (typeof data !== 'undefined') {
-    const json: ICoverageSummaryJson = JSON.parse(data.toString());
-
-    logger.printSuccess(`Total:\n ${JSON.stringify(json.total)}`);
-
-    const summary = json.total;
-    const summaryKeys = Object.keys(summary) as (keyof ICoverageSummaryObj)[];
-
-    parseSummary(summary, summaryKeys);
-  }
-
-  readFiles += 1;
-
-  if (readFiles === jestProjects.length) {
-    recalculateStats();
-    writeAverageStats();
-  }
-};
-
-for (const project of jestProjects) {
-  const projectPath = project.replace(/<rootDir>/, '').replace('jest.config.ts', '');
-  const filePath = path.join(root, 'coverage', projectPath, 'coverage-summary.json');
-
-  fs.readFile(filePath, readFileCallback);
-}
+})();

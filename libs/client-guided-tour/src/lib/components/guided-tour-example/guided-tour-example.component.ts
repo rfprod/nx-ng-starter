@@ -11,6 +11,7 @@ import { IGuidedTourData } from '../guided-tour/guided-tour.interface';
   styleUrls: ['./guided-tour-example.component.scss'],
   providers: [AppGuidedTourService],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppGuidedTourExampleComponent implements AfterViewInit {
   /** Tour steps. */

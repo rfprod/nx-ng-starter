@@ -7,6 +7,7 @@ import { AppElizaService, IChatMessage } from '@app/client-util-eliza';
   templateUrl: './chatbot-widget-root.component.html',
   styleUrls: ['./chatbot-widget-root.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppChatbotWidgetRootComponent {
   public readonly messages$ = this.eliza.messages$;

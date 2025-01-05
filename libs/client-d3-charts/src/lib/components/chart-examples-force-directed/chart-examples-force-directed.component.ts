@@ -14,6 +14,7 @@ import {
   templateUrl: './chart-examples-force-directed.component.html',
   styleUrls: ['./chart-examples-force-directed.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppChartExamplesForceDirectedComponent {
   /** Sample chart data. */
@@ -70,9 +71,9 @@ export class AppChartExamplesForceDirectedComponent {
 
   /** The chart options. */
   private get chartOptions() {
-    return <Partial<IForceDirectedChartOptions>>{
+    return {
       chartTitle: 'Example force directed chart',
-    };
+    } as Partial<IForceDirectedChartOptions>;
   }
 
   /** the breakpoint observer stream. */

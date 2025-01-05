@@ -10,11 +10,12 @@ import { ILineChartOptions, TDateFormat, TLineChartData } from '../../interfaces
   templateUrl: './chart-examples-line.component.html',
   styleUrls: ['./chart-examples-line.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppChartExamplesLineComponent {
   /** The chart data. */
   private get chartData() {
-    return <TLineChartData[]>[
+    return [
       [
         { timestamp: this.randomTimestamp(), value: this.randomValue() },
         { timestamp: this.randomTimestamp(), value: this.randomValue() },
@@ -42,7 +43,7 @@ export class AppChartExamplesLineComponent {
         { timestamp: this.randomTimestamp(), value: this.randomValue() },
         { timestamp: this.randomTimestamp(), value: this.randomValue() },
       ].sort((a, b) => a.timestamp - b.timestamp),
-    ];
+    ] as TLineChartData[];
   }
 
   /** The breakpoint observer stream. */
@@ -93,11 +94,11 @@ export class AppChartExamplesLineComponent {
    * @param dateFormat date format
    */
   private lineChartOptions(dateFormat: TDateFormat = 'default') {
-    return <Partial<ILineChartOptions>>{
+    return {
       chartTitle: `Example line chart, date format ${dateFormat}`,
       xAxisTitle: 'Date range',
       yAxisTitle: 'Value range',
       dateFormat,
-    };
+    } as Partial<ILineChartOptions>;
   }
 }

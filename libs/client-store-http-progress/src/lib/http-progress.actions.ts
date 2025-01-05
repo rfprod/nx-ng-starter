@@ -1,7 +1,7 @@
 import { actionType } from '@app/client-util-ngrx';
 import { createAction, props } from '@ngrx/store';
 
-import { httpProgressReducerConfig, IHttpProgressPayload, IShowToastPayload } from './http-progress.interface';
+import { httpProgressReducerConfig, type IHttpProgressPayload, type IShowToastPayload } from './http-progress.interface';
 
 export const httpProgressAction = {
   start: createAction(actionType(httpProgressReducerConfig.featureName, 'start'), props<{ payload: IHttpProgressPayload }>()),

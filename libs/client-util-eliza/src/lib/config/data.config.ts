@@ -1,6 +1,6 @@
-import { InjectionToken, Provider } from '@angular/core';
+import { InjectionToken, type Provider } from '@angular/core';
 
-import { IElizaData } from '../interfaces/eliza.interface';
+import type { IElizaData } from '../interfaces/eliza.interface';
 import { elizaFinals } from './finals.config';
 import { elizaInitials } from './initials.config';
 import { elizaKeywords } from './keywords.config';
@@ -35,8 +35,8 @@ export const ELIZA_DATA = new InjectionToken<IElizaData>('ELIZA_DATA');
  * @returns Eliza data provider
  */
 export const elizaDataProvider = (data: IElizaData): Provider =>
-  <Provider>{
+  ({
     provide: ELIZA_DATA,
     providedIn: 'root',
     useValue: { ...data },
-  };
+  }) as Provider;

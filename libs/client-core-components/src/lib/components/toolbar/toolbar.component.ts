@@ -6,6 +6,7 @@ import { anchorButton, IAnchorButton } from '@app/client-util';
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppToolbarComponent {
   @Input() public version = 'N/A';

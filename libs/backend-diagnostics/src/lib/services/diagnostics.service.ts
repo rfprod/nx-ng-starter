@@ -37,16 +37,16 @@ export class AppDiagnosticsService implements IDiagnosticsService {
   }
 
   public ping(): IPingResult {
-    return <IPingResult>{
+    return {
       message: 'Diagnostics service is online. Routes: /, /static.',
-    };
+    } as IPingResult;
   }
 
   public static(): Observable<TDiagData> {
     return this.npmVersion().pipe(
       map(
         npmVersion =>
-          <TDiagData>[
+          [
             {
               name: 'Node.js Version',
               value: process.version.replace('v', ''),
@@ -75,14 +75,14 @@ export class AppDiagnosticsService implements IDiagnosticsService {
               name: 'CPU Cores',
               value: os.cpus().length,
             },
-          ],
+          ] as TDiagData,
       ),
     );
   }
 
   public dynamic(): TDiagData {
     const divider = 1048576;
-    return <TDiagData>[
+    return [
       {
         name: 'Free Memory',
         value: `${Math.round(os.freemem() / divider)}MB`,
@@ -91,6 +91,6 @@ export class AppDiagnosticsService implements IDiagnosticsService {
         name: 'Uptime',
         value: `${os.uptime()}s`,
       },
-    ];
+    ] as TDiagData;
   }
 }

@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
   templateUrl: './diagnostics-index.component.html',
   styleUrls: ['./diagnostics-index.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppDiagnosticsIndexComponent implements OnInit, OnDestroy {
   constructor(private readonly store: Store<IDiagnosticsState>) {}

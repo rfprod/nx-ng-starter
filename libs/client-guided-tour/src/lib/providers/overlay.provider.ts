@@ -1,5 +1,5 @@
-import { OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
-import { InjectionToken, Provider } from '@angular/core';
+import { OverlayConfig, type OverlayRef } from '@angular/cdk/overlay';
+import { InjectionToken, type Provider } from '@angular/core';
 
 /** The overlay reference injection token. */
 export const OVERLAY_REFERENCE = new InjectionToken<OverlayRef>('OverlayReference');

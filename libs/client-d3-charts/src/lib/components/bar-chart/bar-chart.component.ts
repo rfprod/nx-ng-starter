@@ -16,6 +16,7 @@ type TBarOptions = Partial<IBarChartOptions>;
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppBarChartComponent extends AppD3ChartBase<TBarData, TBarOptions> implements AfterViewInit, OnChanges {
   /** The chart id. */

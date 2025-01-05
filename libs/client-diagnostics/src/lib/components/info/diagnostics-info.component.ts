@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
   templateUrl: './diagnostics-info.component.html',
   styleUrls: ['./diagnostics-info.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppDiagnosticsInfoComponent implements OnInit {
   /**

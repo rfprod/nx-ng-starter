@@ -15,18 +15,18 @@ import { IWebsocketConfig, IWebsocketRequestEvent, IWebsocketResponseEvent, WS_C
 export class AppWebsocketApiService {
   private readonly destroyRef = inject(DestroyRef);
 
-  private readonly wsSubject: WebSocketSubject<IWebsocketRequestEvent> = new WebSocketSubject(this.wsConfig);
+  private readonly wsSubject = new WebSocketSubject<IWebsocketRequestEvent>(this.wsConfig);
 
   constructor(@Inject(WS_CONFIG) private readonly wsConfig: IWebsocketConfig) {}
 
   public connect<T = unknown>() {
     return this.wsSubject.pipe(
       takeUntilDestroyed(this.destroyRef),
-      map(event => <IWebsocketResponseEvent<T>>event),
+      map(event => event as IWebsocketResponseEvent<T>),
       catchError((error: Error) => {
         // eslint-disable-next-line no-console -- this is needed so that websocket erros are reported to console
         console.error('error', error);
-        return of(<IWebsocketResponseEvent<T>>{ event: 'error.message' });
+        return of({ event: 'error.message' } as IWebsocketResponseEvent<T>);
       }),
     );
   }

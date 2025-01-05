@@ -1,4 +1,4 @@
-import { ActivatedRouteSnapshot, convertToParamMap, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, convertToParamMap, type RouterStateSnapshot } from '@angular/router';
 
 import { AppRouteSerializer } from './route.serializer';
 

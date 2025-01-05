@@ -10,18 +10,19 @@ import { IPieChartDataNode, IPieChartOptions } from '../../interfaces/pie-chart.
   templateUrl: './chart-examples-pie.component.html',
   styleUrls: ['./chart-examples-pie.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppChartExamplesPieComponent {
   /** The chart data. */
   private get chartData() {
-    return <IPieChartDataNode[]>[
+    return [
       { key: 'one', y: 1 },
       { key: 'two', y: 2 },
       { key: 'three', y: 3 },
       { key: 'four', y: 4 },
       { key: 'five', y: 5 },
       { key: 'six', y: 6 },
-    ];
+    ] as IPieChartDataNode[];
   }
 
   /** The chart options. */
@@ -30,13 +31,13 @@ export class AppChartExamplesPieComponent {
       first: Partial<IPieChartOptions>;
       second: Partial<IPieChartOptions>;
     } = {
-      first: <Partial<IPieChartOptions>>{
+      first: {
         chartTitle: 'Example pie chart 1',
-      },
-      second: <Partial<IPieChartOptions>>{
+      } as Partial<IPieChartOptions>,
+      second: {
         chartTitle: 'Example pie chart 2',
         innerRadius: 75,
-      },
+      } as Partial<IPieChartOptions>,
     };
     return options;
   }

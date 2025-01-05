@@ -1,5 +1,5 @@
-import { TestBed, TestModuleMetadata } from '@angular/core/testing';
-import { HammerGestureConfig } from '@angular/platform-browser';
+import { TestBed, type TestModuleMetadata } from '@angular/core/testing';
+import type { HammerGestureConfig } from '@angular/platform-browser';
 
 import { AppHammerGestureConfig } from './hammerjs-gesture.config';
 

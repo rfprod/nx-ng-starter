@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 
-import { IFeatureAccessState, IFeatureAccessStateModel } from './feature-access.interface';
+import type { IFeatureAccessState, IFeatureAccessStateModel } from './feature-access.interface';
 
 const selectFeature = (state: IFeatureAccessState) => state.featureAccess;
 

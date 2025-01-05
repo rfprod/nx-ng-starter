@@ -1,13 +1,13 @@
-import { ElementRef } from '@angular/core';
+import type { ElementRef } from '@angular/core';
 import * as d3 from 'd3';
 
-import { IPieChartDataNode, IPieChartOptions } from '../interfaces/pie-chart.interface';
+import type { IPieChartDataNode, IPieChartOptions } from '../interfaces/pie-chart.interface';
 import { generateConfiguration } from './configuration.util';
 
 /**
  * The pie chart default configuration.
  */
-export const defaultPieChartConfig: IPieChartOptions = Object.freeze(<IPieChartOptions>{
+export const defaultPieChartConfig: IPieChartOptions = Object.freeze({
   chartTitle: '',
   width: 600,
   height: 600,
@@ -23,7 +23,7 @@ export const defaultPieChartConfig: IPieChartOptions = Object.freeze(<IPieChartO
   labelTextWrapWidth: 60,
   transitionDuration: 1000,
   color: d3.scaleOrdinal(d3.schemeCategory10),
-});
+} as IPieChartOptions);
 
 /**
  * Creates a container for the pie chart.

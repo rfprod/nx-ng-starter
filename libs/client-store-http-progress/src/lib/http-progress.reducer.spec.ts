@@ -1,10 +1,15 @@
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store, StoreModule } from '@ngrx/store';
 import { first, switchMap, tap } from 'rxjs';
 
 import { httpProgressAction } from './http-progress.actions';
-import { httpProgressReducerConfig, IHttpProgressState, IHttpProgressStateModel, IShowToastPayload } from './http-progress.interface';
+import {
+  httpProgressReducerConfig,
+  type IHttpProgressState,
+  type IHttpProgressStateModel,
+  type IShowToastPayload,
+} from './http-progress.interface';
 import { AppHttpProgressReducer, httpProgressReducerProvider } from './http-progress.reducer';
 import { httpProgressSelector } from './http-progress.selectors';
 

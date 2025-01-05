@@ -1,5 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 

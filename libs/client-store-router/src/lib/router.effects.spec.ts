@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { EffectsModule } from '@ngrx/effects';
@@ -8,7 +8,7 @@ import { Store, StoreModule } from '@ngrx/store';
 
 import { routerAction } from './router.actions';
 import { AppRouterEffects } from './router.effects';
-import { featureName, IRouterState } from './router.interface';
+import { featureName, type IRouterState } from './router.interface';
 
 describe('AppRouterEffects', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
@@ -35,7 +35,7 @@ describe('AppRouterEffects', () => {
     router = TestBed.inject(Router);
     routerNavigateSpy = jest.spyOn(router, 'navigate').mockImplementation(() => new Promise<boolean>(resolve => resolve(true)));
     location = TestBed.inject(Location);
-    (<jest.Mock>location.historyGo).mockClear();
+    (location.historyGo as jest.Mock).mockClear();
   });
 
   it('should call router.navigate when the navigate action is dispatched', waitForAsync(() => {

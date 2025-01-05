@@ -1,10 +1,10 @@
-import { TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store, StoreModule } from '@ngrx/store';
 import { first, lastValueFrom } from 'rxjs';
 
 import { chatbotAction } from './chatbot.actions';
-import { chatbotReducerConfig, IChatbotState, IChatbotStateModel } from './chatbot.interface';
+import { chatbotReducerConfig, type IChatbotState, type IChatbotStateModel } from './chatbot.interface';
 import { AppChatbotReducer, chatbotReducerProvider } from './chatbot.reducer';
 import { chatbotSelector } from './chatbot.selectors';
 

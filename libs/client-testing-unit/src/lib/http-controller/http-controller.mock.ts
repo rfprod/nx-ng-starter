@@ -1,5 +1,5 @@
-import { HttpRequest } from '@angular/common/http';
-import { HttpTestingController, RequestMatch, TestRequest } from '@angular/common/http/testing';
+import type { HttpRequest } from '@angular/common/http';
+import type { HttpTestingController, RequestMatch, TestRequest } from '@angular/common/http/testing';
 
 export type THttpRequestMatcher<T> = string | RequestMatch | ((req: HttpRequest<T>) => boolean);
 
@@ -16,7 +16,7 @@ export function flushHttpRequests<T>(
     | Record<string, unknown>
     | ArrayBuffer
     | Blob
-    | (string | number | Record<string, unknown> | null)[]
+    | Array<string | number | Record<string, unknown> | null>
     | null = {},
   produceError?: boolean,
 ): void {

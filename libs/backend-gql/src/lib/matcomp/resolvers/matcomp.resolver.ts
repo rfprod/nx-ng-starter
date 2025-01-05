@@ -45,7 +45,7 @@ export class AppMatcompResolver {
   @Subscription(() => AppMatcompModel)
   @UseGuards(AppMatcompGuard)
   public matcompCreated() {
-    return this.pubSub.asyncIterator('matcompCreated');
+    return this.pubSub.asyncIterableIterator('matcompCreated');
   }
 
   @Mutation(() => AppMatcompModel)
@@ -60,6 +60,6 @@ export class AppMatcompResolver {
   @Subscription(() => AppMatcompModel)
   @UseGuards(AppMatcompGuard)
   public matcompRemoved() {
-    return this.pubSub.asyncIterator('matcompRemoved');
+    return this.pubSub.asyncIterableIterator('matcompRemoved');
   }
 }

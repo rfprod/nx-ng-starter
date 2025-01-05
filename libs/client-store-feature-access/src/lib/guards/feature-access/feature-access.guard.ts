@@ -16,7 +16,7 @@ export class AppFeatureAccessGuard {
   ) {}
 
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
-    const value: string | undefined = (<{ feature?: string }>state.root.data).feature;
+    const value: string | undefined = (state.root.data as { feature?: string }).feature;
     const featureSelector =
       typeof value === 'undefined' || value === '' ? featureAccessSelector.enable : featureAccessSelector.enableFeature(value);
     return this.store.select(featureSelector).pipe(

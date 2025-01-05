@@ -20,6 +20,7 @@ interface ILogoRef {
   templateUrl: './root.component.html',
   styleUrls: ['./root.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: false,
 })
 export class AppRootComponent implements OnInit, AfterContentInit {
   private readonly destroyRef = inject(DestroyRef);

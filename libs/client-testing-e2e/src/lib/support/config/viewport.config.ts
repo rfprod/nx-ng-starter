@@ -1,4 +1,4 @@
-import { IViewportSizes } from '../interfaces/viewport-config.interface';
+import type { IViewportSizes } from '../interfaces/viewport-config.interface';
 
 /**
  * Viewport options.

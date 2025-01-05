@@ -1,41 +1,36 @@
-import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { BreakpointObserver, Breakpoints, type BreakpointState } from '@angular/cdk/layout';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { Meta, Title } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { AppMaterialModule } from '@app/client-material';
 import { AppServiceWorkerService } from '@app/client-service-worker';
-import { MarkdownModule, MarkdownModuleConfig, MARKED_OPTIONS, MarkedOptions } from 'ngx-markdown';
+import { MarkdownModule, type MarkdownModuleConfig, MARKED_OPTIONS, type MarkedOptions } from 'ngx-markdown';
 import { of, tap } from 'rxjs';
 
 import { testingProviders } from '../../../testing/testing-providers.mock';
-import { DOCUMENTATION_ENVIRONMENT, IDocumentationEnvironment } from '../../interfaces/environment.interface';
+import { DOCUMENTATION_ENVIRONMENT, type IDocumentationEnvironment } from '../../interfaces/environment.interface';
 import { AppDocRootComponent } from './root.component';
 
 describe('AppDocRootComponent', () => {
   const markdownModuleConfig: MarkdownModuleConfig = {
     markedOptions: {
       provide: MARKED_OPTIONS,
-      useValue: <MarkedOptions>{
+      useValue: {
         gfm: true,
         breaks: false,
         pedantic: false,
         smartLists: true,
         smartypants: false,
-      },
+      } as MarkedOptions,
     },
   };
 
   const testBedConfig: TestModuleMetadata = {
-    imports: [
-      NoopAnimationsModule,
-      HttpClientTestingModule,
-      RouterTestingModule,
-      AppMaterialModule.forRoot(),
-      MarkdownModule.forRoot(markdownModuleConfig),
-    ],
+    imports: [NoopAnimationsModule, AppMaterialModule.forRoot(), MarkdownModule.forRoot(markdownModuleConfig)],
     declarations: [AppDocRootComponent],
     providers: [
       ...testingProviders,
@@ -45,6 +40,9 @@ describe('AppDocRootComponent', () => {
           subscribeToUpdates$: of(null),
         },
       },
+      provideHttpClientTesting(),
+      provideHttpClient(),
+      provideRouter([]),
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
   };
@@ -75,7 +73,7 @@ describe('AppDocRootComponent', () => {
     bpObserver = TestBed.inject(BreakpointObserver);
     bpObserverSpy = jest.spyOn(bpObserver, 'observe');
     if (typeof bpState !== 'undefined') {
-      bpObserverSpy.mockReturnValue(of(<BreakpointState>{ ...bpState }));
+      bpObserverSpy.mockReturnValue(of({ ...bpState } as BreakpointState));
     }
 
     fixture = TestBed.createComponent(AppDocRootComponent);

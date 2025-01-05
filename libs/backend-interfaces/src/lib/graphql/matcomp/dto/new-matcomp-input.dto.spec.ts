@@ -39,9 +39,9 @@ describe('AppMatcompInputDto', () => {
       const conf = type.toConfig();
       expect(conf.name).toEqual('AppMatcompInputDto');
 
-      const fields = (<typeof conf & { fields: Record<keyof AppMatcompInputDto, GraphQLFieldConfig<AppTestResolver, AppMatcompModel>> }>(
-        conf
-      )).fields;
+      const fields = (
+        conf as typeof conf & { fields: Record<keyof AppMatcompInputDto, GraphQLFieldConfig<AppTestResolver, AppMatcompModel>> }
+      ).fields;
       expect(fields.name).toBeDefined();
       expect(fields.description).toBeDefined();
     }

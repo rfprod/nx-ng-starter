@@ -1,5 +1,5 @@
-import { getJestProjects } from '@nx/jest';
+import { getJestProjectsAsync } from '@nx/jest';
 
-const config = { projects: getJestProjects() };
+const config = { projects: getJestProjectsAsync() };
 
 export default config;

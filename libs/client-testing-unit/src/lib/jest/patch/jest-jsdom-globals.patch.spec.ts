@@ -1,7 +1,7 @@
 import { setupJestJsdomGlobalMocks } from './jest-jsdom-globals.patch';
 
 describe('setupJestJsdomGlobalMocks', () => {
-  const consoleBackup = <Console>{ ...console };
+  const consoleBackup = { ...console } as Console;
   let definePropertySpy: jest.SpyInstance;
 
   beforeAll(() => {

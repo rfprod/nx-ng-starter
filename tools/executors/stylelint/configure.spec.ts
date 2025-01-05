@@ -6,7 +6,7 @@ import * as devkit from '@nx/devkit';
 import * as nxTree from 'nx/src/generators/tree';
 
 import configure, { AppConfigureStylelintCheckExecutor } from './configure';
-import { IExecutorOptions } from './schema';
+import type { IExecutorOptions } from './schema';
 
 describe('AppConfigureStylelintCheckExecutor', () => {
   const getProjectsInput = (withTargets = false) => {
@@ -73,16 +73,21 @@ describe('AppConfigureStylelintCheckExecutor', () => {
   const setup = (projectsInput?: Record<string, ProjectConfiguration>, optionsInput?: IExecutorOptions & { dryRun: boolean }) => {
     const projects = typeof projectsInput === 'undefined' ? getProjectsInput() : { ...projectsInput };
 
-    (<jest.Mock>devkit.getProjects).mockImplementation((tree: nxTree.FsTree) => new Map(Object.entries(projects)));
-    (<jest.Mock>nxTree.flushChanges).mockImplementation((root: string, fileChanges: nxTree.FileChange[]) => void 0);
+    (devkit.getProjects as jest.Mock).mockImplementation((tree: nxTree.FsTree) => new Map(Object.entries(projects)));
+    (nxTree.flushChanges as jest.Mock).mockImplementation((root: string, fileChanges: nxTree.FileChange[]) => void 0);
 
     const context: ExecutorContext = {
       cwd: process.cwd(),
       isVerbose: false,
       root: '/root',
-      workspace: {
+      projectsConfigurations: {
         version: 1,
-        projects,
+        projects: {},
+      },
+      nxJsonConfiguration: {},
+      projectGraph: {
+        nodes: {},
+        dependencies: {},
       },
       configurationName: '',
       projectName: 'test',
@@ -115,7 +120,7 @@ describe('AppConfigureStylelintCheckExecutor', () => {
         executor.configure();
       } catch (e) {
         expect(devkit.getProjects).toHaveBeenCalled();
-        expect((<Error>e).message).toEqual(`The project client-test-app does not have the 'sourceRoot' configuration option defined.`);
+        expect((e as Error).message).toEqual(`The project client-test-app does not have the 'sourceRoot' configuration option defined.`);
       }
     });
 
@@ -133,7 +138,7 @@ describe('AppConfigureStylelintCheckExecutor', () => {
         executor.configure();
       } catch (e) {
         expect(devkit.getProjects).toHaveBeenCalled();
-        expect((<Error>e).message).toEqual(`The project client-test-app does not have the 'targets' configuration option defined.`);
+        expect((e as Error).message).toEqual(`The project client-test-app does not have the 'targets' configuration option defined.`);
       }
     });
 
@@ -151,7 +156,7 @@ describe('AppConfigureStylelintCheckExecutor', () => {
         executor.configure();
       } catch (e) {
         expect(devkit.getProjects).toHaveBeenCalled();
-        expect((<Error>e).message).toEqual(`Could not determine a suffix for the project: client-test-app.`);
+        expect((e as Error).message).toEqual(`Could not determine a suffix for the project: client-test-app.`);
       }
     });
 
@@ -176,7 +181,7 @@ describe('AppConfigureStylelintCheckExecutor', () => {
         executor.configure();
       } catch (e) {
         expect(devkit.getProjects).toHaveBeenCalled();
-        expect((<Error>e).message).toEqual(`The project client-test-app does not have the 'targets' configuration option defined.`);
+        expect((e as Error).message).toEqual(`The project client-test-app does not have the 'targets' configuration option defined.`);
       }
     });
   });

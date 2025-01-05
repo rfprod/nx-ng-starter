@@ -1,4 +1,4 @@
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { EffectsModule } from '@ngrx/effects';
@@ -6,7 +6,7 @@ import { Store, StoreModule } from '@ngrx/store';
 
 import { sidebarAction } from './sidebar.actions';
 import { AppSidebarEffects } from './sidebar.effects';
-import { ISidebarState, sidebarReducerConfig } from './sidebar.interface';
+import { type ISidebarState, sidebarReducerConfig } from './sidebar.interface';
 import { sidebarReducerProvider } from './sidebar.reducer';
 
 describe('AppSidebarEffects', () => {

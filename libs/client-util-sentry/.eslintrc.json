@@ -1,3 +1,12 @@
 {
-  "extends": ["../../.eslintrc.js", "../../.eslintrc.angular.js"]
+  "extends": ["../../.eslintrc.js", "../../.eslintrc.angular.js"],
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "rules": {
+        "@angular-eslint/prefer-standalone": "off",
+        "@typescript-eslint/no-deprecated": "warn"
+      }
+    }
+  ]
 }

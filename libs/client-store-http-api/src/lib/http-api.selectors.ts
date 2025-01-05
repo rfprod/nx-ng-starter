@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 
-import { IHttpApiState, IHttpApiStateModel } from './http-api.interface';
+import type { IHttpApiState, IHttpApiStateModel } from './http-api.interface';
 
 const selectFeature = (state: IHttpApiState) => state.httpApi;
 

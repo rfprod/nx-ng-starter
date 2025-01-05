@@ -1,5 +1,5 @@
 import { initializeClassProperties } from '../utils/class.util';
-import { IUserLoginCredentials } from './user.interface';
+import type { IUserLoginCredentials } from './user.interface';
 
 export class AppUserLoginCredentials implements IUserLoginCredentials {
   public email = '';

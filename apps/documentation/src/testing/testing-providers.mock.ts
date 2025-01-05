@@ -1,7 +1,7 @@
-import { Provider } from '@angular/core';
+import type { Provider } from '@angular/core';
 import { documentProvider, windowProvider } from '@app/client-util';
 
-import { DOCUMENTATION_ENVIRONMENT, IDocumentationEnvironment } from '../app/interfaces/environment.interface';
+import { DOCUMENTATION_ENVIRONMENT, type IDocumentationEnvironment } from '../app/interfaces/environment.interface';
 
 export const testingEnvironment: IDocumentationEnvironment = {
   appName: 'test',

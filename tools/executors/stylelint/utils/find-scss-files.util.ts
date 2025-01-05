@@ -1,5 +1,5 @@
 import { joinPathFragments, logger } from '@nx/devkit';
-import { FsTree } from 'nx/src/generators/tree';
+import type { FsTree } from 'nx/src/generators/tree';
 import { directoryExists } from 'nx/src/utils/fileutils';
 
 /**

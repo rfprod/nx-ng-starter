@@ -5,21 +5,26 @@ import * as childProcess from 'child_process';
 import path from 'path';
 
 import check from './check';
-import { IExecutorOptions } from './schema';
+import type { IExecutorOptions } from './schema';
 
 describe('check', () => {
   const setup = (projestName?: string) => {
-    (<jest.Mock>childProcess.execFileSync).mockImplementation((command: string, options: childProcess.ExecSyncOptionsWithBufferEncoding) =>
-      Buffer.from([]),
+    (childProcess.execFileSync as jest.Mock).mockImplementation(
+      (command: string, options: childProcess.ExecSyncOptionsWithBufferEncoding) => Buffer.from([]),
     );
 
     const context: ExecutorContext = {
       cwd: process.cwd(),
       isVerbose: false,
       root: '/root',
-      workspace: {
+      projectsConfigurations: {
         version: 1,
         projects: {},
+      },
+      nxJsonConfiguration: {},
+      projectGraph: {
+        nodes: {},
+        dependencies: {},
       },
       configurationName: '',
       projectName: projestName,
@@ -48,7 +53,7 @@ describe('check', () => {
           env: process.env,
           shell: true,
         });
-        expect((<Error>e).message).toEqual('Project name is not defined.');
+        expect((e as Error).message).toEqual('Project name is not defined.');
       }
     });
   });

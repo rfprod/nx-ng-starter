@@ -1,5 +1,5 @@
 function setupGlobalFetchMock() {
-  global.fetch = jest.fn().mockReturnValue(Promise.resolve<Response>(<Response>{}));
+  global.fetch = jest.fn().mockReturnValue(Promise.resolve<Response>({} as Response));
 }
 
 function setupGlobalUrlMock() {

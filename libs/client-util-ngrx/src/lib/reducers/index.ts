@@ -1,1 +1,1 @@
-export * from './reducer.util';
+export type * from './reducer.util';

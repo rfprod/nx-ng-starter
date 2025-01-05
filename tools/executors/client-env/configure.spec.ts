@@ -5,11 +5,11 @@ import type { ExecutorContext } from '@nx/devkit';
 
 import configure from './configure';
 import * as envClient from './env-client';
-import { IExecutorOptions, TSupportedApp } from './schema';
+import type { IExecutorOptions, TSupportedApp } from './schema';
 
 describe('configure', () => {
   const setup = (app: TSupportedApp = 'client', mockEnvClient?: boolean) => {
-    const envClientMock = <jest.Mock>envClient.AppClientEnvConfig;
+    const envClientMock = envClient.AppClientEnvConfig as jest.Mock;
     if (mockEnvClient === true) {
       envClientMock.mockImplementation((opts: IExecutorOptions, ctx: ExecutorContext) => ({
         execute: () => new Promise<void>(resolve => resolve()),
@@ -20,9 +20,14 @@ describe('configure', () => {
       cwd: process.cwd(),
       isVerbose: false,
       root: '/root',
-      workspace: {
+      projectsConfigurations: {
         version: 1,
         projects: {},
+      },
+      nxJsonConfiguration: {},
+      projectGraph: {
+        nodes: {},
+        dependencies: {},
       },
       configurationName: '',
       projectName: app,
@@ -46,9 +51,9 @@ describe('configure', () => {
       try {
         await configure(options, context);
       } catch (e) {
-        error = <Error>e;
+        error = e as Error;
       }
-      expect((<Error>error).message).toEqual(`There was an error processing the app argument.\nIts value is: ${app}`);
+      expect((error as Error).message).toEqual(`There was an error processing the app argument.\nIts value is: ${app}`);
     });
   });
 

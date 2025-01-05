@@ -36,5 +36,5 @@ export const toasterExtraClasses = (toastType: TToastType | string): TToasterExt
     accent: ['accent-bg'],
     primary: ['primary-bg'],
   };
-  return toastType in extraClasses ? extraClasses[<keyof IToasterExtraClassesObj>toastType] : [];
+  return toastType in extraClasses ? extraClasses[toastType as keyof IToasterExtraClassesObj] : [];
 };

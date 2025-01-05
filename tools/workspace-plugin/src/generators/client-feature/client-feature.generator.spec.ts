@@ -1,5 +1,5 @@
 import { libraryGenerator } from '@nx/angular/generators';
-import { Schema } from '@nx/angular/src/generators/library/schema';
+import type { Schema } from '@nx/angular/src/generators/library/schema';
 import type { Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 

@@ -5,15 +5,15 @@ jest.mock('nx/src/generators/tree');
 import type { ExecutorContext, ProjectConfiguration } from '@nx/devkit';
 import * as devkit from '@nx/devkit';
 import * as childProcess from 'child_process';
-import * as nxTree from 'nx/src/generators/tree';
+import type * as nxTree from 'nx/src/generators/tree';
 
 import check from './check';
-import { IExecutorOptions } from './schema';
+import type { IExecutorOptions } from './schema';
 
 describe('check', () => {
   const setup = (projestName?: string) => {
-    (<jest.Mock>childProcess.execFileSync).mockImplementation((command: string, options: childProcess.ExecSyncOptionsWithBufferEncoding) =>
-      Buffer.from([]),
+    (childProcess.execFileSync as jest.Mock).mockImplementation(
+      (command: string, options: childProcess.ExecSyncOptionsWithBufferEncoding) => Buffer.from([]),
     );
 
     const projects: Record<string, ProjectConfiguration> = {};
@@ -24,15 +24,20 @@ describe('check', () => {
       targets: {},
     };
 
-    (<jest.Mock>devkit.getProjects).mockImplementation((tree: nxTree.FsTree) => new Map(Object.entries(projects)));
+    (devkit.getProjects as jest.Mock).mockImplementation((tree: nxTree.FsTree) => new Map(Object.entries(projects)));
 
     const context: ExecutorContext = {
       cwd: process.cwd(),
       isVerbose: false,
       root: '/root',
-      workspace: {
+      projectsConfigurations: {
         version: 1,
-        projects,
+        projects: {},
+      },
+      nxJsonConfiguration: {},
+      projectGraph: {
+        nodes: {},
+        dependencies: {},
       },
       configurationName: '',
       projectName: projestName,
@@ -61,7 +66,7 @@ describe('check', () => {
           env: process.env,
           shell: true,
         });
-        expect((<Error>e).message).toEqual('Project name is not defined.');
+        expect((e as Error).message).toEqual('Project name is not defined.');
       }
     });
 
@@ -78,14 +83,14 @@ describe('check', () => {
           env: process.env,
           shell: true,
         });
-        expect((<Error>e).message).toEqual('Project does not exist.');
+        expect((e as Error).message).toEqual('Project does not exist.');
       }
     });
 
     it("should throw an error if a project's sourceRoot is undefined", async () => {
       const { context, options } = setup('test');
 
-      const workspace = context.workspace;
+      const workspace = context.projectsConfigurations;
       Object.keys(workspace?.projects ?? {}).map(key => {
         if (typeof workspace !== 'undefined') {
           workspace.projects[key].sourceRoot = void 0;
@@ -102,7 +107,7 @@ describe('check', () => {
           env: process.env,
           shell: true,
         });
-        expect((<Error>e).message).toEqual('Project root does not exist.');
+        expect((e as Error).message).toEqual('Project root does not exist.');
       }
     });
   });
@@ -123,7 +128,7 @@ describe('check', () => {
           env: process.env,
           shell: true,
         });
-        expect((<Error>e).message).toEqual('Source directory test/app/src does not exist');
+        expect((e as Error).message).toEqual('Source directory test/app/src does not exist');
       }
     });
   });

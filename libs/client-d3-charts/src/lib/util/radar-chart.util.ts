@@ -1,13 +1,13 @@
-import { ElementRef } from '@angular/core';
+import type { ElementRef } from '@angular/core';
 import * as d3 from 'd3';
 
-import { IRadarChartDataNode, IRadarChartOptions, TRadarChartData } from '../interfaces/radar-chart.interface';
+import type { IRadarChartDataNode, IRadarChartOptions, TRadarChartData } from '../interfaces/radar-chart.interface';
 import { generateConfiguration } from './configuration.util';
 
 /**
  * The radar chart default configuration.
  */
-export const defaultRadarChartConfig: IRadarChartOptions = Object.freeze(<IRadarChartOptions>{
+export const defaultRadarChartConfig: IRadarChartOptions = Object.freeze({
   chartTitle: '',
   width: 350,
   height: 350,
@@ -29,7 +29,7 @@ export const defaultRadarChartConfig: IRadarChartOptions = Object.freeze(<IRadar
   roundStrokes: false, // if true the area and stroke will follow a round path (cardinal-closed)
   transitionDuration: 200,
   color: d3.scaleOrdinal(d3.schemeCategory10),
-});
+} as IRadarChartOptions);
 
 /**
  * Creates a container for the radar chart.

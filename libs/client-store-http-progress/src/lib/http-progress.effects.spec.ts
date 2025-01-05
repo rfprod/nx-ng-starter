@@ -1,11 +1,11 @@
-import { TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
 
 import { httpProgressAction } from './http-progress.actions';
 import { AppHttpProgressEffects } from './http-progress.effects';
-import { httpProgressReducerConfig, IHttpProgressState, IShowToastPayload } from './http-progress.interface';
+import { httpProgressReducerConfig, type IHttpProgressState, type IShowToastPayload } from './http-progress.interface';
 import { httpProgressReducerProvider } from './http-progress.reducer';
 import { AppHttpProgressService } from './services/http-progress/http-progress.service';
 import { AppToasterService } from './services/toaster/toaster.service';

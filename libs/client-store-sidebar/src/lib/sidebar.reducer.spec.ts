@@ -1,10 +1,10 @@
-import { TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store, StoreModule } from '@ngrx/store';
 import { first, lastValueFrom } from 'rxjs';
 
 import { sidebarAction } from './sidebar.actions';
-import { ISidebarState, ISidebarStateModel, sidebarReducerConfig } from './sidebar.interface';
+import { type ISidebarState, type ISidebarStateModel, sidebarReducerConfig } from './sidebar.interface';
 import { AppSidebarReducer, sidebarReducerProvider } from './sidebar.reducer';
 import { sidebarSelector } from './sidebar.selectors';
 
