@@ -1,7 +1,7 @@
 # CI/CD runner image with docker.
 
 # Define image.
-FROM node:20.11.0
+FROM node:22.12.0
 # Set environment variables.
 ENV DEBIAN_FRONTEND=noninteractive
 # Create app directory.
