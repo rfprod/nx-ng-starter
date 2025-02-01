@@ -2,7 +2,7 @@ import { backendGrpcClientOptions } from '@app/backend-grpc';
 import type { INestApplication } from '@nestjs/common';
 import type { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { NestFactory } from '@nestjs/core';
-import type { MicroserviceOptions } from '@nestjs/microservices';
+import type { ClientOptions } from '@nestjs/microservices';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { WsAdapter } from '@nestjs/platform-ws';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -67,7 +67,7 @@ async function bootstrap(expressInstance: e.Express): Promise<INestApplication> 
   app.use(compression.default({ threshold: 0, level: -1 }));
 
   const grpcClientOptions = backendGrpcClientOptions(environment);
-  app.connectMicroservice<MicroserviceOptions>(grpcClientOptions);
+  app.connectMicroservice<ClientOptions>(grpcClientOptions);
   await app.startAllMicroservices();
 
   initAdmin();
