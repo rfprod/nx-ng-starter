@@ -1,6 +1,6 @@
 {
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "name": "elements",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "prefix": "app",
   "projectType": "application",
   "sourceRoot": "apps/elements/src",
@@ -117,7 +117,8 @@
       "executor": "@nx/angular:dev-server",
       "options": {
         "buildTarget": "elements:build"
-      }
+      },
+      "continuous": true
     },
     "stylelint-check": {
       "executor": "./tools/executors/stylelint:check",
