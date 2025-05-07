@@ -3,7 +3,7 @@ import { InjectionToken, type Provider } from '@angular/core';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS, type MatSnackBarConfig } from '@angular/material/snack-bar';
-import { MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY } from '@angular/material-moment-adapter';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
 
 import { AppHammerGestureConfig } from '../configs/hammerjs-gesture/hammerjs-gesture.config';
@@ -31,7 +31,7 @@ export const appMaterialModuleProviders: Provider[] = [
     } as MatSnackBarConfig,
   },
   {
-    provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY,
+    provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS,
     useFactory: matMomentDateAdapterOptionsFactory,
   },
   { provide: MAT_DATE_FORMATS, useValue: CUSTOM_DATE_FORMATS },
