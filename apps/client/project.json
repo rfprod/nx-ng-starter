@@ -1,6 +1,6 @@
 {
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "name": "client",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "prefix": "app",
   "projectType": "application",
   "sourceRoot": "apps/client/src",
@@ -126,7 +126,8 @@
       "options": {
         "buildTarget": "client:build",
         "proxyConfig": "apps/client/proxy.conf.json"
-      }
+      },
+      "continuous": true
     },
     "serve-with-api": {
       "executor": "nx:run-commands",
