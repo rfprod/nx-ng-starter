@@ -2,7 +2,7 @@ import { OverlayConfig } from '@angular/cdk/overlay';
 import { TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatIconRegistry } from '@angular/material/icon';
-import { MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY, type MatMomentDateAdapterOptions } from '@angular/material-moment-adapter';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, type MatMomentDateAdapterOptions } from '@angular/material-moment-adapter';
 import { HAMMER_GESTURE_CONFIG, type HammerGestureConfig } from '@angular/platform-browser';
 
 import { AppHammerGestureConfig } from '../configs/hammerjs-gesture/hammerjs-gesture.config';
@@ -25,7 +25,7 @@ describe('client-material-module-proviers', () => {
     await TestBed.configureTestingModule(testBedConfig).compileComponents();
     matIconsRegistry = TestBed.inject(MatIconRegistry);
     matDateLocale = TestBed.inject(MAT_DATE_LOCALE) as string;
-    matMomentDateAdapter = TestBed.inject(MAT_MOMENT_DATE_ADAPTER_OPTIONS_FACTORY);
+    matMomentDateAdapter = TestBed.inject(MAT_MOMENT_DATE_ADAPTER_OPTIONS);
     matDateFormats = TestBed.inject(MAT_DATE_FORMATS);
     hammerGestureConfig = TestBed.inject(HAMMER_GESTURE_CONFIG);
     overlayConfig = TestBed.inject(OverlayConfig);
