@@ -93,19 +93,17 @@
       }
     },
     "lint": {
-      "executor": "@angular-eslint/builder:lint",
+      "executor": "@nx/eslint:lint",
       "options": {
-        "eslintConfig": "apps/elements/.eslintrc.json",
-        "lintFilePatterns": ["apps/elements/**/*.ts", "apps/elements/**/*.html"]
-      },
-      "outputs": ["{options.outputFile}"]
+        "eslintConfig": "{projectRoot}/eslint.config.mjs",
+        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.html"]
+      }
     },
     "prettier-check": {
       "executor": "./tools/executors/prettier:check",
       "options": {
         "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/prettier/apps/elements"]
+      }
     },
     "serve": {
       "configurations": {
@@ -124,23 +122,22 @@
       "executor": "./tools/executors/stylelint:check",
       "options": {
         "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/stylelint/apps/elements"]
+      }
     },
     "test": {
-      "executor": "@nx/jest:jest",
+      "executor": "@nx/vite:test",
       "options": {
-        "jestConfig": "apps/elements/jest.config.ts",
-        "passWithNoTests": true
-      },
-      "outputs": ["{workspaceRoot}/coverage/apps/elements"]
+        "compiler": "swc",
+        "configFile": "apps/elements/vitest.config.mts",
+        "coverageProvider": "istanbul",
+        "uiFramework": "angular"
+      }
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
-        "tsConfig": "apps/elements/tsconfig.app.json"
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/apps/elements"]
+        "tsConfig": "{projectRoot}/tsconfig.app.json"
+      }
     }
   }
 }

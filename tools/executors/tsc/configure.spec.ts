@@ -1,5 +1,7 @@
-jest.mock('@nx/devkit');
-jest.mock('nx/src/generators/tree');
+import { describe, expect, it, type Mock, vi } from 'vitest';
+
+vi.mock('@nx/devkit');
+vi.mock('nx/src/generators/tree');
 
 import type { ExecutorContext, ProjectConfiguration } from '@nx/devkit';
 import * as devkit from '@nx/devkit';
@@ -73,8 +75,8 @@ describe('AppConfigureTscCheckExecutor', () => {
   const setup = (projectsInput?: Record<string, ProjectConfiguration>, optionsInput?: IExecutorOptions & { dryRun: boolean }) => {
     const projects = typeof projectsInput === 'undefined' ? getProjectsInput() : { ...projectsInput };
 
-    (devkit.getProjects as jest.Mock).mockImplementation((tree: nxTree.FsTree) => new Map(Object.entries(projects)));
-    (nxTree.flushChanges as jest.Mock).mockImplementation((root: string, fileChanges: nxTree.FileChange[]) => void 0);
+    (devkit.getProjects as Mock).mockImplementation((tree: nxTree.FsTree) => new Map(Object.entries(projects)));
+    (nxTree.flushChanges as Mock).mockImplementation((root: string, fileChanges: nxTree.FileChange[]) => void 0);
 
     const context: ExecutorContext = {
       cwd: process.cwd(),
@@ -102,8 +104,6 @@ describe('AppConfigureTscCheckExecutor', () => {
   };
 
   describe('errors', () => {
-    afterEach(() => jest.clearAllMocks());
-
     it('should throw an error if a project sourceRoot is undefined when adding a configuration', () => {
       const { context, options } = setup();
       const executor = new AppConfigureTscCheckExecutor(options, context);
@@ -177,15 +177,13 @@ describe('AppConfigureTscCheckExecutor', () => {
   });
 
   describe('correct behavior: add configurations', () => {
-    afterEach(() => jest.clearAllMocks());
-
     it('should call updateProjectConfiguration without calling flushChanges when the dryRun option is true', () => {
       const projectsInput = getProjectsInput();
       const { context, options } = setup(projectsInput);
 
       const executor = new AppConfigureTscCheckExecutor(options, context);
       expect(executor.tree).toBeDefined();
-      const treeListChangesSpy = jest.spyOn(executor.tree, 'listChanges');
+      const treeListChangesSpy = vi.spyOn(executor.tree, 'listChanges');
       executor.configure();
       expect(devkit.updateProjectConfiguration).toHaveBeenCalledTimes(Object.keys(projectsInput).length);
       expect(treeListChangesSpy).not.toHaveBeenCalled();
@@ -205,7 +203,7 @@ describe('AppConfigureTscCheckExecutor', () => {
 
       const executor = new AppConfigureTscCheckExecutor(options, context);
       expect(executor.tree).toBeDefined();
-      const treeListChangesSpy = jest.spyOn(executor.tree, 'listChanges');
+      const treeListChangesSpy = vi.spyOn(executor.tree, 'listChanges');
       executor.configure();
       expect(devkit.updateProjectConfiguration).toHaveBeenCalledTimes(Object.keys(projectsInput).length);
       expect(treeListChangesSpy).toHaveBeenCalledTimes(1);
@@ -215,8 +213,6 @@ describe('AppConfigureTscCheckExecutor', () => {
   });
 
   describe('correct behavior: remove configurations', () => {
-    afterEach(() => jest.clearAllMocks());
-
     it('should not call updateProjectConfiguration and flushChanges when the dryRun option is true but there is no tsc-check target in project configurations', () => {
       const projectsInput = getProjectsInput();
       const optionsInput: IExecutorOptions & {
@@ -230,7 +226,7 @@ describe('AppConfigureTscCheckExecutor', () => {
 
       const executor = new AppConfigureTscCheckExecutor(options, context);
       expect(executor.tree).toBeDefined();
-      const treeListChangesSpy = jest.spyOn(executor.tree, 'listChanges');
+      const treeListChangesSpy = vi.spyOn(executor.tree, 'listChanges');
       executor.configure();
       expect(devkit.updateProjectConfiguration).not.toHaveBeenCalledTimes(Object.keys(projectsInput).length);
       expect(treeListChangesSpy).not.toHaveBeenCalled();
@@ -251,7 +247,7 @@ describe('AppConfigureTscCheckExecutor', () => {
 
       const executor = new AppConfigureTscCheckExecutor(options, context);
       expect(executor.tree).toBeDefined();
-      const treeListChangesSpy = jest.spyOn(executor.tree, 'listChanges');
+      const treeListChangesSpy = vi.spyOn(executor.tree, 'listChanges');
       executor.configure();
       expect(devkit.updateProjectConfiguration).toHaveBeenCalledTimes(Object.keys(projectsInput).length);
       expect(treeListChangesSpy).not.toHaveBeenCalled();
@@ -272,7 +268,7 @@ describe('AppConfigureTscCheckExecutor', () => {
 
       const executor = new AppConfigureTscCheckExecutor(options, context);
       expect(executor.tree).toBeDefined();
-      const treeListChangesSpy = jest.spyOn(executor.tree, 'listChanges');
+      const treeListChangesSpy = vi.spyOn(executor.tree, 'listChanges');
       executor.configure();
       expect(devkit.updateProjectConfiguration).toHaveBeenCalledTimes(Object.keys(projectsInput).length);
       expect(treeListChangesSpy).toHaveBeenCalledTimes(1);
@@ -284,8 +280,6 @@ describe('AppConfigureTscCheckExecutor', () => {
   });
 
   describe('should expose configure function that initializes the executor class', () => {
-    afterEach(() => jest.clearAllMocks());
-
     it('should call updateProjectConfiguration without calling flushChanges when the dryRun option is true', async () => {
       const projectsInput = getProjectsInput();
       const { context, options } = setup(projectsInput);

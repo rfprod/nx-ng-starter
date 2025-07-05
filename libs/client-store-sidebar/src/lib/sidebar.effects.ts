@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
@@ -13,6 +13,12 @@ import { sidebarSelector } from './sidebar.selectors';
   providedIn: 'root',
 })
 export class AppSidebarEffects {
+  private readonly actions$ = inject(Actions);
+
+  private readonly store = inject(Store<ISidebarState>);
+
+  private readonly router = inject(Router);
+
   public readonly open$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -35,15 +41,9 @@ export class AppSidebarEffects {
     this.actions$.pipe(
       ofType(sidebarAction.toggle.type),
       withLatestFrom(this.store.select(sidebarSelector.sidebarOpen)),
-      map(([action, sidebarOpen]) =>
-        sidebarOpen ? sidebarAction.open({ payload: { navigate: true } }) : sidebarAction.close({ payload: { navigate: true } }),
-      ),
+      map(([action, sidebarOpen]) => {
+        return sidebarOpen ? sidebarAction.open({ payload: { navigate: true } }) : sidebarAction.close({ payload: { navigate: true } });
+      }),
     ),
   );
-
-  constructor(
-    private readonly actions$: Actions,
-    private readonly store: Store<ISidebarState>,
-    private readonly router: Router,
-  ) {}
 }

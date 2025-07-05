@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { from } from 'rxjs';
@@ -10,6 +10,10 @@ import { chatbotAction } from './chatbot.actions';
   providedIn: 'root',
 })
 export class AppChatbotEffects {
+  private readonly actions$ = inject(Actions);
+
+  private readonly router = inject(Router);
+
   public readonly open$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -27,9 +31,4 @@ export class AppChatbotEffects {
       ),
     { dispatch: false },
   );
-
-  constructor(
-    private readonly actions$: Actions,
-    private readonly router: Router,
-  ) {}
 }

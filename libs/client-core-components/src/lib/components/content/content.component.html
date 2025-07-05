@@ -1,9 +1,9 @@
 <mat-sidenav-container class="flex--full">
-  <mat-sidenav mode="over" [opened]="sidebarOpen$ | async" (closedStart)="sidebarCloseHandler()" (swipeleft)="sidebarCloseHandler()">
+  <mat-sidenav mode="over" [opened]="sidebarOpen$ | async" (closedStart)="sidebarCloseHandler()">
     <router-outlet name="sidebar"></router-outlet>
   </mat-sidenav>
 
-  <mat-sidenav-content #content (swiperight)="sidebarOpenHandler()">
+  <mat-sidenav-content #content>
     <router-outlet></router-outlet>
 
     <router-outlet name="chatbot"></router-outlet>

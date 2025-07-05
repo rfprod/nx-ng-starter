@@ -40,7 +40,7 @@ describe('AppHttpApiEffects', () => {
 
   it('should call http api service when the ping action is dispatched', waitForAsync(() => {
     const response: IPingResponse = { message: 'test' };
-    const pingSpy = jest.spyOn(service, 'ping').mockReturnValue(of(response));
+    const pingSpy = vi.spyOn(service, 'ping').mockReturnValue(of(response));
     store.dispatch(httpApiAction.ping());
     void store
       .select(httpApiSelector.ping)

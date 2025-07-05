@@ -1,3 +1,7 @@
-import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
+import '@analogjs/vitest-angular/setup-zone';
 
-setupZoneTestEnv();
+import '@angular/compiler'; // Required for JIT compiler
+import { getTestBed } from '@angular/core/testing';
+import { BrowserTestingModule, platformBrowserTesting } from '@angular/platform-browser/testing';
+
+getTestBed().initTestEnvironment(BrowserTestingModule, platformBrowserTesting());

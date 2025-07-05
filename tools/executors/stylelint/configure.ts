@@ -91,7 +91,6 @@ export class AppConfigureStylelintCheckExecutor {
         options: {
           config: this.options.config,
         },
-        outputs: [`{workspaceRoot}/dist/stylelint/${src.replace(/\/src$/, '')}`],
       };
       updateProjectConfiguration(tree, project.name, config);
     }

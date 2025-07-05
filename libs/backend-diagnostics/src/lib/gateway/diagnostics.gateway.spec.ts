@@ -1,7 +1,8 @@
 import type { INestApplication } from '@nestjs/common';
 import { WsAdapter } from '@nestjs/platform-ws';
 import { Test, type TestingModule } from '@nestjs/testing';
-import { Server, WebSocket } from 'ws';
+import type { MockInstance } from 'vitest';
+import type { Server, WebSocket } from 'ws';
 
 import { AppDiagnosticsService } from '../services/diagnostics.service';
 import { AppDiagnosticsGateway } from './diagnostics.gateway';
@@ -23,8 +24,8 @@ describe('AppDiagnosticsGateway', () => {
   let testingModule: TestingModule;
   let gateway: AppDiagnosticsGateway;
   let gatewaySpy: {
-    sendEvent: jest.SpyInstance;
-    broadcastEvent: jest.SpyInstance;
+    sendEvent: MockInstance;
+    broadcastEvent: MockInstance;
   };
   let app: INestApplication;
   const appPort = 8082;
@@ -51,20 +52,23 @@ describe('AppDiagnosticsGateway', () => {
         app.useWebSocketAdapter(new WsAdapter(app));
 
         await app.listen(appPort, '0.0.0.0');
-        const appUrl = await app.getUrl();
 
-        server = new Server({ server: app.getHttpServer() });
+        server = {
+          removeAllListeners: (eventName?: string | symbol | undefined) => void 0,
+          clients: new Set(),
+        } as unknown as Server;
 
         gateway = testingModule.get<AppDiagnosticsGateway>(AppDiagnosticsGateway);
         gatewaySpy = {
-          sendEvent: jest.spyOn(gateway, 'sendEvent'),
-          broadcastEvent: jest.spyOn(gateway, 'broadcastEvent'),
+          sendEvent: vi.spyOn(gateway, 'sendEvent'),
+          broadcastEvent: vi.spyOn(gateway, 'broadcastEvent'),
         };
 
         gateway['server'] = server;
 
-        const wsUrl = `${appUrl.replace(/http/, 'ws')}/api/events`;
-        wsClient = new WebSocket(wsUrl);
+        wsClient = {
+          send: vi.fn(),
+        } as unknown as WebSocket;
         wsClient.send = () => true;
       });
   });

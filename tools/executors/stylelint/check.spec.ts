@@ -1,6 +1,8 @@
-jest.mock('child_process');
-jest.mock('@nx/devkit');
-jest.mock('nx/src/generators/tree');
+import { describe, expect, it, type Mock, vi } from 'vitest';
+
+vi.mock('child_process');
+vi.mock('@nx/devkit');
+vi.mock('nx/src/generators/tree');
 
 import type { ExecutorContext, ProjectConfiguration } from '@nx/devkit';
 import * as devkit from '@nx/devkit';
@@ -12,8 +14,8 @@ import type { IExecutorOptions } from './schema';
 
 describe('check', () => {
   const setup = (projestName?: string) => {
-    (childProcess.execFileSync as jest.Mock).mockImplementation(
-      (command: string, options: childProcess.ExecSyncOptionsWithBufferEncoding) => Buffer.from([]),
+    (childProcess.execFileSync as Mock).mockImplementation((command: string, options: childProcess.ExecSyncOptionsWithBufferEncoding) =>
+      Buffer.from([]),
     );
 
     const projects: Record<string, ProjectConfiguration> = {};
@@ -24,7 +26,7 @@ describe('check', () => {
       targets: {},
     };
 
-    (devkit.getProjects as jest.Mock).mockImplementation((tree: nxTree.FsTree) => new Map(Object.entries(projects)));
+    (devkit.getProjects as Mock).mockImplementation((tree: nxTree.FsTree) => new Map(Object.entries(projects)));
 
     const context: ExecutorContext = {
       cwd: process.cwd(),
@@ -51,8 +53,6 @@ describe('check', () => {
   };
 
   describe('errors: projectName', () => {
-    afterEach(() => jest.clearAllMocks());
-
     it('should throw an error if context.projectName is undefined', async () => {
       const { context, options } = setup();
 
@@ -113,8 +113,6 @@ describe('check', () => {
   });
 
   describe('no errors', () => {
-    afterEach(() => jest.clearAllMocks());
-
     it('should throw an error if a source directory does not exist', async () => {
       const { context, options } = setup('test');
 

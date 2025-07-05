@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { DateAdapter } from '@angular/material/core';
 import { WINDOW } from '@app/client-util';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
@@ -6,7 +6,6 @@ import { Subject } from 'rxjs';
 
 import { EN_DICTIONARY } from '../dictionaries/en';
 import { RU_DICTIONARY } from '../dictionaries/ru';
-import { IUiDictionary } from '../interfaces/ui-dictionary.interface';
 import { ISupportedLanguage, IUiLanguagesInterface, TLangCode, uiLanguages } from '../interfaces/ui-languages.interface';
 import { IUiTranslations } from '../interfaces/ui-translations.interface';
 
@@ -17,6 +16,16 @@ import { IUiTranslations } from '../interfaces/ui-translations.interface';
   providedIn: 'root',
 })
 export class AppTranslationUtilsService {
+  private readonly translate = inject(TranslateService);
+
+  private readonly dateAdapter = inject(DateAdapter<unknown>);
+
+  private readonly win = inject(WINDOW);
+
+  private readonly ruDictionary = inject(RU_DICTIONARY);
+
+  private readonly enDictionary = inject(EN_DICTIONARY);
+
   /**
    * Language changes notifier.
    */
@@ -45,13 +54,7 @@ export class AppTranslationUtilsService {
     en: { ...this.enDictionary },
   };
 
-  constructor(
-    private readonly translate: TranslateService,
-    private readonly dateAdapter: DateAdapter<unknown>,
-    @Inject(WINDOW) private readonly win: Window,
-    @Inject(RU_DICTIONARY) private readonly ruDictionary: IUiDictionary,
-    @Inject(EN_DICTIONARY) private readonly enDictionary: IUiDictionary,
-  ) {
+  constructor() {
     this.languageChangeSubscription();
   }
 

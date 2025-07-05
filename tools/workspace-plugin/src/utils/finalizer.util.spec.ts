@@ -2,16 +2,14 @@ import { promisify } from 'util';
 
 import { finalizeGenerator } from './finalizer.util';
 
-jest.mock('util', () => ({
-  promisify: jest
-    .fn()
-    .mockImplementation((cmd: unknown) => (command: string) => new Promise(resolve => resolve({ stderr: '', stdout: '' }))),
-  inherits: jest.fn(),
+vi.mock('util', () => ({
+  promisify: vi.fn().mockImplementation((cmd: unknown) => (command: string) => new Promise(resolve => resolve({ stderr: '', stdout: '' }))),
+  inherits: vi.fn(),
 }));
 
 describe('finalizer', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should remove .eslintrc.json if it exists', async () => {

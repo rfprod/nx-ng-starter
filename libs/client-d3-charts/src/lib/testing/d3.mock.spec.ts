@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import type { MockInstance } from 'vitest';
 
 describe('setupD3JsMock', () => {
   describe('document.getElementById finds nothing', () => {
@@ -49,10 +50,10 @@ describe('setupD3JsMock', () => {
   });
 
   describe('document.getElementById finds an element', () => {
-    let docSpy: jest.SpyInstance;
+    let docSpy: MockInstance;
 
     beforeEach(() => {
-      docSpy = jest.spyOn(document, 'getElementById');
+      docSpy = vi.spyOn(document, 'getElementById');
       const el = document.createElement('div');
       docSpy.mockReturnValue(el);
     });

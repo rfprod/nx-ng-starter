@@ -10,7 +10,7 @@ import type { IExecutorOptions, TSupportedApp } from './schema';
  * - elements
  */
 export class AppClientEnvConfig extends AppBaseEnvConfig {
-  public readonly supportedApps: TSupportedApp[] = ['client', 'documentation', 'elements'];
+  public override readonly supportedApps: TSupportedApp[] = ['client', 'documentation', 'elements'];
 
   constructor(options: IExecutorOptions, context: ExecutorContext) {
     super(options, context);

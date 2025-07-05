@@ -1,11 +1,14 @@
 {
   "compilerOptions": {
-    "allowJs": true,
-    "baseUrl": "../../",
-    "module": "commonjs",
-    "outDir": "../../dist/out-tsc",
-    "types": ["jest", "node"]
+    "types": [
+      "../../node_modules/vite/client",
+      "../../node_modules/vitest/globals",
+      "../../node_modules/vitest/importMeta",
+      "../../node_modules/vitest/utils",
+      "../../node_modules/vitest",
+      "node"
+    ]
   },
   "extends": "./tsconfig.json",
-  "include": ["**/*.spec.ts", "**/*.d.ts", "jest.config.ts"]
+  "include": ["vite.config.mts", "vitest.config.mts", "src/**/*.spec.ts"]
 }

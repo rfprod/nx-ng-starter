@@ -1,7 +1,15 @@
 {
   "compilerOptions": {
-    "types": ["cypress", "jest", "node"]
+    "types": [
+      "../../node_modules/vite/client",
+      "../../node_modules/vitest/globals",
+      "../../node_modules/vitest/importMeta",
+      "../../node_modules/vitest/utils",
+      "../../node_modules/vitest",
+      "node",
+      "cypress"
+    ]
   },
   "extends": "./tsconfig.json",
-  "include": ["src"]
+  "include": ["src/**/*.ts", "*.mts"]
 }

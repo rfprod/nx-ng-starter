@@ -1,55 +1,58 @@
-import { INestApplication } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-import { Args, GraphQLSchemaBuilderModule, GraphQLSchemaFactory, Mutation, Resolver } from '@nestjs/graphql';
-import { GraphQLFieldConfig, GraphQLSchema } from 'graphql';
+import { validate } from 'class-validator';
 
-import { AppMatcomp } from '../matcomp.interface';
-import { AppMatcompModel } from '../model/matcomp.model';
-import { AppMatcompInputDto } from './new-matcomp-input.dto';
-
-@Resolver(() => AppMatcompModel)
-class AppTestResolver {
-  @Mutation(() => AppMatcompModel)
-  public async create(@Args('input') args: AppMatcompInputDto) {
-    return new AppMatcomp({ ...args });
-  }
-}
+import { AppMatcompInputDto, maxInputLength } from './new-matcomp-input.dto';
 
 describe('AppMatcompInputDto', () => {
-  let app: INestApplication;
-  let gqlSchemaFactory: GraphQLSchemaFactory;
-  let schema: GraphQLSchema;
+  it('should validate correctly with valid input', async () => {
+    const input = new AppMatcompInputDto();
+    input.name = 'Valid Name';
+    input.description = 'This is a valid description.';
 
-  beforeAll(async () => {
-    app = await NestFactory.create(GraphQLSchemaBuilderModule);
-    await app.init();
-
-    gqlSchemaFactory = app.get(GraphQLSchemaFactory);
-    schema = await gqlSchemaFactory.create([AppTestResolver], [], { skipCheck: true });
+    const errors = await validate(input);
+    expect(errors).toHaveLength(0); // No validation errors should be present
   });
 
-  afterAll(async () => {
-    await app.close();
+  it('should fail validation if name is too short', async () => {
+    const input = new AppMatcompInputDto();
+    input.name = 'ab';
+    input.description = 'This is a valid description.';
+
+    const errors = await validate(input);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].property).toBe('name');
+    expect(errors[0].constraints).toHaveProperty('minLength');
   });
 
-  it('should have expected model', () => {
-    const type = schema.getType('AppMatcompInputDto');
-    expect(type).toBeDefined();
-    if (typeof type !== 'undefined') {
-      const conf = type.toConfig();
-      expect(conf.name).toEqual('AppMatcompInputDto');
+  it('should fail validation if name is too long', async () => {
+    const input = new AppMatcompInputDto();
+    input.name = 'a'.repeat(maxInputLength + 1);
+    input.description = 'This is a valid description.';
 
-      const fields = (
-        conf as typeof conf & { fields: Record<keyof AppMatcompInputDto, GraphQLFieldConfig<AppTestResolver, AppMatcompModel>> }
-      ).fields;
-      expect(fields.name).toBeDefined();
-      expect(fields.description).toBeDefined();
-    }
+    const errors = await validate(input);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].property).toBe('name');
+    expect(errors[0].constraints).toHaveProperty('maxLength');
   });
 
-  it('should initialize class properties as expected', () => {
-    const model = new AppMatcompInputDto();
-    expect(model.name).toEqual('');
-    expect(model.description).toEqual('');
+  it('should fail validation if description is too short', async () => {
+    const input = new AppMatcompInputDto();
+    input.name = 'Valid Name';
+    input.description = 'ab';
+
+    const errors = await validate(input);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].property).toBe('description');
+    expect(errors[0].constraints).toHaveProperty('minLength');
+  });
+
+  it('should fail validation if description is too long', async () => {
+    const input = new AppMatcompInputDto();
+    input.name = 'Valid Name';
+    input.description = 'a'.repeat(maxInputLength + 1);
+
+    const errors = await validate(input);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].property).toBe('description');
+    expect(errors[0].constraints).toHaveProperty('maxLength');
   });
 });

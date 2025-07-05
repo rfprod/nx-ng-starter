@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { first, map, switchMap, timer } from 'rxjs';
 
 import { IBarChartOptions, TBarChartData } from '../../interfaces/bar-chart.interface';
@@ -13,6 +13,8 @@ import { IBarChartOptions, TBarChartData } from '../../interfaces/bar-chart.inte
   standalone: false,
 })
 export class AppChartExamplesBarComponent {
+  private readonly breakpointObserver = inject(BreakpointObserver);
+
   /** The chart data. */
   private get chartData() {
     return [
@@ -48,6 +50,4 @@ export class AppChartExamplesBarComponent {
       );
     }),
   );
-
-  constructor(private readonly breakpointObserver: BreakpointObserver) {}
 }

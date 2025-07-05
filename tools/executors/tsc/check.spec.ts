@@ -1,16 +1,17 @@
-jest.mock('child_process');
+import { describe, expect, it, type Mock, vi } from 'vitest';
+
+vi.mock('child_process');
 
 import type { ExecutorContext } from '@nx/devkit';
 import * as childProcess from 'child_process';
 import path from 'path';
 
 import check from './check';
-import type { IExecutorOptions } from './schema';
 
 describe('check', () => {
   const setup = (projestName?: string) => {
-    (childProcess.execFileSync as jest.Mock).mockImplementation(
-      (command: string, options: childProcess.ExecSyncOptionsWithBufferEncoding) => Buffer.from([]),
+    (childProcess.execFileSync as Mock).mockImplementation((command: string, options: childProcess.ExecSyncOptionsWithBufferEncoding) =>
+      Buffer.from([]),
     );
 
     const context: ExecutorContext = {
@@ -32,14 +33,10 @@ describe('check', () => {
       targetName: '',
     };
 
-    const options: IExecutorOptions = { tsConfig: '' };
-
-    return { context, options };
+    return { context, options: { tsConfig: '' } };
   };
 
   describe('errors', () => {
-    afterEach(() => jest.clearAllMocks());
-
     it('should throw an error if context.projectName is undefined', async () => {
       const { context, options } = setup();
 
@@ -59,8 +56,6 @@ describe('check', () => {
   });
 
   describe('correct behavior', () => {
-    afterEach(() => jest.clearAllMocks());
-
     it('should execFileSync with expected parameters', async () => {
       const { context, options } = setup('test');
 

@@ -1,4 +1,4 @@
-import { Directive, Input, OnChanges, SimpleChange, SimpleChanges, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, inject, Input, OnChanges, SimpleChange, SimpleChanges, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { tap } from 'rxjs/operators';
 
@@ -14,13 +14,13 @@ interface IInputChanges extends SimpleChanges {
   standalone: false,
 })
 export class AppFeatureFlagDirective implements OnChanges {
-  @Input() public appFeatureFlag?: string | null;
+  private readonly viewContainer = inject(ViewContainerRef);
 
-  constructor(
-    private readonly viewContainer: ViewContainerRef,
-    private readonly template: TemplateRef<unknown>,
-    private readonly store: Store<IFeatureAccessState>,
-  ) {}
+  private readonly template = inject(TemplateRef<unknown>);
+
+  private readonly store = inject(Store<IFeatureAccessState>);
+
+  @Input() public appFeatureFlag?: string | null;
 
   public ngOnChanges(changes: IInputChanges) {
     const value: string | null | undefined = changes.appFeatureFlag.currentValue;

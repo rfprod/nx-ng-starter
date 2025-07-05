@@ -1,57 +1,50 @@
-import { INestApplication } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-import { Args, GraphQLSchemaBuilderModule, GraphQLSchemaFactory, Query, Resolver } from '@nestjs/graphql';
-import { GraphQLArgumentConfig, GraphQLFieldConfig, GraphQLSchema } from 'graphql';
+import { validate } from 'class-validator';
 
-import { AppMatcomp } from '../matcomp.interface';
-import { AppMatcompModel } from '../model/matcomp.model';
-import { AppMatcompArgs, defaultSkipValue, defaultTakeValue } from './matcomp.args';
+import { AppMatcompArgs } from './matcomp.args';
 
-@Resolver(() => AppMatcompModel)
-class AppTestResolver {
-  @Query(() => [AppMatcompModel])
-  public async matcomps(@Args() matcompArgs: AppMatcompArgs) {
-    const matcomp = (id = '0') => new AppMatcomp({ id, name: 'test', description: 'test', creationDate: new Date() });
-    const matcomps = [matcomp(), matcomp('1'), matcomp('2')];
-    return matcomps.slice(matcompArgs.skip, matcompArgs.take);
-  }
-}
-
-describe('AppMatcompModel', () => {
-  let app: INestApplication;
-  let gqlSchemaFactory: GraphQLSchemaFactory;
-  let schema: GraphQLSchema;
-
-  beforeAll(async () => {
-    app = await NestFactory.create(GraphQLSchemaBuilderModule);
-    await app.init();
-
-    gqlSchemaFactory = app.get(GraphQLSchemaFactory);
-    schema = await gqlSchemaFactory.create([AppTestResolver], [AppMatcompArgs], { skipCheck: true });
+describe('AppMatcompArgs', () => {
+  it('should validate correctly with default values', async () => {
+    const args = new AppMatcompArgs();
+    const errors = await validate(args);
+    expect(errors).toHaveLength(0);
   });
 
-  afterAll(async () => {
-    await app.close();
+  it('should validate correctly with custom valid values', async () => {
+    const args = new AppMatcompArgs();
+    args.skip = 5;
+    args.take = 25;
+
+    const errors = await validate(args);
+    expect(errors).toHaveLength(0);
   });
 
-  it('should have expected model', () => {
-    const type = schema.getQueryType();
-    expect(type).toBeDefined();
-    if (typeof type !== 'undefined' && type !== null) {
-      const conf = type.toConfig();
-      expect(conf.name).toEqual('Query');
-      const fields = (conf as typeof conf & { fields: { matcomps: GraphQLFieldConfig<AppTestResolver, AppMatcompModel> } }).fields;
-      expect(fields.matcomps).toBeDefined();
-      expect(fields.matcomps.args).toBeDefined();
-      const args = fields.matcomps.args as { skip: GraphQLArgumentConfig; take: GraphQLArgumentConfig };
-      expect(args.skip.defaultValue).toEqual(defaultSkipValue);
-      expect(args.take.defaultValue).toEqual(defaultTakeValue);
-    }
+  it('should fail validation if skip is less than defaultSkipValue', async () => {
+    const args = new AppMatcompArgs();
+    args.skip = -1;
+
+    const errors = await validate(args);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].property).toBe('skip');
+    expect(errors[0].constraints).toHaveProperty('min');
   });
 
-  it('should initialize class properties as expected', () => {
-    const model = new AppMatcompArgs();
-    expect(model.skip).toEqual(defaultSkipValue);
-    expect(model.take).toEqual(defaultTakeValue);
+  it('should fail validation if take is less than minTakeValue', async () => {
+    const args = new AppMatcompArgs();
+    args.take = 0;
+
+    const errors = await validate(args);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].property).toBe('take');
+    expect(errors[0].constraints).toHaveProperty('min');
+  });
+
+  it('should fail validation if take is greater than maxTakeValue', async () => {
+    const args = new AppMatcompArgs();
+    args.take = 51;
+
+    const errors = await validate(args);
+    expect(errors).toHaveLength(1);
+    expect(errors[0].property).toBe('take');
+    expect(errors[0].constraints).toHaveProperty('max');
   });
 });

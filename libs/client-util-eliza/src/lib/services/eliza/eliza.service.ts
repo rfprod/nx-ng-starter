@@ -13,19 +13,21 @@
  * JavaScript source: https://github.com/natelewis/eliza-as-promised
  */
 
-import { Inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 
 import { ELIZA_DATA } from '../../config/data.config';
 import { elizaInitialConfig } from '../../config/eliza.config';
 import { elizaFinalDefault } from '../../config/finals.config';
 import { elizaInitialDefault } from '../../config/initials.config';
 import { IChatMessage } from '../../interfaces/chat.interface';
-import { IElizaConfig, IElizaData, IElizaKeyword, IElizaResponse } from '../../interfaces/eliza.interface';
+import type { IElizaConfig, IElizaData, IElizaKeyword, IElizaResponse } from '../../interfaces/eliza.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppElizaService {
+  public readonly elizaData = inject(ELIZA_DATA);
+
   /**
    * Eliza configuration.
    */
@@ -60,8 +62,8 @@ export class AppElizaService {
    */
   public readonly messages$ = this.messages.asReadonly();
 
-  constructor(@Inject(ELIZA_DATA) public readonly elizaData: IElizaData) {
-    this.setup(elizaData);
+  constructor() {
+    this.setup(this.elizaData);
   }
 
   /**

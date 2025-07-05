@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-import { ITooltipData, TOOLTIP_DATA } from './tooltip.interface';
+import { TOOLTIP_DATA } from './tooltip.interface';
 
 @Component({
   selector: 'app-tooltip',
@@ -10,5 +10,5 @@ import { ITooltipData, TOOLTIP_DATA } from './tooltip.interface';
   standalone: false,
 })
 export class AppTooltipComponent {
-  constructor(@Inject(TOOLTIP_DATA) public readonly data: ITooltipData) {}
+  public readonly data = inject(TOOLTIP_DATA);
 }

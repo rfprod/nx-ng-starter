@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { first, map, switchMap, timer } from 'rxjs';
 
 import {
@@ -17,6 +17,8 @@ import {
   standalone: false,
 })
 export class AppChartExamplesForceDirectedComponent {
+  private readonly breakpointObserver = inject(BreakpointObserver);
+
   /** Sample chart data. */
   private readonly value = Object.freeze({
     domains: ['first', 'second', 'third'],
@@ -91,6 +93,4 @@ export class AppChartExamplesForceDirectedComponent {
       );
     }),
   );
-
-  constructor(private readonly breakpointObserver: BreakpointObserver) {}
 }

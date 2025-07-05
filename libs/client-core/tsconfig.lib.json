@@ -12,7 +12,7 @@
     "outDir": "../../dist/out-tsc",
     "target": "ES2022"
   },
-  "exclude": ["src/test-setup.ts", "**/*.spec.ts", "**/*.mock.ts", "**/*.stories.ts", "jest.config.ts"],
+  "exclude": ["src/test-setup.ts", "**/*.spec.ts", "**/*.mock.ts", "**/*.stories.ts", "*.mts"],
   "extends": "./tsconfig.json",
   "include": ["**/*.ts"]
 }

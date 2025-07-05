@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { EffectsModule } from '@ngrx/effects';
 import { Store, StoreModule } from '@ngrx/store';
+import type { MockInstance } from 'vitest';
 
 import { sidebarAction } from './sidebar.actions';
 import { AppSidebarEffects } from './sidebar.effects';
@@ -21,13 +22,13 @@ describe('AppSidebarEffects', () => {
 
   let store: Store<ISidebarState>;
   let router: Router;
-  let routerNavigateSpy: jest.SpyInstance;
+  let routerNavigateSpy: MockInstance;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule(testBedConfig).compileComponents();
     store = TestBed.inject(Store);
     router = TestBed.inject(Router);
-    routerNavigateSpy = jest.spyOn(router, 'navigate').mockImplementation(() => new Promise<boolean>(resolve => resolve(true)));
+    routerNavigateSpy = vi.spyOn(router, 'navigate').mockImplementation(() => new Promise<boolean>(resolve => resolve(true)));
   });
 
   it('should call router.navigate when the open action is dispatched with payload { navigate: true }', waitForAsync(() => {

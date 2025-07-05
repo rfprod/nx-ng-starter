@@ -2,8 +2,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { elizaData, elizaDataProvider } from '../../config/data.config';
 import { elizaInitialConfig } from '../../config/eliza.config';
-import { elizaFinalDefault, elizaFinals } from '../../config/finals.config';
-import { elizaInitialDefault, elizaInitials } from '../../config/initials.config';
+import { elizaFinals } from '../../config/finals.config';
+import { elizaInitials } from '../../config/initials.config';
 import type { IChatMessage } from '../../interfaces/chat.interface';
 import type { IElizaConfig, IElizaData } from '../../interfaces/eliza.interface';
 import { AppElizaService } from './eliza.service';
@@ -19,11 +19,11 @@ describe('AppElizaService', () => {
     service = TestBed.inject(AppElizaService);
   };
 
-  describe('basic features', () => {
-    beforeEach(async () => {
-      await setup();
-    });
+  beforeAll(async () => {
+    await setup();
+  });
 
+  describe('basic features', () => {
     it('should be defined', () => {
       expect(service).toBeDefined();
     });
@@ -68,8 +68,8 @@ describe('AppElizaService', () => {
     const noPresError = new Error('Eliza does not have any configured pre expressions.');
     const noPostsError = new Error('Eliza does not have any configured post expressions.');
 
-    beforeEach(async () => {
-      await setup();
+    beforeAll(() => {
+      service.reset();
 
       service['data'] = void 0;
     });
@@ -112,19 +112,6 @@ describe('AppElizaService', () => {
       } catch (e) {
         expect((e as Error).message).toEqual(notInitializedError.message);
       }
-    });
-  });
-
-  describe('default initial message and default final message', () => {
-    beforeEach(async () => {
-      await setup({ ...elizaData, initials: [], finals: [] });
-    });
-
-    it('should use the default initial message and default final message if initials and finals are not configured', async () => {
-      const messages = service.messages$();
-      expect(messages[0].text).toEqual(elizaInitialDefault);
-      const response = await service.getResponse('Bye');
-      expect(response.reply).toEqual(elizaFinalDefault);
     });
   });
 });

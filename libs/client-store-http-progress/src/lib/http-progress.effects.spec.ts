@@ -22,15 +22,15 @@ describe('AppHttpProgressEffects', () => {
         provide: AppHttpProgressService,
         useValue: {
           globalProgressHandler: {
-            start: jest.fn(),
-            stop: jest.fn(),
+            start: vi.fn(),
+            stop: vi.fn(),
           },
         },
       },
       {
         provide: AppToasterService,
         useValue: {
-          showToaster: jest.fn(),
+          showToaster: vi.fn(),
         },
       },
     ],

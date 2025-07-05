@@ -8,31 +8,27 @@ describe('AppLoggerMiddleware', () => {
   let middleware: AppLoggerMiddleware;
 
   beforeAll(async () => {
-    await Test.createTestingModule({
+    testingModule = await Test.createTestingModule({
       providers: [AppLoggerMiddleware],
-    })
-      .compile()
-      .then(module => {
-        testingModule = module;
-        middleware = testingModule.get<AppLoggerMiddleware>(AppLoggerMiddleware);
-      });
+    }).compile();
+    middleware = testingModule.get<AppLoggerMiddleware>(AppLoggerMiddleware);
   });
 
   it('the middleware should log an original request url', () => {
     const middlewareParams: {
       req: Request;
       res: Response;
-      next: () => unknown;
+      next(): unknown;
     } = {
       req: request,
       res: response,
       next: () => void 0,
     };
     middlewareParams.req.originalUrl = 'test';
-    const nextHandleSpy = jest.spyOn(middlewareParams, 'next');
-    const consoleLogSpy = jest.spyOn(console, 'log');
+    const nextHandleSpy = vi.spyOn(middlewareParams, 'next');
+    const stdoutWriteSpy = vi.spyOn(process.stdout, 'write');
     middleware.use(middlewareParams.req, middlewareParams.res, middlewareParams.next);
-    expect(consoleLogSpy).toHaveBeenCalledWith('req', middlewareParams.req.originalUrl);
+    expect(stdoutWriteSpy).toHaveBeenCalledWith(`\nreq: ${middlewareParams.req.originalUrl}\n`);
     expect(nextHandleSpy).toHaveBeenCalled();
   });
 });

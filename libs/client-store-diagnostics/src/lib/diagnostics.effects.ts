@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap, tap } from 'rxjs/operators';
 
@@ -11,6 +11,12 @@ import { AppWebsocketApiService } from './services/websocket/websocket-api.servi
   providedIn: 'root',
 })
 export class AppDiagnosticsEffects {
+  private readonly actions$ = inject(Actions);
+
+  private readonly wsApi = inject(AppWebsocketApiService);
+
+  private readonly staticApi = inject(AppStaticDataService);
+
   public readonly connect$ = createEffect(() =>
     this.actions$.pipe(
       ofType(diagnosticsAction.connect.type),
@@ -28,7 +34,7 @@ export class AppDiagnosticsEffects {
       map(({ payload }) => {
         const event = payload.events[0];
         return event.event === 'users'
-          ? diagnosticsAction.userDataSuccess({ payload: event.data.reduce((acc: number, item) => acc + (item.value as number), 0) })
+          ? diagnosticsAction.userDataSuccess({ payload: event.data.reduce((acc: number, item) => acc + (item['value'] as number), 0) })
           : diagnosticsAction.dynamicDataSuccess({ payload: event.data });
       }),
     ),
@@ -63,10 +69,4 @@ export class AppDiagnosticsEffects {
       map(payload => diagnosticsAction.staticDataSuccess({ payload })),
     ),
   );
-
-  constructor(
-    private readonly actions$: Actions,
-    private readonly wsApi: AppWebsocketApiService,
-    private readonly staticApi: AppStaticDataService,
-  ) {}
 }

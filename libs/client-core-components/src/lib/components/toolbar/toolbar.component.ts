@@ -45,9 +45,9 @@ export class AppToolbarComponent {
     this.sidebarToggled.emit();
   }
 
-  public toggleChatbot(): void {
-    if (this.chatbotOpen !== null) {
-      this.chatbotToggled.emit(!this.chatbotOpen);
+  public toggleChatbot(event: MouseEvent | KeyboardEvent): void {
+    if ((this.chatbotOpen !== null && event instanceof MouseEvent) || (event instanceof KeyboardEvent && event.key === 'Enter')) {
+      this.chatbotToggled.emit(!Boolean(this.chatbotOpen));
     }
   }
 

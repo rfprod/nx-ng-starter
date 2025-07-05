@@ -9,16 +9,16 @@ import { finalizeGenerator } from '../../utils/finalizer.util';
 import * as generator from './client-store.generator';
 import type { ISchematicContext } from './schema.interface';
 
-jest.mock('../../utils/finalizer.util', () => ({
-  finalizeGenerator: jest.fn().mockImplementation(() => new Promise(resolve => resolve({ success: true }))),
+vi.mock('../../utils/finalizer.util', () => ({
+  finalizeGenerator: vi.fn().mockImplementation(() => new Promise(resolve => resolve({ success: true }))),
 }));
 
-jest.mock('../../utils/project-configuration.util', () => ({
-  updateProjectLinterConfig: jest.fn().mockImplementation(() => void 0),
+vi.mock('../../utils/project-configuration.util', () => ({
+  updateProjectLinterConfig: vi.fn().mockImplementation(() => void 0),
 }));
 
-jest.mock('@nx/angular/generators', () => ({
-  libraryGenerator: jest.fn().mockImplementation((tree: Tree, schema: Schema) => {
+vi.mock('@nx/angular/generators', () => ({
+  libraryGenerator: vi.fn().mockImplementation((tree: Tree, schema: Schema) => {
     const p = new Promise(resolve => {
       const path = `libs/${schema.name}/project.json`;
       tree.write(path, '{}');
@@ -37,7 +37,7 @@ describe('client-store', () => {
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     tree = createTreeWithEmptyWorkspace({
       layout: 'apps-libs',
     });
@@ -82,7 +82,7 @@ describe('client-store', () => {
       const testSetupIncludes = defaultTestSetupIncludes();
       for (let i = 0, max = testSetupIncludes.length; i < max; i += 1) {
         const include = testSetupIncludes[i];
-        expect(testSetup).toContain(include);
+        expect(testSetup, `Does not include ${include}`).toContain(include);
       }
 
       expectFileToExist(`/libs/${context.name}/src/lib/${kebabCaseName}.actions.ts`, tree);

@@ -1,7 +1,6 @@
 import { ConnectedPosition, Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { DOCUMENT } from '@angular/common';
-import { AfterContentInit, Directive, ElementRef, Inject, Injector, Input, OnDestroy, ViewContainerRef } from '@angular/core';
+import { AfterContentInit, Directive, DOCUMENT, ElementRef, inject, Injector, Input, OnDestroy, ViewContainerRef } from '@angular/core';
 
 import { OVERLAY_REFERENCE } from '../../providers/overlay.provider';
 import { AppGuidedTourService } from '../../services/guided-tour/guided-tour.service';
@@ -14,6 +13,18 @@ import { GUIDED_TOUR_DATA, IGuidedTourData } from './guided-tour.interface';
   standalone: false,
 })
 export class AppGuidedTourDirective implements AfterContentInit, OnDestroy {
+  private readonly el = inject(ElementRef);
+
+  private readonly overlay = inject(Overlay);
+
+  private readonly overlayConfig = inject(OverlayConfig);
+
+  private readonly viewContainerRef = inject(ViewContainerRef);
+
+  private readonly doc = inject(DOCUMENT);
+
+  private readonly tour = inject(AppGuidedTourService);
+
   /** Guided tour step configuration. */
   @Input() public appGuidedTour: IGuidedTourData | undefined = void 0;
 
@@ -113,22 +124,6 @@ export class AppGuidedTourDirective implements AfterContentInit, OnDestroy {
 
   /** Overlay reference. */
   private overlayRef: OverlayRef | null = null;
-
-  /**
-   * @param el A wrapper around a native element inside of a View.
-   * @param overlay Service to create Overlays.
-   * @param overlayConfig Initial configuration used when creating an overlay.
-   * @param viewContainerRef Represents a container where one or more views can be attached to a component.
-   * @param tour Guided tour service.
-   */
-  constructor(
-    private readonly el: ElementRef,
-    private readonly overlay: Overlay,
-    private readonly overlayConfig: OverlayConfig,
-    private readonly viewContainerRef: ViewContainerRef,
-    @Inject(DOCUMENT) private readonly doc: Document,
-    private readonly tour: AppGuidedTourService,
-  ) {}
 
   /** Overlay configurator. */
   private configureOverlay(): void {

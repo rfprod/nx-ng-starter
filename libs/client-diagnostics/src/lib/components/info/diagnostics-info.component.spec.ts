@@ -47,7 +47,7 @@ describe('AppDiagnosticsInfoComponent', () => {
   });
 
   it('should dispatch one event on init', () => {
-    const spy = jest.spyOn(store, 'dispatch');
+    const spy = vi.spyOn(store, 'dispatch');
     component.ngOnInit();
     expect(spy).toHaveBeenCalledTimes(1);
   });

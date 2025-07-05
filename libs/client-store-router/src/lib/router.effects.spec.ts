@@ -5,6 +5,7 @@ import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { EffectsModule } from '@ngrx/effects';
 import { routerReducer } from '@ngrx/router-store';
 import { Store, StoreModule } from '@ngrx/store';
+import type { Mock, MockInstance } from 'vitest';
 
 import { routerAction } from './router.actions';
 import { AppRouterEffects } from './router.effects';
@@ -17,7 +18,7 @@ describe('AppRouterEffects', () => {
       {
         provide: Location,
         useValue: {
-          historyGo: jest.fn(),
+          historyGo: vi.fn(),
         },
       },
     ],
@@ -26,16 +27,16 @@ describe('AppRouterEffects', () => {
 
   let store: Store<IRouterState>;
   let router: Router;
-  let routerNavigateSpy: jest.SpyInstance;
+  let routerNavigateSpy: MockInstance;
   let location: Location;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule(testBedConfig).compileComponents();
     store = TestBed.inject(Store);
     router = TestBed.inject(Router);
-    routerNavigateSpy = jest.spyOn(router, 'navigate').mockImplementation(() => new Promise<boolean>(resolve => resolve(true)));
+    routerNavigateSpy = vi.spyOn(router, 'navigate').mockImplementation(() => new Promise<boolean>(resolve => resolve(true)));
     location = TestBed.inject(Location);
-    (location.historyGo as jest.Mock).mockClear();
+    (location.historyGo as Mock).mockClear();
   });
 
   it('should call router.navigate when the navigate action is dispatched', waitForAsync(() => {

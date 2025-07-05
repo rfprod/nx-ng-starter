@@ -1,8 +1,9 @@
 import { TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { MatSnackBar, type MatSnackBarRef, type SimpleSnackBar } from '@angular/material/snack-bar';
 import type { TToastType } from '@app/client-util';
+import type { MockInstance } from 'vitest';
 
-import { AppToasterService, toasterServiceProvider } from './toaster.service';
+import { AppToasterService } from './toaster.service';
 
 describe('AppToasterService', () => {
   const testBedConfig: TestModuleMetadata = {
@@ -16,7 +17,7 @@ describe('AppToasterService', () => {
           }) as MatSnackBar,
         deps: [],
       },
-      toasterServiceProvider,
+      AppToasterService,
     ],
   };
 
@@ -24,8 +25,8 @@ describe('AppToasterService', () => {
   let snackBar: MatSnackBar;
   let spy: {
     snackBar: {
-      open: jest.SpyInstance;
-      dismiss: jest.SpyInstance;
+      open: MockInstance;
+      dismiss: MockInstance;
     };
   };
 
@@ -35,8 +36,8 @@ describe('AppToasterService', () => {
     snackBar = TestBed.inject(MatSnackBar);
     spy = {
       snackBar: {
-        open: jest.spyOn(snackBar, 'open'),
-        dismiss: jest.spyOn(snackBar, 'dismiss'),
+        open: vi.spyOn(snackBar, 'open'),
+        dismiss: vi.spyOn(snackBar, 'dismiss'),
       },
     };
   });
@@ -167,7 +168,7 @@ describe('AppToasterService', () => {
   it('should dismiss snackBar on hideToaster() method call if it was opened previously', () => {
     service.showToaster('message', 'primary');
     expect(service['snackBarRef']).toBeDefined();
-    jest.spyOn((service as unknown as { snackBarRef: MatSnackBarRef<SimpleSnackBar> }).snackBarRef, 'dismiss');
+    vi.spyOn((service as unknown as { snackBarRef: MatSnackBarRef<SimpleSnackBar> }).snackBarRef, 'dismiss');
     service.hideToaster();
     expect(service['snackBarRef']?.dismiss).toHaveBeenCalled();
   });

@@ -19,7 +19,7 @@ export class AppDiagnosticsService implements IDiagnosticsService {
   private npmVersion() {
     const observable$ = new Observable<string>(subscriber => {
       let version = 'N/A';
-      if (typeof process.env.ELECTRON !== 'undefined') {
+      if (typeof process.env['ELECTRON'] !== 'undefined') {
         subscriber.next(version);
         subscriber.complete();
       }

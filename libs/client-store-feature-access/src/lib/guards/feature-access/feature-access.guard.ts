@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { first, map, Observable } from 'rxjs';
@@ -10,10 +10,9 @@ import { featureAccessSelector } from '../../feature-access.selectors';
   providedIn: 'root',
 })
 export class AppFeatureAccessGuard {
-  constructor(
-    private readonly router: Router,
-    private readonly store: Store<IFeatureAccessState>,
-  ) {}
+  private readonly router = inject(Router);
+
+  private readonly store = inject(Store<IFeatureAccessState>);
 
   public canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
     const value: string | undefined = (state.root.data as { feature?: string }).feature;

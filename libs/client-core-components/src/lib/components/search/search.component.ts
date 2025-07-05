@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, HostBinding, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, HostBinding, inject, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { Data, Route, Router, Routes } from '@angular/router';
@@ -9,7 +9,7 @@ interface ISearchOptions {
   icon?: string;
   value: string;
   routerLink: string;
-  isActive: () => ReturnType<Router['isActive']>;
+  isActive(): ReturnType<Router['isActive']>;
 }
 
 interface IParsedRoute {
@@ -26,6 +26,8 @@ interface IParsedRoute {
   standalone: false,
 })
 export class AppSearchComponent implements AfterViewInit {
+  private readonly router = inject(Router);
+
   @HostBinding('class.density-3') public density = true;
 
   /** The autocomplete input. */
@@ -50,7 +52,7 @@ export class AppSearchComponent implements AfterViewInit {
     ),
   );
 
-  constructor(private readonly router: Router) {
+  constructor() {
     void this.getOptions().subscribe();
   }
 
@@ -82,15 +84,15 @@ export class AppSearchComponent implements AfterViewInit {
           )
           .map(route => {
             const data = route.data;
-            const feature = typeof data?.feature === 'string' && data.feature.length > 0 ? data.feature : route.path;
+            const feature = typeof data?.['feature'] === 'string' && data['feature'].length > 0 ? data['feature'] : route.path;
             const name =
-              typeof data?.title === 'string' && data.title.length > 0
-                ? data.title
+              typeof data?.['title'] === 'string' && data['title'].length > 0
+                ? data['title']
                 : `${feature.slice(0, 1).toUpperCase()}${feature.slice(1, feature.length)}`;
             return {
               name,
               value: route.path,
-              icon: route.data?.icon,
+              icon: route.data?.['icon'],
               routerLink: route.path.replace(/\s/g, '/'),
               isActive: () =>
                 this.router.isActive(route.path, {
@@ -138,7 +140,7 @@ export class AppSearchComponent implements AfterViewInit {
     let children: Routes = route.children ?? [];
     if (children.length === 0 && typeof route.loadChildren !== 'undefined') {
       await route.loadChildren();
-      const loadedRoutes = (route as Route & Record<'_loadedRoutes' | string, Route['children']>)._loadedRoutes;
+      const loadedRoutes = (route as Route & Record<'_loadedRoutes' | string, Route['children']>)['_loadedRoutes'];
       children = typeof loadedRoutes !== 'undefined' ? [...loadedRoutes] : children;
     }
     const resolvers = children.flatMap(async child => {

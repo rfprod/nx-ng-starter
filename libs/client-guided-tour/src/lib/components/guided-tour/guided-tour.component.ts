@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { AppGuidedTourService } from '../../services/guided-tour/guided-tour.service';
-import { GUIDED_TOUR_DATA, IGuidedTourData } from './guided-tour.interface';
+import { GUIDED_TOUR_DATA } from './guided-tour.interface';
 
 /** Guided tour component. */
 @Component({
@@ -12,12 +12,7 @@ import { GUIDED_TOUR_DATA, IGuidedTourData } from './guided-tour.interface';
   standalone: false,
 })
 export class AppGuidedTourComponent {
-  /**
-   * @param tour  Guided tour service.
-   * @param data Guided tour step data.
-   */
-  constructor(
-    public readonly tour: AppGuidedTourService,
-    @Inject(GUIDED_TOUR_DATA) public readonly data: IGuidedTourData,
-  ) {}
+  public readonly tour = inject(AppGuidedTourService);
+
+  public readonly data = inject(GUIDED_TOUR_DATA);
 }

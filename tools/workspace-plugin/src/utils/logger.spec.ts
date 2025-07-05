@@ -1,11 +1,13 @@
+import type { MockInstance } from 'vitest';
+
 import { COLORS } from './colors';
 import { logger } from './logger';
 
 describe('logger', () => {
-  let spy: jest.SpyInstance;
+  let spy: MockInstance;
 
   beforeEach(() => {
-    spy = jest.spyOn(console, 'log');
+    spy = vi.spyOn(console, 'log');
   });
 
   afterEach(() => {

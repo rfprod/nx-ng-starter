@@ -1,5 +1,7 @@
-jest.mock('child_process');
-jest.mock('./env-client');
+import { describe, expect, it, type Mock, vi } from 'vitest';
+
+vi.mock('child_process');
+vi.mock('./env-client');
 
 import type { ExecutorContext } from '@nx/devkit';
 
@@ -9,7 +11,7 @@ import type { IExecutorOptions, TSupportedApp } from './schema';
 
 describe('configure', () => {
   const setup = (app: TSupportedApp = 'client', mockEnvClient?: boolean) => {
-    const envClientMock = envClient.AppClientEnvConfig as jest.Mock;
+    const envClientMock = envClient.AppClientEnvConfig as Mock;
     if (mockEnvClient === true) {
       envClientMock.mockImplementation((opts: IExecutorOptions, ctx: ExecutorContext) => ({
         execute: () => new Promise<void>(resolve => resolve()),
@@ -41,8 +43,6 @@ describe('configure', () => {
   };
 
   describe('errors', () => {
-    afterEach(() => jest.clearAllMocks());
-
     it('should throw an error if context.projectName is undefined', async () => {
       const app: TSupportedApp = '';
       const { context, options } = setup(app, true);
@@ -58,8 +58,6 @@ describe('configure', () => {
   });
 
   describe('correct behavior', () => {
-    afterEach(() => jest.clearAllMocks());
-
     it('should execute successfully', async () => {
       const { context, options } = setup('client', true);
 

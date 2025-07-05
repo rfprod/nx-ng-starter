@@ -4,6 +4,7 @@ import { TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { AppHttpHandlersService } from '@app/client-store-http-progress';
 import { flushHttpRequests, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { lastValueFrom, of } from 'rxjs';
+import type { MockInstance } from 'vitest';
 
 import { AppStaticDataService } from './static-data-api.service';
 
@@ -27,12 +28,12 @@ describe('AppStaticDataService', () => {
   let service: AppStaticDataService;
   let httpHandlers: AppHttpHandlersService;
   let httpHandlersSpy: {
-    getEndpoint: jest.SpyInstance;
-    pipeHttpResponse: jest.SpyInstance;
+    getEndpoint: MockInstance;
+    pipeHttpResponse: MockInstance;
   };
 
   let httpClient: HttpClient;
-  let httpClientGetSpy: jest.SpyInstance;
+  let httpClientGetSpy: MockInstance;
 
   let httpController: HttpTestingController;
 
@@ -42,11 +43,11 @@ describe('AppStaticDataService', () => {
     service = TestBed.inject(AppStaticDataService);
     httpHandlers = TestBed.inject(AppHttpHandlersService);
     httpHandlersSpy = {
-      getEndpoint: jest.spyOn(httpHandlers, 'getEndpoint'),
-      pipeHttpResponse: jest.spyOn(httpHandlers, 'pipeHttpResponse'),
+      getEndpoint: vi.spyOn(httpHandlers, 'getEndpoint'),
+      pipeHttpResponse: vi.spyOn(httpHandlers, 'pipeHttpResponse'),
     };
     httpClient = TestBed.inject(HttpClient);
-    httpClientGetSpy = jest.spyOn(httpClient, 'get');
+    httpClientGetSpy = vi.spyOn(httpClient, 'get');
   });
 
   afterEach(() => {

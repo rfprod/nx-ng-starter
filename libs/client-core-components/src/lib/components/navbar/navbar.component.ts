@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { IRouterButton, routerButton } from '@app/client-util';
 
@@ -10,6 +10,8 @@ import { IRouterButton, routerButton } from '@app/client-util';
   standalone: false,
 })
 export class AppNavbarComponent {
+  private readonly router = inject(Router);
+
   @Input() public appName: string | null = null;
 
   @Input() public logoSrc: string | null = 'assets/svg/logo.svg';
@@ -87,8 +89,6 @@ export class AppNavbarComponent {
   @Output() public readonly navigatedBack = new EventEmitter<undefined>();
 
   @Output() public readonly navigatedForward = new EventEmitter<undefined>();
-
-  constructor(private readonly router: Router) {}
 
   public navButtonClick(): void {
     this.navButtonClicked.emit();

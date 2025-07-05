@@ -7,8 +7,8 @@ import { changesConfig } from './changes.config';
 const patternKeys = Object.keys(changesConfig) as Array<keyof typeof changesConfig>;
 
 const env = {
-  premerge: Boolean(process.env.PREMERGE),
-  trunk: process.env.TRUNK ?? 'main',
+  premerge: Boolean(process.env['PREMERGE']),
+  trunk: process.env['TRUNK'] ?? 'main',
 };
 
 /**

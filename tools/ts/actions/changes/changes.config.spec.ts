@@ -29,7 +29,7 @@ describe('changesConfig', () => {
         'nx.json',
         'babel.config.json',
         'package.json',
-        'jest*',
+        'vite*',
         '.eslint*',
         '.prettier*',
         '.protolint.yaml',

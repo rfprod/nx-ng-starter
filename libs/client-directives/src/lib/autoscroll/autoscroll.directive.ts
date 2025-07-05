@@ -1,4 +1,4 @@
-import { AfterContentInit, Directive, ElementRef, HostListener, Input, OnDestroy } from '@angular/core';
+import { AfterContentInit, Directive, ElementRef, HostListener, inject, Input, OnDestroy } from '@angular/core';
 
 const defaultVerticalOffsetLock = 10;
 
@@ -10,6 +10,8 @@ const defaultVerticalOffsetLock = 10;
   standalone: false,
 })
 export class AppAutoscrollDirective implements AfterContentInit, OnDestroy {
+  private readonly el = inject(ElementRef<HTMLElement>);
+
   @Input() public verticalOffsetLock = defaultVerticalOffsetLock;
 
   @Input() public observeAttributes = false;
@@ -19,8 +21,6 @@ export class AppAutoscrollDirective implements AfterContentInit, OnDestroy {
   private mutationObserver?: MutationObserver;
 
   private nativeElement?: HTMLElement;
-
-  constructor(private readonly el: ElementRef) {}
 
   public getObserveAttributes(): boolean {
     return this.observeAttributes;

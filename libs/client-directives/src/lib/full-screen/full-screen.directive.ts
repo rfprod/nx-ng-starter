@@ -1,4 +1,4 @@
-import { Directive, ElementRef, signal } from '@angular/core';
+import { Directive, ElementRef, inject, signal } from '@angular/core';
 
 interface IStyleConfiguration {
   width: string;
@@ -15,16 +15,13 @@ interface IStyleConfiguration {
   standalone: false,
 })
 export class AppFullScreenDirective {
+  private readonly el = inject(ElementRef<HTMLElement>);
+
   /** Original styles of the component. */
   private readonly originalStyles = signal<IStyleConfiguration | null>(null);
 
   /** Full screen state. */
   public readonly enabled$ = signal<boolean>(false);
-
-  /**
-   * @param el Element reference.
-   */
-  constructor(private readonly el: ElementRef<HTMLElement>) {}
 
   /**
    * Create a copy of the original styles.

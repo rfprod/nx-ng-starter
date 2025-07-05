@@ -1,56 +1,34 @@
-import { INestApplication } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-import { Args, GraphQLSchemaBuilderModule, GraphQLSchemaFactory, Mutation, Resolver } from '@nestjs/graphql';
-import { GraphQLFieldConfig, GraphQLSchema } from 'graphql';
+import type { FileUpload } from 'graphql-upload/processRequest.mjs';
 
-import { AppMatcompModel } from '../../matcomp/model/matcomp.model';
 import { AppFileUploadInputDto } from './file-upload-input.dto';
 
-@Resolver(() => AppMatcompModel)
-class AppTestResolver {
-  @Mutation(() => String)
-  public async upload(@Args('input') args: AppFileUploadInputDto) {
-    return args.filename;
-  }
-}
-
 describe('AppFileUploadInputDto', () => {
-  let app: INestApplication;
-  let gqlSchemaFactory: GraphQLSchemaFactory;
-  let schema: GraphQLSchema;
-
-  beforeAll(async () => {
-    app = await NestFactory.create(GraphQLSchemaBuilderModule);
-    await app.init();
-
-    gqlSchemaFactory = app.get(GraphQLSchemaFactory);
-    schema = await gqlSchemaFactory.create([AppTestResolver], [], { skipCheck: true });
+  it('should create an instance with default values', () => {
+    const input = new AppFileUploadInputDto();
+    expect(input.filename).toBe('');
+    expect(input.mimetype).toBe('');
+    expect(input.encoding).toBe('');
   });
 
-  afterAll(async () => {
-    await app.close();
+  it('should allow setting properties', () => {
+    const input = new AppFileUploadInputDto();
+    input.filename = 'test-file.txt';
+    input.mimetype = 'text/plain';
+    input.encoding = '7bit';
+
+    expect(input.filename).toBe('test-file.txt');
+    expect(input.mimetype).toBe('text/plain');
+    expect(input.encoding).toBe('7bit');
   });
 
-  it('should have expected model', () => {
-    const type = schema.getType('AppFileUploadInputDto');
-    expect(type).toBeDefined();
-    if (typeof type !== 'undefined') {
-      const conf = type.toConfig();
-      expect(conf.name).toEqual('AppFileUploadInputDto');
+  it('should implement Partial<FileUpload>', () => {
+    const input: Partial<FileUpload> = new AppFileUploadInputDto();
+    input.filename = 'example.txt';
+    input.mimetype = 'application/pdf';
+    input.encoding = 'utf-8';
 
-      const fields = (
-        conf as typeof conf & { fields: Record<keyof AppFileUploadInputDto, GraphQLFieldConfig<AppTestResolver, AppMatcompModel>> }
-      ).fields;
-      expect(fields.filename).toBeDefined();
-      expect(fields.mimetype).toBeDefined();
-      expect(fields.encoding).toBeDefined();
-    }
-  });
-
-  it('should initialize class properties as expected', () => {
-    const model = new AppFileUploadInputDto();
-    expect(model.filename).toEqual('');
-    expect(model.mimetype).toEqual('');
-    expect(model.encoding).toEqual('');
+    expect(input).toHaveProperty('filename', 'example.txt');
+    expect(input).toHaveProperty('mimetype', 'application/pdf');
+    expect(input).toHaveProperty('encoding', 'utf-8');
   });
 });

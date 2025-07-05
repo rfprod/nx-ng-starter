@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { first, map, switchMap, timer } from 'rxjs';
 
 import { ILineChartOptions, TDateFormat, TLineChartData } from '../../interfaces/line-chart.interface';
@@ -13,6 +13,8 @@ import { ILineChartOptions, TDateFormat, TLineChartData } from '../../interfaces
   standalone: false,
 })
 export class AppChartExamplesLineComponent {
+  private readonly breakpointObserver = inject(BreakpointObserver);
+
   /** The chart data. */
   private get chartData() {
     return [
@@ -68,8 +70,6 @@ export class AppChartExamplesLineComponent {
       );
     }),
   );
-
-  constructor(private readonly breakpointObserver: BreakpointObserver) {}
 
   /**
    * Random value generator.

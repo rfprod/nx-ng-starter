@@ -1,5 +1,5 @@
 import { backendGrpcClientOptions } from '@app/backend-grpc';
-import type { INestApplication } from '@nestjs/common';
+import { type INestApplication, Logger } from '@nestjs/common';
 import type { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { NestFactory } from '@nestjs/core';
 import type { ClientOptions } from '@nestjs/microservices';
@@ -34,8 +34,8 @@ const globalPrefix = 'api';
 dotenv.config();
 
 const initAdmin = () => {
-  const localCredential = process.env.FIRE_API_CREDENTIAL;
-  const localDatabaseURL = process.env.FIRE_DATABASE_URL;
+  const localCredential = process.env['FIRE_API_CREDENTIAL'];
+  const localDatabaseURL = process.env['FIRE_DATABASE_URL'];
 
   if (typeof localCredential !== 'undefined' && typeof localDatabaseURL !== 'undefined') {
     const cert = JSON.parse(localCredential !== '' ? localCredential : '{}');
@@ -76,10 +76,10 @@ async function bootstrap(expressInstance: e.Express): Promise<INestApplication> 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup(globalPrefix, app, document);
 
-  if (typeof process.env.FIREBASE_CONFIG === 'undefined' || process.env.FIREBASE_CONFIG === '') {
-    const port = typeof process.env.port !== 'undefined' ? process.env.port : defaultPort;
+  if (typeof process.env['FIREBASE_CONFIG'] === 'undefined' || process.env['FIREBASE_CONFIG'] === '') {
+    const port = typeof process.env['port'] !== 'undefined' ? process.env['port'] : defaultPort;
     await app.listen(port, () => {
-      console.info(`Listening http://localhost:${port}/${globalPrefix}/`);
+      Logger.log(`Listening http://localhost:${port}/${globalPrefix}/`);
     });
   }
 

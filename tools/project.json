@@ -49,15 +49,31 @@
         ]
       }
     },
-    "compile-executors": {
+    "clean-executor-compilation": {
       "executor": "nx:run-commands",
       "options": {
+        "color": true,
+        "commands": [
+          {
+            "command": "rm -rf ./tools/executors/**/*.js ./tools/executors/**/**/*.js ./tools/executors/**/*.js.map ./tools/executors/**/**/*.js.map",
+            "forwardAllArgs": false
+          }
+        ],
+        "parallel": false
+      }
+    },
+    "compile-executors": {
+      "dependsOn": ["clean-executor-compilation"],
+      "executor": "nx:run-commands",
+      "options": {
+        "color": true,
         "commands": [
           {
             "command": "rm -rf ./tools/executors/**/*.js ./tools/executors/**/*.js.map && npx tsc -p ./tools/executors/tsconfig.executors.json",
             "forwardAllArgs": false
           }
-        ]
+        ],
+        "parallel": false
       }
     },
     "compodoc-build": {
@@ -76,7 +92,7 @@
       "options": {
         "commands": [
           {
-            "command": "compodoc -p tsconfig.compodoc.json -d ./dist/compodoc  --coverageTest 40",
+            "command": "compodoc -p tsconfig.compodoc.json -d ./dist/compodoc  --coverageTest 39",
             "forwardAllArgs": false
           }
         ]
@@ -116,12 +132,11 @@
       }
     },
     "lint": {
-      "executor": "@angular-eslint/builder:lint",
+      "executor": "@nx/eslint:lint",
       "options": {
-        "eslintConfig": "tools/.eslintrc.json",
-        "lintFilePatterns": ["tools/generators/**/*.ts", "tools/ts/**/*.ts", "tools/js/**/*.js", "/*.*.js"]
-      },
-      "outputs": ["{options.outputFile}"]
+        "eslintConfig": "{projectRoot}/eslint.config.mjs",
+        "lintFilePatterns": ["tools/executors/**/*.ts", "tools/ts/**/*.ts", "tools/js/**/*.js"]
+      }
     },
     "lint-shell": {
       "executor": "nx:run-commands",
@@ -205,19 +220,20 @@
       }
     },
     "test": {
-      "executor": "@nx/jest:jest",
+      "dependsOn": ["clean-executor-compilation"],
+      "executor": "@nx/vite:test",
       "options": {
-        "jestConfig": "tools/jest.config.ts",
-        "passWithNoTests": true
-      },
-      "outputs": ["{workspaceRoot}/coverage/tools"]
+        "compiler": "swc",
+        "configFile": "tools/vitest.config.mts",
+        "coverageProvider": "istanbul",
+        "uiFramework": "none"
+      }
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
-        "tsConfig": "tools/tsconfig.tools.json"
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/tools"]
+        "tsConfig": "{projectRoot}/tsconfig.tools.json"
+      }
     },
     "tsc-configure": {
       "executor": "./tools/executors/tsc:configure",

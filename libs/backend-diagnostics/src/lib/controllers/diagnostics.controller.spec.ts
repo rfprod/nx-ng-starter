@@ -1,5 +1,6 @@
 import { Test, type TestingModule } from '@nestjs/testing';
 import { firstValueFrom, of } from 'rxjs';
+import type { MockInstance } from 'vitest';
 
 import { diagnosticsModuleProviders } from '../diagnostics.module';
 import { AppDiagnosticsService } from '../services/diagnostics.service';
@@ -10,8 +11,8 @@ describe('AppDiagnosticsController', () => {
   let diagController: AppDiagnosticsController;
   let diagService: AppDiagnosticsService;
   let diagServiceSpy: {
-    ping: jest.SpyInstance;
-    static: jest.SpyInstance;
+    ping: MockInstance;
+    static: MockInstance;
   };
 
   beforeAll(async () => {
@@ -25,10 +26,10 @@ describe('AppDiagnosticsController', () => {
         diagController = testingModule.get<AppDiagnosticsController>(AppDiagnosticsController);
         diagService = testingModule.get<AppDiagnosticsService>(AppDiagnosticsService);
         diagServiceSpy = {
-          ping: jest.spyOn(diagService, 'ping').mockReturnValue({
+          ping: vi.spyOn(diagService, 'ping').mockReturnValue({
             message: 'Diagnostics service is online. Routes: /, /static.',
           }),
-          static: jest.spyOn(diagService, 'static').mockReturnValue(
+          static: vi.spyOn(diagService, 'static').mockReturnValue(
             of([
               {
                 name: 'Node.js Version',

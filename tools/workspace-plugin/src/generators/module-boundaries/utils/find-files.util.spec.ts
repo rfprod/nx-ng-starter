@@ -1,19 +1,20 @@
 import * as fs from 'fs';
+import type { MockInstance } from 'vitest';
 
 import { findFiles } from './find-files.util';
 
-jest.mock('fs', () => ({
-  existsSync: jest.fn(),
-  readdirSync: jest.fn(),
+vi.mock('fs', () => ({
+  existsSync: vi.fn(),
+  readdirSync: vi.fn(),
 }));
 
 describe('findFiles', () => {
-  let existsSyncSpy: jest.SpyInstance;
-  let readdirSyncSpy: jest.SpyInstance;
+  let existsSyncSpy: MockInstance;
+  let readdirSyncSpy: MockInstance;
 
   beforeEach(() => {
-    existsSyncSpy = jest.spyOn(fs, 'existsSync');
-    readdirSyncSpy = jest.spyOn(fs, 'readdirSync');
+    existsSyncSpy = vi.spyOn(fs, 'existsSync');
+    readdirSyncSpy = vi.spyOn(fs, 'readdirSync');
   });
 
   it('should return stderr if the source directory does not exist', () => {

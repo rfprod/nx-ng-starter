@@ -3,11 +3,11 @@ import type { ActionReducer } from '@ngrx/store';
 import { storeLogger } from './logger.reducer';
 
 describe('storeLogger', () => {
-  const logSpy = jest.spyOn(console, 'log');
+  const logSpy = vi.spyOn(console, 'log');
 
   it('should execute reducer function and call console.log twise', () => {
     const state = { test: 'test' };
-    const reducer = jest.fn();
+    const reducer = vi.fn();
     const logger = storeLogger(reducer as ActionReducer<unknown>);
     const action = { type: 'test action' };
     logger(state as unknown, action);

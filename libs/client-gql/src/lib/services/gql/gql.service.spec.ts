@@ -1,12 +1,13 @@
 import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
-import { ApolloLink, InMemoryCache } from '@apollo/client/core';
+import { ApolloLink } from '@apollo/client/core';
 import { AppHttpHandlersService, type TGqlClient } from '@app/client-store-http-progress';
 import { AppUserStoreModule } from '@app/client-store-user';
 import { getTestBedConfig } from '@app/client-testing-unit';
-import { Apollo, type ApolloBase, provideApollo } from 'apollo-angular';
+import { Apollo, type ApolloBase } from 'apollo-angular';
 import type { DocumentNode } from 'graphql';
-import { cold, getTestScheduler } from 'jasmine-marbles';
 import { lastValueFrom, type Observable, of, tap } from 'rxjs';
+import { TestScheduler } from 'rxjs/testing';
+import type { MockInstance } from 'vitest';
 
 import { matcompMutations } from '../../graphql/matcomp/matcomp.mutations';
 import { matcompQueries } from '../../graphql/matcomp/matcomp.queries';
@@ -18,7 +19,7 @@ describe('AppClientGqlService', () => {
   const testBedConfig: TestModuleMetadata = getTestBedConfig({
     imports: [AppUserStoreModule.forRoot()],
     providers: [
-      provideApollo(() => ({ cache: new InMemoryCache() })),
+      Apollo,
       AppGqlService,
       {
         provide: AppHttpHandlersService,
@@ -52,34 +53,58 @@ describe('AppClientGqlService', () => {
 
   describe('public method', () => {
     const result = { result: 'success' };
-    const testSuccessMethod = (spy: jest.SpyInstance, method: 'query' | 'mutate', params: TTestSuccessMethodParams) => {
-      const q$ = cold('---x|', { x: result });
-      spy.mockImplementation(() => q$);
 
-      void service[method](...params).subscribe(response => {
-        expect(response).toEqual(result);
+    const testSuccessMethod = (
+      scheduler: TestScheduler,
+      spy: MockInstance,
+      method: 'query' | 'mutate',
+      params: TTestSuccessMethodParams,
+    ) => {
+      scheduler.run(({ cold, expectObservable }) => {
+        // const source$ = cold('-a-b-c-|', { a: 1, b: 2, c: 3 });
+        // const expected = '-x-y-z-|'; // Define expected output
+
+        // const result$ = source$.pipe(map(value => value + 1)); // Example transformation
+
+        // expectObservable(result$).toBe(expected, { x: 2, y: 3, z: 4 });
+
+        const q$ = cold('---x|', { x: result });
+        spy.mockImplementation(() => q$);
+
+        void service[method](...params).subscribe(response => {
+          expect(response).toEqual(result);
+        });
+        scheduler.flush();
       });
-      getTestScheduler().flush();
     };
 
-    let pipeResponseSpy: jest.SpyInstance;
-    let useApolloSpy: jest.SpyInstance;
+    let pipeResponseSpy: MockInstance;
+    let useApolloSpy: MockInstance;
     let valueChanges$: Observable<typeof result>;
-    let watchQuerySpy: jest.SpyInstance;
-    let mutateSpy: jest.SpyInstance;
+    let watchQuerySpy: MockInstance;
+    let mutateSpy: MockInstance;
 
     beforeEach(() => {
-      valueChanges$ = cold('---x|', { x: result });
-      pipeResponseSpy = jest.spyOn(handlers, 'pipeGqlResponse');
-      watchQuerySpy = jest.fn(() => ({
-        valueChanges: valueChanges$,
-      }));
-      mutateSpy = jest.fn(() => valueChanges$);
+      const testScheduler = new TestScheduler((actual, expected) => {
+        expect(actual).toEqual(expected);
+      });
+
+      testScheduler.run(({ cold }) => {
+        valueChanges$ = cold('---x|', { x: result });
+
+        pipeResponseSpy = vi.spyOn(handlers, 'pipeGqlResponse');
+
+        watchQuerySpy = vi.fn(() => ({
+          valueChanges: valueChanges$,
+        }));
+
+        mutateSpy = vi.fn(() => valueChanges$);
+      });
     });
 
     describe('query', () => {
       beforeEach(() => {
-        useApolloSpy = jest.spyOn(apollo, 'use').mockImplementation(
+        useApolloSpy = vi.spyOn(apollo, 'use').mockImplementation(
           () =>
             new Object({
               watchQuery: watchQuerySpy,
@@ -89,7 +114,10 @@ describe('AppClientGqlService', () => {
 
       it('should return proper value after graphQL service mutate call', () => {
         const params: TTestSuccessMethodParams = [{} as DocumentNode];
-        testSuccessMethod(pipeResponseSpy, 'query', params);
+        const testScheduler = new TestScheduler((actual, expected) => {
+          expect(actual).toEqual(expected);
+        });
+        testSuccessMethod(testScheduler, pipeResponseSpy, 'query', params);
       });
 
       it('should call query with proper params', () => {
@@ -106,7 +134,7 @@ describe('AppClientGqlService', () => {
 
     describe('mutate', () => {
       beforeEach(() => {
-        useApolloSpy = jest.spyOn(apollo, 'use').mockImplementation(
+        useApolloSpy = vi.spyOn(apollo, 'use').mockImplementation(
           () =>
             new Object({
               mutate: mutateSpy,
@@ -115,16 +143,25 @@ describe('AppClientGqlService', () => {
       });
 
       it('should call pipe request with proper params', () => {
-        pipeResponseSpy.mockReturnValue(cold('-|'));
-        const id = 'xx';
-        const variables = { id };
-        void service.mutate(matcompMutations.remove, clientName, variables);
-        expect(pipeResponseSpy).toHaveBeenCalledWith(valueChanges$);
+        const testScheduler = new TestScheduler((actual, expected) => {
+          expect(actual).toEqual(expected);
+        });
+
+        testScheduler.run(({ cold }) => {
+          pipeResponseSpy.mockReturnValue(cold('-|'));
+          const id = 'xx';
+          const variables = { id };
+          void service.mutate(matcompMutations.remove, clientName, variables);
+          expect(pipeResponseSpy).toHaveBeenCalledWith(valueChanges$);
+        });
       });
 
       it('should return proper value after shared graphQL service mutate call', () => {
         const params: TTestSuccessMethodParams = [{} as DocumentNode];
-        testSuccessMethod(pipeResponseSpy, 'mutate', params);
+        const testScheduler = new TestScheduler((actual, expected) => {
+          expect(actual).toEqual(expected);
+        });
+        testSuccessMethod(testScheduler, pipeResponseSpy, 'mutate', params);
       });
 
       it('should call apollo.use with proper role', () => {
@@ -148,7 +185,7 @@ describe('AppClientGqlService', () => {
 
     describe('resetApolloClient', () => {
       beforeEach(() => {
-        useApolloSpy = jest.spyOn(apollo, 'use').mockImplementation(
+        useApolloSpy = vi.spyOn(apollo, 'use').mockImplementation(
           () =>
             new Object({
               watchQuery: watchQuerySpy,
@@ -178,8 +215,8 @@ describe('AppClientGqlService', () => {
             resetStore: () => new Promise<void>(resolve => resolve()),
           },
         }) as ApolloBase;
-        const resetStoreSpy = jest.spyOn(apolloBase.client, 'resetStore');
-        useApolloSpy = jest.spyOn(apollo, 'use').mockImplementation(() => apolloBase);
+        const resetStoreSpy = vi.spyOn(apolloBase.client, 'resetStore');
+        useApolloSpy = vi.spyOn(apollo, 'use').mockImplementation(() => apolloBase);
         void service
           .resetApolloClient(clientName)
           .pipe(
@@ -196,12 +233,12 @@ describe('AppClientGqlService', () => {
   });
 
   describe('createApolloClient', () => {
-    let createApolloLinkSpy: jest.SpyInstance;
-    let createApolloSpy: jest.SpyInstance;
+    let createApolloLinkSpy: MockInstance;
+    let createApolloSpy: MockInstance;
 
     beforeEach(() => {
-      createApolloLinkSpy = jest.spyOn(handlers, 'createGqlLink');
-      createApolloSpy = jest.spyOn(apollo, 'create');
+      createApolloLinkSpy = vi.spyOn(handlers, 'createGqlLink');
+      createApolloSpy = vi.spyOn(apollo, 'create');
     });
 
     it('should call apollo createApolloLinkSpy with proper params with the default client name', waitForAsync(() => {

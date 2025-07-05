@@ -78,7 +78,6 @@ export class AppConfigurePrettierCheckExecutor {
         options: {
           config: this.options.config,
         },
-        outputs: [`{workspaceRoot}/dist/prettier/${srcRoot.replace(/\/src$/, '')}`],
       };
       updateProjectConfiguration(tree, project.name, config);
     }

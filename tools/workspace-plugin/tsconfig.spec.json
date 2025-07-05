@@ -1,9 +1,14 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "module": "commonjs",
-    "types": ["jest", "node"]
+    "types": [
+      "../../node_modules/vite/client",
+      "../../node_modules/vitest/globals",
+      "../../node_modules/vitest/importMeta",
+      "../../node_modules/vitest/utils",
+      "../../node_modules/vitest",
+      "node"
+    ]
   },
-  "include": ["jest.config.ts", "src/**/*.test.ts", "src/**/*.spec.ts", "src/**/*.d.ts"]
+  "extends": "./tsconfig.json",
+  "include": ["vite.config.mts", "vitest.config.mts", "src/**/*.spec.ts"]
 }

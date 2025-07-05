@@ -141,23 +141,6 @@ This project was generated using [Nx](https://nx.dev).
 - [30-minute video showing all Nx features](https://nx.dev/getting-started/what-is-nx)
 - [Interactive Tutorial](https://nx.dev/tutorial/01-create-application)
 
-### Workspace capabilities
-
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
-
-These capabilities include generating applications, libraries, .etc as well as the devtools to test, and build projects as well.
-
-Below are plugins which are added to the workspace:
-
-| Application type                       | Command                | Domain       |
-| -------------------------------------- | ---------------------- | ------------ |
-| [Angular](https://angular.io)          | `nx add @nx/angular`   | Web client   |
-| [Nest](https://nestjs.com)             | `nx add @nx/nest`      | API          |
-| [Node](https://nodejs.org)             | `nx add @nx/node`      | Automation   |
-| [Storybook](https://storybook.js.org/) | `nx add @nx/storybook` | UI testing   |
-| [Cypress](https://www.cypress.io/)     | `nx add @nx/cypress`   | E2E testing  |
-| [Jest](https://jestjs.io/)             | `nx add @nx/jest`      | Unit testing |
-
 ### Generating an application
 
 To generate an application run:

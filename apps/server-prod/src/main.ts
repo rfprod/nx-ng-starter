@@ -29,7 +29,7 @@ async function bootstrap() {
   );
 
   const defaultPort = 8080;
-  const port = process.env.PORT ?? defaultPort;
+  const port = process.env['PORT'] ?? defaultPort;
   await app.listen(port);
 
   Logger.log(`🚀 Simple production server is running on: http://localhost:${port}/${globalPrefix}`);

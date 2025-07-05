@@ -57,8 +57,8 @@ describe('AppChatbotWidgetRootComponent', () => {
 
   it('resetBot should reset eliza and enable form', () => {
     const spy = {
-      reset: jest.spyOn(eliza, 'reset'),
-      enable: jest.spyOn(component.form, 'enable'),
+      reset: vi.spyOn(eliza, 'reset'),
+      enable: vi.spyOn(component.form, 'enable'),
     };
     component.resetBot();
     expect(spy.reset).toHaveBeenCalledTimes(1);
@@ -66,7 +66,7 @@ describe('AppChatbotWidgetRootComponent', () => {
   });
 
   it('botResponse should add a message to the messages array', () => {
-    const nextMessage = jest.spyOn(eliza, 'nextMessage');
+    const nextMessage = vi.spyOn(eliza, 'nextMessage');
     const previousCount = eliza.messages$().length;
     component.botResponse('next msg');
     const nextCount = eliza.messages$().length;
@@ -78,8 +78,8 @@ describe('AppChatbotWidgetRootComponent', () => {
     let messages = 1;
     expect(component.messages$().length).toEqual(messages);
     const spy = {
-      nextMessage: jest.spyOn(eliza, 'nextMessage'),
-      reset: jest.spyOn(component.form, 'reset'),
+      nextMessage: vi.spyOn(eliza, 'nextMessage'),
+      reset: vi.spyOn(component.form, 'reset'),
     };
     component.form.controls.message.patchValue('test');
     component.form.controls.message.updateValueAndValidity();
@@ -91,7 +91,7 @@ describe('AppChatbotWidgetRootComponent', () => {
   });
 
   it('keyUp handler should call userMessage on CTRL+Enter press', () => {
-    const userMessage = jest.spyOn(component, 'userMessage');
+    const userMessage = vi.spyOn(component, 'userMessage');
     const event: KeyboardEvent = new KeyboardEvent('keyup', { ctrlKey: true, key: 'Enter' });
     component.keyUp(event);
     expect(userMessage).toHaveBeenCalledTimes(1);

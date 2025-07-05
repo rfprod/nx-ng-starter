@@ -10,48 +10,48 @@ describe('AppAuthService', () => {
   let authService: AppAuthService;
   let jwtService: JwtService;
 
-  beforeAll(async () => {
-    await Test.createTestingModule({
+  let token: string;
+  const payload: Omit<IAuthPayload, 'expires'> = {
+    email: 'test@email.tld',
+    name: 'test',
+  };
+
+  beforeEach(async () => {
+    testingModule = await Test.createTestingModule({
       imports: [
         JwtModule.register({
           secret: 'jwtsecret',
         }),
       ],
-      providers: [AppAuthService],
-    })
-      .compile()
-      .then(module => {
-        testingModule = module;
-        authService = testingModule.get<AppAuthService>(AppAuthService);
-        jwtService = testingModule.get<JwtService>(JwtService);
-      });
+      providers: [
+        {
+          provide: AppAuthService,
+          useFactory: (jwt: JwtService) => new AppAuthService(jwt),
+          inject: [JwtService],
+        },
+      ],
+    }).compile();
+    authService = testingModule.get<AppAuthService>(AppAuthService);
+    jwtService = testingModule.get<JwtService>(JwtService);
   });
 
-  describe('jwt methods', () => {
-    let token: string;
-    const payload: Omit<IAuthPayload, 'expires'> = {
-      email: 'test@email.tld',
-      name: 'test',
-    };
+  it('generateJWToken should generate a token and return it', () => {
+    const jwtSignSpy = vi.spyOn(jwtService, 'sign');
 
-    it('generateJWToken should generate a token and return it', () => {
-      const jwtSignSpy = jest.spyOn(jwtService, 'sign');
+    token = authService.generateJWToken(payload);
+    expect(typeof token === 'string').toBeTruthy();
+    expect(token !== '').toBeTruthy();
+    expect(jwtSignSpy).toHaveBeenCalledWith(payload);
+  });
 
-      token = authService.generateJWToken(payload);
-      expect(typeof token === 'string').toBeTruthy();
-      expect(token !== '').toBeTruthy();
-      expect(jwtSignSpy).toHaveBeenCalledWith(payload);
+  it('decodeJWToken should decode a token and return it', () => {
+    const jwtDecodeSpy = vi.spyOn(jwtService, 'decode');
+    const decoded = authService.decodeJWToken(token);
+    expect(decoded).toMatchObject<IAuthPayload & { iat: number }>({
+      ...payload,
+      iat: decoded.iat,
     });
-
-    it('decodeJWToken should decode a token and return it', () => {
-      const jwtDecodeSpy = jest.spyOn(jwtService, 'decode');
-      const decoded = authService.decodeJWToken(token);
-      expect(decoded).toMatchObject<IAuthPayload & { iat: number }>({
-        ...payload,
-        iat: decoded.iat,
-      });
-      expect(jwtDecodeSpy).toHaveBeenCalledWith(token);
-    });
+    expect(jwtDecodeSpy).toHaveBeenCalledWith(token);
   });
 
   it('ping should return "Welcome to api!"', () => {

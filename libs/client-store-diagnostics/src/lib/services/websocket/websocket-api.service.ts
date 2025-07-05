@@ -1,10 +1,10 @@
-import { DestroyRef, Inject, inject, Injectable } from '@angular/core';
+import { DestroyRef, inject, Injectable } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { WebSocketSubject } from 'rxjs/webSocket';
 
-import { IWebsocketConfig, IWebsocketRequestEvent, IWebsocketResponseEvent, WS_CONFIG } from '../../diagnostics.interface';
+import { type IWebsocketRequestEvent, type IWebsocketResponseEvent, WS_CONFIG } from '../../diagnostics.interface';
 
 /**
  * Websocket API Service.
@@ -15,9 +15,9 @@ import { IWebsocketConfig, IWebsocketRequestEvent, IWebsocketResponseEvent, WS_C
 export class AppWebsocketApiService {
   private readonly destroyRef = inject(DestroyRef);
 
-  private readonly wsSubject = new WebSocketSubject<IWebsocketRequestEvent>(this.wsConfig);
+  private readonly wsConfig = inject(WS_CONFIG);
 
-  constructor(@Inject(WS_CONFIG) private readonly wsConfig: IWebsocketConfig) {}
+  private readonly wsSubject = new WebSocketSubject<IWebsocketRequestEvent>(this.wsConfig);
 
   public connect<T = unknown>() {
     return this.wsSubject.pipe(

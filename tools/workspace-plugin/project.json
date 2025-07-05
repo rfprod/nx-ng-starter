@@ -38,37 +38,31 @@
       "outputs": ["{options.outputPath}"]
     },
     "lint": {
-      "executor": "@angular-eslint/builder:lint",
+      "executor": "@nx/eslint:lint",
       "options": {
-        "eslintConfig": "tools/workspace-plugin/.eslintrc.json",
+        "eslintConfig": "{projectRoot}/eslint.config.mjs",
         "lintFilePatterns": [
+          "tools/workspace-plugin/*.mts",
           "tools/workspace-plugin/**/*.ts",
           "tools/workspace-plugin/package.json",
           "tools/workspace-plugin/generators.json"
         ]
-      },
-      "outputs": ["{options.outputFile}"]
+      }
     },
     "test": {
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
-      },
-      "executor": "@nx/jest:jest",
+      "executor": "@nx/vite:test",
       "options": {
-        "jestConfig": "tools/workspace-plugin/jest.config.ts",
-        "passWithNoTests": true
-      },
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"]
+        "compiler": "swc",
+        "configFile": "tools/workspace-plugin/vitest.config.mts",
+        "coverageProvider": "istanbul",
+        "uiFramework": "none"
+      }
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
-        "tsConfig": "tools/workspace-plugin/tsconfig.lib.json"
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/tools/workspace-plugin"]
+        "tsConfig": "{projectRoot}/tsconfig.lib.json"
+      }
     }
   }
 }

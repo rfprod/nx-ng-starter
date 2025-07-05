@@ -3,6 +3,7 @@ import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angula
 import { Router } from '@angular/router';
 import { newTestBedMetadata } from '@app/client-testing-unit';
 import { of } from 'rxjs';
+import type { MockInstance } from 'vitest';
 
 import { AppNavbarComponent } from './navbar.component';
 
@@ -25,14 +26,14 @@ describe('AppNavbarComponent', () => {
   let component: AppNavbarComponent;
 
   let router: Router;
-  let routerIsActiveSpy: jest.SpyInstance;
+  let routerIsActiveSpy: MockInstance;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule(testBedConfig).compileComponents();
     fixture = TestBed.createComponent(AppNavbarComponent);
     component = fixture.debugElement.componentInstance;
     router = TestBed.inject(Router);
-    routerIsActiveSpy = jest.spyOn(router, 'isActive');
+    routerIsActiveSpy = vi.spyOn(router, 'isActive');
     fixture.detectChanges();
   });
 
@@ -41,7 +42,7 @@ describe('AppNavbarComponent', () => {
   });
 
   it('navButtonClick should emit an output event', () => {
-    const spy = jest.spyOn(component.navButtonClicked, 'emit');
+    const spy = vi.spyOn(component.navButtonClicked, 'emit');
     component.navButtonClick();
     expect(spy).toHaveBeenCalled();
   });
@@ -104,13 +105,13 @@ describe('AppNavbarComponent', () => {
   });
 
   it('navigateBack should emit an output event', () => {
-    const spy = jest.spyOn(component.navigatedBack, 'emit');
+    const spy = vi.spyOn(component.navigatedBack, 'emit');
     component.navigateBack();
     expect(spy).toHaveBeenCalled();
   });
 
   it('navigateForward should emit an output event', () => {
-    const spy = jest.spyOn(component.navigatedForward, 'emit');
+    const spy = vi.spyOn(component.navigatedForward, 'emit');
     component.navigateForward();
     expect(spy).toHaveBeenCalled();
   });

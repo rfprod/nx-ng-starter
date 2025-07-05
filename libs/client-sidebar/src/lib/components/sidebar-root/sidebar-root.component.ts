@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { httpProgressSelector, IHttpProgressState } from '@app/client-store-http-progress';
 import { sidebarAction } from '@app/client-store-sidebar';
@@ -13,12 +13,11 @@ import { map } from 'rxjs';
   standalone: false,
 })
 export class AppSidebarRootComponent {
-  public readonly loading$ = this.store.select(httpProgressSelector.sidebar).pipe(map(state => state.loading));
+  private readonly store = inject(Store<IHttpProgressState>);
 
-  constructor(
-    private readonly store: Store<IHttpProgressState>,
-    private readonly router: Router,
-  ) {}
+  private readonly router = inject(Router);
+
+  public readonly loading$ = this.store.select(httpProgressSelector.sidebar).pipe(map(state => state.loading));
 
   /**
    * Sidebar close handler.
