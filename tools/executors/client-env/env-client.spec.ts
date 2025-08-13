@@ -1,6 +1,8 @@
-jest.mock('@nx/devkit');
-jest.mock('fs/promises');
-jest.mock('dotenv');
+import { describe, expect, it, type Mock, vi } from 'vitest';
+
+vi.mock('@nx/devkit');
+vi.mock('fs/promises');
+vi.mock('dotenv');
 
 import { type ExecutorContext, logger } from '@nx/devkit';
 import dotenv from 'dotenv';
@@ -20,12 +22,12 @@ describe('AppClientEnvConfig', () => {
     mockStat?: boolean,
     mockwriteFile?: boolean,
   ) => {
-    const accessMock = fsPromises.access as jest.Mock;
+    const accessMock = fsPromises.access as Mock;
     if (mockAccess === true) {
       accessMock.mockImplementation((path: PathLike, mode?: number) => new Promise<void>(resolve => resolve()));
     }
 
-    const readFileMock = fsPromises.readFile as jest.Mock;
+    const readFileMock = fsPromises.readFile as Mock;
     if (mockReadFile === true) {
       readFileMock.mockImplementation(
         (
@@ -40,7 +42,7 @@ describe('AppClientEnvConfig', () => {
       );
     }
 
-    const statMock = fsPromises.stat as jest.Mock;
+    const statMock = fsPromises.stat as Mock;
     if (mockStat === true) {
       statMock.mockImplementation(
         (
@@ -81,7 +83,7 @@ describe('AppClientEnvConfig', () => {
       );
     }
 
-    const writeFileMock = fsPromises.writeFile as jest.Mock;
+    const writeFileMock = fsPromises.writeFile as Mock;
     if (mockwriteFile === true) {
       writeFileMock.mockImplementation(
         (
@@ -128,10 +130,8 @@ describe('AppClientEnvConfig', () => {
   };
 
   describe('errors', () => {
-    afterEach(() => jest.clearAllMocks());
-
     it('should throw an error if an application is not supported', async () => {
-      const dotenvSpy = jest.spyOn(dotenv, 'config');
+      const dotenvSpy = vi.spyOn(dotenv, 'config');
 
       const { context, options, accessMock, readFileMock, writeFileMock } = setup();
       const executor = new AppClientEnvConfig(options, context);
@@ -153,7 +153,7 @@ describe('AppClientEnvConfig', () => {
     it('should throw an error if unable to read package.json file', async () => {
       const error = new Error('test error');
 
-      const dotenvSpy = jest.spyOn(dotenv, 'config');
+      const dotenvSpy = vi.spyOn(dotenv, 'config');
 
       const { context, options, accessMock, readFileMock, writeFileMock } = setup();
       readFileMock.mockImplementation(
@@ -184,7 +184,7 @@ describe('AppClientEnvConfig', () => {
 
     it('should throw an error if unable to access environment config file', async () => {
       const error = new Error('test error');
-      const dotenvSpy = jest.spyOn(dotenv, 'config');
+      const dotenvSpy = vi.spyOn(dotenv, 'config');
 
       const { context, options, accessMock, readFileMock, writeFileMock } = setup('client', false, true);
       accessMock.mockImplementation((path: PathLike, mode?: number) => new Promise<void>((resolve, reject) => reject(error)));
@@ -205,7 +205,7 @@ describe('AppClientEnvConfig', () => {
 
     it('should throw an error if unable to stat env file path', async () => {
       const error = new Error('test error');
-      const dotenvSpy = jest.spyOn(dotenv, 'config');
+      const dotenvSpy = vi.spyOn(dotenv, 'config');
 
       const { context, options, accessMock, readFileMock, statMock, writeFileMock } = setup('client', true, true);
       statMock.mockImplementation(
@@ -234,7 +234,7 @@ describe('AppClientEnvConfig', () => {
 
     it('should throw an error if unable to write env file', async () => {
       const error = new Error('test error');
-      const dotenvSpy = jest.spyOn(dotenv, 'config');
+      const dotenvSpy = vi.spyOn(dotenv, 'config');
 
       const { context, options, accessMock, readFileMock, statMock, writeFileMock } = setup('client', true, true, true);
       writeFileMock.mockImplementation(
@@ -273,10 +273,8 @@ describe('AppClientEnvConfig', () => {
   });
 
   describe('correct behavior', () => {
-    afterEach(() => jest.clearAllMocks());
-
     it('should call logger.info if everything went as expected when setting environment variables', async () => {
-      const dotenvSpy = jest.spyOn(dotenv, 'config');
+      const dotenvSpy = vi.spyOn(dotenv, 'config');
 
       const { context, options, accessMock, readFileMock, statMock, writeFileMock } = setup('client', true, true, true, true);
       const executor = new AppClientEnvConfig(options, context);
@@ -295,7 +293,7 @@ describe('AppClientEnvConfig', () => {
     });
 
     it('should not call readFile and call logger.info if everything went as expected when resetting environment variables', async () => {
-      const dotenvSpy = jest.spyOn(dotenv, 'config');
+      const dotenvSpy = vi.spyOn(dotenv, 'config');
 
       const { context, options, accessMock, readFileMock, statMock, writeFileMock } = setup('client', true, true, true, true);
       options.reset = true;

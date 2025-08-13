@@ -1,4 +1,4 @@
-import { Injectable, Provider } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarRef, SimpleSnackBar } from '@angular/material/snack-bar';
 import { toasterExtraClasses, TToasterExtraClasses, TToastType } from '@app/client-util';
 
@@ -12,6 +12,8 @@ import { toasterExtraClasses, TToasterExtraClasses, TToastType } from '@app/clie
   providedIn: 'root',
 })
 export class AppToasterService {
+  private readonly snackBar = inject(MatSnackBar);
+
   /**
    * Snackbar reference.
    */
@@ -21,12 +23,6 @@ export class AppToasterService {
    * Default toaster duration value.
    */
   private readonly defaultDuration = 7000;
-
-  /**
-   * Constructor.
-   * @param snackBar material snackbar
-   */
-  constructor(private readonly snackBar: MatSnackBar) {}
 
   /**
    * Shows snackbar.
@@ -52,9 +48,3 @@ export class AppToasterService {
     }
   }
 }
-
-export const toasterServiceProvider: Provider = {
-  provide: AppToasterService,
-  useFactory: (snackBar: MatSnackBar) => new AppToasterService(snackBar),
-  deps: [MatSnackBar],
-};

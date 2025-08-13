@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 /**
  * PWA offline component.
@@ -13,7 +13,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   standalone: false,
 })
 export class AppPwaOfflineComponent {
-  constructor(public readonly location: Location) {}
+  public readonly location = inject(Location);
 
   /**
    * Loads a previous route that failed to load due to offline status.

@@ -4,14 +4,13 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ModuleWithProviders, NgModule, NgZone, Provider } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
+import { BrowserTestingModule } from '@angular/platform-browser/testing';
 import { RouterModule } from '@angular/router';
 import { AppMaterialModule } from '@app/client-material';
 import { documentProvider, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV, windowProvider } from '@app/client-util';
 import { EffectsModule } from '@ngrx/effects';
 import { NavigationActionTiming, routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { StoreModule } from '@ngrx/store';
-import { HttpLink } from 'apollo-angular/http';
 
 import { AppTestingComponent } from './components/testing/testing.component.mock';
 import { dialogRefMockProvider } from './refs/dialog-ref.mock';
@@ -37,7 +36,6 @@ export const testingEnvironment: IWebClientAppEnvironment = {
 };
 
 export const mocksCoreModuleProviders: Provider[] = [
-  HttpLink,
   dialogRefMockProvider,
   overlayRefMockProvider,
   matSnackbarRefMockProvider,
@@ -60,7 +58,7 @@ export const mocksCoreModuleProviders: Provider[] = [
 @NgModule({
   declarations: [AppTestingComponent],
   exports: [
-    BrowserDynamicTestingModule,
+    BrowserTestingModule,
     NoopAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
@@ -69,7 +67,7 @@ export const mocksCoreModuleProviders: Provider[] = [
     AppTestingComponent,
   ],
   imports: [
-    BrowserDynamicTestingModule,
+    BrowserTestingModule,
     NoopAnimationsModule,
     FormsModule,
     ReactiveFormsModule,

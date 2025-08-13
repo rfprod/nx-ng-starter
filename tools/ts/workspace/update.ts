@@ -122,7 +122,7 @@ function checkForUpdates(jsonUpgraded = false): TUpdatablePackages {
   const ncuOutput = spawnCommandSync('ncu', args);
   const updatablePackages: TUpdatablePackages =
     jsonUpgraded && typeof ncuOutput.error === 'undefined'
-      ? JSON.parse(ncuOutput.stdout.replace(/Using yarn(.*package\.json)?/gi, '').trim()) ?? {}
+      ? (JSON.parse(ncuOutput.stdout.replace(/Using yarn(.*package\.json)?/gi, '').trim()) ?? {})
       : {};
   if (jsonUpgraded) {
     writeUpdateSummary(updatablePackages);
@@ -372,14 +372,14 @@ const removeUnneededFiles = () => {
  * Reads input, and follows control flow.
  */
 function readInputAndRun(): void {
-  const check = (argv as { [key: string]: boolean | undefined }).check;
-  const cleanup = (argv as { [key: string]: boolean | undefined }).cleanup;
-  const migrate = (argv as { [key: string]: string | undefined }).migrate;
-  const bulkUserChoice = (argv as { [key: string]: boolean | undefined }).bulkUserChoice;
+  const check = (argv as { [key: string]: boolean | undefined })['check'];
+  const cleanup = (argv as { [key: string]: boolean | undefined })['cleanup'];
+  const migrate = (argv as { [key: string]: string | undefined })['migrate'];
+  const bulkUserChoice = (argv as { [key: string]: boolean | undefined })['bulkUserChoice'];
   if (cleanup === true) {
     removeUnneededFiles();
   } else if (check === true) {
-    const jsonUpgraded = (argv as { [key: string]: boolean | undefined }).jsonUpgraded;
+    const jsonUpgraded = (argv as { [key: string]: boolean | undefined })['jsonUpgraded'];
     checkForUpdates(jsonUpgraded);
   } else if (migrate === 'update') {
     updateAndMigratePackages(bulkUserChoice);

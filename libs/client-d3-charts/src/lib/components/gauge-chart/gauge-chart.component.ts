@@ -1,9 +1,18 @@
-import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Inject, Input, OnChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  DOCUMENT,
+  ElementRef,
+  inject,
+  Input,
+  OnChanges,
+  ViewChild,
+} from '@angular/core';
 
 import { IChartInputChanges } from '../../interfaces/chart-component.interface';
 import { IGaugeChartDataNode, IGaugeChartOptions } from '../../interfaces/gauge-chart.interface';
-import { D3_CHART_FACTORY, ID3ChartFactory } from '../../providers/d3-chart-factory.provider';
+import { D3_CHART_FACTORY } from '../../providers/d3-chart-factory.provider';
 import { AppD3ChartBase } from '../_base/chart.base';
 
 type TGaugeData = IGaugeChartDataNode[];
@@ -18,6 +27,10 @@ type TGaugeOptions = Partial<IGaugeChartOptions>;
   standalone: false,
 })
 export class AppGaugeChartComponent extends AppD3ChartBase<TGaugeData, TGaugeOptions> implements AfterViewInit, OnChanges {
+  private readonly doc = inject(DOCUMENT);
+
+  private readonly factory = inject(D3_CHART_FACTORY);
+
   /** The chart id. */
   @Input() public chartId = 'gauge-0';
 
@@ -33,14 +46,7 @@ export class AppGaugeChartComponent extends AppD3ChartBase<TGaugeData, TGaugeOpt
   /** D3 chart view child reference. */
   @ViewChild('container') public readonly container?: ElementRef<HTMLDivElement>;
 
-  /**
-   * @param doc The web page's Document object.
-   * @param d3Factory D3 chart factory.
-   */
-  constructor(
-    @Inject(DOCUMENT) private readonly doc: Document,
-    @Inject(D3_CHART_FACTORY) private readonly d3Factory: ID3ChartFactory,
-  ) {
+  constructor() {
     super();
   }
 
@@ -68,7 +74,7 @@ export class AppGaugeChartComponent extends AppD3ChartBase<TGaugeData, TGaugeOpt
   protected drawChart(): void {
     if (typeof this.container !== 'undefined') {
       const options = this.chartOptions();
-      this.d3Factory.drawGaugeChart(this.container, this.data, options);
+      this.factory.drawGaugeChart(this.container, this.data, options);
     }
   }
 

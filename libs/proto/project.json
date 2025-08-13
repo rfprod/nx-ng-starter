@@ -7,19 +7,17 @@
   "tags": ["scope:proto", "type:data-access"],
   "targets": {
     "lint": {
-      "executor": "@angular-eslint/builder:lint",
+      "executor": "@nx/eslint:lint",
       "options": {
-        "eslintConfig": "libs/proto/.eslintrc.json",
-        "lintFilePatterns": ["libs/proto/**/*.ts"]
-      },
-      "outputs": ["{options.outputFile}"]
+        "eslintConfig": "{projectRoot}/eslint.config.mjs",
+        "lintFilePatterns": ["{projectRoot}/**/*.ts"]
+      }
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
-        "tsConfig": "libs/proto/tsconfig.lib.json"
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/proto"]
+        "tsConfig": "{projectRoot}/tsconfig.lib.json"
+      }
     }
   }
 }

@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, QueryList, signal, ViewChildren } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, inject, QueryList, signal, ViewChildren } from '@angular/core';
 
 import { AppGuidedTourService } from '../../services/guided-tour/guided-tour.service';
 import { AppGuidedTourDirective } from '../guided-tour/guided-tour.directive';
@@ -14,6 +14,8 @@ import { IGuidedTourData } from '../guided-tour/guided-tour.interface';
   standalone: false,
 })
 export class AppGuidedTourExampleComponent implements AfterViewInit {
+  public readonly tour = inject(AppGuidedTourService);
+
   /** Tour steps. */
   @ViewChildren(AppGuidedTourDirective) public steps!: QueryList<AppGuidedTourDirective>;
 
@@ -60,11 +62,6 @@ export class AppGuidedTourExampleComponent implements AfterViewInit {
       last: true,
     },
   ]);
-
-  /**
-   * @param tour Guided tour service.
-   */
-  constructor(public readonly tour: AppGuidedTourService) {}
 
   public ngAfterViewInit(): void {
     this.tour.configuration = [...this.steps];

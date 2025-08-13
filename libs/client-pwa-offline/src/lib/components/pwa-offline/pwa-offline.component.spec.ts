@@ -30,7 +30,7 @@ describe('AppPwaOfflineComponent', () => {
   });
 
   it('back should call location.back', () => {
-    const spy = jest.spyOn(location, 'back');
+    const spy = vi.spyOn(location, 'back');
     component.back();
     expect(spy).toHaveBeenCalled();
   });

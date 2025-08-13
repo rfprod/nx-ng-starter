@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
-import { IDashboardTableConfig } from '../../interfaces/table-config.interface';
+import type { IDashboardTableConfig } from '../../interfaces/table-config.interface';
 import { AppTableBase } from '../_base/table/table.base';
 
 export interface IPeriodicElement {
@@ -18,7 +18,7 @@ export interface IPeriodicElement {
   standalone: false,
 })
 export class AppTableComponent<T> extends AppTableBase<T> {
-  @Input() public set config(config: IDashboardTableConfig<T>) {
+  @Input() public override set config(config: IDashboardTableConfig<T>) {
     super.config = config;
   }
 

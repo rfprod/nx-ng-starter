@@ -3,6 +3,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { type NavigationBehaviorOptions, provideRouter, Router, type UrlTree } from '@angular/router';
 import { NEVER, of, tap } from 'rxjs';
+import type { MockInstance } from 'vitest';
 
 import { NAVIGATOR } from '../providers/navigator.provider';
 import { AppPwaOfflineInterceptor } from './pwa-offline.interceptor';
@@ -10,7 +11,7 @@ import { AppPwaOfflineInterceptor } from './pwa-offline.interceptor';
 describe('AppPwaOfflineInterceptor', () => {
   let interceptor: AppPwaOfflineInterceptor;
   let router: Router;
-  let routerSpy: jest.SpyInstance;
+  let routerSpy: MockInstance;
 
   const configureTestBed = (navigatorMock = { onLine: true }) => {
     beforeEach(async () => {
@@ -31,7 +32,7 @@ describe('AppPwaOfflineInterceptor', () => {
       router = TestBed.inject(Router);
       const routerSpyImplementation = (url: string | UrlTree, extras?: NavigationBehaviorOptions | undefined) =>
         new Promise<boolean>(resolve => resolve(true));
-      routerSpy = jest.spyOn(router, 'navigateByUrl').mockImplementationOnce(routerSpyImplementation);
+      routerSpy = vi.spyOn(router, 'navigateByUrl').mockImplementationOnce(routerSpyImplementation);
     });
   };
 

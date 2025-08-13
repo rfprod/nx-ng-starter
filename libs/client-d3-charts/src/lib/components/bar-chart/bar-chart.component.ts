@@ -1,9 +1,18 @@
-import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Inject, Input, OnChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  DOCUMENT,
+  ElementRef,
+  inject,
+  Input,
+  OnChanges,
+  ViewChild,
+} from '@angular/core';
 
 import { IBarChartOptions, TBarChartData } from '../../interfaces/bar-chart.interface';
 import { IChartInputChanges } from '../../interfaces/chart-component.interface';
-import { D3_CHART_FACTORY, ID3ChartFactory } from '../../providers/d3-chart-factory.provider';
+import { D3_CHART_FACTORY } from '../../providers/d3-chart-factory.provider';
 import { defaultBarChartConfig } from '../../util/bar-chart.util';
 import { AppD3ChartBase } from '../_base/chart.base';
 
@@ -19,6 +28,10 @@ type TBarOptions = Partial<IBarChartOptions>;
   standalone: false,
 })
 export class AppBarChartComponent extends AppD3ChartBase<TBarData, TBarOptions> implements AfterViewInit, OnChanges {
+  private readonly doc = inject(DOCUMENT);
+
+  private readonly factory = inject(D3_CHART_FACTORY);
+
   /** The chart id. */
   @Input() public chartId = 'bar-0';
 
@@ -31,14 +44,7 @@ export class AppBarChartComponent extends AppD3ChartBase<TBarData, TBarOptions> 
   /** D3 chart view child reference. */
   @ViewChild('container') public readonly container?: ElementRef<HTMLDivElement>;
 
-  /**
-   * @param doc The web page's Document object.
-   * @param d3Factory D3 chart factory.
-   */
-  constructor(
-    @Inject(DOCUMENT) private readonly doc: Document,
-    @Inject(D3_CHART_FACTORY) private readonly d3Factory: ID3ChartFactory,
-  ) {
+  constructor() {
     super();
   }
 
@@ -67,7 +73,7 @@ export class AppBarChartComponent extends AppD3ChartBase<TBarData, TBarOptions> 
   protected drawChart(): void {
     if (typeof this.container !== 'undefined') {
       const options = this.chartOptions();
-      this.d3Factory.drawBarChart(this.container, this.data, options);
+      this.factory.drawBarChart(this.container, this.data, options);
     }
   }
 

@@ -26,7 +26,7 @@ describe('AppThemeToggleComponent', () => {
 
   it('toggleTheme should emit an output event', () => {
     component.darkThemeEnabled = null;
-    const spy = jest.spyOn(component.themeToggled, 'emit');
+    const spy = vi.spyOn(component.themeToggled, 'emit');
     component.toggleTheme();
     expect(spy).not.toHaveBeenCalled();
 

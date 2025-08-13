@@ -1,5 +1,14 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["js", "ts", "executors"],
-  "exclude": ["jest.config.ts"]
+  "compilerOptions": {
+    "types": [
+      "../../node_modules/vite/client",
+      "../../node_modules/vitest/globals",
+      "../../node_modules/vitest/importMeta",
+      "../../node_modules/vitest/utils",
+      "../../node_modules/vitest",
+      "node"
+    ]
+  },
+  "include": ["js/*.js", "ts/**/*.ts", "*.mts", "executors/**/*.ts"]
 }

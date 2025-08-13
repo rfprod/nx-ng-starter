@@ -1,6 +1,7 @@
 {
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
+    "enableI18nLegacyMessageIdFormat": false,
     "enableIvy": true,
     "enableResourceInlining": true,
     "extendedDiagnostics": {
@@ -17,7 +18,6 @@
   },
   "compileOnSave": false,
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "declaration": false,
     "downlevelIteration": true,
@@ -27,13 +27,16 @@
     "extendedDiagnostics": false,
     "forceConsistentCasingInFileNames": true,
     "importHelpers": true,
+    "isolatedModules": true,
     "lib": ["ES2022", "DOM", "ESNext.AsyncIterable"],
     "module": "ESNext",
     "moduleResolution": "Node",
     "noEmit": false,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": true,
+    "noImplicitOverride": true,
     "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
     "noUnusedLocals": true,
     "paths": {
       "@app/backend-auth": ["libs/backend-auth/src/index.ts"],
@@ -82,10 +85,13 @@
       "@rfprodz/client-util-eliza": ["libs/client-util-eliza/src/index.ts"],
       "@rfprodz/d3-charts": ["libs/client-d3-charts/src/index.ts"]
     },
+    "removeComments": true,
     "rootDir": ".",
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "strict": true,
+    "strictBindCallApply": true,
+    "strictNullChecks": true,
     "target": "ES2022",
     "typeRoots": ["node_modules/@types"],
     "useDefineForClassFields": false

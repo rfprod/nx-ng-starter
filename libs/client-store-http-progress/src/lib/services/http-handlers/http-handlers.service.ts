@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   ApolloLink,
@@ -10,10 +10,10 @@ import {
   ServerParseError,
   split,
   UriFunction,
-} from '@apollo/client/core/';
+} from '@apollo/client/core';
 import { ErrorResponse, onError } from '@apollo/client/link/error';
 import { getMainDefinition } from '@apollo/client/utilities';
-import { HTTP_STATUS, IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
+import { HTTP_STATUS, WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngrx/store';
 import { MutationResult } from 'apollo-angular';
 import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
@@ -35,15 +35,17 @@ export type TGqlClient = 'graphql';
   providedIn: 'root',
 })
 export class AppHttpHandlersService {
-  public readonly defaultHttpTimeout = 10000;
+  private readonly store = inject(Store<IHttpProgressState>);
 
-  constructor(
-    private readonly store: Store<IHttpProgressState>,
-    private readonly toaster: AppToasterService,
-    private readonly httpLink: HttpLink,
-    private readonly router: Router,
-    @Inject(WEB_CLIENT_APP_ENV) private readonly env: IWebClientAppEnvironment,
-  ) {}
+  private readonly toaster = inject(AppToasterService);
+
+  private readonly httpLink = inject(HttpLink);
+
+  private readonly router = inject(Router);
+
+  private readonly env = inject(WEB_CLIENT_APP_ENV);
+
+  public readonly defaultHttpTimeout = 10000;
 
   /**
    * Gets gql http headers.
@@ -151,7 +153,7 @@ export class AppHttpHandlersService {
 
     graphQLErrors?.map(({ message, extensions }) => {
       console.error('Apollo linkHandler [GraphQL error]: ', message);
-      const code = extensions?.code as string;
+      const code = extensions?.['code'] as string;
       const result = `[GraphQL error ${code}]: ${message}`;
       errorMessage += result;
     });

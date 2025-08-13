@@ -23,40 +23,38 @@
       "outputs": ["{workspaceRoot}/dist/libs/client-guided-tour"]
     },
     "lint": {
-      "executor": "@angular-eslint/builder:lint",
+      "executor": "@nx/eslint:lint",
       "options": {
-        "eslintConfig": "libs/client-guided-tour/.eslintrc.json",
-        "lintFilePatterns": ["libs/client-guided-tour/**/*.ts"]
-      },
-      "outputs": ["{options.outputFile}"]
+        "eslintConfig": "{projectRoot}/eslint.config.mjs",
+        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.html"]
+      }
     },
     "prettier-check": {
       "executor": "./tools/executors/prettier:check",
       "options": {
         "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-guided-tour"]
+      }
     },
     "stylelint-check": {
       "executor": "./tools/executors/stylelint:check",
       "options": {
         "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/stylelint/libs/client-guided-tour"]
+      }
     },
     "test": {
-      "executor": "@nx/jest:jest",
+      "executor": "@nx/vite:test",
       "options": {
-        "jestConfig": "libs/client-guided-tour/jest.config.ts"
-      },
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"]
+        "compiler": "swc",
+        "configFile": "libs/client-guided-tour/vitest.config.mts",
+        "coverageProvider": "istanbul",
+        "uiFramework": "angular"
+      }
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
-        "tsConfig": "libs/client-guided-tour/tsconfig.lib.json"
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-guided-tour"]
+        "tsConfig": "{projectRoot}/tsconfig.lib.json"
+      }
     }
   }
 }

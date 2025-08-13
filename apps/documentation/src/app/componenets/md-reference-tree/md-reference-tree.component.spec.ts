@@ -6,6 +6,7 @@ import { provideRouter } from '@angular/router';
 import { AppMaterialModule } from '@app/client-material';
 import { Store, StoreModule } from '@ngrx/store';
 import { MarkdownModule, type MarkdownModuleConfig, MARKED_OPTIONS, type MarkedOptions } from 'ngx-markdown';
+import type { MockInstance } from 'vitest';
 
 import { testingProviders } from '../../../testing/testing-providers.mock';
 import { mdFilesAction } from '../../modules/md-files/md-files.actions';
@@ -43,14 +44,14 @@ describe('AppDocMarkdownReferenceTreeComponent', () => {
   let component: AppDocMarkdownReferenceTreeComponent;
 
   let store: Store<IMdFilesState>;
-  let storeDispatchSpy: jest.SpyInstance;
+  let storeDispatchSpy: MockInstance;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule(testBedConfig).compileComponents();
     fixture = TestBed.createComponent(AppDocMarkdownReferenceTreeComponent);
     component = fixture.debugElement.componentInstance;
     store = TestBed.inject(Store);
-    storeDispatchSpy = jest.spyOn(store, 'dispatch');
+    storeDispatchSpy = vi.spyOn(store, 'dispatch');
     fixture.detectChanges();
   });
 

@@ -1,4 +1,5 @@
 import { FsTree } from 'nx/src/generators/tree';
+import { describe, expect, it, type MockInstance, vi } from 'vitest';
 
 import { findFiles } from './find-html-files.util';
 
@@ -6,15 +7,15 @@ describe('findFiles', () => {
   const root = process.cwd();
   let tree: FsTree;
   let treeSpy: {
-    children: jest.SpyInstance;
-    isFile: jest.SpyInstance;
+    children: MockInstance;
+    isFile: MockInstance;
   };
 
   beforeEach(() => {
     tree = new FsTree(root, false);
     treeSpy = {
-      children: jest.spyOn(tree, 'children'),
-      isFile: jest.spyOn(tree, 'isFile'),
+      children: vi.spyOn(tree, 'children'),
+      isFile: vi.spyOn(tree, 'isFile'),
     };
   });
 

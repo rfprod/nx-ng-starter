@@ -10,6 +10,7 @@ import { AppMaterialModule } from '@app/client-material';
 import { AppServiceWorkerService } from '@app/client-service-worker';
 import { MarkdownModule, type MarkdownModuleConfig, MARKED_OPTIONS, type MarkedOptions } from 'ngx-markdown';
 import { of, tap } from 'rxjs';
+import type { MockInstance } from 'vitest';
 
 import { testingProviders } from '../../../testing/testing-providers.mock';
 import { DOCUMENTATION_ENVIRONMENT, type IDocumentationEnvironment } from '../../interfaces/environment.interface';
@@ -50,8 +51,8 @@ describe('AppDocRootComponent', () => {
   let fixture: ComponentFixture<AppDocRootComponent>;
   let component: AppDocRootComponent;
 
-  let setTitleSpy: jest.SpyInstance;
-  let updateTagSpy: jest.SpyInstance;
+  let setTitleSpy: MockInstance;
+  let updateTagSpy: MockInstance;
 
   let title: Title;
   let meta: Meta;
@@ -59,7 +60,7 @@ describe('AppDocRootComponent', () => {
   let env: IDocumentationEnvironment;
 
   let bpObserver: BreakpointObserver;
-  let bpObserverSpy: jest.SpyInstance;
+  let bpObserverSpy: MockInstance;
 
   const configureEnvironment = async (bpState?: BreakpointState) => {
     await TestBed.configureTestingModule(testBedConfig).compileComponents();
@@ -67,11 +68,11 @@ describe('AppDocRootComponent', () => {
     title = TestBed.inject(Title);
     meta = TestBed.inject(Meta);
 
-    setTitleSpy = jest.spyOn(title, 'setTitle');
-    updateTagSpy = jest.spyOn(meta, 'updateTag');
+    setTitleSpy = vi.spyOn(title, 'setTitle');
+    updateTagSpy = vi.spyOn(meta, 'updateTag');
 
     bpObserver = TestBed.inject(BreakpointObserver);
-    bpObserverSpy = jest.spyOn(bpObserver, 'observe');
+    bpObserverSpy = vi.spyOn(bpObserver, 'observe');
     if (typeof bpState !== 'undefined') {
       bpObserverSpy.mockReturnValue(of({ ...bpState } as BreakpointState));
     }

@@ -36,7 +36,7 @@ describe('AppSentryService', () => {
     });
 
     it('should not initialize Sentry for unit testing and development environments', () => {
-      const initSpy = jest.spyOn(sentry, 'init');
+      const initSpy = vi.spyOn(sentry, 'init');
       expect(env.sentry.env).toEqual('unit-testing');
       initializeSentry(env, env.meta.version);
       expect(initSpy).not.toHaveBeenCalled();
@@ -47,7 +47,7 @@ describe('AppSentryService', () => {
     });
 
     it('should initialize Sentry for the production environment', () => {
-      const initSpy = jest.spyOn(sentry, 'init');
+      const initSpy = vi.spyOn(sentry, 'init');
       env.sentry.env = 'production';
       initializeSentry(env, env.meta.version);
       expect(initSpy).toHaveBeenCalled();

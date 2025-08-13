@@ -7,33 +7,32 @@
   "tags": ["scope:client-util-security", "type:util"],
   "targets": {
     "lint": {
-      "executor": "@angular-eslint/builder:lint",
+      "executor": "@nx/eslint:lint",
       "options": {
-        "eslintConfig": "libs/client-util-security/.eslintrc.json",
-        "lintFilePatterns": ["libs/client-util-security/**/*.ts"]
-      },
-      "outputs": ["{options.outputFile}"]
+        "eslintConfig": "{projectRoot}/eslint.config.mjs",
+        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.html"]
+      }
     },
     "prettier-check": {
       "executor": "./tools/executors/prettier:check",
       "options": {
         "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-util-security"]
+      }
     },
     "test": {
-      "executor": "@nx/jest:jest",
+      "executor": "@nx/vite:test",
       "options": {
-        "jestConfig": "libs/client-util-security/jest.config.ts"
-      },
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"]
+        "compiler": "swc",
+        "configFile": "libs/client-util-security/vitest.config.mts",
+        "coverageProvider": "istanbul",
+        "uiFramework": "angular"
+      }
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
-        "tsConfig": "libs/client-util-security/tsconfig.lib.json"
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-util-security"]
+        "tsConfig": "{projectRoot}/tsconfig.lib.json"
+      }
     }
   }
 }

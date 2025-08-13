@@ -28,24 +28,24 @@ describe('AppToolbarComponent', () => {
   });
 
   it('toggleSidebar should emit an output event', () => {
-    const spy = jest.spyOn(component.sidebarToggled, 'emit');
+    const spy = vi.spyOn(component.sidebarToggled, 'emit');
     component.toggleSidebar();
     expect(spy).toHaveBeenCalled();
   });
 
   it('toggleChatbot should emit an output event', () => {
-    const spy = jest.spyOn(component.chatbotToggled, 'emit');
-    component.toggleChatbot();
+    const spy = vi.spyOn(component.chatbotToggled, 'emit');
+    component.toggleChatbot(new MouseEvent('click'));
     expect(spy).toHaveBeenCalledWith(!(component.chatbotOpen ?? false));
 
     component.chatbotOpen = null;
     spy.mockClear();
-    component.toggleChatbot();
-    expect(spy).not.toHaveBeenCalled();
+    component.toggleChatbot(new KeyboardEvent('Enter', { key: 'Enter' }));
+    expect(spy).toHaveBeenCalled();
   });
 
   it('toggleTheme should emit an output event', () => {
-    const spy = jest.spyOn(component.themeToggled, 'emit');
+    const spy = vi.spyOn(component.themeToggled, 'emit');
     component.toggleTheme();
     expect(spy).toHaveBeenCalledWith(!(component.darkThemeEnabled ?? false));
 

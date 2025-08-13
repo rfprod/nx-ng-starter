@@ -1,3 +1,44 @@
 {
-  "eslint.validate": ["json"]
+  "eslint.validate": ["json"],
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[proto3]": {
+    "editor.defaultFormatter": "xaver.clang-format"
+  },
+  "[sh]": {
+    "editor.defaultFormatter": "timonwong.shellcheck"
+  },
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "always",
+    "source.fixAll.stylelint": "always",
+    "source.fixAll.tslint": "always",
+    "source.organizeImports": "always"
+  },
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 5000,
+  "files.trimTrailingWhitespace": true,
+  "shellcheck.customArgs": ["-x"],
+  "shellcheck.enable": true,
+  "shellcheck.enableQuickFix": false,
+  "shellcheck.exclude": [],
+  "shellcheck.executablePath": "shellcheck",
+  "shellcheck.ignorePatterns": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true
+  },
+  "shellcheck.run": "onType",
+  "shellcheck.useWorkspaceRootAsCwd": true
 }

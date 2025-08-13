@@ -10,6 +10,7 @@ import { testingEnvironment } from '@app/client-testing-unit';
 import { WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngrx/store';
 import { lastValueFrom, of } from 'rxjs';
+import { beforeEach, type MockInstance, vi } from 'vitest';
 
 import { AppRootComponent } from './root.component';
 
@@ -43,9 +44,9 @@ describe('AppRootComponent', () => {
   let fixture: ComponentFixture<AppRootComponent>;
   let component: AppRootComponent;
   let title: Title;
-  let setTitleSpy: jest.SpyInstance;
+  let setTitleSpy: MockInstance;
   let meta: Meta;
-  let updateTagSpy: jest.SpyInstance;
+  let updateTagSpy: MockInstance;
   let store: Store<{ theme: IThemeStateModel }>;
 
   beforeEach(async () => {
@@ -53,15 +54,11 @@ describe('AppRootComponent', () => {
     fixture = TestBed.createComponent(AppRootComponent);
     component = fixture.componentInstance;
     title = TestBed.inject(Title);
-    setTitleSpy = jest.spyOn(title, 'setTitle');
+    setTitleSpy = vi.spyOn(title, 'setTitle');
     meta = TestBed.inject(Meta);
-    updateTagSpy = jest.spyOn(meta, 'updateTag');
+    updateTagSpy = vi.spyOn(meta, 'updateTag');
     store = TestBed.inject(Store);
     fixture.detectChanges();
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
   });
 
   it('should be defined', () => {
@@ -79,7 +76,7 @@ describe('AppRootComponent', () => {
   });
 
   it('logoSrc$ should return dark logo reference based on the value of the darkTheme state', async () => {
-    jest.spyOn(store, 'select').mockImplementation(() => of(false));
+    vi.spyOn(store, 'select').mockImplementation(() => of(false));
     const darkThemeState = await lastValueFrom(store.select(themeSelector.darkThemeEnabled));
     expect(darkThemeState).toBeFalsy();
     const logoRef = await lastValueFrom(component.logoSrc$);
@@ -88,14 +85,14 @@ describe('AppRootComponent', () => {
   });
 
   it('toggleSidebar should call store dispatch', () => {
-    const storeSpy = jest.spyOn(store, 'dispatch');
+    const storeSpy = vi.spyOn(store, 'dispatch');
     component.toggleSidebar();
     expect(storeSpy).toHaveBeenCalledTimes(1);
     expect(storeSpy).toHaveBeenCalledWith(sidebarAction.toggle());
   });
 
   it('toggleChatbot should call store dispatch events depending on the parameter', () => {
-    const storeSpy = jest.spyOn(store, 'dispatch');
+    const storeSpy = vi.spyOn(store, 'dispatch');
     component.toggleChatbot(true);
     const calls = {
       first: 1,
@@ -110,21 +107,21 @@ describe('AppRootComponent', () => {
   });
 
   it('navButtonClick should call store dispatch', () => {
-    const storeSpy = jest.spyOn(store, 'dispatch');
+    const storeSpy = vi.spyOn(store, 'dispatch');
     component.navButtonClick();
     expect(storeSpy).toHaveBeenCalledTimes(1);
     expect(storeSpy).toHaveBeenCalledWith(sidebarAction.close({ payload: { navigate: false } }));
   });
 
   it('navigateBack should call store dispatch', () => {
-    const storeSpy = jest.spyOn(store, 'dispatch');
+    const storeSpy = vi.spyOn(store, 'dispatch');
     component.navigateBack();
     expect(storeSpy).toHaveBeenCalledTimes(1);
     expect(storeSpy).toHaveBeenCalledWith(routerAction.back());
   });
 
   it('navigateForward should call store dispatch', () => {
-    const storeSpy = jest.spyOn(store, 'dispatch');
+    const storeSpy = vi.spyOn(store, 'dispatch');
     component.navigateForward();
     expect(storeSpy).toHaveBeenCalledTimes(1);
     expect(storeSpy).toHaveBeenCalledWith(routerAction.forward());

@@ -29,20 +29,20 @@ describe('AppThemeEffects', () => {
   });
 
   it('should add "unicorn-dark-theme" class to the overlay container when the enableDarkTheme action is dispatched', waitForAsync(() => {
-    const addSpy = jest.spyOn(overlay.getContainerElement().classList, 'add');
+    const addSpy = vi.spyOn(overlay.getContainerElement().classList, 'add');
     store.dispatch(themeAction.enableDarkTheme());
     expect(addSpy).toHaveBeenCalledWith('unicorn-dark-theme');
   }));
 
   it('should remove "unicorn-dark-theme" class to the overlay container when the disableDarkTheme action is dispatched', waitForAsync(() => {
-    const removeSpy = jest.spyOn(overlay.getContainerElement().classList, 'remove');
+    const removeSpy = vi.spyOn(overlay.getContainerElement().classList, 'remove');
     store.dispatch(themeAction.disableDarkTheme());
     expect(removeSpy).toHaveBeenCalledWith('unicorn-dark-theme');
   }));
 
   it('should add/remove "unicorn-dark-theme" class to/from the overlay container when the toggleDarkTheme action is dispatched', waitForAsync(() => {
-    const addSpy = jest.spyOn(overlay.getContainerElement().classList, 'add');
-    const removeSpy = jest.spyOn(overlay.getContainerElement().classList, 'remove');
+    const addSpy = vi.spyOn(overlay.getContainerElement().classList, 'add');
+    const removeSpy = vi.spyOn(overlay.getContainerElement().classList, 'remove');
     store.dispatch(themeAction.toggleDarkTheme());
     expect(addSpy).toHaveBeenCalledWith('unicorn-dark-theme');
     store.dispatch(themeAction.toggleDarkTheme());

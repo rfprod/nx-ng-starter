@@ -7,41 +7,38 @@
   "tags": ["scope:client-dashboards", "type:feature"],
   "targets": {
     "lint": {
-      "executor": "@angular-eslint/builder:lint",
+      "executor": "@nx/eslint:lint",
       "options": {
-        "eslintConfig": "libs/client-dashboards/.eslintrc.json",
-        "lintFilePatterns": ["libs/client-dashboards/**/*.ts"]
-      },
-      "outputs": ["{options.outputFile}"]
+        "eslintConfig": "{projectRoot}/eslint.config.mjs",
+        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.html"]
+      }
     },
     "prettier-check": {
       "executor": "./tools/executors/prettier:check",
       "options": {
         "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-dashboards"]
+      }
     },
     "stylelint-check": {
       "executor": "./tools/executors/stylelint:check",
       "options": {
         "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/stylelint/libs/client-dashboards"]
+      }
     },
     "test": {
-      "executor": "@nx/jest:jest",
+      "executor": "@nx/vite:test",
       "options": {
-        "jestConfig": "libs/client-dashboards/jest.config.ts",
-        "passWithNoTests": true
-      },
-      "outputs": ["{workspaceRoot}/coverage/libs/client-dashboards"]
+        "compiler": "swc",
+        "configFile": "libs/client-dashboards/vitest.config.mts",
+        "coverageProvider": "istanbul",
+        "uiFramework": "angular"
+      }
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
-        "tsConfig": "libs/client-dashboards/tsconfig.lib.json"
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-dashboards"]
+        "tsConfig": "{projectRoot}/tsconfig.lib.json"
+      }
     }
   }
 }

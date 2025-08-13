@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc"
   },
-  "exclude": ["test-setup.ts", "jest.config.ts", "*.spec.ts"],
+  "exclude": ["test-setup.ts", "**/*.mts", "**/*.spec.ts"],
   "extends": "./tsconfig.json",
   "include": ["**/*.ts"]
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { map, mergeMap } from 'rxjs/operators';
 
@@ -9,6 +9,10 @@ import { AppHttpApiService } from './services/http-api/http-api.service';
   providedIn: 'root',
 })
 export class AppHttpApiEffects {
+  private readonly actions$ = inject(Actions);
+
+  private readonly api = inject(AppHttpApiService);
+
   public readonly ping$ = createEffect(() =>
     this.actions$.pipe(
       ofType(httpApiAction.ping.type),
@@ -16,9 +20,4 @@ export class AppHttpApiEffects {
       map(payload => httpApiAction.pingSuccess({ payload })),
     ),
   );
-
-  constructor(
-    private readonly actions$: Actions,
-    private readonly api: AppHttpApiService,
-  ) {}
 }

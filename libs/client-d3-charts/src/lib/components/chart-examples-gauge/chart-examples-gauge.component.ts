@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { first, map, switchMap, timer } from 'rxjs';
 
 import { IGaugeChartDataNode, IGaugeChartOptions } from '../../interfaces/gauge-chart.interface';
@@ -13,6 +13,8 @@ import { IGaugeChartDataNode, IGaugeChartOptions } from '../../interfaces/gauge-
   standalone: false,
 })
 export class AppChartExamplesGaugeComponent {
+  private readonly breakpointObserver = inject(BreakpointObserver);
+
   /** The chat values. */
   public value = {
     first: 80,
@@ -95,6 +97,4 @@ export class AppChartExamplesGaugeComponent {
       );
     }),
   );
-
-  constructor(private readonly breakpointObserver: BreakpointObserver) {}
 }

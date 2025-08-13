@@ -1,8 +1,8 @@
-import { getJestProjectsAsync } from '@nx/jest';
 import { execFile, type ExecFileException } from 'child_process';
 import * as fs from 'fs';
-import path from 'path';
+import { FsTree } from 'nx/src/generators/tree';
 
+import { findFiles } from '../utils/find-files.util';
 import { logger } from '../utils/logger';
 
 /**
@@ -41,6 +41,7 @@ const totalCoverage: ICoverageSummaryObj = {
 let readFiles = 0;
 
 const writeAverageStats = () => {
+  const readmePath = `${root}/UNIT_COVERAGE.md`;
   const coverageSummary = `# Unit Coverage Stats
 
 ## Lines
@@ -67,8 +68,6 @@ const writeAverageStats = () => {
 | -------------------------------- | ---------------------------------- | ---------------------------------- | ------------------------------ |
 | ${totalCoverage.branches.total}  | ${totalCoverage.branches.covered}  | ${totalCoverage.branches.skipped}  | ${totalCoverage.branches.pct}% |
 `;
-
-  const readmePath = path.join(root, 'UNIT_COVERAGE.md');
 
   fs.writeFile(readmePath, coverageSummary, (error: NodeJS.ErrnoException | null) => {
     if (error !== null) {
@@ -143,11 +142,13 @@ const recalculateStats = () => {
   }
 };
 
-void (async () => {
-  /**
-   * Jest projects array.
-   */
-  const jestProjects = await getJestProjectsAsync();
+(async (): Promise<void> => {
+  const tree = new FsTree(process.cwd(), false);
+  const files = findFiles(tree, 'dist/coverage', 'summary.json');
+  if (files.stderr) {
+    throw new Error(files.stderr);
+  }
+  const fileList = files.stdout.split(' ');
 
   const readFileCallback = (error: NodeJS.ErrnoException | null, data?: Buffer) => {
     if (error !== null) {
@@ -167,16 +168,18 @@ void (async () => {
 
     readFiles += 1;
 
-    if (readFiles === jestProjects.length) {
+    if (readFiles === fileList.length) {
       recalculateStats();
       writeAverageStats();
     }
   };
 
-  for (const project of jestProjects) {
-    const projectPath = project.replace(/<rootDir>/, '').replace('jest.config.ts', '');
-    const filePath = path.join(root, 'coverage', projectPath, 'coverage-summary.json');
+  for (const relativePath of fileList) {
+    const absolutePath = `${process.cwd()}/${relativePath}`;
 
-    fs.readFile(filePath, readFileCallback);
+    fs.readFile(absolutePath, readFileCallback);
   }
-})();
+})().catch((error: Error) => {
+  process.stderr.write(`Coverage stats generator error: ${error.toString()}\n`);
+  process.exit(1);
+});

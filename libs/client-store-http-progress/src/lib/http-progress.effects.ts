@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { tap, withLatestFrom } from 'rxjs/operators';
@@ -13,6 +13,14 @@ import { AppToasterService } from './services/toaster/toaster.service';
   providedIn: 'root',
 })
 export class AppHttpProgressEffects {
+  private readonly actions$ = inject(Actions);
+
+  private readonly store = inject(Store<IHttpProgressState>);
+
+  private readonly toaster = inject(AppToasterService);
+
+  private readonly service = inject(AppHttpProgressService);
+
   public readonly start$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -52,11 +60,4 @@ export class AppHttpProgressEffects {
       ),
     { dispatch: false },
   );
-
-  constructor(
-    private readonly actions$: Actions,
-    private readonly store: Store<IHttpProgressState>,
-    private readonly toaster: AppToasterService,
-    private readonly service: AppHttpProgressService,
-  ) {}
 }

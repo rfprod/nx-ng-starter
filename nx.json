@@ -16,38 +16,90 @@
     "@nrwl/schematics:application": {
       "framework": "angular",
       "style": "scss",
-      "unitTestRunner": "jest"
+      "unitTestRunner": "vitest"
     },
     "@nrwl/schematics:library": {
       "style": "scss",
-      "unitTestRunner": "jest"
+      "unitTestRunner": "vitest"
     },
     "@nrwl/web:application": {
       "e2eTestRunner": "cypress",
       "linter": "eslint",
       "style": "scss",
-      "unitTestRunner": "jest"
+      "unitTestRunner": "vitest"
     },
     "@nrwl/web:library": {
       "linter": "eslint",
       "style": "scss",
-      "unitTestRunner": "jest"
+      "unitTestRunner": "vitest"
     },
     "@nx/angular:application": {
       "e2eTestRunner": "cypress",
       "linter": "eslint",
       "style": "scss",
-      "unitTestRunner": "jest"
+      "unitTestRunner": "vitest"
     },
     "@nx/angular:component": {
       "changeDetection": "OnPush",
       "inlineStyle": false,
       "inlineTemplate": false,
-      "style": "scss"
+      "style": "scss",
+      "type": "component"
+    },
+    "@nx/angular:directive": {
+      "type": "directive"
+    },
+    "@nx/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@nx/angular:interceptor": {
+      "typeSeparator": "."
     },
     "@nx/angular:library": {
       "linter": "eslint",
-      "unitTestRunner": "jest"
+      "unitTestRunner": "vitest"
+    },
+    "@nx/angular:module": {
+      "typeSeparator": "."
+    },
+    "@nx/angular:pipe": {
+      "typeSeparator": "."
+    },
+    "@nx/angular:resolver": {
+      "typeSeparator": "."
+    },
+    "@nx/angular:scam": {
+      "type": "component"
+    },
+    "@nx/angular:scam-directive": {
+      "type": "directive"
+    },
+    "@nx/angular:service": {
+      "type": "service"
+    },
+    "@schematics/angular:component": {
+      "type": "component"
+    },
+    "@schematics/angular:directive": {
+      "type": "directive"
+    },
+    "@schematics/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:module": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:pipe": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:resolver": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:service": {
+      "type": "service"
     }
   },
   "namedInputs": {
@@ -61,11 +113,11 @@
       "!{projectRoot}/tsconfig.eslint.json",
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/tsconfig.json",
-      "!{projectRoot}/jest.config.ts",
+      "!{projectRoot}/vitest.config.mts",
       "!{projectRoot}/.eslintrc.json"
     ],
-    "projectLinterConfig": ["{projectRoot}/tsconfig.spec.json", "{projectRoot}/jest.config.ts"],
-    "projectTestConfig": ["{projectRoot}/tsconfig.eslint.json", "{projectRoot}/.eslintrc.json"],
+    "projectLinterConfig": ["{projectRoot}/tsconfig.spec.json", "{projectRoot}/vitest.config.mts"],
+    "projectTestConfig": ["{projectRoot}/tsconfig.eslint.json", "{projectRoot}/eslint.config.mjs"],
     "rootLinterConfig": [
       "{workspaceRoot}/.eslintignore",
       "{workspaceRoot}/.eslintrc.js",
@@ -73,7 +125,7 @@
       "{workspaceRoot}/.prettierignore",
       "{workspaceRoot}/.prettierrc"
     ],
-    "rootTestConfig": ["{workspaceRoot}/jest.config.ts", "{workspaceRoot}/jest.preset.js"],
+    "rootTestConfig": ["{workspaceRoot}/vite.config.ts", "{workspaceRoot}/vitest.workspace.ts"],
     "sharedGlobals": ["{workspaceRoot}/babel.config.json", "{workspaceRoot}/nx.json", "{workspaceRoot}/tsconfig.base.json"]
   },
   "newProjectRoot": "",
@@ -100,7 +152,7 @@
     },
     "lint": {
       "cache": true,
-      "inputs": ["default", "^prod", "projectLinterConfig", "rootLinterConfig"]
+      "inputs": ["default", "^prod", "projectLinterConfig", "rootLinterConfig", "{workspaceRoot}/eslint.config.mjs"]
     },
     "prettier-check": {
       "cache": true
@@ -122,6 +174,9 @@
         "runtimeCacheInputs": ["node -v", "echo $IMPORTANT_ENV_VAR"]
       }
     }
+  },
+  "tui": {
+    "enabled": true
   },
   "useLegacyCache": false,
   "workspaceLayout": {

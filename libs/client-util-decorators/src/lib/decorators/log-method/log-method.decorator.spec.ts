@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed, TestModuleMetadata } from '@angular/core/testing';
+import { MockInstance } from 'vitest';
 
 import { logMethod } from './log-method.decorator';
 
@@ -34,17 +35,17 @@ describe('trackChanges', () => {
   let fixture: ComponentFixture<AppLogMethodTestingComponent>;
   let component: AppLogMethodTestingComponent;
 
-  let spy: jest.SpyInstance;
+  let spy: MockInstance;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule(testBedConfig).compileComponents();
     fixture = TestBed.createComponent(AppLogMethodTestingComponent);
     component = fixture.componentInstance;
-    spy = jest.spyOn(console, 'log');
+    spy = vi.spyOn(console, 'log');
   });
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('should log changes if attached and enabled explicitly', () => {

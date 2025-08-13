@@ -2,61 +2,64 @@ import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { ApolloLink, InMemoryCache, type Operation, type ServerError, type ServerParseError } from '@apollo/client/core';
+import { ApolloLink, type Operation, type ServerError, type ServerParseError } from '@apollo/client/core';
 import type { NetworkError } from '@apollo/client/errors';
 import type { ErrorResponse } from '@apollo/client/link/error';
+import * as apolloUtils from '@apollo/client/utilities';
 import { flushHttpRequests, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { AppTranslateModule } from '@app/client-translate';
 import { HTTP_STATUS, type IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngrx/store';
-import { Apollo, gql, provideApollo } from 'apollo-angular';
-import type { GraphQLError, GraphQLFormattedError } from 'graphql';
+import { Apollo, gql } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
+import { type GraphQLError, type GraphQLFormattedError, Kind, type NameNode, OperationTypeNode } from 'graphql';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
+import type { MockInstance } from 'vitest';
 
 import { httpProgressAction } from '../../http-progress.actions';
 import { AppHttpProgressStoreModule } from '../../http-progress.module';
-import { AppToasterService, toasterServiceProvider } from '../toaster/toaster.service';
+import { AppToasterService } from '../toaster/toaster.service';
 import { AppHttpHandlersService } from './http-handlers.service';
 
 describe('AppHttpHandlersService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     imports: [AppTranslateModule.forRoot(), AppHttpProgressStoreModule.forRoot()],
-    providers: [toasterServiceProvider, provideApollo(() => ({ cache: new InMemoryCache() }))],
+    providers: [AppToasterService, Apollo, HttpLink],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
   let service: AppHttpHandlersService;
   let serviceSpies: {
-    checkErrorStatusAndRedirect: jest.SpyInstance;
-    handleGqlError: jest.SpyInstance;
-    handleError: jest.SpyInstance;
+    checkErrorStatusAndRedirect: MockInstance;
+    handleGqlError: MockInstance;
+    handleError: MockInstance;
   };
   let apollo: Apollo;
   let httpTestingController: HttpTestingController;
   let toaster: AppToasterService;
   let env: IWebClientAppEnvironment;
   let store: Store;
-  let storeDispatchSpy: jest.SpyInstance;
+  let storeDispatchSpy: MockInstance;
   let router: Router;
-  let routerNavigateSpy: jest.SpyInstance;
+  let routerNavigateSpy: MockInstance;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule(testBedConfig).compileComponents();
     service = TestBed.inject(AppHttpHandlersService);
     serviceSpies = {
-      checkErrorStatusAndRedirect: jest.spyOn(service, 'checkErrorStatusAndRedirect'),
-      handleGqlError: jest.spyOn(service, 'handleGqlError'),
-      handleError: jest.spyOn(service, 'handleError'),
+      checkErrorStatusAndRedirect: vi.spyOn(service, 'checkErrorStatusAndRedirect'),
+      handleGqlError: vi.spyOn(service, 'handleGqlError'),
+      handleError: vi.spyOn(service, 'handleError'),
     };
     toaster = TestBed.inject(AppToasterService);
     httpTestingController = TestBed.inject(HttpTestingController);
     apollo = TestBed.inject(Apollo);
     env = TestBed.inject(WEB_CLIENT_APP_ENV);
     store = TestBed.inject(Store);
-    storeDispatchSpy = jest.spyOn(store, 'dispatch');
+    storeDispatchSpy = vi.spyOn(store, 'dispatch');
     router = TestBed.inject(Router);
-    routerNavigateSpy = jest.spyOn(router, 'navigate').mockImplementation(
+    routerNavigateSpy = vi.spyOn(router, 'navigate').mockImplementation(
       () =>
         new Promise<boolean>(resolve => {
           resolve(true);
@@ -147,9 +150,24 @@ describe('AppHttpHandlersService', () => {
           }
         }
       `;
+      process.stdout.write(`\nquery: ${JSON.stringify(query)}\n`);
       const operation = {
         query,
       } as Operation;
+
+      vi.spyOn(apolloUtils, 'getMainDefinition').mockReturnValueOnce({
+        kind: Kind.OPERATION_DEFINITION,
+        operation: OperationTypeNode.QUERY,
+        name: {
+          kind: Kind.NAME,
+          value: 'UploadFile',
+        } as NameNode,
+        selectionSet: {
+          kind: Kind.SELECTION_SET,
+          selections: [],
+        },
+      });
+
       const splitTest = service.gqlLinkSplitTest();
       const result = splitTest(operation);
       expect(result).toBeFalsy();
@@ -164,9 +182,11 @@ describe('AppHttpHandlersService', () => {
           }
         }
       `;
+      process.stdout.write(`\nquery: ${JSON.stringify(query)}\n`);
       const operation = {
         query,
       } as Operation;
+
       const splitTest = service.gqlLinkSplitTest();
       const result = splitTest(operation);
       expect(result).toBeTruthy();
@@ -174,10 +194,10 @@ describe('AppHttpHandlersService', () => {
   });
 
   describe('gqlErrorLinkHandler', () => {
-    let showToasterSpy: jest.SpyInstance;
+    let showToasterSpy: MockInstance;
 
     beforeEach(() => {
-      showToasterSpy = jest.spyOn(toaster, 'showToaster');
+      showToasterSpy = vi.spyOn(toaster, 'showToaster');
     });
 
     it('should process errors as expected: no errors', () => {
@@ -204,7 +224,7 @@ describe('AppHttpHandlersService', () => {
         networkError: void 0,
       } as ErrorResponse;
       service.gqlErrorLinkHandler(errorRes);
-      const expectedMessage = `[GraphQL error ${testErrorNoCode.extensions?.code}]: ${testErrorNoCode.message}[GraphQL error ${testError.extensions.code}]: ${testError.message}`;
+      const expectedMessage = `[GraphQL error ${testErrorNoCode.extensions?.['code']}]: ${testErrorNoCode.message}[GraphQL error ${testError.extensions['code']}]: ${testError.message}`;
       expect(showToasterSpy).toHaveBeenCalledWith(expectedMessage, 'error');
     });
 
@@ -238,7 +258,7 @@ describe('AppHttpHandlersService', () => {
   });
 
   it('checkErrorStatusAndRedirect should reset user if error status is 401', () => {
-    const showToasterSpy = jest.spyOn(toaster, 'showToaster');
+    const showToasterSpy = vi.spyOn(toaster, 'showToaster');
     service.checkErrorStatusAndRedirect(HTTP_STATUS.BAD_REQUEST);
     expect(routerNavigateSpy).not.toHaveBeenCalled();
     expect(showToasterSpy).not.toHaveBeenCalledWith(expect.any(String), 'error');
@@ -279,9 +299,9 @@ describe('AppHttpHandlersService', () => {
   });
 
   it('createGqlLink should return the newtork link observable', waitForAsync(() => {
-    const getEndpointSpy = jest.spyOn(service, 'getEndpoint');
-    const gqlUriFunctionSpy = jest.spyOn(service, 'gqlUriFunction');
-    const gqlLinkSplitTestSpy = jest.spyOn(service, 'gqlLinkSplitTest');
+    const getEndpointSpy = vi.spyOn(service, 'getEndpoint');
+    const gqlUriFunctionSpy = vi.spyOn(service, 'gqlUriFunction');
+    const gqlLinkSplitTestSpy = vi.spyOn(service, 'gqlLinkSplitTest');
     const link = service.createGqlLink('testToken');
     expect(link instanceof ApolloLink).toBeTruthy();
     expect(getEndpointSpy).toHaveBeenCalledTimes(1);

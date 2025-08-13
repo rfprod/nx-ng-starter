@@ -73,5 +73,5 @@ export const sentryProviders: (env: IWebClientAppEnvironment) => Array<Provider 
   providedIn: 'root',
 })
 export class AppSentryService {
-  constructor(public readonly trace: TraceService) {}
+  public readonly trace = inject(TraceService);
 }

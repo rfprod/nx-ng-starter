@@ -32,12 +32,12 @@ import 'core-js/es/number';
 import 'core-js/es/object';
 import 'core-js/es/parse-float';
 import 'core-js/es/parse-int';
+import 'core-js/es/reflect';
 import 'core-js/es/regexp';
 import 'core-js/es/set';
 import 'core-js/es/string';
 import 'core-js/es/symbol';
 import 'core-js/es/weak-map';
-import 'core-js/es/reflect';
 /**
  * Required to support Web Animations `@angular/platform-browser/animations`.
  * Needed for: All but Chrome, Firefox and Opera. https://caniuse.com/web-animation
@@ -59,7 +59,7 @@ import 'web-animations-js'; // Run `npm install --save web-animations-js`.
  * In IE/Edge developer tools, the addEventListener will also be wrapped by zone.js
  * with the following flag, it will bypass `zone.js` patch for IE/Edge
  */
-(window as any).__Zone_enable_cross_context_check = true;
+(window as unknown as Record<string, boolean>)['__Zone_enable_cross_context_check'] = true;
 
 /**
  * Zone JS is required by default for Angular itself.

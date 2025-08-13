@@ -4,6 +4,7 @@ import { AppHttpProgressStoreModule } from '@app/client-store-http-progress';
 import { sidebarAction } from '@app/client-store-sidebar';
 import { AppTestingComponent, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { Store } from '@ngrx/store';
+import type { MockInstance } from 'vitest';
 
 import { AppSidebarRootComponent } from './sidebar-root.component';
 
@@ -30,21 +31,21 @@ describe('AppSidebarRootComponent', () => {
   let component: AppSidebarRootComponent;
 
   let store: Store;
-  let storeDispatchSpy: jest.SpyInstance;
-  let sidebarCloseHandlerSpy: jest.SpyInstance;
+  let storeDispatchSpy: MockInstance;
+  let sidebarCloseHandlerSpy: MockInstance;
 
   let router: Router;
-  let routerNavigateSpy: jest.SpyInstance;
+  let routerNavigateSpy: MockInstance;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule(testBedConfig).compileComponents();
     fixture = TestBed.createComponent(AppSidebarRootComponent);
     component = fixture.componentInstance;
     store = TestBed.inject(Store);
-    storeDispatchSpy = jest.spyOn(store, 'dispatch');
-    sidebarCloseHandlerSpy = jest.spyOn(component, 'sidebarCloseHandler');
+    storeDispatchSpy = vi.spyOn(store, 'dispatch');
+    sidebarCloseHandlerSpy = vi.spyOn(component, 'sidebarCloseHandler');
     router = TestBed.inject(Router);
-    routerNavigateSpy = jest.spyOn(router, 'navigate');
+    routerNavigateSpy = vi.spyOn(router, 'navigate');
     fixture.detectChanges();
   });
 

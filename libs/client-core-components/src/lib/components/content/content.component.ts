@@ -16,6 +16,10 @@ import { tap } from 'rxjs/operators';
 export class AppContentComponent {
   private readonly destroyRef = inject(DestroyRef);
 
+  private readonly store = inject(Store<ISidebarState>);
+
+  private readonly router = inject(Router);
+
   @ViewChild('content') public readonly content?: MatSidenavContent;
 
   public readonly sidebarOpen$ = this.store.select(sidebarSelector.sidebarOpen);
@@ -23,16 +27,13 @@ export class AppContentComponent {
   public readonly routerEvents$ = this.router.events.pipe(
     takeUntilDestroyed(this.destroyRef),
     tap(event => {
-      if (event instanceof NavigationEnd && typeof this.content !== 'undefined') {
+      if (event instanceof NavigationEnd && this.content instanceof MatSidenavContent) {
         this.content.scrollTo({ top: 0 });
       }
     }),
   );
 
-  constructor(
-    private readonly store: Store<ISidebarState>,
-    private readonly router: Router,
-  ) {
+  constructor() {
     void this.routerEvents$.subscribe();
   }
 

@@ -66,14 +66,14 @@ describe('AppWebsocketApiService correct connection', () => {
   }));
 
   it('startDiagEvents should work as expected', () => {
-    const nextEventSpy = jest.spyOn(service['wsSubject'], 'next');
+    const nextEventSpy = vi.spyOn(service['wsSubject'], 'next');
     service.startDiagEvents();
     const event = { event: 'start-diag' };
     expect(nextEventSpy).toHaveBeenCalledWith(event);
   });
 
   it('stopDiagEvents should work as expected', () => {
-    const nextEventSpy = jest.spyOn(service['wsSubject'], 'next');
+    const nextEventSpy = vi.spyOn(service['wsSubject'], 'next');
     service.stopDiagEvents();
     const event = { event: 'stop-diag' };
     expect(nextEventSpy).toHaveBeenCalledWith(event);
@@ -114,7 +114,7 @@ describe('AppWebsocketApiService incorrect connection', () => {
 
   it('should work as expected when the websocket url is provided incorrectly', waitForAsync(() => {
     expect(wsConfig.url).toEqual('');
-    const spy = jest.spyOn(console, 'error');
+    const spy = vi.spyOn(console, 'error');
     void service
       .connect()
       .pipe(

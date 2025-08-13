@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
+import type { MockInstance } from 'vitest';
 
 import { featureAccessAction } from '../../feature-access.actions';
 import { AppFeatureAccessInitGuard } from './feature-access-init.guard';
@@ -7,7 +8,7 @@ import { AppFeatureAccessInitGuard } from './feature-access-init.guard';
 describe('AppFeatureAccessInitGuard', () => {
   let guard: AppFeatureAccessInitGuard;
   let store: Store;
-  let storeDispatchSpy: jest.SpyInstance;
+  let storeDispatchSpy: MockInstance;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -15,7 +16,7 @@ describe('AppFeatureAccessInitGuard', () => {
     });
     guard = TestBed.inject(AppFeatureAccessInitGuard);
     store = TestBed.inject(Store);
-    storeDispatchSpy = jest.spyOn(store, 'dispatch');
+    storeDispatchSpy = vi.spyOn(store, 'dispatch');
   });
 
   it('should be created', () => {

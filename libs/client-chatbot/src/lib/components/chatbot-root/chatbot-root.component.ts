@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, HostListener, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, HostListener, inject, signal } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { AppElizaService, IChatMessage } from '@app/client-util-eliza';
 
@@ -10,6 +10,10 @@ import { AppElizaService, IChatMessage } from '@app/client-util-eliza';
   standalone: false,
 })
 export class AppChatbotRootComponent {
+  private readonly fb = inject(FormBuilder);
+
+  private readonly eliza = inject(AppElizaService);
+
   public readonly messages$ = this.eliza.messages$;
 
   private readonly nextUserMessage$ = signal<IChatMessage | null>(null);
@@ -29,11 +33,6 @@ export class AppChatbotRootComponent {
   public readonly form = this.fb.group({
     message: [''],
   });
-
-  constructor(
-    private readonly fb: FormBuilder,
-    private readonly eliza: AppElizaService,
-  ) {}
 
   public resetBot() {
     this.eliza.reset();

@@ -7,41 +7,38 @@
   "tags": ["scope:client-store-user", "type:data-access"],
   "targets": {
     "lint": {
-      "executor": "@angular-eslint/builder:lint",
+      "executor": "@nx/eslint:lint",
       "options": {
-        "eslintConfig": "libs/client-store-user/.eslintrc.json",
-        "lintFilePatterns": ["libs/client-store-user/**/*.ts"]
-      },
-      "outputs": ["{options.outputFile}"]
+        "eslintConfig": "{projectRoot}/eslint.config.mjs",
+        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.html"]
+      }
     },
     "prettier-check": {
       "executor": "./tools/executors/prettier:check",
       "options": {
         "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/prettier/libs/client-store-user"]
+      }
     },
     "stylelint-check": {
       "executor": "./tools/executors/stylelint:check",
       "options": {
         "config": ""
-      },
-      "outputs": ["{workspaceRoot}/dist/stylelint/libs/client-store-user"]
+      }
     },
     "test": {
-      "executor": "@nx/jest:jest",
+      "executor": "@nx/vite:test",
       "options": {
-        "jestConfig": "libs/client-store-user/jest.config.ts",
-        "passWithNoTests": true
-      },
-      "outputs": ["{workspaceRoot}/coverage/libs/client-store-user"]
+        "compiler": "swc",
+        "configFile": "libs/client-store-user/vitest.config.mts",
+        "coverageProvider": "istanbul",
+        "uiFramework": "angular"
+      }
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
       "options": {
-        "tsConfig": "libs/client-store-user/tsconfig.lib.json"
-      },
-      "outputs": ["{workspaceRoot}/dist/out-tsc/libs/client-store-user"]
+        "tsConfig": "{projectRoot}/tsconfig.lib.json"
+      }
     }
   }
 }

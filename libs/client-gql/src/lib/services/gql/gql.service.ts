@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ApolloClient, ApolloClientOptions, InMemoryCache, NormalizedCacheObject } from '@apollo/client/core';
 import { AppHttpHandlersService, TGqlClient } from '@app/client-store-http-progress';
 import { IUserState, userSelector } from '@app/client-store-user';
@@ -15,13 +15,13 @@ import { first, map, switchMap, tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AppGqlService {
-  private readonly userToken$ = this.store.select(userSelector.token).pipe(first());
+  private readonly apollo = inject(Apollo);
 
-  constructor(
-    private readonly apollo: Apollo,
-    private readonly handlers: AppHttpHandlersService,
-    private readonly store: Store<IUserState>,
-  ) {}
+  private readonly handlers = inject(AppHttpHandlersService);
+
+  private readonly store = inject(Store<IUserState>);
+
+  private readonly userToken$ = this.store.select(userSelector.token).pipe(first());
 
   /**
    * Creates apollo client for a specific user role.

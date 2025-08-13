@@ -1,13 +1,16 @@
-import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
+import '@analogjs/vitest-angular/setup-zone';
 
-setupZoneTestEnv();
+import '@angular/compiler'; // Required for JIT compiler
+import { getTestBed } from '@angular/core/testing';
+import { BrowserTestingModule, platformBrowserTesting } from '@angular/platform-browser/testing';
+import { vi } from 'vitest';
 
-const traceService = 'TraceService';
-const browserTracing = 'BrowserTracing';
-
-jest.mock('@sentry/angular-ivy', () => ({
-  [traceService]: jest.fn().mockReturnValue({}),
-  [browserTracing]: jest.fn().mockReturnValue({}),
-  init: jest.fn().mockReturnValue({}),
-  createErrorHandler: jest.fn().mockReturnValue({}),
+vi.mock('@sentry/angular-ivy', () => ({
+  ['TraceService']: vi.fn().mockReturnValue({}),
+  ['BrowserTracing']: vi.fn().mockReturnValue({}),
+  init: vi.fn().mockReturnValue({}),
+  createErrorHandler: vi.fn().mockReturnValue({}),
+  routingInstrumentation: vi.fn().mockReturnValue({}),
 }));
+
+getTestBed().initTestEnvironment(BrowserTestingModule, platformBrowserTesting());

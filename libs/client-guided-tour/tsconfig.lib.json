@@ -11,9 +11,10 @@
     "lib": ["dom", "ES2022"],
     "outDir": "../../dist/out-tsc",
     "sourceMap": true,
-    "target": "ES2022"
+    "target": "ES2022",
+    "moduleResolution": "bundler"
   },
-  "exclude": ["src/test-setup.ts", "**/*.spec.ts", "jest.config.ts"],
+  "exclude": ["src/test-setup.ts", "**/*.spec.ts", "*.mts"],
   "extends": "./tsconfig.json",
   "include": ["**/*.ts"]
 }

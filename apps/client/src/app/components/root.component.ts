@@ -1,4 +1,4 @@
-import { AfterContentInit, ChangeDetectionStrategy, Component, DestroyRef, HostBinding, Inject, inject, OnInit } from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, Component, DestroyRef, HostBinding, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Meta, Title } from '@angular/platform-browser';
 import { AppServiceWorkerService } from '@app/client-service-worker';
@@ -6,7 +6,7 @@ import { chatbotAction, chatbotSelector, IChatbotState } from '@app/client-store
 import { routerAction } from '@app/client-store-router';
 import { ISidebarState, sidebarAction, sidebarSelector } from '@app/client-store-sidebar';
 import { IThemeState, themeAction, themeSelector } from '@app/client-store-theme';
-import { IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '@app/client-util';
+import { WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
 
@@ -24,6 +24,16 @@ interface ILogoRef {
 })
 export class AppRootComponent implements OnInit, AfterContentInit {
   private readonly destroyRef = inject(DestroyRef);
+
+  private readonly title = inject(Title);
+
+  private readonly meta = inject(Meta);
+
+  private readonly sw = inject(AppServiceWorkerService);
+
+  public readonly store = inject(Store<IChatbotState & ISidebarState & IThemeState>);
+
+  private readonly env = inject(WEB_CLIENT_APP_ENV);
 
   /**
    * Defines if UI should use alternative dark material theme.
@@ -58,14 +68,6 @@ export class AppRootComponent implements OnInit, AfterContentInit {
   public readonly logoSrc$ = this.darkThemeEnabled$.pipe(
     map(darkThemeEnabled => (darkThemeEnabled ? this.logoRef.light : this.logoRef.dark)),
   );
-
-  constructor(
-    private readonly title: Title,
-    private readonly meta: Meta,
-    private readonly sw: AppServiceWorkerService,
-    public readonly store: Store<IChatbotState & ISidebarState & IThemeState>,
-    @Inject(WEB_CLIENT_APP_ENV) private readonly env: IWebClientAppEnvironment,
-  ) {}
 
   /** Sidebar toggle. */
   public toggleSidebar(): void {

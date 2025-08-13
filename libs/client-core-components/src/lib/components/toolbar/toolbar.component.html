@@ -22,7 +22,9 @@
 
     <mat-divider></mat-divider>
 
-    <a mat-menu-item (click)="toggleChatbot()"> <mat-icon>chat_bubble_outline</mat-icon> Chat widget </a>
+    <a mat-menu-item (click)="toggleChatbot($event)" (keyup)="toggleChatbot($event)" tabindex="-1">
+      <mat-icon>chat_bubble_outline</mat-icon> Chat widget
+    </a>
 
     <mat-divider></mat-divider>
 

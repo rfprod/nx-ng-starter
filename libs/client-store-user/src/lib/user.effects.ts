@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { from } from 'rxjs';
@@ -10,6 +10,10 @@ import { userAction } from './user.actions';
   providedIn: 'root',
 })
 export class AppUserEffects {
+  private readonly actions$ = inject(Actions);
+
+  private readonly router = inject(Router);
+
   public readonly login$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -36,9 +40,4 @@ export class AppUserEffects {
       ),
     { dispatch: false },
   );
-
-  constructor(
-    private readonly actions$: Actions,
-    private readonly router: Router,
-  ) {}
 }

@@ -1,9 +1,9 @@
 import { AppMessage, AppUser, AppUserLoginCredentials, AppUserLogoutCredentials } from '@app/backend-interfaces';
-import { JwtModule } from '@nestjs/jwt';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 import { Test, type TestingModule } from '@nestjs/testing';
+import type { MockInstance } from 'vitest';
 
-import { authModuleProviders } from '../backend-auth.module';
-import { AppAuthService } from '../services/auth.service';
+import { AppAuthService, AUTH_SERVICE_TOKEN } from '../services/auth.service';
 import { AppAuthController } from './auth.controller';
 
 describe('AppAuthController', () => {
@@ -11,9 +11,9 @@ describe('AppAuthController', () => {
   let authController: AppAuthController;
   let authService: AppAuthService;
   let authServiceSpy: {
-    login: jest.SpyInstance;
-    logout: jest.SpyInstance;
-    signup: jest.SpyInstance;
+    login: MockInstance;
+    logout: MockInstance;
+    signup: MockInstance;
   };
 
   beforeAll(async () => {
@@ -24,7 +24,17 @@ describe('AppAuthController', () => {
         }),
       ],
       controllers: [AppAuthController],
-      providers: [...authModuleProviders],
+      providers: [
+        {
+          provide: AppAuthService,
+          useFactory: (jwt: JwtService) => new AppAuthService(jwt),
+          inject: [JwtService],
+        },
+        {
+          provide: AUTH_SERVICE_TOKEN,
+          useExisting: AppAuthService,
+        },
+      ],
     })
       .compile()
       .then(module => {
@@ -32,7 +42,7 @@ describe('AppAuthController', () => {
         authController = testingModule.get<AppAuthController>(AppAuthController);
         authService = testingModule.get<AppAuthService>(AppAuthService);
         authServiceSpy = {
-          login: jest.spyOn(authService, 'login').mockImplementation(
+          login: vi.spyOn(authService, 'login').mockImplementation(
             (credentials: AppUserLoginCredentials) =>
               new AppUser({
                 id: '0',
@@ -46,12 +56,12 @@ describe('AppAuthController', () => {
                 }),
               }),
           ),
-          logout: jest
+          logout: vi
             .spyOn(authService, 'logout')
             .mockImplementation(
               (credentials: AppUserLogoutCredentials) => new AppMessage({ message: `success for token ${credentials.token}` }),
             ),
-          signup: jest.spyOn(authService, 'signup').mockImplementation(
+          signup: vi.spyOn(authService, 'signup').mockImplementation(
             (credentials: AppUserLoginCredentials) =>
               new AppUser({
                 id: '0',

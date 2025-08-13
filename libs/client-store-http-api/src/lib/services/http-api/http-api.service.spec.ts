@@ -4,13 +4,13 @@ import { TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { AppHttpHandlersService } from '@app/client-store-http-progress';
 import { flushHttpRequests, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { lastValueFrom, of } from 'rxjs';
+import type { MockInstance } from 'vitest';
 
 import { AppHttpApiService } from './http-api.service';
 
 describe('AppHttpApiService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
     providers: [
-      AppHttpApiService,
       {
         provide: AppHttpHandlersService,
         useValue: {
@@ -23,6 +23,7 @@ describe('AppHttpApiService', () => {
           pipeHttpResponse: () => of(null),
         },
       },
+      AppHttpApiService,
       provideHttpClientTesting(),
       provideHttpClient(),
     ],
@@ -32,12 +33,12 @@ describe('AppHttpApiService', () => {
   let service: AppHttpApiService;
   let httpHandlers: AppHttpHandlersService;
   let httpHandlersSpy: {
-    getEndpoint: jest.SpyInstance;
-    pipeHttpResponse: jest.SpyInstance;
+    getEndpoint: MockInstance;
+    pipeHttpResponse: MockInstance;
   };
 
   let httpClient: HttpClient;
-  let httpClientGetSpy: jest.SpyInstance;
+  let httpClientGetSpy: MockInstance;
 
   let httpController: HttpTestingController;
 
@@ -47,11 +48,11 @@ describe('AppHttpApiService', () => {
     service = TestBed.inject(AppHttpApiService);
     httpHandlers = TestBed.inject(AppHttpHandlersService);
     httpHandlersSpy = {
-      getEndpoint: jest.spyOn(httpHandlers, 'getEndpoint'),
-      pipeHttpResponse: jest.spyOn(httpHandlers, 'pipeHttpResponse'),
+      getEndpoint: vi.spyOn(httpHandlers, 'getEndpoint'),
+      pipeHttpResponse: vi.spyOn(httpHandlers, 'pipeHttpResponse'),
     };
     httpClient = TestBed.inject(HttpClient);
-    httpClientGetSpy = jest.spyOn(httpClient, 'get');
+    httpClientGetSpy = vi.spyOn(httpClient, 'get');
   });
 
   afterEach(() => {

@@ -3,6 +3,7 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { catchError, lastValueFrom, Observable, of } from 'rxjs';
 import { throttleTime, timeout } from 'rxjs/operators';
+import type { MockInstance } from 'vitest';
 
 import { flushHttpRequests } from './http-controller.mock';
 
@@ -13,14 +14,14 @@ describe('flushHttpRequests', () => {
 
   let http: HttpClient;
   let controller: HttpTestingController;
-  let verifySpy: jest.SpyInstance;
+  let verifySpy: MockInstance;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule(testBedConfig).compileComponents();
 
     http = TestBed.inject(HttpClient);
     controller = TestBed.inject(HttpTestingController);
-    verifySpy = jest.spyOn(controller, 'verify');
+    verifySpy = vi.spyOn(controller, 'verify');
 
     void http
       .get('test-req')

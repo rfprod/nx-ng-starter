@@ -5,7 +5,7 @@ module.exports = {
     disableTelemetry: true,
   },
 
-  addons: [{ name: '@storybook/addon-controls' }],
+  addons: [],
 
   features: {
     postcss: true,
@@ -54,9 +54,5 @@ module.exports = {
     // add your own webpack tweaks above if needed
 
     return config;
-  },
-
-  docs: {
-    autodocs: true
   }
 };

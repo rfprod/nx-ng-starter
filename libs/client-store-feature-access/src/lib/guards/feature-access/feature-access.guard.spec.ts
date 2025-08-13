@@ -24,7 +24,7 @@ describe('AppFeatureAccessGuard', () => {
   });
 
   it('canActivate should select `enable` state from store and return an url tree', async () => {
-    const storeSelectSpy = jest.spyOn(store, 'select').mockImplementation(() => of(false));
+    const storeSelectSpy = vi.spyOn(store, 'select').mockImplementation(() => of(false));
     const route = {} as ActivatedRouteSnapshot;
     const state = { root: { data: { feature: void 0 } } } as unknown as RouterStateSnapshot;
     const result = await firstValueFrom(guard.canActivate(route, state));
@@ -33,7 +33,7 @@ describe('AppFeatureAccessGuard', () => {
   });
 
   it('canActivate should select `enable` state from store and return a boolean', async () => {
-    const storeSelectSpy = jest.spyOn(store, 'select').mockImplementation(() => of(true));
+    const storeSelectSpy = vi.spyOn(store, 'select').mockImplementation(() => of(true));
     const route = {} as ActivatedRouteSnapshot;
     const state = { root: { data: { feature: void 0 } } } as unknown as RouterStateSnapshot;
     const result = await firstValueFrom(guard.canActivate(route, state));
@@ -42,7 +42,7 @@ describe('AppFeatureAccessGuard', () => {
   });
 
   it('canActivate should select `enableFeature` state from store and return an url tree', async () => {
-    const storeSelectSpy = jest.spyOn(store, 'select').mockImplementation(() => of(false));
+    const storeSelectSpy = vi.spyOn(store, 'select').mockImplementation(() => of(false));
     const route = {} as ActivatedRouteSnapshot;
     const state = { root: { data: { feature: 'test' } } } as unknown as RouterStateSnapshot;
     const result = await firstValueFrom(guard.canActivate(route, state));
@@ -52,7 +52,7 @@ describe('AppFeatureAccessGuard', () => {
   });
 
   it('canActivate should select `enableFeature` state from store and return a boolean', async () => {
-    const storeSelectSpy = jest.spyOn(store, 'select').mockImplementation(() => of(true));
+    const storeSelectSpy = vi.spyOn(store, 'select').mockImplementation(() => of(true));
     const route = {} as ActivatedRouteSnapshot;
     const state = { root: { data: { feature: 'test' } } } as unknown as RouterStateSnapshot;
     const result = await firstValueFrom(guard.canActivate(route, state));

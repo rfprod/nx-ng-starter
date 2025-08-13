@@ -108,7 +108,7 @@ export abstract class AppBaseEnvConfig<T = IEnvConfig> {
  */
 export const appEnvFactory = () => ({
   meta: {
-    version: '${(options as Record<string, unknown>).version}',
+    version: '${(options as Record<string, unknown>)['version']}',
   },
 });
 `;

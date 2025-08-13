@@ -1,5 +1,5 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { NEVER, Observable } from 'rxjs';
 
@@ -13,10 +13,9 @@ import { NAVIGATOR } from '../providers/navigator.provider';
   providedIn: 'root',
 })
 export class AppPwaOfflineInterceptor implements HttpInterceptor {
-  constructor(
-    @Inject(NAVIGATOR) private readonly navigator: Navigator,
-    private readonly router: Router,
-  ) {}
+  private readonly navigator = inject(NAVIGATOR);
+
+  private readonly router = inject(Router);
 
   public intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const routeLoaded = this.router.url.includes('offline');

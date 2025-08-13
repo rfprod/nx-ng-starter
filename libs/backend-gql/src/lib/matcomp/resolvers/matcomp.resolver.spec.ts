@@ -37,7 +37,7 @@ describe('AppMatcompResolver', () => {
   });
 
   it('matcomps should call service.findAll with args', async () => {
-    const spy = jest.spyOn(service, 'findAll');
+    const spy = vi.spyOn(service, 'findAll');
     const args = new AppMatcompArgs();
     await resolver.matcomps(args);
     expect(spy).toHaveBeenCalledWith(args);
@@ -45,7 +45,7 @@ describe('AppMatcompResolver', () => {
 
   describe('matcomp', () => {
     it(' should call service.findOneById with arg and throw an exception if an item was not found', async () => {
-      const spy = jest.spyOn(service, 'findOneById');
+      const spy = vi.spyOn(service, 'findOneById');
       const id = '0';
       try {
         await resolver.matcomp(id);
@@ -57,7 +57,7 @@ describe('AppMatcompResolver', () => {
 
     it(' should call service.findOneById with arg and return an item if it exists', async () => {
       const matcomp = new AppMatcomp();
-      const spy = jest.spyOn(service, 'findOneById');
+      const spy = vi.spyOn(service, 'findOneById');
       spy.mockReturnValue(matcomp);
       const id = '0';
       const result = await resolver.matcomp(id);
@@ -70,8 +70,8 @@ describe('AppMatcompResolver', () => {
     const dto = new AppMatcompInputDto();
     const expectedItem = new AppMatcomp({ ...dto, id: '0' });
     const expectedSubscription: AppMatcompSubscription = new AppMatcompSubscription({ matcomp: expectedItem });
-    const pubSubSpy = jest.spyOn(pubSub, 'publish');
-    const serviceSpy = jest.spyOn(service, 'create');
+    const pubSubSpy = vi.spyOn(pubSub, 'publish');
+    const serviceSpy = vi.spyOn(service, 'create');
     serviceSpy.mockReturnValue(expectedItem);
     const result = await resolver.create(dto);
     expect(result).toEqual(expectedItem);
@@ -80,15 +80,15 @@ describe('AppMatcompResolver', () => {
   });
 
   it('matcompCreated should call pubSub.asyncIterableIterator with args', () => {
-    const pubSubSpy = jest.spyOn(pubSub, 'asyncIterableIterator');
+    const pubSubSpy = vi.spyOn(pubSub, 'asyncIterableIterator');
     resolver.matcompCreated();
     expect(pubSubSpy).toHaveBeenCalledWith('matcompCreated');
   });
 
   describe('remove', () => {
     it('remove should call service.remove with args, call pubSub.publish, and return the removed item', async () => {
-      const pubSubSpy = jest.spyOn(pubSub, 'publish');
-      const serviceSpy = jest.spyOn(service, 'remove');
+      const pubSubSpy = vi.spyOn(pubSub, 'publish');
+      const serviceSpy = vi.spyOn(service, 'remove');
       const expectedItem = void 0;
       const expectedSubscription: AppMatcompSubscription = new AppMatcompSubscription(expectedItem);
       const id = '0';
@@ -103,8 +103,8 @@ describe('AppMatcompResolver', () => {
       const expectedItem = new AppMatcomp({ ...dto, id: '0' });
       const expectedSubscription: AppMatcompSubscription = new AppMatcompSubscription({ matcomp: expectedItem });
       await resolver.create(dto);
-      const pubSubSpy = jest.spyOn(pubSub, 'publish');
-      const serviceSpy = jest.spyOn(service, 'remove');
+      const pubSubSpy = vi.spyOn(pubSub, 'publish');
+      const serviceSpy = vi.spyOn(service, 'remove');
       serviceSpy.mockReturnValue(expectedItem);
       const result = await resolver.remove(expectedItem.id);
       expect(result).toEqual(expectedItem);
@@ -114,7 +114,7 @@ describe('AppMatcompResolver', () => {
   });
 
   it('matcompRemoved should call pubSub.asyncIterableIterator with args', () => {
-    const pubSubSpy = jest.spyOn(pubSub, 'asyncIterableIterator');
+    const pubSubSpy = vi.spyOn(pubSub, 'asyncIterableIterator');
     resolver.matcompRemoved();
     expect(pubSubSpy).toHaveBeenCalledWith('matcompRemoved');
   });

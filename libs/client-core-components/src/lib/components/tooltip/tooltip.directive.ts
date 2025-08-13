@@ -1,6 +1,6 @@
 import { ConnectedPosition, Overlay, OverlayConfig, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
-import { AfterContentInit, Directive, ElementRef, HostListener, Injector, Input, OnDestroy, ViewContainerRef } from '@angular/core';
+import { AfterContentInit, Directive, ElementRef, HostListener, inject, Injector, Input, OnDestroy, ViewContainerRef } from '@angular/core';
 import { OVERLAY_REFERENCE } from '@app/client-material';
 
 import { AppTooltipComponent } from './tooltip.component';
@@ -11,6 +11,14 @@ import { TOOLTIP_DATA } from './tooltip.interface';
   standalone: false,
 })
 export class AppTooltipDirective implements AfterContentInit, OnDestroy {
+  private readonly el = inject(ElementRef);
+
+  private readonly overlay = inject(Overlay);
+
+  private readonly overlayConfig = inject(OverlayConfig);
+
+  private readonly viewContainerRef = inject(ViewContainerRef);
+
   @Input() public appTooltip?: string = void 0;
 
   @Input() public appTooltipDisabled = false;
@@ -31,13 +39,6 @@ export class AppTooltipDirective implements AfterContentInit, OnDestroy {
   private nativeElement?: HTMLElement;
 
   private overlayRef: OverlayRef | null = null;
-
-  constructor(
-    private readonly el: ElementRef,
-    private readonly overlay: Overlay,
-    private readonly overlayConfig: OverlayConfig,
-    private readonly viewContainerRef: ViewContainerRef,
-  ) {}
 
   private configureOverlay(): void {
     const positionHost = this.nativeElement;

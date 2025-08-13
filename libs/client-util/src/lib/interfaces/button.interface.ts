@@ -4,7 +4,7 @@ export type TRouterCommands = Array<{ outlets: { [key: string]: string[] } }>;
 
 export interface IRouterButton {
   routerLink: TRouterCommands;
-  routeActive: () => boolean;
+  routeActive(): boolean;
   icon: string;
   title: string;
 }

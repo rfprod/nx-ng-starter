@@ -33,7 +33,7 @@ describe('AppFeatureAccessEffects', () => {
   it('should dispatch the setEnvironment action when the initialize action is dispatched', waitForAsync(() => {
     const payload = { production: true };
     store.dispatch(featureAccessAction.setEnvironment({ payload }));
-    const setEnvironmentSpy = jest.spyOn(featureAccessAction, 'setEnvironment');
+    const setEnvironmentSpy = vi.spyOn(featureAccessAction, 'setEnvironment');
     void store
       .select(featureAccessSelector.enable)
       .pipe(

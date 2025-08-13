@@ -1,4 +1,4 @@
-import { create } from '@storybook/theming';
+import { create } from 'storybook/theming';
 
 const theme = create(
   {
@@ -13,7 +13,7 @@ const theme = create(
     enableShortcuts: true,
     isToolshown: true,
     theme,
-    selectedPanel: undefined,
+    selectedPanel: void 0,
     initialActive: 'sidebar',
     sidebar: {
       showRoots: false,

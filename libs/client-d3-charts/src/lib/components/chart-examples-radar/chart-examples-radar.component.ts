@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { first, map, switchMap, timer } from 'rxjs';
 
 import { IRadarChartDataNode, IRadarChartOptions } from '../../interfaces/radar-chart.interface';
@@ -13,6 +13,8 @@ import { IRadarChartDataNode, IRadarChartOptions } from '../../interfaces/radar-
   standalone: false,
 })
 export class AppChartExamplesRadaraComponent {
+  private readonly breakpointObserver = inject(BreakpointObserver);
+
   /** The chart data. */
   private get chartData() {
     return [
@@ -63,6 +65,4 @@ export class AppChartExamplesRadaraComponent {
       );
     }),
   );
-
-  constructor(private readonly breakpointObserver: BreakpointObserver) {}
 }

@@ -1,11 +1,11 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { AfterContentInit, ChangeDetectionStrategy, Component, DestroyRef, Inject, inject, OnInit } from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Meta, Title } from '@angular/platform-browser';
 import { AppServiceWorkerService } from '@app/client-service-worker';
 import { map } from 'rxjs';
 
-import { DOCUMENTATION_ENVIRONMENT, IDocumentationEnvironment } from '../../interfaces/environment.interface';
+import { DOCUMENTATION_ENVIRONMENT } from '../../interfaces/environment.interface';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +17,16 @@ import { DOCUMENTATION_ENVIRONMENT, IDocumentationEnvironment } from '../../inte
 export class AppDocRootComponent implements OnInit, AfterContentInit {
   private readonly destroyRef = inject(DestroyRef);
 
+  private readonly title = inject(Title);
+
+  private readonly meta = inject(Meta);
+
+  private readonly bpObserver = inject(BreakpointObserver);
+
+  private readonly sw = inject(AppServiceWorkerService);
+
+  private readonly env = inject(DOCUMENTATION_ENVIRONMENT);
+
   public readonly version = this.env.meta.version;
 
   public readonly config$ = this.bpObserver
@@ -27,14 +37,6 @@ export class AppDocRootComponent implements OnInit, AfterContentInit {
         return { sidenavOpen };
       }),
     );
-
-  constructor(
-    private readonly title: Title,
-    private readonly meta: Meta,
-    private readonly bpObserver: BreakpointObserver,
-    private readonly sw: AppServiceWorkerService,
-    @Inject(DOCUMENTATION_ENVIRONMENT) private readonly env: IDocumentationEnvironment,
-  ) {}
 
   /**
    * Lifecycle hook called on component initialization.

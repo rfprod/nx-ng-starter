@@ -1,7 +1,5 @@
-import 'hammerjs';
-
 import { enableProdMode } from '@angular/core';
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { platformBrowser } from '@angular/platform-browser';
 import { applicationIsFramed } from '@app/client-util-security';
 
 import { AppDocModule } from './app/doc.module';
@@ -14,7 +12,7 @@ if (applicationIsFramed()) {
     enableProdMode();
   }
 
-  platformBrowserDynamic()
+  platformBrowser()
     .bootstrapModule(AppDocModule)
     .catch(err => {
       console.error(err);

@@ -1,4 +1,4 @@
-import { Inject, Injectable, Injector } from '@angular/core';
+import { inject, Injectable, Injector } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { AppChatbotRootComponent } from '@app/client-chatbot';
 import { WINDOW } from '@app/client-util';
@@ -7,10 +7,9 @@ import { WINDOW } from '@app/client-util';
   providedIn: 'root',
 })
 export class AppElementsService {
-  constructor(
-    private readonly injector: Injector,
-    @Inject(WINDOW) private readonly window: Window,
-  ) {}
+  private readonly injector = inject(Injector);
+
+  private readonly window = inject(WINDOW);
 
   public registerElements(): void {
     this.registerChatbotWidget();

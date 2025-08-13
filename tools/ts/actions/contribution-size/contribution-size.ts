@@ -7,11 +7,11 @@ import { actors, defaultThresholds } from './contribution-size.config';
 import type { IThresholdsConfig } from './contribution-size.interface';
 
 const ENV = {
-  maxFiles: process.env.MAX_FILES ?? '0',
-  insertions: process.env.INSERTIONS ?? '0',
-  deletions: process.env.DELETIONS ?? '0',
-  trunk: process.env.TRUNK ?? 'main',
-  actor: process.env.ACTOR,
+  maxFiles: process.env['MAX_FILES'] ?? '0',
+  insertions: process.env['INSERTIONS'] ?? '0',
+  deletions: process.env['DELETIONS'] ?? '0',
+  trunk: process.env['TRUNK'] ?? 'main',
+  actor: process.env['ACTOR'],
 };
 
 const actor = actors.find(item => item.actor === ENV.actor);

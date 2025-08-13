@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ComponentFixture, TestBed, TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { EffectsModule } from '@ngrx/effects';
@@ -16,6 +16,7 @@ import { AppFeatureFlagDirective } from './feature-flag.directive';
     <span>test</span>
   </ng-template> `,
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class AppFeatureFlagTestComponent {
   public flag?: string | null = null;

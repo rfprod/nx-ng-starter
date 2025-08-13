@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { tap } from 'rxjs/operators';
@@ -10,6 +10,12 @@ import { routerAction } from './router.actions';
   providedIn: 'root',
 })
 export class AppRouterEffects {
+  private readonly action$ = inject(Actions);
+
+  private readonly router = inject(Router);
+
+  private readonly location = inject(Location);
+
   public readonly navigate$ = createEffect(
     () =>
       this.action$.pipe(
@@ -42,10 +48,4 @@ export class AppRouterEffects {
       ),
     { dispatch: false },
   );
-
-  constructor(
-    private readonly action$: Actions,
-    private readonly router: Router,
-    private readonly location: Location,
-  ) {}
 }

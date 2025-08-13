@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { AppHttpHandlersService } from '@app/client-store-http-progress';
 
 import { IPingResponse } from '../../http-api.interface';
@@ -11,10 +11,9 @@ import { IPingResponse } from '../../http-api.interface';
   providedIn: 'root',
 })
 export class AppHttpApiService {
-  constructor(
-    private readonly httpClient: HttpClient,
-    private readonly httpHandlers: AppHttpHandlersService,
-  ) {}
+  private readonly httpClient = inject(HttpClient);
+
+  private readonly httpHandlers = inject(AppHttpHandlersService);
 
   public ping() {
     const endpoint = this.httpHandlers.getEndpoint('auth');

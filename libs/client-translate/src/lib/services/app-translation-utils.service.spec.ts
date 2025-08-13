@@ -2,6 +2,7 @@ import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/te
 import { DateAdapter } from '@angular/material/core';
 import { documentProvider, WINDOW } from '@app/client-util';
 import { type LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import type { MockInstance } from 'vitest';
 
 import { type ISupportedLanguage, type TLangCode, uiLanguages } from '../interfaces/ui-languages.interface';
 import { AppTranslateModule } from '../translate.module';
@@ -31,16 +32,16 @@ describe('AppTranslationUtilsService', () => {
   let win: Window;
   let spy: {
     service: {
-      languageChanges: jest.SpyInstance;
+      languageChanges: MockInstance;
     };
     translate: {
-      onLangChange: jest.SpyInstance;
-      setDefaultLang: jest.SpyInstance;
-      setTranslation: jest.SpyInstance;
-      use: jest.SpyInstance;
+      onLangChange: MockInstance;
+      setDefaultLang: MockInstance;
+      setTranslation: MockInstance;
+      use: MockInstance;
     };
     dateAdapter: {
-      setLocale: jest.SpyInstance;
+      setLocale: MockInstance;
     };
   };
 
@@ -52,16 +53,16 @@ describe('AppTranslationUtilsService', () => {
     win = TestBed.inject(WINDOW);
     spy = {
       service: {
-        languageChanges: jest.spyOn((service as any).languageChangesSubject, 'next'),
+        languageChanges: vi.spyOn((service as any).languageChangesSubject, 'next'),
       },
       translate: {
-        onLangChange: jest.spyOn(translate.onLangChange, 'subscribe'),
-        setDefaultLang: jest.spyOn(translate, 'setDefaultLang'),
-        setTranslation: jest.spyOn(translate, 'setTranslation'),
-        use: jest.spyOn(translate, 'use'),
+        onLangChange: vi.spyOn(translate.onLangChange, 'subscribe'),
+        setDefaultLang: vi.spyOn(translate, 'setDefaultLang'),
+        setTranslation: vi.spyOn(translate, 'setTranslation'),
+        use: vi.spyOn(translate, 'use'),
       },
       dateAdapter: {
-        setLocale: jest.spyOn(dateAdapter, 'setLocale'),
+        setLocale: vi.spyOn(dateAdapter, 'setLocale'),
       },
     };
   });

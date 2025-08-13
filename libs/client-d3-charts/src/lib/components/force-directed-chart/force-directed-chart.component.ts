@@ -1,9 +1,18 @@
-import { DOCUMENT } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, Inject, Input, OnChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  DOCUMENT,
+  ElementRef,
+  inject,
+  Input,
+  OnChanges,
+  ViewChild,
+} from '@angular/core';
 
 import { IChartInputChanges } from '../../interfaces/chart-component.interface';
 import { IForceDirectedChartData, IForceDirectedChartOptions } from '../../interfaces/force-directed-chart.interface';
-import { D3_CHART_FACTORY, ID3ChartFactory } from '../../providers/d3-chart-factory.provider';
+import { D3_CHART_FACTORY } from '../../providers/d3-chart-factory.provider';
 import { AppD3ChartBase } from '../_base/chart.base';
 
 type TForceData = IForceDirectedChartData;
@@ -18,6 +27,10 @@ type TForceOptions = Partial<IForceDirectedChartOptions>;
   standalone: false,
 })
 export class AppForceDirectedChartComponent extends AppD3ChartBase<TForceData, TForceOptions> implements AfterViewInit, OnChanges {
+  private readonly doc = inject(DOCUMENT);
+
+  private readonly factory = inject(D3_CHART_FACTORY);
+
   /** The chart identifier. */
   @Input() public chartId = 'force-0';
 
@@ -35,14 +48,7 @@ export class AppForceDirectedChartComponent extends AppD3ChartBase<TForceData, T
   /** The chart container view child reference. */
   @ViewChild('container') public readonly container?: ElementRef<HTMLDivElement>;
 
-  /**
-   * @param doc The web page's Document object.
-   * @param d3Factory D3 chart factory.
-   */
-  constructor(
-    @Inject(DOCUMENT) private readonly doc: Document,
-    @Inject(D3_CHART_FACTORY) private readonly d3Factory: ID3ChartFactory,
-  ) {
+  constructor() {
     super();
   }
 
@@ -64,7 +70,7 @@ export class AppForceDirectedChartComponent extends AppD3ChartBase<TForceData, T
   protected drawChart(): void {
     if (typeof this.container !== 'undefined') {
       const options = this.chartOptions();
-      this.d3Factory.drawForceDirectedChart(this.container, this.data, options);
+      this.factory.drawForceDirectedChart(this.container, this.data, options);
     }
   }
 

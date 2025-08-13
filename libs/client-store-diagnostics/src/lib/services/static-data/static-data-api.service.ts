@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { AppHttpHandlersService } from '@app/client-store-http-progress';
 
 import { TDiagnosticData } from '../../diagnostics.interface';
@@ -8,10 +8,9 @@ import { TDiagnosticData } from '../../diagnostics.interface';
   providedIn: 'root',
 })
 export class AppStaticDataService {
-  constructor(
-    private readonly http: HttpClient,
-    private readonly handlers: AppHttpHandlersService,
-  ) {}
+  private readonly http = inject(HttpClient);
+
+  private readonly handlers = inject(AppHttpHandlersService);
 
   /**
    * Gets serverstatic diagnostic data.

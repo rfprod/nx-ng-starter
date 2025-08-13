@@ -8,6 +8,7 @@ import { diagnosticsAction } from './diagnostics.actions';
 import { AppDiagnosticsEffects } from './diagnostics.effects';
 import { diagnosticsReducerConfig, type IDiagnosticsState } from './diagnostics.interface';
 import { diagnosticsReducerProvider } from './diagnostics.reducer';
+import { AppStaticDataService } from './services/static-data/static-data-api.service';
 import { AppWebsocketApiService } from './services/websocket/websocket-api.service';
 
 describe('AppDiagnosticsEffects', () => {
@@ -18,6 +19,12 @@ describe('AppDiagnosticsEffects', () => {
     ],
     providers: [
       diagnosticsReducerProvider,
+      {
+        provide: AppStaticDataService,
+        useValue: {
+          staticData: of([]),
+        },
+      },
       {
         provide: AppWebsocketApiService,
         useValue: {
@@ -41,25 +48,25 @@ describe('AppDiagnosticsEffects', () => {
   });
 
   it('should call api service connect method when the connect action is dispatched, payload #1', waitForAsync(() => {
-    const connectSpy = jest.spyOn(api, 'connect');
+    const connectSpy = vi.spyOn(api, 'connect');
     store.dispatch(diagnosticsAction.connect());
     expect(connectSpy).toHaveBeenCalledWith();
   }));
 
   it('should call api service connect method when the connect action is dispatched, payload #2', waitForAsync(() => {
-    const connectSpy = jest.spyOn(api, 'connect').mockImplementation(() => of({ data: [], event: 'users' }));
+    const connectSpy = vi.spyOn(api, 'connect').mockImplementation(() => of({ data: [], event: 'users' }));
     store.dispatch(diagnosticsAction.connect());
     expect(connectSpy).toHaveBeenCalledWith();
   }));
 
   it('should start events on action dispatch', waitForAsync(() => {
-    const sendEventSpy = jest.spyOn(api, 'startDiagEvents');
+    const sendEventSpy = vi.spyOn(api, 'startDiagEvents');
     store.dispatch(diagnosticsAction.startEvents());
     expect(sendEventSpy).toHaveBeenCalled();
   }));
 
   it('should stop events on action dispatch', waitForAsync(() => {
-    const sendEventSpy = jest.spyOn(api, 'stopDiagEvents');
+    const sendEventSpy = vi.spyOn(api, 'stopDiagEvents');
     store.dispatch(diagnosticsAction.stopEvents());
     expect(sendEventSpy).toHaveBeenCalled();
   }));

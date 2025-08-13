@@ -1,4 +1,4 @@
-import { Component, DebugElement, ElementRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DebugElement, ElementRef } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
@@ -11,6 +11,7 @@ import { AppFullScreenDirective } from './full-screen.directive';
   selector: 'app-testing-component',
   template: '<span appFullScreen #fullScreen="fullScreen">dummy component</span>',
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class AppTestingComponent {}
 

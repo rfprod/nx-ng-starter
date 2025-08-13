@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { diagnosticsAction, IDiagnosticsState } from '@app/client-store-diagnostics';
 import { Store } from '@ngrx/store';
 
@@ -10,7 +10,7 @@ import { Store } from '@ngrx/store';
   standalone: false,
 })
 export class AppDiagnosticsIndexComponent implements OnInit, OnDestroy {
-  constructor(private readonly store: Store<IDiagnosticsState>) {}
+  private readonly store = inject(Store<IDiagnosticsState>);
 
   public ngOnInit(): void {
     this.store.dispatch(diagnosticsAction.staticData());

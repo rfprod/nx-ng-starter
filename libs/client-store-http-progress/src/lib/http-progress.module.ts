@@ -7,7 +7,6 @@ import { AppGlobalProgressBarComponent } from './components/global-progress-bar/
 import { AppHttpProgressEffects } from './http-progress.effects';
 import { httpProgressReducerConfig, IHttpProgressState } from './http-progress.interface';
 import { httpProgressReducerProvider } from './http-progress.reducer';
-import { httpProgressService } from './services/http-progress/http-progress.service';
 
 @NgModule({
   imports: [
@@ -21,7 +20,7 @@ export class AppHttpProgressStoreModule {
   public static forRoot(): ModuleWithProviders<AppHttpProgressStoreModule> {
     return {
       ngModule: AppHttpProgressStoreModule,
-      providers: [httpProgressService, httpProgressReducerProvider],
+      providers: [httpProgressReducerProvider],
     };
   }
 }

@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
     "rootDir": ".",
-    "target": "es5",
+    "target": "ES2022",
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "../dist/out-tsc",
-    "lib": ["ES2022", "dom"],
+    "lib": ["ES2022", "DOM"],
     "allowJs": true,
     "checkJs": true,
-    "types": ["node", "jest"]
+    "types": ["node"]
   },
   "extends": "./tsconfig.json",
-  "include": ["**/*.ts"],
-  "exclude": ["jest.config.ts"]
+  "exclude": ["vite.config.mts", "vitest.config.mts", "**/*.spec.ts"],
+  "include": ["**/*.ts"]
 }

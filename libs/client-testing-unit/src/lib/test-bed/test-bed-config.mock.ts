@@ -7,6 +7,7 @@ import { AppMocksCoreModule } from '../testing-unit.module';
  * New TestBed metadata getter type.
  */
 export type TNewTestBedMetadata = (metadata?: TestModuleMetadata) => TestModuleMetadata;
+
 /**
  * New TestBed metadata getter.
  * Should be used to provide additional metadata to default test bed config.
@@ -31,6 +32,7 @@ export const newTestBedMetadata: TNewTestBedMetadata = (metadata?: TestModuleMet
  * TestBed config getter type.
  */
 export type TTestBedConfigGetter = (metadata?: TestModuleMetadata) => TestModuleMetadata;
+
 /**
  * TestBed configuration getter.
  * @param metadata additional test bed metadata

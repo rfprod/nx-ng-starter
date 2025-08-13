@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { logMethod } from '@app/client-util-decorators';
 import { Store } from '@ngrx/store';
 
-import { DOCUMENTATION_ENVIRONMENT, IDocumentationEnvironment } from '../../interfaces/environment.interface';
+import { DOCUMENTATION_ENVIRONMENT } from '../../interfaces/environment.interface';
 import { mdFilesAction } from '../../modules/md-files/md-files.actions';
 import { IMdFilesState } from '../../modules/md-files/md-files.interface';
 
@@ -25,6 +25,10 @@ interface IMarkdownReferenceNode {
   standalone: false,
 })
 export class AppDocMarkdownReferenceTreeComponent {
+  private readonly store = inject(Store<IMdFilesState>);
+
+  private readonly env = inject(DOCUMENTATION_ENVIRONMENT);
+
   public readonly dataSource = new MatTreeNestedDataSource<IMarkdownReferenceNode>();
 
   public readonly childrenAccessor = (dataNode: IMarkdownReferenceNode) => dataNode.children ?? [];
@@ -46,10 +50,7 @@ export class AppDocMarkdownReferenceTreeComponent {
     return treeNodes;
   }
 
-  constructor(
-    private readonly store: Store<IMdFilesState>,
-    @Inject(DOCUMENTATION_ENVIRONMENT) private readonly env: IDocumentationEnvironment,
-  ) {
+  constructor() {
     this.dataSource.data = this.treeData();
   }
 

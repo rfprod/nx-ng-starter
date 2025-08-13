@@ -1,6 +1,13 @@
 {
   "compilerOptions": {
-    "types": ["node", "jest"]
+    "types": [
+      "../../node_modules/vite/client",
+      "../../node_modules/vitest/globals",
+      "../../node_modules/vitest/importMeta",
+      "../../node_modules/vitest/utils",
+      "../../node_modules/vitest",
+      "node"
+    ]
   },
   "extends": "./tsconfig.json",
   "include": ["src"]

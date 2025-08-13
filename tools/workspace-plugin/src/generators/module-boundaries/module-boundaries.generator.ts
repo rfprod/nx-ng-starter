@@ -30,7 +30,7 @@ const depConstraints = (configDir: string, verbose?: boolean) => {
     logger.log('configDir', configDir);
   }
 
-  const configFiles = findFiles(configDir, '.js');
+  const configFiles = findFiles(configDir, '.mjs');
   if (verbose === true) {
     logger.log('configFiles', configFiles);
   }

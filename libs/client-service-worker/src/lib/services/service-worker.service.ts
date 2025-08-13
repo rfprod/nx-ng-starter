@@ -1,5 +1,4 @@
-import { DOCUMENT } from '@angular/common';
-import { ApplicationRef, Inject, Injectable, NgZone } from '@angular/core';
+import { ApplicationRef, DOCUMENT, inject, Injectable, NgZone } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { SwUpdate } from '@angular/service-worker';
 import { catchError, combineLatest, concat, defer, filter, first, from, interval, map, of, skip, switchMap, tap } from 'rxjs';
@@ -8,6 +7,16 @@ import { catchError, combineLatest, concat, defer, filter, first, from, interval
   providedIn: 'root',
 })
 export class AppServiceWorkerService {
+  private readonly appRef = inject(ApplicationRef);
+
+  private readonly service = inject(SwUpdate);
+
+  private readonly snackBar = inject(MatSnackBar);
+
+  private readonly zone = inject(NgZone);
+
+  private readonly document = inject(DOCUMENT);
+
   /**
    * Application state stream.
    */
@@ -77,14 +86,6 @@ export class AppServiceWorkerService {
    * Should be used in the application root component.
    */
   public readonly subscribeToUpdates$ = combineLatest([this.versionUpdate$, this.checkForUpdates$]);
-
-  constructor(
-    private readonly appRef: ApplicationRef,
-    private readonly service: SwUpdate,
-    private readonly snackBar: MatSnackBar,
-    private readonly zone: NgZone,
-    @Inject(DOCUMENT) private readonly document: Document,
-  ) {}
 
   /**
    * Displays a snackbar.

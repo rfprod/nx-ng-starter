@@ -3,11 +3,11 @@ import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/te
 import { getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { catchError, of, throwError } from 'rxjs';
 
-import { AppHttpProgressService, httpProgressService } from './http-progress.service';
+import { AppHttpProgressService } from './http-progress.service';
 
 describe('AppHttpProgressService', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    providers: [httpProgressService],
+    providers: [AppHttpProgressService],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 
@@ -25,26 +25,26 @@ describe('AppHttpProgressService', () => {
   });
 
   it('globalProgressHandler start handler should attach the loading indicator', () => {
-    const spy = jest.spyOn(overlayRef, 'attach');
+    const spy = vi.spyOn(overlayRef, 'attach');
     service.globalProgressHandler.start();
     expect(spy).toHaveBeenCalled();
   });
 
   it('globalProgressHandler stop handler should detach the loading indicator', () => {
     service.globalProgressHandler.start();
-    const spy = jest.spyOn(overlayRef, 'detach');
+    const spy = vi.spyOn(overlayRef, 'detach');
     service.globalProgressHandler.stop();
     expect(spy).toHaveBeenCalled();
   });
 
   it('globalProgressHandler.tapStopperObservable should call handers.mainView.stop on success', waitForAsync(() => {
-    const spy = jest.spyOn(service.globalProgressHandler, 'stop');
+    const spy = vi.spyOn(service.globalProgressHandler, 'stop');
     void of(null).pipe(service.globalProgressHandler.tapStopperObservable()).subscribe();
     expect(spy).toHaveBeenCalled();
   }));
 
   it('globalProgressHandler.tapStopperObservable should call handers.mainView.stop on error', waitForAsync(() => {
-    const spy = jest.spyOn(service.globalProgressHandler, 'stop');
+    const spy = vi.spyOn(service.globalProgressHandler, 'stop');
     void throwError(() => new Error(''))
       .pipe(
         service.globalProgressHandler.tapStopperObservable(),

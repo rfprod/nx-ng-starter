@@ -1,5 +1,5 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { map, tap, withLatestFrom } from 'rxjs/operators';
@@ -12,6 +12,12 @@ import { themeSelector } from './theme.selectors';
   providedIn: 'root',
 })
 export class AppThemeEffects {
+  private readonly actions$ = inject(Actions);
+
+  private readonly store = inject(Store<IThemeState>);
+
+  private readonly overlayContainer = inject(OverlayContainer);
+
   public readonly enableDarkTheme$ = createEffect(
     () =>
       this.actions$.pipe(
@@ -41,10 +47,4 @@ export class AppThemeEffects {
       map(([action, darkThemeEnabled]) => (darkThemeEnabled ? themeAction.disableDarkTheme() : themeAction.enableDarkTheme())),
     ),
   );
-
-  constructor(
-    private readonly actions$: Actions,
-    private readonly store: Store<IThemeState>,
-    private readonly overlayContainer: OverlayContainer,
-  ) {}
 }
