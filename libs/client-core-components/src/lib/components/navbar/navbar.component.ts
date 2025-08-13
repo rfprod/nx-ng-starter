@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { IRouterButton, routerButton } from '@app/client-util';
+import { IRouterButton, routerButton, WINDOW } from '@app/client-util';
 
 @Component({
   selector: 'app-navbar',
@@ -11,6 +11,8 @@ import { IRouterButton, routerButton } from '@app/client-util';
 })
 export class AppNavbarComponent {
   private readonly router = inject(Router);
+
+  private readonly win = inject(WINDOW);
 
   @Input() public appName: string | null = null;
 
@@ -28,54 +30,6 @@ export class AppNavbarComponent {
           fragment: 'ignored',
         }),
       [{ outlets: { primary: [''] } }],
-    ),
-    routerButton(
-      'API info',
-      'api',
-      () =>
-        this.router.isActive('info', {
-          matrixParams: 'ignored',
-          queryParams: 'ignored',
-          paths: 'exact',
-          fragment: 'ignored',
-        }),
-      [{ outlets: { primary: ['info'] } }],
-    ),
-    routerButton(
-      'Chart examples',
-      'show_chart',
-      () =>
-        this.router.isActive('charts', {
-          matrixParams: 'ignored',
-          queryParams: 'ignored',
-          paths: 'exact',
-          fragment: 'ignored',
-        }),
-      [{ outlets: { primary: ['charts'] } }],
-    ),
-    routerButton(
-      'Chat',
-      'chat',
-      () =>
-        this.router.isActive('chatbot', {
-          matrixParams: 'ignored',
-          queryParams: 'ignored',
-          paths: 'exact',
-          fragment: 'ignored',
-        }),
-      [{ outlets: { primary: ['chatbot'] } }],
-    ),
-    routerButton(
-      'Dashboards',
-      'dashboard',
-      () =>
-        this.router.isActive('dashboards', {
-          matrixParams: 'ignored',
-          queryParams: 'ignored',
-          paths: 'exact',
-          fragment: 'ignored',
-        }),
-      [{ outlets: { primary: ['dashboards'] } }],
     ),
   ];
 
@@ -100,5 +54,18 @@ export class AppNavbarComponent {
 
   public navigateForward(): void {
     this.navigatedForward.emit();
+  }
+
+  public openNavigator(): void {
+    const event = new KeyboardEvent('keydown', {
+      key: '~',
+      code: 'Backquote',
+      ctrlKey: true,
+      shiftKey: true,
+      bubbles: true,
+      cancelable: true,
+    });
+
+    this.win.dispatchEvent(event);
   }
 }

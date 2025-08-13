@@ -8,20 +8,31 @@
       [routerLink]="buttons[0].routerLink"
       [ngClass]="{ 'toolbar--actionable': !buttons[0].routeActive() }"
     />
+
     <span class="flex--full"></span>
+
     <app-navigator (nagivateBack)="navigateBack()" (nagivateForward)="navigateForward()"></app-navigator>
+
     <span class="flex--full"></span>
+
     <button mat-icon-button [matMenuTriggerFor]="mobileMenuTop">
       <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #mobileMenuTop="matMenu">
       @for (button of buttons; track button) {
         <ng-template [appFeatureFlag]="button.title !== 'Dashboards' ? null : 'dashboards'">
-          <a mat-menu-item [routerLink]="button.routerLink" [disabled]="button.routeActive()" (click)="navButtonClick()">
+          <a
+            mat-menu-item
+            [routerLink]="button.routerLink"
+            [disabled]="button.routeActive()"
+            (click)="navButtonClick()"
+            (keydown)="navButtonClick()"
+          >
             <mat-icon>{{ button.icon }}</mat-icon> {{ button.title }}
           </a>
         </ng-template>
       }
+      <a mat-menu-item (click)="openNavigator()" (keydown)="openNavigator()"> <mat-icon>explore</mat-icon> Navigator </a>
     </mat-menu>
   </mat-toolbar>
 }

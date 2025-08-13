@@ -77,7 +77,7 @@ jobs:
       - name: Unit test
         if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' }}
         run: |
-          npx nx run-many --target test --all --pass-with-no-tests --code-coverage --run-in-band --ci
+          npx nx run-many --target test --all --pass-with-no-tests --coverage
           npx nx run tools:coverage-stats
           cat ./UNIT_COVERAGE.md >> $GITHUB_STEP_SUMMARY
 

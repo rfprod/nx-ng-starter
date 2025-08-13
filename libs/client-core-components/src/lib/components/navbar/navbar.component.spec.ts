@@ -5,6 +5,7 @@ import { newTestBedMetadata } from '@app/client-testing-unit';
 import { of } from 'rxjs';
 import type { MockInstance } from 'vitest';
 
+import { windowProvider } from '@app/client-util';
 import { AppNavbarComponent } from './navbar.component';
 
 describe('AppNavbarComponent', () => {
@@ -18,6 +19,7 @@ describe('AppNavbarComponent', () => {
           isActive: () => false,
         },
       },
+      windowProvider,
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
   });
@@ -48,7 +50,7 @@ describe('AppNavbarComponent', () => {
   });
 
   it('buttons should have default values', () => {
-    const expectedLength = 5;
+    const expectedLength = 1;
     expect(component.buttons.length).toEqual(expectedLength);
   });
 
@@ -56,46 +58,6 @@ describe('AppNavbarComponent', () => {
     const firstButtonIndex = 0;
     component.buttons[firstButtonIndex].routeActive();
     expect(routerIsActiveSpy).toHaveBeenCalledWith('', {
-      matrixParams: 'ignored',
-      queryParams: 'ignored',
-      paths: 'exact',
-      fragment: 'ignored',
-    });
-    routerIsActiveSpy.mockClear();
-
-    const secondButtonIndex = 1;
-    component.buttons[secondButtonIndex].routeActive();
-    expect(routerIsActiveSpy).toHaveBeenCalledWith('info', {
-      matrixParams: 'ignored',
-      queryParams: 'ignored',
-      paths: 'exact',
-      fragment: 'ignored',
-    });
-    routerIsActiveSpy.mockClear();
-
-    const thirdButtonIndex = 2;
-    component.buttons[thirdButtonIndex].routeActive();
-    expect(routerIsActiveSpy).toHaveBeenCalledWith('charts', {
-      matrixParams: 'ignored',
-      queryParams: 'ignored',
-      paths: 'exact',
-      fragment: 'ignored',
-    });
-    routerIsActiveSpy.mockClear();
-
-    const fourthButtonIndex = 3;
-    component.buttons[fourthButtonIndex].routeActive();
-    expect(routerIsActiveSpy).toHaveBeenCalledWith('chatbot', {
-      matrixParams: 'ignored',
-      queryParams: 'ignored',
-      paths: 'exact',
-      fragment: 'ignored',
-    });
-    routerIsActiveSpy.mockClear();
-
-    const fifthButtonIndex = 4;
-    component.buttons[fifthButtonIndex].routeActive();
-    expect(routerIsActiveSpy).toHaveBeenCalledWith('dashboards', {
       matrixParams: 'ignored',
       queryParams: 'ignored',
       paths: 'exact',

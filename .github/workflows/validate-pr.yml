@@ -201,7 +201,7 @@ jobs:
         run: npx nx run-many --target tsc-check --projects ${{ matrix.projects }}
 
       - name: Unit test
-        run: npx nx run-many --target test --pass-with-no-tests --code-coverage --run-in-band --ci --projects ${{ matrix.projects }}
+        run: npx nx run-many --target test --pass-with-no-tests --coverage --projects ${{ matrix.projects }}
 
       - name: Set failure
         id: check

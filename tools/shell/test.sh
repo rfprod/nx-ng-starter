@@ -59,7 +59,7 @@ copyReportsToDist() {
     mkdir -p $COVERAGE_DIST_ROOT
   fi
 
-  cp -r ./coverage "$COVERAGE_DIST_ROOT" || exit 1
+  cp -r ./dist/coverage "$COVERAGE_DIST_ROOT" || exit 1
 }
 
 ##

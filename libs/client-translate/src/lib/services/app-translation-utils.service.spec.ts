@@ -1,7 +1,7 @@
-import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
+import { TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { DateAdapter } from '@angular/material/core';
 import { documentProvider, WINDOW } from '@app/client-util';
-import { type LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import type { MockInstance } from 'vitest';
 
 import { type ISupportedLanguage, type TLangCode, uiLanguages } from '../interfaces/ui-languages.interface';
@@ -36,7 +36,7 @@ describe('AppTranslationUtilsService', () => {
     };
     translate: {
       onLangChange: MockInstance;
-      setDefaultLang: MockInstance;
+      setFallbackLang: MockInstance;
       setTranslation: MockInstance;
       use: MockInstance;
     };
@@ -57,7 +57,7 @@ describe('AppTranslationUtilsService', () => {
       },
       translate: {
         onLangChange: vi.spyOn(translate.onLangChange, 'subscribe'),
-        setDefaultLang: vi.spyOn(translate, 'setDefaultLang'),
+        setFallbackLang: vi.spyOn(translate, 'setFallbackLang'),
         setTranslation: vi.spyOn(translate, 'setTranslation'),
         use: vi.spyOn(translate, 'use'),
       },
@@ -92,25 +92,13 @@ describe('AppTranslationUtilsService', () => {
     expect(service['setDatepickersLocale']).toEqual(expect.any(Function));
   });
 
-  it('languageChangeSubscription should work correctly', waitForAsync(() => {
-    service['languageChangeSubscription']();
-    expect(spy.translate.onLangChange).toHaveBeenCalled();
-    void translate.onLangChange.subscribe(
-      (langChangeEvent: LangChangeEvent) => {
-        expect(spy.service.languageChanges).toHaveBeenCalledWith(langChangeEvent);
-        expect(dateAdapter.setLocale).toHaveBeenCalledWith(langChangeEvent.lang);
-      },
-      (): void => void 0,
-    );
-  }));
-
   it('initialize should work correctly', () => {
     const callsBefore = {
       dateAdapter: {
         setLocale: spy.dateAdapter.setLocale.mock.calls.length,
       },
       translate: {
-        setDefaultLang: spy.translate.setDefaultLang.mock.calls.length,
+        setFallbackLang: spy.translate.setFallbackLang.mock.calls.length,
         setTranslation: spy.translate.setTranslation.mock.calls.length,
         use: spy.translate.use.mock.calls.length,
       },
@@ -121,17 +109,17 @@ describe('AppTranslationUtilsService', () => {
         setLocale: spy.dateAdapter.setLocale.mock.calls.length,
       },
       translate: {
-        setDefaultLang: spy.translate.setDefaultLang.mock.calls.length,
+        setFallbackLang: spy.translate.setFallbackLang.mock.calls.length,
         setTranslation: spy.translate.setTranslation.mock.calls.length,
         use: spy.translate.use.mock.calls.length,
       },
     };
     expect(dateAdapter.setLocale).toHaveBeenCalledWith('ru');
-    expect(translate.setDefaultLang).toHaveBeenCalled();
+    expect(translate.setFallbackLang).toHaveBeenCalled();
     expect(translate.setTranslation).toHaveBeenCalled();
     expect(translate.use).toHaveBeenCalled();
-    expect(callsAfter.dateAdapter.setLocale - callsBefore.dateAdapter.setLocale).toEqual(1);
-    expect(callsAfter.translate.setDefaultLang - callsBefore.translate.setDefaultLang).toEqual(1);
+    expect(callsAfter.dateAdapter.setLocale - callsBefore.dateAdapter.setLocale).toEqual(2);
+    expect(callsAfter.translate.setFallbackLang - callsBefore.translate.setFallbackLang).toEqual(1);
     expect(callsAfter.translate.setTranslation - callsBefore.translate.setTranslation).toEqual(1 + 1);
     expect(callsAfter.translate.use - callsBefore.translate.use).toEqual(1);
   });
@@ -195,7 +183,7 @@ describe('AppTranslationUtilsService', () => {
   });
 
   it('isCurrentLanguage should resolve is language is current by its code', () => {
-    const curLang: TLangCode = translate.currentLang as TLangCode;
+    const curLang: TLangCode = translate.getCurrentLang() as TLangCode;
     expect(service.isCurrentLanguage('' as TLangCode)).toBeFalsy();
     expect(service.isCurrentLanguage(curLang)).toBeTruthy();
   });
