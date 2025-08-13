@@ -2,10 +2,10 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { newTestBedMetadata } from '@app/client-testing-unit';
+import { windowProvider } from '@app/client-util';
 import { of } from 'rxjs';
 import type { MockInstance } from 'vitest';
 
-import { windowProvider } from '@app/client-util';
 import { AppNavbarComponent } from './navbar.component';
 
 describe('AppNavbarComponent', () => {
