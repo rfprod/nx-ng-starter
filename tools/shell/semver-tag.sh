@@ -86,7 +86,7 @@ semverTag() {
     printNameAndValue "ALL_SEMVER_TAGS" "$ALL_SEMVER_TAGS"
     printGap
 
-    SEMVERS_ARRAY_INPUT=$(echo $ALL_SEMVER_TAGS | tr " " "\n")
+    SEMVERS_ARRAY_INPUT=$(echo "$ALL_SEMVER_TAGS" | tr " " "\n")
     while IFS=' ' read -r line; do SEMVERS_ARRAY+=("$line"); done <<<"$SEMVERS_ARRAY_INPUT"
 
     local LATEST_SEMVER
@@ -194,7 +194,7 @@ semverTag() {
     local TAG
     TAG="${MAJOR}.${MINOR}.${PATCH}"
 
-    setTag $TAG
+    setTag "$TAG"
 
     printGap
   fi

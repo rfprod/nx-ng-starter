@@ -2,7 +2,6 @@ import nx from '@nx/eslint-plugin';
 import rxjs from '@smarttools/eslint-plugin-rxjs';
 import stylistic from '@stylistic/eslint-plugin';
 import angularEslint from 'angular-eslint';
-import { defineConfig } from 'eslint/config';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import compat from 'eslint-plugin-compat';
 import cypressPlugin from 'eslint-plugin-cypress/flat';
@@ -13,6 +12,7 @@ import prettierRecommended from 'eslint-plugin-prettier/recommended';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import eslintStorybook from 'eslint-plugin-storybook';
 import unicorn from 'eslint-plugin-unicorn';
+import { defineConfig } from 'eslint/config';
 import { dirname } from 'path';
 import { join } from 'path/posix';
 import tsEslint from 'typescript-eslint';
@@ -203,12 +203,12 @@ export const commonRules = {
 const stylisticRules = {
   '@stylistic/indent': 'off', // keep off, conflicts with other rules
   '@stylistic/indent-binary-ops': 'off', // keep off for now
-  '@stylistic/operator-linebreak': ['error', 'after', { overrides: { '?': 'before', ':': 'before' } }],
+  '@stylistic/operator-linebreak': ['error', 'after', { overrides: { '?': 'before', ':': 'before', '|': 'before' } }],
   '@stylistic/arrow-parens': ['error', 'as-needed'],
   '@stylistic/brace-style': 'error',
   '@stylistic/comma-spacing': ['error', { before: false, after: true }],
   '@stylistic/lines-between-class-members': ['error', 'always', { exceptAfterOverload: true }],
-  '@stylistic/quotes': ['error', 'single', { avoidEscape: true, allowTemplateLiterals: true }],
+  '@stylistic/quotes': ['error', 'single', { avoidEscape: true, allowTemplateLiterals: 'always' }],
   '@stylistic/quote-props': ['error', 'as-needed'],
 };
 

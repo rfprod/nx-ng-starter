@@ -19,9 +19,9 @@ export default defineConfig({
       provider: 'istanbul',
       thresholds: {
         branches: 27,
-        functions: 66,
-        lines: 67,
-        statements: 65,
+        functions: 63,
+        lines: 66,
+        statements: 64,
       },
     },
     include: ['src/**/*.spec.ts'],

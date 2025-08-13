@@ -63,7 +63,7 @@ export class AppTranslationUtilsService {
    */
   public initialize(): void {
     this.setDatepickersLocale('ru');
-    this.translate.setDefaultLang(this.langs.ru);
+    void this.translate.setFallbackLang(this.langs.ru).subscribe();
     this.translate.setTranslation(this.langs.ru, this.translations.ru);
     this.translate.setTranslation(this.langs.en, this.translations.en);
     void this.translate.use(this.langs.ru);
@@ -116,7 +116,7 @@ export class AppTranslationUtilsService {
    * @param langCode language code
    */
   public isCurrentLanguage(langCode: TLangCode): boolean {
-    return this.translate.currentLang === langCode;
+    return this.translate.getCurrentLang() === langCode;
   }
 
   /**
