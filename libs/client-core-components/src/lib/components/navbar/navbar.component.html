@@ -27,12 +27,13 @@
             [disabled]="button.routeActive()"
             (click)="navButtonClick()"
             (keydown)="navButtonClick()"
+            tabindex="0"
           >
             <mat-icon>{{ button.icon }}</mat-icon> {{ button.title }}
           </a>
         </ng-template>
       }
-      <a mat-menu-item (click)="openNavigator()" (keydown)="openNavigator()"> <mat-icon>explore</mat-icon> Navigator </a>
+      <a mat-menu-item (click)="openNavigator()" (keydown)="openNavigator()" tabindex="0"> <mat-icon>explore</mat-icon> Navigator </a>
     </mat-menu>
   </mat-toolbar>
 }
