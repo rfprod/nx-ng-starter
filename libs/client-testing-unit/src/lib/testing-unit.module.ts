@@ -3,7 +3,6 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ModuleWithProviders, NgModule, NgZone, Provider } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserTestingModule } from '@angular/platform-browser/testing';
 import { RouterModule } from '@angular/router';
 import { AppMaterialModule } from '@app/client-material';
@@ -57,18 +56,9 @@ export const mocksCoreModuleProviders: Provider[] = [
 
 @NgModule({
   declarations: [AppTestingComponent],
-  exports: [
-    BrowserTestingModule,
-    NoopAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AppMaterialModule,
-    RouterModule,
-    AppTestingComponent,
-  ],
+  exports: [BrowserTestingModule, FormsModule, ReactiveFormsModule, AppMaterialModule, RouterModule, AppTestingComponent],
   imports: [
     BrowserTestingModule,
-    NoopAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([]),

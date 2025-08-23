@@ -4,7 +4,6 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { Meta, Title } from '@angular/platform-browser';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { AppMaterialModule } from '@app/client-material';
 import { AppServiceWorkerService } from '@app/client-service-worker';
@@ -31,7 +30,7 @@ describe('AppDocRootComponent', () => {
   };
 
   const testBedConfig: TestModuleMetadata = {
-    imports: [NoopAnimationsModule, AppMaterialModule.forRoot(), MarkdownModule.forRoot(markdownModuleConfig)],
+    imports: [AppMaterialModule.forRoot(), MarkdownModule.forRoot(markdownModuleConfig)],
     declarations: [AppDocRootComponent],
     providers: [
       ...testingProviders,

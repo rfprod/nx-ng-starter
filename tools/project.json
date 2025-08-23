@@ -69,7 +69,7 @@
         "color": true,
         "commands": [
           {
-            "command": "rm -rf ./tools/executors/**/*.js ./tools/executors/**/*.js.map && npx tsc -p ./tools/executors/tsconfig.executors.json",
+            "command": "npx tsc -p ./tools/executors/tsconfig.executors.json",
             "forwardAllArgs": false
           }
         ],

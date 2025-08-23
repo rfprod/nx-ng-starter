@@ -1,6 +1,6 @@
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 import type { Args, Meta, StoryFn } from '@storybook/angular';
 
 import { AppDiagnosticsInfoPage } from './diagnostics-info-page.component';
@@ -12,7 +12,7 @@ export default {
 
 const story: StoryFn<AppDiagnosticsInfoPage> = (args: Args) => ({
   moduleMetadata: {
-    imports: [BrowserAnimationsModule, MatIconModule, MatListModule],
+    imports: [BrowserModule, MatIconModule, MatListModule],
     declarations: [AppDiagnosticsInfoPage],
   },
   props: {

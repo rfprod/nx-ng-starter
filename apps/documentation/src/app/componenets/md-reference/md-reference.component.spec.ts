@@ -1,7 +1,6 @@
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { AppMaterialModule } from '@app/client-material';
 import { StoreModule } from '@ngrx/store';
@@ -28,7 +27,6 @@ describe('AppDocMarkdownReferenceComponent', () => {
 
   const testBedConfig: TestModuleMetadata = {
     imports: [
-      NoopAnimationsModule,
       AppMaterialModule.forRoot(),
       StoreModule.forRoot({}),
       StoreModule.forFeature<IMdFilesState>(mdFilesReducerConfig.featureName, mdFilesReducerConfig.token),

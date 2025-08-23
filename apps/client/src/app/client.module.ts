@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AppCoreModule } from '@app/client-core';
 import { AppCoreComponentsModule } from '@app/client-core-components';
@@ -24,7 +24,7 @@ import { AppRootComponent } from './components/root.component';
  */
 @NgModule({
   imports: [
-    BrowserAnimationsModule,
+    BrowserModule,
     StoreModule.forRoot({}, { metaReducers: metaReducers(environment.production) }),
     EffectsModule.forRoot(),
     AppDiagnosticsStoreModule.forRoot(environment),
