@@ -1,4 +1,4 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 import { AppMaterialModule } from '@app/client-material';
 import type { Args, Meta, StoryFn } from '@storybook/angular';
 
@@ -12,7 +12,7 @@ export default {
 
 const story: StoryFn<AppNavigatorComponent> = (args: Args) => ({
   moduleMetadata: {
-    imports: [BrowserAnimationsModule, AppMaterialModule.forRoot()],
+    imports: [BrowserModule, AppMaterialModule.forRoot()],
     declarations: [AppNavigatorComponent, AppTooltipDirective],
   },
   props: {

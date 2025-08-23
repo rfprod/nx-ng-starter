@@ -21,10 +21,6 @@ export const constraints = [
     sourceTag: 'scope:documentation-e2e',
   },
   {
-    onlyDependOnLibsWithTags: [],
-    sourceTag: 'scope:client-util-animations',
-  },
-  {
     onlyDependOnLibsWithTags: ['scope:client-material', 'scope:client-util', 'scope:client-util-ngrx'],
     sourceTag: 'scope:client-testing-unit',
   },

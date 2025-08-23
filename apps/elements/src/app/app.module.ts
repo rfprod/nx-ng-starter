@@ -1,5 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA, DoBootstrap, NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 import { appCoreModuleProviders } from '@app/client-core';
 import { AppElementsModule, AppElementsService } from '@app/client-elements';
 import { sentryProviders } from '@app/client-util-sentry';
@@ -10,7 +10,7 @@ import { environment } from '../environments/environment';
  * The elements application module.
  */
 @NgModule({
-  imports: [BrowserAnimationsModule, AppElementsModule],
+  imports: [BrowserModule, AppElementsModule],
   providers: [...appCoreModuleProviders(environment), ...sentryProviders(environment)],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

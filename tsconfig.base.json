@@ -18,6 +18,7 @@
   },
   "compileOnSave": false,
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "declaration": false,
     "downlevelIteration": true,
@@ -73,7 +74,6 @@
       "@app/client-testing-unit": ["libs/client-testing-unit/src/index.ts"],
       "@app/client-translate": ["libs/client-translate/src/index.ts"],
       "@app/client-util": ["libs/client-util/src/index.ts"],
-      "@app/client-util-animations": ["libs/client-util-animations/src/index.ts"],
       "@app/client-util-decorators": ["libs/client-util-decorators/src/index.ts"],
       "@app/client-util-eliza": ["libs/client-util-eliza/src/index.ts"],
       "@app/client-util-ngrx": ["libs/client-util-ngrx/src/index.ts"],

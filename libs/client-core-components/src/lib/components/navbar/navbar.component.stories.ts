@@ -1,4 +1,4 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { AppMaterialModule } from '@app/client-material';
 import { routerButton } from '@app/client-util';
@@ -16,7 +16,7 @@ export default {
 
 const story: StoryFn<AppNavbarComponent> = (args: Args) => ({
   moduleMetadata: {
-    imports: [BrowserAnimationsModule, AppMaterialModule.forRoot()],
+    imports: [BrowserModule, AppMaterialModule.forRoot()],
     providers: [
       {
         provide: Router,

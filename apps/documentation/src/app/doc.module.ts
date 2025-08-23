@@ -1,6 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AppMaterialModule } from '@app/client-material';
 import { AppPwaOfflineModule } from '@app/client-pwa-offline';
@@ -43,7 +43,7 @@ const markdownModuleConfig: MarkdownModuleConfig = {
   declarations: [AppDocRootComponent, AppDocMarkdownReferenceTreeComponent, AppDocMarkdownReferenceComponent],
   bootstrap: [AppDocRootComponent],
   imports: [
-    BrowserAnimationsModule,
+    CommonModule,
     MarkdownModule.forRoot(markdownModuleConfig),
     StoreModule.forRoot({}, { metaReducers: metaReducers(environment.production) }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
