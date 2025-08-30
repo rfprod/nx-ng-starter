@@ -1,8 +1,17 @@
-# Nx Ng Starter
-
-[Nx](https://nx.dev/) + [Angular](https://angular.io/) + [NestJS](https://nestjs.com/) mono-repository starter with workflow automation.
+# Nx Angular NestJS Starter: A Scalable Monorepo Template for Angular and NestJS Applications
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+
+## Description
+
+[Nx](https://nx.dev/) [Angular](https://angular.io/) [NestJS](https://nestjs.com/) Starter is a powerful template designed for building scalable Angular and NestJS applications using Nx. It leverages modern development practices to enhance productivity and maintainability.
+
+## Key Features
+
+- **Monorepo Support:** Manage multiple Angular applications and libraries in a single repository.
+- **Optimized Build Process:** Leverage Nx's caching and task running capabilities for faster builds.
+- **Integrated Testing:** Built-in support for unit and end-to-end testing.
+- **Customizable Configuration:** Easily adjust settings to fit your project's needs.
 
 ## Workflows
 
@@ -55,6 +64,32 @@ In order to run own copy of the project one must fulfill the following requireme
 
 - [Yarn](https://www.npmjs.com/package/yarn) - preferred package manager for dependencies installation in the project root.
 - [npm](https://www.npmjs.com/package/npm) - preferred package manager for dependencies installation in the `functions` folder.
+
+### Getting started
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/rfprod/nx-ng-starter.git
+```
+
+2. Navigate to the project directory:
+
+```bash
+cd ./nx-ng-starter
+```
+
+3. Install dependencies:
+
+```bash
+yarn install --frozen-lockfile
+```
+
+4. Run the application:
+
+```bash
+yarn start
+```
 
 ## Package scripts reference
 
@@ -127,13 +162,17 @@ npx nx generate client-util client-util-<feature-name> --tags=scope:client-util-
 npx nx generate module-boundaries
 ```
 
+### Build the dependency graph
+
+```bash
+npx nx dep-graph
+```
+
 ## General Tooling
 
 This project was generated using [Nx](https://nx.dev).
 
 <p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/nx-logo.png" width="350"></p>
-
-🔎 **Nx is a set of Angular CLI power-ups for modern development.**
 
 ### Quick Start & Documentation
 
@@ -141,125 +180,19 @@ This project was generated using [Nx](https://nx.dev).
 - [30-minute video showing all Nx features](https://nx.dev/getting-started/what-is-nx)
 - [Interactive Tutorial](https://nx.dev/tutorial/01-create-application)
 
-### Generating an application
+## Frequently Asked Questions
 
-To generate an application run:
+### How do I contribute to this project?
 
-```bash
-npx nx g @nx/angular:app my-app
-```
+Refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines.
 
-> You can use any of the plugins above to generate applications as well.
+### What technologies are used in this project?
 
-When using Nx, you can create multiple applications and libraries in the same workspace.
-
-### Generating a library
-
-To generate a library run:
-
-```bash
-npx nx g @nx/angular:lib my-lib
-```
-
-> You can also use any of the plugins above to generate libraries as well.
-
-Libraries are sharable across libraries and applications.
-
-It can be imported from `@nx-ng-starter/mylib`.
-
-### Running a development server
-
-To start a dev server run:
-
-```bash
-npx nx serve my-app
-```
-
-Navigate to http://localhost:4200/.
-
-The app will automatically reload if you change any of the source files.
-
-### Code scaffolding
-
-To generate a new component run:
-
-```bash
-npx nx g @nx/angular:component my-component --project=my-app
-```
-
-### Building applications
-
-To build the project run:
-
-```bash
-npx nx build my-app
-```
-
-The build artifacts will be stored in the `dist/` directory.
-
-Use the `--prod` flag for a production build.
-
-### Unit testing with [Jest](https://jestjs.io)
-
-To execute the unit tests run:
-
-```bash
-npx nx test my-app
-```
-
-To execute the unit tests affected by a change run:
-
-```bash
-npx nx affected:test
-```
-
-### End-to-end testing with [Cypress](https://www.cypress.io)
-
-To execute the end-to-end tests run:
-
-```bash
-npx nx e2e my-app
-```
-
-To execute the end-to-end tests affected by a change run:
-
-```bash
-npx nx affected:e2e
-```
-
-### Understanding the workspace
-
-To see a diagram of the dependencies of the projects run:
-
-```bash
-npx nx dep-graph
-```
-
-### Generating a storybook for a feature library or UI library
-
-```bash
-npx nx g @nx/angular:storybook-configuration project-name
-```
-
-### Tools help
-
-Print supported workspace commands
-
-```bash
-npx nx run tools:help
-```
-
-### Further help
-
-Visit the [Nx Documentation](https://nx.dev) to learn more.
-
-## Technology reference
-
-### Workspace
+#### Workspace
 
 - [Nrwl Nx](https://nx.dev)
 
-### Client
+#### Client
 
 - [Angular](https://angular.io)
 - [Angular CLI](https://cli.angular.io/)
@@ -268,7 +201,7 @@ Visit the [Nx Documentation](https://nx.dev) to learn more.
 - [Material Design Guidelines](https://material.io)
 - [NgRx](https://ngrx.io/)
 
-### Server
+#### Server
 
 - [NestJS](https://nestjs.com/)
 - [Firebase JS Reference](https://firebase.google.com/docs/reference/js/)
@@ -276,19 +209,19 @@ Visit the [Nx Documentation](https://nx.dev) to learn more.
 - [Angular Firebase: Apollo Server](https://angularfirebase.com/lessons/graphql-apollo-2-tutorial-node/#Apollo-Server)
 - [GRPC](https://grpc.io/)
 
-### Testing
+#### Testing
 
 - [Cypress](https://www.cypress.io/)
-- [Jest](https://jestjs.io/)
+- [Vitest](https://vitest.dev/)
 
-### Documentation
+#### Documentation
 
 - [Compodoc](https://compodoc.github.io/compodoc/)
 
-### CI
+#### CI
 
 - [GitHub Actions](https://github.com/features/actions)
 
-### Development methodology
+#### Development methodology
 
 - [Trunk based development](https://trunkbaseddevelopment.com/)
