@@ -46,6 +46,9 @@ export const updateProjectTestConfig = <T = Record<string, string>>(schema: T & 
       coverageProvider: 'istanbul',
       uiFramework: userInterface === true ? 'angular' : 'none',
     };
+    if (userInterface === true) {
+      projectConfig.targets['test'].options.tsConfig = `libs/${schema.name}/tsconfig.lib.json`;
+    }
     if (typeof projectConfig.targets['test'].outputs !== 'undefined') {
       delete projectConfig.targets['test'].outputs;
     }
