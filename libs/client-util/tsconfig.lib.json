@@ -13,7 +13,7 @@
     "target": "ES2022",
     "moduleResolution": "bundler"
   },
-  "exclude": ["src/test-setup.ts", "**/*.spec.ts", "**/*.mock.ts", "*.mts"],
+  "exclude": ["*.mts", "src/test-setup.ts", "**/*.spec.ts", "**/*.mock.ts"],
   "extends": "./tsconfig.json",
   "include": ["**/*.ts"]
 }

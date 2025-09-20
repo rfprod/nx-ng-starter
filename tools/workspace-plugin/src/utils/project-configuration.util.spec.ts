@@ -130,6 +130,7 @@ describe('updateProjectTestConfig', () => {
             configFile: '{projectRoot}/vitest.config.mts',
             coverageProvider: 'istanbul',
             uiFramework: 'angular',
+            tsConfig: `libs/${schema.name}/tsconfig.lib.json`,
           },
         },
       },
