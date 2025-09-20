@@ -11,7 +11,8 @@
     "lib": ["dom", "ES2022"],
     "outDir": "../../dist/out-tsc",
     "target": "ES2022",
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "moduleResolution": "bundler"
   },
   "exclude": ["src/test-setup.ts", "**/*.spec.ts", "**/*.mock.ts", "**/*.stories.ts", "*.mts"],
   "extends": "./tsconfig.json",

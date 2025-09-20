@@ -1,20 +1,19 @@
 {
   "angularCompilerOptions": {
-    "enableResourceInlining": true,
     "skipTemplateCodegen": true,
     "strictMetadataEmit": true
   },
   "compilerOptions": {
     "declaration": true,
     "declarationMap": true,
+    "sourceMap": true,
     "inlineSources": true,
     "lib": ["dom", "ES2022"],
     "outDir": "../../dist/out-tsc",
-    "sourceMap": true,
     "target": "ES2022",
     "moduleResolution": "bundler"
   },
-  "exclude": ["src/test-setup.ts", "**/*.spec.ts", "*.mts"],
+  "exclude": ["*.mts", "src/test-setup.ts", "**/*.spec.ts", "**/*.mock.ts"],
   "extends": "./tsconfig.json",
   "include": ["**/*.ts"]
 }

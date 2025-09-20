@@ -1,8 +1,7 @@
 {
   "angularCompilerOptions": {
     "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "enableResourceInlining": true
+    "strictMetadataEmit": true
   },
   "compilerOptions": {
     "declaration": true,
@@ -11,9 +10,10 @@
     "inlineSources": true,
     "lib": ["dom", "ES2022"],
     "outDir": "../../dist/out-tsc",
-    "target": "ES2022"
+    "target": "ES2022",
+    "moduleResolution": "bundler"
   },
-  "exclude": ["src/test-setup.ts", "**/*.spec.ts", "*.mts"],
+  "exclude": ["*.mts", "src/test-setup.ts", "**/*.spec.ts", "**/*.mock.ts"],
   "extends": "./tsconfig.json",
   "include": ["**/*.ts"]
 }

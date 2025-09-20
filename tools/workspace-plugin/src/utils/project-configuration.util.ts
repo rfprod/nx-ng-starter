@@ -45,10 +45,12 @@ export const updateProjectTestConfig = <T = Record<string, string>>(schema: T & 
       configFile: `{projectRoot}/vitest.config.mts`,
       coverageProvider: 'istanbul',
       uiFramework: userInterface === true ? 'angular' : 'none',
+      ...(userInterface === true
+        ? {
+            tsConfig: `libs/${schema.name}/tsconfig.lib.json`,
+          }
+        : {}),
     };
-    if (userInterface === true) {
-      projectConfig.targets['test'].options.tsConfig = `libs/${schema.name}/tsconfig.lib.json`;
-    }
     if (typeof projectConfig.targets['test'].outputs !== 'undefined') {
       delete projectConfig.targets['test'].outputs;
     }
