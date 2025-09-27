@@ -43,10 +43,10 @@ describe('AppDiagnosticsService', () => {
     });
 
     it('npmVersion should return N/A for electron env', async () => {
-      process.env.ELECTRON = 'true';
+      process.env['ELECTRON'] = 'true';
       const staticData = await firstValueFrom(service.static());
       expect(staticData.find(item => item.name === 'NPM Version')?.value).toEqual('N/A');
-      delete process.env.ELECTRON;
+      delete process.env['ELECTRON'];
     });
   });
 

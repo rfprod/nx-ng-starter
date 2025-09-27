@@ -16,7 +16,7 @@ describe('AppSentryService', () => {
         },
         {
           provide: AppSentryService,
-          useFactory: (trace: sentry.TraceService) => new AppSentryService(trace),
+          useFactory: () => new AppSentryService(),
           deps: [sentry.TraceService],
         },
       ],
