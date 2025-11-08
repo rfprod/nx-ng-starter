@@ -8,22 +8,22 @@ source tools/shell/utils/config.sh
 ##
 # Print help.
 ##
-printHelp() {
-  printInfoTitle "<< ${0} usage >>"
-  printUsageTip "bash tools/shell/firebase-deploy.sh ?" "print help"
-  printInfoMessage "Client app"
-  printUsageTip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN client" "CI environment"
-  printUsageTip "bash tools/shell/firebase-deploy.sh localhost client" "Local environment, firebase authentication required"
-  printInfoMessage "Elements app"
-  printUsageTip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN elements" "CI environment"
-  printUsageTip "bash tools/shell/firebase-deploy.sh localhost elements" "Local environment, firebase authentication required"
-  printInfoMessage "API app"
-  printUsageTip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN api" "CI environment"
-  printUsageTip "bash tools/shell/firebase-deploy.sh localhost api" "Local environment, firebase authentication required"
-  printInfoMessage "All apps"
-  printUsageTip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN" "CI environment"
-  printUsageTip "bash tools/shell/firebase-deploy.sh localhost" "Local environment, firebase authentication required"
-  printGap
+print_help() {
+  print_info_title "<< ${0} usage >>"
+  print_usage_tip "bash tools/shell/firebase-deploy.sh ?" "print help"
+  print_info_message "Client app"
+  print_usage_tip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN client" "CI environment"
+  print_usage_tip "bash tools/shell/firebase-deploy.sh localhost client" "Local environment, firebase authentication required"
+  print_info_message "Elements app"
+  print_usage_tip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN elements" "CI environment"
+  print_usage_tip "bash tools/shell/firebase-deploy.sh localhost elements" "Local environment, firebase authentication required"
+  print_info_message "API app"
+  print_usage_tip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN api" "CI environment"
+  print_usage_tip "bash tools/shell/firebase-deploy.sh localhost api" "Local environment, firebase authentication required"
+  print_info_message "All apps"
+  print_usage_tip "bash tools/shell/firebase-deploy.sh FIREBASE_DEPLOY_TOKEN" "CI environment"
+  print_usage_tip "bash tools/shell/firebase-deploy.sh localhost" "Local environment, firebase authentication required"
+  print_gap
 }
 
 ##
@@ -54,9 +54,9 @@ cleanup() {
 # Copies firebase config from the application root to the project root.
 ##
 config() {
-  printInfoTitle "<< CONFIG >>"
-  printNameAndValue "project directory" "$1"
-  printGap
+  print_info_title "<< CONFIG >>"
+  print_name_and_value "project directory" "$1"
+  print_gap
 
   ##
   # Copy firebase files to the project root for deployment.
@@ -68,21 +68,21 @@ config() {
 ##
 # Deploys a client application to Firebase hosting.
 ##
-deployHosting() {
-  printInfoTitle "<< Deploying hosting >>"
-  printNameAndValue "project directory" "$2"
-  printGap
+deploy_hosting() {
+  print_info_title "<< Deploying hosting >>"
+  print_name_and_value "project directory" "$2"
+  print_gap
 
   config "$2"
 
   if [ "$1" = "localhost" ]; then
-    printInfoMessage ">> deploying from localhost"
-    printGap
+    print_info_message ">> deploying from localhost"
+    print_gap
 
     firebase deploy --only hosting || exit 1
   else
-    printInfoMessage ">> deploying using deployment token"
-    printGap
+    print_info_message ">> deploying using deployment token"
+    print_gap
 
     firebase deploy --only hosting --token "$1" || exit 1
   fi
@@ -93,21 +93,21 @@ deployHosting() {
 ##
 # Deploys an api application to Firebase functions.
 ##
-deployFunctions() {
-  printInfoTitle "<< Deploying hosting >>"
-  printNameAndValue "project directory" "$2"
-  printGap
+deploy_functions() {
+  print_info_title "<< Deploying hosting >>"
+  print_name_and_value "project directory" "$2"
+  print_gap
 
   config "$2"
 
   if [ "$1" = "localhost" ]; then
-    printInfoMessage ">> deploying from localhost, firebase auth is assumed"
-    printGap
+    print_info_message ">> deploying from localhost, firebase auth is assumed"
+    print_gap
 
     firebase deploy --only functions || exit 1
   else
-    printInfoMessage ">> deploying using deployment token"
-    printGap
+    print_info_message ">> deploying using deployment token"
+    print_gap
 
     firebase deploy --only functions --token "$1" || exit 1
   fi
@@ -118,28 +118,28 @@ deployFunctions() {
 ##
 # Deploys all applications.
 ##
-deployAll() {
-  deployFunctions "$1" "${PROJECT_DIRECTORIES["api"]}"
-  deployHosting "$1" "${PROJECT_DIRECTORIES["client"]}"
-  deployHosting "$1" "${PROJECT_DIRECTORIES["elements"]}"
-  deployHosting "$1" "${PROJECT_DIRECTORIES["documentation"]}"
+deploy_all() {
+  deploy_functions "$1" "${PROJECT_DIRECTORIES["api"]}"
+  deploy_hosting "$1" "${PROJECT_DIRECTORIES["client"]}"
+  deploy_hosting "$1" "${PROJECT_DIRECTORIES["elements"]}"
+  deploy_hosting "$1" "${PROJECT_DIRECTORIES["documentation"]}"
 }
 
 ##
 # Script control flow.
 ##
 if [ "$1" = "?" ]; then
-  printHelp
+  print_help
 elif [ $# -ge 2 ]; then
   APP_DIRECTORY="${PROJECT_DIRECTORIES["$2"]}"
   if [ "$2" = "client" ] || [ "$2" = "elements" ] || [ "$2" = "documentation" ]; then
-    deployHosting "$1" "$APP_DIRECTORY"
+    deploy_hosting "$1" "$APP_DIRECTORY"
   elif [ "$2" = "api" ]; then
-    deployFunctions "$1" "$APP_DIRECTORY"
+    deploy_functions "$1" "$APP_DIRECTORY"
   else
-    deployAll "$1"
+    deploy_all "$1"
   fi
 else
-  printHelp
+  print_help
   exit 1
 fi

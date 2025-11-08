@@ -10,10 +10,13 @@ import {
 } from '@apollo/client/core';
 import type { DocumentTypeDecoration } from '@graphql-typed-document-node/core';
 import { ExtraSubscriptionOptions } from 'apollo-angular';
-import { EmptyObject, WatchFragmentOptions } from 'apollo-angular/types';
 import { type DocumentNode, Kind, NameNode, OperationDefinitionNode, OperationTypeNode } from 'graphql';
 import { Observable } from 'rxjs';
 import { vi } from 'vitest';
+
+interface IEmptyObject {
+  [key: string]: unknown;
+}
 
 /** Apollo document node. */
 export interface IDocumentNode<
@@ -23,8 +26,8 @@ export interface IDocumentNode<
   Variables = {
     [key: string]: unknown;
   },
-> extends DocumentNode,
-    DocumentTypeDecoration<Result, Variables> {}
+>
+  extends DocumentNode, DocumentTypeDecoration<Result, Variables> {}
 
 class AppMockApolloBase {
   public query = vi.fn().mockResolvedValue({
@@ -45,14 +48,14 @@ class AppMockApolloBase {
     },
   });
 
-  public watchFragment = <FragmentData = unknown, Variables extends OperationVariables = EmptyObject>(
-    options: WatchFragmentOptions<FragmentData, Variables>,
+  public watchFragment = <FragmentData = unknown, Variables extends OperationVariables = IEmptyObject>(
+    options: Record<string, Variables>,
     extra?: ExtraSubscriptionOptions,
   ): Observable<WatchFragmentResult<FragmentData>> => {
     throw new Error('Function not implemented.');
   };
 
-  public subscribe = <T, V extends OperationVariables = EmptyObject>(
+  public subscribe = <T, V extends OperationVariables = IEmptyObject>(
     options: SubscriptionOptions<V, T>,
     extra?: ExtraSubscriptionOptions,
   ): Observable<FetchResult<T>> => {

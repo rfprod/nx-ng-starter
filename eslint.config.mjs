@@ -2,6 +2,7 @@ import nx from '@nx/eslint-plugin';
 import rxjs from '@smarttools/eslint-plugin-rxjs';
 import stylistic from '@stylistic/eslint-plugin';
 import angularEslint from 'angular-eslint';
+import { defineConfig } from 'eslint/config';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import compat from 'eslint-plugin-compat';
 import cypressPlugin from 'eslint-plugin-cypress/flat';
@@ -10,9 +11,7 @@ import jsonc from 'eslint-plugin-jsonc';
 import prettier from 'eslint-plugin-prettier';
 import prettierRecommended from 'eslint-plugin-prettier/recommended';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
-import eslintStorybook from 'eslint-plugin-storybook';
 import unicorn from 'eslint-plugin-unicorn';
-import { defineConfig } from 'eslint/config';
 import { dirname } from 'path';
 import { join } from 'path/posix';
 import tsEslint from 'typescript-eslint';
@@ -31,7 +30,6 @@ export const ignores = [
   '**/node_modules/*',
   '**/generated/**',
   '**/assets/**',
-  '!.storybook',
   '.config/',
   '.angular/',
   '.docker/',
@@ -523,14 +521,6 @@ export const tsConfigAngular = {
     '@angular-eslint/no-inputs-metadata-property': 'error',
     '@angular-eslint/no-outputs-metadata-property': 'error',
     '@angular-eslint/no-queries-metadata-property': 'error',
-  },
-};
-
-export const tsConfigStorybook = {
-  extends: [...eslintStorybook.configs['flat/recommended']],
-  files: ['**/*.stories.ts'],
-  rules: {
-    'storybook/prefer-pascal-case': 'off',
   },
 };
 

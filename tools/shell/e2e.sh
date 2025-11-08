@@ -13,24 +13,24 @@ PROJECT_ROOT=.
 ##
 # Print help.
 ##
-printHelp() {
-  printInfoTitle "<< ${0} usage >>"
-  printUsageTip "bash tools/shell/e2e.sh ?" "print help"
-  printUsageTip "bash tools/shell/e2e.sh reports" "copy e2e reports to dist"
-  reportSupportedModuleAliasesE2E
-  printGap
+print_help() {
+  print_info_title "<< ${0} usage >>"
+  print_usage_tip "bash tools/shell/e2e.sh ?" "print help"
+  print_usage_tip "bash tools/shell/e2e.sh reports" "copy e2e reports to dist"
+  report_supported_module_aliases_e2e
+  print_gap
 }
 
 ##
 # Copies generated report to dist folder.
 ##
-copyReportToDist() {
-  printInfoTitle "<< Copy report to dist >>"
-  printNameAndValue "module name" "$1"
-  printNameAndValue "module partial path" "$2"
-  printNameAndValue "e2e dist path" "$3"
-  printNameAndValue "optional action (report)" "$4"
-  printGap
+copy_report_to_dist() {
+  print_info_title "<< Copy report to dist >>"
+  print_name_and_value "module name" "$1"
+  print_name_and_value "module partial path" "$2"
+  print_name_and_value "e2e dist path" "$3"
+  print_name_and_value "optional action (report)" "$4"
+  print_gap
 
   ##
   # E2E root paths.
@@ -69,18 +69,18 @@ copyReportToDist() {
     for E2E_DISTR_ROOT in "${E2E_DIST_ROOTS[@]}"; do
       # check coverage dist path existence
       if [ -d "$E2E_DISTR_ROOT" ]; then
-        printSuccessMessage "e2e directory $E2E_DISTR_ROOT exists, proceeding"
+        print_success_message "e2e directory $E2E_DISTR_ROOT exists, proceeding"
       else
-        printErrorTitle "<< ERROR >>"
-        printWarningMessage "directory $E2E_DISTR_ROOT does not exist"
-        printSuccessMessage "creating directory $E2E_DISTR_ROOT"
-        printGap
+        print_error_title "<< ERROR >>"
+        print_warning_message "directory $E2E_DISTR_ROOT does not exist"
+        print_success_message "creating directory $E2E_DISTR_ROOT"
+        print_gap
 
         mkdir -p "$E2E_DISTR_ROOT"
       fi
 
       if [ -d "$REPORT_DIR" ]; then
-        printSuccessMessage "e2e directory $REPORT_DIR exists, proceeding"
+        print_success_message "e2e directory $REPORT_DIR exists, proceeding"
 
         # merge json reports
         npx mochawesome-merge "$REPORTS_GLOB" >"$MERGED_JSON_REPORT_PATH"
@@ -97,11 +97,11 @@ copyReportToDist() {
 # Script control flow.
 ##
 if [ "$1" = "?" ]; then
-  printHelp
+  print_help
 elif [ "$1" = "reports" ]; then
-  copyReportToDist "app:client-e2e" "apps/client-e2e" "./dist/cypress/apps/client-e2e" "report"
-  copyReportToDist "app:documentation-e2e" "apps/documentation-e2e" "./dist/cypress/apps/documentation-e2e" "report"
+  copy_report_to_dist "app:client-e2e" "apps/client-e2e" "./dist/cypress/apps/client-e2e" "report"
+  copy_report_to_dist "app:documentation-e2e" "apps/documentation-e2e" "./dist/cypress/apps/documentation-e2e" "report"
 else
-  printHelp
+  print_help
   exit 1
 fi

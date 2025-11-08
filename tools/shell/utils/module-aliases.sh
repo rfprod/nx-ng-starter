@@ -6,7 +6,7 @@ declare -A EXISTING_MODULE_ALIASES
 declare -A EXISTING_MODULE_ALIASES_E2E
 declare -A EXISTING_MODULE_ALIASES_UNIT
 
-findSupportedModuleAliases() {
+find_supported_module_aliases() {
 
   readarray -d '' FOUND_LIB_ALIASES < <(find libs/ -mindepth 1 -maxdepth 1 -type d '!' -exec test -e "{}/lib/" ';' -print0)
 
@@ -42,58 +42,58 @@ findSupportedModuleAliases() {
   done
 }
 
-findSupportedModuleAliases
+find_supported_module_aliases
 
-reportSupportedModuleAliases() {
-  printInfoTitle "<< MODULE ALIASES >>"
-  printGap
+report_supported_module_aliases() {
+  print_info_title "<< MODULE ALIASES >>"
+  print_gap
 
   local KEY
   for KEY in "${!EXISTING_MODULE_ALIASES[@]}"; do
-    printNameAndValue "${KEY}" "${EXISTING_MODULE_ALIASES[$KEY]}"
+    print_name_and_value "${KEY}" "${EXISTING_MODULE_ALIASES[$KEY]}"
   done
 
-  printGap
-  printInfoMessage "Use this aliases in other module related scripts like tools/shell/changelog.sh, tools/shell/document.sh etc."
-  printGap
+  print_gap
+  print_info_message "Use this aliases in other module related scripts like tools/shell/changelog.sh, tools/shell/document.sh etc."
+  print_gap
 }
 
-reportSupportedModuleAliasesUnit() {
-  printInfoTitle "<< MODULE ALIASES (unit) >>"
-  printGap
+report_supported_module_aliases_unit() {
+  print_info_title "<< MODULE ALIASES (unit) >>"
+  print_gap
 
   local KEY
   for KEY in "${!EXISTING_MODULE_ALIASES_UNIT[@]}"; do
-    printNameAndValue "${KEY}" "${EXISTING_MODULE_ALIASES_UNIT[$KEY]}"
+    print_name_and_value "${KEY}" "${EXISTING_MODULE_ALIASES_UNIT[$KEY]}"
   done
 
-  printGap
-  printInfoMessage "Use this aliases in tools/shell/test.sh."
-  printGap
+  print_gap
+  print_info_message "Use this aliases in tools/shell/test.sh."
+  print_gap
 }
 
-reportSupportedModuleAliasesE2E() {
-  printInfoTitle "<< MODULE ALIASES (e2e) >>"
-  printGap
+report_supported_module_aliases_e2e() {
+  print_info_title "<< MODULE ALIASES (e2e) >>"
+  print_gap
 
   local KEY
   for KEY in "${!EXISTING_MODULE_ALIASES_E2E[@]}"; do
-    printNameAndValue "${KEY}" "${EXISTING_MODULE_ALIASES_E2E[$KEY]}"
+    print_name_and_value "${KEY}" "${EXISTING_MODULE_ALIASES_E2E[$KEY]}"
   done
 
-  printGap
-  printInfoMessage "Use this aliases in tools/shell/e2e.sh."
-  printGap
+  print_gap
+  print_info_message "Use this aliases in tools/shell/e2e.sh."
+  print_gap
 }
 
 ##
 # Returns if module alias exists.
 #
 # examples:
-# moduleAliasExists "somealias" && echo yes || echo no                       # no
-# moduleAliasExists "${MODULE_ALIAS_LIB_SHARED_UTIL}" && echo yes || echo no # yes
+# module_alias_exists "somealias" && echo yes || echo no                       # no
+# module_alias_exists "${MODULE_ALIAS_LIB_SHARED_UTIL}" && echo yes || echo no # yes
 ##
-moduleAliasExists() {
+module_alias_exists() {
   local SEARCH_VALUE=$1
   local RESULT=1
   local ALIAS
@@ -110,7 +110,7 @@ moduleAliasExists() {
 # Supported module (apps and libs) aliases.
 ##
 if [ "$1" = "?" ]; then
-  reportSupportedModuleAliases
-  reportSupportedModuleAliasesUnit
-  reportSupportedModuleAliasesE2E
+  report_supported_module_aliases
+  report_supported_module_aliases_unit
+  report_supported_module_aliases_e2e
 fi

@@ -6,20 +6,6 @@
   "sourceRoot": "libs/client-diagnostics/src",
   "tags": ["scope:client-diagnostics", "type:feature"],
   "targets": {
-    "build-storybook": {
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
-      },
-      "executor": "@storybook/angular:build-storybook",
-      "options": {
-        "browserTarget": "documentation:build:storybook",
-        "compodoc": false,
-        "configDir": "libs/client-diagnostics/.storybook",
-        "outputDir": "dist/storybook/client-diagnostics"
-      }
-    },
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {
@@ -33,15 +19,6 @@
         "config": ""
       }
     },
-    "storybook": {
-      "executor": "@storybook/angular:start-storybook",
-      "options": {
-        "browserTarget": "documentation:build:storybook",
-        "compodoc": false,
-        "configDir": "libs/client-diagnostics/.storybook",
-        "port": 4400
-      }
-    },
     "stylelint-check": {
       "executor": "./tools/executors/stylelint:check",
       "options": {
@@ -49,7 +26,7 @@
       }
     },
     "test": {
-      "executor": "@nx/vite:test",
+      "executor": "@nx/vitest:test",
       "options": {
         "compiler": "swc",
         "configFile": "libs/client-diagnostics/vitest.config.mts",

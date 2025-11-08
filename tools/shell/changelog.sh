@@ -16,51 +16,51 @@ CHANGELOG_LIBS=${PROJECT_ROOT}/changelog/libs
 ##
 # Print help.
 ##
-printHelp() {
-  printInfoTitle "<< ${0} usage >>"
-  printUsageTip "bash tools/shell/changelog.sh ?" "print help"
-  printUsageTip "bash tools/shell/changelog.sh all" "generate all changelogs"
-  printUsageTip "bash tools/shell/changelog.sh <APP_ALIAS_FROM_TSCONFIG>" "generate changelog for a specific application/library"
+print_help() {
+  print_info_title "<< ${0} usage >>"
+  print_usage_tip "bash tools/shell/changelog.sh ?" "print help"
+  print_usage_tip "bash tools/shell/changelog.sh all" "generate all changelogs"
+  print_usage_tip "bash tools/shell/changelog.sh <APP_ALIAS_FROM_TSCONFIG>" "generate changelog for a specific application/library"
   reportSupportedModuleAliases
-  printGap
+  print_gap
 }
 
 ##
 # Checks changelog directories existence, and creates directories if it does not exist.
 ##
-checkChangelogDirectoriesExistence() {
+check_changelog_directories_existence() {
   if [ -d ${CHANGELOG_ROOT} ]; then
-    printSuccessMessage "changelog directory $CHANGELOG_ROOT exists, proceeding"
-    printGap
+    print_success_message "changelog directory $CHANGELOG_ROOT exists, proceeding"
+    print_gap
   else
-    printInfoTitle "<< ERROR >>"
-    printWarningMessage "changelog directory $CHANGELOG_ROOT does not exist"
-    printInfoMessage "creating changelog directory $CHANGELOG_ROOT"
-    printGap
+    print_info_title "<< ERROR >>"
+    print_warning_message "changelog directory $CHANGELOG_ROOT does not exist"
+    print_info_message "creating changelog directory $CHANGELOG_ROOT"
+    print_gap
 
     mkdir -p $CHANGELOG_ROOT
   fi
 
   if [ -d ${CHANGELOG_APPS} ]; then
-    printSuccessMessage "changelog directory $CHANGELOG_APPS exists, proceeding"
-    printGap
+    print_success_message "changelog directory $CHANGELOG_APPS exists, proceeding"
+    print_gap
   else
-    printErrorTitle "<< ERROR >>"
-    printWarningMessage "changelog directory $CHANGELOG_APPS does not exist"
-    printSuccessMessage "creating changelog directory $CHANGELOG_APPS"
-    printGap
+    print_error_title "<< ERROR >>"
+    print_warning_message "changelog directory $CHANGELOG_APPS does not exist"
+    print_success_message "creating changelog directory $CHANGELOG_APPS"
+    print_gap
 
     mkdir -p $CHANGELOG_APPS
   fi
 
   if [ -d ${CHANGELOG_LIBS} ]; then
-    printSuccessMessage "changelog directory $CHANGELOG_APPS exists, proceeding"
-    printGap
+    print_success_message "changelog directory $CHANGELOG_APPS exists, proceeding"
+    print_gap
   else
-    printErrorTitle "<< ERROR >>"
-    printWarningMessage "changelog directory $CHANGELOG_LIBS does not exist"
-    printSuccessMessage "creating changelog directory $CHANGELOG_LIBS"
-    printGap
+    print_error_title "<< ERROR >>"
+    print_warning_message "changelog directory $CHANGELOG_LIBS does not exist"
+    print_success_message "creating changelog directory $CHANGELOG_LIBS"
+    print_gap
 
     mkdir -p $CHANGELOG_LIBS
   fi
@@ -69,10 +69,10 @@ checkChangelogDirectoriesExistence() {
 ##
 # Generates changelog index.html with relative links.
 ##
-generateChangelogIndex() {
-  printInfoTitle "<< GENERATING CHANGELOG INDEX >>"
-  printNameAndValue "changelog dist root" "$1"
-  printGap
+generate_changelog_index() {
+  print_info_title "<< GENERATING CHANGELOG INDEX >>"
+  print_name_and_value "changelog dist root" "$1"
+  print_gap
 
   ##
   # Find all changelog files and save in array.
@@ -103,9 +103,9 @@ generateChangelogIndex() {
 ##
 # Copies generated changelog to dist.
 ##
-copyReportToDist() {
-  printInfoTitle "<< COPY CHANGELOG TO DIST >>"
-  printGap
+copy_report_to_dist() {
+  print_info_title "<< COPY CHANGELOG TO DIST >>"
+  print_gap
 
   ##
   # Changelog root path.
@@ -114,39 +114,39 @@ copyReportToDist() {
 
   # check documentation dist path existence
   if [ -d ${CHANGELOG_DIST_ROOT} ]; then
-    printSuccessMessage "directory $CHANGELOG_DIST_ROOT exists, proceeding"
-    printGap
+    print_success_message "directory $CHANGELOG_DIST_ROOT exists, proceeding"
+    print_gap
   else
-    printErrorTitle "<< ERROR >>"
-    printWarningMessage "directory $CHANGELOG_DIST_ROOT does not exist"
-    printInfoMessage "creating directory $CHANGELOG_DIST_ROOT"
-    printGap
+    print_error_title "<< ERROR >>"
+    print_warning_message "directory $CHANGELOG_DIST_ROOT does not exist"
+    print_info_message "creating directory $CHANGELOG_DIST_ROOT"
+    print_gap
 
     mkdir -p $CHANGELOG_DIST_ROOT
   fi
 
   cp -r ${CHANGELOG_ROOT} $CHANGELOG_DIST_ROOT || exit 1
 
-  generateChangelogIndex "$CHANGELOG_DIST_ROOT"
+  generate_changelog_index "$CHANGELOG_DIST_ROOT"
 }
 
 ##
 # Checks if required path exists and proceeds with changelog generation.
 ##
-checkConfigPathAndProceed() {
-  printInfoTitle "<< Checking module path and proceeding >>"
-  printNameAndValue "module name" "$1"
-  printNameAndValue "module partial path" "$2"
+check_config_path_and_proceed() {
+  print_info_title "<< Checking module path and proceeding >>"
+  print_name_and_value "module name" "$1"
+  print_name_and_value "module partial path" "$2"
 
   local MODULE_PATH="${PROJECT_ROOT}/${2}/"
 
-  printNameAndValue "module path" "$MODULE_PATH"
-  printGap
+  print_name_and_value "module path" "$MODULE_PATH"
+  print_gap
 
   if [ ! -d "$MODULE_PATH" ]; then
-    printErrorTitle "<< ERROR >>"
-    printWarningMessage "module path $MODULE_PATH not found"
-    printGap
+    print_error_title "<< ERROR >>"
+    print_warning_message "module path $MODULE_PATH not found"
+    print_gap
 
     exit 1
   else
@@ -192,9 +192,9 @@ checkConfigPathAndProceed() {
 ##
 # Generates module changelog.
 ##
-generateModuleChangelog() {
-  printInfoTitle "<< GENERATING MODULE CHANGELOG >>"
-  printNameAndValue "module alias" "$1"
+generate_module_changelog() {
+  print_info_title "<< GENERATING MODULE CHANGELOG >>"
+  print_name_and_value "module alias" "$1"
 
   local MODULE_ALIAS=$1
 
@@ -203,21 +203,21 @@ generateModuleChangelog() {
 
   local MODULE_PARTIAL_PATH="${MODULE_ALIAS//\:/s/}" # partial module path, e.g. apps/client for subsequent path formation
 
-  printNameAndValue "module name" "$MODULE_NAME"
-  printNameAndValue "module partial path name" "$MODULE_PARTIAL_PATH"
-  printGap
+  print_name_and_value "module name" "$MODULE_NAME"
+  print_name_and_value "module partial path name" "$MODULE_PARTIAL_PATH"
+  print_gap
 
   local ALIAS_EXISTS=
   moduleAliasExists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
 
   if [ "$ALIAS_EXISTS" = 1 ]; then
-    checkConfigPathAndProceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH"
+    check_config_path_and_proceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH"
   elif
     [ "$MODULE_ALIAS" = "all" ]
   then
-    for MODULE_ALIAS_VAR in "${EXISTING_MODULE_ALIASES[@]}"; do generateModuleChangelog "$MODULE_ALIAS_VAR"; done
+    for MODULE_ALIAS_VAR in "${EXISTING_MODULE_ALIASES[@]}"; do generate_module_changelog "$MODULE_ALIAS_VAR"; done
   else
-    printHelp
+    print_help
     exit 1
   fi
 }
@@ -226,13 +226,13 @@ generateModuleChangelog() {
 # Script control flow.
 ##
 if [ "$1" = "?" ]; then
-  printHelp
+  print_help
 elif [ $# -eq 1 ]; then
   rm -rf ./changelog/*
-  checkChangelogDirectoriesExistence
-  generateModuleChangelog "$1"
-  copyReportToDist
+  check_changelog_directories_existence
+  generate_module_changelog "$1"
+  copy_report_to_dist
 else
-  printHelp
+  print_help
   exit 1
 fi

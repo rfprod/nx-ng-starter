@@ -13,9 +13,11 @@ describe('configure', () => {
   const setup = (app: TSupportedApp = 'client', mockEnvClient?: boolean) => {
     const envClientMock = envClient.AppClientEnvConfig as Mock;
     if (mockEnvClient === true) {
-      envClientMock.mockImplementation((opts: IExecutorOptions, ctx: ExecutorContext) => ({
-        execute: () => new Promise<void>(resolve => resolve()),
-      }));
+      envClientMock.mockImplementation(function (opts: IExecutorOptions, ctx: ExecutorContext) {
+        return {
+          execute: () => new Promise<void>(resolve => resolve()),
+        };
+      });
     }
 
     const context: ExecutorContext = {

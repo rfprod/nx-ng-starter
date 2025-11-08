@@ -1,3 +1,4 @@
+import type { ConnectedPosition } from '@angular/cdk/overlay';
 import { InjectionToken, type Provider } from '@angular/core';
 
 /** Guided tour step data. */
@@ -25,3 +26,15 @@ export const guidedTourDataProvider: Provider = {
     last: true,
   } as IGuidedTourData,
 };
+
+/**
+ * Guided tour directive interface.
+ */
+export interface IGuidedTourDirective {
+  appGuidedTour?: IGuidedTourData;
+  highlightElement: boolean;
+  flexibleConnectedPositions: ConnectedPosition[];
+  scrollStrategy: 'block' | 'close' | 'noop' | 'reposition';
+  dispose(): void;
+  display(): void;
+}

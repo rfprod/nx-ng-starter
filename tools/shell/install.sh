@@ -7,29 +7,29 @@ source tools/shell/utils/config.sh
 ##
 # Print help.
 ##
-printHelp() {
-  printInfoTitle "<< ${0} usage >>"
-  printUsageTip "bash tools/shell/install.sh ?" "print help"
-  printUsageTip "bash tools/shell/install.sh local" "install project dependencies only"
-  printUsageTip "bash tools/shell/install.sh global" "install global dependencies only"
-  printUsageTip "bash tools/shell/install.sh all" "install projects dependencies, global dependencies, brew (linux), protolint (linux), shellcheck (linux)"
-  printUsageTip "bash tools/shell/install.sh all osx" "install projects dependencies, global dependencies, protolint (osx), shellcheck (osx)"
-  printUsageTip "bash tools/shell/install.sh all linux ci" "install projects dependencies, global dependencies, brew (linux), protolint (linux), shellcheck (linux) in ci environment"
-  printUsageTip "bash tools/shell/install.sh proto" "install protobuf dependencies on linux"
-  printUsageTip "bash tools/shell/install.sh proto osx" "install protobuf dependencies on osx"
-  printUsageTip "bash tools/shell/install.sh proto linux ci" "install protobuf dependencies on linux in ci environment"
-  printUsageTip "bash tools/shell/install.sh shellcheck" "install shellcheck on linux"
-  printUsageTip "bash tools/shell/install.sh shellcheck osx" "install shellcheck on osx"
-  printUsageTip "bash tools/shell/install.sh shellcheck linux ci" "install shellcheck on linux in ci environment"
-  printGap
+print_help() {
+  print_info_title "<< ${0} usage >>"
+  print_usage_tip "bash tools/shell/install.sh ?" "print help"
+  print_usage_tip "bash tools/shell/install.sh local" "install project dependencies only"
+  print_usage_tip "bash tools/shell/install.sh global" "install global dependencies only"
+  print_usage_tip "bash tools/shell/install.sh all" "install projects dependencies, global dependencies, brew (linux), protolint (linux), shellcheck (linux)"
+  print_usage_tip "bash tools/shell/install.sh all osx" "install projects dependencies, global dependencies, protolint (osx), shellcheck (osx)"
+  print_usage_tip "bash tools/shell/install.sh all linux ci" "install projects dependencies, global dependencies, brew (linux), protolint (linux), shellcheck (linux) in ci environment"
+  print_usage_tip "bash tools/shell/install.sh proto" "install protobuf dependencies on linux"
+  print_usage_tip "bash tools/shell/install.sh proto osx" "install protobuf dependencies on osx"
+  print_usage_tip "bash tools/shell/install.sh proto linux ci" "install protobuf dependencies on linux in ci environment"
+  print_usage_tip "bash tools/shell/install.sh shellcheck" "install shellcheck on linux"
+  print_usage_tip "bash tools/shell/install.sh shellcheck osx" "install shellcheck on osx"
+  print_usage_tip "bash tools/shell/install.sh shellcheck linux ci" "install shellcheck on linux in ci environment"
+  print_gap
 }
 
 ##
 # Installs project dependencies.
 ##
-installProjectDependencies() {
-  printInfoTitle "<< Installing project dependencies >>"
-  printGap
+install_project_dependencies() {
+  print_info_title "<< Installing project dependencies >>"
+  print_gap
 
   cd ./functions || exit 1
   npm install || exit 1
@@ -40,9 +40,9 @@ installProjectDependencies() {
 ##
 # Installs global npm dependencies.
 ##
-installGlobalDependencies() {
-  printInfoTitle "<< Installing global dependencies >>"
-  printGap
+install_global_dependencies() {
+  print_info_title "<< Installing global dependencies >>"
+  print_gap
 
   sudo npm install -g @angular/cli@latest @nestjs/cli@latest @ngxs/cli@latest @nrwl/cli@latest typescript@latest @compodoc/compodoc@latest commitizen@latest cz-conventional-changelog@latest clang-format@latest yarn@1.22.22 madge@latest npm-check-updates@latest || exit 1
 }
@@ -50,9 +50,9 @@ installGlobalDependencies() {
 ##
 # Installs protobuf on Linux.
 ##
-installProtobufLinux() {
-  printInfoTitle "<< Installing protobuf, protoc-gen-grpc-web, protolint on linux >>"
-  printGap
+install_protobuf_linux() {
+  print_info_title "<< Installing protobuf, protoc-gen-grpc-web, protolint on linux >>"
+  print_gap
 
   if [ "$1" = "ci" ]; then
     apt install -y protobuf-compiler-grpc
@@ -89,8 +89,8 @@ installProtobufLinux() {
   PROTOLINT_CHECKSUM_CHECK=$(find ./ -type f -name "checksums.txt" -exec grep "${PROTOLINT_CHECKSUM}" {} +)
 
   if [[ -z "$PROTOLINT_CHECKSUM_CHECK" ]]; then
-    printErrorTitle "Protolint checksum does not match"
-    printGap
+    print_error_title "Protolint checksum does not match"
+    print_gap
     exit 1
   fi
 
@@ -123,9 +123,9 @@ installProtobufLinux() {
 ##
 # Installs protobuf and gRPC tools on OSX.
 ##
-installProtobufOsx() {
-  printInfoTitle "<< Installing protobuf, protoc-gen-grpc-web, protolint on osx >>"
-  printGap
+install_protobuf_osx() {
+  print_info_title "<< Installing protobuf, protoc-gen-grpc-web, protolint on osx >>"
+  print_gap
 
   brew install protolint
   brew install protobuf
@@ -135,20 +135,20 @@ installProtobufOsx() {
 ##
 # Installs protobuf.
 ##
-installProtobuf() {
+install_protobuf() {
   if [ "$1" = "osx" ]; then
-    installProtobufOsx
+    install_protobuf_osx
   else
-    installProtobufLinux "$2"
+    install_protobuf_linux "$2"
   fi
 }
 
 ##
 # Installs Shellcheck on Linux.
 ##
-installShellcheckLinux() {
-  printInfoTitle "<< Installing shellcheck on linux >>"
-  printGap
+install_shellcheck_linux() {
+  print_info_title "<< Installing shellcheck on linux >>"
+  print_gap
 
   if [ "$1" = "ci" ]; then
     apt -y install shellcheck
@@ -160,9 +160,9 @@ installShellcheckLinux() {
 ##
 # Installs Shellcheck on Osx.
 ##
-installShellcheckOsx() {
-  printInfoTitle "<< Installing shellcheck on osx >>"
-  printGap
+install_shellcheck_osx() {
+  print_info_title "<< Installing shellcheck on osx >>"
+  print_gap
 
   brew install shellcheck
 }
@@ -170,11 +170,11 @@ installShellcheckOsx() {
 ##
 # Installs shellcheck.
 ##
-installShellcheck() {
+install_shellcheck() {
   if [ "$1" = "osx" ]; then
-    installShellcheckOsx
+    install_shellcheck_osx
   else
-    installShellcheckLinux "$2"
+    install_shellcheck_linux "$2"
   fi
 }
 
@@ -182,21 +182,21 @@ installShellcheck() {
 # Dependencies installation control flow.
 ##
 if [ "$1" = "?" ]; then
-  printHelp
+  print_help
 elif [ "$1" = "all" ]; then
-  installProjectDependencies
-  installGlobalDependencies
-  installProtobuf "$2" "$3"
-  installShellcheck "$2" "$3"
+  install_project_dependencies
+  install_global_dependencies
+  install_protobuf "$2" "$3"
+  install_shellcheck "$2" "$3"
 elif [ "$1" = "project" ]; then
-  installProjectDependencies
+  install_project_dependencies
 elif [ "$1" = "global" ]; then
-  installGlobalDependencies
+  install_global_dependencies
 elif [ "$1" = "proto" ]; then
-  installProtobuf "$2" "$3"
+  install_protobuf "$2" "$3"
 elif [ "$1" = "shellcheck" ]; then
-  installShellcheck "$2" "$3"
+  install_shellcheck "$2" "$3"
 else
-  printHelp
+  print_help
   exit 1
 fi

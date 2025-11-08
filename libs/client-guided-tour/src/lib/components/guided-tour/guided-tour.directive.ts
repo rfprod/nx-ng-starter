@@ -5,14 +5,14 @@ import { AfterContentInit, Directive, DOCUMENT, ElementRef, inject, Injector, In
 import { OVERLAY_REFERENCE } from '../../providers/overlay.provider';
 import { AppGuidedTourService } from '../../services/guided-tour/guided-tour.service';
 import { AppGuidedTourComponent } from './guided-tour.component';
-import { GUIDED_TOUR_DATA, IGuidedTourData } from './guided-tour.interface';
+import { GUIDED_TOUR_DATA, IGuidedTourData, IGuidedTourDirective } from './guided-tour.interface';
 
 /** Guided tour directive. */
 @Directive({
   selector: '[appGuidedTour]',
   standalone: false,
 })
-export class AppGuidedTourDirective implements AfterContentInit, OnDestroy {
+export class AppGuidedTourDirective implements IGuidedTourDirective, AfterContentInit, OnDestroy {
   private readonly el = inject(ElementRef);
 
   private readonly overlay = inject(Overlay);

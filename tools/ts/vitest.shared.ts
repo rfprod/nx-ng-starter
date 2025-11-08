@@ -7,6 +7,6 @@ export const sharedTestConfig: ViteUserConfig['test'] = {
   testTimeout: 10000,
   watch: false,
   passWithNoTests: true,
-  pool: 'threads',
+  pool: 'forks',
   reporters: ['default'],
 };

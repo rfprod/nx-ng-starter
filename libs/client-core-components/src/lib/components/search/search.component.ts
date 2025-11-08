@@ -31,7 +31,7 @@ export class AppSearchComponent implements AfterViewInit {
   @HostBinding('class.density-3') public density = true;
 
   /** The autocomplete input. */
-  @ViewChild(MatInput) public matInput!: MatInput;
+  @ViewChild(MatInput) public matInput?: MatInput;
 
   /** Event emitter to notify the parent component that an option has been selected. */
   @Output() public readonly optionSelected = new EventEmitter<void>();
@@ -174,7 +174,10 @@ export class AppSearchComponent implements AfterViewInit {
 
   public ngAfterViewInit(): void {
     setTimeout(() => {
-      this.matInput.focus();
+      const matInput = this.matInput;
+      if (typeof matInput !== 'undefined') {
+        matInput.focus();
+      }
     });
   }
 }

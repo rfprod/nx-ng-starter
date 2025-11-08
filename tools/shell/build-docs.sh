@@ -4,9 +4,9 @@ source tools/shell/utils/print-utils.sh ''
 
 source tools/shell/utils/config.sh
 
-buildDocumentation() {
-  printInfoTitle "<< Building documentation app >>"
-  printGap
+build_documentation() {
+  print_info_title "<< Building documentation app >>"
+  print_gap
 
   npx nx run-many --target test --all --code-coverage --run-in-band || exit 1
   npx nx run tools:coverage-stats || exit 1
@@ -26,9 +26,6 @@ buildDocumentation() {
   npx nx run-many --target e2e --all
   bash tools/shell/e2e.sh reports || exit 1
   yarn generate:e2e-test-report-index || exit 1
-
-  npx nx run documentation:build-storybook || exit 1
-  cp -r ./dist/storybook/documentation ./dist/apps/documentation/browser/assets/storybook || exit 1
 }
 
-buildDocumentation
+build_documentation

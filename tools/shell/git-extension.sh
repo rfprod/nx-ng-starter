@@ -11,21 +11,21 @@ CHANGED_ALIASES=()
 ##
 # Print help.
 ##
-printHelp() {
-  printInfoTitle "<< ${0} usage >>"
-  printUsageTip "bash tools/shell/git-extension.sh ?" "print help"
-  printUsageTip "bash tools/shell/git-extension.sh detect-yarn-lock-change" "detects if yarn lock was changed"
-  printUsageTip "bash tools/shell/git-extension.sh print" "get and print changed apps/libs aliases"
-  printUsageTip "bash tools/shell/git-extension.sh" "get changed apps/libs aliases"
-  printGap
+print_help() {
+  print_info_title "<< ${0} usage >>"
+  print_usage_tip "bash tools/shell/git-extension.sh ?" "print help"
+  print_usage_tip "bash tools/shell/git-extension.sh detect-yarn-lock-change" "detects if yarn lock was changed"
+  print_usage_tip "bash tools/shell/git-extension.sh print" "get and print changed apps/libs aliases"
+  print_usage_tip "bash tools/shell/git-extension.sh" "get changed apps/libs aliases"
+  print_gap
 }
 
 ##
 # Stores changed aliases in a respective variable.
 ##
-getChangedProjectAliases() {
-  printInfoTitle "<< GET LIBRARY CHANGES >>"
-  printGap
+get_changed_project_aliases() {
+  print_info_title "<< GET LIBRARY CHANGES >>"
+  print_gap
 
   local FOUND_CHANGED_ALIASES
   FOUND_CHANGED_ALIASES=$(git status | grep -o "\(apps\|libs\)\/[a-z0-9-]*" | awk '!a[$0]++' | sed -E 's/s\//\:/g')
@@ -40,7 +40,7 @@ getChangedProjectAliases() {
   done
 }
 
-printChangedAliases() {
+print_changed_aliases() {
   ##
   # Prints app and lib aliases which contain changes.
   ##
@@ -48,19 +48,19 @@ printChangedAliases() {
   if [ -n "$CHANGED_ALIASES" ]; then
     local CHANGED_ALIAS
     for CHANGED_ALIAS in "${CHANGED_ALIASES[@]}"; do
-      printValue "$CHANGED_ALIAS"
+      print_value "$CHANGED_ALIAS"
     done
   else
-    printInfoTitle "<< NO CHANGES >>"
-    printGap
+    print_info_title "<< NO CHANGES >>"
+    print_gap
   fi
 }
 
 YARN_LOCK_CHANGED=0
 
-checkYarnLockChanges() {
-  printInfoTitle "<< Detecting yarn.lock changes between two latest commits >>"
-  printGap
+check_yarn_lock_changes() {
+  print_info_title "<< Detecting yarn.lock changes between two latest commits >>"
+  print_gap
 
   local CHANGED
   CHANGED="$(git diff --name-only HEAD HEAD~1 | grep "yarn.lock")"
@@ -69,17 +69,17 @@ checkYarnLockChanges() {
     YARN_LOCK_CHANGED=1
   fi
 
-  printNameAndValue "yarn.lock changed (0 - unchanged, 1 - changed)" "$YARN_LOCK_CHANGED"
-  printGap
+  print_name_and_value "yarn.lock changed (0 - unchanged, 1 - changed)" "$YARN_LOCK_CHANGED"
+  print_gap
 }
 
 if [ "$1" = "?" ]; then
-  printHelp
+  print_help
 elif [ "$1" = "print" ]; then
-  getChangedProjectAliases
-  printChangedAliases
+  get_changed_project_aliases
+  print_changed_aliases
 elif [ "$1" = "detect-yarn-lock-change" ]; then
-  checkYarnLockChanges
+  check_yarn_lock_changes
 else
-  getChangedProjectAliases
+  get_changed_project_aliases
 fi

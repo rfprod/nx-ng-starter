@@ -39,7 +39,7 @@ export const updateProjectTestConfig = <T = Record<string, string>>(schema: T & 
         value: {},
       });
     }
-    projectConfig.targets['test'].executor = '@nx/vite:test';
+    projectConfig.targets['test'].executor = '@nx/vitest:test';
     projectConfig.targets['test'].options = {
       compiler: 'swc',
       configFile: `{projectRoot}/vitest.config.mts`,

@@ -7,7 +7,7 @@ import {
   WsResponse,
 } from '@nestjs/websockets';
 import { Subscription, tap, timer } from 'rxjs';
-import { Server, WebSocket } from 'ws';
+import { type Server, WebSocket } from 'ws';
 
 import { dianosticEventsGatewayPort, IUserCountEvent, TDiagData } from '../interfaces/diagnostics.interface';
 import { AppDiagnosticsService } from '../services/diagnostics.service';

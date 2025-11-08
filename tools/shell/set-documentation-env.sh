@@ -9,17 +9,17 @@ declare -A EXISTING_README
 ##
 # Sets markdown file paths array value.
 ##
-setMarkdownFilePathsValue() {
-  printInfoTitle "<< SETTING MARKDOWN FILE PATHS >>"
-  printNameAndValue "readmes" "${EXISTING_README[@]}"
-  printGap
+set_markdown_file_paths_value() {
+  print_info_title "<< SETTING MARKDOWN FILE PATHS >>"
+  print_name_and_value "readmes" "${EXISTING_README[@]}"
+  print_gap
 
   COMMA_SEPARATES_STRINGS=$(
     IFS=","
     echo "${EXISTING_README[*]}"
   )
 
-  printNameAndValue "COMMA_SEPARATES_STRINGS" "$COMMA_SEPARATES_STRINGS"
+  print_name_and_value "COMMA_SEPARATES_STRINGS" "$COMMA_SEPARATES_STRINGS"
 
   find ./apps/documentation/src/environments/ -type f -name "environment.ts" -exec sed -i "s#mdFilePaths.*#mdFilePaths: [$COMMA_SEPARATES_STRINGS],#g" {} +
   find ./apps/documentation/src/environments/ -type f -name "environment.prod.ts" -exec sed -i "s#mdFilePaths.*#mdFilePaths: [$COMMA_SEPARATES_STRINGS],#g" {} +
@@ -32,23 +32,23 @@ setMarkdownFilePathsValue() {
 ##
 # Reports existing *.md files.
 ##
-reportExistingReadmes() {
-  printInfoTitle "<< README FILES >>"
-  printInfoMessage "execute this script without any parameters to find README files and use found paths to update environment of the Documentation app"
-  printGap
+report_existing_readmes() {
+  print_info_title "<< README FILES >>"
+  print_info_message "execute this script without any parameters to find README files and use found paths to update environment of the Documentation app"
+  print_gap
 
   local KEY
   for KEY in "${!EXISTING_README[@]}"; do
-    printNameAndValue "${KEY}" "${EXISTING_README[$KEY]}"
+    print_name_and_value "${KEY}" "${EXISTING_README[$KEY]}"
   done
 
-  printGap
+  print_gap
 }
 
 ##
 # Finds *.md files in apps/, tools/, and libs/ and updates Documentation environment.
 ##
-findReadmes() {
+find_readmes() {
 
   readarray -d '' FOUND_READMES < <(find apps/ libs/ tools/ -type f -name "*.md" -print0)
 
@@ -64,13 +64,13 @@ findReadmes() {
 
   # debug found readmes 2
   # for KEY in "${!FOUND_READMES[@]}"; do
-  #   printNameAndValue "${KEY}" "${FOUND_READMES[$KEY]}"
+  #   print_name_and_value "${KEY}" "${FOUND_READMES[$KEY]}"
   # done
   #printf "\n"
 
   # debug existing readmes
   # for KEY in "${!EXISTING_README[@]}"; do
-  #   printNameAndValue "${KEY}" "${EXISTING_README[$KEY]}"
+  #   print_name_and_value "${KEY}" "${EXISTING_README[$KEY]}"
   # done
   #printf "\n"
 
@@ -79,10 +79,10 @@ findReadmes() {
   ##
 
   if [ "$1" = "?" ]; then
-    reportExistingReadmes
+    report_existing_readmes
   else
-    setMarkdownFilePathsValue "${EXISTING_README[@]}"
+    set_markdown_file_paths_value "${EXISTING_README[@]}"
   fi
 }
 
-findReadmes "$1"
+find_readmes "$1"

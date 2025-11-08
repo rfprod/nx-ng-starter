@@ -43,8 +43,8 @@ runs:
     - name: Configure kernel
       uses: ./.github/actions/configure-kernel
 
-    - name: Use yarn v1 required for integrity check
-      uses: ./.github/actions/use-yarn-v1
+    - name: Configure yarn
+      uses: ./.github/actions/configure-yarn
 
     - name: Workspace cache
       id: workspace-cache
@@ -59,7 +59,7 @@ runs:
 
     - name: Install project dependencies
       shell: bash
-      run: yarn install:ci
+      run: yarn install --immutable
 
     - name: Install global compodoc
       if: inputs.compodoc == 'true'

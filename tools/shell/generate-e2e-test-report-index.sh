@@ -10,33 +10,33 @@ PROJECT_ROOT=.
 ##
 # Print help.
 ##
-printHelp() {
-  printInfoTitle "<< ${0} usage >>"
-  printUsageTip "bash tools/shell/generate-e2e-test-report-index.sh ?" "print help"
-  printUsageTip "bash tools/shell/generate-e2e-test-report-index.sh" "generate e2e reports index"
-  printGap
+print_help() {
+  print_info_title "<< ${0} usage >>"
+  print_usage_tip "bash tools/shell/generate-e2e-test-report-index.sh ?" "print help"
+  print_usage_tip "bash tools/shell/generate-e2e-test-report-index.sh" "generate e2e reports index"
+  print_gap
 }
 
 ##
 # Generate bootstrap script.
 ##
-generateReportIndex() {
-  printInfoTitle "<< Generating e2e report index >>"
-  printNameAndValue "E2E_DIST_PATH" "$1"
+generate_report_index() {
+  print_info_title "<< Generating e2e report index >>"
+  print_name_and_value "E2E_DIST_PATH" "$1"
 
   local E2E_DIST_PATH
   E2E_DIST_PATH="$1"
 
   if [ ! -d "$E2E_DIST_PATH" ]; then
-    printErrorTitle "<< ERROR >>"
-    printWarningMessage "You should generate documentation app dist first."
-    printGap
+    print_error_title "<< ERROR >>"
+    print_warning_message "You should generate documentation app dist first."
+    print_gap
   else
     # Delete index.html file just in case. It should not exist when generating unit coverage index.
     rm -rf "$E2E_DIST_PATH"/index.html
 
-    printInfoTitle "<< Files from latest dist >>"
-    printGap
+    print_info_title "<< Files from latest dist >>"
+    print_gap
 
     local CURRENT_DATE
     CURRENT_DATE=$(date)
@@ -114,8 +114,8 @@ generateReportIndex() {
       echo '</html>'
     } >"$E2E_DIST_PATH"/index.html
 
-    printSuccessMessage "<< Generated index file >>"
-    printGap
+    print_success_message "<< Generated index file >>"
+    print_gap
 
     # To debug generated index.html files uncomment next line.
     # cat "$E2E_DIST_PATH"/index.html
@@ -130,7 +130,7 @@ declare -A REPORT_INDEXES=(
 generate() {
   for REPORT_INDEX in "${REPORT_INDEXES[@]}"; do
     echo "$REPORT_INDEX"
-    generateReportIndex "$REPORT_INDEX"
+    generate_report_index "$REPORT_INDEX"
   done
 }
 
@@ -138,8 +138,8 @@ generate() {
 # Script control flow.
 ##
 if [ "$1" = "?" ]; then
-  printHelp
+  print_help
 else
-  # generateReportIndex
+  # generate_report_index
   generate
 fi

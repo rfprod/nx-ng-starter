@@ -16,7 +16,7 @@
         }
       },
       "defaultConfiguration": "production",
-      "executor": "@angular-devkit/build-angular:ng-packagr",
+      "executor": "@angular/build:ng-packagr",
       "options": {
         "project": "libs/client-pwa-offline/ng-package.json"
       },
@@ -42,7 +42,7 @@
       }
     },
     "test": {
-      "executor": "@nx/vite:test",
+      "executor": "@nx/vitest:test",
       "options": {
         "compiler": "swc",
         "configFile": "libs/client-pwa-offline/vitest.config.mts",

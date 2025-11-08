@@ -6,41 +6,41 @@ source tools/shell/git-extension.sh ''
 ##
 # Print help.
 ##
-printHelp() {
-  printInfoTitle "<< ${0} usage >>"
-  printUsageTip "tools/shell/yarn-extension.sh ?" "print help"
-  printUsageTip "tools/shell/yarn-extension.sh integrity-check" "performs an integrity check, and cleans up workspace if the is no integrity."
-  printGap
+print_help() {
+  print_info_title "<< ${0} usage >>"
+  print_usage_tip "tools/shell/yarn-extension.sh ?" "print help"
+  print_usage_tip "tools/shell/yarn-extension.sh integrity-check" "performs an integrity check, and cleans up workspace if the is no integrity."
+  print_gap
 }
 
 ##
 # Checks Yarn version.
 # Yarn v1 is required to use the feature that checks the packages integrity.
 ##
-checkYarnVersion() {
-  printInfoTitle "<< Checking yarn version >>"
-  printGap
+check_yarn_version() {
+  print_info_title "<< Checking yarn version >>"
+  print_gap
 
   local FULL_VERSION
   FULL_VERSION=$(yarn --version)
   local MAJOR_VERSION
   MAJOR_VERSION=$(yarn --version | grep -E -o "^[0-9].")
 
-  if [ "$MAJOR_VERSION" != "1." ]; then
-    printInfoTitle "<< Yarn version mismatch >>"
-    printGap
+  if [ "$MAJOR_VERSION" != "4." ]; then
+    print_info_title "<< Yarn version mismatch >>"
+    print_gap
 
-    printInfoMessage "Expected yarn version: 1.x.x"
-    printInfoMessage "Installed yarn version: $FULL_VERSION"
-    printGap
+    print_info_message "Expected yarn version: 4.x.x"
+    print_info_message "Installed yarn version: $FULL_VERSION"
+    print_gap
     exit 1
   else
-    printInfoTitle "<< Yarn version match >>"
-    printGap
+    print_info_title "<< Yarn version match >>"
+    print_gap
 
-    printInfoMessage "Expected yarn version: 1.x.x"
-    printInfoMessage "Installed yarn version: $FULL_VERSION"
-    printGap
+    print_info_message "Expected yarn version: 4.x.x"
+    print_info_message "Installed yarn version: $FULL_VERSION"
+    print_gap
   fi
 }
 
@@ -49,33 +49,33 @@ checkYarnVersion() {
 # No integrity mean that installed node_modules do not correspond versions defined in the package.json.
 # This utility is intended to be used by the CI mainly.
 ##
-checkIntegrity() {
-  printInfoTitle "<< Checking package integrity >>"
-  printGap
+check_integrity() {
+  print_info_title "<< Checking package integrity >>"
+  print_gap
 
-  checkYarnVersion
+  check_yarn_version
 
-  checkYarnLockChanges
+  check_yarn_lock_changes
 
-  if ! yarn check --integrity || [ "$YARN_LOCK_CHANGED" -eq 1 ]; then
-    printInfoTitle "<< Cleaning up workspace, and caches >>"
-    printGap
+  if ! yarn check --immutable || [ "$YARN_LOCK_CHANGED" -eq 1 ]; then
+    print_info_title "<< Cleaning up workspace, and caches >>"
+    print_gap
 
     yarn workspace:cleanup
     rm -rf ./node_modules
     npm cache clean --force
     yarn cache clean
   else
-    printSuccessTitle "<< Package integrity verified >>"
-    printInfoMessage ">> will verify tree additionally without erroring"
-    printGap
+    print_success_title "<< Package integrity verified >>"
+    print_info_message ">> will verify tree additionally without erroring"
+    print_gap
 
     yarn check --verify-tree || true
   fi
 }
 
 if [ "$1" = "?" ]; then
-  printHelp
+  print_help
 elif [ "$1" = "integrity-check" ]; then
-  checkIntegrity
+  check_integrity
 fi
