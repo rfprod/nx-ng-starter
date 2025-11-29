@@ -89,6 +89,26 @@
         "tsConfig": "apps/client/tsconfig.app.json"
       }
     },
+    "build-with-hooks": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx nx run client:configure-env",
+            "forwardAllArgs": false
+          },
+          {
+            "command": "npx nx build client",
+            "forwardAllArgs": true
+          },
+          {
+            "command": "npx nx run client:configure-env --reset",
+            "forwardAllArgs": false
+          }
+        ],
+        "parallel": false
+      }
+    },
     "configure-env": {
       "executor": "./tools/executors/client-env:configure",
       "options": {
@@ -96,7 +116,7 @@
       }
     },
     "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "executor": "@angular/build:extract-i18n",
       "options": {
         "buildTarget": "client:build"
       }
@@ -148,7 +168,7 @@
       }
     },
     "test": {
-      "executor": "@nx/vite:test",
+      "executor": "@nx/vitest:test",
       "options": {
         "compiler": "swc",
         "configFile": "apps/client/vitest.config.mts",

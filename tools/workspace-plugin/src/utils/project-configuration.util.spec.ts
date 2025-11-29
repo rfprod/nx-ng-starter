@@ -97,7 +97,7 @@ describe('updateProjectTestConfig', () => {
       ...projectConfig,
       targets: {
         test: {
-          executor: '@nx/vite:test',
+          executor: '@nx/vitest:test',
           options: {
             compiler: 'swc',
             configFile: '{projectRoot}/vitest.config.mts',
@@ -124,7 +124,7 @@ describe('updateProjectTestConfig', () => {
       ...projectConfig,
       targets: {
         test: {
-          executor: '@nx/vite:test',
+          executor: '@nx/vitest:test',
           options: {
             compiler: 'swc',
             configFile: '{projectRoot}/vitest.config.mts',

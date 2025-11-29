@@ -6,7 +6,7 @@ source tools/shell/build-utils.sh
 ##
 # Print help.
 ##
-printHelp() {
+print_help() {
   local TITLE="<< ${0} usage >>"
   printf "
     ${LIGHT_BLUE}%s\n
@@ -22,7 +22,7 @@ printHelp() {
 # Building control flow.
 ##
 if (($# != 1)); then
-  printHelp
+  print_help
 fi
 
 case "$1" in
@@ -37,6 +37,6 @@ windows)
   error 'TODO: build for Windows'
   ;;
 *)
-  printHelp
+  print_help
   ;;
 esac

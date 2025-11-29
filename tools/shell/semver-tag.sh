@@ -6,15 +6,15 @@ source tools/shell/utils/module-aliases.sh ''
 ##
 # Reports usage error and exits.
 ##
-reportUsageErrorAndExit() {
-  printInfoTitle "<< ${0} usage >>"
-  printInfoMessage "version increment exits with error if latest commit is already tagged or if checked out branch is not main"
-  printUsageTip "bash tools/shell/version-increment.sh" "tag latest comment with an appropriate version"
-  printInfoMessage "Custom ruleset based on the https://semver.org specification:"
-  printNameAndValue "MAJOR" "changes in one of the applications or a core application library"
-  printNameAndValue "MINOR" "changes in one of the feature libraries"
-  printNameAndValue "PATCH" "changes in one of the general purpose libraries or other files which do not belong to apps or libs folders"
-  printGap
+print_help() {
+  print_info_title "<< ${0} usage >>"
+  print_info_message "version increment exits with error if latest commit is already tagged or if checked out branch is not main"
+  print_usage_tip "bash tools/shell/version-increment.sh" "tag latest comment with an appropriate version"
+  print_info_message "Custom ruleset based on the https://semver.org specification:"
+  print_name_and_value "MAJOR" "changes in one of the applications or a core application library"
+  print_name_and_value "MINOR" "changes in one of the feature libraries"
+  print_name_and_value "PATCH" "changes in one of the general purpose libraries or other files which do not belong to apps or libs folders"
+  print_gap
 
   exit 1
 }
@@ -22,10 +22,10 @@ reportUsageErrorAndExit() {
 ##
 # Tag the latest merge commit.
 ##
-setTag() {
-  printInfoTitle "<< Setting tag >>"
-  printNameAndValue "tag" "$1"
-  printGap
+set_tag() {
+  print_info_title "<< Setting tag >>"
+  print_name_and_value "tag" "$1"
+  print_gap
 
   ##
   # Set tag.
@@ -33,16 +33,16 @@ setTag() {
   ##
   git tag "$1"
 
-  printSuccessTitle "SUCCESS"
-  printGap
+  print_success_title "SUCCESS"
+  print_gap
 }
 
 ##
 # Generate next tag based on semver, and set tag.
 ##
-semverTag() {
-  printInfoTitle "Tagging commit using semver"
-  printGap
+semver_tag() {
+  print_info_title "Tagging commit using semver"
+  print_gap
 
   local CHANGED_FILES
   # Get changed files
@@ -55,12 +55,12 @@ semverTag() {
   #CHANGED_FILES="libs/client-chatbot/src/app/index.html\nlibs/backend-grpc/src/app/index.html\nlibs/client-store/src/lib/index.html" # minor changes mock
   #CHANGED_FILES="package.json" # patch changes mock
 
-  printNameAndValue "changed files" "${CHANGED_FILES}"
-  printGap
+  print_name_and_value "changed files" "${CHANGED_FILES}"
+  print_gap
 
   if [ -z "$CHANGED_FILES" ]; then
-    printErrorTitle "ERROR: no changed files found in latest commit $COMMIT_HASH in branch"
-    printGap
+    print_error_title "ERROR: no changed files found in latest commit $COMMIT_HASH in branch"
+    print_gap
     exit 1
   else
     local ALL_TAGS
@@ -83,8 +83,8 @@ semverTag() {
       ALL_SEMVER_TAGS="0.0.0"
     fi
 
-    printNameAndValue "ALL_SEMVER_TAGS" "$ALL_SEMVER_TAGS"
-    printGap
+    print_name_and_value "ALL_SEMVER_TAGS" "$ALL_SEMVER_TAGS"
+    print_gap
 
     SEMVERS_ARRAY_INPUT=$(echo "$ALL_SEMVER_TAGS" | tr " " "\n")
     while IFS=' ' read -r line; do SEMVERS_ARRAY+=("$line"); done <<<"$SEMVERS_ARRAY_INPUT"
@@ -99,14 +99,14 @@ semverTag() {
     LATEST_SEMVER_MINOR=$(printf "%s" "$LATEST_SEMVER" | grep -o "\.[0-9]*\." | tr -d '.') # get initial latest semver minor and remove dots
     LATEST_SEMVER_PATCH=$(printf "%s" "$LATEST_SEMVER" | grep -o "\.[0-9]*$" | tr -d '.')  # get initial latest semver patch and remove dots
 
-    printInfoMessage "SEMVERS_ARRAY"
-    printGap
+    print_info_message "SEMVERS_ARRAY"
+    print_gap
 
     ##
     # Get latest semver parts from SEMVERS_ARRAY
     ##
     for i in "${SEMVERS_ARRAY[@]}"; do
-      printNameAndValue "ARRAY_ITEM_SEMVER" "$i"
+      print_name_and_value "ARRAY_ITEM_SEMVER" "$i"
 
       local ARRAY_ITEM_SEMVER_MAJOR
       local ARRAY_ITEM_SEMVER_MINOR
@@ -116,12 +116,12 @@ semverTag() {
       ARRAY_ITEM_SEMVER_MINOR=$(printf "%s" "$i" | grep -o "\.[0-9]*\." | tr -d '.') # get array item semver minor and remove dots
       ARRAY_ITEM_SEMVER_PATCH=$(printf "%s" "$i" | grep -o "\.[0-9]*$" | tr -d '.')  # get array item semver patch and remove dots
 
-      printNameAndValue "LATEST_SEMVER_MAJOR" "$LATEST_SEMVER_MAJOR"
-      printNameAndValue "LATEST_SEMVER_MINOR" "$LATEST_SEMVER_MINOR"
-      printNameAndValue "LATEST_SEMVER_PATCH" "$LATEST_SEMVER_PATCH"
-      printNameAndValue "ARRAY_ITEM_SEMVER_MAJOR" "$ARRAY_ITEM_SEMVER_MAJOR"
-      printNameAndValue "ARRAY_ITEM_SEMVER_MINOR" "$ARRAY_ITEM_SEMVER_MINOR"
-      printNameAndValue "ARRAY_ITEM_SEMVER_PATCH" "$ARRAY_ITEM_SEMVER_PATCH"
+      print_name_and_value "LATEST_SEMVER_MAJOR" "$LATEST_SEMVER_MAJOR"
+      print_name_and_value "LATEST_SEMVER_MINOR" "$LATEST_SEMVER_MINOR"
+      print_name_and_value "LATEST_SEMVER_PATCH" "$LATEST_SEMVER_PATCH"
+      print_name_and_value "ARRAY_ITEM_SEMVER_MAJOR" "$ARRAY_ITEM_SEMVER_MAJOR"
+      print_name_and_value "ARRAY_ITEM_SEMVER_MINOR" "$ARRAY_ITEM_SEMVER_MINOR"
+      print_name_and_value "ARRAY_ITEM_SEMVER_PATCH" "$ARRAY_ITEM_SEMVER_PATCH"
 
       if [ $((LATEST_SEMVER_PATCH + 0)) -lt $((ARRAY_ITEM_SEMVER_PATCH + 0)) ]; then
         LATEST_SEMVER_MAJOR=$ARRAY_ITEM_SEMVER_MAJOR
@@ -142,10 +142,10 @@ semverTag() {
       fi
     done
 
-    printNameAndValue "LATEST_SEMVER_MAJOR" "$LATEST_SEMVER_MAJOR"
-    printNameAndValue "LATEST_SEMVER_MINOR" "$LATEST_SEMVER_MINOR"
-    printNameAndValue "LATEST_SEMVER_PATCH" "$LATEST_SEMVER_PATCH"
-    printGap
+    print_name_and_value "LATEST_SEMVER_MAJOR" "$LATEST_SEMVER_MAJOR"
+    print_name_and_value "LATEST_SEMVER_MINOR" "$LATEST_SEMVER_MINOR"
+    print_name_and_value "LATEST_SEMVER_PATCH" "$LATEST_SEMVER_PATCH"
+    print_gap
 
     ##
     # Initialize new semver parts with latest found.
@@ -170,10 +170,10 @@ semverTag() {
     local CHANGED_FILES_CONTAIN_PATCH_CHANGES
     CHANGED_FILES_CONTAIN_PATCH_CHANGES=$(printf "%s" "$CHANGED_FILES" | grep -v "angular\.json\|nx\.json\|apps\/api\/.*\|apps\/client\/.*\|apps\/elements\/.*\|apps\/elements-testing\/.*\|apps\/documentation\/.*\|libs\/backend-core\/.*\|libs\/client-core\/.*\|apps\/.*\|libs\/.*" | grep -o ".*")
 
-    printNameAndValue "CHANGED_FILES_CONTAIN_MAJOR_CHANGES" "${CHANGED_FILES_CONTAIN_MAJOR_CHANGES}"
-    printNameAndValue "CHANGED_FILES_CONTAIN_MINOR_CHANGES" "${CHANGED_FILES_CONTAIN_MINOR_CHANGES}"
-    printNameAndValue "CHANGED_FILES_CONTAIN_PATCH_CHANGES" "${CHANGED_FILES_CONTAIN_PATCH_CHANGES}"
-    printGap
+    print_name_and_value "CHANGED_FILES_CONTAIN_MAJOR_CHANGES" "${CHANGED_FILES_CONTAIN_MAJOR_CHANGES}"
+    print_name_and_value "CHANGED_FILES_CONTAIN_MINOR_CHANGES" "${CHANGED_FILES_CONTAIN_MINOR_CHANGES}"
+    print_name_and_value "CHANGED_FILES_CONTAIN_PATCH_CHANGES" "${CHANGED_FILES_CONTAIN_PATCH_CHANGES}"
+    print_gap
 
     ##
     # Increment new semver parts depending on changed files.
@@ -188,25 +188,25 @@ semverTag() {
     elif [ -n "$CHANGED_FILES_CONTAIN_PATCH_CHANGES" ]; then
       PATCH=$((PATCH + 1))
     else
-      reportUsageErrorAndExit
+      print_help
     fi
 
     local TAG
     TAG="${MAJOR}.${MINOR}.${PATCH}"
 
-    setTag "$TAG"
+    set_tag "$TAG"
 
-    printGap
+    print_gap
   fi
 }
 
 ##
 # Check commit tag and proceed.
 ##
-checkCommitTagAndProceed() {
-  printInfoTitle "<< Checking latest commit tag >>"
-  printNameAndValue "latest commit hash" "${1}"
-  printGap
+check_commit_tag_and_proceed() {
+  print_info_title "<< Checking latest commit tag >>"
+  print_name_and_value "latest commit hash" "${1}"
+  print_gap
 
   local COMMIT_TAG
   COMMIT_TAG=$(git tag --points-at "$1") # get tag which points at the latest commit hash
@@ -215,29 +215,29 @@ checkCommitTagAndProceed() {
   # Exit with error if latest commit in given branch is already tagged
   ##
   if [ -n "$COMMIT_TAG" ]; then
-    reportUsageErrorAndExit
+    print_help
   fi
 
-  semverTag
+  semver_tag
 }
 
 ##
 # Sets versioning format and proceeds.
 ##
-setVersioningFormatAndProceed() {
-  printInfoTitle "<< Setting versioning format and proceeding >>"
-  printNameAndValue "checked out branch" "${1}"
-  printGap
+set_versioning_format_and_proceed() {
+  print_info_title "<< Setting versioning format and proceeding >>"
+  print_name_and_value "checked out branch" "${1}"
+  print_gap
 
   local COMMIT_HASH
   COMMIT_HASH=$(git log --pretty=format:"%h" -n 1) # get latest commit hash in checked out branch
 
-  printNameAndValue "latest commit hash" "$COMMIT_HASH"
-  printGap
+  print_name_and_value "latest commit hash" "$COMMIT_HASH"
+  print_gap
 
   if [ -z "$COMMIT_HASH" ]; then
-    printErrorTitle "ERROR: commit not found in branch ${1}"
-    printGap
+    print_error_title "ERROR: commit not found in branch ${1}"
+    print_gap
 
     exit 1
   fi
@@ -246,18 +246,18 @@ setVersioningFormatAndProceed() {
   # Check which branch is checked out to choose versioning format
   ##
   if [ "$1" = "main" ]; then
-    checkCommitTagAndProceed "$COMMIT_HASH"
+    check_commit_tag_and_proceed "$COMMIT_HASH"
   else
-    reportUsageErrorAndExit
+    print_help
   fi
 }
 
 ##
 # Tag commit with version in appropriate format.
 ##
-versionTagCommit() {
-  printInfoTitle "<< Tagging commit with version >>"
-  printGap
+version_tag_commit() {
+  print_info_title "<< Tagging commit with version >>"
+  print_gap
 
   local CHECKED_OUT_BRANCH_NAME
   CHECKED_OUT_BRANCH_NAME=$(git branch | grep -o "\*.*")
@@ -265,13 +265,13 @@ versionTagCommit() {
   local BRANCH_NAME
   BRANCH_NAME="${CHECKED_OUT_BRANCH_NAME//* /}" # remove pattern '* ' to get the branch name only
 
-  printNameAndValue "checked out branch" "$BRANCH_NAME"
-  printGap
+  print_name_and_value "checked out branch" "$BRANCH_NAME"
+  print_gap
 
   if [ "${BRANCH_NAME}" = "main" ]; then
-    setVersioningFormatAndProceed "$BRANCH_NAME"
+    set_versioning_format_and_proceed "$BRANCH_NAME"
   else
-    reportUsageErrorAndExit
+    print_help
   fi
 }
 
@@ -281,4 +281,4 @@ versionTagCommit() {
 # Commits are tagged with a version in the semver format only for the following branches:
 # - main
 ##
-versionTagCommit
+version_tag_commit

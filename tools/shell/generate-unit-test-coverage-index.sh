@@ -9,16 +9,16 @@ PROJECT_ROOT=.
 ##
 # Print help.
 ##
-printHelp() {
-  printInfoTitle "<< ${0} usage >>"
-  printUsageTip "bash tools/shell/generate-unit-test-coverage-index.sh ?" "print help"
-  printUsageTip "bash tools/shell/generate-unit-test-coverage-index.sh" "generate unit test coverage reports index"
-  printGap
+print_help() {
+  print_info_title "<< ${0} usage >>"
+  print_usage_tip "bash tools/shell/generate-unit-test-coverage-index.sh ?" "print help"
+  print_usage_tip "bash tools/shell/generate-unit-test-coverage-index.sh" "generate unit test coverage reports index"
+  print_gap
 }
 
-generateReportIndex() {
-  printInfoTitle "<< Generating unit coverage index file >>"
-  printGap
+generate_report_index() {
+  print_info_title "<< Generating unit coverage index file >>"
+  print_gap
 
   ##
   # Documentation unit coverage reports dist path.
@@ -27,9 +27,9 @@ generateReportIndex() {
   DOCUMENTATION_UNIT_COVERAGE_DIST_PATH=${PROJECT_ROOT}/dist/apps/documentation/browser/assets/coverage
 
   if [ ! -d ${DOCUMENTATION_UNIT_COVERAGE_DIST_PATH} ]; then
-    printErrorTitle "<< ERROR >>"
-    printWarningMessage "You should generate documentation app dist first."
-    printGap
+    print_error_title "<< ERROR >>"
+    print_warning_message "You should generate documentation app dist first."
+    print_gap
     exit 1
   fi
 
@@ -72,8 +72,8 @@ generateReportIndex() {
     echo '</html>'
   } >"$DOCUMENTATION_UNIT_COVERAGE_DIST_PATH"/index.html
 
-  printSuccessMessage "<< Generated index file >>"
-  printGap
+  print_success_message "<< Generated index file >>"
+  print_gap
 
   # To debug generated index.html files uncomment next line.
   # cat "$DOCUMENTATION_UNIT_COVERAGE_DIST_PATH"/index.html
@@ -83,7 +83,7 @@ generateReportIndex() {
 # Script execution control flow.
 ##
 if [ "$1" = "?" ]; then
-  printHelp
+  print_help
 else
-  generateReportIndex
+  generate_report_index
 fi

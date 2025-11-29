@@ -1,4 +1,4 @@
-import { enableProdMode } from '@angular/core';
+import { enableProdMode, provideZoneChangeDetection } from '@angular/core';
 import { platformBrowser } from '@angular/platform-browser';
 import { applicationIsFramed } from '@app/client-util-security';
 import { initializeSentry } from '@app/client-util-sentry';
@@ -24,7 +24,7 @@ if (applicationIsFramed()) {
   initializeSentry(environment, clientReleaseId);
 
   platformBrowser()
-    .bootstrapModule(AppClientModule)
+    .bootstrapModule(AppClientModule, { applicationProviders: [provideZoneChangeDetection()] })
     .catch(err => {
       console.error(err);
     });

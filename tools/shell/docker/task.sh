@@ -7,17 +7,17 @@ source tools/shell/utils/config.sh
 ##
 # Reports usage error.
 ##
-reportUsageError() {
-  printInfoTitle "<< ${0} usage >>"
-  printUsageTip "bash tools/shell/task.sh install-docker-ci" "install dependencies for CI docker container image (should be used from inside of docker only)"
-  printUsageTip "bash tools/shell/task.sh cleanup" "utility task, removes stopped containers and cleans up untagged images (should be used on runners which use CI container images)"
-  printUsageTip "bash tools/shell/task.sh login USERNAME PASSWORD" "docker login, requires a user name and a password"
-  printGap
+print_help() {
+  print_info_title "<< ${0} usage >>"
+  print_usage_tip "bash tools/shell/task.sh install-docker-ci" "install dependencies for CI docker container image (should be used from inside of docker only)"
+  print_usage_tip "bash tools/shell/task.sh cleanup" "utility task, removes stopped containers and cleans up untagged images (should be used on runners which use CI container images)"
+  print_usage_tip "bash tools/shell/task.sh login USERNAME PASSWORD" "docker login, requires a user name and a password"
+  print_gap
 
   exit 1
 }
 
-dockerLogin() {
+docker_login() {
   local DOCKER_REGISTRY_USER
   DOCKER_REGISTRY_USER="$1"
   local DOCKER_REGISTRY_PASS
@@ -27,20 +27,20 @@ dockerLogin() {
 }
 
 if [ 1 -gt $# ]; then
-  reportUsageError
+  print_help
 elif [ "$1" = "install-docker-ci" ]; then
   ##
   # Install global dependencies required for linting, testing, and building.
   # This task should be used when building mono-ci container.
   ##
-  printInfoTitle "Installing global dependencies required for linting, testing, and building"
-  printGap
+  print_info_title "Installing global dependencies required for linting, testing, and building"
+  print_gap
 
   npm rebuild node-sass --unsafe-perm || exit 1
   # Installing yarn@1.22.18 is mandatory, yarn v2 does not have integrity check which is needed for pipelines.
   npm i --force -g yarn@1.22.19 typescript@latest @angular/cli@latest @compodoc/compodoc@latest commitizen@latest cz-conventional-changelog@latest clang-format@latest --unsafe-perm || exit 1
-  printInfoMessage "Setting yarn cache directory"
-  printGap
+  print_info_message "Setting yarn cache directory"
+  print_gap
   yarn config set cache-folder ~/.yarn || exit 1
   yarn install:proto:linux:ci || exit 1
   yarn install:shellcheck:linux:ci || exit 1
@@ -48,34 +48,34 @@ elif [ "$1" = "cleanup" ]; then
   ##
   # Removes stopped containers and cleans up untagged images.
   ##
-  printInfoTitle "Cleaning up container images"
-  printGap
+  print_info_title "Cleaning up container images"
+  print_gap
 
   EXIT_CODE=0
   DOCKER_EXISTS=$(command -v docker) || EXIT_CODE=1
 
-  printNameAndValue "docker exists" "$DOCKER_EXISTS"
-  printNameAndValue "docker checker exit code" "$EXIT_CODE"
-  printGap
+  print_name_and_value "docker exists" "$DOCKER_EXISTS"
+  print_name_and_value "docker checker exit code" "$EXIT_CODE"
+  print_gap
 
   if [ "$EXIT_CODE" -eq 0 ]; then
-    printInfoMessage "cleaning up docker: removing all stopped containers"
-    printGap
+    print_info_message "cleaning up docker: removing all stopped containers"
+    print_gap
     docker rm -v -f "$(docker ps -qa)" || true
 
-    printInfoMessage "cleaning up docker: removing all untagged images"
-    printGap
+    print_info_message "cleaning up docker: removing all untagged images"
+    print_gap
     docker rmi "$(docker images | grep "^<none>" | awk "{print $3}")" || true
 
-    printInfoMessage "cleaning up docker: removing unused images"
-    printGap
+    print_info_message "cleaning up docker: removing unused images"
+    print_gap
     docker image prune -af
   else
-    printInfoMessage "docker is not installed, nothing to clean up"
-    printGap
+    print_info_message "docker is not installed, nothing to clean up"
+    print_gap
   fi
 elif [ "$1" = "login" ]; then
-  dockerLogin "$2" "$3"
+  docker_login "$2" "$3"
 else
-  reportUsageError
+  print_help
 fi

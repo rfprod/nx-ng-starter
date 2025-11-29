@@ -1,5 +1,5 @@
 {
-  "eslint.validate": ["json"],
+  "eslint.validate": ["json", "javascript", "typescript"],
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -19,10 +19,10 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "always",
-    "source.fixAll.stylelint": "always",
-    "source.fixAll.tslint": "always",
-    "source.organizeImports": "always"
+    "source.organizeImports": "never",
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.tslint": "never",
+    "source.fixAll.stylelint": "explicit"
   },
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,

@@ -16,11 +16,11 @@ declare -A DIAGRAMS=(
 ##
 # Print help.
 ##
-printHelp() {
-  printInfoTitle "<< ${0} usage >>"
-  printUsageTip "bash tools/shell/diagrams.sh ?" "print help"
-  printUsageTip "bash tools/shell/diagrams.sh" "generate all diagrams"
-  printGap
+print_help() {
+  print_info_title "<< ${0} usage >>"
+  print_usage_tip "bash tools/shell/diagrams.sh ?" "print help"
+  print_usage_tip "bash tools/shell/diagrams.sh" "generate all diagrams"
+  print_gap
 }
 
 DIST_PATH=./dist/diagrams
@@ -28,22 +28,22 @@ DIST_PATH=./dist/diagrams
 ##
 # Generates diagrams.
 ##
-generateDiagrams() {
-  printInfoTitle "<< Generating diagrams >>"
-  printNameAndValue "dist" "./dist/diagrams"
-  printGap
+generate_diagrams() {
+  print_info_title "<< Generating diagrams >>"
+  print_name_and_value "dist" "./dist/diagrams"
+  print_gap
 
   mkdir "$DIST_PATH" || true
 
   for DIAGRAM in "${DIAGRAMS[@]}"; do
-    printInfoTitle "<< $DIAGRAM >>"
+    print_info_title "<< $DIAGRAM >>"
 
     yarn workspace:mmdc -i ./tools/diagrams/"$DIAGRAM".mmd -o "$DIST_PATH"/"$DIAGRAM".png
   done
 }
 
 if [ "$1" = "?" ]; then
-  printHelp
+  print_help
 else
-  generateDiagrams
+  generate_diagrams
 fi

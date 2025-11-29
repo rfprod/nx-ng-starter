@@ -35,12 +35,11 @@ describe('changesConfig', () => {
         '.protolint.yaml',
         '.stylelint*',
       ],
-      storybook: ['.storybook/**', '*.stories.ts'],
     };
 
     expect(changesConfig).toMatchObject({
       ...expectation,
-      deploy: [...expectation.dependencies, ...expectation.src, ...expectation.storybook],
+      deploy: [...expectation.dependencies, ...expectation.src],
     });
   });
 });

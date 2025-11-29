@@ -1,0 +1,21 @@
+# For more information see:
+# - https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+# - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
+
+# The action can be referenced in workflows like:
+# ./.github/actions/configure-yarn
+
+name: configure-yarn
+description: Configures yarn to use the correct version.
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Configure yarn
+      shell: bash
+      run: |
+        npm i -g yarn@1.22.22 corepack
+        corepack enable
+        corepack prepare yarn@4.11.0 --activate
+        yarn --version
+        yarn config

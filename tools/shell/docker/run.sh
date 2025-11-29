@@ -35,28 +35,28 @@ declare -A PORT_MAPPING=(
 ##
 # Reports usage.
 ##
-reportUsage() {
-  printInfoTitle "<< ${0} usage >>"
-  printUsageTip "bash tools/shell/run.sh ?" "print help"
-  printUsageTip "bash tools/shell/run.sh APPLICATION" "run APPLICATION docker container"
-  printUsageTip "bash tools/shell/run.sh APPLICATION debug" "run APPLICATION docker container in debug mode"
-  printGap
+print_help() {
+  print_info_title "<< ${0} usage >>"
+  print_usage_tip "bash tools/shell/run.sh ?" "print help"
+  print_usage_tip "bash tools/shell/run.sh APPLICATION" "run APPLICATION docker container"
+  print_usage_tip "bash tools/shell/run.sh APPLICATION debug" "run APPLICATION docker container in debug mode"
+  print_gap
 
-  printInfoMessage "Supported applications"
-  printGap
+  print_info_message "Supported applications"
+  print_gap
 
   for SUPPORTED_IMAGE_KEY in "${!IMAGES[@]}"; do
-    printValue "${SUPPORTED_IMAGE_KEY}"
+    print_value "${SUPPORTED_IMAGE_KEY}"
   done
-  printGap
+  print_gap
 }
 
 ##
 # Builds Docker container image for the supported app.
 ##
-runContainer() {
-  printInfoTitle "<< Run Docker container image: $1 >>"
-  printGap
+run_container() {
+  print_info_title "<< Run Docker container image: $1 >>"
+  print_gap
 
   local APP_NAME
   APP_NAME=$1
@@ -68,16 +68,16 @@ runContainer() {
   PORTS_MAP=${PORT_MAPPING[$APP_NAME]:-"8080:8080"}
 
   if [ -z "$IMAGE_NAME" ]; then
-    printErrorTitle "Application is not supported"
-    printNameAndValue "application key" "$APP_NAME"
-    printGap
+    print_error_title "Application is not supported"
+    print_name_and_value "application key" "$APP_NAME"
+    print_gap
 
-    reportUsage
+    print_help
     exit 1
   fi
 
-  printSuccessTitle "Application $APP_NAME is supported, proceeding"
-  printGap
+  print_success_title "Application $APP_NAME is supported, proceeding"
+  print_gap
 
   echo "$IMAGE_NAME"
 
@@ -89,10 +89,10 @@ runContainer() {
 }
 
 if [ "$1" = "?" ]; then
-  reportUsage
+  print_help
 elif [ 1 -gt $# ]; then
-  reportUsage
+  print_help
   exit 1
 else
-  runContainer "$1" "$2"
+  run_container "$1" "$2"
 fi

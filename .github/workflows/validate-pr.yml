@@ -21,7 +21,6 @@ jobs:
     outputs:
       projects: ${{ steps.check-projects.outputs.projects }}
       projects-build: ${{ steps.check-projects-build.outputs.projects }}
-      projects-build-storybook: ${{ steps.check-projects-build-storybook.outputs.projects }}
       changes: ${{ steps.check-changes.outputs.changes }}
       success: ${{ steps.check.outputs.success || 'true' }}
 
@@ -53,14 +52,6 @@ jobs:
           affected: 'true'
           batch-size: '3'
           with-target: 'build'
-
-      - name: Check affected projects with target `build-storybook`
-        id: check-projects-build-storybook
-        uses: ./.github/actions/check-projects
-        with:
-          affected: 'true'
-          batch-size: '3'
-          with-target: 'build-storybook'
 
       - name: Check affected projects
         id: check-projects
@@ -102,6 +93,12 @@ jobs:
         run: |
           sudo apt install shellcheck
           npx nx run tools:lint-shell
+
+      - name: Analyze circular dependencies
+        if: fromJSON(needs.checks.outputs.changes).src == 'true'
+        run: |
+          sudo npm i -g madge@latest
+          madge --circular --extensions ts ./apps ./libs ./tools --ts-config ./tsconfig.base.json
 
       - name: Set failure
         id: check
@@ -197,11 +194,15 @@ jobs:
       - name: Setup environment
         uses: ./.github/actions/setup-environment
 
-      - name: Compiler check affected
+      - name: Compiler check
         run: npx nx run-many --target tsc-check --projects ${{ matrix.projects }}
+        env:
+          NODE_OPTIONS: '--max-old-space-size=4096'
 
       - name: Unit test
-        run: npx nx run-many --target test --pass-with-no-tests --coverage --projects ${{ matrix.projects }}
+        run: npx nx run-many --target test --projects ${{ matrix.projects }} --silent --no-file-parallelism --maxWorkers 1 --maxConcurrency 1
+        env:
+          NODE_OPTIONS: '--max-old-space-size=4096'
 
       - name: Set failure
         id: check
@@ -224,10 +225,6 @@ jobs:
 
       - name: Setup environment
         uses: ./.github/actions/setup-environment
-
-      - name: Build global storybook
-        if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).storybook == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' }}
-        run: npx nx run documentation:build-storybook
 
       - name: Set failure
         id: check
@@ -266,47 +263,22 @@ jobs:
         if: failure()
         run: echo "success=(echo 'false')" >> $GITHUB_OUTPUT
 
-  build-affected-storybook:
-    needs: checks
-    if: needs.checks.outputs.projects-build-storybook != '[]'
-    runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: true
-      max-parallel: 40
-      matrix:
-        projects: ${{ fromJSON(needs.checks.outputs.projects-build-storybook) }}
-
-    outputs:
-      success: ${{ steps.check.outputs.success || 'true' }}
-
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      - name: Setup environment
-        uses: ./.github/actions/setup-environment
-
-      - name: Build storybook affected
-        run: npx nx run-many --target build-storybook --projects ${{ matrix.projects }}
-
-      - name: Set failure
-        id: check
-        if: failure()
-        run: echo "success=(echo 'false')" >> $GITHUB_OUTPUT
-
   premerge:
-    needs: [checks, lint, lint-affected, test, test-affected, build, build-affected, build-affected-storybook]
+    needs: [checks, lint, lint-affected, test, test-affected, build, build-affected]
     if: always()
     runs-on: ubuntu-latest
 
     steps:
       - name: Check result
         run: |
-          if [[ "$CHECKS_RESULT" != "true" || "$LINT_RESULT" != "true" || "$LINT_AFFECTED_RESULT" != "true" || "$TEST_RESULT" != "true" || "$TEST_AFFECTED_RESULT" != "true" || "$BUILD_RESULT" != "true" || "$BUILD_AFFECTED_RESULT" != "true" || "$BUILD_AFFECTED_STORYBOOK_RESULT" != "true" ]]; then exit 1; fi
+          if [[ "$CHECKS_RESULT" != "true" || \
+            "$LINT_RESULT" != "true" || \
+            "$LINT_AFFECTED_RESULT" != "true" || \
+            "$TEST_RESULT" != "true" || \
+            "$TEST_AFFECTED_RESULT" != "true" || \
+            "$BUILD_RESULT" != "true" || \
+            "$BUILD_AFFECTED_RESULT" != "true" \
+          ]]; then exit 1; fi
           echo "### :rocket: Premerge checks succeeded" >> $GITHUB_STEP_SUMMARY
         env:
           CHECKS_RESULT: ${{ needs.checks.outputs.success }}
@@ -316,4 +288,3 @@ jobs:
           TEST_AFFECTED_RESULT: ${{ needs.test-affected.outputs.success || needs.checks.outputs.projects == '[]' }}
           BUILD_RESULT: ${{ needs.build.outputs.success }}
           BUILD_AFFECTED_RESULT: ${{ needs.build-affected.outputs.success || needs.checks.outputs.projects-build == '[]' }}
-          BUILD_AFFECTED_STORYBOOK_RESULT: ${{ needs.build-affected-storybook.outputs.success || needs.checks.outputs.projects-build-storybook == '[]' }}

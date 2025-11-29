@@ -25,7 +25,6 @@ const src = [
   '.protolint.yaml',
   '.stylelint*',
 ];
-const storybook = ['.storybook/**', '*.stories.ts'];
 
 export const changesConfig = {
   dependencies,
@@ -39,6 +38,5 @@ export const changesConfig = {
   packages,
   shelltools,
   src,
-  storybook,
-  deploy: [...dependencies, ...src, ...storybook],
+  deploy: [...dependencies, ...src],
 };

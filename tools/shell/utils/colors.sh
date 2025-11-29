@@ -80,7 +80,7 @@ REGISTERED_COLOR_VARS=(
 ##
 # Reports supported colors to the terminal.
 ##
-reportSupportedColors() {
+report_supported_colors() {
   local TITLE
   TITLE="<< COLORS >>"
   printf "
@@ -101,5 +101,5 @@ reportSupportedColors() {
 # Colors usage.
 ##
 if [ "$1" = "?" ]; then
-  reportSupportedColors
+  report_supported_colors
 fi

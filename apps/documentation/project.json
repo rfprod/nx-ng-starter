@@ -30,24 +30,6 @@
           "optimization": true,
           "outputHashing": "all",
           "sourceMap": false
-        },
-        "storybook": {
-          "assets": [
-            {
-              "glob": "**/*.*",
-              "input": "./libs/client-core/src/lib/assets",
-              "output": "assets"
-            }
-          ],
-          "polyfills": [],
-          "scripts": [],
-          "styles": [
-            "apps/documentation/src/styles.scss",
-            "libs/client-core/src/lib/styles/styles.scss",
-            "node_modules/roboto-fontface/css/roboto/roboto-fontface.css",
-            "node_modules/material-design-icon-fonts-self-hosted-web/iconfont/material-icons.css"
-          ],
-          "tsConfig": "apps/documentation/.storybook/tsconfig.json"
         }
       },
       "executor": "@nx/angular:application",
@@ -136,20 +118,6 @@
         "tsConfig": "apps/documentation/tsconfig.app.json"
       }
     },
-    "build-storybook": {
-      "configurations": {
-        "ci": {
-          "quiet": true
-        }
-      },
-      "executor": "@storybook/angular:build-storybook",
-      "options": {
-        "browserTarget": "documentation:build:storybook",
-        "compodoc": false,
-        "configDir": "apps/documentation/.storybook",
-        "outputDir": "dist/storybook/documentation"
-      }
-    },
     "configure-env": {
       "executor": "./tools/executors/client-env:configure",
       "options": {
@@ -157,7 +125,7 @@
       }
     },
     "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "executor": "@angular/build:extract-i18n",
       "options": {
         "browserTarget": "documentation:build"
       }
@@ -187,15 +155,6 @@
       },
       "continuous": true
     },
-    "storybook": {
-      "executor": "@storybook/angular:start-storybook",
-      "options": {
-        "browserTarget": "documentation:build:storybook",
-        "compodoc": false,
-        "configDir": "apps/documentation/.storybook",
-        "port": 4400
-      }
-    },
     "stylelint-check": {
       "executor": "./tools/executors/stylelint:check",
       "options": {
@@ -203,7 +162,7 @@
       }
     },
     "test": {
-      "executor": "@nx/vite:test",
+      "executor": "@nx/vitest:test",
       "options": {
         "compiler": "swc",
         "configFile": "apps/documentation/vitest.config.mts",

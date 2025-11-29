@@ -1,3 +1,12 @@
+vi.mock('@sentry/angular-ivy', async () => ({
+  ...vi.importActual('@sentry/angular-ivy'),
+  ['BrowserTracing']: vi.fn(),
+  ['TraceService']: vi.fn(),
+  createErrorHandler: vi.fn(),
+  init: vi.fn(),
+  routingInstrumentation: vi.fn(),
+}));
+
 import { TestBed } from '@angular/core/testing';
 import { testingEnvironment } from '@app/client-testing-unit';
 import * as sentry from '@sentry/angular-ivy';

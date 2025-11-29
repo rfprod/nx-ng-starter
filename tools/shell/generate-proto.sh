@@ -22,21 +22,21 @@ OUT_DIR_TS=$PROJECT_ROOT/libs/proto/src/lib/ts
 ##
 # Print help.
 ##
-printHelp() {
-  printInfoTitle "<< ${0} usage >>"
-  printUsageTip "bash tools/shell/generate-proto.sh ?" "print help"
-  printUsageTip "bash tools/shell/generate-proto.sh protoc" "generate grpc"
-  printUsageTip "bash tools/shell/generate-proto.sh protobufjs" "generate ts definitions"
-  printGap
+print_help() {
+  print_info_title "<< ${0} usage >>"
+  print_usage_tip "bash tools/shell/generate-proto.sh ?" "print help"
+  print_usage_tip "bash tools/shell/generate-proto.sh protoc" "generate grpc"
+  print_usage_tip "bash tools/shell/generate-proto.sh protobufjs" "generate ts definitions"
+  print_gap
 }
 
 ##
 # Reports success.
 ##
-reportSuccess() {
-  printSuccessTitle "<< SUCCESS >>"
-  printSuccessMessage "libs/proto successfully updated"
-  printGap
+report_success() {
+  print_success_title "<< SUCCESS >>"
+  print_success_message "libs/proto successfully updated"
+  print_gap
 }
 
 ##
@@ -46,9 +46,9 @@ run_protoc() {
   local PROTO_FILES="$PROTO_SOURCE_PATH/root.proto
     $PROTO_SOURCE_PATH/common.proto"
 
-  printInfoTitle "<< RUNNING PROTOC >>"
-  printNameAndValue "proto files" "$PROTO_FILES"
-  printGap
+  print_info_title "<< RUNNING PROTOC >>"
+  print_name_and_value "proto files" "$PROTO_FILES"
+  print_gap
 
   # shellcheck disable=SC2086
   protoc -I="$PROTO_SOURCE_PATH" $PROTO_FILES \
@@ -63,12 +63,12 @@ run_protobufjs() {
   local PATH_TO_PROTO_JS="$OUT_DIR_TS/nx-ng-starter_proto.js"
   local PATH_TO_PROTO_TS="$OUT_DIR_TS/nx-ng-starter_proto.d.ts"
 
-  printInfoTitle "<< RUNNING PROTOBUFJS >>"
-  printNameAndValue "path to proto" "$PROTO_SOURCE_PATH"
-  printNameAndValue "output path" "$OUT_DIR_TS"
-  printNameAndValue "path to proto js" "$PATH_TO_PROTO_JS"
-  printNameAndValue "path to proto ts" "$PATH_TO_PROTO_TS"
-  printGap
+  print_info_title "<< RUNNING PROTOBUFJS >>"
+  print_name_and_value "path to proto" "$PROTO_SOURCE_PATH"
+  print_name_and_value "output path" "$OUT_DIR_TS"
+  print_name_and_value "path to proto js" "$PATH_TO_PROTO_JS"
+  print_name_and_value "path to proto ts" "$PATH_TO_PROTO_TS"
+  print_gap
 
   npm i --no-save pbts-grpc-transcoder --legacy-peer-deps
   git checkout yarn.lock
@@ -77,7 +77,7 @@ run_protobufjs() {
   ## next run is needed to generate protobufjs library without jsdoc comments
   node_modules/pbts-grpc-transcoder/node_modules/.bin/pbjs --target static-module --wrap es6 --es6 --force-number --keep-case --no-create --no-encode --no-decode --no-verify --no-delimited --no-beautify --no-comments -o "$PATH_TO_PROTO_JS" "$PROTO_SOURCE_PATH"/*.proto
 
-  reportSuccess
+  report_success
 
   sleep 1
 }
@@ -85,7 +85,7 @@ run_protobufjs() {
 ##
 # Lints libs/proto after regeneration.
 ##
-lintProtoLib() {
+lint_proto_lib() {
   npx nx lint proto --fix
 }
 
@@ -93,14 +93,14 @@ lintProtoLib() {
 # Script control flow.
 ##
 if [ "$1" = "?" ]; then
-  printHelp
+  print_help
 elif [ "$1" == "protoc" ]; then
   run_protoc
-  lintProtoLib
+  lint_proto_lib
 elif [ "$1" == "protobufjs" ]; then
   run_protobufjs
-  lintProtoLib
+  lint_proto_lib
 else
-  printHelp
+  print_help
   exit 1
 fi

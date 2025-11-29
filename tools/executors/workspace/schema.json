@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "type": "object",
+  "cli": "nx",
+  "description": "Scans package.json and project.json files for commands",
+  "properties": {
+    "search": {
+      "type": "string",
+      "description": "If provided, its value is used for filtering found commands."
+    }
+  },
+  "required": []
+}

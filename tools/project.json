@@ -121,15 +121,7 @@
       }
     },
     "help": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          {
-            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/package-commands.ts",
-            "forwardAllArgs": true
-          }
-        ]
-      }
+      "executor": "./tools/executors/workspace:commands"
     },
     "lint": {
       "executor": "@nx/eslint:lint",
@@ -148,65 +140,6 @@
         ]
       }
     },
-    "migrate": {
-      "executor": "nx:run-commands",
-      "options": {
-        "color": true,
-        "commands": [
-          {
-            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --check --jsonUpgraded",
-            "forwardAllArgs": false
-          },
-          {
-            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --migrate=update",
-            "forwardAllArgs": false
-          },
-          {
-            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --cleanup",
-            "forwardAllArgs": false
-          }
-        ],
-        "parallel": false
-      }
-    },
-    "migrate-bulk-confirm": {
-      "executor": "nx:run-commands",
-      "options": {
-        "color": true,
-        "commands": [
-          {
-            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --check --jsonUpgraded",
-            "forwardAllArgs": false
-          },
-          {
-            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --migrate=update --bulkUserChoice=true",
-            "forwardAllArgs": false
-          },
-          {
-            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --cleanup;",
-            "forwardAllArgs": false
-          }
-        ],
-        "parallel": false
-      }
-    },
-    "migrate-only": {
-      "executor": "nx:run-commands",
-      "options": {
-        "color": true,
-        "commands": [
-          {
-            "command": "yarn install && yarn ngcc && npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --migrate=only",
-            "forwardAllArgs": false
-          },
-          {
-            "command": "npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/workspace/update.ts --cleanup",
-            "forwardAllArgs": false
-          }
-        ],
-        "parallel": false
-      }
-    },
     "prettier-configure": {
       "executor": "./tools/executors/prettier:configure",
       "options": {
@@ -221,7 +154,7 @@
     },
     "test": {
       "dependsOn": ["clean-executor-compilation"],
-      "executor": "@nx/vite:test",
+      "executor": "@nx/vitest:test",
       "options": {
         "compiler": "swc",
         "configFile": "tools/vitest.config.mts",
