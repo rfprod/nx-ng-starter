@@ -21,7 +21,7 @@ print_help() {
   print_usage_tip "bash tools/shell/changelog.sh ?" "print help"
   print_usage_tip "bash tools/shell/changelog.sh all" "generate all changelogs"
   print_usage_tip "bash tools/shell/changelog.sh <APP_ALIAS_FROM_TSCONFIG>" "generate changelog for a specific application/library"
-  reportSupportedModuleAliases
+  report_supported_module_aliases
   print_gap
 }
 
@@ -208,7 +208,7 @@ generate_module_changelog() {
   print_gap
 
   local ALIAS_EXISTS=
-  moduleAliasExists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
+  module_alias_exists "$MODULE_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
 
   if [ "$ALIAS_EXISTS" = 1 ]; then
     check_config_path_and_proceed "$MODULE_NAME" "$MODULE_PARTIAL_PATH"

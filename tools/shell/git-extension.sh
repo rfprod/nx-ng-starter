@@ -32,7 +32,7 @@ get_changed_project_aliases() {
 
   for FOUND_CHANGED_ALIAS in $FOUND_CHANGED_ALIASES; do
     local ALIAS_EXISTS=
-    moduleAliasExists "$FOUND_CHANGED_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
+    module_alias_exists "$FOUND_CHANGED_ALIAS" && ALIAS_EXISTS=1 || ALIAS_EXISTS=0
 
     if [ "$ALIAS_EXISTS" = 1 ]; then
       CHANGED_ALIASES+=("$FOUND_CHANGED_ALIAS")
