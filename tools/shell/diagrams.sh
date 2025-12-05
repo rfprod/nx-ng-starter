@@ -1,49 +1,61 @@
 #!/bin/bash
 
+set -euo pipefail
+
 source tools/shell/utils/print-utils.sh ''
 
 source tools/shell/utils/config.sh
 
-##
-# Available diagram names.
-##
-declare -A DIAGRAMS=(
-  ["BRANCHING"]="branching"
-  ["TRUNK_ON_PUSH"]="trunk-on-push-pipeline"
-  ["PR_VALIDATION"]="pr-validation-pipeline"
+# --------------------------------------------------------
+# Usage:
+#   bash ./tools/shell/diagrams.sh  SOURCE_DIR  TARGET_DIR
+#
+# Example:
+#   bash ./tools/shell/diagrams.sh ./diagrams ./html
+# --------------------------------------------------------
+
+print_info_title "<< Generating diagrams >>"
+print_name_and_value "dist" "./dist/diagrams"
+print_gap
+
+SRC_PATH="${1:-./tools/diagrams}"
+DIST_PATH="${2:-./dist/diagrams}"
+
+mkdir -p "$DIST_PATH"
+
+MERMAID_SCRIPTS=$(cat <<'EOF'
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<script>mermaid.initialize({startOnLoad:true});</script>
+EOF
 )
 
-##
-# Print help.
-##
-print_help() {
-  print_info_title "<< ${0} usage >>"
-  print_usage_tip "bash tools/shell/diagrams.sh ?" "print help"
-  print_usage_tip "bash tools/shell/diagrams.sh" "generate all diagrams"
-  print_gap
-}
+# iterate over all *.mmd files in the source directory
+shopt -s nullglob
+for SRC_FILE in "$SRC_PATH"/*.mmd; do
+    # strip directory and extension
+    FILE_NAME=$(basename "$SRC_FILE" .mmd)
+    DIST_FILE="$DIST_PATH/${FILE_NAME}.html"
 
-DIST_PATH=./dist/diagrams
+    # read the mermaid source
+    DIAGRAM_SOURCE=$(<"$SRC_FILE")
 
-##
-# Generates diagrams.
-##
-generate_diagrams() {
-  print_info_title "<< Generating diagrams >>"
-  print_name_and_value "dist" "./dist/diagrams"
-  print_gap
+    # write a minimal HTML wrapper
+    cat >"$DIST_FILE" <<HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>${FILE_NAME}</title>
+${MERMAID_SCRIPTS}
+</head>
+<body>
+<div class="mermaid">
+${DIAGRAM_SOURCE}
+</div>
+</body>
+</html>
+HTML
 
-  mkdir "$DIST_PATH" || true
-
-  for DIAGRAM in "${DIAGRAMS[@]}"; do
-    print_info_title "<< $DIAGRAM >>"
-
-    yarn workspace:mmdc -i ./tools/diagrams/"$DIAGRAM".mmd -o "$DIST_PATH"/"$DIAGRAM".png
-  done
-}
-
-if [ "$1" = "?" ]; then
-  print_help
-else
-  generate_diagrams
-fi
+    echo "Generated $DIST_FILE"
+done
+shopt -u nullglob
