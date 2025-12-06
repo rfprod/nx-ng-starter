@@ -19,7 +19,7 @@ import { ELIZA_DATA } from '../../config/data.config';
 import { elizaInitialConfig } from '../../config/eliza.config';
 import { elizaFinalDefault } from '../../config/finals.config';
 import { elizaInitialDefault } from '../../config/initials.config';
-import { IChatMessage } from '../../interfaces/chat.interface';
+import type { IChatMessage } from '../../interfaces/chat.interface';
 import type { IElizaConfig, IElizaData, IElizaKeyword, IElizaResponse } from '../../interfaces/eliza.interface';
 
 @Injectable({
