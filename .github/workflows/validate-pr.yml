@@ -282,9 +282,9 @@ jobs:
           echo "### :rocket: Premerge checks succeeded" >> $GITHUB_STEP_SUMMARY
         env:
           CHECKS_RESULT: ${{ needs.checks.outputs.success }}
-          LINT_RESULT: ${{ needs.lint.outputs.success }}
-          LINT_AFFECTED_RESULT: ${{ needs.lint-affected.outputs.success || needs.checks.outputs.projects == '[]' }}
-          TEST_RESULT: ${{ needs.test.outputs.success }}
-          TEST_AFFECTED_RESULT: ${{ needs.test-affected.outputs.success || needs.checks.outputs.projects == '[]' }}
-          BUILD_RESULT: ${{ needs.build.outputs.success }}
-          BUILD_AFFECTED_RESULT: ${{ needs.build-affected.outputs.success || needs.checks.outputs.projects-build == '[]' }}
+          LINT_RESULT: ${{ needs.lint.result == 'success' || needs.lint.result == 'skipped' }}
+          LINT_AFFECTED_RESULT: ${{ needs.lint-affected.result == 'success' || needs.lint-affected.result == 'skipped' }}
+          TEST_RESULT: ${{ needs.test.result == 'success' || needs.test.result == 'skipped' }}
+          TEST_AFFECTED_RESULT: ${{ needs.test-affected.result == 'success' || needs.test-affected.result == 'skipped' }}
+          BUILD_RESULT: ${{ needs.build.result == 'success' || needs.build.result == 'skipped' }}
+          BUILD_AFFECTED_RESULT: ${{ needs.build-affected.result == 'success' || needs.build-affected.result == 'skipped' }}

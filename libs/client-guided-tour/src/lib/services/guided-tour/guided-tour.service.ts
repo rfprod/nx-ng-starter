@@ -7,7 +7,7 @@ import { IGuidedTourDirective } from '../../components/guided-tour/guided-tour.i
  * @description This service should be injected once for each tour. Use component `providers` array to declare.
  */
 @Injectable({
-  providedIn: 'any',
+  providedIn: 'root',
 })
 export class AppGuidedTourService {
   /** Guider tour steps. */
@@ -21,7 +21,7 @@ export class AppGuidedTourService {
   /** Active step. */
   public active?: IGuidedTourDirective;
 
-  /** Activate next step. */
+  /** Activates next step. */
   public next() {
     this.active?.dispose();
     const stepIndex = (this.active?.appGuidedTour?.index ?? -1) + 1;
@@ -33,7 +33,7 @@ export class AppGuidedTourService {
     }
   }
 
-  /** Activate previous step. */
+  /** Activates previous step. */
   public previous() {
     this.active?.dispose();
     const stepIndex = (this.active?.appGuidedTour?.index ?? -1) - 1;
@@ -45,7 +45,7 @@ export class AppGuidedTourService {
     }
   }
 
-  /** End tour. */
+  /** Ends tour. */
   public end() {
     this.active?.dispose();
     this.active = void 0;
