@@ -14,6 +14,11 @@ concurrency:
   group: ${{ github.ref }}.validate-pr
   cancel-in-progress: true
 
+permissions:
+  contents: read
+  actions: write # needed to call another workflow
+  id-token: write # called workflow inherits this permission
+
 jobs:
   checks:
     runs-on: ubuntu-latest
