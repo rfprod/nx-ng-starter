@@ -15,8 +15,13 @@ inputs:
     description: Name of the library to publish
     required: true
   npm-automation-token:
-    description: NPM automation token for packages publishing
-    required: true
+    description: NPM automation token for package publishing
+    required: false
+    default: ''
+  use-trusted-publishing:
+    description: Use Trusted Publishing flow instead of NPM automation token
+    required: false
+    default: 'false'
 
 runs:
   using: 'composite'
@@ -25,10 +30,50 @@ runs:
       shell: bash
       run: npx nx build ${{ inputs.library-name }}
 
-    - name: Publish the package to npmjs.org
+    - name: Bail out on invalid inputs
+      if: ${{ inputs.npm-automation-token == "" && inputs.use-trusted-publishing == 'false' }}
       shell: bash
       run: |
-        echo "//registry.npmjs.org/:_authToken=${{ inputs.npm-automation-token }}" > ~/.npmrc
-        cd ./dist/libs/${{ inputs.library-name }}
+        MESSAGE=":x: Neither NPM automation token nor Trusted Publishing was configured for authentication."
+        echo "${MESSAGE}"
+        echo "### :package: Package publishing: ${LIBRARY_NAME}" >> $GITHUB_STEP_SUMMARY
+        echo "${MESSAGE}" >> $GITHUB_STEP_SUMMARY
+        exit 1
+      env:
+        LIBRARY_NAME: ${{ inputs.library-name }}
+
+    - name: Print summary
+      shell: bash
+      run: |
+        MESSAGE=":ticket: Proceeding with NPM automation token."
+        if [ "$USE_TRUSTED_PUBLISHING" == "true" ]; then MESSAGE=":ticket: Proceeding with Trusted Publishing."; fi
+        echo "${MESSAGE}"
+        echo "### :package: Package publishing: ${LIBRARY_NAME}" >> $GITHUB_STEP_SUMMARY
+        echo "${MESSAGE}" >> $GITHUB_STEP_SUMMARY
+      env:
+        LIBRARY_NAME: ${{ inputs.library-name }}
+        USE_TRUSTED_PUBLISHING: ${{ inputs.use-trusted-publishing }}
+
+    - name: Publish using a token
+      if: ${{ inputs.npm-automation-token != '' && inputs.use-trusted-publishing == 'false' }}
+      shell: bash
+      run: |
+        echo "//registry.npmjs.org/:_authToken=${NPM_AUTOMATION_TOKEN}" > ~/.npmrc
+        cd ./dist/libs/"$LIBRARY_NAME"
         npm publish --access public
         find ~/.npmrc -exec shred -fuz {} +
+      env:
+        LIBRARY_NAME: ${{ inputs.library-name }}
+        NPM_AUTOMATION_TOKEN: ${{ inputs.npm-automation-token }}
+
+    - name: Publish using Trusted Publishing
+      if: ${{ inputs.use-trusted-publishing == 'true' }}
+      shell: bash
+      run: |
+        echo "registry=https://registry.npmjs.org/" > ~/.npmrc
+        cd ./dist/libs/"$LIBRARY_NAME"
+        npm publish --access public
+        find ~/.npmrc -exec shred -fuz {} +
+      env:
+        LIBRARY_NAME: ${{ inputs.library-name }}
+        NPM_CONFIG_PROVENANCE: true

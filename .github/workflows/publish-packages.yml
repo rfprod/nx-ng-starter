@@ -6,7 +6,8 @@ on:
   workflow_call:
     secrets:
       NPM_AUTOMATION_TOKEN:
-        required: true
+        description: NPM automation token for package publishing
+        required: false
 
 defaults:
   run:
@@ -45,6 +46,9 @@ jobs:
     needs: checks
     if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packageCharts == 'true' }}
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - name: Checkout sources
@@ -61,12 +65,15 @@ jobs:
         uses: ./.github/actions/npm-publish
         with:
           library-name: client-d3-charts
-          npm-automation-token: ${{ secrets.NPM_AUTOMATION_TOKEN }}
+          use-trusted-publishing: true
 
   publish-client-guided-tour:
     needs: checks
     if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packageGuidedTour == 'true' }}
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - name: Checkout sources
@@ -83,12 +90,15 @@ jobs:
         uses: ./.github/actions/npm-publish
         with:
           library-name: client-guided-tour
-          npm-automation-token: ${{ secrets.NPM_AUTOMATION_TOKEN }}
+          use-trusted-publishing: true
 
   publish-client-pwa-offline:
     needs: checks
     if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packagePwaOffline == 'true' }}
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - name: Checkout sources
@@ -105,12 +115,15 @@ jobs:
         uses: ./.github/actions/npm-publish
         with:
           library-name: client-pwa-offline
-          npm-automation-token: ${{ secrets.NPM_AUTOMATION_TOKEN }}
+          use-trusted-publishing: true
 
   publish-client-util-eliza:
     needs: checks
     if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packageEliza == 'true' }}
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - name: Checkout sources
@@ -127,12 +140,15 @@ jobs:
         uses: ./.github/actions/npm-publish
         with:
           library-name: client-util-eliza
-          npm-automation-token: ${{ secrets.NPM_AUTOMATION_TOKEN }}
+          use-trusted-publishing: true
 
   publish-backend-diagnostics:
     needs: checks
     if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packageBackendDiagnostics == 'true' }}
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - name: Checkout sources
@@ -149,4 +165,4 @@ jobs:
         uses: ./.github/actions/npm-publish
         with:
           library-name: backend-diagnostics
-          npm-automation-token: ${{ secrets.NPM_AUTOMATION_TOKEN }}
+          use-trusted-publishing: true
