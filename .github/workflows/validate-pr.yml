@@ -23,6 +23,7 @@ jobs:
       projects-build: ${{ steps.check-projects-build.outputs.projects }}
       changes: ${{ steps.check-changes.outputs.changes }}
       success: ${{ steps.check.outputs.success || 'true' }}
+      origin: ${{ steps.check-origin.outputs.origin }}
 
     steps:
       - name: Checkout sources
@@ -65,6 +66,10 @@ jobs:
         with:
           premerge: 'true'
           trunk: 'main'
+
+      - name: Check origin
+        id: check-origin
+        uses: ./.github/actions/check-origin
 
       - name: Set failure
         id: check
@@ -263,8 +268,14 @@ jobs:
         if: failure()
         run: echo "success=(echo 'false')" >> $GITHUB_OUTPUT
 
+  publish-packages-dry-run:
+    needs: [checks]
+    if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packages == 'true' }}
+    uses: ./.github/workflows/publish-packages.yml
+    secrets: inherit
+
   premerge:
-    needs: [checks, lint, lint-affected, test, test-affected, build, build-affected]
+    needs: [checks, lint, lint-affected, test, test-affected, build, build-affected, publish-packages-dry-run]
     if: always()
     runs-on: ubuntu-latest
 
@@ -277,7 +288,8 @@ jobs:
             "$TEST_RESULT" != "true" || \
             "$TEST_AFFECTED_RESULT" != "true" || \
             "$BUILD_RESULT" != "true" || \
-            "$BUILD_AFFECTED_RESULT" != "true" \
+            "$BUILD_AFFECTED_RESULT" != "true" || \
+            "$PUBLISH_PACKAGES_DRY_RUN" != "true" \
           ]]; then exit 1; fi
           echo "### :rocket: Premerge checks succeeded" >> $GITHUB_STEP_SUMMARY
         env:
@@ -288,3 +300,4 @@ jobs:
           TEST_AFFECTED_RESULT: ${{ needs.test-affected.result == 'success' || needs.test-affected.result == 'skipped' }}
           BUILD_RESULT: ${{ needs.build.result == 'success' || needs.build.result == 'skipped' }}
           BUILD_AFFECTED_RESULT: ${{ needs.build-affected.result == 'success' || needs.build-affected.result == 'skipped' }}
+          PUBLISH_PACKAGES_DRY_RUN: ${{ needs.publish-packages-dry-run.result == 'success' || needs.publish-packages-dry-run.result == 'skipped' }}
