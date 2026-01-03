@@ -171,8 +171,6 @@ npx nx dep-graph
 
 This project was generated using [Nx](https://nx.dev).
 
-<p align="center"><img src="https://raw.githubusercontent.com/nrwl/nx/master/nx-logo.png" width="350"></p>
-
 ### Quick Start & Documentation
 
 - [Nx Documentation](https://nx.dev)

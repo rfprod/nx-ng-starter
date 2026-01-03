@@ -1,12 +1,10 @@
 # backend-diagnostics
 
+This library was generated with [Nx](https://nx.dev).
+
+## Description
+
 Diagnostics module for NestJS backends.
-
-## Developer commands reference
-
-```bash
-npx nx run tools:help --search backend-diagnostics:
-```
 
 ## Usage
 
@@ -54,6 +52,10 @@ async function bootstrap(expressInstance: e.Express): Promise<INestApplication> 
 void bootstrap(server);
 
 ```
+
+### Examples
+
+Example of using the diagnostics module in [the API application module](https://github.com/rfprod/nx-ng-starter/blob/main/apps/api/src/app/api.module.ts#L66)
 
 ## References
 

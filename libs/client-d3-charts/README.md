@@ -72,21 +72,15 @@ import {
 } from '@rfprodz/client-d3-charts';
 ```
 
-### Chart examples
+### Examples
 
-See the chart eamples components
+See the chart examples component
 
 ```typescript
 import { AppChartExamplesComponent } from '@rfprodz/client-d3-charts';
 ```
 
-or the [source code](https://github.com/rfprod/nx-ng-starter/blob/main/libs/client-d3-charts/src/lib/components/chart-examples/) of the chart examples component
-
-## Developer commands reference
-
-```bash
-npx nx run tools:help --search client-d3-charts:
-```
+or the [source code](https://github.com/rfprod/nx-ng-starter/blob/main/libs/client-d3-charts/src/lib/components/chart-examples/)
 
 ## References
 
