@@ -104,16 +104,10 @@ export class GuidedComponent implements AfterViewInit {
 }
 ```
 
-#### Full example
+#### Examples
 
 - [module](https://github.com/rfprod/nx-ng-starter/blob/main/libs/client-guided-tour/src/lib/guided-tour-example.module.ts)
 - [component](https://github.com/rfprod/nx-ng-starter/tree/main/libs/client-guided-tour/src/lib/components/guided-tour-example)
-
-## Developer commands reference
-
-```bash
-npx nx run tools:help --search client-guided-tour:
-```
 
 ## References
 

@@ -76,15 +76,9 @@ export class AppModule {
 }
 ```
 
-### Chatbot component
+### Examples
 
 Example [chatbot-root.component.ts](https://github.com/rfprod/nx-ng-starter/blob/main/libs/client-chatbot/src/lib/components/chatbot-root/chatbot-root.component.ts)
-
-## Developer commands reference
-
-```bash
-npx nx run tools:help --search client-util-eliza:
-```
 
 ## References
 
