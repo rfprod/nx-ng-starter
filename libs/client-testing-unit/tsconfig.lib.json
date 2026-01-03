@@ -6,9 +6,9 @@
   "compilerOptions": {
     "declaration": true,
     "declarationMap": true,
-    "sourceMap": true,
     "inlineSources": true,
-    "outDir": "../../dist/out-tsc"
+    "outDir": "../../dist/out-tsc",
+    "sourceMap": true
   },
   "exclude": ["*.mts", "src/test-setup.ts", "**/*.spec.ts", "**/*.mock.ts"],
   "extends": "./tsconfig.json",

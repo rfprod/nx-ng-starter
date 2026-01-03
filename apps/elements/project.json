@@ -1,6 +1,6 @@
 {
-  "name": "elements",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "elements",
   "prefix": "app",
   "projectType": "application",
   "sourceRoot": "apps/elements/src",
@@ -50,6 +50,7 @@
           }
         ],
         "baseHref": "/",
+        "browser": "apps/elements/src/main.ts",
         "budgets": [
           {
             "maximumError": "15mb",
@@ -63,7 +64,6 @@
           }
         ],
         "index": "apps/elements/src/index.html",
-        "browser": "apps/elements/src/main.ts",
         "namedChunks": true,
         "optimization": false,
         "outputHashing": "none",
@@ -132,11 +132,11 @@
           "proxyConfig": "apps/elements/proxy.conf.json"
         }
       },
+      "continuous": true,
       "executor": "@nx/angular:dev-server",
       "options": {
         "buildTarget": "elements:build"
-      },
-      "continuous": true
+      }
     },
     "stylelint-check": {
       "executor": "./tools/executors/stylelint:check",

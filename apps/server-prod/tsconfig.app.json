@@ -1,12 +1,12 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
+    "emitDecoratorMetadata": true,
     "module": "commonjs",
     "moduleResolution": "Node",
-    "types": ["node"],
-    "emitDecoratorMetadata": true
+    "outDir": "../../dist/out-tsc",
+    "types": ["node"]
   },
   "exclude": ["**/*.spec.ts", "**/*.test.ts", "*.mts"],
+  "extends": "./tsconfig.json",
   "include": ["**/*.ts"]
 }

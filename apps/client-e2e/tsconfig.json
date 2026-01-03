@@ -1,11 +1,11 @@
 {
-  "extends": "../../tsconfig.base.json",
-  "files": [],
-  "include": ["src/**/*.ts"],
   "compilerOptions": {
-    "sourceMap": false,
     "outDir": "../../dist/out-tsc",
+    "sourceMap": false,
     "types": ["cypress", "node"]
   },
-  "exclude": []
+  "exclude": [],
+  "extends": "../../tsconfig.base.json",
+  "files": [],
+  "include": ["src/**/*.ts"]
 }
