@@ -3,18 +3,23 @@
 name: publish-packages
 
 on:
+  repository_dispatch:
+    types: [publish_packages]
+  workflow_dispatch:
   workflow_call:
-    secrets:
-      NPM_AUTOMATION_TOKEN:
-        description: NPM automation token for package publishing
+    inputs:
+      dry-run:
+        description: Used by premerge workflow to confirm the ability to publish packages without doing so
+        type: string
         required: false
+        default: 'false'
 
 defaults:
   run:
     shell: bash
 
 concurrency:
-  group: ${{ github.ref_name }}.${{ github.sha }}.publish-packages
+  group: ${{ github.ref_name || github.ref }}.${{ github.sha }}.publish-packages
   cancel-in-progress: true
 
 jobs:
@@ -66,6 +71,7 @@ jobs:
         with:
           library-name: client-d3-charts
           use-trusted-publishing: true
+          dry-run: ${{ inputs.dry-run == 'true' }}
 
   publish-client-guided-tour:
     needs: checks
@@ -91,6 +97,7 @@ jobs:
         with:
           library-name: client-guided-tour
           use-trusted-publishing: true
+          dry-run: ${{ inputs.dry-run == 'true' }}
 
   publish-client-pwa-offline:
     needs: checks
@@ -116,6 +123,7 @@ jobs:
         with:
           library-name: client-pwa-offline
           use-trusted-publishing: true
+          dry-run: ${{ inputs.dry-run == 'true' }}
 
   publish-client-util-eliza:
     needs: checks
@@ -141,6 +149,7 @@ jobs:
         with:
           library-name: client-util-eliza
           use-trusted-publishing: true
+          dry-run: ${{ inputs.dry-run == 'true' }}
 
   publish-backend-diagnostics:
     needs: checks
@@ -166,3 +175,4 @@ jobs:
         with:
           library-name: backend-diagnostics
           use-trusted-publishing: true
+          dry-run: ${{ inputs.dry-run == 'true' }}
