@@ -17,6 +17,7 @@ concurrency:
 permissions:
   contents: read
   actions: write # needed to call another workflow
+  id-token: write # called workflow inherits this permission
 
 jobs:
   checks:
