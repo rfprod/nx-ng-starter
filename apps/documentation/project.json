@@ -1,6 +1,6 @@
 {
-  "name": "documentation",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "documentation",
   "prefix": "app",
   "projectType": "application",
   "sourceRoot": "apps/documentation/src",
@@ -26,9 +26,9 @@
             }
           ],
           "namedChunks": false,
-          "serviceWorker": "apps/documentation/ngsw-config.json",
           "optimization": true,
           "outputHashing": "all",
+          "serviceWorker": "apps/documentation/ngsw-config.json",
           "sourceMap": false
         }
       },
@@ -66,6 +66,7 @@
           }
         ],
         "baseHref": "/",
+        "browser": "apps/documentation/src/main.ts",
         "budgets": [
           {
             "maximumError": "15mb",
@@ -79,7 +80,6 @@
           }
         ],
         "index": "apps/documentation/src/index.html",
-        "browser": "apps/documentation/src/main.ts",
         "namedChunks": true,
         "optimization": {
           "fonts": false,
@@ -149,11 +149,11 @@
           "browserTarget": "documentation:build:production"
         }
       },
+      "continuous": true,
       "executor": "@nx/angular:dev-server",
       "options": {
         "browserTarget": "documentation:build"
-      },
-      "continuous": true
+      }
     },
     "stylelint-check": {
       "executor": "./tools/executors/stylelint:check",

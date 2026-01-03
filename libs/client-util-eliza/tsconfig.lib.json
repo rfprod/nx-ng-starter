@@ -6,12 +6,12 @@
   "compilerOptions": {
     "declaration": true,
     "declarationMap": true,
-    "sourceMap": true,
     "inlineSources": true,
+    "moduleResolution": "bundler",
     "outDir": "../../dist/out-tsc",
+    "sourceMap": true,
     "target": "ES2022",
-    "useDefineForClassFields": false,
-    "moduleResolution": "bundler"
+    "useDefineForClassFields": false
   },
   "exclude": ["src/test-setup.ts", "**/*.spec.ts", "**/*.mock.ts", "**/*.stories.ts", "*.mts"],
   "extends": "./tsconfig.json",

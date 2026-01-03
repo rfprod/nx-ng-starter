@@ -61,6 +61,12 @@ runs:
       shell: bash
       run: yarn install --immutable
 
+    - name: Compile executors
+      shell: bash
+      run: |
+        rm -rf ./tools/executors/**/*.js ./tools/executors/**/**/*.js ./tools/executors/**/*.js.map ./tools/executors/**/**/*.js.map
+        npx tsc -p ./tools/executors/tsconfig.executors.json
+
     - name: Install global compodoc
       if: inputs.compodoc == 'true'
       shell: bash

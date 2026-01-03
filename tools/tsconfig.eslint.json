@@ -1,5 +1,4 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
     "types": [
       "../../node_modules/vite/client",
@@ -10,5 +9,6 @@
       "node"
     ]
   },
+  "extends": "./tsconfig.json",
   "include": ["js/*.js", "ts/**/*.ts", "*.mts", "executors/**/*.ts"]
 }

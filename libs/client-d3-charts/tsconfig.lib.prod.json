@@ -1,12 +1,12 @@
 {
-  "extends": "./tsconfig.lib.json",
-  "compilerOptions": {
-    "declarationMap": false,
-    "target": "ES2022",
-    "useDefineForClassFields": false,
-    "moduleResolution": "bundler"
-  },
   "angularCompilerOptions": {
     "compilationMode": "partial"
-  }
+  },
+  "compilerOptions": {
+    "declarationMap": false,
+    "moduleResolution": "bundler",
+    "target": "ES2022",
+    "useDefineForClassFields": false
+  },
+  "extends": "./tsconfig.lib.json"
 }

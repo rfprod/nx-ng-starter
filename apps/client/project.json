@@ -1,6 +1,6 @@
 {
-  "name": "client",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "client",
   "prefix": "app",
   "projectType": "application",
   "sourceRoot": "apps/client/src",
@@ -25,9 +25,9 @@
               "with": "apps/client/src/environments/environment.prod.ts"
             }
           ],
-          "serviceWorker": "apps/client/ngsw-config.json",
           "optimization": true,
           "outputHashing": "all",
+          "serviceWorker": "apps/client/ngsw-config.json",
           "sourceMap": false
         }
       },
@@ -59,6 +59,7 @@
           }
         ],
         "baseHref": "/",
+        "browser": "apps/client/src/main.ts",
         "budgets": [
           {
             "maximumError": "15mb",
@@ -72,7 +73,6 @@
           }
         ],
         "index": "apps/client/src/index.html",
-        "browser": "apps/client/src/main.ts",
         "namedChunks": true,
         "optimization": true,
         "outputHashing": "none",
@@ -140,12 +140,12 @@
           "buildTarget": "client:build:production"
         }
       },
+      "continuous": true,
       "executor": "@nx/angular:dev-server",
       "options": {
         "buildTarget": "client:build",
         "proxyConfig": "apps/client/proxy.conf.json"
-      },
-      "continuous": true
+      }
     },
     "serve-with-api": {
       "executor": "nx:run-commands",

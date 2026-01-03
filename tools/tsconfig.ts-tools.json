@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
+    "allowJs": true,
+    "checkJs": true,
+    "lib": ["ES2022", "DOM"],
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "../dist/out-tsc",
-    "lib": ["ES2022", "DOM"],
-    "allowJs": true,
-    "checkJs": true,
+    "target": "ES2022",
     "types": ["node"]
   },
   "extends": "./tsconfig.json",

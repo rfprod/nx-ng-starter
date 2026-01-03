@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
-    "rootDir": ".",
-    "target": "es5",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "lib": ["es2017"],
     "allowJs": true,
     "checkJs": true,
-    "types": ["node"],
-    "sourceMap": false
+    "lib": ["es2017"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "rootDir": ".",
+    "sourceMap": false,
+    "target": "es5",
+    "types": ["node"]
   },
-  "extends": "../tsconfig.json",
   "exclude": ["**/*.spec.ts"],
+  "extends": "../tsconfig.json",
   "include": ["**/*.ts"]
 }

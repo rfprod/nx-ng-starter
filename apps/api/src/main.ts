@@ -53,7 +53,8 @@ const initAdmin = () => {
  * Bootstraps server.
  */
 async function bootstrap(expressInstance: e.Express): Promise<INestApplication> {
-  const app = await NestFactory.create(AppApiModule, new ExpressAdapter(expressInstance));
+  const adapter = new ExpressAdapter(expressInstance);
+  const app = await NestFactory.create<INestApplication<e.Express>>(AppApiModule, adapter);
   app.useWebSocketAdapter(new WsAdapter(app));
 
   app.setGlobalPrefix(globalPrefix);
@@ -74,7 +75,10 @@ async function bootstrap(expressInstance: e.Express): Promise<INestApplication> 
 
   const config = new DocumentBuilder().setTitle(environment.appName).setVersion('1.0').build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup(globalPrefix, app, document);
+  SwaggerModule.setup('index.html', app, document);
+  adapter.get('', (req, res: e.Response) => {
+    res.redirect('/index.html');
+  });
 
   if (typeof process.env['FIREBASE_CONFIG'] === 'undefined' || process.env['FIREBASE_CONFIG'] === '') {
     const port = typeof process.env['port'] !== 'undefined' ? process.env['port'] : defaultPort;
