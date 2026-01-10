@@ -1,0 +1,24 @@
+# For more information see:
+# - https://docs.github.com/en/actions/creating-actions/creating-a-composite-action
+# - https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputsoutput_id
+
+# The action can be referenced in workflows like:
+# uses: rfprod/nx-ng-starter/.github/actions/configure-session@main
+# or
+# uses: ./.github/actions/configure-session
+
+name: configure-session
+description: Configure a bash session.
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Configure session
+      shell: bash
+      run: |
+        echo "Increasing fs max watches..."
+        echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+        echo "Disabling history..."
+        unset HISTFILE
+        echo "Setting stop on errors, undefined vars, or pipe failures..."
+        set -euo pipefail

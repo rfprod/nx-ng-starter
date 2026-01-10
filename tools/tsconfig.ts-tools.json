@@ -9,6 +9,7 @@
     "target": "ES2022",
     "types": ["node"]
   },
+  "exclude": ["vite.config.mts", "vitest.config.mts", "**/*.spec.ts"],
   "extends": "./tsconfig.json",
   "include": ["ts/**/*.ts"]
 }
