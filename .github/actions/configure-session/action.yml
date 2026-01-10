@@ -22,3 +22,8 @@ runs:
         unset HISTFILE
         echo "Setting stop on errors, undefined vars, or pipe failures..."
         set -euo pipefail
+        shopt -s inherit_errexit
+        shopt -s nullglob
+        shopt -s globstar
+        IFS=$'\n\t'
+        export IFS

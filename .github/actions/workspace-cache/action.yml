@@ -14,7 +14,7 @@ inputs:
   node-version:
     description: NodeJS version
     required: true
-    default: 20.11.x
+    default: 24.12.x
 outputs:
   cache-hit:
     description: Workspace cache hit
@@ -30,7 +30,7 @@ runs:
         echo "commitsha=$(echo ${GITHUB_SHA})" >> $GITHUB_OUTPUT
 
     - name: Workspace cache (node_modules, nx, jest, angular)
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       id: workspace-cache
       with:
         path: |
