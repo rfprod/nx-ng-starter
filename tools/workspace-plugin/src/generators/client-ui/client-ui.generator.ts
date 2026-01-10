@@ -1,4 +1,4 @@
-import { libraryGenerator } from '@nx/angular/generators';
+import { libraryGenerator, UnitTestRunner } from '@nx/angular/generators';
 import { generateFiles, joinPathFragments, type ProjectConfiguration, readProjectConfiguration, type Tree } from '@nx/devkit';
 
 import { cleanup } from '../../utils/cleanup.util';
@@ -38,6 +38,8 @@ export default async function (tree: Tree, schema: ISchematicContext) {
     standalone: false,
     tags,
     directory: `libs/${name}`,
+    linter: 'eslint',
+    unitTestRunner: UnitTestRunner.VitestAnalog,
   });
 
   addFiles(schema, tree);

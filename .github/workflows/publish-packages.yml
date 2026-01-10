@@ -12,13 +12,20 @@ on:
         type: string
         required: false
         default: 'false'
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: 'Run in dry-run mode'
+        required: false
+        default: 'false'
+        type: string
 
 defaults:
   run:
     shell: bash
 
 concurrency:
-  group: ${{ github.ref_name || github.ref }}.${{ github.sha }}.publish-packages
+  group: ${{ github.event.client_payload.ref || github.ref_name || github.ref }}.${{ github.sha }}.publish-packages
   cancel-in-progress: true
 
 jobs:
@@ -28,11 +35,38 @@ jobs:
     outputs:
       changes: ${{ steps.check-changes.outputs.changes }}
       origin: ${{ steps.check-origin.outputs.origin }}
+      dry-run: ${{ steps.variables.outputs.dry-run }}
+      ref: ${{ steps.variables.outputs.ref }}
 
     steps:
+      - name: Variables
+        id: variables
+        env:
+          DRY_RUN: >-
+            ${{
+              (github.event_name == 'repository_dispatch' && (github.event.client_payload.dry_run == true || github.event.client_payload.dry_run == 'true')) ||
+              (github.event_name == 'workflow_dispatch' && (inputs.dry-run == true || inputs.dry-run == 'true')) ||
+              (github.event_name == 'workflow_call' && inputs.dry-run) ||
+              false
+            }}
+          REF: >-
+            ${{
+              (github.event_name == 'repository_dispatch' && github.event.client_payload.ref) ||
+              (github.event_name == 'workflow_dispatch' && github.ref_name) ||
+              (github.event_name == 'workflow_call' && github.ref_name) ||
+              github.ref
+            }}
+        run: |
+          echo "dry-run=$(echo ${DRY_RUN})" >> $GITHUB_OUTPUT
+          echo "ref=$(echo ${REF})" >> $GITHUB_OUTPUT
+          echo "### :rocket: Publish Packages" >> $GITHUB_STEP_SUMMARY
+          echo "REF: ${REF}" >> $GITHUB_STEP_SUMMARY
+          echo "DRY_RUN: ${DRY_RUN}" >> $GITHUB_STEP_SUMMARY
+
       - name: Checkout sources
         uses: actions/checkout@v6
         with:
+          ref: ${{ steps.variables.outputs.ref }}
           fetch-depth: 2
 
       - name: Setup environment
@@ -48,115 +82,105 @@ jobs:
 
   publish-client-d3-charts:
     needs: checks
-    if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packageCharts == 'true' }}
+    if: ${{ needs.checks.outputs.origin == 'true' && (needs.checks.outputs.dry-run == 'true' || fromJSON(needs.checks.outputs.changes).packageCharts == 'true') }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout sources
         uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.checks.outputs.ref }}
 
       - name: Setup environment
         uses: ./.github/actions/setup-environment
-        with:
-          compodoc: false
-          cypress: false
-          firebase-tools: false
 
       - name: NPM publish
         uses: ./.github/actions/npm-publish
         with:
           library-name: client-d3-charts
           use-trusted-publishing: true
-          dry-run: ${{ inputs.dry-run == 'true' }}
+          dry-run: ${{ needs.checks.outputs.dry-run == 'true' }}
 
   publish-client-guided-tour:
     needs: checks
-    if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packageGuidedTour == 'true' }}
+    if: ${{ needs.checks.outputs.origin == 'true' && (needs.checks.outputs.dry-run == 'true' || fromJSON(needs.checks.outputs.changes).packageGuidedTour == 'true') }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout sources
         uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.checks.outputs.ref }}
 
       - name: Setup environment
         uses: ./.github/actions/setup-environment
-        with:
-          compodoc: false
-          cypress: false
-          firebase-tools: false
 
       - name: NPM publish
         uses: ./.github/actions/npm-publish
         with:
           library-name: client-guided-tour
           use-trusted-publishing: true
-          dry-run: ${{ inputs.dry-run == 'true' }}
+          dry-run: ${{ needs.checks.outputs.dry-run == 'true' }}
 
   publish-client-pwa-offline:
     needs: checks
-    if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packagePwaOffline == 'true' }}
+    if: ${{ needs.checks.outputs.origin == 'true' && (needs.checks.outputs.dry-run == 'true' || fromJSON(needs.checks.outputs.changes).packagePwaOffline == 'true') }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout sources
         uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.checks.outputs.ref }}
 
       - name: Setup environment
         uses: ./.github/actions/setup-environment
-        with:
-          compodoc: false
-          cypress: false
-          firebase-tools: false
 
       - name: NPM publish
         uses: ./.github/actions/npm-publish
         with:
           library-name: client-pwa-offline
           use-trusted-publishing: true
-          dry-run: ${{ inputs.dry-run == 'true' }}
+          dry-run: ${{ needs.checks.outputs.dry-run == 'true' }}
 
   publish-client-util-eliza:
     needs: checks
-    if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packageEliza == 'true' }}
+    if: ${{ needs.checks.outputs.origin == 'true' && (needs.checks.outputs.dry-run == 'true' || fromJSON(needs.checks.outputs.changes).packageEliza == 'true') }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout sources
         uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.checks.outputs.ref }}
 
       - name: Setup environment
         uses: ./.github/actions/setup-environment
-        with:
-          compodoc: false
-          cypress: false
-          firebase-tools: false
 
       - name: NPM publish
         uses: ./.github/actions/npm-publish
         with:
           library-name: client-util-eliza
           use-trusted-publishing: true
-          dry-run: ${{ inputs.dry-run == 'true' }}
+          dry-run: ${{ needs.checks.outputs.dry-run == 'true' }}
 
   publish-backend-diagnostics:
     needs: checks
-    if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packageBackendDiagnostics == 'true' }}
+    if: ${{ needs.checks.outputs.origin == 'true' && (needs.checks.outputs.dry-run == 'true' || fromJSON(needs.checks.outputs.changes).packageBackendDiagnostics == 'true') }}
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout sources
         uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.checks.outputs.ref }}
 
       - name: Setup environment
         uses: ./.github/actions/setup-environment
-        with:
-          compodoc: false
-          cypress: false
-          firebase-tools: false
 
       - name: NPM publish
         uses: ./.github/actions/npm-publish
         with:
           library-name: backend-diagnostics
           use-trusted-publishing: true
-          dry-run: ${{ inputs.dry-run == 'true' }}
+          dry-run: ${{ needs.checks.outputs.dry-run == 'true' }}

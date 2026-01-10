@@ -14,11 +14,6 @@ concurrency:
   group: ${{ github.ref_name }}.${{ github.sha }}.trunk
   cancel-in-progress: true
 
-permissions:
-  contents: read
-  actions: write # needed to call another workflow
-  id-token: write # called workflow inherits this permission
-
 jobs:
   checks:
     runs-on: ubuntu-latest
@@ -112,14 +107,20 @@ jobs:
 
       - name: Dispatch package publishing
         if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packages == 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          EVENT_TYPE: publish_packages
         run: |
           gh api \
-            repos/${{ github.repository }}/dispatches \
-            --method POST \
-            -f event_type='publish_packages' \
-            -f client_payload='{}'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            -X POST \
+            /repos/${REPO}/dispatches \
+            --header 'Accept: application/vnd.github+json' \
+            --input - <<EOF
+          {
+            "event_type": "${EVENT_TYPE}"
+          }
+          EOF
 
       - name: Cleanup
         run: rm -rf ./.env ./functions/.env
@@ -138,5 +139,25 @@ jobs:
   publish-packages:
     needs: [checks, trunk]
     if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packages == 'true' }}
-    uses: ./.github/workflows/publish-packages.yml
-    secrets: inherit
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      actions: write
+      id-token: write
+
+    steps:
+      - name: Publish Packages
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.head_ref }}
+          EVENT_TYPE: publish_packages
+        run: |
+          gh api \
+            -X POST \
+            /repos/${REPO}/dispatches \
+            -f event_type="${EVENT_TYPE}" \
+            -f client_payload='{
+              "ref":"'"${BRANCH}"'"
+            }'
