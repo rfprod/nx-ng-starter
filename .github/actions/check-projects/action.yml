@@ -37,7 +37,7 @@ runs:
     - name: Check projects
       id: check-projects
       shell: bash
-      run: npx nx run tools:action-projects
+      run: npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/actions/projects/projects.ts
       env:
         AFFECTED: ${{ inputs.affected }}
         BATCH_SIZE: ${{ inputs.batch-size }}

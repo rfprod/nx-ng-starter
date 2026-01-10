@@ -26,22 +26,19 @@ inputs:
   node-version:
     description: NodeJS version
     required: true
-    default: 22.12.x
+    default: 24.12.x
 
 runs:
   using: 'composite'
   steps:
-    - name: Disable session history
-      uses: ./.github/actions/disable-session-history
+    - name: Configure session
+      uses: ./.github/actions/configure-session
 
     - name: Use Node.js ${{ inputs.node-version }}
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version: ${{ inputs.node-version }}
         check-latest: true
-
-    - name: Configure kernel
-      uses: ./.github/actions/configure-kernel
 
     - name: Configure yarn
       uses: ./.github/actions/configure-yarn

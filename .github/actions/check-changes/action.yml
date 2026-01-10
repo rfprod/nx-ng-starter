@@ -26,7 +26,7 @@ runs:
     - name: Changes
       id: check-changes
       shell: bash
-      run: npx nx run tools:action-changes
+      run: npx ts-node -P ./tools/tsconfig.ts-tools.json ./tools/ts/actions/changes/changes.ts
       env:
         PREMERGE: ${{ inputs.premerge }}
         TRUNK: ${{ inputs.trunk }}
