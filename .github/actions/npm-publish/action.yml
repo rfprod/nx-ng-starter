@@ -35,7 +35,7 @@ runs:
       run: npx nx build ${{ inputs.library-name }}
 
     - name: Bail out on invalid inputs
-      if: ${{ inputs.npm-automation-token == "" && inputs.use-trusted-publishing == 'false' }}
+      if: ${{ inputs.npm-automation-token == '' && inputs.use-trusted-publishing == 'false' }}
       shell: bash
       run: |
         MESSAGE=":x: Neither NPM automation token nor Trusted Publishing was configured for authentication."

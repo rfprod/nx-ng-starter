@@ -14,11 +14,6 @@ concurrency:
   group: ${{ github.ref }}.validate-pr
   cancel-in-progress: true
 
-permissions:
-  contents: read
-  actions: write # needed to call another workflow
-  id-token: write # called workflow inherits this permission
-
 jobs:
   checks:
     runs-on: ubuntu-latest
@@ -274,10 +269,94 @@ jobs:
         run: echo "success=(echo 'false')" >> $GITHUB_OUTPUT
 
   publish-packages-dry-run:
-    needs: [checks]
+    needs: checks
     if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packages == 'true' }}
-    uses: ./.github/workflows/publish-packages.yml
-    secrets: inherit
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      actions: write
+      id-token: write
+
+    outputs:
+      publish_conclusion: ${{ steps.publish-trigger.outputs.publish_conclusion }}
+
+    steps:
+      - name: Publish Packages (dry run)
+        id: publish-trigger
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.head_ref }}
+          EVENT_TYPE: publish_packages
+          DRY_RUN: true
+        run: |
+          echo "### :rocket: Publish Packages (dry run)" >> $GITHUB_STEP_SUMMARY
+          echo "BRANCH: ${BRANCH}" >> $GITHUB_STEP_SUMMARY
+          echo "EVENT_TYPE: ${EVENT_TYPE}" >> $GITHUB_STEP_SUMMARY
+          echo "DRY_RUN: ${DRY_RUN}" >> $GITHUB_STEP_SUMMARY
+
+          gh api \
+            -X POST \
+            /repos/${REPO}/dispatches \
+            --header 'Accept: application/vnd.github+json' \
+            --input - <<EOF
+          {
+            "event_type": "${EVENT_TYPE}",
+            "client_payload": {
+              "ref": "${BRANCH}",
+              "dry_run": "${DRY_RUN}"
+            }
+          }
+          EOF
+
+          echo "Looking for the workflow run..."
+          # up to ~5 min (30 * 10 s)
+          for i in {1..30}; do
+            RUN_ID=$(
+              gh api "/repos/${REPO}/actions/runs?event=repository_dispatch&per_page=20" \
+                --jq '.workflow_runs
+                  | map(
+                      select(
+                        .event == "repository_dispatch"
+                        and .status != "completed" # optional: skip already-completed runs, or change logic
+                        and (
+                            (.display_title | test("'"${EVENT_TYPE}"'"; "i"))            # Optional: event_type in title
+                            or (.name | test("'"${EVENT_TYPE}"'"; "i"))                  # Optional: event_type in name
+                            or true # always true if you skip these, or include more logic as needed
+                        )
+                      )
+                  )
+                  | sort_by(.created_at)
+                  | .[-1].id
+                '
+            )
+
+            if [[ -n "$RUN_ID" ]]; then
+              echo "Found RUN_ID: $RUN_ID"
+              break
+            fi
+            sleep 10
+          done
+
+          if [[ -z "$RUN_ID" ]]; then
+            echo "❌ Could not locate the workflow run"
+            exit 1
+          fi
+
+          echo "✅ Found run ID $RUN_ID - waiting for completion..."
+
+          while true; do
+            STATUS=$(gh api "/repos/${REPO}/actions/runs/${RUN_ID}" --jq '.status')
+            CONCL=$(gh api "/repos/${REPO}/actions/runs/${RUN_ID}" --jq '.conclusion')
+            if [[ "$STATUS" == "completed" ]]; then
+              echo "🟢 Run completed with conclusion: $CONCL"
+              echo "publish_conclusion=$CONCL" >> $GITHUB_OUTPUT
+              break
+            fi
+            echo "⏳ Run still $STATUS … sleeping 10 s"
+            sleep 10
+          done
 
   premerge:
     needs: [checks, lint, lint-affected, test, test-affected, build, build-affected, publish-packages-dry-run]
@@ -305,4 +384,4 @@ jobs:
           TEST_AFFECTED_RESULT: ${{ needs.test-affected.result == 'success' || needs.test-affected.result == 'skipped' }}
           BUILD_RESULT: ${{ needs.build.result == 'success' || needs.build.result == 'skipped' }}
           BUILD_AFFECTED_RESULT: ${{ needs.build-affected.result == 'success' || needs.build-affected.result == 'skipped' }}
-          PUBLISH_PACKAGES_DRY_RUN: ${{ needs.publish-packages-dry-run.result == 'success' || needs.publish-packages-dry-run.result == 'skipped' }}
+          PUBLISH_PACKAGES_DRY_RUN: ${{ (needs.publish-packages-dry-run.result == 'success' && needs.publish-packages-dry-run.outputs.publish_conclusion == 'success') || needs.publish-packages-dry-run.result == 'skipped' }}

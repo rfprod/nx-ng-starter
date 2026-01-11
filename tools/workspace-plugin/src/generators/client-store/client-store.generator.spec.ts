@@ -26,6 +26,12 @@ vi.mock('@nx/angular/generators', () => ({
     });
     return p;
   }),
+  ['UnitTestRunner']: {
+    ['Jest']: 'jest',
+    ['None']: 'none',
+    ['VitestAnalog']: 'vitest-analog',
+    ['VitestAngular']: 'vitest-angular',
+  },
 }));
 
 describe('client-store', () => {
