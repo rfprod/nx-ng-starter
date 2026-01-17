@@ -57,7 +57,7 @@ check_integrity() {
 
   check_yarn_lock_changes
 
-  if ! yarn check --immutable || [ "$YARN_LOCK_CHANGED" -eq 1 ]; then
+  if ! yarn install --immutable || [ "$YARN_LOCK_CHANGED" -eq 1 ]; then
     print_info_title "<< Cleaning up workspace, and caches >>"
     print_gap
 
@@ -70,7 +70,7 @@ check_integrity() {
     print_info_message ">> will verify tree additionally without erroring"
     print_gap
 
-    yarn check --verify-tree || true
+    yarn install --check-cache || true
   fi
 }
 

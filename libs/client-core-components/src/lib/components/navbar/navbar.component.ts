@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { isActive, Router } from '@angular/router';
 import { IRouterButton, routerButton, WINDOW } from '@app/client-util';
 
 @Component({
@@ -22,13 +22,12 @@ export class AppNavbarComponent {
     routerButton(
       'Home',
       'home',
-      () =>
-        this.router.isActive('', {
-          matrixParams: 'ignored',
-          queryParams: 'ignored',
-          paths: 'exact',
-          fragment: 'ignored',
-        }),
+      isActive('', this.router, {
+        matrixParams: 'ignored',
+        queryParams: 'ignored',
+        paths: 'exact',
+        fragment: 'ignored',
+      }),
       [{ outlets: { primary: [''] } }],
     ),
   ];

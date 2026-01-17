@@ -1,6 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import * as routerNamespace from '@angular/router';
 import { newTestBedMetadata } from '@app/client-testing-unit';
 import { windowProvider } from '@app/client-util';
 import { of } from 'rxjs';
@@ -8,12 +8,21 @@ import type { MockInstance } from 'vitest';
 
 import { AppNavbarComponent } from './navbar.component';
 
+vi.mock('@angular/router', async () => {
+  const actual = await vi.importActual<Record<string, unknown>>('@angular/router');
+
+  return {
+    ...actual,
+    isActive: vi.fn().mockReturnValue(vi.fn()),
+  };
+});
+
 describe('AppNavbarComponent', () => {
   const testBedConfig: TestModuleMetadata = newTestBedMetadata({
     declarations: [AppNavbarComponent],
     providers: [
       {
-        provide: Router,
+        provide: routerNamespace.Router,
         useValue: {
           events: of(null),
           isActive: () => false,
@@ -27,15 +36,15 @@ describe('AppNavbarComponent', () => {
   let fixture: ComponentFixture<AppNavbarComponent>;
   let component: AppNavbarComponent;
 
-  let router: Router;
+  let router: routerNamespace.Router;
   let routerIsActiveSpy: MockInstance;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule(testBedConfig).compileComponents();
     fixture = TestBed.createComponent(AppNavbarComponent);
     component = fixture.debugElement.componentInstance;
-    router = TestBed.inject(Router);
-    routerIsActiveSpy = vi.spyOn(router, 'isActive');
+    router = TestBed.inject(routerNamespace.Router);
+    routerIsActiveSpy = vi.spyOn(routerNamespace, 'isActive');
     fixture.detectChanges();
   });
 
@@ -57,7 +66,7 @@ describe('AppNavbarComponent', () => {
   it('buttons, routeActive should call router isActive with params', () => {
     const firstButtonIndex = 0;
     component.buttons[firstButtonIndex].routeActive();
-    expect(routerIsActiveSpy).toHaveBeenCalledWith('', {
+    expect(routerIsActiveSpy).toHaveBeenCalledWith('', router, {
       matrixParams: 'ignored',
       queryParams: 'ignored',
       paths: 'exact',

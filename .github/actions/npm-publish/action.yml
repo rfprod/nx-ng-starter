@@ -52,6 +52,8 @@ runs:
       run: |
         set -euo pipefail
 
+        cd ./dist/libs/"$LIBRARY_NAME"
+
         PACKAGE_NAME="$(node -p "require('./package.json').name")"
         PACKAGE_VERSION="$(node -p "require('./package.json').version")"
 
@@ -71,7 +73,7 @@ runs:
           echo "npm view succeeded → the version exists"
         else
           echo "npm view failed → distinguish 404 from other errors"
-          if echo "$NPM_VIEW_OUTPUT" | grep -qE '^npm ERR! code E404'; then
+          if echo "$NPM_VIEW_OUTPUT" | grep -qi 'E404'; then
             EXISTS="false"
             echo "Package $PACKAGE_NAME@$PACKAGE_VERSION not found → will be published."
           else
@@ -84,6 +86,8 @@ runs:
         echo "name=$PACKAGE_NAME" >> $GITHUB_OUTPUT
         echo "version=$PACKAGE_VERSION" >> $GITHUB_OUTPUT
         echo "exists=$EXISTS" >> $GITHUB_OUTPUT
+      env:
+        LIBRARY_NAME: ${{ inputs.library-name }}
 
     - name: Print summary
       shell: bash
@@ -97,6 +101,7 @@ runs:
         echo "Package exists on npmjs.org: $PACKAGE_EXISTS" >> $GITHUB_STEP_SUMMARY
         if [ "$PACKAGE_EXISTS" == "true" ]; then
           echo ":exclamation: $PACKAGE_NAME@$PACKAGE_VERSION already exists on npmjs.org." >> $GITHUB_STEP_SUMMARY
+          exit 1
         fi
       env:
         LIBRARY_NAME: ${{ inputs.library-name }}

@@ -1,4 +1,4 @@
-import type { Router } from '@angular/router';
+import type { isActive } from '@angular/router';
 
 export type TRouterCommands = Array<{ outlets: { [key: string]: string[] } }>;
 
@@ -17,7 +17,7 @@ export interface IRouterButton {
  * @param routerLink router link
  * @returns router button object
  */
-export const routerButton = (title: string, icon: string, routeActive: Router['isActive'], routerLink: TRouterCommands) =>
+export const routerButton = (title: string, icon: string, routeActive: ReturnType<typeof isActive>, routerLink: TRouterCommands) =>
   ({ title, icon, routeActive, routerLink }) as IRouterButton;
 
 export interface IAnchorButton {
