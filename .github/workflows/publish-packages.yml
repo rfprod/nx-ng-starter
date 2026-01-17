@@ -8,7 +8,12 @@ on:
   workflow_call:
     inputs:
       dry-run:
-        description: Used by premerge workflow to confirm the ability to publish packages without doing so
+        description: Used by premerge workflow to confirm the ability to publish packages without doing so.
+        type: string
+        required: false
+        default: 'false'
+      premerge:
+        description: Indicates that it is a premerge workflow. Used for correct repository checkout.
         type: string
         required: false
         default: 'false'
@@ -46,7 +51,7 @@ jobs:
             ${{
               (github.event_name == 'repository_dispatch' && (github.event.client_payload.dry_run == true || github.event.client_payload.dry_run == 'true')) ||
               (github.event_name == 'workflow_dispatch' && (inputs.dry-run == true || inputs.dry-run == 'true')) ||
-              (github.event_name == 'workflow_call' && inputs.dry-run) ||
+              (github.event_name == 'workflow_call' && (inputs.dry-run == true || inputs.dry-run == 'true')) ||
               false
             }}
           REF: >-
@@ -56,18 +61,26 @@ jobs:
               (github.event_name == 'workflow_call' && github.ref_name) ||
               github.ref
             }}
+          PREMERGE: >-
+            ${{
+              (github.event_name == 'repository_dispatch' && (github.event.client_payload.premerge == true || github.event.client_payload.premerge == 'true')) ||
+              (github.event_name == 'workflow_dispatch' && (inputs.premerge == true || inputs.premerge == 'true')) ||
+              false
+            }}
         run: |
           echo "dry-run=$(echo ${DRY_RUN})" >> $GITHUB_OUTPUT
           echo "ref=$(echo ${REF})" >> $GITHUB_OUTPUT
+          echo "premerge=$(echo ${PREMERGE})" >> $GITHUB_OUTPUT
           echo "### :rocket: Publish Packages" >> $GITHUB_STEP_SUMMARY
           echo "REF: ${REF}" >> $GITHUB_STEP_SUMMARY
           echo "DRY_RUN: ${DRY_RUN}" >> $GITHUB_STEP_SUMMARY
+          echo "PREMERGE: ${PREMERGE}" >> $GITHUB_STEP_SUMMARY
 
       - name: Checkout sources
         uses: actions/checkout@v6
         with:
-          ref: ${{ steps.variables.outputs.ref }}
           fetch-depth: 2
+          ref: ${{ steps.variables.outputs.ref }}
 
       - name: Setup environment
         uses: ./.github/actions/setup-environment
@@ -75,6 +88,8 @@ jobs:
       - name: Check changes
         id: check-changes
         uses: ./.github/actions/check-changes
+        with:
+          premerge: ${{ steps.variables.outputs.premerge }}
 
       - name: Check origin
         id: check-origin

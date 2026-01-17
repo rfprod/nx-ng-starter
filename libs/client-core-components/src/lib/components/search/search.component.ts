@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, HostBinding, inject, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
-import { Data, Route, Router, Routes } from '@angular/router';
+import { Data, isActive, Route, Router, Routes } from '@angular/router';
 import { BehaviorSubject, combineLatest, defer, forkJoin, from, map, of, startWith, switchMap } from 'rxjs';
 
 interface ISearchOptions {
@@ -9,7 +9,7 @@ interface ISearchOptions {
   icon?: string;
   value: string;
   routerLink: string;
-  isActive(): ReturnType<Router['isActive']>;
+  isActive: ReturnType<typeof isActive>;
 }
 
 interface IParsedRoute {
@@ -94,13 +94,12 @@ export class AppSearchComponent implements AfterViewInit {
               value: route.path,
               icon: route.data?.['icon'],
               routerLink: route.path.replace(/\s/g, '/'),
-              isActive: () =>
-                this.router.isActive(route.path, {
-                  matrixParams: 'ignored',
-                  queryParams: 'ignored',
-                  paths: 'exact',
-                  fragment: 'ignored',
-                }),
+              isActive: isActive(route.path, this.router, {
+                matrixParams: 'ignored',
+                queryParams: 'ignored',
+                paths: 'exact',
+                fragment: 'ignored',
+              }),
             };
           });
         this.optionsSubject.next(options);
