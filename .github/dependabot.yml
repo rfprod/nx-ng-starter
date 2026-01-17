@@ -1,0 +1,38 @@
+version: 2
+updates:
+  - package-ecosystem: 'github-actions'
+    directory: '.github/workflows'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '04:00'
+    groups:
+      all-actions:
+        patterns:
+          - '*'
+    commit-message:
+      prefix: 'ci'
+      include: 'scope'
+    open-pull-requests-limit: 1
+    labels:
+      - 'CICD'
+      - 'Dependencies'
+      - 'Maintenance'
+  - package-ecosystem: 'docker'
+    directory: '.docker'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '04:00'
+    groups:
+      all-containers:
+        patterns:
+          - '*'
+    commit-message:
+      prefix: 'build'
+      include: 'scope'
+    open-pull-requests-limit: 1
+    labels:
+      - 'DevOps'
+      - 'Dependencies'
+      - 'Maintenance'

@@ -32,8 +32,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Disable session history
-        uses: ./.github/actions/disable-session-history
+      - name: Configure session
+        uses: ./.github/actions/configure-session
 
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
