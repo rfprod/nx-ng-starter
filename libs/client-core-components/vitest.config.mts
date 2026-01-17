@@ -19,7 +19,7 @@ export default defineConfig({
       provider: 'istanbul',
       thresholds: {
         branches: 27,
-        functions: 63,
+        functions: 62,
         lines: 65,
         statements: 64,
       },

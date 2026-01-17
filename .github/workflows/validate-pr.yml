@@ -287,7 +287,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
-          BRANCH: ${{ github.head_ref }}
+          BRANCH: ${{ github.event.pull_request.head.ref }}
           EVENT_TYPE: publish_packages
           DRY_RUN: true
         run: |
@@ -305,7 +305,8 @@ jobs:
             "event_type": "${EVENT_TYPE}",
             "client_payload": {
               "ref": "${BRANCH}",
-              "dry_run": "${DRY_RUN}"
+              "dry_run": "${DRY_RUN}",
+              "premerge": "true"
             }
           }
           EOF

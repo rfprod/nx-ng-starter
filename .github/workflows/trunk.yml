@@ -157,7 +157,12 @@ jobs:
           gh api \
             -X POST \
             /repos/${REPO}/dispatches \
-            -f event_type="${EVENT_TYPE}" \
-            -f client_payload='{
-              "ref":"'"${BRANCH}"'"
-            }'
+            --header 'Accept: application/vnd.github+json' \
+            --input - <<EOF
+          {
+            "event_type": "${EVENT_TYPE}",
+            "client_payload": {
+              "ref": "${BRANCH}"
+            }
+          }
+          EOF
