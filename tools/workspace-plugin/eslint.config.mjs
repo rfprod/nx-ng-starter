@@ -18,7 +18,7 @@ export default defineConfig([
   exceptions.logger,
   exceptions.spec,
   {
-    files: ['**/module-boundaries.generator.ts'],
+    files: ['**/module-boundaries.generator.ts', '**/tsconfig-migrations.generator.ts'],
     rules: {
       '@typescript-eslint/no-require-imports': 'off',
       'max-depth': ['error', 6],
