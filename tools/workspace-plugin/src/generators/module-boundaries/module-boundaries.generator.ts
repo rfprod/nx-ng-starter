@@ -19,20 +19,20 @@ interface IAuditException {
 /**
  * Reads the boundaries file.
  * @param configDir the directory with .eslint configuration files
- * @param verbose whether to print detailed output
+ * @param debug whether to print detailed output
  */
-const depConstraints = (configDir: string, verbose?: boolean) => {
+const depConstraints = (configDir: string, debug?: boolean) => {
   const configExists = directoryExists(configDir);
   if (!configExists) {
     throw new Error(`The directory with the module boundary configurations does not exist: ${configDir}.`);
   }
-  if (verbose === true) {
-    logger.log('configDir', configDir);
+  if (debug === true) {
+    logger.debug('configDir', configDir);
   }
 
   const configFiles = findFiles(configDir, '.mjs');
-  if (verbose === true) {
-    logger.log('configFiles', configFiles);
+  if (debug === true) {
+    logger.debug('configFiles', configFiles);
   }
 
   const files = configFiles.stdout.length > 0 ? configFiles.stdout.split(' ') : [];
@@ -64,7 +64,7 @@ const depConstraints = (configDir: string, verbose?: boolean) => {
  * @param tree the file system tree
  * @param entries project configurations
  * @param constraints the module bounary constraints
- * @param verbose whether to print detailed output
+ * @param debug whether to print detailed output
  */
 const projectSourceRoots = (
   tree: Tree,
@@ -73,7 +73,7 @@ const projectSourceRoots = (
     file: string;
     constraints: TModuleBoundaryConfig;
   }>,
-  verbose?: boolean,
+  debug?: boolean,
 ) => {
   const scopes = constraints.reduce((accumulator: string[], item) => {
     const result = item.constraints.map(constraint => constraint.sourceTag);
@@ -81,8 +81,8 @@ const projectSourceRoots = (
     return accumulator;
   }, []);
 
-  if (verbose === true) {
-    logger.log('scopes with constraints', scopes);
+  if (debug === true) {
+    logger.debug('scopes with constraints', scopes);
   }
 
   const projects = scopes.reduce((accumulator: ProjectConfiguration[], scope) => {
@@ -93,8 +93,8 @@ const projectSourceRoots = (
     return accumulator;
   }, []);
 
-  if (verbose === true) {
-    logger.log('projects with constraints', projects);
+  if (debug === true) {
+    logger.debug('projects with constraints', projects);
   }
 
   const allBoundaryConfigs = constraints.reduce((accumulator: Array<TModuleBoundaryConfig['0'] & { file: string }>, item) => {
@@ -106,8 +106,8 @@ const projectSourceRoots = (
     return accumulator;
   }, []);
 
-  if (verbose === true) {
-    logger.log('all boundary configs', allBoundaryConfigs);
+  if (debug === true) {
+    logger.debug('all boundary configs', allBoundaryConfigs);
   }
 
   const sourceRoots = projects
@@ -127,8 +127,8 @@ const projectSourceRoots = (
       return result;
     });
 
-  if (verbose === true) {
-    logger.log('project source roots', sourceRoots);
+  if (debug === true) {
+    logger.debug('project source roots', sourceRoots);
   }
 
   return sourceRoots;
@@ -142,11 +142,11 @@ export default async function (tree: Tree, schema: ISchematicContext) {
 
   const constraints = depConstraints(configDir);
 
-  if (schema.verbose === true) {
-    logger.log('constraints', constraints);
+  if (schema.debug === true) {
+    logger.debug('constraints', constraints);
   }
 
-  const sourceRoots = projectSourceRoots(tree, entries, constraints, schema.verbose);
+  const sourceRoots = projectSourceRoots(tree, entries, constraints, schema.debug);
 
   const exceptions: IAuditException[] = [];
 
@@ -169,8 +169,8 @@ export default async function (tree: Tree, schema: ISchematicContext) {
             sourceRoot: config.sourceRoot,
           };
 
-          if (schema.verbose === true) {
-            logger.error(exception.message);
+          if (schema.debug === true) {
+            logger.debug(`Exception: ${exception.message}`);
           }
 
           exceptions.push(exception);

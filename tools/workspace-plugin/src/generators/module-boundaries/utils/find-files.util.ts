@@ -3,9 +3,8 @@ import path from 'path';
 
 /**
  * Find all JavaScript files in a directory.
- * @param tree the file system tree
  * @param src the source directory
- * @param filter the file extension filter, defaults to .html
+ * @param filter the file extension filter, defaults to .js
  * @param result the execution result, is required for recursion, defaults to { stderr: '', stdout: '' }
  * @returns execution result
  */
