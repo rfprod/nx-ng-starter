@@ -12,8 +12,28 @@ on:
         type: string
         required: false
         default: 'false'
-      premerge:
-        description: Indicates that it is a premerge workflow. Used for correct repository checkout.
+      publish-client-d3-charts:
+        description: Indicates that `client-d3-charts` library should be published.
+        type: string
+        required: false
+        default: 'false'
+      publish-client-guided-tour:
+        description: Indicates that `client-guided-tour` library should be published.
+        type: string
+        required: false
+        default: 'false'
+      publish-client-pwa-offline:
+        description: Indicates that `client-pwa-offline` library should be published.
+        type: string
+        required: false
+        default: 'false'
+      publish-client-util-eliza:
+        description: Indicates that `client-util-eliza` library should be published.
+        type: string
+        required: false
+        default: 'false'
+      publish-backend-diagnostics:
+        description: Indicates that `backend-diagnostics` library should be published.
         type: string
         required: false
         default: 'false'
@@ -24,6 +44,31 @@ on:
         required: false
         default: 'false'
         type: string
+      publish-client-d3-charts:
+        description: Indicates that `client-d3-charts` library should be published.
+        type: boolean
+        required: false
+        default: false
+      publish-client-guided-tour:
+        description: Indicates that `client-guided-tour` library should be published.
+        type: boolean
+        required: false
+        default: false
+      publish-client-pwa-offline:
+        description: Indicates that `client-pwa-offline` library should be published.
+        type: boolean
+        required: false
+        default: false
+      publish-client-util-eliza:
+        description: Indicates that `client-util-eliza` library should be published.
+        type: boolean
+        required: false
+        default: false
+      publish-backend-diagnostics:
+        description: Indicates that `backend-diagnostics` library should be published.
+        type: boolean
+        required: false
+        default: false
 
 defaults:
   run:
@@ -38,10 +83,14 @@ jobs:
     runs-on: ubuntu-latest
 
     outputs:
-      changes: ${{ steps.check-changes.outputs.changes }}
       origin: ${{ steps.check-origin.outputs.origin }}
       dry-run: ${{ steps.variables.outputs.dry-run }}
       ref: ${{ steps.variables.outputs.ref }}
+      publish-client-d3-charts: ${{ steps.variables.outputs.publish-client-d3-charts }}
+      publish-client-guided-tour: ${{ steps.variables.outputs.publish-client-guided-tour }}
+      publish-client-pwa-offline: ${{ steps.variables.outputs.publish-client-pwa-offline }}
+      publish-client-util-eliza: ${{ steps.variables.outputs.publish-client-util-eliza }}
+      publish-backend-diagnostics: ${{ steps.variables.outputs.publish-backend-diagnostics }}
 
     steps:
       - name: Variables
@@ -61,35 +110,60 @@ jobs:
               (github.event_name == 'workflow_call' && github.ref_name) ||
               github.ref
             }}
-          PREMERGE: >-
+          PUBLISH_CLIENT_D3_CHARTS: >-
             ${{
-              (github.event_name == 'repository_dispatch' && (github.event.client_payload.premerge == true || github.event.client_payload.premerge == 'true')) ||
-              (github.event_name == 'workflow_dispatch' && (inputs.premerge == true || inputs.premerge == 'true')) ||
+              (github.event_name == 'repository_dispatch' && (github.event.client_payload.publish-client-d3-charts == true || github.event.client_payload.publish-client-d3-charts == 'true')) ||
+              (github.event_name == 'workflow_dispatch' && (inputs.publish-client-d3-charts == true || inputs.publish-client-d3-charts == 'true')) ||
+              false
+            }}
+          PUBLISH_CLIENT_GUIDED_TOUR: >-
+            ${{
+              (github.event_name == 'repository_dispatch' && (github.event.client_payload.publish-client-guided-tour == true || github.event.client_payload.publish-client-guided-tour == 'true')) ||
+              (github.event_name == 'workflow_dispatch' && (inputs.publish-client-guided-tour == true || inputs.publish-client-guided-tour == 'true')) ||
+              false
+            }}
+          PUBLISH_CLIENT_PWA_OFFLINE: >-
+            ${{
+              (github.event_name == 'repository_dispatch' && (github.event.client_payload.publish-client-pwa-offline == true || github.event.client_payload.publish-client-pwa-offline == 'true')) ||
+              (github.event_name == 'workflow_dispatch' && (inputs.publish-client-pwa-offline == true || inputs.publish-client-pwa-offline == 'true')) ||
+              false
+            }}
+          PUBLISH_CLIENT_UTIL_ELIZA: >-
+            ${{
+              (github.event_name == 'repository_dispatch' && (github.event.client_payload.publish-client-util-eliza == true || github.event.client_payload.publish-client-util-eliza == 'true')) ||
+              (github.event_name == 'workflow_dispatch' && (inputs.publish-client-util-eliza == true || inputs.publish-client-util-eliza == 'true')) ||
+              false
+            }}
+          PUBLISH_BACKEND_DIAGNOSTICS: >-
+            ${{
+              (github.event_name == 'repository_dispatch' && (github.event.client_payload.publish-backend-diagnostics == true || github.event.client_payload.publish-backend-diagnostics == 'true')) ||
+              (github.event_name == 'workflow_dispatch' && (inputs.publish-backend-diagnostics == true || inputs.publish-backend-diagnostics == 'true')) ||
               false
             }}
         run: |
           echo "dry-run=$(echo ${DRY_RUN})" >> $GITHUB_OUTPUT
           echo "ref=$(echo ${REF})" >> $GITHUB_OUTPUT
-          echo "premerge=$(echo ${PREMERGE})" >> $GITHUB_OUTPUT
+          echo "publish-client-d3-charts=$(echo ${PUBLISH_CLIENT_D3_CHARTS})" >> $GITHUB_OUTPUT
+          echo "publish-client-guided-tour=$(echo ${PUBLISH_CLIENT_GUIDED_TOUR})" >> $GITHUB_OUTPUT
+          echo "publish-client-pwa-offline=$(echo ${PUBLISH_CLIENT_PWA_OFFLINE})" >> $GITHUB_OUTPUT
+          echo "publish-client-util-eliza=$(echo ${PUBLISH_CLIENT_UTIL_ELIZA})" >> $GITHUB_OUTPUT
+          echo "publish-backend-diagnostics=$(echo ${PUBLISH_BACKEND_DIAGNOSTICS})" >> $GITHUB_OUTPUT
           echo "### :rocket: Publish Packages" >> $GITHUB_STEP_SUMMARY
-          echo "REF: ${REF}" >> $GITHUB_STEP_SUMMARY
           echo "DRY_RUN: ${DRY_RUN}" >> $GITHUB_STEP_SUMMARY
-          echo "PREMERGE: ${PREMERGE}" >> $GITHUB_STEP_SUMMARY
+          echo "REF: ${REF}" >> $GITHUB_STEP_SUMMARY
+          echo "PUBLISH_CLIENT_D3_CHARTS: ${PUBLISH_CLIENT_D3_CHARTS}" >> $GITHUB_STEP_SUMMARY
+          echo "PUBLISH_CLIENT_GUIDED_TOUR: ${PUBLISH_CLIENT_GUIDED_TOUR}" >> $GITHUB_STEP_SUMMARY
+          echo "PUBLISH_CLIENT_PWA_OFFLINE: ${PUBLISH_CLIENT_PWA_OFFLINE}" >> $GITHUB_STEP_SUMMARY
+          echo "PUBLISH_CLIENT_UTIL_ELIZA: ${PUBLISH_CLIENT_UTIL_ELIZA}" >> $GITHUB_STEP_SUMMARY
+          echo "PUBLISH_BACKEND_DIAGNOSTICS: ${PUBLISH_BACKEND_DIAGNOSTICS}" >> $GITHUB_STEP_SUMMARY
 
       - name: Checkout sources
         uses: actions/checkout@v6
         with:
-          fetch-depth: 2
           ref: ${{ steps.variables.outputs.ref }}
 
       - name: Setup environment
         uses: ./.github/actions/setup-environment
-
-      - name: Check changes
-        id: check-changes
-        uses: ./.github/actions/check-changes
-        with:
-          premerge: ${{ steps.variables.outputs.premerge }}
 
       - name: Check origin
         id: check-origin
@@ -97,7 +171,7 @@ jobs:
 
   publish-client-d3-charts:
     needs: checks
-    if: ${{ needs.checks.outputs.origin == 'true' && (needs.checks.outputs.dry-run == 'true' || fromJSON(needs.checks.outputs.changes).packageCharts == 'true') }}
+    if: ${{ needs.checks.outputs.origin == 'true' && (needs.checks.outputs.dry-run == 'true' || needs.checks.outputs.publish-client-d3-charts == 'true') }}
     runs-on: ubuntu-latest
 
     steps:
@@ -118,7 +192,7 @@ jobs:
 
   publish-client-guided-tour:
     needs: checks
-    if: ${{ needs.checks.outputs.origin == 'true' && (needs.checks.outputs.dry-run == 'true' || fromJSON(needs.checks.outputs.changes).packageGuidedTour == 'true') }}
+    if: ${{ needs.checks.outputs.origin == 'true' && (needs.checks.outputs.dry-run == 'true' || needs.checks.outputs.publish-client-guided-tour == 'true') }}
     runs-on: ubuntu-latest
 
     steps:
@@ -139,7 +213,7 @@ jobs:
 
   publish-client-pwa-offline:
     needs: checks
-    if: ${{ needs.checks.outputs.origin == 'true' && (needs.checks.outputs.dry-run == 'true' || fromJSON(needs.checks.outputs.changes).packagePwaOffline == 'true') }}
+    if: ${{ needs.checks.outputs.origin == 'true' && (needs.checks.outputs.dry-run == 'true' || needs.checks.outputs.publish-client-pwa-offline == 'true') }}
     runs-on: ubuntu-latest
 
     steps:
@@ -160,7 +234,7 @@ jobs:
 
   publish-client-util-eliza:
     needs: checks
-    if: ${{ needs.checks.outputs.origin == 'true' && (needs.checks.outputs.dry-run == 'true' || fromJSON(needs.checks.outputs.changes).packageEliza == 'true') }}
+    if: ${{ needs.checks.outputs.origin == 'true' && (needs.checks.outputs.dry-run == 'true' || needs.checks.outputs.publish-client-util-eliza == 'true') }}
     runs-on: ubuntu-latest
 
     steps:
@@ -181,7 +255,7 @@ jobs:
 
   publish-backend-diagnostics:
     needs: checks
-    if: ${{ needs.checks.outputs.origin == 'true' && (needs.checks.outputs.dry-run == 'true' || fromJSON(needs.checks.outputs.changes).packageBackendDiagnostics == 'true') }}
+    if: ${{ needs.checks.outputs.origin == 'true' && (needs.checks.outputs.dry-run == 'true' || needs.checks.outputs.publish-backend-diagnostics == 'true') }}
     runs-on: ubuntu-latest
 
     steps:
