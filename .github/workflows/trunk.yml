@@ -153,6 +153,12 @@ jobs:
           REPO: ${{ github.repository }}
           BRANCH: ${{ github.head_ref }}
           EVENT_TYPE: publish_packages
+          PUBLISH_CLIENT_D3_CHARTS: ${{ fromJSON(needs.checks.outputs.changes).packageCharts == 'true' }}
+          PUBLISH_CLIENT_GUIDED_TOUR: ${{ fromJSON(needs.checks.outputs.changes).packageGuidedTour == 'true' }}
+          PUBLISH_CLIENT_PWA_OFFLINE: ${{ fromJSON(needs.checks.outputs.changes).packagePwaOffline == 'true' }}
+          PUBLISH_CLIENT_UTIL_ELIZA: ${{ fromJSON(needs.checks.outputs.changes).packageEliza == 'true' }}
+          PUBLISH_BACKEND_DIAGNOSTICS: ${{ fromJSON(needs.checks.outputs.changes).packageBackendDiagnostics == 'true' }}
+
         run: |
           gh api \
             -X POST \
@@ -162,7 +168,12 @@ jobs:
           {
             "event_type": "${EVENT_TYPE}",
             "client_payload": {
-              "ref": "${BRANCH}"
+              "ref": "${BRANCH}",
+              "publish-client-d3-charts": "${PUBLISH_CLIENT_D3_CHARTS}",
+              "publish-client-guided-tour": "${PUBLISH_CLIENT_GUIDED_TOUR}",
+              "publish-client-pwa-offline": "${PUBLISH_CLIENT_PWA_OFFLINE}",
+              "publish-client-util-eliza": "${PUBLISH_CLIENT_UTIL_ELIZA}",
+              "publish-backend-diagnostics": "${PUBLISH_BACKEND_DIAGNOSTICS}"
             }
           }
           EOF

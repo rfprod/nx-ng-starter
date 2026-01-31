@@ -42,7 +42,7 @@ jobs:
           git fetch origin main:main
           npx --no-install commitlint --from main
 
-      - name: Validation contribution size
+      - name: Validate contribution size
         if: ${{ github.event.pull_request.user.login != 'dependabot[bot]' }}
         uses: ./.github/actions/validate-contribution-size
 
@@ -305,8 +305,7 @@ jobs:
             "event_type": "${EVENT_TYPE}",
             "client_payload": {
               "ref": "${BRANCH}",
-              "dry_run": "${DRY_RUN}",
-              "premerge": "true"
+              "dry_run": "${DRY_RUN}"
             }
           }
           EOF
