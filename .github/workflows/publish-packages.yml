@@ -78,6 +78,10 @@ concurrency:
   group: ${{ github.event.client_payload.ref || github.ref_name || github.ref }}.${{ github.sha }}.publish-packages
   cancel-in-progress: true
 
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
+
 jobs:
   checks:
     runs-on: ubuntu-latest

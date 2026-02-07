@@ -83,4 +83,9 @@ runs:
       shell: bash
       run: |
         sudo apt update
-        sudo apt install secure-delete
+        sudo apt install -y secure-delete
+
+    - name: Install font tools
+      shell: bash
+      run: |
+        sudo apt install -y eot2ttf
