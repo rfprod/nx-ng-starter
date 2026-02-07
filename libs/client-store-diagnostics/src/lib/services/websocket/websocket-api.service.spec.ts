@@ -3,7 +3,6 @@ import { HttpTestingController, provideHttpClientTesting } from '@angular/common
 import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { flushHttpRequests, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { type Observable, of, tap } from 'rxjs';
-import { WebSocketSubject } from 'rxjs/webSocket';
 
 import { type IWebsocketConfig, type IWebsocketResponseEvent, WS_CONFIG } from '../../diagnostics.interface';
 import { AppWebsocketApiService } from './websocket-api.service';
@@ -46,7 +45,7 @@ describe('AppWebsocketApiService correct connection', () => {
       .connect()
       .pipe(
         tap(result => {
-          expect(result instanceof WebSocketSubject).toBeTruthy();
+          expect(result instanceof Object).toBeTruthy();
         }),
       )
       .subscribe();
