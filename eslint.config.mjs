@@ -5,7 +5,7 @@ import angularEslint from 'angular-eslint';
 import { defineConfig } from 'eslint/config';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import compat from 'eslint-plugin-compat';
-import cypressPlugin from 'eslint-plugin-cypress/flat';
+import cypressPlugin from 'eslint-plugin-cypress';
 import eslintComments from 'eslint-plugin-eslint-comments';
 import jsonc from 'eslint-plugin-jsonc';
 import prettier from 'eslint-plugin-prettier';
