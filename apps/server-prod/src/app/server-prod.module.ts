@@ -31,7 +31,7 @@ import { environment } from '../environments/environment';
       serveRoot: '',
       rootPath: environment.production
         ? path.join(__dirname, 'assets')
-        : path.join(__dirname, '../', '../', '../', 'dist/', 'apps/', 'client'),
+        : path.join(__dirname, '../', '../', '../', 'dist/', 'apps/', 'client/', 'browser'),
     }),
   ],
 })
