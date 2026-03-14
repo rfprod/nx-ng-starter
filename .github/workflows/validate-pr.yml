@@ -35,12 +35,14 @@ jobs:
       - name: Setup environment
         uses: ./.github/actions/setup-environment
 
-      - name: Validate commit messages
-        if: ${{ github.event.pull_request.user.login != 'dependabot[bot]' }}
+      - name: Checkout branches for checks
         run: |
           git checkout -b premerge
           git fetch origin main:main
-          npx --no-install commitlint --from main
+
+      - name: Validate commit messages
+        if: ${{ github.event.pull_request.user.login != 'dependabot[bot]' }}
+        run: npx --no-install commitlint --from main
 
       - name: Validate contribution size
         if: ${{ github.event.pull_request.user.login != 'dependabot[bot]' }}
@@ -290,6 +292,11 @@ jobs:
           BRANCH: ${{ github.event.pull_request.head.ref }}
           EVENT_TYPE: publish_packages
           DRY_RUN: true
+          PUBLISH_CLIENT_D3_CHARTS: ${{ fromJSON(needs.checks.outputs.changes).packageCharts == 'true' }}
+          PUBLISH_CLIENT_GUIDED_TOUR: ${{ fromJSON(needs.checks.outputs.changes).packageGuidedTour == 'true' }}
+          PUBLISH_CLIENT_PWA_OFFLINE: ${{ fromJSON(needs.checks.outputs.changes).packagePwaOffline == 'true' }}
+          PUBLISH_CLIENT_UTIL_ELIZA: ${{ fromJSON(needs.checks.outputs.changes).packageEliza == 'true' }}
+          PUBLISH_BACKEND_DIAGNOSTICS: ${{ fromJSON(needs.checks.outputs.changes).packageBackendDiagnostics == 'true' }}
         run: |
           echo "### :rocket: Publish Packages (dry run)" >> $GITHUB_STEP_SUMMARY
           echo "BRANCH: ${BRANCH}" >> $GITHUB_STEP_SUMMARY
@@ -305,7 +312,12 @@ jobs:
             "event_type": "${EVENT_TYPE}",
             "client_payload": {
               "ref": "${BRANCH}",
-              "dry_run": "${DRY_RUN}"
+              "dry_run": "${DRY_RUN}",
+              "publish-client-d3-charts": "${PUBLISH_CLIENT_D3_CHARTS}",
+              "publish-client-guided-tour": "${PUBLISH_CLIENT_GUIDED_TOUR}",
+              "publish-client-pwa-offline": "${PUBLISH_CLIENT_PWA_OFFLINE}",
+              "publish-client-util-eliza": "${PUBLISH_CLIENT_UTIL_ELIZA}",
+              "publish-backend-diagnostics": "${PUBLISH_BACKEND_DIAGNOSTICS}"
             }
           }
           EOF

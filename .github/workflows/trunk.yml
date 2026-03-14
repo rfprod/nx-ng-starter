@@ -158,7 +158,6 @@ jobs:
           PUBLISH_CLIENT_PWA_OFFLINE: ${{ fromJSON(needs.checks.outputs.changes).packagePwaOffline == 'true' }}
           PUBLISH_CLIENT_UTIL_ELIZA: ${{ fromJSON(needs.checks.outputs.changes).packageEliza == 'true' }}
           PUBLISH_BACKEND_DIAGNOSTICS: ${{ fromJSON(needs.checks.outputs.changes).packageBackendDiagnostics == 'true' }}
-
         run: |
           gh api \
             -X POST \

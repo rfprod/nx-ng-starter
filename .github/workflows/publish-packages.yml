@@ -175,7 +175,7 @@ jobs:
 
   publish-client-d3-charts:
     needs: checks
-    if: ${{ needs.checks.outputs.origin == 'true' && (needs.checks.outputs.dry-run == 'true' || needs.checks.outputs.publish-client-d3-charts == 'true') }}
+    if: ${{ needs.checks.outputs.origin == 'true' && needs.checks.outputs.publish-client-d3-charts == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -196,7 +196,7 @@ jobs:
 
   publish-client-guided-tour:
     needs: checks
-    if: ${{ needs.checks.outputs.origin == 'true' && (needs.checks.outputs.dry-run == 'true' || needs.checks.outputs.publish-client-guided-tour == 'true') }}
+    if: ${{ needs.checks.outputs.origin == 'true' && needs.checks.outputs.publish-client-guided-tour == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -217,7 +217,7 @@ jobs:
 
   publish-client-pwa-offline:
     needs: checks
-    if: ${{ needs.checks.outputs.origin == 'true' && (needs.checks.outputs.dry-run == 'true' || needs.checks.outputs.publish-client-pwa-offline == 'true') }}
+    if: ${{ needs.checks.outputs.origin == 'true' && needs.checks.outputs.publish-client-pwa-offline == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -238,7 +238,7 @@ jobs:
 
   publish-client-util-eliza:
     needs: checks
-    if: ${{ needs.checks.outputs.origin == 'true' && (needs.checks.outputs.dry-run == 'true' || needs.checks.outputs.publish-client-util-eliza == 'true') }}
+    if: ${{ needs.checks.outputs.origin == 'true' && needs.checks.outputs.publish-client-util-eliza == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
@@ -259,7 +259,7 @@ jobs:
 
   publish-backend-diagnostics:
     needs: checks
-    if: ${{ needs.checks.outputs.origin == 'true' && (needs.checks.outputs.dry-run == 'true' || needs.checks.outputs.publish-backend-diagnostics == 'true') }}
+    if: ${{ needs.checks.outputs.origin == 'true' && needs.checks.outputs.publish-backend-diagnostics == 'true' }}
     runs-on: ubuntu-latest
 
     steps:
