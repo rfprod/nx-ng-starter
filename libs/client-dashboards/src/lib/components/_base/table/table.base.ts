@@ -16,7 +16,7 @@ export abstract class AppTableBase<T> {
   public columns = signal<IDashboardTableConfig<T>['columns']>([]);
 
   /** Displayed tale columns. */
-  public displayedColumns = signal<IDashboardTableConfig<T>['displayedColumns']>(this.columns().map(item => item.name));
+  public displayedColumns = signal(this.columns().map(item => item.name));
 
   /** Table's data source. */
   public dataSource = signal<typeof this.config.data>([]);

@@ -290,7 +290,7 @@ const drawBarsAndSetPointerEvents = (
  * @returns the chart configuration
  */
 export const drawBarChart = (container: ElementRef<HTMLDivElement>, data: TBarChartData, options?: Partial<IBarChartOptions>) => {
-  const config: IBarChartOptions = generateConfiguration<IBarChartOptions>(defaultBarChartConfig, options, {});
+  const config: IBarChartOptions = generateConfiguration(defaultBarChartConfig, options, {});
 
   const { g } = createContainer(container, config);
 

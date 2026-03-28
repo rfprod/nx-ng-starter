@@ -367,7 +367,7 @@ export const drawLineChart = (
   datasetLabels: string[],
   options?: Partial<ILineChartOptions>,
 ) => {
-  const config: ILineChartOptions = generateConfiguration<ILineChartOptions>(defaultLineChartConfig, options, {});
+  const config: ILineChartOptions = generateConfiguration(defaultLineChartConfig, options, {});
 
   const { g } = createContainer(container, config);
 

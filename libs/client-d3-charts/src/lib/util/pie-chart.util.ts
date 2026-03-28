@@ -56,7 +56,7 @@ const createContainer = (container: ElementRef<HTMLDivElement>, config: IPieChar
  * @returns the chart configuration
  */
 export const drawPieChart = (container: ElementRef<HTMLDivElement>, data: IPieChartDataNode[], options?: Partial<IPieChartOptions>) => {
-  const config: IPieChartOptions = generateConfiguration<IPieChartOptions>(defaultPieChartConfig, options, {});
+  const config: IPieChartOptions = generateConfiguration(defaultPieChartConfig, options, {});
 
   const { g } = createContainer(container, config);
 

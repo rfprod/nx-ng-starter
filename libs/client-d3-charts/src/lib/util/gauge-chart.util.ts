@@ -178,7 +178,7 @@ export const drawGaugeChart = (
   data: IGaugeChartDataNode[],
   options?: Partial<IGaugeChartOptions>,
 ) => {
-  const config: IGaugeChartOptions = generateConfiguration<IGaugeChartOptions>(defaultGaugeChartConfig, options, {});
+  const config: IGaugeChartOptions = generateConfiguration(defaultGaugeChartConfig, options, {});
 
   const { g } = createContainer(container, config);
 

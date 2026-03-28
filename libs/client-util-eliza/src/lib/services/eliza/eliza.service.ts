@@ -31,7 +31,7 @@ export class AppElizaService {
   /**
    * Eliza configuration.
    */
-  private readonly config = signal<IElizaConfig>({ ...elizaInitialConfig });
+  private readonly config = signal({ ...elizaInitialConfig });
 
   /**
    * Publicly readable Eliza configuration.

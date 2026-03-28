@@ -323,7 +323,7 @@ const appendInvisibleTooltipCircles = (
  * @returns the hart configuration
  */
 export const drawRadarChart = (container: ElementRef<HTMLDivElement>, data: TRadarChartData, options?: Partial<IRadarChartOptions>) => {
-  const config: IRadarChartOptions = generateConfiguration<IRadarChartOptions>(defaultRadarChartConfig, options, {});
+  const config: IRadarChartOptions = generateConfiguration(defaultRadarChartConfig, options, {});
 
   const maxValue = Math.max(config.maxValue, d3.max(data, i => d3.max(i.map(o => o.value))) ?? 0);
   const axisNames = data[0].map((i, j) => i.axis);
