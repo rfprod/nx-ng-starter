@@ -27,7 +27,7 @@ export class AppApiEnvironment implements IApiEnvironment {
   public grpcUrl = '0.0.0.0:50051';
 
   constructor(input?: Partial<AppApiEnvironment>) {
-    initializeClassProperties<Partial<AppApiEnvironment>>(this, input);
+    initializeClassProperties(this, input);
   }
 }
 

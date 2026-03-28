@@ -325,11 +325,7 @@ export const drawForceDirectedChart = (
   data: IForceDirectedChartData,
   options?: Partial<IForceDirectedChartOptions>,
 ) => {
-  const config: IForceDirectedChartOptions = generateConfiguration<IForceDirectedChartOptions>(
-    defaultForceDirectedChartConfig,
-    options,
-    {},
-  );
+  const config: IForceDirectedChartOptions = generateConfiguration(defaultForceDirectedChartConfig, options, {});
 
   const { svg, g } = createContainer(container, config);
 

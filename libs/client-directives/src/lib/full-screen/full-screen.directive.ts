@@ -21,7 +21,7 @@ export class AppFullScreenDirective {
   private readonly originalStyles = signal<IStyleConfiguration | null>(null);
 
   /** Full screen state. */
-  public readonly enabled$ = signal<boolean>(false);
+  public readonly enabled$ = signal(false);
 
   /**
    * Create a copy of the original styles.

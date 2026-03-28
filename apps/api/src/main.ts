@@ -2,7 +2,6 @@ import { backendGrpcClientOptions } from '@app/backend-grpc';
 import { type INestApplication, Logger } from '@nestjs/common';
 import type { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { NestFactory } from '@nestjs/core';
-import type { ClientOptions } from '@nestjs/microservices';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { WsAdapter } from '@nestjs/platform-ws';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -54,7 +53,7 @@ const initAdmin = () => {
  */
 async function bootstrap(expressInstance: e.Express): Promise<INestApplication> {
   const adapter = new ExpressAdapter(expressInstance);
-  const app = await NestFactory.create<INestApplication<e.Express>>(AppApiModule, adapter);
+  const app: INestApplication<e.Express> = await NestFactory.create(AppApiModule, adapter);
   app.useWebSocketAdapter(new WsAdapter(app));
 
   app.setGlobalPrefix(globalPrefix);
@@ -68,7 +67,7 @@ async function bootstrap(expressInstance: e.Express): Promise<INestApplication> 
   app.use(compression.default({ threshold: 0, level: -1 }));
 
   const grpcClientOptions = backendGrpcClientOptions(environment);
-  app.connectMicroservice<ClientOptions>(grpcClientOptions);
+  app.connectMicroservice(grpcClientOptions);
   await app.startAllMicroservices();
 
   initAdmin();

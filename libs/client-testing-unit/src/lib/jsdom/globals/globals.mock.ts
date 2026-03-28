@@ -1,7 +1,7 @@
 import { vi } from 'vitest';
 
 function setupGlobalFetchMock() {
-  global.fetch = vi.fn().mockReturnValue(Promise.resolve<Response>({} as Response));
+  global.fetch = vi.fn().mockReturnValue(Promise.resolve({} as Response));
 }
 
 function setupGlobalUrlMock() {
