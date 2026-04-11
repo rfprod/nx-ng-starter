@@ -18,13 +18,17 @@ description: Checks the repository owner. The publish/deploy steps should not be
 
 inputs:
   repo-owner:
-    description: Repository owner
+    description: Repository owner.
     required: true
     default: ${{ github.repository_owner }}
   original-owner:
-    description: Original repository owner
+    description: Original repository owner.
     required: true
     default: 'rfprod'
+  bail-out:
+    description: Exit with an error code 1 if origin verification fails.
+    required: false
+    default: 'true'
 outputs:
   origin:
     description: Indicates that the repository owner is the original owner which means that it is not a fork. Has two values - 'true' if the repo owner is the original owner, 'false' if the repo owner is not the original owner, i.e. it is a fork.
@@ -39,15 +43,18 @@ runs:
       run: |
         echo "Checking repository owner..."
         ORIGIN='false'
-        if [ "$REPO_OWNER" == "$ORIGINAL_OWNER" ]; then ORIGIN='true'; fi
+        if [[ "$REPO_OWNER" == "$ORIGINAL_OWNER" ]]; then ORIGIN='true'; fi
         echo "origin=$(echo ${ORIGIN})" >> $GITHUB_OUTPUT
         echo "### :rocket: Check origin" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "| Metric | Value | " >> $GITHUB_STEP_SUMMARY
-        echo "| ------ | ----- | " >> $GITHUB_STEP_SUMMARY
-        echo "| REPO_OWNER | $REPO_OWNER |" >> $GITHUB_STEP_SUMMARY
+        echo "| Metric         | Value           | " >> $GITHUB_STEP_SUMMARY
+        echo "| -------------- | --------------- | " >> $GITHUB_STEP_SUMMARY
+        echo "| REPO_OWNER     | $REPO_OWNER     |" >> $GITHUB_STEP_SUMMARY
         echo "| ORIGINAL_OWNER | $ORIGINAL_OWNER |" >> $GITHUB_STEP_SUMMARY
-        echo "| ORIGIN | $ORIGIN |" >> $GITHUB_STEP_SUMMARY
+        echo "| BAIL_OUT       | $BAIL_OUT       |" >> $GITHUB_STEP_SUMMARY
+        echo "| ORIGIN         | $ORIGIN         |" >> $GITHUB_STEP_SUMMARY
+        if [[ "$ORIGIN" == "true" && "$BAIL_OUT" == "true" ]]; then exit 1; fi
       env:
         REPO_OWNER: ${{ inputs.repo-owner }}
         ORIGINAL_OWNER: ${{ inputs.original-owner }}
+        BAIL_OUT: ${{ inputs.bail.out }}
