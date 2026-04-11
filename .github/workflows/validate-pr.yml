@@ -23,7 +23,6 @@ jobs:
       projects-build: ${{ steps.check-projects-build.outputs.projects }}
       changes: ${{ steps.check-changes.outputs.changes }}
       success: ${{ steps.check.outputs.success || 'true' }}
-      origin: ${{ steps.check-origin.outputs.origin }}
 
     steps:
       - name: Checkout sources
@@ -70,7 +69,6 @@ jobs:
           trunk: 'main'
 
       - name: Check origin
-        id: check-origin
         uses: ./.github/actions/check-origin
 
       - name: Set failure
@@ -272,7 +270,7 @@ jobs:
 
   publish-packages-dry-run:
     needs: checks
-    if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packages == 'true' }}
+    if: fromJSON(needs.checks.outputs.changes).packages == 'true'
     runs-on: ubuntu-latest
 
     permissions:

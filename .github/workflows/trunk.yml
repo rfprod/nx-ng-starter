@@ -21,7 +21,6 @@ jobs:
     outputs:
       changes: ${{ steps.check-changes.outputs.changes }}
       deploy: ${{ steps.check-changes.outputs.deploy }}
-      origin: ${{ steps.check-origin.outputs.origin }}
 
     steps:
       - name: Checkout sources
@@ -37,7 +36,6 @@ jobs:
         uses: ./.github/actions/check-changes
 
       - name: Check origin
-        id: check-origin
         uses: ./.github/actions/check-origin
 
   trunk:
@@ -106,7 +104,7 @@ jobs:
         uses: ./.github/actions/dist-artifact-upload
 
       - name: Dispatch package publishing
-        if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packages == 'true' }}
+        if: fromJSON(needs.checks.outputs.changes).packages == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
@@ -127,7 +125,7 @@ jobs:
 
   deploy-apps:
     needs: [checks, trunk]
-    if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).deploy == 'true' }}
+    if: fromJSON(needs.checks.outputs.changes).deploy == 'true'
     uses: ./.github/workflows/deploy-apps.yml
     secrets: inherit
     with:
@@ -138,7 +136,7 @@ jobs:
 
   publish-packages:
     needs: [checks, trunk]
-    if: ${{ needs.checks.outputs.origin == 'true' && fromJSON(needs.checks.outputs.changes).packages == 'true' }}
+    if: fromJSON(needs.checks.outputs.changes).packages == 'true'
     runs-on: ubuntu-latest
 
     permissions:
