@@ -1,4 +1,3 @@
-import type { ILineChartOptions } from '../interfaces/line-chart.interface';
 import { defaultLineChartConfig } from './line-chart.util';
 
 describe('line-chart.util', () => {
@@ -25,6 +24,6 @@ describe('line-chart.util', () => {
       dateFormat: expect.any(String),
       labelTextWrapWidth: expect.any(Number),
       color: expect.any(Function),
-    } as ILineChartOptions);
+    });
   });
 });

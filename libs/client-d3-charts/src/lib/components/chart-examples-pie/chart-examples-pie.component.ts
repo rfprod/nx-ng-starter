@@ -35,11 +35,11 @@ export class AppChartExamplesPieComponent {
     } = {
       first: {
         chartTitle: 'Example pie chart 1',
-      } as Partial<IPieChartOptions>,
+      },
       second: {
         chartTitle: 'Example pie chart 2',
         innerRadius: 75,
-      } as Partial<IPieChartOptions>,
+      },
     };
     return options;
   }

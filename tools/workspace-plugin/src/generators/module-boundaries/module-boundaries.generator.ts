@@ -112,7 +112,7 @@ const projectSourceRoots = (
 
   const sourceRoots = projects
     .map(project => ({
-      scope: project.tags?.find(tag => tag.includes('scope')) ?? ('' as string),
+      scope: project.tags?.find(tag => tag.includes('scope')) ?? '',
       sourceRoot: project.sourceRoot ?? '',
     }))
     .filter(record => record.scope !== '' && record.sourceRoot !== '')

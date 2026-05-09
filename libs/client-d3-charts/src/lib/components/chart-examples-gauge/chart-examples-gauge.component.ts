@@ -37,13 +37,13 @@ export class AppChartExamplesGaugeComponent {
         return {
           key: 'value',
           y: (item + 1) * mod,
-        } as IGaugeChartDataNode;
+        };
       }),
       second: Array.from(Array(chunks.second).keys()).map(item => {
         return {
           key: 'value',
           y: item + 1,
-        } as IGaugeChartDataNode;
+        };
       }),
     };
     return data;
@@ -61,23 +61,23 @@ export class AppChartExamplesGaugeComponent {
     } = {
       first: {
         chartTitle: 'Example gauge chart 1',
-      } as Partial<IGaugeChartOptions>,
+      },
       second: {
         chartTitle: 'Example gauge chart 2',
         showLabels: false,
-      } as Partial<IGaugeChartOptions>,
+      },
       third: {
         chartTitle: 'Example gauge chart 3',
         showLabels: false,
         showTooltips: false,
         defaultColor: 'red',
-      } as Partial<IGaugeChartOptions>,
+      },
       fourth: {
         chartTitle: 'Example gauge chart 2',
         showLabels: false,
         valueFontSize: 30,
         padRad: 0,
-      } as Partial<IGaugeChartOptions>,
+      },
     };
     return options;
   }

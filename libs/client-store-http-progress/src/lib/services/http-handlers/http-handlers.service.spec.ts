@@ -213,11 +213,10 @@ describe('AppHttpHandlersService', () => {
       const testErrorNoCode = {
         message: 'gql error 1',
       } as GraphQLError;
+      const extensions: GraphQLError['extensions'] = { code: '400' };
       const testError = {
         message: 'gql error 2',
-        extensions: {
-          code: '400',
-        } as GraphQLError['extensions'],
+        extensions,
       } as GraphQLError;
       const errorRes = {
         graphQLErrors: [testErrorNoCode, testError] as readonly GraphQLFormattedError[],

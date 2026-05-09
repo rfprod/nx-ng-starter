@@ -1,5 +1,5 @@
 describe('setupJsdomGlobalMocks', () => {
-  const consoleBackup = { ...console } as Console;
+  const consoleBackup: Console = { ...console };
 
   it('setupJsdomGlobalMocks should override console,log an console.group methods', () => {
     const originalConsoleLogSpy = vi.spyOn(consoleBackup, 'log');
