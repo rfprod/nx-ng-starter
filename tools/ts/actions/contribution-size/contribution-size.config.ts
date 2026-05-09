@@ -10,7 +10,7 @@ export const actors: readonly IActorConfig[] = Object.freeze([
       maxFiles: Number(Infinity),
       deletions: Number(Infinity),
       insertions: Number(Infinity),
-    } as IThresholdsConfig,
+    },
   },
 ]);
 

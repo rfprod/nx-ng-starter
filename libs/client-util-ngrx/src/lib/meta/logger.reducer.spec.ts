@@ -10,7 +10,7 @@ describe('storeLogger', () => {
     const reducer = vi.fn();
     const logger = storeLogger(reducer as ActionReducer<unknown>);
     const action = { type: 'test action' };
-    logger(state as unknown, action);
+    logger(state, action);
     expect(reducer).toHaveBeenCalledWith(state, action);
     const expectedCalls = 2;
     expect(logSpy).toHaveBeenCalledTimes(expectedCalls);

@@ -36,3 +36,20 @@ updates:
       - 'DevOps'
       - 'Dependencies'
       - 'Maintenance'
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'weekly'
+      day: 'monday'
+      time: '04:00'
+    groups:
+      all-containers:
+        patterns:
+          - '*'
+    commit-message:
+      prefix: 'build'
+      include: 'scope'
+    open-pull-requests-limit: 0
+    labels:
+      - 'Dependencies'
+      - 'Maintenance'

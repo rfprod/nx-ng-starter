@@ -2,6 +2,8 @@ type TExtendedWindow = typeof window & {
   Cypress?: unknown;
 };
 
+const cyWin: TExtendedWindow = window;
+
 /**
  * Disallowing a client application to be bootstrapped in an iframe increases application security.
  * Exceptions:
@@ -12,7 +14,7 @@ type TExtendedWindow = typeof window & {
 export const applicationIsFramed = (
   self = window.self,
   top = window.top,
-  cypress = (window as TExtendedWindow).Cypress,
+  cypress = cyWin.Cypress,
   origin = window.location.origin,
 ): boolean => {
   const framed = self !== top;

@@ -44,7 +44,7 @@ export class AppDocMarkdownReferenceTreeComponent {
       const name = item.replace(/\/[A-Za-z]+\.md/, '/');
       const filePath = `${basePath}${item}`;
       const children: IMarkdownReferenceNode[] = [{ name: item.replace(/^.*\/(?=[A-Za-z]+\.md$)/, ''), filePath }];
-      return { name, children } as IMarkdownReferenceNode;
+      return { name, children };
     });
     this.showReadme(`md${mdFilePaths[0]}`);
     return treeNodes;

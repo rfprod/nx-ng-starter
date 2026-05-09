@@ -39,7 +39,7 @@ export class AppDiagnosticsService implements IDiagnosticsService {
   public ping(): IPingResult {
     return {
       message: 'Diagnostics service is online. Routes: /, /static.',
-    } as IPingResult;
+    };
   }
 
   public static(): Observable<TDiagData> {

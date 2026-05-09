@@ -73,7 +73,7 @@ describe('AppDocRootComponent', () => {
     bpObserver = TestBed.inject(BreakpointObserver);
     bpObserverSpy = vi.spyOn(bpObserver, 'observe');
     if (typeof bpState !== 'undefined') {
-      bpObserverSpy.mockReturnValue(of({ ...bpState } as BreakpointState));
+      bpObserverSpy.mockReturnValue(of({ ...bpState }));
     }
 
     fixture = TestBed.createComponent(AppDocRootComponent);

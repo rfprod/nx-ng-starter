@@ -67,7 +67,8 @@ const printPackageCommands = (tree: FsTree, search?: string) => {
   try {
     data = tree.read('package.json', 'utf8');
   } catch (error) {
-    logger.error(error as NodeJS.ErrnoException);
+    const err: NodeJS.ErrnoException = error as NodeJS.ErrnoException;
+    logger.error(err);
     process.exit(1);
   }
 

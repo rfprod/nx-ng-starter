@@ -33,4 +33,4 @@ export interface IAnchorButton {
  * @param href link href
  * @returns anchor button object
  */
-export const anchorButton = (title: string, icon: string, href: string) => ({ title, icon, href }) as IAnchorButton;
+export const anchorButton = (title: string, icon: string, href: string) => ({ title, icon, href });

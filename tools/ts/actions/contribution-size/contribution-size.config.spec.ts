@@ -10,7 +10,7 @@ describe('contribution-size.config', () => {
           maxFiles: Number(Infinity),
           deletions: Number(Infinity),
           insertions: Number(Infinity),
-        } as IThresholdsConfig,
+        },
       },
     ]);
     expect(actors).toEqual(expectation);

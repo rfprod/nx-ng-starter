@@ -22,7 +22,7 @@ describe('AppHttpApiEffects', () => {
       {
         provide: AppHttpApiService,
         useValue: {
-          ping: () => of({ message: 'test' } as IPingResponse),
+          ping: () => of({ message: 'test' }),
         },
       },
     ],
