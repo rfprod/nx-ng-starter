@@ -1450,7 +1450,7 @@ __metadata:
     web-animations-js: "npm:2.3.2"
     webpack: "npm:5.106.2"
     webpack-bundle-analyzer: "npm:5.3.0"
-    webpack-dev-server: "npm:5.2.3"
+    webpack-dev-server: "npm:5.2.4"
     webpack-merge: "npm:6.0.1"
     webpack-node-externals: "npm:3.0.0"
     webpack-sources: "npm:3.4.1"
@@ -36333,6 +36333,51 @@ __metadata:
   bin:
     webpack-dev-server: bin/webpack-dev-server.js
   checksum: 10c0/a716f1d509635ad9f2779baf242657740e6ad516ce210fe094cbf3b16f25f114e477c45a751ad2bbf1c601cbbe67b6ba9b8b43159b7c01fc3342c95b985fe963
+  languageName: node
+  linkType: hard
+
+"webpack-dev-server@npm:5.2.4":
+  version: 5.2.4
+  resolution: "webpack-dev-server@npm:5.2.4"
+  dependencies:
+    "@types/bonjour": "npm:^3.5.13"
+    "@types/connect-history-api-fallback": "npm:^1.5.4"
+    "@types/express": "npm:^4.17.25"
+    "@types/express-serve-static-core": "npm:^4.17.21"
+    "@types/serve-index": "npm:^1.9.4"
+    "@types/serve-static": "npm:^1.15.5"
+    "@types/sockjs": "npm:^0.3.36"
+    "@types/ws": "npm:^8.5.10"
+    ansi-html-community: "npm:^0.0.8"
+    bonjour-service: "npm:^1.2.1"
+    chokidar: "npm:^3.6.0"
+    colorette: "npm:^2.0.10"
+    compression: "npm:^1.8.1"
+    connect-history-api-fallback: "npm:^2.0.0"
+    express: "npm:^4.22.1"
+    graceful-fs: "npm:^4.2.6"
+    http-proxy-middleware: "npm:^2.0.9"
+    ipaddr.js: "npm:^2.1.0"
+    launch-editor: "npm:^2.6.1"
+    open: "npm:^10.0.3"
+    p-retry: "npm:^6.2.0"
+    schema-utils: "npm:^4.2.0"
+    selfsigned: "npm:^5.5.0"
+    serve-index: "npm:^1.9.1"
+    sockjs: "npm:^0.3.24"
+    spdy: "npm:^4.0.2"
+    webpack-dev-middleware: "npm:^7.4.2"
+    ws: "npm:^8.18.0"
+  peerDependencies:
+    webpack: ^5.0.0
+  peerDependenciesMeta:
+    webpack:
+      optional: true
+    webpack-cli:
+      optional: true
+  bin:
+    webpack-dev-server: bin/webpack-dev-server.js
+  checksum: 10c0/42f8afe11b7bfe65d72e30d861ddf1e4d05f27202c4c1162d204cb41a4a858dffc91c5a02bf44ec08acc8c02b4a57aaf46924ec12a5e5b97c307991379282669
   languageName: node
   linkType: hard
 
