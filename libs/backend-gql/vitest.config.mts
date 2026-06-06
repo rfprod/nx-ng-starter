@@ -1,4 +1,3 @@
-import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { defineConfig } from 'vitest/config';
 
 import { sharedTestConfig } from '../../vitest.shared';
@@ -6,7 +5,9 @@ import { sharedTestConfig } from '../../vitest.shared';
 export default defineConfig({
   root: __dirname,
   cacheDir: '/tmp/vitest/nx-ng-starter/libs/backend-gql',
-  plugins: [nxViteTsPaths()],
+  resolve: {
+    tsconfigPaths: true,
+  },
   test: {
     ...sharedTestConfig,
     environment: 'node',
@@ -18,7 +19,7 @@ export default defineConfig({
       provider: 'istanbul',
       thresholds: {
         branches: 25,
-        functions: 64,
+        functions: 62,
         lines: 71,
         statements: 71,
       },

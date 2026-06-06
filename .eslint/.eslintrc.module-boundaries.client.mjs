@@ -17,10 +17,6 @@ export const constraints = [
     sourceTag: 'scope:documentation',
   },
   {
-    onlyDependOnLibsWithTags: ['scope:client-testing-e2e', 'scope:client-util'],
-    sourceTag: 'scope:documentation-e2e',
-  },
-  {
     onlyDependOnLibsWithTags: ['scope:client-material', 'scope:client-util', 'scope:client-util-ngrx'],
     sourceTag: 'scope:client-testing-unit',
   },
@@ -56,7 +52,6 @@ export const constraints = [
       'scope:client-translate',
       'scope:client-testing-unit',
       'scope:client-util',
-      'scope:proto',
     ],
     sourceTag: 'scope:client-store',
   },
@@ -152,7 +147,6 @@ export const constraints = [
       'scope:client-store-user',
       'scope:client-testing-unit',
       'scope:client-util',
-      'scope:proto',
     ],
     sourceTag: 'scope:client-gql',
   },
@@ -162,8 +156,8 @@ export const constraints = [
       'scope:client-material',
       'scope:client-store',
       'scope:client-translate',
-      'scope:client-util-eliza',
       'scope:client-testing-unit',
+      'scope:client-util-eliza',
     ],
     sourceTag: 'scope:client-chatbot',
   },
@@ -267,10 +261,6 @@ export const constraints = [
       'scope:client-util-sentry',
     ],
     sourceTag: 'scope:elements',
-  },
-  {
-    onlyDependOnLibsWithTags: ['scope:client-testing-e2e', 'scope:client-util'],
-    sourceTag: 'scope:elements-e2e',
   },
   {
     onlyDependOnLibsWithTags: [],

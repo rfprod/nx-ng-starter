@@ -2,9 +2,18 @@
   "compilerOptions": {
     "declaration": true,
     "outDir": "../../dist/out-tsc",
-    "types": ["node"]
+    "types": ["node"],
+    "rootDir": "src"
   },
   "exclude": ["vite.config.mts", "vitest.config.mts", "src/**/*.spec.ts", "src/**/*.test.ts"],
   "extends": "./tsconfig.json",
-  "include": ["src/**/*.ts"]
+  "include": ["src/**/*.ts"],
+  "angularCompilerOptions": {
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
+  }
 }

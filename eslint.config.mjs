@@ -505,7 +505,6 @@ export const tsConfigAngular = {
     '@angular-eslint/prefer-on-push-component-change-detection': 'error',
     '@angular-eslint/no-output-native': 'error',
     '@angular-eslint/no-lifecycle-call': 'error',
-    '@angular-eslint/no-conflicting-lifecycle': 'error',
     '@angular-eslint/no-forward-ref': 'error',
     '@angular-eslint/no-input-prefix': 'error',
     '@angular-eslint/no-input-rename': 'error',

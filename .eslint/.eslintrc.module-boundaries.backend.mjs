@@ -10,16 +10,14 @@ export const constraints = [
     onlyDependOnLibsWithTags: [
       'scope:backend-auth',
       'scope:backend-diagnostics',
-      'scope:backend-grpc',
       'scope:backend-gql',
       'scope:backend-interfaces',
       'scope:backend-logger',
-      'scope:proto',
     ],
     sourceTag: 'scope:api',
   },
   {
-    onlyDependOnLibsWithTags: ['scope:backend-interfaces', 'scope:proto'],
+    onlyDependOnLibsWithTags: ['scope:backend-interfaces'],
     sourceTag: 'scope:backend-auth',
   },
   {
@@ -27,8 +25,8 @@ export const constraints = [
     sourceTag: 'scope:backend-diagnostics',
   },
   {
-    onlyDependOnLibsWithTags: ['scope:backend-interfaces', 'scope:proto'],
-    sourceTag: 'scope:backend-grpc',
+    onlyDependOnLibsWithTags: [],
+    sourceTag: 'scope:backend-logger',
   },
   {
     onlyDependOnLibsWithTags: ['scope:backend-interfaces'],
@@ -37,9 +35,5 @@ export const constraints = [
   {
     onlyDependOnLibsWithTags: [],
     sourceTag: 'scope:backend-interfaces',
-  },
-  {
-    onlyDependOnLibsWithTags: ['scope:proto'],
-    sourceTag: 'scope:backend-logger',
   },
 ];

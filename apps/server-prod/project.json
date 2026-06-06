@@ -19,15 +19,22 @@
           "optimization": true
         }
       },
-      "executor": "@nx/webpack:webpack",
+      "executor": "@nx/esbuild:esbuild",
       "options": {
-        "assets": ["apps/server-prod/src/assets"],
-        "compiler": "tsc",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/server-prod/src/assets",
+            "output": "assets"
+          }
+        ],
         "main": "apps/server-prod/src/main.ts",
         "outputPath": "dist/apps/server-prod",
-        "target": "node",
         "tsConfig": "apps/server-prod/tsconfig.app.json",
-        "webpackConfig": "apps/server-prod/webpack.config.js"
+        "platform": "node",
+        "format": ["cjs"],
+        "bundle": true,
+        "esbuildConfig": "apps/server-prod/esbuild.config.js"
       },
       "outputs": ["{options.outputPath}"]
     },

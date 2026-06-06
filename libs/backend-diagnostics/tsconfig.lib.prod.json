@@ -3,7 +3,16 @@
     "declaration": true,
     "declarationMap": true,
     "target": "ES2022",
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "rootDir": "./src"
   },
-  "extends": "./tsconfig.lib.json"
+  "extends": "./tsconfig.lib.json",
+  "angularCompilerOptions": {
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
+  }
 }

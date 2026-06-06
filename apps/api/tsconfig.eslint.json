@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "outDir": "../../dist/apps/api",
+    "rootDir": "./src",
     "types": [
       "../../node_modules/vite/client",
       "../../node_modules/vitest/globals",

@@ -5,6 +5,9 @@ import { sharedTestConfig } from '../ts/vitest.shared';
 export default defineConfig({
   root: __dirname,
   cacheDir: '/tmp/vitest/nx-ng-starter/tools/workspace-plugin',
+  resolve: {
+    tsconfigPaths: true,
+  },
   test: {
     ...sharedTestConfig,
     environment: 'node',

@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "target": "ES2022",
-    "useDefineForClassFields": false
+    "outDir": "../../dist/apps/documentation",
+    "tsBuildInfoFile": "../../dist/apps/documentation/tsconfig.app.tsbuildinfo",
+    "moduleResolution": "bundler"
   },
   "exclude": ["**/test-setup.ts", "**/*.spec.ts", "**/*.mock.ts", "*.mts"],
   "extends": "./tsconfig.json",
-  "files": ["src/main.ts", "src/polyfills.ts"],
-  "include": ["src/app/**/*.ts"]
+  "files": ["./src/main.ts", "./src/polyfills.ts"],
+  "include": ["./src/app/**/*.ts"]
 }

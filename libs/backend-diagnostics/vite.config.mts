@@ -1,11 +1,11 @@
-import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
-import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { defineConfig } from 'vite';
 
 export default defineConfig(({ mode }) => ({
   root: __dirname,
   cacheDir: '/tmp/vite/nx-ng-starter/libs/backend-diagnostics',
-  plugins: [nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
+  resolve: {
+    tsconfigPaths: true,
+  },
   build: {
     outDir: '../../dist/libs/backend-diagnostics',
     emptyOutDir: true,

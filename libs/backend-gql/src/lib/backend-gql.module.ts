@@ -23,13 +23,18 @@ export class AppGqlModule {
       include: [AppGqlMatcompModule],
       playground: environment.production ? false : true,
       installSubscriptionHandlers: true,
-      autoSchemaFile:
-        environment.firebase || docker
-          ? false
-          : environment.production
-            ? join(process.cwd(), 'schema.gql')
-            : join(process.cwd(), 'libs/backend-gql/schema.gql'),
-      typePaths: environment.firebase || docker ? [join(process.cwd(), 'schema.gql')] : void 0,
+      // Schema-first mode (read from prebuilt file)
+      ...(environment.firebase || docker
+        ? {
+            autoSchemaFile: false,
+            typePaths: [join(process.cwd(), environment.production ? 'schema.gql' : 'libs/backend-gql/schema.gql')],
+          }
+        : {
+            // Code-first mode (generate from decorators)
+            autoSchemaFile: true,
+            typePaths: [join(process.cwd(), environment.production ? 'schema.gql' : 'libs/backend-gql/schema.gql')],
+          }),
+      //
       sortSchema: true,
       subscriptions: {
         'graphql-ws': {

@@ -1,19 +1,24 @@
 {
   "angularCompilerOptions": {
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
   },
   "compilerOptions": {
+    "composite": true,
     "declaration": true,
     "declarationMap": true,
-    "inlineSources": true,
     "moduleResolution": "bundler",
-    "outDir": "../../dist/out-tsc",
-    "sourceMap": true,
     "target": "ES2022",
+    "outDir": "../../dist/libs/client-util-eliza",
+    "tsBuildInfoFile": "../../dist/libs/client-util-eliza/tsconfig.lib.tsbuildinfo",
+    "rootDir": "./src",
     "useDefineForClassFields": false
   },
-  "exclude": ["src/test-setup.ts", "**/*.spec.ts", "**/*.mock.ts", "**/*.stories.ts", "*.mts"],
+  "exclude": ["./src/test-setup.ts", "**/*.spec.ts", "**/*.mock.ts", "**/*.stories.ts", "*.mts"],
   "extends": "./tsconfig.json",
-  "include": ["**/*.ts"]
+  "include": ["./src/**/*.ts"]
 }

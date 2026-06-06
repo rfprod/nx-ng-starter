@@ -23,7 +23,7 @@ export class AppMatcompResolver {
   @Query(() => AppMatcompModel)
   @UseGuards(AppMatcompGuard)
   public async matcomp(
-    @Args('id')
+    @Args('id', { type: () => String })
     id: string,
   ) {
     const matcomp = this.service.findOneById(id);
@@ -35,7 +35,7 @@ export class AppMatcompResolver {
 
   @Mutation(() => AppMatcompModel)
   @UseGuards(AppMatcompGuard)
-  public async create(@Args('input') args: AppMatcompInputDto) {
+  public async create(@Args('input', { type: () => AppMatcompInputDto }) args: AppMatcompInputDto) {
     const createdMatcomp = this.service.create(args);
     const matcompSubscription: AppMatcompSubscription = new AppMatcompSubscription({ matcomp: createdMatcomp });
     void this.pubSub.publish('matcompCreated', matcompSubscription);
@@ -50,7 +50,7 @@ export class AppMatcompResolver {
 
   @Mutation(() => AppMatcompModel)
   @UseGuards(AppMatcompGuard)
-  public async remove(@Args('id') id: string) {
+  public async remove(@Args('id', { type: () => String }) id: string) {
     const removedMatcomp = this.service.remove(id);
     const matcompSubscription: AppMatcompSubscription = new AppMatcompSubscription({ matcomp: removedMatcomp });
     void this.pubSub.publish('matcompRemoved', matcompSubscription);

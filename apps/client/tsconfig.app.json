@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
-    "target": "ES2022",
-    "useDefineForClassFields": false
+    "outDir": "../../dist/apps/client",
+    "tsBuildInfoFile": "../../dist/apps/client/tsconfig.app.tsbuildinfo",
+    "moduleResolution": "bundler"
   },
   "exclude": ["**/test-setup.ts", "**/*.spec.ts", "*.mts"],
   "extends": "./tsconfig.json",

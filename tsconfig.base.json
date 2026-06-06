@@ -2,8 +2,6 @@
   "angularCompilerOptions": {
     "annotateForClosureCompiler": true,
     "enableI18nLegacyMessageIdFormat": false,
-    "enableIvy": true,
-    "enableResourceInlining": true,
     "extendedDiagnostics": {
       "checks": {
         "invalidBananaInBox": "error",
@@ -11,7 +9,6 @@
       },
       "defaultCategory": "error"
     },
-    "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
@@ -21,7 +18,7 @@
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "declaration": false,
-    "downlevelIteration": true,
+    "sourceMap": false,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -43,7 +40,6 @@
       "@app/backend-auth": ["libs/backend-auth/src/index.ts"],
       "@app/backend-diagnostics": ["libs/backend-diagnostics/src/index.ts"],
       "@app/backend-gql": ["libs/backend-gql/src/index.ts"],
-      "@app/backend-grpc": ["libs/backend-grpc/src/index.ts"],
       "@app/backend-interfaces": ["libs/backend-interfaces/src/index.ts"],
       "@app/backend-logger": ["libs/backend-logger/src/index.ts"],
       "@app/client-chatbot": ["libs/client-chatbot/src/index.ts"],
@@ -79,14 +75,12 @@
       "@app/client-util-ngrx": ["libs/client-util-ngrx/src/index.ts"],
       "@app/client-util-security": ["libs/client-util-security/src/index.ts"],
       "@app/client-util-sentry": ["libs/client-util-sentry/src/index.ts"],
-      "@app/proto": ["libs/proto/src/index.ts"],
       "@app/workspace-plugin": ["tools/workspace-plugin/src/index.ts"],
       "@rfprodz/backend-diagnostics": ["libs/backend-diagnostics/src/index.ts"],
       "@rfprodz/client-util-eliza": ["libs/client-util-eliza/src/index.ts"],
       "@rfprodz/d3-charts": ["libs/client-d3-charts/src/index.ts"]
     },
     "removeComments": true,
-    "rootDir": ".",
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "strict": true,
@@ -94,7 +88,8 @@
     "strictNullChecks": true,
     "target": "ES2022",
     "typeRoots": ["node_modules/@types"],
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "noUncheckedSideEffectImports": true
   },
   "exclude": [
     "node_modules",
@@ -104,7 +99,6 @@
     ".firebase",
     ".github",
     ".husky",
-    ".storybook",
     ".vscode",
     "android",
     "changelog",
@@ -112,9 +106,6 @@
     "dist",
     "documentation",
     "functions",
-    "libs/proto/src/lib/grpc",
-    "libs/proto/src/lib/ts",
-    "tools/proto",
     "tools/shell"
   ]
 }
