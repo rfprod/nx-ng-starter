@@ -1,3 +1,5 @@
+import { Field, ID, ObjectType } from '@nestjs/graphql';
+
 import { initializeClassProperties } from '../../utils/class.util';
 import type { AppMatcompArgs } from './dto/matcomp.args';
 import type { AppMatcompInput } from './matcomp-input.interface';
@@ -22,13 +24,18 @@ export interface IMatcompMutation {
 /**
  * Matcomp interface with initialization.
  */
+@ObjectType()
 export class AppMatcomp implements AppMatcompModel {
+  @Field(() => ID)
   public id = '';
 
+  @Field(() => String)
   public name = '';
 
+  @Field(() => String)
   public description = '';
 
+  @Field(() => Date)
   public creationDate = new Date();
 
   constructor(input?: AppMatcomp | AppMatcompInput) {

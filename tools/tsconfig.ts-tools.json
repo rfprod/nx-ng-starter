@@ -5,9 +5,11 @@
     "lib": ["ES2022", "DOM"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "outDir": "../dist/out-tsc",
+    "outDir": "../dist/tools/ts",
+    "tsBuildInfoFile": "../dist/tools/ts/tsconfig.ts-tools.tsbuildinfo",
     "target": "ES2022",
-    "types": ["node"]
+    "types": ["node"],
+    "rootDir": "ts"
   },
   "exclude": ["vite.config.mts", "vitest.config.mts", "**/*.spec.ts"],
   "extends": "./tsconfig.json",

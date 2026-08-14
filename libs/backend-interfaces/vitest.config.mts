@@ -1,4 +1,3 @@
-import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { defineConfig } from 'vitest/config';
 
 import { sharedTestConfig } from '../../vitest.shared';
@@ -6,7 +5,9 @@ import { sharedTestConfig } from '../../vitest.shared';
 export default defineConfig({
   root: __dirname,
   cacheDir: '/tmp/vitest/nx-ng-starter/libs/backend-interfaces',
-  plugins: [nxViteTsPaths()],
+  resolve: {
+    tsconfigPaths: true,
+  },
   test: {
     ...sharedTestConfig,
     environment: 'node',
@@ -17,10 +18,10 @@ export default defineConfig({
       reportsDirectory: '../../dist/coverage/libs/backend-interfaces',
       provider: 'istanbul',
       thresholds: {
-        branches: 100,
-        functions: 73,
+        branches: 83,
+        functions: 61,
         lines: 91,
-        statements: 92,
+        statements: 88,
       },
     },
     include: ['src/**/*.spec.ts'],

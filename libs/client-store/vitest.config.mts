@@ -1,5 +1,4 @@
 import angular from '@analogjs/vite-plugin-angular';
-import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { defineConfig } from 'vitest/config';
 
 import { sharedTestConfig } from '../../vitest.shared';
@@ -7,7 +6,10 @@ import { sharedTestConfig } from '../../vitest.shared';
 export default defineConfig({
   root: __dirname,
   cacheDir: '/tmp/vitest/nx-ng-starter/libs/client-store',
-  plugins: [angular(), nxViteTsPaths()],
+  plugins: [angular()],
+  resolve: {
+    tsconfigPaths: true,
+  },
   test: {
     ...sharedTestConfig,
     environment: 'jsdom',

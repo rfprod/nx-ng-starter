@@ -1,19 +1,16 @@
+/** Internal type. DO NOT USE DIRECTLY. */
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type IScalars = {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
+  ID: { input: string; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
   /** `Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. */
-  Timestamp: { input: any; output: any; }
+  Timestamp: { input: unknown; output: unknown };
 };
 
 export interface IAppMatcompInputDto {
@@ -35,11 +32,9 @@ export interface IMutation {
   remove: IAppMatcompModel;
 }
 
-
 export type IMutationCreateArgs = {
   input: IAppMatcompInputDto;
 };
-
 
 export type IMutationRemoveArgs = {
   id: IScalars['String']['input'];
@@ -51,11 +46,9 @@ export interface IQuery {
   matcomps: Array<IAppMatcompModel>;
 }
 
-
 export type IQueryMatcompArgs = {
   id: IScalars['String']['input'];
 };
-
 
 export type IQueryMatcompsArgs = {
   skip?: IScalars['Int']['input'];

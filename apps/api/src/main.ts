@@ -1,4 +1,5 @@
-import { backendGrpcClientOptions } from '@app/backend-grpc';
+import 'reflect-metadata';
+
 import { type INestApplication, Logger } from '@nestjs/common';
 import type { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 import { NestFactory } from '@nestjs/core';
@@ -8,7 +9,6 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as compression from 'compression';
 import dotenv from 'dotenv';
 import e from 'express';
-import * as admin from 'firebase-admin';
 import * as functions from 'firebase-functions';
 
 import { AppApiModule } from './app/api.module';
@@ -32,22 +32,6 @@ const globalPrefix = 'api';
  */
 dotenv.config();
 
-const initAdmin = () => {
-  const localCredential = process.env['FIRE_API_CREDENTIAL'];
-  const localDatabaseURL = process.env['FIRE_DATABASE_URL'];
-
-  if (typeof localCredential !== 'undefined' && typeof localDatabaseURL !== 'undefined') {
-    const cert = JSON.parse(localCredential !== '' ? localCredential : '{}');
-
-    admin.initializeApp({
-      credential: admin.credential.cert(cert),
-      databaseURL: localDatabaseURL,
-    });
-  } else {
-    admin.initializeApp();
-  }
-};
-
 /**
  * Bootstraps server.
  */
@@ -65,12 +49,6 @@ async function bootstrap(expressInstance: e.Express): Promise<INestApplication> 
   app.enableCors(corsOptions);
 
   app.use(compression.default({ threshold: 0, level: -1 }));
-
-  const grpcClientOptions = backendGrpcClientOptions(environment);
-  app.connectMicroservice(grpcClientOptions);
-  await app.startAllMicroservices();
-
-  initAdmin();
 
   const config = new DocumentBuilder().setTitle(environment.appName).setVersion('1.0').build();
   const document = SwaggerModule.createDocument(app, config);

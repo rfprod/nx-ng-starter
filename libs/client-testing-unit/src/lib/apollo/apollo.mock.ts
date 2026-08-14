@@ -31,15 +31,11 @@ export interface IDocumentNode<
 
 class AppMockApolloBase {
   public query = vi.fn().mockResolvedValue({
-    data: {
-      /* mock data */
-    },
+    data: {/* mock data */},
   });
 
   public mutate = vi.fn().mockResolvedValue({
-    data: {
-      /* mock mutation data */
-    },
+    data: {/* mock mutation data */},
   });
 
   public watchQuery = vi.fn().mockReturnValue({

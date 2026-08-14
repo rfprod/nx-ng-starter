@@ -1,4 +1,3 @@
-import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { defineConfig } from 'vitest/config';
 
 import { sharedTestConfig } from '../../vitest.shared';
@@ -6,7 +5,9 @@ import { sharedTestConfig } from '../../vitest.shared';
 export default defineConfig({
   root: __dirname,
   cacheDir: '/tmp/vitest/nx-ng-starter/libs/backend-logger',
-  plugins: [nxViteTsPaths()],
+  resolve: {
+    tsconfigPaths: true,
+  },
   test: {
     ...sharedTestConfig,
     environment: 'node',

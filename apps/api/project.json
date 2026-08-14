@@ -30,9 +30,15 @@
           "optimization": true
         }
       },
-      "executor": "@nx/webpack:webpack",
+      "executor": "@nx/esbuild:esbuild",
       "options": {
-        "assets": ["apps/api/src/assets"],
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/api/src/assets",
+            "output": "assets"
+          }
+        ],
         "budgets": [
           {
             "maximumError": "15mb",
@@ -41,12 +47,13 @@
           }
         ],
         "buildLibsFromSource": true,
-        "compiler": "tsc",
         "main": "apps/api/src/main.ts",
         "outputPath": "dist/apps/api",
-        "target": "node",
         "tsConfig": "apps/api/tsconfig.app.json",
-        "webpackConfig": "apps/api/webpack.config.js"
+        "platform": "node",
+        "format": ["cjs"],
+        "bundle": true,
+        "esbuildConfig": "apps/api/esbuild.config.js"
       }
     },
     "lint": {

@@ -11,13 +11,7 @@ export function flushHttpRequests<T>(
   verify = false,
   matcher: THttpRequestMatcher<T> = (req: HttpRequest<T>): boolean => true,
   responseData:
-    | string
-    | number
-    | Record<string, unknown>
-    | ArrayBuffer
-    | Blob
-    | Array<string | number | Record<string, unknown> | null>
-    | null = {},
+    string | number | Record<string, unknown> | ArrayBuffer | Blob | Array<string | number | Record<string, unknown> | null> | null = {},
   produceError?: boolean,
 ): void {
   httpController.match(matcher).forEach((req: TestRequest) => {

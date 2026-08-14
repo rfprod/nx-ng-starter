@@ -1,12 +1,13 @@
 import angular from '@analogjs/vite-plugin-angular';
-import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
-import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { defineConfig } from 'vite';
 
-export default defineConfig(({mode}) => ({
+export default defineConfig(({ mode }) => ({
   root: __dirname,
   cacheDir: '/tmp/vite/nx-ng-starter/apps/documentation',
-  plugins: [angular(), nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
+  plugins: [angular()],
+  resolve: {
+    tsconfigPaths: true,
+  },
   build: {
     outDir: '../../dist/apps/documentation',
     emptyOutDir: true,
@@ -14,6 +15,6 @@ export default defineConfig(({mode}) => ({
     commonjsOptions: { transformMixedEsModules: true },
   },
   define: {
-    ['import.meta.vitest']: mode !== 'production'
-  }
+    ['import.meta.vitest']: mode !== 'production',
+  },
 }));

@@ -1,9 +1,16 @@
 {
   "angularCompilerOptions": {
-    "compilationMode": "partial"
+    "compilationMode": "partial",
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
   },
   "compilerOptions": {
     "declarationMap": false,
+    "rootDir": "./src",
     "target": "ES2022",
     "useDefineForClassFields": false
   },

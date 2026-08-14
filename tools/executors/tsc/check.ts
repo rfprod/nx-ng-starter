@@ -11,7 +11,30 @@ export default async function check(options: IExecutorOptions, context: Executor
     throw new Error('Project name is not defined.');
   }
 
-  execFileSync('tsc', ['-p', path.join(context.cwd, options.tsConfig)], {
+  const tsConfigPath = path.join(context.cwd, options.tsConfig);
+
+  execFileSync('tsc', ['-b', tsConfigPath], {
+    stdio: 'inherit',
+    cwd: process.cwd(),
+    env: process.env,
+    shell: true,
+  });
+
+  execFileSync('rm', ['-rf', path.join(context.cwd, options.tsConfig.replace(/tsconfig\.[a-z]+\.json/, ''), '**/', '*.js')], {
+    stdio: 'inherit',
+    cwd: process.cwd(),
+    env: process.env,
+    shell: true,
+  });
+
+  execFileSync('rm', ['-rf', path.join(context.cwd, options.tsConfig.replace(/tsconfig\.[a-z]+\.json/, ''), '**/', '*.d.ts')], {
+    stdio: 'inherit',
+    cwd: process.cwd(),
+    env: process.env,
+    shell: true,
+  });
+
+  execFileSync('rm', ['-rf', path.join(context.cwd, options.tsConfig.replace(/tsconfig\.[a-z]+\.json/, ''), '**/', '*.d.ts.map')], {
     stdio: 'inherit',
     cwd: process.cwd(),
     env: process.env,

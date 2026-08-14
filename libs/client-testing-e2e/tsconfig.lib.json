@@ -1,9 +1,22 @@
 {
   "compilerOptions": {
-    "outDir": "../../dist/out-tsc",
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "../../dist/libs/client-testing-e2e",
+    "tsBuildInfoFile": "../../dist/libs/client-testing-e2e/tsconfig.lib.tsbuildinfo",
     "sourceMap": false,
+    "rootDir": "./src",
     "types": ["cypress", "node"]
   },
   "extends": "./tsconfig.json",
-  "include": ["**/*.ts"]
+  "include": ["./src/**/*.ts"],
+  "angularCompilerOptions": {
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
+  }
 }

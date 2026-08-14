@@ -2,11 +2,20 @@
   "compilerOptions": {
     "allowJs": true,
     "checkJs": true,
-    "outDir": "../dist/out-tsc",
+    "outDir": "../dist/tools",
+    "tsBuildInfoFile": "../dist/tools/tsconfig.tools.tsbuildinfo",
     "rootDir": ".",
     "types": ["node"]
   },
   "exclude": ["vite.config.mts", "vitest.config.mts", "**/*.spec.ts"],
   "extends": "./tsconfig.json",
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts"],
+  "angularCompilerOptions": {
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
+  }
 }

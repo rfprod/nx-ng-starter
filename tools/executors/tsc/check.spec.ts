@@ -44,7 +44,7 @@ describe('check', () => {
         const result = await check(options, context);
         expect(result).not.toMatchObject({ success: true });
       } catch (e) {
-        expect(childProcess.execFileSync).not.toHaveBeenCalledWith('tsc', ['-p', path.join(context.cwd, options.tsConfig)], {
+        expect(childProcess.execFileSync).not.toHaveBeenCalledWith('tsc', ['-b', path.join(context.cwd, options.tsConfig)], {
           stdio: 'inherit',
           cwd: process.cwd(),
           env: process.env,
@@ -60,7 +60,7 @@ describe('check', () => {
       const { context, options } = setup('test');
 
       const result = await check(options, context);
-      expect(childProcess.execFileSync).toHaveBeenCalledWith('tsc', ['-p', path.join(context.cwd, options.tsConfig)], {
+      expect(childProcess.execFileSync).toHaveBeenCalledWith('tsc', ['-b', path.join(context.cwd, options.tsConfig)], {
         stdio: 'inherit',
         cwd: process.cwd(),
         env: process.env,

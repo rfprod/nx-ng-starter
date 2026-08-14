@@ -1,18 +1,23 @@
 {
   "angularCompilerOptions": {
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
   },
   "compilerOptions": {
+    "composite": true,
     "declaration": true,
     "declarationMap": true,
-    "inlineSources": true,
     "moduleResolution": "bundler",
-    "outDir": "../../dist/out-tsc",
-    "sourceMap": true,
-    "target": "ES2022"
+    "target": "ES2022",
+    "outDir": "../../dist/libs/client-pwa-offline",
+    "tsBuildInfoFile": "../../dist/libs/client-pwa-offline/tsconfig.lib.tsbuildinfo",
+    "rootDir": "./src"
   },
-  "exclude": ["*.mts", "src/test-setup.ts", "**/*.spec.ts", "**/*.mock.ts"],
+  "exclude": ["*.mts", "./src/test-setup.ts", "**/*.spec.ts", "**/*.mock.ts"],
   "extends": "./tsconfig.json",
-  "include": ["**/*.ts"]
+  "include": ["./src/**/*.ts"]
 }
