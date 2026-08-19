@@ -161,7 +161,7 @@ jobs:
           echo "PUBLISH_BACKEND_DIAGNOSTICS: ${PUBLISH_BACKEND_DIAGNOSTICS}" >> $GITHUB_STEP_SUMMARY
 
       - name: Checkout sources
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ steps.variables.outputs.ref }}
 
@@ -178,7 +178,7 @@ jobs:
 
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ needs.checks.outputs.ref }}
 
@@ -199,7 +199,7 @@ jobs:
 
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ needs.checks.outputs.ref }}
 
@@ -220,7 +220,7 @@ jobs:
 
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ needs.checks.outputs.ref }}
 
@@ -241,7 +241,7 @@ jobs:
 
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ needs.checks.outputs.ref }}
 
@@ -262,7 +262,7 @@ jobs:
 
     steps:
       - name: Checkout sources
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           ref: ${{ needs.checks.outputs.ref }}
 
