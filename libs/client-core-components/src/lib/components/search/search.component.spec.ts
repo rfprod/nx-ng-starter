@@ -3,12 +3,14 @@ import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angula
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { newTestBedMetadata } from '@app/client-testing-unit';
 
+import { AppSearchService } from '../../services/search/search.service';
 import { AppSearchComponent } from './search.component';
 
 describe('AppSearchComponent', () => {
   const testBedConfig: TestModuleMetadata = newTestBedMetadata({
     imports: [MatAutocompleteModule],
     declarations: [AppSearchComponent],
+    providers: [AppSearchService],
     schemas: [NO_ERRORS_SCHEMA],
   });
 

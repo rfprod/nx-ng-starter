@@ -1,7 +1,7 @@
 @if (!tour.active) {
-  <button mat-raised-button color="accent" (click)="tour.next()">Start tour</button>
+  <button mat-raised-button (click)="tour.next()">Start tour</button>
 } @else {
-  <button mat-raised-button color="warn" (click)="tour.end()">End tour</button>
+  <button mat-raised-button (click)="tour.end()">End tour</button>
 }
 
 @if (tourConig$(); as config) {
