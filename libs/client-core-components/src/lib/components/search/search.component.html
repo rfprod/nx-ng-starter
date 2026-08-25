@@ -1,4 +1,4 @@
-<mat-form-field appearance="outline" subscriptSizing="dynamic" color="accent">
+<mat-form-field appearance="outline" subscriptSizing="dynamic">
   <mat-label>Search</mat-label>
 
   <input matInput [formControl]="control" [matAutocomplete]="auto" (click)="control.reset()" />
@@ -7,12 +7,33 @@
 
   <mat-autocomplete #auto="matAutocomplete">
     @for (option of filteredOptions | async; track option) {
-      <mat-option [value]="option.value" [disabled]="option.isActive()" (onSelectionChange)="selectOption(option.routerLink)">
+      <mat-option
+        [ngClass]="{ dim: !option.match }"
+        [value]="option.value"
+        [disabled]="option.isActive()"
+        (onSelectionChange)="selectOption(option.routerLink)"
+      >
         @if (option.icon) {
           <mat-icon>{{ option.icon }}</mat-icon>
         }
         {{ option.name }}
+        <div class="mat-caption">{{ option.description }}</div>
       </mat-option>
+
+      @for (child of option.children; track child) {
+        <mat-option
+          class="primary-marker"
+          [ngClass]="{ dim: !child.match }"
+          [value]="child.value"
+          [disabled]="child.isActive()"
+          (onSelectionChange)="selectOption(child.routerLink)"
+        >
+          @if (child.icon) {
+            <mat-icon class="material-icons-sm material-icons-sm-inline">{{ child.icon }}</mat-icon>
+          }
+          <small>{{ child.name }}</small>
+        </mat-option>
+      }
     }
   </mat-autocomplete>
 </mat-form-field>

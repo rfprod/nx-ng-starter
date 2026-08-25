@@ -9,17 +9,17 @@
   </mat-card-content>
 
   <mat-card-actions class="actions">
-    <button mat-button [disabled]="data.first" (click)="tour.previous()" color="primary">
+    <button mat-button [disabled]="data.first" (click)="tour.previous()">
       <mat-icon>chevron_left</mat-icon>
       Previous
     </button>
 
-    <button mat-button (click)="tour.end()" color="warn">
+    <button mat-button (click)="tour.end()">
       <mat-icon>close</mat-icon>
       End
     </button>
 
-    <button mat-button [disabled]="data.last" (click)="tour.next()" color="primary">
+    <button mat-button [disabled]="data.last" (click)="tour.next()">
       Next
       <mat-icon>chevron_right</mat-icon>
     </button>

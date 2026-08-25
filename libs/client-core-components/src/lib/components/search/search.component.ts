@@ -1,22 +1,35 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, HostBinding, inject, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
-import { Data, isActive, Route, Router, Routes } from '@angular/router';
-import { BehaviorSubject, combineLatest, defer, forkJoin, from, map, of, startWith, switchMap } from 'rxjs';
+import { isActive, IsActiveMatchOptions, Router } from '@angular/router';
+import {
+  BehaviorSubject,
+  combineLatest,
+  debounceTime,
+  defer,
+  distinctUntilChanged,
+  forkJoin,
+  from,
+  map,
+  of,
+  startWith,
+  switchMap,
+} from 'rxjs';
 
-interface ISearchOptions {
+import { AppSearchService, IParsedRoute } from '../../services/search/search.service';
+
+interface ISearchOption {
   name: string;
+  description: string;
   icon?: string;
   value: string;
   routerLink: string;
+  match: boolean;
   isActive: ReturnType<typeof isActive>;
+  children: Array<Omit<ISearchOption, 'children'>>;
 }
 
-interface IParsedRoute {
-  path: string;
-  outlet?: string;
-  data?: Data;
-}
+type TChild = Record<string, string | Pick<IsActiveMatchOptions, 'paths'>>;
 
 @Component({
   selector: 'app-search',
@@ -26,7 +39,11 @@ interface IParsedRoute {
   standalone: false,
 })
 export class AppSearchComponent implements AfterViewInit {
-  private readonly router = inject(Router);
+  readonly #config: { dedounceTime: number } = { dedounceTime: 175 };
+
+  readonly #router = inject(Router);
+
+  readonly #search = inject(AppSearchService);
 
   @HostBinding('class.density-3') public density = true;
 
@@ -40,16 +57,35 @@ export class AppSearchComponent implements AfterViewInit {
   public control = new FormControl('', { nonNullable: true });
 
   /** The search options state. */
-  private readonly optionsSubject = new BehaviorSubject<ISearchOptions[]>([]);
+  private readonly optionsSubject = new BehaviorSubject<ISearchOption[]>([]);
 
   /** The options value for the autocomplete. */
-  public readonly filteredOptions = combineLatest([this.control.valueChanges.pipe(startWith('')), this.optionsSubject.asObservable()]).pipe(
-    map(([value, options]) =>
-      options.filter(item => {
-        const searchTerm = value.toLowerCase();
-        return item.name.toLowerCase().includes(searchTerm) || item.value.toLowerCase().includes(searchTerm);
-      }),
-    ),
+  public readonly filteredOptions = combineLatest([
+    this.control.valueChanges.pipe(startWith(''), debounceTime(this.#config.dedounceTime), distinctUntilChanged()),
+    this.optionsSubject.asObservable(),
+  ]).pipe(
+    map(([value, options]) => {
+      const searchTerm = value.toLowerCase();
+      if (searchTerm.length === 0) {
+        return options;
+      }
+      return options
+        .filter(item => {
+          const match = item.name.toLowerCase().includes(searchTerm) || item.description.toLowerCase().includes(searchTerm);
+          const childMatch = item.children.some(
+            child => child.name.toLowerCase().includes(searchTerm) || child.description.toLowerCase().includes(searchTerm),
+          );
+          return match || childMatch;
+        })
+        .map(item => ({
+          ...item,
+          match: item.name.toLowerCase().includes(searchTerm) || item.description.toLowerCase().includes(searchTerm),
+          children: item.children.map(child => ({
+            ...child,
+            match: child.name.toLowerCase().includes(searchTerm) || child.description.toLowerCase().includes(searchTerm),
+          })),
+        }));
+    }),
   );
 
   constructor() {
@@ -57,109 +93,151 @@ export class AppSearchComponent implements AfterViewInit {
   }
 
   /**
+   * Search option mapper.
+   * @param name Option name.
+   * @param description Option description.
+   * @param path Router path.
+   * @param icon Option icon.
+   * @param rlaMatchOptions Router link active options.
+   */
+  #mapSearchOption(
+    name: string,
+    description: string,
+    path: string,
+    icon?: string,
+    rlaMatchOptions?: Pick<IsActiveMatchOptions, 'paths'>,
+  ): Omit<ISearchOption, 'children'> {
+    const routerLink = path.replace(/\s/g, '/');
+    const option: Omit<ISearchOption, 'children'> = {
+      name,
+      description,
+      value: path,
+      icon: icon,
+      routerLink,
+      match: true,
+      isActive: isActive(routerLink, this.#router, {
+        matrixParams: 'ignored',
+        queryParams: 'ignored',
+        paths: rlaMatchOptions?.paths ?? 'exact',
+        fragment: 'ignored',
+      }),
+    };
+    return option;
+  }
+
+  /**
+   * Feature value parser.
+   * @param route Parsed application route.
+   */
+  #featureValue(route: IParsedRoute): string {
+    const feature = typeof route.data?.['feature'] === 'string' && route.data['feature'].length > 0 ? route.data['feature'] : route.path;
+    return typeof route.data?.['title'] === 'string' && route.data['title'].length > 0
+      ? route.data['title']
+      : `${feature.slice(0, 1).toUpperCase()}${feature.slice(1, feature.length)}`;
+  }
+
+  /**
+   * Description value parser.
+   * @param route Parsed application route.
+   */
+  #descriptionValue(route: IParsedRoute): string {
+    return typeof route.data?.['description'] === 'string' && route.data['description'].length > 0 ? route.data['description'] : '';
+  }
+
+  /**
+   * Children value parser.
+   * @param route Parsed application route.
+   */
+  #childrenValue(route: IParsedRoute): TChild[] {
+    return typeof route.data?.['children'] === 'string' && Array.isArray(route.data['children']) ? route.data['children'] : [];
+  }
+
+  /**
+   * Child feature value parser.
+   * @param route Parsed application route.
+   */
+  #childFeatureValue(child: TChild): string | undefined {
+    return typeof child['feature'] === 'string' && child['feature'].length > 0 ? child['feature'] : void 0;
+  }
+
+  /**
+   * Child icon value parser.
+   * @param route Parsed application route.
+   */
+  #childIconValue(child: TChild): string | undefined {
+    return typeof child['icon'] === 'string' && child['icon'].length > 0 ? child['icon'] : void 0;
+  }
+
+  /**
+   * Child path value parser.
+   * @param route Parsed application route.
+   */
+  #childPathValue(routePath: string, child: TChild): string | undefined {
+    return typeof child['path'] === 'string' && child['path'].length > 0 ? `${routePath}/${child['path']}` : void 0;
+  }
+
+  /**
+   * Child route link active match options value parser.
+   * @param route Parsed application route.
+   */
+  #childRlaMatchOptionsValue(child: TChild): Pick<IsActiveMatchOptions, 'paths'> | undefined {
+    return typeof child['rlaMatchOptions'] === 'object' && Object.keys(child['rlaMatchOptions']).length > 0
+      ? child['rlaMatchOptions']
+      : void 0;
+  }
+
+  /**
+   * Child skip search value parser.
+   * @param route Parsed application route.
+   */
+  #childSkipSearchValue(child: TChild): boolean {
+    return 'skipSearch' in child && typeof child['skipSearch'] === 'boolean' ? child['skipSearch'] : false;
+  }
+
+  /**
    * Search options getter.
    * @returns search options
    */
   private getOptions() {
-    return of(this.router.config).pipe(
+    return of(this.#router.config).pipe(
       switchMap(routes => {
-        const r = routes.flatMap(item => (typeof item.outlet !== 'undefined' ? of([]) : defer(() => from(this.parseRoute(item)))));
+        const r = routes.flatMap(item => (typeof item.outlet !== 'undefined' ? of([]) : defer(() => from(this.#search.parseRoute(item)))));
         return forkJoin(r);
       }),
       map(routes => {
         const options = routes
           .flat(1)
-          .filter(
-            route =>
-              /** Routes with empty paths that do not have Router data defining a feature are ignored by the application global search.  */
-              (route.path !== '' || (route.path === '' && typeof route.data !== 'undefined' && 'feature' in route.data)) &&
-              /** Routes that defined redirects are ignored by the application global search.  */
-              !route.path.includes('*') &&
-              /** Routes that require path parameters are ignored by the application global search.  */
-              !route.path.includes(':') &&
-              /** Routes with defined outlets are ignored by the application global search.  */
-              typeof route.outlet === 'undefined' &&
-              /** PWA offline route is ignored by the application global search. */
-              route.path !== 'offline',
-          )
+          .filter(route => this.#search.routeFilter(route))
           .map(route => {
-            const data = route.data;
-            const feature = typeof data?.['feature'] === 'string' && data['feature'].length > 0 ? data['feature'] : route.path;
-            const name =
-              typeof data?.['title'] === 'string' && data['title'].length > 0
-                ? data['title']
-                : `${feature.slice(0, 1).toUpperCase()}${feature.slice(1, feature.length)}`;
+            const feature = this.#featureValue(route);
+            const description = this.#descriptionValue(route);
+            const children = this.#childrenValue(route);
             return {
-              name,
-              value: route.path,
-              icon: route.data?.['icon'],
-              routerLink: route.path.replace(/\s/g, '/'),
-              isActive: isActive(route.path, this.router, {
-                matrixParams: 'ignored',
-                queryParams: 'ignored',
-                paths: 'exact',
-                fragment: 'ignored',
-              }),
+              ...this.#mapSearchOption(feature, description, route.path, route.data?.['icon'], route.data?.['rlaMatchOptions']),
+              children: children.reduce((accumulator: Array<Omit<ISearchOption, 'children'>>, child: TChild) => {
+                const childFeature = this.#childFeatureValue(child);
+                const childIcon = this.#childIconValue(child);
+                const childPath = this.#childPathValue(route.path, child);
+                const childRlaMatchOptions = this.#childRlaMatchOptionsValue(child);
+                const skipSearch = this.#childSkipSearchValue(child);
+                if (
+                  typeof childFeature !== 'undefined' &&
+                  typeof childIcon !== 'undefined' &&
+                  typeof childPath !== 'undefined' &&
+                  !skipSearch
+                ) {
+                  const childOption = this.#mapSearchOption(childFeature, '', childPath, childIcon, childRlaMatchOptions);
+                  accumulator.push(childOption);
+                }
+                return accumulator;
+              }, []),
             };
           });
+        options.sort((x, y) => x.name.localeCompare(y.name));
         this.optionsSubject.next(options);
         return options;
       }),
     );
-  }
-
-  /**
-   * Child route configuration parser.
-   * @param root root path / parent path
-   * @param data root path data / parent path data
-   * @param outlet router outlet for the given route
-   * @param routes child routes
-   * @returns the array with routes, route segment separator is space
-   */
-  private parseChildRoutes(root = '', data?: Data, outlet?: string, routes?: Routes): IParsedRoute[] {
-    return typeof routes === 'undefined'
-      ? [{ path: root.trim(), data, outlet }]
-      : routes.flatMap(child => {
-          const childPath = `${root} ${child.path}`.trim();
-          const childData = child.data;
-          const childOutlet = child.outlet;
-          return this.parseChildRoutes(childPath, childData, childOutlet, child.children);
-        });
-  }
-
-  /**
-   * Router configuration parser.
-   * @param root root route
-   * @returns the array with routes, route segment separator is space
-   */
-  private async parseRoute(root: Route): Promise<IParsedRoute[]> {
-    const route = { ...root };
-    const rootPath = (route.path ?? '').trim();
-    const result: IParsedRoute[] = [{ path: rootPath, data: root.data, outlet: route.outlet }];
-    let children: Routes = route.children ?? [];
-    if (children.length === 0 && typeof route.loadChildren !== 'undefined') {
-      await route.loadChildren();
-      const loadedRoutes = (route as Route & Record<'_loadedRoutes' | string, Route['children']>)['_loadedRoutes'];
-      children = typeof loadedRoutes !== 'undefined' ? [...loadedRoutes] : children;
-    }
-    const resolvers = children.flatMap(async child => {
-      const childPath = `${rootPath} ${child.path}`.trim();
-      const childData = child.data;
-      const childOutlet = child.outlet;
-      const expandRoutes = this.parseChildRoutes(childPath, childData, childOutlet, child.children);
-      result.push(...expandRoutes);
-      return result;
-    });
-    if (typeof resolvers !== 'undefined') {
-      await Promise.all(resolvers);
-    }
-    return result.reduce((accumulator: IParsedRoute[], record) => {
-      const exists = accumulator.findIndex(item => item.path === record.path);
-      if (exists === -1) {
-        accumulator.push(record);
-      }
-      return accumulator;
-    }, []);
   }
 
   /**
@@ -168,7 +246,7 @@ export class AppSearchComponent implements AfterViewInit {
    */
   public selectOption(routerLink: string) {
     this.optionSelected.emit();
-    void this.router.navigate([routerLink]);
+    void this.#router.navigate([routerLink]);
   }
 
   public ngAfterViewInit(): void {

@@ -1,6 +1,6 @@
 @if (config$ | async; as config) {
   <div class="root">
-    <mat-toolbar color="primary" class="root__toolbar">
+    <mat-toolbar class="root__toolbar">
       <button mat-icon-button disabled>
         <mat-icon>recycling</mat-icon>
       </button>
@@ -31,7 +31,7 @@
         </div>
       </mat-sidenav-content>
     </mat-sidenav-container>
-    <mat-toolbar color="primary" class="root__toolbar">
+    <mat-toolbar class="root__toolbar">
       <button mat-icon-button (click)="sidenav.toggle()">
         @if (!sidenav.opened) {
           <mat-icon title="open sidenav"> flip_to_front </mat-icon>

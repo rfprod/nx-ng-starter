@@ -1,0 +1,206 @@
+/* Documentation: https://github.com/angular/components/blob/main/guides/theming.md */
+@use '@angular/material' as mat;
+@use 'sass:map';
+
+$custom-typography: (
+  plain-family: (
+    Roboto,
+    monospace,
+    'Helvetica Neue',
+    sans-serif,
+  ),
+  brand-family: (
+    'Open Sans',
+    sans-serif,
+  ),
+  bold-weight: 900,
+  medium-weight: 500,
+  regular-weight: 300,
+);
+
+$custom-density: (
+  scale: 0,
+);
+
+$candy-app-theme: mat.define-theme(
+  (
+    color: (
+      primary: mat.$blue-palette,
+      tertiary: mat.$red-palette,
+      theme-type: light,
+    ),
+    typography: $custom-typography,
+    density: $custom-density,
+  )
+);
+
+$unicorn-dark-theme: mat.define-theme(
+  (
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$orange-palette,
+      theme-type: dark,
+    ),
+    typography: $custom-typography,
+    density: $custom-density,
+  )
+);
+
+/* Extended palette variables */
+
+/* Tight theme */
+$primary: map.get(mat.$blue-palette, 60);
+$primary-mild: map.get(mat.$cyan-palette, 40);
+$primary-extra-mild: map.get(mat.$cyan-palette, 20);
+$accent: map.get(mat.$orange-palette, 60);
+$warn: map.get(mat.$red-palette, 60);
+
+$success: map.get(mat.$green-palette, 90);
+$error: map.get(mat.$red-palette, 90);
+
+/* Dark theme */
+$dark-primary: map.get(mat.$azure-palette, 60);
+$dark-primary-mild: map.get(mat.$azure-palette, 30);
+$dark-primary-extra-mild: map.get(mat.$azure-palette, 10);
+$dark-accent: map.get(mat.$yellow-palette, 30);
+$dark-warn: map.get(mat.$orange-palette, 30);
+
+$dark-success: map.get(mat.$green-palette, 50);
+$dark-error: map.get(mat.$red-palette, 50);
+
+/* General purpose */
+$black: #000000;
+$white: #ffffff;
+$grey: #565656;
+$darkgrey: darken($grey, 20%);
+$lightgrey: lighten($grey, 20%);
+$extralightgrey: lighten($grey, 40%);
+
+/* Extended palette maps */
+
+$extended-bg-palette: (
+  light: (
+    '.basic': mat.get-theme-color($candy-app-theme, 'background'),
+    '.basic-inverse': mat.get-theme-color($unicorn-dark-theme, 'background'),
+    '.foreground': mat.get-theme-color($candy-app-theme, 'surface-container'),
+    '.foreground-inverse': mat.get-theme-color($unicorn-dark-theme, 'surface-container'),
+    '.primary': $primary,
+    '.primary-mild': $primary-mild,
+    '.accent': $accent,
+    '.warn': $warn,
+    '.success': $success,
+    '.error': $error,
+    'mat-grid-tile': $primary-mild,
+    'app-root': $primary-mild,
+    '.label': $lightgrey,
+    '::webkit-scrollbar': $white,
+  ),
+  dark: (
+    '.basic': mat.get-theme-color($unicorn-dark-theme, 'background'),
+    '.basic-inverse': mat.get-theme-color($candy-app-theme, 'background'),
+    '.foreground': mat.get-theme-color($unicorn-dark-theme, 'surface-container'),
+    '.foreground-inverse': mat.get-theme-color($candy-app-theme, 'surface-container'),
+    '.primary': $dark-primary,
+    '.primary-mild': $dark-primary-mild,
+    '.accent': $dark-accent,
+    '.warn': $dark-warn,
+    '.success': $dark-success,
+    '.error': $dark-error,
+    'mat-grid-tile': $dark-primary-mild,
+    'app-root': $dark-primary-mild,
+    '.label': $darkgrey,
+    '::webkit-scrollbar': $white,
+  ),
+);
+$extended-text-palette: (
+  light: (
+    '.basic-bg-text': mat.get-theme-color($candy-app-theme, 'on-background'),
+    '.basic-bg-text-inverse': mat.get-theme-color($unicorn-dark-theme, 'on-background'),
+    '.primary': $primary,
+    '.primary-bg-text': mat.get-theme-color($unicorn-dark-theme, 'on-background'),
+    '.accent': $accent,
+    '.warn': $warn,
+    '.success': $success,
+    '.error': $error,
+    'mat-slide-toggle:hover': $warn,
+    'app-root': $black,
+    'form.legend': $darkgrey,
+  ),
+  dark: (
+    '.basic-bg-text': mat.get-theme-color($unicorn-dark-theme, 'on-background'),
+    '.basic-bg-text-inverse': mat.get-theme-color($candy-app-theme, 'on-background'),
+    '.primary': $dark-primary,
+    '.primary-bg-text': mat.get-theme-color($candy-app-theme, 'on-background'),
+    '.accent': $dark-accent,
+    '.warn': $dark-warn,
+    '.success': $dark-success,
+    '.error': $dark-error,
+    'mat-slide-toggle:hover': $warn,
+    'app-root': $white,
+    'form.legend': $lightgrey,
+  ),
+);
+$extended-box-shadow-palette: (
+  light: (
+    '::webkit-scrollbar-track': $primary,
+    '::webkit-scrollbar-thumb': $primary,
+  ),
+  dark: (
+    '::webkit-scrollbar-track': $dark-primary,
+    '::webkit-scrollbar-thumb': $dark-primary,
+  ),
+);
+
+/**
+ * Include one of the following mixins depending on css attribute that needs to be set, options:
+ * - color: extended-color
+ * - background-color: extended-background-color
+ *
+ * Check $extended-palette map above for currently supported selectors, and add new ones when needed.
+ * Selector can be one of the following: DOM-element, class, id
+ *
+ * Example usage, set color for paragraph text:
+ * p {
+ *   @include extended-color(p);
+ * }
+ */
+@mixin extended-fill($selector) {
+  fill: map-get(map-get($extended-text-palette, light), $selector);
+
+  .unicorn-dark-theme & {
+    fill: map-get(map-get($extended-text-palette, dark), $selector);
+  }
+}
+@mixin extended-color($selector) {
+  color: map-get(map-get($extended-text-palette, light), $selector);
+
+  .unicorn-dark-theme & {
+    color: map-get(map-get($extended-text-palette, dark), $selector);
+  }
+}
+@mixin extended-background-color($selector) {
+  background-color: map-get(map-get($extended-bg-palette, light), $selector);
+
+  .unicorn-dark-theme & {
+    background-color: map-get(map-get($extended-bg-palette, dark), $selector);
+  }
+}
+@function get-extended-background-color($selector, $theme: 'light') {
+  @if $theme == 'light' {
+    @return map-get(map-get($extended-bg-palette, light), $selector);
+  } @else if $theme == 'dark' {
+    @return map-get(map-get($extended-bg-palette, dark), $selector);
+  } @else {
+    @error "Invalid theme: #{$theme}. Use 'light or 'dark' as a value.";
+  }
+}
+
+@mixin extended-box-shadow-color($inset, $offsetX, $offsetY, $blurRadius, $spreadRadius, $selector) {
+  -webkit-box-shadow: $inset $offsetX $offsetY $blurRadius $spreadRadius map-get(map-get($extended-box-shadow-palette, light), $selector);
+  box-shadow: $inset $offsetX $offsetY $blurRadius $spreadRadius map-get(map-get($extended-box-shadow-palette, light), $selector);
+
+  .unicorn-dark-theme & {
+    -webkit-box-shadow: $inset $offsetX $offsetY $blurRadius $spreadRadius map-get(map-get($extended-box-shadow-palette, dark), $selector);
+    box-shadow: $inset $offsetX $offsetY $blurRadius $spreadRadius map-get(map-get($extended-box-shadow-palette, dark), $selector);
+  }
+}

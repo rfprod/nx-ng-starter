@@ -1,60 +1,37 @@
 /* Angular Material Theme, and Typography customization */
-
-/* Documentation: https://github.com/angular/components/blob/main/guides/theming.md */
 @use '@angular/material' as mat;
-@use 'node_modules/@angular/material/_index.scss';
+@use './theming/_configuration.scss' as config;
 
-/**
- * Define a custom typography config that overrides font-family, and all levels.
- */
+@mixin shadow-dom-theme {
+  @include mat.elevation-classes();
+  @include mat.app-background();
+  @include mat.all-component-themes(config.$candy-app-theme);
 
-$custom-typography: mat.m2-define-typography-config(
-  $font-family: 'Roboto, monospace, "Helvetica Neue", sans-serif',
-);
+  @include mat.toolbar-overrides(
+    (
+      container-background-color: config.$primary,
+    )
+  );
 
-/**
- * Include the common styles for Angular Material. Include this here so that you only
- * have to load a single css file for Angular Material in your app.
- * Be sure to include this mixin once!
- * Custom typography config is passed to mat-core.
- */
-@include mat.elevation-classes();
-@include mat.app-background();
+  @include mat.progress-bar-overrides(
+    (
+      active-indicator-color: config.$primary,
+      track-color: config.$accent,
+    )
+  );
 
-/* Define a custom light theme. */
-$candy-app-primary: mat.m2-define-palette(mat.$m2-green-palette, 700);
-$candy-app-accent: mat.m2-define-palette(mat.$m2-light-green-palette, 400);
-$candy-app-warn: mat.m2-define-palette(mat.$m2-red-palette, 800);
-$candy-app-theme: mat.m2-define-light-theme(
-  (
-    color: (
-      primary: $candy-app-primary,
-      accent: $candy-app-accent,
-      warn: $candy-app-warn,
-    ),
-    density: 0,
-  )
-);
+  @include mat.dialog-overrides(
+    (
+      container-color: darken(config.get-extended-background-color('.foreground', 'light'), 2.5%),
+    )
+  );
+  @include mat.typography-hierarchy(config.$candy-app-theme, $back-compat: true);
+  @include mat.all-component-typographies(config.$custom-typography);
+}
 
-/* Include the custom light theme styles. */
-@include mat.all-component-themes($candy-app-theme);
-
-@include mat.all-component-typographies($custom-typography);
-
-/* Define an alternate dark theme. */
-$unicorn-dark-primary: mat.m2-define-palette(mat.$m2-deep-orange-palette, 800);
-$unicorn-dark-accent: mat.m2-define-palette(mat.$m2-yellow-palette, 400);
-$unicorn-dark-warn: mat.m2-define-palette(mat.$m2-orange-palette, 300);
-$unicorn-dark-theme: mat.m2-define-dark-theme(
-  (
-    color: (
-      primary: $unicorn-dark-primary,
-      accent: $unicorn-dark-accent,
-      warn: $unicorn-dark-warn,
-    ),
-    density: 0,
-  )
-);
+:root {
+  @include shadow-dom-theme();
+}
 
 /**
  * Include the alternative theme styles inside of a block with a CSS class.
@@ -63,7 +40,26 @@ $unicorn-dark-theme: mat.m2-define-dark-theme(
  */
 
 .unicorn-dark-theme {
-  @include mat.all-component-colors($unicorn-dark-theme);
+  @include mat.all-component-colors(config.$unicorn-dark-theme);
+
+  @include mat.toolbar-overrides(
+    (
+      container-background-color: config.$dark-primary,
+    )
+  );
+
+  @include mat.progress-bar-overrides(
+    (
+      active-indicator-color: config.$dark-primary,
+      track-color: config.$dark-accent,
+    )
+  );
+
+  @include mat.dialog-overrides(
+    (
+      container-color: darken(config.get-extended-background-color('.foreground', 'dark'), 2.5%),
+    )
+  );
 }
 
 /**
@@ -71,9 +67,9 @@ $unicorn-dark-theme: mat.m2-define-dark-theme(
  * Imports and includes variables, and mixins:
  * custom-selectors-colouring, custom-colouring-classes
  */
-@import 'libs/client-core/src/lib/styles/theming/theming-extension.scss';
+@import './theming/theming-extension.scss';
 
 /**
  * Global common theming styles.
  */
-@import 'libs/client-core/src/lib/styles/theming/theming-common.scss';
+@import './theming/theming-common.scss';
