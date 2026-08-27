@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
+    "moduleResolution": "bundler",
     "outDir": "../../dist/apps/client",
-    "tsBuildInfoFile": "../../dist/apps/client/tsconfig.app.tsbuildinfo",
-    "moduleResolution": "bundler"
+    "tsBuildInfoFile": "../../dist/apps/client/tsconfig.app.tsbuildinfo"
   },
   "exclude": ["**/test-setup.ts", "**/*.spec.ts", "*.mts"],
   "extends": "./tsconfig.json",

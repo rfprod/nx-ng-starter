@@ -3,7 +3,7 @@ import { nxViteTsPaths } from '@nx/vite/plugins/nx-tsconfig-paths.plugin';
 import { defineConfig } from 'vite';
 
 export default defineConfig(({ mode }) => ({
-  root: __dirname,
+  root: import.meta.dirname,
   cacheDir: '/tmp/vite/nx-ng-starter/apps/api',
   plugins: [nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
   build: {

@@ -3,7 +3,7 @@ import { defineConfig } from 'vitest/config';
 import { sharedTestConfig } from '../ts/vitest.shared';
 
 export default defineConfig({
-  root: __dirname,
+  root: import.meta.dirname,
   cacheDir: '/tmp/vitest/nx-ng-starter/tools/workspace-plugin',
   resolve: {
     tsconfigPaths: true,

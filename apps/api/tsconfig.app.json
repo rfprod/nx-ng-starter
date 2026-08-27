@@ -1,16 +1,4 @@
 {
-  "compilerOptions": {
-    "emitDecoratorMetadata": true,
-    "module": "ES2022",
-    "moduleResolution": "bundler",
-    "outDir": "../../dist/apps/api",
-    "tsBuildInfoFile": "../../dist/apps/api/tsconfig.app.tsbuildinfo",
-    "types": ["node"],
-    "rootDir": "./src"
-  },
-  "exclude": ["**/*.spec.ts", "**/*.test.ts", "*.mts"],
-  "extends": "./tsconfig.json",
-  "include": ["./src/**/*.ts"],
   "angularCompilerOptions": {
     "extendedDiagnostics": {
       "checks": {
@@ -19,11 +7,33 @@
       }
     }
   },
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "outDir": "../../dist/apps/api",
+    "rootDir": "./src",
+    "tsBuildInfoFile": "../../dist/apps/api/tsconfig.app.tsbuildinfo",
+    "types": ["node"]
+  },
+  "exclude": ["**/*.spec.ts", "**/*.test.ts", "*.mts"],
+  "extends": "./tsconfig.json",
+  "include": ["./src/**/*.ts"],
   "references": [
-    { "path": "../../libs/backend-auth/tsconfig.lib.json" },
-    { "path": "../../libs/backend-diagnostics/tsconfig.lib.json" },
-    { "path": "../../libs/backend-gql/tsconfig.lib.json" },
-    { "path": "../../libs/backend-interfaces/tsconfig.lib.json" },
-    { "path": "../../libs/backend-logger/tsconfig.lib.json" }
+    {
+      "path": "../../libs/backend-auth/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/backend-diagnostics/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/backend-gql/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/backend-interfaces/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/backend-logger/tsconfig.lib.json"
+    }
   ]
 }

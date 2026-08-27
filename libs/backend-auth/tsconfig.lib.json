@@ -1,15 +1,4 @@
 {
-  "compilerOptions": {
-    "composite": true,
-    "declaration": true,
-    "declarationMap": true,
-    "outDir": "../../dist/libs/backend-auth",
-    "tsBuildInfoFile": "../../dist/libs/backend-auth/tsconfig.lib.tsbuildinfo",
-    "rootDir": "./src"
-  },
-  "exclude": ["**/*.spec.ts", "*.mts"],
-  "extends": "./tsconfig.json",
-  "include": ["./src/**/*.ts"],
   "angularCompilerOptions": {
     "extendedDiagnostics": {
       "checks": {
@@ -18,5 +7,20 @@
       }
     }
   },
-  "references": [{ "path": "../backend-interfaces/tsconfig.lib.json" }]
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "../../dist/libs/backend-auth",
+    "rootDir": "./src",
+    "tsBuildInfoFile": "../../dist/libs/backend-auth/tsconfig.lib.tsbuildinfo"
+  },
+  "exclude": ["**/*.spec.ts", "*.mts"],
+  "extends": "./tsconfig.json",
+  "include": ["./src/**/*.ts"],
+  "references": [
+    {
+      "path": "../backend-interfaces/tsconfig.lib.json"
+    }
+  ]
 }

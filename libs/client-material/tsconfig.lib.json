@@ -12,10 +12,10 @@
     "declaration": true,
     "declarationMap": true,
     "moduleResolution": "bundler",
-    "target": "ES2022",
     "outDir": "../../dist/libs/client-material",
-    "tsBuildInfoFile": "../../dist/libs/client-material/tsconfig.lib.tsbuildinfo",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "target": "ES2022",
+    "tsBuildInfoFile": "../../dist/libs/client-material/tsconfig.lib.tsbuildinfo"
   },
   "exclude": ["*.mts", "./src/test-setup.ts", "**/*.spec.ts", "**/*.mock.ts"],
   "extends": "./tsconfig.json",
