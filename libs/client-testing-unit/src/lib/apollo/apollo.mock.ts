@@ -1,15 +1,7 @@
 import { Injectable } from '@angular/core';
-import {
-  ApolloClient,
-  ApolloClientOptions,
-  FetchResult,
-  NormalizedCacheObject,
-  OperationVariables,
-  SubscriptionOptions,
-  WatchFragmentResult,
-} from '@apollo/client/core';
+import { ApolloCache, ApolloClient, ApolloLink, OperationVariables } from '@apollo/client/core';
 import type { DocumentTypeDecoration } from '@graphql-typed-document-node/core';
-import { ExtraSubscriptionOptions } from 'apollo-angular';
+import { Subscription } from 'apollo-angular';
 import { type DocumentNode, Kind, NameNode, OperationDefinitionNode, OperationTypeNode } from 'graphql';
 import { Observable } from 'rxjs';
 import { vi } from 'vitest';
@@ -46,23 +38,23 @@ class AppMockApolloBase {
 
   public watchFragment = <FragmentData = unknown, Variables extends OperationVariables = IEmptyObject>(
     options: Record<string, Variables>,
-    extra?: ExtraSubscriptionOptions,
-  ): Observable<WatchFragmentResult<FragmentData>> => {
+    extra?: Subscription.SubscribeOptions,
+  ): Observable<ApolloCache.WatchFragmentResult<FragmentData>> => {
     throw new Error('Function not implemented.');
   };
 
   public subscribe = <T, V extends OperationVariables = IEmptyObject>(
-    options: SubscriptionOptions<V, T>,
-    extra?: ExtraSubscriptionOptions,
-  ): Observable<FetchResult<T>> => {
+    options: ApolloClient.SubscribeOptions<T, V>,
+    extra?: Subscription.SubscribeOptions,
+  ): Observable<ApolloLink.Result<T>> => {
     throw new Error('Function not implemented.');
   };
 
-  public get client(): ApolloClient<unknown> {
-    return {} as ApolloClient<unknown>;
+  public get client(): ApolloClient {
+    return {} as ApolloClient;
   }
 
-  public set client(client: ApolloClient<unknown>) {
+  public set client(client: ApolloClient) {
     // setter mock
   }
 }
@@ -78,7 +70,7 @@ class AppMockApollo {
     subscribe: vi.fn(),
   });
 
-  public create(options: ApolloClientOptions<NormalizedCacheObject>, name?: string): void {
+  public create(options: ApolloClient.Options, name?: string): void {
     // create mock
   }
 

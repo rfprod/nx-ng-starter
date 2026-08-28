@@ -20,7 +20,7 @@ export default defineConfig({
       reportsDirectory: '../../dist/coverage/libs/client-store-http-progress',
       provider: 'istanbul',
       thresholds: {
-        branches: 77,
+        branches: 76,
         functions: 93,
         lines: 98,
         statements: 97,

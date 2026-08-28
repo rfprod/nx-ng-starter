@@ -15,7 +15,8 @@
     "outDir": "../../dist/libs/client-gql",
     "rootDir": "./src",
     "target": "ES2022",
-    "tsBuildInfoFile": "../../dist/libs/client-gql/tsconfig.lib.tsbuildinfo"
+    "tsBuildInfoFile": "../../dist/libs/client-gql/tsconfig.lib.tsbuildinfo",
+    "types": ["../../tools/ts/types/apollo.d.ts"]
   },
   "exclude": ["*.mts", "./src/test-setup.ts", "**/*.spec.ts", "**/*.mock.ts"],
   "extends": "./tsconfig.json",

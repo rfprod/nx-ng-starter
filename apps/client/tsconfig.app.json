@@ -2,7 +2,8 @@
   "compilerOptions": {
     "moduleResolution": "bundler",
     "outDir": "../../dist/apps/client",
-    "tsBuildInfoFile": "../../dist/apps/client/tsconfig.app.tsbuildinfo"
+    "tsBuildInfoFile": "../../dist/apps/client/tsconfig.app.tsbuildinfo",
+    "types": ["../../tools/ts/types/apollo.d.ts"]
   },
   "exclude": ["**/test-setup.ts", "**/*.spec.ts", "*.mts"],
   "extends": "./tsconfig.json",
