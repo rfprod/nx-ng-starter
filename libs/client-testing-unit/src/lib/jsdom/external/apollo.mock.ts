@@ -5,8 +5,12 @@ import { vi } from 'vitest';
  * Sets up the Apollo Uload Client mock.
  */
 export function setupApolloUploadClientMock() {
-  vi.mock('apollo-upload-client/createUploadLink.mjs', () => ({
+  vi.mock('apollo-upload-client/UploadHttpLink.mjs', () => ({
     ['__esModule']: true,
-    default: () => new ApolloLink(),
+    default: class AppUploadHttpLink extends ApolloLink {
+      constructor(options?: ApolloLink.RequestHandler) {
+        super();
+      }
+    },
   }));
 }

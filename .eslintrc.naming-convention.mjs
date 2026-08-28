@@ -5,10 +5,10 @@ const camelCaseRegExpInput = '([a-z]+([A-Z])?[a-z]*)([A-Z][a-z]+|A11y|URL){0,}([
 
 /**
  * TypeScript Eslint naming convention configuration generator.
- * @param {jestConfigs: boolean} options configuration options
+ * @param {jestConfigs: boolean, testSetup: boolean, noInterfacePrefix: boolean} options configuration options
  * @returns @typescript-eslint/naming-convention configuration
  */
-export const namingConventionConfig = (options = { jestConfigs: false, testSetup: false }) => ({
+export const namingConventionConfig = (options = { jestConfigs: false, testSetup: false, noInterfacePrefix: false }) => ({
   '@typescript-eslint/naming-convention': [
     'error', // https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/naming-convention.md
     {
@@ -19,7 +19,7 @@ export const namingConventionConfig = (options = { jestConfigs: false, testSetup
     },
     {
       selector: 'variable',
-      format: ['camelCase', 'UPPER_CASE'],
+      format: options.noInterfacePrefix === true ? ['camelCase', 'StrictPascalCase', 'UPPER_CASE'] : ['camelCase', 'UPPER_CASE'],
       leadingUnderscore: 'forbid',
       trailingUnderscore: 'forbid',
     },
@@ -118,7 +118,7 @@ export const namingConventionConfig = (options = { jestConfigs: false, testSetup
     },
     {
       selector: 'interface',
-      prefix: ['I'],
+      prefix: options.noInterfacePrefix === true ? [] : ['I'],
       format: ['StrictPascalCase'],
       leadingUnderscore: 'forbid',
       trailingUnderscore: 'forbid',

@@ -1,23 +1,13 @@
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  ApolloLink,
-  ApolloQueryResult,
-  FetchResult,
-  Operation,
-  ServerError,
-  ServerParseError,
-  split,
-  UriFunction,
-} from '@apollo/client/core';
-import { ErrorResponse, onError } from '@apollo/client/link/error';
+import { ApolloLink, CombinedGraphQLErrors, ObservableQuery, ServerError, ServerParseError } from '@apollo/client/core';
+import { ErrorLink } from '@apollo/client/link/error';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { HTTP_STATUS, WEB_CLIENT_APP_ENV } from '@app/client-util';
 import { Store } from '@ngrx/store';
-import { MutationResult } from 'apollo-angular';
-import { HttpLink, HttpLinkHandler } from 'apollo-angular/http';
-import createUploadLink from 'apollo-upload-client/createUploadLink.mjs';
+import { Apollo } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
 import memo from 'memo-decorator';
 import { MonoTypeOperatorFunction, Observable, of } from 'rxjs';
 import { catchError, finalize, map, tap, timeout } from 'rxjs/operators';
@@ -100,7 +90,7 @@ export class AppHttpHandlersService {
    * @param observable input observable
    * @returns a piped observable
    */
-  public pipeGqlResponse<T>(observable: Observable<ApolloQueryResult<T> | FetchResult<T> | MutationResult<T>>) {
+  public pipeGqlResponse<T>(observable: Observable<ObservableQuery.Result<T> | ApolloLink.Result<T> | Apollo.MutateResult<T>>) {
     this.store.dispatch(httpProgressAction.start({ payload: { mainView: true } }));
     return observable.pipe(
       timeout(this.defaultHttpTimeout),
@@ -115,20 +105,15 @@ export class AppHttpHandlersService {
 
   /**
    * Gets the gql network link.
-   * @param hander http link handler
    * @param uri universal resource indentifier
    * @param userToken user token
    * @returns gql link
    */
-  private createGqlNetworkLink(splitTest: (op: Operation) => boolean, hander: HttpLinkHandler, uri: string, userToken: string) {
-    return split(
-      splitTest,
-      hander,
-      createUploadLink({
-        uri,
-        headers: { Authorization: `Token ${userToken}` },
-      }) as unknown as ApolloLink,
-    );
+  private createGqlNetworkLink(uri: HttpLink.Options['uri'], userToken: string) {
+    return this.httpLink.create({
+      uri,
+      headers: new HttpHeaders().append('Authorization', `Token ${userToken}`),
+    });
   }
 
   /**
@@ -136,7 +121,7 @@ export class AppHttpHandlersService {
    */
   public gqlLinkSplitTest() {
     const uploadMutations = ['UploadFile'];
-    return (operation: Operation) => {
+    return (operation: ApolloLink.Operation) => {
       const { name } = getMainDefinition(operation.query);
       return typeof name === 'undefined' || !uploadMutations.includes(name.value);
     };
@@ -146,26 +131,27 @@ export class AppHttpHandlersService {
    * Gets the gql error link handler.
    * @returns apollo error link handler
    */
-  public gqlErrorLinkHandler(error: ErrorResponse) {
-    const { graphQLErrors, networkError } = error;
-
+  public gqlErrorLinkHandler(error: ErrorLink.ErrorHandlerOptions['error']) {
     let errorMessage = '';
 
-    graphQLErrors?.map(({ message, extensions }) => {
-      console.error('Apollo linkHandler [GraphQL error]: ', message);
-      const code = extensions?.['code'] as string;
-      const result = `[GraphQL error ${code}]: ${message}`;
-      errorMessage += result;
-    });
+    if (CombinedGraphQLErrors.is(error)) {
+      error.errors.map(({ message, extensions }) => {
+        console.error('Apollo linkHandler [GraphQL error]: ', message);
+        const code = extensions?.['code'] as string;
+        const result = `[GraphQL error ${code}]: ${message}`;
+        errorMessage += result;
+      });
+    } else {
+      console.error('Apollo linkHandler [Network error]: ', error);
 
-    if (typeof networkError !== 'undefined') {
-      console.error('Apollo linkHandler [Network error]: ', networkError);
-
-      if (networkError instanceof HttpErrorResponse) {
-        errorMessage += (networkError.error as { detail: string }).detail;
+      if (error instanceof HttpErrorResponse) {
+        errorMessage += (error.error as { detail: string }).detail;
+      } else if (ServerParseError.is(error) || ServerError.is(error)) {
+        const code = error.statusCode;
+        const result = `[Network error ${code}]: ${error?.message}`;
+        errorMessage += result;
       } else {
-        const code = (networkError as (ServerParseError & ServerError) | null)?.statusCode;
-        const result = `[Network error ${code}]: ${networkError?.message}`;
+        const result = `[Unknown error]: ${error?.message}`;
         errorMessage += result;
       }
     }
@@ -184,12 +170,8 @@ export class AppHttpHandlersService {
   public createGqlLink(userToken: string, name: TGqlClient = 'graphql'): ApolloLink {
     const uri = this.getEndpoint(name);
     const uriFn = this.gqlUriFunction(uri);
-    const httpLinkHandler = this.httpLink.create({
-      uri: uriFn,
-    });
-    const linkHandler: ApolloLink = onError((error: ErrorResponse) => this.gqlErrorLinkHandler(error));
-    const splitTest = this.gqlLinkSplitTest();
-    const networkLink = this.createGqlNetworkLink(splitTest, httpLinkHandler, uri, userToken);
+    const linkHandler: ApolloLink = new ErrorLink((options: ErrorLink.ErrorHandlerOptions) => this.gqlErrorLinkHandler(options.error));
+    const networkLink = this.createGqlNetworkLink(uriFn, userToken);
     return linkHandler.concat(networkLink);
   }
 
@@ -197,10 +179,10 @@ export class AppHttpHandlersService {
    * Gql URI function.
    * @param uri graphql endpoint
    */
-  public gqlUriFunction(uri: string): UriFunction {
-    return (operation: Operation) => {
+  public gqlUriFunction(uri: string) {
+    return ((operation: ApolloLink.Operation) => {
       return `${uri}?operation=${operation.operationName}`;
-    };
+    }) as unknown as HttpLink.Options['uri'];
   }
 
   /**
