@@ -1,10 +1,11 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { ApolloClientOptions, InMemoryCache, split } from '@apollo/client/core';
-import { WebSocketLink } from '@apollo/client/link/ws';
+import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client/core';
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { IWebClientAppEnvironment } from '@app/client-util';
 import { APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
+import { createClient } from 'graphql-ws';
 
 /**
  * Creates apollo links: http, ws.
@@ -14,23 +15,23 @@ export function getApolloLinks(env: IWebClientAppEnvironment, httpLink: HttpLink
     uri: `${env.api}graphql`,
   });
 
-  const ws = new WebSocketLink({
-    uri: `${env.api.replace(/http/, 'ws')}/`,
-    options: {
-      reconnect: true,
-    },
-  });
+  const ws = new GraphQLWsLink(
+    createClient({
+      url: `${env.api.replace(/http/, 'ws')}/`,
+      retryAttempts: 2,
+    }),
+  );
 
   return { http, ws };
 }
 
-export function apolloOptionsFactory(env: IWebClientAppEnvironment, httpLink: HttpLink): ApolloClientOptions<Record<string, unknown>> {
+export function apolloOptionsFactory(env: IWebClientAppEnvironment, httpLink: HttpLink): ApolloClient.Options {
   // apollo links
   const links = getApolloLinks(env, httpLink);
 
   // using the ability to split links, you can send data to each link
   // depending on what kind of operation is being sent
-  const link = split(
+  const link = ApolloLink.split(
     // split based on operation type
     ({ query }) => {
       const definition = getMainDefinition(query);
@@ -43,6 +44,17 @@ export function apolloOptionsFactory(env: IWebClientAppEnvironment, httpLink: Ht
   return {
     link,
     cache: new InMemoryCache(),
+    defaultOptions: {
+      watchQuery: {
+        errorPolicy: 'all',
+      },
+      mutate: {
+        errorPolicy: 'all',
+      },
+      query: {
+        errorPolicy: 'all',
+      },
+    },
   };
 }
 

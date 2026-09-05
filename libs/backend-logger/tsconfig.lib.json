@@ -1,15 +1,4 @@
 {
-  "compilerOptions": {
-    "composite": true,
-    "declaration": true,
-    "declarationMap": true,
-    "outDir": "../../dist/libs/backend-logger",
-    "tsBuildInfoFile": "../../dist/libs/backend-logger/tsconfig.lib.tsbuildinfo",
-    "rootDir": "./src"
-  },
-  "exclude": ["**/*.spec.ts", "*.mts"],
-  "extends": "./tsconfig.json",
-  "include": ["./src/**/*.ts"],
   "angularCompilerOptions": {
     "extendedDiagnostics": {
       "checks": {
@@ -17,5 +6,16 @@
         "optionalChainNotNullable": "suppress"
       }
     }
-  }
+  },
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "../../dist/libs/backend-logger",
+    "rootDir": "./src",
+    "tsBuildInfoFile": "../../dist/libs/backend-logger/tsconfig.lib.tsbuildinfo"
+  },
+  "exclude": ["**/*.spec.ts", "*.mts"],
+  "extends": "./tsconfig.json",
+  "include": ["./src/**/*.ts"]
 }

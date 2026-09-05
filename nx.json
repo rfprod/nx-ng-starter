@@ -41,10 +41,10 @@
       "unitTestRunner": "vitest-analog"
     },
     "@nx/angular:component": {
+      "style": "scss",
       "changeDetection": "OnPush",
       "inlineStyle": false,
       "inlineTemplate": false,
-      "style": "scss",
       "type": "component"
     },
     "@nx/angular:directive": {
@@ -167,6 +167,15 @@
     },
     "tsc-check": {
       "cache": true
+    },
+    "@nx/angular:ng-packagr-lite": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["default", "^default"]
+    },
+    "@nx/vitest:test": {
+      "cache": true,
+      "inputs": ["default", "^default"]
     }
   },
   "tasksRunnerOptions": {

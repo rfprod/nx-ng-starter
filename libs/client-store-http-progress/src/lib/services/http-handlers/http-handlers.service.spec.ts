@@ -2,9 +2,8 @@ import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { HttpTestingController } from '@angular/common/http/testing';
 import { TestBed, type TestModuleMetadata, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { ApolloLink, type Operation, type ServerError, type ServerParseError } from '@apollo/client/core';
-import type { NetworkError } from '@apollo/client/errors';
-import type { ErrorResponse } from '@apollo/client/link/error';
+import { ApolloLink, CombinedGraphQLErrors, ServerParseError } from '@apollo/client/core';
+import type { ErrorLink } from '@apollo/client/link/error';
 import * as apolloUtils from '@apollo/client/utilities';
 import { flushHttpRequests, getTestBedConfig, newTestBedMetadata } from '@app/client-testing-unit';
 import { AppTranslateModule } from '@app/client-translate';
@@ -12,7 +11,7 @@ import { HTTP_STATUS, type IWebClientAppEnvironment, WEB_CLIENT_APP_ENV } from '
 import { Store } from '@ngrx/store';
 import { Apollo, gql } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
-import { type GraphQLError, type GraphQLFormattedError, Kind, type NameNode, OperationTypeNode } from 'graphql';
+import { type GraphQLError, Kind, type NameNode, OperationTypeNode } from 'graphql';
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, finalize, tap } from 'rxjs/operators';
 import type { MockInstance } from 'vitest';
@@ -153,7 +152,7 @@ describe('AppHttpHandlersService', () => {
       process.stdout.write(`\nquery: ${JSON.stringify(query)}\n`);
       const operation = {
         query,
-      } as Operation;
+      } as ApolloLink.Operation;
 
       vi.spyOn(apolloUtils, 'getMainDefinition').mockReturnValueOnce({
         kind: Kind.OPERATION_DEFINITION,
@@ -185,7 +184,7 @@ describe('AppHttpHandlersService', () => {
       process.stdout.write(`\nquery: ${JSON.stringify(query)}\n`);
       const operation = {
         query,
-      } as Operation;
+      } as ApolloLink.Operation;
 
       const splitTest = service.gqlLinkSplitTest();
       const result = splitTest(operation);
@@ -201,12 +200,12 @@ describe('AppHttpHandlersService', () => {
     });
 
     it('should process errors as expected: no errors', () => {
-      const errorRes = {
-        graphQLErrors: void 0,
-        networkError: void 0,
-      } as ErrorResponse;
+      const errorRes: ErrorLink.ErrorHandlerOptions['error'] = {
+        message: 'error',
+        name: 'name',
+      };
       service.gqlErrorLinkHandler(errorRes);
-      expect(showToasterSpy).toHaveBeenCalledWith('Graphql request error', 'error');
+      expect(showToasterSpy).toHaveBeenCalledWith('[Unknown error]: error', 'error');
     });
 
     it('should process errors as expected: graphQLErrors', () => {
@@ -218,41 +217,26 @@ describe('AppHttpHandlersService', () => {
         message: 'gql error 2',
         extensions,
       } as GraphQLError;
-      const errorRes = {
-        graphQLErrors: [testErrorNoCode, testError] as readonly GraphQLFormattedError[],
-        networkError: void 0,
-      } as ErrorResponse;
+      const errorRes = new CombinedGraphQLErrors({ errors: [testErrorNoCode, testError] });
       service.gqlErrorLinkHandler(errorRes);
       const expectedMessage = `[GraphQL error ${testErrorNoCode.extensions?.['code']}]: ${testErrorNoCode.message}[GraphQL error ${testError.extensions['code']}]: ${testError.message}`;
       expect(showToasterSpy).toHaveBeenCalledWith(expectedMessage, 'error');
     });
 
     it('should process errors as expected: networkError', () => {
-      const networkError: NetworkError = {
+      const originalParseError: ServerParseError = {
+        message: 'err',
         bodyText: '',
-        message: '',
-        name: '',
-        response: {
-          body: null,
-          bodyUsed: false,
-          headers: {},
-          ok: false,
-          status: 400,
-          statusText: 'err',
-          type: 'error',
-          url: 'https://test',
-        } as Response,
-        result: {},
         statusCode: 400,
+        response: new Response(),
+        name: 'HttpErrorResponse',
       };
-      const errorRes = {
-        graphQLErrors: void 0,
-        networkError,
-      } as ErrorResponse;
-      service.gqlErrorLinkHandler(errorRes);
-      const err = networkError as (ServerParseError & ServerError) | null;
-      const expectedMessage = `[Network error ${err?.statusCode}]: ${err?.message}`;
-      expect(showToasterSpy).toHaveBeenCalledWith(expectedMessage, 'error');
+      const networkError = new ServerParseError(originalParseError, {
+        bodyText: 'error',
+        response: new Response(),
+      });
+      service.gqlErrorLinkHandler(networkError);
+      expect(showToasterSpy).toHaveBeenCalledWith(`[Network error ${networkError.statusCode}]: ${networkError.message}`, 'error');
     });
   });
 
@@ -313,7 +297,7 @@ describe('AppHttpHandlersService', () => {
     const uriFn = service.gqlUriFunction(uri);
     const operation = {
       operationName: 'test',
-    } as Operation;
+    } as ApolloLink.Operation;
     const result = uriFn(operation);
     expect(result).toEqual(`${uri}?operation=${operation.operationName}`);
   });

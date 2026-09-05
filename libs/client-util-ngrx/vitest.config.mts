@@ -4,7 +4,7 @@ import { defineConfig } from 'vitest/config';
 import { sharedTestConfig } from '../../vitest.shared';
 
 export default defineConfig({
-  root: __dirname,
+  root: import.meta.dirname,
   cacheDir: '/tmp/vitest/nx-ng-starter/libs/client-util-ngrx',
   plugins: [angular()],
   resolve: {
