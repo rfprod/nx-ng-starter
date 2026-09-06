@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { ApolloClient, ApolloClientOptions, InMemoryCache, NormalizedCacheObject } from '@apollo/client/core';
+import { ApolloClient, InMemoryCache } from '@apollo/client/core';
 import { AppHttpHandlersService, TGqlClient } from '@app/client-store-http-progress';
 import { IUserState, userSelector } from '@app/client-store-user';
 import { Store } from '@ngrx/store';
@@ -27,7 +27,7 @@ export class AppGqlService {
    * Creates apollo client for a specific user role.
    * @param name the client name
    */
-  public createApolloClient(name: TGqlClient = 'graphql'): Observable<ApolloClientOptions<NormalizedCacheObject>> {
+  public createApolloClient(name: TGqlClient = 'graphql'): Observable<ApolloClient.Options> {
     return this.getApolloClientOptions(name).pipe(
       tap(options => {
         this.apollo.create(options, name);
@@ -43,7 +43,7 @@ export class AppGqlService {
     return this.getApolloClientOptions(name).pipe(
       switchMap(options => {
         const newClient = new ApolloClient(options);
-        const client = this.apollo.use(name).client as ApolloClient<NormalizedCacheObject> | undefined;
+        const client = this.apollo.use(name).client as ApolloClient | undefined;
         return this.clearClient(client).pipe(
           tap(() => {
             this.apollo.use(name).client = newClient;
@@ -87,11 +87,11 @@ export class AppGqlService {
    * Returns apollo client options depending on user role.
    * @param name the client name
    */
-  private getApolloClientOptions(name: TGqlClient): Observable<ApolloClientOptions<NormalizedCacheObject>> {
+  private getApolloClientOptions(name: TGqlClient): Observable<ApolloClient.Options> {
     return this.userToken$.pipe(
       map(token => this.handlers.createGqlLink(token, name)),
       map(link => {
-        const options: ApolloClientOptions<NormalizedCacheObject> = {
+        const options: ApolloClient.Options = {
           link,
           cache: new InMemoryCache({ resultCaching: false }),
           defaultOptions: {
@@ -115,7 +115,7 @@ export class AppGqlService {
    * Clears apollo client.
    * @param client apollo client
    */
-  private clearClient(client?: ApolloClient<NormalizedCacheObject>) {
+  private clearClient(client?: ApolloClient) {
     return typeof client !== 'undefined' ? from(client.resetStore()) : of(null);
   }
 }

@@ -40,9 +40,6 @@ export class AppGqlModule {
         'graphql-ws': {
           path: '/api/graphql',
         },
-        'subscriptions-transport-ws': {
-          path: '/api/graphql',
-        },
       },
       buildSchemaOptions: {
         dateScalarMode: 'timestamp',

@@ -12,18 +12,26 @@
     "declaration": true,
     "declarationMap": true,
     "moduleResolution": "bundler",
-    "target": "ES2022",
     "outDir": "../../dist/libs/client-elements",
-    "tsBuildInfoFile": "../../dist/libs/client-elements/tsconfig.lib.tsbuildinfo",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "target": "ES2022",
+    "tsBuildInfoFile": "../../dist/libs/client-elements/tsconfig.lib.tsbuildinfo"
   },
   "exclude": ["*.mts", "./src/test-setup.ts", "**/*.spec.ts", "**/*.mock.ts"],
   "extends": "./tsconfig.json",
   "include": ["./src/**/*.ts"],
   "references": [
-    { "path": "../client-chatbot/tsconfig.lib.json" },
-    { "path": "../client-testing-unit/tsconfig.lib.json" },
-    { "path": "../client-util/tsconfig.lib.json" },
-    { "path": "../client-util-eliza/tsconfig.lib.json" }
+    {
+      "path": "../client-chatbot/tsconfig.lib.json"
+    },
+    {
+      "path": "../client-testing-unit/tsconfig.lib.json"
+    },
+    {
+      "path": "../client-util/tsconfig.lib.json"
+    },
+    {
+      "path": "../client-util-eliza/tsconfig.lib.json"
+    }
   ]
 }

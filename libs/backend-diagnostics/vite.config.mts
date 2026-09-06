@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig(({ mode }) => ({
-  root: __dirname,
+  root: import.meta.dirname,
   cacheDir: '/tmp/vite/nx-ng-starter/libs/backend-diagnostics',
   resolve: {
     tsconfigPaths: true,

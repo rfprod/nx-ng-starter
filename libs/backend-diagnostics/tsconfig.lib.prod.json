@@ -1,12 +1,4 @@
 {
-  "compilerOptions": {
-    "declaration": true,
-    "declarationMap": true,
-    "target": "ES2022",
-    "useDefineForClassFields": false,
-    "rootDir": "./src"
-  },
-  "extends": "./tsconfig.lib.json",
   "angularCompilerOptions": {
     "extendedDiagnostics": {
       "checks": {
@@ -14,5 +6,13 @@
         "optionalChainNotNullable": "suppress"
       }
     }
-  }
+  },
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "rootDir": "./src",
+    "target": "ES2022",
+    "useDefineForClassFields": false
+  },
+  "extends": "./tsconfig.lib.json"
 }

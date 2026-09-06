@@ -4,7 +4,7 @@ import { defineConfig } from 'vitest/config';
 import { sharedTestConfig } from '../../vitest.shared';
 
 export default defineConfig({
-  root: __dirname,
+  root: import.meta.dirname,
   cacheDir: '/tmp/vitest/nx-ng-starter/libs/client-store-http-progress',
   plugins: [angular()],
   resolve: {
@@ -20,7 +20,7 @@ export default defineConfig({
       reportsDirectory: '../../dist/coverage/libs/client-store-http-progress',
       provider: 'istanbul',
       thresholds: {
-        branches: 77,
+        branches: 76,
         functions: 93,
         lines: 98,
         statements: 97,

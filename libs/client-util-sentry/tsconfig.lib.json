@@ -12,13 +12,17 @@
     "declaration": true,
     "declarationMap": true,
     "moduleResolution": "bundler",
-    "target": "ES2022",
     "outDir": "../../dist/libs/client-util-sentry",
-    "tsBuildInfoFile": "../../dist/libs/client-util-sentry/tsconfig.lib.tsbuildinfo",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "target": "ES2022",
+    "tsBuildInfoFile": "../../dist/libs/client-util-sentry/tsconfig.lib.tsbuildinfo"
   },
   "exclude": ["*.mts", "./src/test-setup.ts", "**/*.spec.ts", "**/*.mock.ts"],
   "extends": "./tsconfig.json",
   "include": ["./src/**/*.ts"],
-  "references": [{ "path": "../client-util/tsconfig.lib.json" }]
+  "references": [
+    {
+      "path": "../client-util/tsconfig.lib.json"
+    }
+  ]
 }
