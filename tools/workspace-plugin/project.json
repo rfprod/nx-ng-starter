@@ -1,12 +1,13 @@
 {
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "name": "workspace-plugin",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "tools/workspace-plugin/src",
   "tags": ["scope:workspace-plugin", "type:workspace"],
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
       "options": {
         "assets": [
           {
@@ -34,19 +35,11 @@
         "outputPath": "dist/tools/workspace-plugin",
         "tsConfig": "tools/workspace-plugin/tsconfig.lib.json",
         "updateBuildableProjectDepsInPackageJson": true
-      },
-      "outputs": ["{options.outputPath}"]
+      }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
       "options": {
-        "eslintConfig": "{projectRoot}/eslint.config.mjs",
-        "lintFilePatterns": [
-          "tools/workspace-plugin/*.mts",
-          "tools/workspace-plugin/**/*.ts",
-          "tools/workspace-plugin/package.json",
-          "tools/workspace-plugin/generators.json"
-        ]
+        "args": ["*.mts", "**/*.ts", "package.json", "generators.json"]
       }
     },
     "test": {

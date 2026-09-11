@@ -28,21 +28,19 @@
             "output": "assets"
           }
         ],
+        "bundle": true,
+        "esbuildConfig": "apps/server-prod/esbuild.config.js",
+        "format": ["cjs"],
         "main": "apps/server-prod/src/main.ts",
         "outputPath": "dist/apps/server-prod",
-        "tsConfig": "apps/server-prod/tsconfig.app.json",
         "platform": "node",
-        "format": ["cjs"],
-        "bundle": true,
-        "esbuildConfig": "apps/server-prod/esbuild.config.js"
+        "tsConfig": "apps/server-prod/tsconfig.app.json"
       },
       "outputs": ["{options.outputPath}"]
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
       "options": {
-        "eslintConfig": "{projectRoot}/eslint.config.mjs",
-        "lintFilePatterns": ["{projectRoot}/**/*.ts"]
+        "args": ["**/*.ts"]
       }
     },
     "prettier-check": {

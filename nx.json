@@ -41,10 +41,10 @@
       "unitTestRunner": "vitest-analog"
     },
     "@nx/angular:component": {
-      "style": "scss",
       "changeDetection": "OnPush",
       "inlineStyle": false,
       "inlineTemplate": false,
+      "style": "scss",
       "type": "component"
     },
     "@nx/angular:directive": {
@@ -120,9 +120,10 @@
     "projectLinterConfig": ["{projectRoot}/tsconfig.spec.json", "{projectRoot}/vitest.config.mts"],
     "projectTestConfig": ["{projectRoot}/tsconfig.eslint.json", "{projectRoot}/eslint.config.mjs"],
     "rootLinterConfig": [
-      "{workspaceRoot}/.eslintignore",
-      "{workspaceRoot}/.eslintrc.js",
-      "{workspaceRoot}/.eslintrc.*.js",
+      "{workspaceRoot}/eslint.config.mjs",
+      "{workspaceRoot}/.eslint/*.mjs",
+      "{workspaceRoot}/.eslintrc.module-boundaries.mjs",
+      "{workspaceRoot}/.eslintrc.naming-convention.mjs",
       "{workspaceRoot}/.prettierignore",
       "{workspaceRoot}/.prettierrc"
     ],
@@ -131,21 +132,29 @@
   },
   "newProjectRoot": "",
   "parallel": 1,
+  "plugins": [
+    {
+      "options": {
+        "targetName": "lint"
+      },
+      "plugin": "@nx/eslint/plugin",
+      "exclude": ["**/executors/**"]
+    }
+  ],
   "targetDefaults": {
+    "@nx/angular:ng-packagr-lite": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["default", "^default"]
+    },
+    "@nx/vitest:test": {
+      "cache": true,
+      "inputs": ["default", "^default"]
+    },
     "build": {
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["default", "^prod"]
-    },
-    "build-storybook": {
-      "inputs": [
-        "default",
-        "^prod",
-        "{workspaceRoot}/.storybook/**/*",
-        "{projectRoot}/.storybook/**/*",
-        "{projectRoot}/**/*.stories.ts",
-        "{projectRoot}/tsconfig.storybook.json"
-      ]
     },
     "e2e": {
       "cache": true,
@@ -153,7 +162,10 @@
     },
     "lint": {
       "cache": true,
-      "inputs": ["default", "^prod", "projectLinterConfig", "rootLinterConfig", "{workspaceRoot}/eslint.config.mjs"]
+      "inputs": ["default", "^prod", "projectLinterConfig", "rootLinterConfig", "{workspaceRoot}/eslint.config.mjs"],
+      "options": {
+        "config": "./eslint.config.mjs"
+      }
     },
     "prettier-check": {
       "cache": true
@@ -167,15 +179,6 @@
     },
     "tsc-check": {
       "cache": true
-    },
-    "@nx/angular:ng-packagr-lite": {
-      "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["default", "^default"]
-    },
-    "@nx/vitest:test": {
-      "cache": true,
-      "inputs": ["default", "^default"]
     }
   },
   "tasksRunnerOptions": {

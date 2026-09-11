@@ -20,10 +20,8 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
       "options": {
-        "eslintConfig": "{projectRoot}/eslint.config.mjs",
-        "lintFilePatterns": ["{projectRoot}/**/*.ts"]
+        "args": ["**/*.ts"]
       }
     },
     "prettier-check": {

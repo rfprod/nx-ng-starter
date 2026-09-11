@@ -1,20 +1,24 @@
 {
   "angularCompilerOptions": {
-    "skipTemplateCodegen": true,
-    "strictMetadataEmit": true,
-    "enableResourceInlining": true
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
   },
   "compilerOptions": {
+    "composite": true,
     "declaration": true,
     "declarationMap": true,
-    "sourceMap": true,
-    "inlineSources": true,
-    "lib": ["dom", "ES2022"],
-    "outDir": "../../dist/out-tsc",
+    "moduleResolution": "bundler",
+    "outDir": "../../dist/libs/<%= kebabCaseName %>",
+    "rootDir": "./src",
     "target": "ES2022",
-    "moduleResolution": "bundler"
+    "tsBuildInfoFile": "../../dist/libs/<%= kebabCaseName %>/tsconfig.lib.tsbuildinfo"
   },
   "exclude": ["*.mts", "src/test-setup.ts", "**/*.spec.ts", "**/*.mock.ts"],
   "extends": "./tsconfig.json",
-  "include": ["**/*.ts"]
+  "include": ["**/*.ts"],
+  "references": []
 }
