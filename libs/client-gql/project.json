@@ -24,14 +24,7 @@
       }
     },
     "test": {
-      "executor": "@nx/vitest:test",
-      "options": {
-        "compiler": "swc",
-        "configFile": "libs/client-gql/vitest.config.mts",
-        "coverageProvider": "istanbul",
-        "tsConfig": "libs/client-gql/tsconfig.lib.json",
-        "uiFramework": "angular"
-      }
+      "options": {}
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",

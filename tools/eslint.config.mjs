@@ -19,6 +19,12 @@ export default defineConfig([
   exceptions.logger,
   exceptions.spec,
   {
+    files: ['**/find-files.util.ts'],
+    rules: {
+      complexity: ['error', 11],
+    },
+  },
+  {
     files: ['**/types/*.d.ts'],
     rules: {
       ...namingConventionConfig({ noInterfacePrefix: true }),

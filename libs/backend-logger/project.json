@@ -17,13 +17,7 @@
       }
     },
     "test": {
-      "executor": "@nx/vitest:test",
-      "options": {
-        "compiler": "swc",
-        "configFile": "libs/backend-logger/vitest.config.mts",
-        "coverageProvider": "istanbul",
-        "uiFramework": "none"
-      }
+      "options": {}
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
