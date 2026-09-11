@@ -12,7 +12,7 @@ const __dirname = dirname(__filename);
 
 export default defineConfig([
   {
-    ignores: ignores.concat(join('!', __dirname), '/**').concat(join(__dirname), '/workspace-plugin'),
+    ignores: ignores.concat(join('!', __dirname, '/executors', '/**')).concat(join(__dirname, '/workspace-plugin', '/**')),
   },
   mtsConfig,
   tsConfig,
@@ -24,6 +24,21 @@ export default defineConfig([
       ...namingConventionConfig({ noInterfacePrefix: true }),
       '@typescript-eslint/no-empty-object-type': 'off',
       '@typescript-eslint/no-empty-interface': 'off',
+    },
+  },
+  {
+    files: ['**/module-boundaries.generator.ts'],
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+      'max-depth': ['error', 6],
+      'max-lines-per-function': [
+        'error',
+        {
+          max: 59,
+          skipBlankLines: true,
+          skipComments: true,
+        },
+      ],
     },
   },
 ]);

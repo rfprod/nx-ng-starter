@@ -47,20 +47,18 @@
           }
         ],
         "buildLibsFromSource": true,
+        "bundle": true,
+        "esbuildConfig": "apps/api/esbuild.config.js",
+        "format": ["cjs"],
         "main": "apps/api/src/main.ts",
         "outputPath": "dist/apps/api",
-        "tsConfig": "apps/api/tsconfig.app.json",
         "platform": "node",
-        "format": ["cjs"],
-        "bundle": true,
-        "esbuildConfig": "apps/api/esbuild.config.js"
+        "tsConfig": "apps/api/tsconfig.app.json"
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
       "options": {
-        "eslintConfig": "{projectRoot}/eslint.config.mjs",
-        "lintFilePatterns": ["{projectRoot}/**/*.ts"]
+        "args": ["**/*.ts"]
       }
     },
     "prettier-check": {

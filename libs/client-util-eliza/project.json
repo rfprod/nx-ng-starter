@@ -23,10 +23,8 @@
       "outputs": ["{workspaceRoot}/dist/libs/client-util-eliza"]
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
       "options": {
-        "eslintConfig": "{projectRoot}/eslint.config.mjs",
-        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.html"]
+        "args": ["**/*.ts"]
       }
     },
     "prettier-check": {
