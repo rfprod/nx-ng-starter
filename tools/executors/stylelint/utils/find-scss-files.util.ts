@@ -1,6 +1,5 @@
 import { joinPathFragments, logger } from '@nx/devkit';
 import type { FsTree } from 'nx/src/generators/tree';
-import { directoryExists } from 'nx/src/utils/fileutils';
 
 /**
  * Recursively find all scss files in a directory and its subdirectories.
@@ -16,16 +15,24 @@ export const findScssFiles = (
   filter = '.scss',
   result = { stderr: '', stdout: '' },
 ): { stderr: string; stdout: string } => {
-  if (!directoryExists(src)) {
-    logger.error(`Source directory ${src} does not exist`);
-    result.stderr = `Source directory ${src} does not exist`;
+  if (!tree.exists(src)) {
+    const message = `Source directory ${src} does not exist`;
+    logger.error(message);
+    result.stderr = message;
+    return result;
+  }
+
+  if (tree.isFile(src)) {
+    const message = `Source directory ${src} is a file`;
+    logger.error(message);
+    result.stderr = message;
     return result;
   }
 
   const files = tree.children(src);
   for (let i = 0, max = files.length; i < max; i += 1) {
     const filePath = joinPathFragments(src, files[i]);
-    if (!tree.isFile(filePath)) {
+    if (!tree.isFile(filePath) && tree.exists(filePath)) {
       findScssFiles(tree, filePath, filter, result);
     } else if (filePath.endsWith(filter)) {
       result.stdout += result.stdout.length === 0 ? filePath : ` ${filePath}`;

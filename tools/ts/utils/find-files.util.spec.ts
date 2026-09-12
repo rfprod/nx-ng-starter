@@ -1,27 +1,41 @@
+import { mkdtemp, rm } from 'fs/promises';
 import { FsTree } from 'nx/src/generators/tree';
-import { createDirectory } from 'nx/src/utils/fileutils';
+import { tmpdir } from 'os';
 import type { MockInstance } from 'vitest';
 
 import { findFiles } from './find-files.util';
 
 describe('findFiles', () => {
-  const root = process.cwd();
   let tree: FsTree;
-  let treeSpy: {
-    children: MockInstance;
-    isFile: MockInstance;
+  let treeSpy: { children: MockInstance; isFile: MockInstance };
+
+  let tmpDir: string;
+
+  const createTempDir = async () => {
+    return mkdtemp(tmpdir() + '/');
   };
 
-  beforeEach(() => {
-    tree = new FsTree(root, false);
+  const removeTempDir = async (dirPath: string) => {
+    return rm(dirPath, { recursive: true, force: true });
+  };
+
+  beforeEach(async () => {
+    tmpDir = await createTempDir();
+    tree = new FsTree(tmpDir, false);
     treeSpy = {
       children: vi.spyOn(tree, 'children'),
       isFile: vi.spyOn(tree, 'isFile'),
     };
   });
 
+  afterEach(async () => {
+    await removeTempDir(tmpDir);
+  });
+
   it('should return an empty string if there are no .html files in the file system tree', () => {
-    const files = findFiles(tree, 'tools');
+    const pkgDir = 'tools';
+    tree.write(`${pkgDir}/.gitkeep`, '');
+    const files = findFiles(tree, pkgDir);
     expect(files.stderr.length).toEqual(0);
     expect(files.stdout.length).toEqual(0);
     expect(treeSpy.children).toHaveBeenCalled();
@@ -29,11 +43,8 @@ describe('findFiles', () => {
   });
 
   it('should find .html files in the file system tree', () => {
-    const testFilePath = './test.html';
-    const testFileContent = '<div>zxc</div>';
-    const pkgDir = `${tree.root}/pkg`;
-    createDirectory(pkgDir);
-    tree.write(`${pkgDir}/${testFilePath}`, testFileContent);
+    const pkgDir = 'pkg';
+    tree.write(`${pkgDir}/test.html`, '<div>zxc</div>');
     const files = findFiles(tree, pkgDir);
     expect(files.stderr.length).toEqual(0);
     expect(files.stdout.length).toBeGreaterThan(0);
@@ -42,11 +53,9 @@ describe('findFiles', () => {
   });
 
   it('should find .json files in the file system tree', () => {
-    const testFilePath = './test.json';
     const testFileContent = JSON.stringify({ z: 'x' });
-    const pkgDir = `${tree.root}/pkg`;
-    createDirectory(pkgDir);
-    tree.write(`${pkgDir}/${testFilePath}`, testFileContent);
+    const pkgDir = `pkg`;
+    tree.write(`${pkgDir}/test.json`, testFileContent);
     const files = findFiles(tree, pkgDir, '.json');
     expect(files.stderr.length).toEqual(0);
     expect(files.stdout.length).toBeGreaterThan(0);

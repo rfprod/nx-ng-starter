@@ -43,13 +43,7 @@
       }
     },
     "test": {
-      "executor": "@nx/vitest:test",
-      "options": {
-        "compiler": "swc",
-        "configFile": "tools/workspace-plugin/vitest.config.mts",
-        "coverageProvider": "istanbul",
-        "uiFramework": "none"
-      }
+      "options": {}
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",

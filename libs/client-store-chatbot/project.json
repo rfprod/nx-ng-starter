@@ -24,14 +24,7 @@
       }
     },
     "test": {
-      "executor": "@nx/vitest:test",
-      "options": {
-        "compiler": "swc",
-        "configFile": "libs/client-store-chatbot/vitest.config.mts",
-        "coverageProvider": "istanbul",
-        "tsConfig": "libs/client-store-chatbot/tsconfig.lib.json",
-        "uiFramework": "angular"
-      }
+      "options": {}
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",

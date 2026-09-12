@@ -9,7 +9,7 @@
   },
   "exclude": ["vite.config.mts", "vitest.config.mts", "**/*.spec.ts"],
   "extends": "./tsconfig.json",
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "vitest.config.mts"],
   "angularCompilerOptions": {
     "extendedDiagnostics": {
       "checks": {

@@ -140,13 +140,7 @@
       }
     },
     "test": {
-      "executor": "@nx/vitest:test",
-      "options": {
-        "compiler": "swc",
-        "configFile": "apps/elements/vitest.config.mts",
-        "coverageProvider": "istanbul",
-        "uiFramework": "angular"
-      }
+      "options": {}
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",

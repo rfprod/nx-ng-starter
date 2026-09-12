@@ -1,6 +1,6 @@
 import { defineConfig } from 'vitest/config';
 
-import { sharedTestConfig } from '../ts/vitest.shared';
+import { sharedTestConfig } from '../ts/vitest.shared.mjs';
 
 export default defineConfig({
   root: import.meta.dirname,

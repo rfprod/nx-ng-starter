@@ -138,17 +138,20 @@
         "targetName": "lint"
       },
       "plugin": "@nx/eslint/plugin",
-      "exclude": ["**/executors/**"]
+      "exclude": ["tools/executors/**"]
+    },
+    {
+      "plugin": "@nx/vitest",
+      "options": {
+        "testTargetName": "test"
+      },
+      "exclude": ["apps/*-e2e/**", "libs/*-e2e/**", "tools/executors/**"]
     }
   ],
   "targetDefaults": {
     "@nx/angular:ng-packagr-lite": {
       "cache": true,
       "dependsOn": ["^build"],
-      "inputs": ["default", "^default"]
-    },
-    "@nx/vitest:test": {
-      "cache": true,
       "inputs": ["default", "^default"]
     },
     "build": {
@@ -173,10 +176,21 @@
     "stylelint-check": {
       "cache": true
     },
-    "test": {
-      "cache": true,
-      "inputs": ["default", "^prod", "projectTestConfig", "rootTestConfig"]
-    },
+    "test": [
+      {
+        "cache": true,
+        "inputs": ["default", "^prod", "projectTestConfig", "rootTestConfig"]
+      },
+      {
+        "filter": {
+          "plugin": "@nx/vitest"
+        },
+        "inputs": ["default", "^default"],
+        "options": {
+          "config": "./vitest.config.mts"
+        }
+      }
+    ],
     "tsc-check": {
       "cache": true
     }

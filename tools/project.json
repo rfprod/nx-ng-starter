@@ -152,12 +152,7 @@
     },
     "test": {
       "dependsOn": ["clean-executor-compilation"],
-      "options": {
-        "compiler": "swc",
-        "coverageProvider": "istanbul",
-        "uiFramework": "none",
-        "config": "./vitest.config.mts"
-      }
+      "options": {}
     },
     "tsc-check": {
       "executor": "./tools/executors/tsc:check",
