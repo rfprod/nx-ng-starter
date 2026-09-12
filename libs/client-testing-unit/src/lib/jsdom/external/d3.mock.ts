@@ -1,5 +1,3 @@
-import { vi } from 'vitest';
-
 /**
  * d3js select method mock.
  * @param id element id
@@ -77,7 +75,7 @@ const range = (...args: number[]) => [...args];
 /**
  * d3js mock value.
  */
-const d3MockValue = {
+export const d3MockValue = {
   scaleOrdinal,
   max,
   scaleLinear,
@@ -85,10 +83,3 @@ const d3MockValue = {
   range,
   lineRadial,
 };
-
-/**
- * Sets up the d3js library mock.
- */
-export function setupD3JsMock() {
-  vi.mock('d3', () => d3MockValue);
-}

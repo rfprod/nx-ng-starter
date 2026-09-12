@@ -117,23 +117,29 @@ const gqlMock = (query: string) => {
   };
 };
 
-/** Set up Apollo mocks. */
-export function setupApolloMocks() {
-  vi.mock('apollo-angular', () => {
+/**
+ * Mock functions for Apollo Angular libraries.
+ *
+ * @example
+ * // Use in `test-setup.ts` files
+ * vi.mock('apollo-angular', () => mockFunctions['apollo-angular']());
+ * vi.mock('apollo-angular/http', () => mockFunctions['apollo-angular/http']());
+ * vi.mock('@apollo/client/utilities', () => mockFunctions['@apollo/client/utilities']());
+ */
+export const apolloMockFunctions = {
+  ['apollo-angular']: () => {
     return {
       ['Apollo']: AppMockApollo,
       gql: gqlMock,
       ['ApolloBase']: AppMockApolloBase,
     };
-  });
-
-  vi.mock('apollo-angular/http', () => {
+  },
+  ['apollo-angular/http']: () => {
     return {
       ['HttpLink']: AppMockHttpLink,
     };
-  });
-
-  vi.mock('@apollo/client/utilities', () => {
+  },
+  ['@apollo/client/utilities']: () => {
     return {
       getMainDefinition: vi.fn().mockReturnValue({
         kind: Kind.OPERATION_DEFINITION,
@@ -144,5 +150,5 @@ export function setupApolloMocks() {
         } as NameNode,
       }),
     };
-  });
-}
+  },
+};

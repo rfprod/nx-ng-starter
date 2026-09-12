@@ -1,7 +1,7 @@
 import angular from '@analogjs/vite-plugin-angular';
 import { defineConfig } from 'vitest/config';
 
-import { sharedTestConfig } from '../../vitest.shared';
+import { sharedTestConfig } from '../../vitest.shared.mts';
 
 export default defineConfig({
   root: import.meta.dirname,
