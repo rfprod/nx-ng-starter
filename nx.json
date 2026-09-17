@@ -107,7 +107,6 @@
     "default": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.scss", "{projectRoot}/**/*.html", "sharedGlobals"],
     "prod": [
       "default",
-      "!{projectRoot}/**/*.stories.ts",
       "!{projectRoot}/**/*.spec.ts",
       "!{projectRoot}/**/*.md",
       "!{projectRoot}/tsconfig.e2e.json",
