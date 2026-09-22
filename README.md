@@ -1,44 +1,82 @@
-# Nx Angular NestJS Starter: A Scalable Monorepo Template for Angular and NestJS Applications
+# nx-ng-starter
+
+A modern, full-stack monorepo starter built with **Nx**, **Angular**, **Node.js**, and **Firebase**. Ship web, mobile, and desktop applications from a single repository with GraphQL, real-time database integration, and enterprise-grade tooling.
+
+[![Nx](https://img.shields.io/badge/Nx-23-143055?logo=nx&logoColor=white)](https://nx.dev)
+[![Angular](https://img.shields.io/badge/Angular-21-DD0031?logo=angular&logoColor=white)](https://angular.io)
+[![Node.js](https://img.shields.io/badge/Node.js-24-339933?logo=node.js&logoColor=white)](https://nodejs.org)
+[![NestJS](https://img.shields.io/badge/NestJS-12-FF0000?logo=nestjs&logoColor=white)](https://nestjs.com)
+[![Firebase](https://img.shields.io/badge/Firebase-Cloud-FFA000?logo=firebase&logoColor=white)](https://firebase.google.com)
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-## Description
+## Overview
 
-[Nx](https://nx.dev/) [Angular](https://angular.io/) [NestJS](https://nestjs.com/) Starter is a powerful template designed for building scalable Angular and NestJS applications using Nx. It leverages modern development practices to enhance productivity and maintainability.
+**nx-ng-starter** is a starter template that eliminates boilerplate configuration for modern full-stack applications. It combines the monorepo power of **Nx** with the reactive paradigm of **Angular**, a scalable **Node.js** backend, and **Firebase** for authentication, database, and deployment.
+
+Whether you're building a web application, a mobile app with **Capacitor**, a desktop app with **Electron**, or all three — this starter provides the foundation with best practices baked in.
 
 ## Key Features
 
-- **Monorepo Support:** Manage multiple Angular applications and libraries in a single repository.
-- **Optimized Build Process:** Leverage Nx's caching and task running capabilities for faster builds.
-- **Integrated Testing:** Built-in support for unit and end-to-end testing.
-- **Customizable Configuration:** Easily adjust settings to fit your project's needs.
+- **Monorepo Architecture** — Manage multiple apps and libraries in one workspace using Nx
+- **Full-Stack JavaScript/TypeScript** — Shared code between frontend and backend
+- **Firebase Integration** — Firestore database, Realtime Database, Authentication, Cloud Functions, and Hosting
+- **GraphQL Support** — Schema-driven API development with type safety
+- **Multi-Platform** — Web, Android (Capacitor), and Desktop (Electron) from shared code
+- **Docker Ready** — Containerized deployment for Node.js backend and services
+- **Enterprise Tooling** — ESLint, Prettier, Jest, Cypress, and Storybook preconfigured
+- **CI/CD Workflows** — GitHub Actions for automated testing and deployment
+- **Real-Time Capabilities** — Firebase Realtime Database and Firestore for live data sync
 
-## Workflows
+## Technology Stack
 
-|                                                                              | Trigger                             | Badge                                                                                                                                                                                                    |
-| ---------------------------------------------------------------------------- | ----------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [:information_source:](# 'Source code security scanning.')                   | Manual, Scheduled (weekly)          | [![codeql-analysis](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/codeql-analysis.yml)             |
-| [:information_source:](# 'Containerization.')                                | Manual                              | [![build-docker](https://github.com/rfprod/nx-ng-starter/actions/workflows/build-docker.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/build-docker.yml)                      |
-| [:information_source:](# 'Publish npm packages.')                            | PR merge event (destination: trunk) | [![publish-packages](https://github.com/rfprod/nx-ng-starter/actions/workflows/publish-packages.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/publish-packages.yml)          |
-| [:information_source:](# 'User acceptance testing.')                         | Manual                              | [![test-e2e](https://github.com/rfprod/nx-ng-starter/actions/workflows/test-e2e.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/test-e2e.yml)                                  |
-| [:information_source:](# 'Full testing, deliverables build and deployment.') | PR merge event (destination: trunk) | [![trunk](https://github.com/rfprod/nx-ng-starter/actions/workflows/trunk.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/trunk.yml)                                           |
-| [:information_source:](# 'Code ownership validation.')                       | Scheduled (weekly)                  | [![validate-codeowners](https://github.com/rfprod/nx-ng-starter/actions/workflows/validate-codeowners.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/validate-codeowners.yml) |
-| [:information_source:](# 'Quality gates: pull request validation.')          | PR open event (destination: trunk)  | [![validate-pr](https://github.com/rfprod/nx-ng-starter/actions/workflows/validate-pr.yml/badge.svg)](https://github.com/rfprod/nx-ng-starter/actions/workflows/validate-pr.yml)                         |
+| Layer                 | Technology                                                                                   | Purpose                                                           |
+| --------------------- | -------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| **Frontend**          | [Angular](https://angular.io)                                                                | The framework for building scalable web applications.             |
+| **Frontend**          | [Angular Material](https://material.angular.io/)                                             | Material design components for Angular.                           |
+| **Frontend**          | [NgRx](https://ngrx.io/)                                                                     | User Interface state management.                                  |
+| **Mobile**            | [Capacitor](https://capacitorjs.com/)                                                        | Cross-platform Android applications.                              |
+| **Desktop**           | [Electron](https://www.electronjs.org/)                                                      | Cross-platform desktop applications.                              |
+| **Backend**           | [NestJS](https://nestjs.com/)                                                                | Node.js framework for building scalable server-side applications. |
+| **Backend**           | [Express GraphQL Server](https://graphql.org/graphql-js/running-an-express-graphql-server/)  | Type-safe API layer.                                              |
+| **Documentation**     | [Compodoc](https://compodoc.github.io/compodoc/)                                             | Documentation tool form Angular frontends and NestJS backends.    |
+| **Quality Assurance** | [Vitest](https://vitest.dev/)                                                                | Next generation unit testing framework.                           |
+| **Quality Assurance** | [Cypress](https://www.cypress.io/)                                                           | Versatile browser testing framework.                              |
+| **Database**          | [Firestore / Realtime Database](https://firebase.google.com/docs/database/rtdb-vs-firestore) | Cloud-hosted database.                                            |
+| **Authentication**    | [Firebase Auth](https://firebase.google.com/docs/auth/)                                      | User identity and access control.                                 |
+| **Deployment**        | [Firebase Hosting & Cloud Functions](https://firebase.google.com/docs/hosting/functions)     | Serverless deployment infrastructure.                             |
+| **Containerization**  | [Docker](https://www.docker.com/)                                                            | Containerized services.                                           |
+| **Build Tool**        | [Nx](https://nx.dev)                                                                         | Monorepo build orchestration.                                     |
+| **Package Manager**   | [Yarn](https://www.npmjs.com/package/yarn)                                                   | Deterministic dependency management.                              |
+| **CI/CD**             | [GitHub Actions](https://github.com/features/actions)                                        | Software workflow automation.                                     |
 
 ## Requirements
 
-In order to run own copy of the project one must fulfill the following requirements.
+### Before setting up, ensure you have:
 
-### Supported operating systems
+- [**Bash 5**](https://www.gnu.org/software/bash/)
+- [**Node.js**](https://nodejs.org/)
+- [**Yarn**](https://yarnpkg.com/)
+- [**Git**](https://git-scm.com/)
+- [**Firebase**](https://firebase.google.com)
+- [**Docker**](https://www.docker.com/)
 
-- :trophy: [Debian based Linux](https://en.wikipedia.org/wiki/List_of_Linux_distributions#Debian-based) - `recommended`
+### Package managers:
+
+- [Yarn](https://www.npmjs.com/package/yarn) - preferred for dependencies installation in the project root.
+- [npm](https://www.npmjs.com/package/npm) - preferred for dependencies installation in the `functions` folder.
+
+### Supported operating systems:
+
+- [Debian based Linux](https://en.wikipedia.org/wiki/List_of_Linux_distributions#Debian-based) - `recommended`
   - check out [this dev setup instructions](https://github.com/rfprod/wdsdu) to facilitate setting up the dev environment;
   - given that the dev environment is set up, the command `yarn install:all:linux` should install everything needed to work with the project;
-- :ok: [OSX](https://en.wikipedia.org/wiki/MacOS) - `should work due to similarity to Linux`
+- [OSX](https://en.wikipedia.org/wiki/MacOS) - `should work due to its similarity to Linux`
   - one will have to figure out oneself how to set up the dev environment;
   - given that the dev environment is set up, the command `yarn install:all:osx` should install everything needed to work with the project;
   - the automation scripts support the OS with relatively high probability, but it has not been tested;
-- 🤷 [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) - `should work, but no guarantees`
+- [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows) - `should work, but no guarantees`
   - one will have to figure out oneself how to set up the dev environment;
   - one will have to figure out oneself how to install `protolint`, [see available installation options](https://github.com/yoheimuta/protolint#installation);
   - given that the dev environment is set up, the following commands should be used to install `shellcheck` via PowerShell;
@@ -53,53 +91,55 @@ In order to run own copy of the project one must fulfill the following requireme
     git config --global core.eol lf
     ```
 
-### Core dependencies
+## Installation & Setup
 
-- [Bash 5](https://www.gnu.org/software/bash/)
-- [Node.js](https://nodejs.org/)
-- [Yarn](https://yarnpkg.com/)
-- [Git](https://git-scm.com/)
-
-### Preferred package manager
-
-- [Yarn](https://www.npmjs.com/package/yarn) - preferred package manager for dependencies installation in the project root.
-- [npm](https://www.npmjs.com/package/npm) - preferred package manager for dependencies installation in the `functions` folder.
-
-### Getting started
-
-1. Clone the repository:
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/rfprod/nx-ng-starter.git
+cd nx-ng-starter
 ```
 
-2. Navigate to the project directory:
+### 2. Install Dependencies, Setup Git Hooks, and Compile Workspace Executors
 
 ```bash
-cd ./nx-ng-starter
+yarn setup
 ```
 
-3. Install dependencies:
+### 3. Configure Firebase (Required for Deployment)
+
+Create a `firebase.json` file in the root directory with your Firebase project credentials:
+
+```json
+{
+  "projects": {
+    "default": "your-firebase-project-id"
+  }
+}
+```
+
+Alternatively, set environment variables:
 
 ```bash
-yarn install --frozen-lockfile
+export FIREBASE_PROJECT_ID=your-project-id
+export FIREBASE_API_KEY=your-api-key
 ```
 
-4. Run the application:
+### 4. Start Development
 
 ```bash
 yarn start
 ```
 
-## Package scripts reference
+This will start:
 
-The project has lots of package scripts, check it in the `package.json` located in the project root, or use the following command (see terminal output for usage tips)
+- **Web app**: http://localhost:4200
+- **API server**: http://localhost:8080
+- **Nx dev server**: Watches for changes and rebuilds automatically
 
-```bash
-npx nx run tools:help
-```
+### 5. Commit Changes
 
-## Committing changes to the repo
+Follow the [Trunk Based Development methodology](https://trunkbaseddevelopment.com/) to propose changes to the `main` branch.
 
 Using [commitizen cli](https://github.com/commitizen/cz-cli) is mandatory.
 
@@ -109,23 +149,55 @@ Provided all dependencies are installed, and [commitizen cli is installed as a g
 git cz
 ```
 
-## GitBook documentation
+## Command Discovery
 
-The GitBook documentation is generated based on this GitHub repo.
+### All Supported Commands
 
-- [GitBook documentation](https://rfprod.gitbook.io/nx-ng-starter/)
+Find all supported commands:
 
-## Firebase deployments
+```bash
+npx nx run tools:help
+```
 
-Application deployments and autogenerated engineering documentation.
+### Running Applications
 
-- [Client](https://nx-ng-starter.web.app)
-- [Elements](https://nx-ng-starter-elements.web.app)
-- [Documentation](https://nx-ng-starter-documentation.web.app)
-  - [Compodoc](https://nx-ng-starter-documentation.web.app/assets/compodoc/index.html)
-  - [Unit test reports](https://nx-ng-starter-documentation.web.app/assets/coverage/index.html)
-  - [E2E test reports](https://nx-ng-starter-documentation.web.app/assets/cypress/index.html)
-  - [Changelogs](https://nx-ng-starter-documentation.web.app/assets/changelog/index.html)
+Find all supported `start` commands:
+
+```bash
+npx nx run tools:help --search start
+```
+
+### Building Applications
+
+Find all supported `build` commands:
+
+```bash
+npx nx run tools:help --search build
+```
+
+### Running Tests
+
+Find all supported `test` commands:
+
+```bash
+npx nx run tools:help --search test
+```
+
+### Deploying Applications
+
+Find all supported `firebase` commands:
+
+```bash
+npx nx run tools:help --search firebase
+```
+
+### Building Containers
+
+Find all supported `docker` commands:
+
+```bash
+npx nx run tools:help --search docker
+```
 
 ## Workspace generators
 
@@ -167,58 +239,36 @@ npx nx generate module-boundaries
 npx nx dep-graph
 ```
 
+## GitBook documentation
+
+The GitBook documentation is generated based on this GitHub repo.
+
+- [GitBook documentation](https://rfprod.gitbook.io/nx-ng-starter/)
+
+## Firebase deployments
+
+Application deployments and autogenerated engineering documentation.
+
+- [Client](https://nx-ng-starter.web.app)
+- [Elements](https://nx-ng-starter-elements.web.app)
+- [Documentation](https://nx-ng-starter-documentation.web.app)
+  - [Compodoc](https://nx-ng-starter-documentation.web.app/assets/compodoc/index.html)
+  - [Unit test reports](https://nx-ng-starter-documentation.web.app/assets/coverage/index.html)
+  - [E2E test reports](https://nx-ng-starter-documentation.web.app/assets/cypress/index.html)
+  - [Changelogs](https://nx-ng-starter-documentation.web.app/assets/changelog/index.html)
+
 ## General Tooling
 
 This project was generated using [Nx](https://nx.dev).
-
-### Quick Start & Documentation
 
 - [Nx Documentation](https://nx.dev)
 - [30-minute video showing all Nx features](https://nx.dev/getting-started/what-is-nx)
 - [Interactive Tutorial](https://nx.dev/tutorial/01-create-application)
 
-## Frequently Asked Questions
-
-### How do I contribute to this project?
+## How to contribute to this project?
 
 Refer to the [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines.
 
-### What technologies are used in this project?
+---
 
-#### Workspace
-
-- [Nrwl Nx](https://nx.dev)
-
-#### Client
-
-- [Angular](https://angular.io)
-- [Angular CLI](https://cli.angular.io/)
-- [Angular Material](https://material.angular.io/)
-- [Apollo Angular](https://github.com/apollographql/apollo-angular)
-- [Material Design Guidelines](https://material.io)
-- [NgRx](https://ngrx.io/)
-
-#### Server
-
-- [NestJS](https://nestjs.com/)
-- [Firebase JS Reference](https://firebase.google.com/docs/reference/js/)
-- [Express GraphQL Server](https://graphql.org/graphql-js/running-an-express-graphql-server/)
-- [Angular Firebase: Apollo Server](https://angularfirebase.com/lessons/graphql-apollo-2-tutorial-node/#Apollo-Server)
-- [GRPC](https://grpc.io/)
-
-#### Testing
-
-- [Cypress](https://www.cypress.io/)
-- [Vitest](https://vitest.dev/)
-
-#### Documentation
-
-- [Compodoc](https://compodoc.github.io/compodoc/)
-
-#### CI
-
-- [GitHub Actions](https://github.com/features/actions)
-
-#### Development methodology
-
-- [Trunk based development](https://trunkbaseddevelopment.com/)
+**Good luck!** 👍
