@@ -118,13 +118,18 @@ const gqlMock = (query: string) => {
 };
 
 /**
- * Mock functions for Apollo Angular libraries.
+ * Mock functions for the Apollo Angular library.
  *
  * @example
- * // Use in `test-setup.ts` files
- * vi.mock('apollo-angular', () => mockFunctions['apollo-angular']());
- * vi.mock('apollo-angular/http', () => mockFunctions['apollo-angular/http']());
- * vi.mock('@apollo/client/utilities', () => mockFunctions['@apollo/client/utilities']());
+ * import { vi } from 'vitest';
+ *
+ * import { apolloMockFunctions } from '@app/client-testing-unit';
+ *
+ * vi.mock('apollo-angular', () => apolloMockFunctions['apollo-angular']());
+ * vi.mock('apollo-angular/http', () => apolloMockFunctions['apollo-angular/http']());
+ * vi.mock('@apollo/client/utilities', () => apolloMockFunctions['@apollo/client/utilities']());
+ *
+ * @description Use in relevant `test-setup.ts` files to set up the Apollo Angular library mock.
  */
 export const apolloMockFunctions = {
   ['apollo-angular']: () => {
