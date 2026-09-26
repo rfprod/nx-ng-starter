@@ -73,7 +73,22 @@ const max = (data: number[]) => Math.max(...data);
 const range = (...args: number[]) => [...args];
 
 /**
- * d3js mock value.
+ * @title d3js mock value (library-scoped).
+ *
+ * @example
+ * import { vi } from 'vitest';
+ *
+ * import { d3MockValue } from './lib/testing/d3.mock';
+ *
+ * vi.mock('d3', async () => {
+ *   const actual = await import('d3');
+ *   return {
+ *     ...actual,
+ *     ...d3MockValue,
+ *   };
+ * });
+ *
+ * @description Use in relevant `test-setup.ts` files to set up the d3js library mock.
  */
 export const d3MockValue = {
   scaleOrdinal,

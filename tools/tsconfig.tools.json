@@ -9,13 +9,5 @@
   },
   "exclude": ["vite.config.mts", "vitest.config.mts", "**/*.spec.ts"],
   "extends": "./tsconfig.json",
-  "include": ["**/*.ts", "vitest.config.mts"],
-  "angularCompilerOptions": {
-    "extendedDiagnostics": {
-      "checks": {
-        "nullishCoalescingNotNullable": "suppress",
-        "optionalChainNotNullable": "suppress"
-      }
-    }
-  }
+  "include": ["**/*.ts", "vitest.config.mts"]
 }
