@@ -6,6 +6,8 @@ updates:
       interval: 'weekly'
       day: 'monday'
       time: '04:00'
+    cooldown:
+      default-days: 7
     groups:
       all-actions:
         patterns:
@@ -24,6 +26,8 @@ updates:
       interval: 'weekly'
       day: 'monday'
       time: '04:00'
+    cooldown:
+      default-days: 7
     groups:
       all-workflows:
         patterns:
@@ -42,6 +46,8 @@ updates:
       interval: 'weekly'
       day: 'monday'
       time: '04:00'
+    cooldown:
+      default-days: 7
     groups:
       all-containers:
         patterns:
@@ -57,9 +63,11 @@ updates:
   - package-ecosystem: 'npm'
     directory: '/'
     schedule:
-      interval: 'weekly'
+      interval: 'monthly'
       day: 'monday'
       time: '04:00'
+    cooldown:
+      default-days: 7
     groups:
       all-containers:
         patterns:
