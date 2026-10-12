@@ -6,11 +6,8 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "[proto3]": {
-    "editor.defaultFormatter": "xaver.clang-format"
-  },
   "[sh]": {
-    "editor.defaultFormatter": "timonwong.shellcheck"
+    "editor.defaultFormatter": "foxundermoon.shell-format"
   },
   "[shellscript]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
@@ -22,10 +19,12 @@
     "source.organizeImports": "never",
     "source.fixAll.eslint": "explicit",
     "source.fixAll.tslint": "never",
-    "source.fixAll.stylelint": "explicit"
+    "source.fixAll.stylelint": "explicit",
+    "source.fixAll.prettier": "explicit"
   },
   "editor.formatOnPaste": true,
   "editor.formatOnSave": true,
+  "editor.defaultFormatter": null,
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 1500,
   "files.trimTrailingWhitespace": true,
@@ -33,12 +32,18 @@
   "shellcheck.enable": true,
   "shellcheck.enableQuickFix": false,
   "shellcheck.exclude": [],
-  "shellcheck.executablePath": "shellcheck",
+  "shellcheck.executablePath": "/usr/bin/shellcheck",
   "shellcheck.ignorePatterns": {
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
     "**/node_modules/*/**": true
   },
   "shellcheck.run": "onType",
-  "shellcheck.useWorkspaceRootAsCwd": true
+  "shellcheck.useWorkspaceRootAsCwd": true,
+  "yaml.format.enable": true,
+  "yaml.format.singleQuote": true,
+  "yaml.format.bracketSpacing": true,
+  "yaml.format.proseWrap": "always",
+  "yaml.format.printWidth": 140,
+  "yaml.validate": true
 }
