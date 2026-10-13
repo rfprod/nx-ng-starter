@@ -22,7 +22,6 @@ export const testingEnvironment: IWebClientAppEnvironment = {
   appName: 'Testing Environment',
   description: 'Testing description',
   api: window.location.origin.includes('localhost') ? 'http://localhost:8080/api' : `${window.location.origin}/api`,
-  envoyUrl: '',
   sentry: {
     env: 'unit-testing',
     dsn: '',

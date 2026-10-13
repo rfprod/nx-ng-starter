@@ -19,7 +19,6 @@ export interface IWebClientAppEnvironment {
   appName: TAppName;
   description: string;
   api: string;
-  envoyUrl: string;
   sentry: {
     env: TSentryEnvironment;
     dsn: string;
