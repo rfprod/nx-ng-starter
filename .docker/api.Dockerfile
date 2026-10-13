@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 WORKDIR /app
 # Copy sources.
 COPY /dist/apps/api ./dist
-COPY /libs/backend-gql/schema.gql ./
+COPY /libs/backend-gql/schema.gql ./libs/backend-gql/schema.gql
 COPY /apps/api/package.json .
 # Install dependencies.
 RUN npm i --legacy-peer-deps \
