@@ -10,5 +10,4 @@ export const environment: IApiEnvironment = {
   production: false,
   firebase: false,
   appName: 'Nx Ng Starter API',
-  grpcUrl: '0.0.0.0:50051',
 };

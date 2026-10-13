@@ -12,7 +12,6 @@ export const environment: IWebClientAppEnvironment = {
   appName: 'Nx Ng Starter Elements',
   description: 'The custom web elements application based on Angular Elements.',
   api: window.location.origin.includes('localhost') ? 'http://localhost:8080/api' : `${window.location.origin}/api`,
-  envoyUrl: 'http://localhost:8090',
   sentry: sentryEnvFactory({ production: true }),
   ...appEnvFactory(),
 };

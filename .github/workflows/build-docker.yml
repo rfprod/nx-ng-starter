@@ -75,7 +75,7 @@ jobs:
           yarn docker:build documentation
 
       - name: Docker push apps
-        if: github.event.inputs.dry-run == false
+        if: github.event.inputs.dry-run == 'false'
         run: |
           yarn docker:push base
           yarn docker:push api-production

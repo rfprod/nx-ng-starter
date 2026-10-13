@@ -6,7 +6,6 @@ export interface IApiEnvironment {
   production: boolean;
   firebase: boolean;
   appName: string;
-  grpcUrl: string;
 }
 
 /**
@@ -23,8 +22,6 @@ export class AppApiEnvironment implements IApiEnvironment {
   public firebase = false;
 
   public appName: TApiAppName = 'Nx Ng Starter API';
-
-  public grpcUrl = '0.0.0.0:50051';
 
   constructor(input?: Partial<AppApiEnvironment>) {
     initializeClassProperties(this, input);

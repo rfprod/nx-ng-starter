@@ -8,7 +8,6 @@ describe('environmentProvider', () => {
     api: '',
     appName: '',
     description: '',
-    envoyUrl: '',
     platform: '',
     production: false,
     sentry: {

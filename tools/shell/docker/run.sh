@@ -52,7 +52,7 @@ print_help() {
 }
 
 ##
-# Builds Docker container image for the supported app.
+# Runs a container image.
 ##
 run_container() {
   print_info_title "<< Run Docker container image: $1 >>"
