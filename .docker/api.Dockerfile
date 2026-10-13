@@ -11,8 +11,8 @@ COPY /dist/apps/api ./dist
 COPY /libs/backend-gql/schema.gql ./
 COPY /apps/api/package.json .
 # Install dependencies.
-RUN npm i --omit=dev --legacy-peer-deps ; \
-  npm cache clean --force
+RUN npm i --legacy-peer-deps \
+  && npm cache clean --force
 # Set user.
 USER appuser
 # Configure exposed port.

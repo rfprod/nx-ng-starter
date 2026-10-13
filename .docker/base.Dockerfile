@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Create app directory.
 WORKDIR /app
 # Install dependencies.
-RUN apk --update --no-cache add curl ;\
-  npm i -g npm ; \
-  addgroup -S appgroup && \
-  adduser -S appuser -G appgroup
+RUN apk --update --no-cache add curl \
+  && npm i -g npm \
+  && addgroup -S appgroup \
+  && adduser -S appuser -G appgroup
