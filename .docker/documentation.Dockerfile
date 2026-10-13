@@ -11,8 +11,8 @@ COPY /dist/apps/server-prod ./dist
 COPY /dist/apps/documentation/browser ./dist/assets
 COPY /apps/server-prod/package.json .
 # Install dependencies.
-RUN npm i --omit=dev --legacy-peer-deps ; \
-  npm cache clean --force
+RUN npm i \
+  && npm cache clean --force
 # Set user.
 USER appuser
 # Configure exposed port.
