@@ -7,12 +7,11 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Create app directory.
 WORKDIR /app
 # Copy sources.
-COPY /tools/proto ./tools/proto
 COPY /dist/apps/api ./dist
 COPY /libs/backend-gql/schema.gql ./
 COPY /apps/api/package.json .
 # Install dependencies.
-RUN npm i --production --legacy-peer-deps ; \
+RUN npm i --omit=dev --legacy-peer-deps ; \
   npm cache clean --force
 # Set user.
 USER appuser
