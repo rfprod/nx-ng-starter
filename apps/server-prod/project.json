@@ -9,12 +9,7 @@
       "configurations": {
         "production": {
           "extractLicenses": true,
-          "fileReplacements": [
-            {
-              "replace": "apps/server-prod/src/environments/environment.ts",
-              "with": "apps/server-prod/src/environments/environment.prod.ts"
-            }
-          ],
+          "esbuildConfig": "apps/server-prod/esbuild.config.prod.js",
           "inspect": false,
           "optimization": true
         }
@@ -50,6 +45,11 @@
       }
     },
     "serve": {
+      "configurations": {
+        "production": {
+          "buildTarget": "server-prod:build:production"
+        }
+      },
       "executor": "@nx/js:node",
       "options": {
         "buildTarget": "server-prod:build"

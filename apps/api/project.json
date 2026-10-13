@@ -9,12 +9,7 @@
       "configurations": {
         "firebase": {
           "extractLicenses": true,
-          "fileReplacements": [
-            {
-              "replace": "apps/api/src/environments/environment.ts",
-              "with": "apps/api/src/environments/environment.firebase.ts"
-            }
-          ],
+          "esbuildConfig": "apps/api/esbuild.config.prod.js",
           "inspect": false,
           "optimization": true
         },

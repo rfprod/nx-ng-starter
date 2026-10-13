@@ -82,7 +82,7 @@
     "start:electron": "electron-builder install-app-deps; yarn build:client && electron .electron/",
     "start:elements": "npx nx run elements:configure-env; npx nx serve elements || true && echo 'Server exited, resetting environment...' && npx nx run elements:configure-env --reset",
     "test": "npx nx run-many --target test --all --run-in-band",
-    "workspace:cleanup": "rm -rf .angular/* documentation/* dist/* coverage/* changelog/* tmp/ /tmp/nx/nx-ng-starter /tmp/vite/nx-ng-starter /tmp/vitest/nx-ng-starter",
+    "workspace:cleanup": "rm -rf .angular/*; rm -rf ./dist/* rm -rf ./tmp/; rm -rf /tmp/nx/nx-ng-starter; rm -rf /tmp/vite/nx-ng-starter; rm -rf /tmp/vitest/nx-ng-starter",
     "workspace:integrity-check": "bash tools/shell/yarn-extension.sh integrity-check"
   },
   "config": {

@@ -4,6 +4,7 @@ import { NestFactory } from '@nestjs/core';
 import * as compression from 'compression';
 
 import { AppSeverProdModule } from './app/server-prod.module';
+import { environment } from './environments/environment';
 
 /**
  * Bootstraps the simple web client production server.
@@ -32,7 +33,9 @@ async function bootstrap() {
   const port = process.env['PORT'] ?? defaultPort;
   await app.listen(port);
 
-  Logger.log(`🚀 Simple production server is running on: http://localhost:${port}/${globalPrefix}`);
+  Logger.log(
+    `🚀 Simple production server (production mode: ${environment.production}) is running on: http://localhost:${port}/${globalPrefix}`,
+  );
 }
 
 void bootstrap();
