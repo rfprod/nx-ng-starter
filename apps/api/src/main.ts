@@ -60,7 +60,7 @@ async function bootstrap(expressInstance: e.Express): Promise<INestApplication> 
   if (typeof process.env['FIREBASE_CONFIG'] === 'undefined' || process.env['FIREBASE_CONFIG'] === '') {
     const port = typeof process.env['port'] !== 'undefined' ? process.env['port'] : defaultPort;
     await app.listen(port, () => {
-      Logger.log(`Listening http://localhost:${port}/${globalPrefix}/`);
+      Logger.log(`Listening (production mode: ${environment.production}) http://localhost:${port}/${globalPrefix}/`);
     });
   }
 
