@@ -10,6 +10,11 @@ source tools/shell/utils/config.sh
 CONTAINER_REGISTRY=rfprod/nx-ng-starter
 
 ##
+# Docker network name (for traffic routing through envoy)
+##
+NETWORK_NAME="nx-ng-apps"
+
+##
 # Supported images.
 # Associative array mapping: <app name | docker file name> - <docker image name>
 ##
@@ -29,7 +34,10 @@ declare -A IMAGES=(
 
 declare -A PORT_MAPPING=(
   ["default"]="8080:8080"
+  ["api"]="8080:8080"
+  ["client"]="8081:8080"
   ["envoy"]="8090:8090"
+  ["envoy-admin"]="9901:9901"
 )
 
 ##
@@ -52,6 +60,19 @@ print_help() {
 }
 
 ##
+# Checks whether a docker network exists. Creates a network if it does not exist.
+##
+check_network() {
+  if ! docker network inspect "$NETWORK_NAME" > /dev/null 2>&1; then
+    echo "Network '$NETWORK_NAME' does not exist. Creating it..."
+    docker network create "$NETWORK_NAME"
+    echo "Network '$NETWORK_NAME' created successfully."
+  else
+    echo "Network '$NETWORK_NAME' already exists."
+  fi
+}
+
+##
 # Runs a container image.
 ##
 run_container() {
@@ -64,8 +85,24 @@ run_container() {
   local IMAGE_NAME
   IMAGE_NAME=${IMAGES[$APP_NAME]}
 
+  local PORT_MAPPING_KEY
+  case "$APP_NAME" in
+    api*)
+      PORT_MAPPING_KEY="api"
+      ;;
+    client*|elements*|documentation)
+      PORT_MAPPING_KEY="client"
+      ;;
+    envoy*)
+      PORT_MAPPING_KEY="envoy"
+      ;;
+    *)
+      PORT_MAPPING_KEY="default"
+      ;;
+  esac
+
   local PORTS_MAP
-  PORTS_MAP=${PORT_MAPPING[$APP_NAME]:-"8080:8080"}
+  PORTS_MAP=${PORT_MAPPING[$PORT_MAPPING_KEY]:-"${PORT_MAPPING["default"]}"}
 
   if [ -z "$IMAGE_NAME" ]; then
     print_error_title "Application is not supported"
@@ -81,10 +118,20 @@ run_container() {
 
   echo "$IMAGE_NAME"
 
-  if [ "$2" = "debug" ]; then
-    docker run --rm --name "$APP_NAME" -it -p 127.0.0.1:"$PORTS_MAP" "$IMAGE_NAME" /bin/sh
+  check_network
+
+  if [ "$APP_NAME" == "envoy" ]; then
+    if [ "$2" = "debug" ]; then
+      docker run --network nx-ng-apps --rm --name "$APP_NAME" -it -p 127.0.0.1:"$PORTS_MAP" -p 127.0.0.1:"${PORT_MAPPING["envoy-admin"]}" /bin/sh
+    else
+      docker run --network nx-ng-apps --rm --name "$APP_NAME" -it -p 127.0.0.1:"$PORTS_MAP" -p 127.0.0.1:"${PORT_MAPPING["envoy-admin"]}" "$IMAGE_NAME"
+    fi
   else
-    docker run --rm --name "$APP_NAME" -it -p 127.0.0.1:"$PORTS_MAP" "$IMAGE_NAME"
+    if [ "$2" = "debug" ]; then
+      docker run --network nx-ng-apps --rm --name "$APP_NAME" -it -p 127.0.0.1:"$PORTS_MAP" "$IMAGE_NAME" /bin/sh
+    else
+      docker run --network nx-ng-apps --rm --name "$APP_NAME" -it -p 127.0.0.1:"$PORTS_MAP" "$IMAGE_NAME"
+    fi
   fi
 }
 

@@ -54,7 +54,7 @@ async function bootstrap(expressInstance: e.Express): Promise<INestApplication> 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('index.html', app, document);
   adapter.get('', (req, res: e.Response) => {
-    res.redirect('/index.html');
+    res.redirect('index.html');
   });
 
   if (typeof process.env['FIREBASE_CONFIG'] === 'undefined' || process.env['FIREBASE_CONFIG'] === '') {
