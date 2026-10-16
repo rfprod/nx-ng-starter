@@ -199,6 +199,118 @@ Find all supported `docker` commands:
 npx nx run tools:help --search docker
 ```
 
+## Running Envoy Unified Reverse Proxy
+
+This section explains how to run the Envoy Unified Reverse Proxy locally with the `api-production` and `client-production` containers on a shared Docker network.
+
+### Prerequisites
+
+Built images:
+
+- `rfprod/nx-ng-starter:api-production-latest`
+- `rfprod/nx-ng-starter:client-production-latest`
+- `rfprod/nx-ng-starter:envoy-latest`
+
+### Network Setup
+
+The setup uses a shared Docker network named **`nx-ng-apps`** for container-to-container communication with `STRICT_DNS` resolution.
+
+The [run script](tools/shell/docker/run.sh) creates the network automatically if it does not exist.
+
+The script automatically:
+
+- Creates the `nx-ng-apps` network if it doesn't exist
+- Connects containers to the shared network
+- Maps appropriate ports (8090 for Envoy, 8081 for client, 8080 for API)
+- Exposes port 9901 for the Admin UI
+
+### Running the Containers
+
+While it is possible to operate containers manually, it is recommended to use existing scripts.
+
+#### 1. Start the API Backend
+
+```bash
+sudo bash tools/shell/docker/run.sh api-production
+```
+
+The API runs on internal port **8080** and is accessible within the network as `api-production:8080`.
+
+#### 2. Start the Web Client
+
+```bash
+sudo bash tools/shell/docker/run.sh client-production
+```
+
+The client runs on internal port **8080** and is accessible within the network as `client-production:8080`.
+
+#### 3. Start the Envoy Proxy
+
+```bash
+sudo bash tools/shell/docker/run.sh envoy
+```
+
+The Envoy proxy listens on:
+
+- **Port 8090**: Main entry point for HTTP traffic
+- **Port 9901**: Admin UI
+
+### Routing Configuration
+
+The Envoy configuration (`.envoy/envoy.yml`) defines two routes:
+
+| Route    | Destination | Cluster                                 | Prefix Rewrite |
+| -------- | ----------- | --------------------------------------- | -------------- |
+| `/api/*` | API backend | `api_backend` → `api-production:8080`   | `/`            |
+| `/`      | Web client  | `web_client` → `client-production:8080` | None           |
+
+### Testing the Setup
+
+#### Access the Web Client
+
+```bash
+curl http://localhost:8090/
+```
+
+Returns the Angular UI from `client-production`.
+
+#### Access the API Swagger Documentation
+
+```bash
+curl http://localhost:8090/api/
+```
+
+Returns the Swagger documentation from `api-production`, redirects to `http://localhost:8090/api/index.html`.
+
+#### Access the Admin UI
+
+```bash
+curl http://localhost:9901/stats
+```
+
+### Container Name Resolution
+
+Inside the shared network, containers resolve each other by name:
+
+- **`api-production`** → reaches the API backend
+- **`client-production`** → reaches the web client
+
+This is enabled by Envoy's **STRICT_DNS** cluster type, which performs DNS lookups using the Docker embedded DNS resolver.
+
+### Cleanup
+
+Stop all containers:
+
+```bash
+sudo docker stop api-production client-production envoy
+```
+
+Remove the network (if no longer needed):
+
+```bash
+sudo docker network rm nx-ng-apps
+```
+
 ## Workspace generators
 
 ### Library generators

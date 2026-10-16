@@ -145,7 +145,7 @@ build_application_image() {
     IMAGE_NAME="$CONTAINER_REGISTRY":"$APP_NAME""-latest"
   fi
 
-  docker build -t "$IMAGE_NAME" -f .docker/"$APP_NAME".Dockerfile .
+  docker --debug build -t "$IMAGE_NAME" -f .docker/"$APP_NAME".Dockerfile .
 }
 
 if [ "$1" = "?" ]; then
