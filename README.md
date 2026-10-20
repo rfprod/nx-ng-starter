@@ -29,6 +29,12 @@ Whether you're building a web application, a mobile app with **Capacitor**, a de
 - **CI/CD Workflows** — GitHub Actions for automated testing and deployment
 - **Real-Time Capabilities** — Firebase Realtime Database and Firestore for live data sync
 
+## Related Projects
+
+This project provides the application source code and Docker image builds used by **[k3s-workspace](https://github.com/rfprod/k3s-workspace)**, a Kubernetes infrastructure-as-code project that deploys containerized services from this repository into a local k3s cluster.
+
+If you're interested in how this application is deployed and orchestrated in a Kubernetes environment, check out **[k3s-workspace README.md](https://github.com/rfprod/k3s-workspace/blob/main/README.md)**.
+
 ## Technology Stack
 
 | Layer                 | Technology                                                                                   | Purpose                                                           |
