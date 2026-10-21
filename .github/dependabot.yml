@@ -72,6 +72,8 @@ updates:
       all-containers:
         patterns:
           - '*'
+    ignore:
+      - dependency-name: '*'
     commit-message:
       prefix: 'build'
       include: 'scope'
