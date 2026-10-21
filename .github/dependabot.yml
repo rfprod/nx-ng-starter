@@ -1,7 +1,7 @@
 version: 2
 updates:
   - package-ecosystem: 'github-actions'
-    directory: '/.github/actions'
+    directory: '/'
     schedule:
       interval: 'weekly'
       day: 'monday'
@@ -10,26 +10,6 @@ updates:
       default-days: 7
     groups:
       all-actions:
-        patterns:
-          - '*'
-    commit-message:
-      prefix: 'ci'
-      include: 'scope'
-    open-pull-requests-limit: 1
-    labels:
-      - 'CI/CD'
-      - 'Dependencies'
-      - 'Maintenance'
-  - package-ecosystem: 'github-actions'
-    directory: '/.github/workflows'
-    schedule:
-      interval: 'weekly'
-      day: 'monday'
-      time: '04:00'
-    cooldown:
-      default-days: 7
-    groups:
-      all-workflows:
         patterns:
           - '*'
     commit-message:
