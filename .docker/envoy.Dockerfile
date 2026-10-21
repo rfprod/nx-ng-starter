@@ -1,6 +1,6 @@
 # Unified Reverse Proxy
 
-FROM envoyproxy/envoy:v1.39.3
+FROM envoyproxy/envoy:v1.40.0
 
 COPY .envoy/envoy.yml /etc/envoy/envoy.yaml
 
