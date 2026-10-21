@@ -22,7 +22,6 @@ jobs:
       projects: ${{ steps.check-projects.outputs.projects }}
       projects-build: ${{ steps.check-projects-build.outputs.projects }}
       changes: ${{ steps.check-changes.outputs.changes }}
-      success: ${{ steps.check.outputs.success || 'true' }}
 
     steps:
       - name: Checkout sources
@@ -71,17 +70,10 @@ jobs:
       - name: Check origin
         uses: ./.github/actions/check-origin
 
-      - name: Set failure
-        id: check
-        if: failure()
-        run: echo "success=$(echo 'false')" >> $GITHUB_OUTPUT
-
   lint:
     needs: checks
+    if: ${{ fromJSON(needs.checks.outputs.changes).shelltools == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' }}
     runs-on: ubuntu-latest
-
-    outputs:
-      success: ${{ steps.check.outputs.success || 'true' }}
 
     steps:
       - name: Checkout sources
@@ -105,11 +97,6 @@ jobs:
           sudo npm i -g madge@latest
           madge --circular --extensions ts ./apps ./libs ./tools --ts-config ./tsconfig.base.json
 
-      - name: Set failure
-        id: check
-        if: failure()
-        run: echo "success=$(echo 'false')" >> $GITHUB_OUTPUT
-
   lint-affected:
     needs: checks
     if: needs.checks.outputs.projects != '[]'
@@ -120,9 +107,6 @@ jobs:
       max-parallel: 40
       matrix:
         projects: ${{ fromJSON(needs.checks.outputs.projects) }}
-
-    outputs:
-      success: ${{ steps.check.outputs.success || 'true' }}
 
     steps:
       - name: Checkout sources
@@ -143,17 +127,10 @@ jobs:
       - name: Lint scss
         run: npx nx run-many --target stylelint-check --dryRun --projects ${{ matrix.projects }}
 
-      - name: Set failure
-        id: check
-        if: failure()
-        run: echo "success=$(echo 'false')" >> $GITHUB_OUTPUT
-
   test:
     needs: checks
+    if: ${{ fromJSON(needs.checks.outputs.changes).src == 'true' }}
     runs-on: ubuntu-latest
-
-    outputs:
-      success: ${{ steps.check.outputs.success || 'true' }}
 
     steps:
       - name: Checkout sources
@@ -170,11 +147,6 @@ jobs:
       - name: Documentation coverage
         run: npx nx run tools:compodoc-coverage-test
 
-      - name: Set failure
-        id: check
-        if: failure()
-        run: echo "success=(echo 'false')" >> $GITHUB_OUTPUT
-
   test-affected:
     needs: checks
     if: needs.checks.outputs.projects != '[]'
@@ -185,9 +157,6 @@ jobs:
       max-parallel: 40
       matrix:
         projects: ${{ fromJSON(needs.checks.outputs.projects) }}
-
-    outputs:
-      success: ${{ steps.check.outputs.success || 'true' }}
 
     steps:
       - name: Checkout sources
@@ -209,33 +178,6 @@ jobs:
         env:
           NODE_OPTIONS: '--max-old-space-size=4096'
 
-      - name: Set failure
-        id: check
-        if: failure()
-        run: echo "success=(echo 'false')" >> $GITHUB_OUTPUT
-
-  build:
-    needs: checks
-    runs-on: ubuntu-latest
-
-    outputs:
-      success: ${{ steps.check.outputs.success || 'true' }}
-
-    steps:
-      - name: Checkout sources
-        uses: actions/checkout@v7
-        with:
-          fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.sha }}
-
-      - name: Setup environment
-        uses: ./.github/actions/setup-environment
-
-      - name: Set failure
-        id: check
-        if: failure()
-        run: echo "success=(echo 'false')" >> $GITHUB_OUTPUT
-
   build-affected:
     needs: checks
     if: needs.checks.outputs.projects-build != '[]'
@@ -246,9 +188,6 @@ jobs:
       max-parallel: 40
       matrix:
         projects: ${{ fromJSON(needs.checks.outputs.projects-build) }}
-
-    outputs:
-      success: ${{ steps.check.outputs.success || 'true' }}
 
     steps:
       - name: Checkout sources
@@ -262,11 +201,6 @@ jobs:
 
       - name: Build affected
         run: npx nx run-many --target build --projects ${{ matrix.projects }}
-
-      - name: Set failure
-        id: check
-        if: failure()
-        run: echo "success=(echo 'false')" >> $GITHUB_OUTPUT
 
   publish-packages-dry-run:
     needs: checks
@@ -369,7 +303,7 @@ jobs:
           done
 
   premerge:
-    needs: [checks, lint, lint-affected, test, test-affected, build, build-affected, publish-packages-dry-run]
+    needs: [checks, lint, lint-affected, test, test-affected, build-affected, publish-packages-dry-run]
     if: always()
     runs-on: ubuntu-latest
 
@@ -381,17 +315,15 @@ jobs:
             "$LINT_AFFECTED_RESULT" != "true" || \
             "$TEST_RESULT" != "true" || \
             "$TEST_AFFECTED_RESULT" != "true" || \
-            "$BUILD_RESULT" != "true" || \
             "$BUILD_AFFECTED_RESULT" != "true" || \
             "$PUBLISH_PACKAGES_DRY_RUN" != "true" \
           ]]; then exit 1; fi
           echo "### :rocket: Premerge checks succeeded" >> $GITHUB_STEP_SUMMARY
         env:
-          CHECKS_RESULT: ${{ needs.checks.outputs.success }}
+          CHECKS_RESULT: ${{ needs.checks.result == 'success' }}
           LINT_RESULT: ${{ needs.lint.result == 'success' || needs.lint.result == 'skipped' }}
           LINT_AFFECTED_RESULT: ${{ needs.lint-affected.result == 'success' || needs.lint-affected.result == 'skipped' }}
           TEST_RESULT: ${{ needs.test.result == 'success' || needs.test.result == 'skipped' }}
           TEST_AFFECTED_RESULT: ${{ needs.test-affected.result == 'success' || needs.test-affected.result == 'skipped' }}
-          BUILD_RESULT: ${{ needs.build.result == 'success' || needs.build.result == 'skipped' }}
           BUILD_AFFECTED_RESULT: ${{ needs.build-affected.result == 'success' || needs.build-affected.result == 'skipped' }}
           PUBLISH_PACKAGES_DRY_RUN: ${{ (needs.publish-packages-dry-run.result == 'success' && needs.publish-packages-dry-run.outputs.publish_conclusion == 'success') || needs.publish-packages-dry-run.result == 'skipped' }}
