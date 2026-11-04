@@ -10,6 +10,7 @@ import * as compression from 'compression';
 import dotenv from 'dotenv';
 import e from 'express';
 import * as functions from 'firebase-functions';
+import path from 'path';
 
 import { AppApiModule } from './app/api.module';
 import { environment } from './environments/environment';
@@ -52,9 +53,10 @@ async function bootstrap(expressInstance: e.Express): Promise<INestApplication> 
 
   const config = new DocumentBuilder().setTitle(environment.appName).setVersion('1.0').build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('index.html', app, document);
-  adapter.get('', (req, res: e.Response) => {
-    res.redirect('index.html');
+  SwaggerModule.setup('', app, document, {
+    ui: true,
+    raw: ['json'],
+    customSwaggerUiPath: path.join(__dirname, 'swagger-ui-dist'),
   });
 
   if (typeof process.env['FIREBASE_CONFIG'] === 'undefined' || process.env['FIREBASE_CONFIG'] === '') {

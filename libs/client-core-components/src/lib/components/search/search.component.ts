@@ -1,6 +1,9 @@
+import { CommonModule } from '@angular/common';
 import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, HostBinding, inject, Output, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { MatInput } from '@angular/material/input';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInput, MatInputModule } from '@angular/material/input';
 import { isActive, IsActiveMatchOptions, Router } from '@angular/router';
 import {
   BehaviorSubject,
@@ -36,7 +39,7 @@ type TChild = Record<string, string | Pick<IsActiveMatchOptions, 'paths'>>;
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false,
+  imports: [CommonModule, FormsModule, MatInputModule, ReactiveFormsModule, MatAutocompleteModule, MatIconModule],
 })
 export class AppSearchComponent implements AfterViewInit {
   readonly #config: { dedounceTime: number } = { dedounceTime: 175 };

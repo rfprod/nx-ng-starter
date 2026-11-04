@@ -8,7 +8,6 @@ import { TOOLTIP_DATA } from './tooltip.interface';
 
 @Directive({
   selector: '[appTooltip]',
-  standalone: false,
 })
 export class AppTooltipDirective implements AfterContentInit, OnDestroy {
   private readonly el = inject(ElementRef);

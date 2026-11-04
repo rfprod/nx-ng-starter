@@ -192,7 +192,7 @@ export class AppHttpHandlersService {
    */
   public getErrorMessage(error: HttpErrorResponse): string {
     const message: string | undefined = error.message ? error.message : error.error;
-    const result: string = typeof message !== 'undefined' ? message : error.status ? `${error.status} - ${error.name}` : 'Server error';
+    const result: string = error.status ? `${error.status} - ${error.message}` : typeof message !== 'undefined' ? message : 'Server error';
     return result;
   }
 

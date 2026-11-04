@@ -1,0 +1,204 @@
+/**
+ * Material 3 Typography Scales - Comprehensive Mixins
+ * Provides mixins for all typography scales and helper functions
+ */
+
+/**
+ * Individual typography scale mixins
+ */
+
+/* Display Scales */
+@mixin mat-display-large {
+  font: var(--mat-sys-display-large);
+}
+
+@mixin mat-display-medium {
+  font: var(--mat-sys-display-medium);
+}
+
+@mixin mat-display-small {
+  font: var(--mat-sys-display-small);
+}
+
+/* Headline Scales */
+@mixin mat-headline-large {
+  font: var(--mat-sys-headline-large);
+}
+
+@mixin mat-headline-medium {
+  font: var(--mat-sys-headline-medium);
+}
+
+@mixin mat-headline-small {
+  font: var(--mat-sys-headline-small);
+}
+
+/* Title Scales */
+@mixin mat-title-large {
+  font: var(--mat-sys-title-large);
+}
+
+@mixin mat-title-medium {
+  font: var(--mat-sys-title-medium);
+}
+
+@mixin mat-title-small {
+  font: var(--mat-sys-title-small);
+}
+
+/* Body Scales */
+@mixin mat-body-large {
+  font: var(--mat-sys-body-large);
+}
+
+@mixin mat-body-medium {
+  font: var(--mat-sys-body-medium);
+}
+
+@mixin mat-body-small {
+  font: var(--mat-sys-body-small);
+}
+
+/* Label Scales */
+@mixin mat-label-large {
+  font: var(--mat-sys-label-large);
+}
+
+@mixin mat-label-medium {
+  font: var(--mat-sys-label-medium);
+}
+
+@mixin mat-label-small {
+  font: var(--mat-sys-label-small);
+}
+
+/**
+ * Parametric mixin for dynamic typography application
+ * Usage: @include mat-typography(headline-large)
+ */
+@mixin mat-typography($scale) {
+  font: var(--mat-sys-#{$scale});
+}
+
+/**
+ * Apply Material 3 typography to all semantic HTML elements
+ */
+@mixin apply-mat-typography-hierarchy {
+  .display-large {
+    @include mat-display-large;
+  }
+
+  .display-medium {
+    @include mat-display-medium;
+  }
+
+  .display-small {
+    @include mat-display-small;
+  }
+
+  h1,
+  .headline-large {
+    @include mat-headline-large;
+  }
+
+  h2,
+  .headline-medium {
+    @include mat-headline-medium;
+  }
+
+  h3,
+  h4,
+  .headline-small {
+    @include mat-headline-small;
+  }
+
+  h5,
+  .title-large {
+    @include mat-title-large;
+  }
+
+  h6,
+  .title-medium {
+    @include mat-title-medium;
+  }
+
+  .title-small {
+    @include mat-title-small;
+  }
+
+  p,
+  .body-large {
+    @include mat-body-large;
+  }
+
+  body,
+  .body-medium {
+    @include mat-body-medium;
+  }
+
+  .body-small {
+    @include mat-body-small;
+  }
+
+  .label-large {
+    @include mat-label-large;
+  }
+
+  label,
+  .label-medium {
+    @include mat-label-medium;
+  }
+
+  small,
+  .label-small {
+    @include mat-label-small;
+  }
+
+  strong,
+  b {
+    @include mat-label-large;
+    font-weight: 500;
+  }
+
+  em,
+  i {
+    @include mat-body-medium;
+    font-style: italic;
+  }
+
+  code,
+  pre {
+    @include mat-label-medium;
+    font-family: 'Courier New', monospace;
+  }
+
+  blockquote {
+    @include mat-headline-small;
+  }
+
+  li {
+    @include mat-body-medium;
+  }
+}
+
+/**
+ * All Material 3 typography scales at a glance
+ * Maps scale names to their mixin equivalents
+ */
+$mat-typography-scales: (
+  'display-large': mat-display-large,
+  'display-medium': mat-display-medium,
+  'display-small': mat-display-small,
+  'headline-large': mat-headline-large,
+  'headline-medium': mat-headline-medium,
+  'headline-small': mat-headline-small,
+  'title-large': mat-title-large,
+  'title-medium': mat-title-medium,
+  'title-small': mat-title-small,
+  'body-large': mat-body-large,
+  'body-medium': mat-body-medium,
+  'body-small': mat-body-small,
+  'label-large': mat-label-large,
+  'label-medium': mat-label-medium,
+  'label-small': mat-label-small,
+);

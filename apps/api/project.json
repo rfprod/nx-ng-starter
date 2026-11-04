@@ -27,13 +27,6 @@
       },
       "executor": "@nx/esbuild:esbuild",
       "options": {
-        "assets": [
-          {
-            "glob": "**/*",
-            "input": "apps/api/src/assets",
-            "output": "assets"
-          }
-        ],
         "budgets": [
           {
             "maximumError": "15mb",

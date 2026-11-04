@@ -9,7 +9,7 @@ import { AppContentComponent } from './content.component';
 
 describe('AppContentComponent', () => {
   const testBedMetadata: TestModuleMetadata = newTestBedMetadata({
-    imports: [AppSidebarStoreModule.forRoot()],
+    imports: [AppSidebarStoreModule.forRoot(), AppContentComponent],
     providers: [
       provideRouter([
         {
@@ -18,7 +18,6 @@ describe('AppContentComponent', () => {
         },
       ]),
     ],
-    declarations: [AppContentComponent],
   });
   const testBedConfig: TestModuleMetadata = getTestBedConfig(testBedMetadata);
 

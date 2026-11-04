@@ -7,7 +7,7 @@ import { TOOLTIP_DATA } from './tooltip.interface';
   templateUrl: './tooltip.component.html',
   styleUrls: ['./tooltip.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false,
+  imports: [],
 })
 export class AppTooltipComponent {
   public readonly data = inject(TOOLTIP_DATA);

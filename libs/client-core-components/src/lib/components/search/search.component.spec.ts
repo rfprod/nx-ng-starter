@@ -8,8 +8,7 @@ import { AppSearchComponent } from './search.component';
 
 describe('AppSearchComponent', () => {
   const testBedConfig: TestModuleMetadata = newTestBedMetadata({
-    imports: [MatAutocompleteModule],
-    declarations: [AppSearchComponent],
+    imports: [MatAutocompleteModule, AppSearchComponent],
     providers: [AppSearchService],
     schemas: [NO_ERRORS_SCHEMA],
   });

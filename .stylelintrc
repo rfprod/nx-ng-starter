@@ -1,11 +1,6 @@
 {
-  "extends": [
-    "stylelint-config-rational-order",
-    "stylelint-prettier/recommended"
-  ],
-  "plugins": [
-    "stylelint-prettier"
-  ],
+  "extends": ["stylelint-config-rational-order", "stylelint-prettier/recommended"],
+  "plugins": ["stylelint-prettier"],
   "rules": {
     "prettier/prettier": true,
     "color-hex-length": "long",
@@ -19,19 +14,14 @@
     "function-url-quotes": [
       "always",
       {
-        "except": [
-          "empty"
-        ]
+        "except": ["empty"]
       }
     ],
     "length-zero-no-unit": true,
     "rule-empty-line-before": [
       "always-multi-line",
       {
-        "except": [
-          "after-single-line-comment",
-          "first-nested"
-        ]
+        "except": ["after-single-line-comment", "first-nested"]
       }
     ]
   }

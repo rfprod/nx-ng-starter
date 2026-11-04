@@ -262,16 +262,16 @@ const drawBarsAndSetPointerEvents = (
     .enter()
     .append('rect')
     .attr('class', 'bar')
+    .attr('x', d => x(d.title) ?? '')
+    .attr('y', d => y(d.value) || 0)
+    .attr('width', x.bandwidth())
     .style('fill', (d, i) => config.color(i.toString()))
     .on('mouseover', function (this, event, d) {
-      return onMouseOver(this, d, g, x, y, config);
+      onMouseOver(this, d, g, x, y, config);
     })
     .on('mouseout', function (this, event, d) {
-      return onMouseOut(this, d, x, y, config);
+      onMouseOut(this, d, x, y, config);
     })
-    .attr('x', d => x(d.title) ?? '')
-    .attr('y', d => y(d.value))
-    .attr('width', x.bandwidth())
     .transition()
     .ease(d3.easeLinear)
     .duration(duration)

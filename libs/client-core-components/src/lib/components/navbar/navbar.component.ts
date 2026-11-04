@@ -1,13 +1,20 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { isActive, Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { isActive, Router, RouterModule } from '@angular/router';
 import { IRouterButton, routerButton, WINDOW } from '@app/client-util';
+
+import { AppNavigatorComponent } from '../navigator/navigator.component';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false,
+  imports: [CommonModule, MatToolbarModule, MatMenuModule, MatButtonModule, MatIconModule, RouterModule, AppNavigatorComponent],
 })
 export class AppNavbarComponent {
   private readonly router = inject(Router);

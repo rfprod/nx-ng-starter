@@ -1,11 +1,19 @@
+import { OverlayModule } from '@angular/cdk/overlay';
 import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Output, signal } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { appMaterialModuleProviders } from '@app/client-material';
+
+import { AppSearchComponent } from '../search/search.component';
+import { AppTooltipDirective } from '../tooltip/tooltip.directive';
 
 @Component({
   selector: 'app-navigator',
   templateUrl: './navigator.component.html',
   styleUrls: ['./navigator.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false,
+  imports: [MatButtonModule, MatIconModule, AppTooltipDirective, AppSearchComponent, OverlayModule],
+  providers: [...appMaterialModuleProviders],
 })
 export class AppNavigatorComponent {
   public showSearch = signal(false);
