@@ -1,7 +1,8 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, DestroyRef, inject, ViewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatSidenavContent } from '@angular/material/sidenav';
-import { NavigationEnd, Router } from '@angular/router';
+import { MatSidenavContent, MatSidenavModule } from '@angular/material/sidenav';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { ISidebarState, sidebarAction, sidebarSelector } from '@app/client-store-sidebar';
 import { Store } from '@ngrx/store';
 import { tap } from 'rxjs/operators';
@@ -11,7 +12,7 @@ import { tap } from 'rxjs/operators';
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: false,
+  imports: [CommonModule, MatSidenavModule, RouterModule],
 })
 export class AppContentComponent {
   private readonly destroyRef = inject(DestroyRef);

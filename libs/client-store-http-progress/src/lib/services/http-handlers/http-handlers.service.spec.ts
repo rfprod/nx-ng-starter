@@ -266,8 +266,8 @@ describe('AppHttpHandlersService', () => {
     });
 
     it('should process an error as expected if the status property is present', () => {
-      const error = { status: 400, statusText: 'test' } as HttpErrorResponse;
-      expect(service.getErrorMessage(error)).toEqual(`${error.status} - ${error.name}`);
+      const error = { status: 400, message: 'test' } as HttpErrorResponse;
+      expect(service.getErrorMessage(error)).toEqual(`${error.status} - ${error.message}`);
     });
 
     it('should process an error as expected if non of the expected properties are present', () => {

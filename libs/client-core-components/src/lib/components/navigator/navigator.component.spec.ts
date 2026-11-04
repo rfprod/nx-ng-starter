@@ -1,4 +1,3 @@
-import { OverlayModule } from '@angular/cdk/overlay';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angular/core/testing';
 import { newTestBedMetadata } from '@app/client-testing-unit';
@@ -8,8 +7,7 @@ import { AppNavigatorComponent } from './navigator.component';
 
 describe('AppNavigatorComponent', () => {
   const testBedConfig: TestModuleMetadata = newTestBedMetadata({
-    imports: [OverlayModule],
-    declarations: [AppNavigatorComponent],
+    imports: [AppNavigatorComponent],
     schemas: [NO_ERRORS_SCHEMA],
   });
 

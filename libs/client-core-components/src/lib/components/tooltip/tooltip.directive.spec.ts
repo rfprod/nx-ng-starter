@@ -14,8 +14,8 @@ describe('AppTooltipDirective', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppMaterialModule.forRoot()],
-      declarations: [AppTestingComponent, AppTooltipDirective],
+      imports: [AppMaterialModule.forRoot(), AppTooltipDirective],
+      declarations: [AppTestingComponent],
       providers: [
         {
           provide: OverlayConfig,

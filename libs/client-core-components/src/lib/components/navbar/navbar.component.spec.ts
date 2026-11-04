@@ -19,7 +19,7 @@ vi.mock('@angular/router', async () => {
 
 describe('AppNavbarComponent', () => {
   const testBedConfig: TestModuleMetadata = newTestBedMetadata({
-    declarations: [AppNavbarComponent],
+    imports: [AppNavbarComponent],
     providers: [
       {
         provide: routerNamespace.Router,

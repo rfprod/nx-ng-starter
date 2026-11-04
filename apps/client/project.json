@@ -140,6 +140,9 @@
       "options": {
         "buildTarget": "client:build",
         "proxyConfig": "apps/client/proxy.conf.json"
+      },
+      "readyWhen": {
+        "signal": true
       }
     },
     "serve-with-api": {

@@ -1,75 +1,96 @@
-/* Angular Material Theme, and Typography customization */
+/* Angular Material Theme - Material 3 */
 @use '@angular/material' as mat;
-@use './theming/_configuration.scss' as config;
+@use 'node_modules/@angular/material/_index.scss';
+@use 'libs/client-core/src/lib/styles/theming/theming-typography.scss' as typo;
 
-@mixin shadow-dom-theme {
-  @include mat.elevation-classes();
-  @include mat.app-background();
-  @include mat.all-component-themes(config.$candy-app-theme);
+/**
+ * Material 3 uses theme-type (light/dark) instead of separate functions.
+ * Define palettes first (these can be custom or built-in).
+ */
+$primary-palette: mat.$cyan-palette;
+$tertiary-palette: mat.$orange-palette;
 
-  @include mat.toolbar-overrides(
-    (
-      container-background-color: config.$primary,
-    )
-  );
+/**
+ * Typography configuration.
+ */
+$typography-map: (
+  plain-family: Roboto,
+  brand-family: Roboto,
+  bold-weight: 900,
+  medium-weight: 500,
+  regular-weight: 300,
+);
 
-  @include mat.progress-bar-overrides(
-    (
-      active-indicator-color: config.$primary,
-      track-color: config.$accent,
-    )
-  );
+/**
+ * Density configuration.
+ */
+$density-map: (
+  scale: 0,
+);
 
-  @include mat.dialog-overrides(
-    (
-      container-color: darken(config.get-extended-background-color('.foreground', 'light'), 2.5%),
-    )
-  );
-  @include mat.typography-hierarchy(config.$candy-app-theme, $back-compat: true);
-  @include mat.all-component-typographies(config.$custom-typography);
-}
+/**
+ * Light theme configuration.
+ */
+$light-theme-map: (
+  color: (
+    theme-type: light,
+    primary: $primary-palette,
+    tertiary: $tertiary-palette,
+  ),
+  typography: $typography-map,
+  density: $density-map,
+);
+
+/**
+ * Define light theme with theme-type: light
+ */
+$light-app-theme: mat.define-theme($light-theme-map);
+
+/**
+ * Dark theme configuration.
+ */
+$dark-theme-map: (
+  color: (
+    theme-type: dark,
+    primary: $primary-palette,
+    tertiary: $tertiary-palette,
+  ),
+  typography: $typography-map,
+  density: $density-map,
+);
+
+/**
+ * Define dark theme with theme-type: dark
+ */
+$dark-app-theme: mat.define-theme($dark-theme-map);
+
+/**
+ * Apply light theme to :root
+ */
 
 :root {
-  @include shadow-dom-theme();
+  @include mat.theme($light-theme-map);
+  // Apply Material 3 typography hierarchy to all elements.
+  @include typo.apply-mat-typography-hierarchy();
+  @include mat.system-classes();
 }
 
 /**
- * Include the alternative theme styles inside of a block with a CSS class.
- * This CSS class can be whatever is needed. Any component inside of an element with
- * `.unicorn-dark-theme` will be affected by the alternate dark theme instead of the light theme.
+ * Apply dark theme within CSS class
  */
 
-.unicorn-dark-theme {
-  @include mat.all-component-colors(config.$unicorn-dark-theme);
+.dark-app-theme {
+  @include mat.theme($dark-theme-map);
 
-  @include mat.toolbar-overrides(
-    (
-      container-background-color: config.$dark-primary,
-    )
-  );
-
-  @include mat.progress-bar-overrides(
-    (
-      active-indicator-color: config.$dark-primary,
-      track-color: config.$dark-accent,
-    )
-  );
-
-  @include mat.dialog-overrides(
-    (
-      container-color: darken(config.get-extended-background-color('.foreground', 'dark'), 2.5%),
-    )
-  );
+  // Typography hierarchy is inherited, no need to reapply.
 }
 
 /**
  * Material Theming extension.
- * Imports and includes variables, and mixins:
- * custom-selectors-colouring, custom-colouring-classes
  */
-@import './theming/theming-extension.scss';
+@import 'libs/client-core/src/lib/styles/theming/theming-extension.scss';
 
 /**
  * Global common theming styles.
  */
-@import './theming/theming-common.scss';
+@import 'libs/client-core/src/lib/styles/theming/theming-common.scss';

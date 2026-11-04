@@ -7,16 +7,8 @@
   "tags": ["scope:client-e2e", "type:e2e"],
   "targets": {
     "e2e": {
-      "configurations": {
-        "production": {
-          "devServerTarget": "client:serve:production"
-        }
-      },
-      "executor": "@nx/cypress:cypress",
       "options": {
-        "cypressConfig": "apps/client-e2e/cypress.config.js",
-        "devServerTarget": "client:serve",
-        "testingType": "e2e"
+        "config-file": "./cypress.config.js"
       }
     },
     "lint": {

@@ -8,5 +8,46 @@
   "exclude": ["**/test-setup.ts", "**/*.spec.ts", "*.mts"],
   "extends": "./tsconfig.json",
   "files": ["src/main.ts", "src/polyfills.ts"],
-  "include": ["src/app/**/*.ts"]
+  "include": ["src/app/**/*.ts"],
+  "references": [
+    {
+      "path": "../../libs/client-core/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/client-core-components/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/client-gql/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/client-pwa-offline/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/client-store-diagnostics/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/client-store-router/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/client-util-eliza/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/client-diagnostics/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/client-dashboards/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/client-chatbot/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/client-guided-tour/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/client-sidebar/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/client-service-worker/tsconfig.lib.json"
+    }
+  ]
 }

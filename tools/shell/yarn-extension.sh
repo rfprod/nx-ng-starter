@@ -54,28 +54,37 @@ check_integrity() {
   print_gap
 
   check_yarn_version
-
   check_yarn_lock_changes
 
-  if ! yarn install --immutable || [ "$YARN_LOCK_CHANGED" -eq 1 ]; then
-    print_info_title "<< Cleaning up workspace, and caches >>"
+  if [ "$YARN_LOCK_CHANGED" -eq 1 ]; then
+    print_info_title "<< Lock file mismatch, clearing cache >>"
     print_gap
 
     yarn workspace:cleanup
     rm -rf ./node_modules
-    npm cache clean --force
+    yarn cache clean
+    return 0
+  fi
+
+  # Just verify cache is valid, don't install
+  if ! yarn install --check-cache; then
+    print_info_title "<< Cache corrupted, clearing >>"
+    print_gap
+
+    yarn workspace:cleanup
+    rm -rf ./node_modules
     yarn cache clean
   else
     print_success_title "<< Package integrity verified >>"
-    print_info_message ">> will verify tree additionally without erroring"
-    print_gap
-
-    yarn install --check-cache || true
   fi
 }
+
 
 if [ "$1" = "?" ]; then
   print_help
 elif [ "$1" = "integrity-check" ]; then
   check_integrity
+else
+  print_help
+  exit 1
 fi

@@ -131,6 +131,9 @@
       "executor": "@nx/angular:dev-server",
       "options": {
         "buildTarget": "elements:build"
+      },
+      "readyWhen": {
+        "signal": true
       }
     },
     "stylelint-check": {

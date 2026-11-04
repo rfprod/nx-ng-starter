@@ -39,7 +39,7 @@ export class AppRootComponent implements OnInit, AfterContentInit {
    * Defines if UI should use alternative dark material theme.
    * This must be a flag. HostBinding should not use async pipes.
    */
-  @HostBinding('class.unicorn-dark-theme') public darkTheme = false;
+  @HostBinding('class.dark-app-theme') public darkTheme = false;
 
   /** Sets text size that is inherited by all child views. */
   @HostBinding('class.mat-body-1') public matBody = true;

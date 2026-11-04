@@ -23,7 +23,7 @@ export class AppThemeEffects {
       this.actions$.pipe(
         ofType(themeAction.enableDarkTheme.type),
         tap(() => {
-          this.overlayContainer.getContainerElement().classList.add('unicorn-dark-theme');
+          this.overlayContainer.getContainerElement().classList.add('dark-app-theme');
         }),
       ),
     { dispatch: false },
@@ -34,7 +34,7 @@ export class AppThemeEffects {
       this.actions$.pipe(
         ofType(themeAction.disableDarkTheme.type),
         tap(() => {
-          this.overlayContainer.getContainerElement().classList.remove('unicorn-dark-theme');
+          this.overlayContainer.getContainerElement().classList.remove('dark-app-theme');
         }),
       ),
     { dispatch: false },

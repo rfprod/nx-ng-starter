@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "affected": {
+    "legacy": true
+  },
   "analytics": false,
   "cacheDirectory": "/tmp/nx/nx-ng-starter",
   "cli": {
@@ -69,12 +72,6 @@
     "@nx/angular:resolver": {
       "typeSeparator": "."
     },
-    "@nx/angular:scam": {
-      "type": "component"
-    },
-    "@nx/angular:scam-directive": {
-      "type": "directive"
-    },
     "@nx/angular:service": {
       "type": "service"
     },
@@ -133,18 +130,28 @@
   "parallel": 1,
   "plugins": [
     {
+      "exclude": ["tools/executors/**"],
       "options": {
         "targetName": "lint"
       },
-      "plugin": "@nx/eslint/plugin",
-      "exclude": ["tools/executors/**"]
+      "plugin": "@nx/eslint/plugin"
     },
     {
-      "plugin": "@nx/vitest",
+      "exclude": ["apps/*-e2e/**", "libs/*-e2e/**", "tools/executors/**"],
       "options": {
         "testTargetName": "test"
       },
-      "exclude": ["apps/*-e2e/**", "libs/*-e2e/**", "tools/executors/**"]
+      "plugin": "@nx/vitest"
+    },
+    {
+      "options": {
+        "ciTargetName": "e2e-ci",
+        "componentTestingTargetName": "component-test",
+        "openTargetName": "open-cypress",
+        "targetName": "e2e",
+        "waitForServerReady": false
+      },
+      "plugin": "@nx/cypress/plugin"
     }
   ],
   "targetDefaults": {

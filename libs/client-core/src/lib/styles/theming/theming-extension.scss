@@ -1,156 +1,275 @@
 @use '@angular/material' as mat;
-@use './configuration.scss' as config;
+@use 'node_modules/@angular/material/_index.scss';
+
+/**
+ * Material 3 System Tokens Reference:
+ * Instead of defining custom palettes, leverage existing system tokens.
+ *
+ * Primary Colors:
+ *	--mat-sys-primary
+ *  --mat-sys-on-primary
+ *  --mat-sys-primary-container
+ *  --mat-sys-on-primary-container
+ * Secondary Colors:
+ *  --mat-sys-secondary
+ *  --mat-sys-on-secondary
+ *  --mat-sys-secondary-container
+ *  --mat-sys-on-secondary-container
+ * Tertiary Colors:
+ *  --mat-sys-tertiary
+ *  --mat-sys-on-tertiary
+ *  --mat-sys-tertiary-container
+ *  --mat-sys-on-tertiary-container
+ * Error/Warning Colors:
+ *  --mat-sys-error
+ *  --mat-sys-on-error
+ *  --mat-sys-error-container
+ *  --mat-sys-on-error-container
+ * Surface Colors:
+ *  --mat-sys-surface
+ *  --mat-sys-on-surface
+ *  --mat-sys-surface-dim
+ *  --mat-sys-surface-bright
+ *  --mat-sys-surface-container-lowest
+ *  --mat-sys-surface-container-low
+ *  --mat-sys-surface-container
+ *  --mat-sys-surface-container-high
+ *  --mat-sys-surface-container-highest
+ * Outline Colors:
+ *  --mat-sys-outline
+ *  --mat-sys-outline-variant
+ * Inverse Colors:
+ *  --mat-sys-inverse-surface
+ *  --mat-sys-inverse-on-surface
+ *  --mat-sys-inverse-primary
+ * Scrim & Shadow:
+ *  --mat-sys-scrim
+ */
+
+/**
+ * Define custom color tokens ONLY if needed beyond system tokens.
+ * These extend the system palette rather than replace it.
+ */
+@mixin define-extended-tokens($theme) {
+  $color-tokens: mat.get-color-tokens($theme);
+
+  // Extract specific colors from the theme
+  $primary: map-get($color-tokens, --mat-sys-primary);
+  $on-primary: map-get($color-tokens, --mat-sys-on-primary);
+  $surface: map-get($color-tokens, --mat-sys-surface);
+  $on-surface: map-get($color-tokens, --mat-sys-on-surface);
+  $error: map-get($color-tokens, --mat-sys-error);
+  $on-error: map-get($color-tokens, --mat-sys-on-error);
+
+  /**
+   * Define custom extended tokens as CSS variables.
+   * These will be scoped to the selector where this mixin is included.
+   */
+  --custom-success: #059669;
+  --custom-success-dark: #10b981;
+  --custom-warning: #d97706;
+  --custom-warning-dark: #f59e0b;
+  --custom-info: #0284c7;
+  --custom-info-dark: #0ea5e9;
+}
+
+/**
+ * Mixin to apply extended tokens at different theme levels.
+ */
+@mixin apply-extended-tokens($theme) {
+  @include define-extended-tokens($theme);
+}
+
+/**
+ * Updated extended color/background mixins using CSS custom properties.
+ * Material 3 uses CSS variables exclusively.
+ */
+@mixin extended-color($token-name) {
+  color: var(#{$token-name});
+}
+
+@mixin extended-background-color($token-name) {
+  background-color: var(#{$token-name});
+}
+
+@mixin extended-fill($token-name) {
+  fill: var(#{$token-name});
+}
+
+@mixin extended-box-shadow-color($inset, $offsetX, $offsetY, $blurRadius, $spreadRadius, $token-name) {
+  box-shadow: $inset $offsetX $offsetY $blurRadius $spreadRadius var(#{$token-name});
+}
+
+/**
+ * Define theme-specific custom tokens.
+ * Light theme custom tokens.
+ */
+@mixin light-theme-extended-tokens {
+  --ext-success: #059669;
+  --ext-success-on: #ffffff;
+  --ext-warning: #d97706;
+  --ext-warning-on: #ffffff;
+  --ext-info: #0284c7;
+  --ext-info-on: #ffffff;
+  --ext-scrollbar: var(--mat-sys-primary);
+}
+
+/**
+ * Dark theme custom tokens.
+ */
+@mixin dark-theme-extended-tokens {
+  --ext-success: #10b981;
+  --ext-success-on: #ffffff;
+  --ext-warning: #f59e0b;
+  --ext-warning-on: #000000;
+  --ext-info: #0ea5e9;
+  --ext-info-on: #ffffff;
+  --ext-scrollbar: var(--mat-sys-primary);
+}
 
 /**
  * Custom selectors coloring mixin.
+ * Now uses system tokens and custom CSS variables.
  */
-@mixin custom-selectors-coloring() {
-  mat-grid-tile {
-    @include config.extended-background-color(mat-grid-tile);
-  }
 
-  app-root {
-    @include config.extended-color(app-root);
-    @include config.extended-background-color(app-root);
-  }
-
+@mixin custom-selectors-coloring($theme) {
   form {
     legend {
-      @include config.extended-color('form.legend');
+      color: mat.get-theme-color($theme, on-surface-variant);
     }
   }
 
   mat-slide-toggle {
     &:hover {
-      @include config.extended-color('mat-slide-toggle:hover');
+      @include extended-color('--mat-sys-error');
     }
   }
 
-  /*
-  * Global scrollbars styling.
-  */
-
+  /* Global scrollbars styling */
   ::-webkit-scrollbar {
-    @include config.extended-background-color('::webkit-scrollbar');
     width: 8px;
+    @include extended-background-color('--mat-sys-surface');
   }
 
   ::-webkit-scrollbar-track {
-    @include config.extended-box-shadow-color(inset, 0, 0, 2px, 0, '::webkit-scrollbar-track');
+    @include extended-box-shadow-color(inset, 0, 0, 2px, 0, '--ext-scrollbar');
   }
 
   ::-webkit-scrollbar-thumb {
-    @include config.extended-box-shadow-color(inset, 0, 0, 48px, 0, '::webkit-scrollbar-thumb');
+    @include extended-box-shadow-color(inset, 0, 0, 48px, 0, '--ext-scrollbar');
+    border-radius: 4px;
   }
 }
-@include custom-selectors-coloring();
 
-/*
-* Custom general coloring classes mixin.
-* The same as theme, and extended colors variables (see above), but as classes
-* so that it can be assigned to DOM elements not related to material components.
-*/
+/**
+ * Custom general coloring classes mixin.
+ * Uses Material 3 system tokens instead of custom palettes.
+ */
 @mixin custom-general-coloring-classes() {
   .basic {
-    @include config.extended-color('.basic-bg-text');
-    @include config.extended-background-color('.basic');
+    @include extended-color('--mat-sys-on-surface');
+    @include extended-background-color('--mat-sys-surface');
   }
 
   .basic-inverse {
-    @include config.extended-color('.basic-bg-text-inverse');
-    @include config.extended-background-color('.basic-inverse');
+    @include extended-color('--mat-sys-surface');
+    @include extended-background-color('--mat-sys-on-surface');
   }
 
   .primary {
-    @include config.extended-color('.primary');
+    @include extended-color('--mat-sys-primary');
   }
 
   .primary-bg {
-    @include config.extended-color('.primary-bg-text');
-    @include config.extended-background-color('.primary');
+    @include extended-color('--mat-sys-on-primary');
+    @include extended-background-color('--mat-sys-primary');
   }
 
   .primary-mild-bg {
-    @include config.extended-color('.primary-bg-text');
-    @include config.extended-background-color('.primary-mild');
+    @include extended-color('--mat-sys-on-primary-container');
+    @include extended-background-color('--mat-sys-primary-container');
   }
 
   .accent {
-    @include config.extended-color('.accent');
+    @include extended-color('--mat-sys-secondary');
   }
 
   .accent-bg {
-    @include config.extended-background-color('.accent');
+    @include extended-background-color('--mat-sys-secondary');
   }
 
   .warn {
-    @include config.extended-color('.warn');
+    @include extended-color('--mat-sys-error');
   }
 
   .warn-bg {
-    @include config.extended-background-color('.warn');
+    @include extended-background-color('--mat-sys-error-container');
   }
 
   .success {
-    @include config.extended-color('.success');
+    @include extended-color('--ext-success');
   }
 
   .success-bg {
-    @include config.extended-background-color('.success');
+    @include extended-background-color('--ext-success');
+    @include extended-color('--ext-success-on');
   }
 
   .error {
-    @include config.extended-color('.error');
+    @include extended-color('--mat-sys-error');
   }
 
   .error-bg {
-    @include config.extended-background-color('.error');
+    @include extended-background-color('--mat-sys-error-container');
   }
 
   .app-tooltip {
-    @include config.extended-color('.basic-bg-text-inverse');
-    @include config.extended-background-color('.basic-inverse');
+    @include extended-color('--mat-sys-inverse-on-surface');
+    @include extended-background-color('--mat-sys-inverse-surface');
   }
 
   .label {
-    @include config.extended-background-color('.label');
+    @include extended-background-color('--mat-sys-surface-dim');
   }
 
   .legend {
-    @include config.extended-fill('.basic-bg-text');
+    @include extended-fill('--mat-sys-on-surface');
   }
 
   .chart-tooltip {
-    @include config.extended-fill('.basic-bg-text');
-  }
-
-  .custom-overlay {
-    @include config.extended-color('.basic-bg-text');
-    @include config.extended-background-color('.basic');
-
-    &--primary-bg {
-      @include config.extended-color('.primary-bg-text');
-      @include config.extended-background-color('.primary');
-    }
+    @include extended-fill('--mat-sys-on-surface');
   }
 }
+
+@mixin component-coloring($toolbar-bg, $grid-tile-bg) {
+  @include mat.toolbar-overrides(
+    (
+      container-background-color: $toolbar-bg,
+    )
+  );
+
+  mat-grid-tile {
+    background-color: $grid-tile-bg;
+  }
+}
+
+/* Apply custom selectors and general coloring classes */
 @include custom-general-coloring-classes();
 
-@mixin custom-density-classes() {
-  .density-0 {
-    @include mat.all-component-densities(0);
-  }
-
-  .density-1 {
-    @include mat.all-component-densities(-1);
-  }
-
-  .density-2 {
-    @include mat.all-component-densities(-2);
-  }
-
-  .density-3 {
-    @include mat.all-component-densities(-3);
-  }
+/* Apply extended tokens to light theme (at root level) */
+:root {
+  @include light-theme-extended-tokens();
+  @include custom-selectors-coloring($light-app-theme);
+  --toolbar-bg-light: #{mat.get-theme-color($light-app-theme, primary, 70)};
+  --grid-tile-light: #{mat.get-theme-color($light-app-theme, primary, 90)};
+  @include component-coloring(var(--toolbar-bg-light), var(--grid-tile-light));
 }
-@include custom-density-classes();
+
+/* Apply extended tokens to dark theme */
+.dark-app-theme {
+  @include dark-theme-extended-tokens();
+  @include custom-selectors-coloring($dark-app-theme);
+  --toolbar-bg-dark: #{mat.get-theme-color($dark-app-theme, primary, 70)};
+  --grid-tile-dark: #{mat.get-theme-color($light-app-theme, primary, 90)};
+  @include component-coloring(var(--toolbar-bg-dark), var(--grid-tile-dark));
+}

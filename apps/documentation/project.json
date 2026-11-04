@@ -152,6 +152,9 @@
       "executor": "@nx/angular:dev-server",
       "options": {
         "browserTarget": "documentation:build"
+      },
+      "readyWhen": {
+        "signal": true
       }
     },
     "stylelint-check": {

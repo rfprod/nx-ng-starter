@@ -1,13 +1,11 @@
 import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angular/core/testing';
-import { MatIconModule } from '@angular/material/icon';
 import { newTestBedMetadata } from '@app/client-testing-unit';
 
 import { AppThemeToggleComponent } from './theme-toggle.component';
 
 describe('AppThemeToggleComponent', () => {
   const testBedConfig: TestModuleMetadata = newTestBedMetadata({
-    imports: [MatIconModule],
-    declarations: [AppThemeToggleComponent],
+    imports: [AppThemeToggleComponent],
   });
 
   let fixture: ComponentFixture<AppThemeToggleComponent>;

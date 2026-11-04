@@ -1,15 +1,12 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { type ComponentFixture, TestBed, type TestModuleMetadata } from '@angular/core/testing';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
 import { newTestBedMetadata } from '@app/client-testing-unit';
 
 import { AppToolbarComponent } from './toolbar.component';
 
 describe('AppToolbarComponent', () => {
   const testBedConfig: TestModuleMetadata = newTestBedMetadata({
-    imports: [MatMenuModule, MatIconModule],
-    declarations: [AppToolbarComponent],
+    imports: [AppToolbarComponent],
     schemas: [NO_ERRORS_SCHEMA],
   });
 

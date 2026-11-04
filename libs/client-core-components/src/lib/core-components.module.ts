@@ -15,17 +15,23 @@ import { AppTooltipComponent } from './components/tooltip/tooltip.component';
 import { AppTooltipDirective } from './components/tooltip/tooltip.directive';
 
 @NgModule({
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, AppMaterialModule, RouterModule, AppFeatureAccessDirectivesModule],
-  declarations: [
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppMaterialModule,
+    RouterModule,
+    AppFeatureAccessDirectivesModule,
     AppContentComponent,
-    AppNavigatorComponent,
+    AppSearchComponent,
     AppNavbarComponent,
+    AppNavigatorComponent,
     AppToolbarComponent,
     AppThemeToggleComponent,
     AppTooltipComponent,
     AppTooltipDirective,
-    AppSearchComponent,
   ],
+  declarations: [],
   exports: [
     AppContentComponent,
     AppNavbarComponent,
