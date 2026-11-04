@@ -103,23 +103,6 @@ jobs:
         if: ${{ fromJSON(needs.checks.outputs.changes).dependencies == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' }}
         uses: ./.github/actions/dist-artifact-upload
 
-      - name: Dispatch package publishing
-        if: fromJSON(needs.checks.outputs.changes).packages == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          REPO: ${{ github.repository }}
-          EVENT_TYPE: publish_packages
-        run: |
-          gh api \
-            -X POST \
-            /repos/${REPO}/dispatches \
-            --header 'Accept: application/vnd.github+json' \
-            --input - <<EOF
-          {
-            "event_type": "${EVENT_TYPE}"
-          }
-          EOF
-
       - name: Cleanup
         run: rm -rf ./.env ./functions/.env
 
