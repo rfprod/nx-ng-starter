@@ -1,7 +1,7 @@
-import { defaultPieChartConfig } from './pie-chart.util';
+import { defaultPieChartConfig, drawPieChart } from './pie-chart.util';
 
 describe('pie-chart.util', () => {
-  it('defaultPieChartConfig should match object', () => {
+  it('should export the configuration object', () => {
     expect(defaultPieChartConfig).toMatchObject({
       chartTitle: expect.any(String),
       width: expect.any(Number),
@@ -18,5 +18,9 @@ describe('pie-chart.util', () => {
       transitionDuration: expect.any(Number),
       color: expect.any(Function),
     });
+  });
+
+  it('should export the constructor function', () => {
+    expect(typeof drawPieChart === 'function').toBeTruthy();
   });
 });

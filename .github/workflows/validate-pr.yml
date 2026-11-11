@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   checks:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     outputs:
       projects: ${{ steps.check-projects.outputs.projects }}
@@ -73,7 +73,7 @@ jobs:
   lint:
     needs: checks
     if: ${{ fromJSON(needs.checks.outputs.changes).shelltools == 'true' || fromJSON(needs.checks.outputs.changes).src == 'true' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout sources
@@ -100,7 +100,7 @@ jobs:
   lint-affected:
     needs: checks
     if: needs.checks.outputs.projects != '[]'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     strategy:
       fail-fast: true
@@ -130,7 +130,7 @@ jobs:
   test:
     needs: checks
     if: ${{ fromJSON(needs.checks.outputs.changes).src == 'true' }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout sources
@@ -150,7 +150,7 @@ jobs:
   test-affected:
     needs: checks
     if: needs.checks.outputs.projects != '[]'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     strategy:
       fail-fast: true
@@ -181,7 +181,7 @@ jobs:
   build-affected:
     needs: checks
     if: needs.checks.outputs.projects-build != '[]'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     strategy:
       fail-fast: true
@@ -205,7 +205,7 @@ jobs:
   publish-packages-dry-run:
     needs: checks
     if: fromJSON(needs.checks.outputs.changes).packages == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     permissions:
       contents: write
@@ -305,7 +305,7 @@ jobs:
   premerge:
     needs: [checks, lint, lint-affected, test, test-affected, build-affected, publish-packages-dry-run]
     if: always()
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Check result

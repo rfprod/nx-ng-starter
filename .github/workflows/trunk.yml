@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   checks:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     outputs:
       changes: ${{ steps.check-changes.outputs.changes }}
@@ -40,7 +40,7 @@ jobs:
 
   trunk:
     needs: checks
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout sources
@@ -120,7 +120,7 @@ jobs:
   publish-packages:
     needs: [checks, trunk]
     if: fromJSON(needs.checks.outputs.changes).packages == 'true'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     permissions:
       contents: write

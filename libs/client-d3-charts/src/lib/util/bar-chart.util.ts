@@ -59,12 +59,12 @@ const wrapSvgText = (svgText: d3.Selection<d3.BaseType, unknown, SVGGElement, un
     const words = text.text().split(/\s+/).reverse();
     if (words.length > 1) {
       let line: string[] = [];
-      let lineNumber = 0;
+      let lineNumber = 1;
       const lineHeight = 1.4;
       const y = text.attr('y');
       const x = text.attr('x');
       const dy = parseFloat(text.attr('dy') ?? 0);
-      let tspan = text.text(null).append('tspan').attr('x', x).attr('y', y).attr('dy', `${dy}em`); // axis label
+      let tspan = text.text(null).append('tspan').attr('x', x).attr('y', y).attr('dy', `${dy}em`);
 
       let word = words.pop();
 
@@ -257,7 +257,8 @@ const drawBarsAndSetPointerEvents = (
   data: TBarChartData,
 ) => {
   const duration = 400;
-  g.selectAll('.bar')
+  const element = g
+    .selectAll('.bar')
     .data(data)
     .enter()
     .append('rect')
@@ -265,13 +266,17 @@ const drawBarsAndSetPointerEvents = (
     .attr('x', d => x(d.title) ?? '')
     .attr('y', d => y(d.value) || 0)
     .attr('width', x.bandwidth())
-    .style('fill', (d, i) => config.color(i.toString()))
+    .style('fill', (d, i) => config.color(i.toString()));
+
+  element
     .on('mouseover', function (this, event, d) {
       onMouseOver(this, d, g, x, y, config);
     })
     .on('mouseout', function (this, event, d) {
       onMouseOut(this, d, x, y, config);
-    })
+    });
+
+  element
     .transition()
     .ease(d3.easeLinear)
     .duration(duration)

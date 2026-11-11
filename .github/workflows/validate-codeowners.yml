@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   codeowners:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     outputs:
       matrix: ${{ steps.get-codeowners.outputs.matrix }}
@@ -33,7 +33,7 @@ jobs:
 
   validate:
     needs: codeowners
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     strategy:
       matrix:

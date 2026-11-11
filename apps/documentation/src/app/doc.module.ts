@@ -44,7 +44,6 @@ const markdownModuleConfig: MarkdownModuleConfig = {
   bootstrap: [AppDocRootComponent],
   imports: [
     CommonModule,
-    MarkdownModule.forRoot(markdownModuleConfig),
     StoreModule.forRoot({}, { metaReducers: metaReducers(environment.production) }),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' }),
     EffectsModule.forRoot(),
@@ -53,6 +52,7 @@ const markdownModuleConfig: MarkdownModuleConfig = {
     AppPwaOfflineModule,
     AppDocRoutingModule,
     AppRouterStoreModule.forRoot(),
+    MarkdownModule.forRoot(markdownModuleConfig),
   ],
   providers: [
     windowProvider,

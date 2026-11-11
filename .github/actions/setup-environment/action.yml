@@ -49,6 +49,32 @@ runs:
       with:
         node-version: ${{ inputs.node-version }}
 
+    - name: Update APT indexes
+      shell: bash
+      run: |
+        if ! getent ahosts azure.archive.ubuntu.com >/dev/null 2>&1; then
+          echo "Azure mirror DNS failed; switching to archive.ubuntu.com"
+          sudo grep -RIl 'azure.archive.ubuntu.com' /etc/apt \
+            | xargs -r sudo sed -i 's|azure.archive.ubuntu.com|archive.ubuntu.com|g'
+        fi
+
+        sudo apt-get \
+          -o Acquire::Retries=0 \
+          -o Acquire::http::Timeout=8 \
+          -o Acquire::https::Timeout=8 \
+          -o Acquire::ConnectTimeout=5 \
+          update
+
+    - name: Install secure delete
+      shell: bash
+      run: |
+        sudo apt install -y secure-delete
+
+    - name: Install font tools
+      shell: bash
+      run: |
+        sudo apt install -y woff2 eot-utils eot2ttf wget
+
     - name: Workspace integrity check
       if: steps.workspace-cache.outputs.cache-hit == 'true'
       shell: bash
@@ -78,14 +104,3 @@ runs:
       if: inputs.firebase-tools == 'true'
       shell: bash
       run: npm i -g firebase-tools
-
-    - name: Install secure delete
-      shell: bash
-      run: |
-        sudo apt update
-        sudo apt install -y secure-delete
-
-    - name: Install font tools
-      shell: bash
-      run: |
-        sudo apt install -y eot2ttf
