@@ -1,7 +1,7 @@
-import { defaultLineChartConfig } from './line-chart.util';
+import { defaultLineChartConfig, drawLineChart } from './line-chart.util';
 
 describe('line-chart.util', () => {
-  it('defaultLineChartConfig should match object', () => {
+  it('should export the configuration object', () => {
     expect(defaultLineChartConfig).toMatchObject({
       chartTitle: expect.any(String),
       width: expect.any(Number),
@@ -25,5 +25,9 @@ describe('line-chart.util', () => {
       labelTextWrapWidth: expect.any(Number),
       color: expect.any(Function),
     });
+  });
+
+  it('should export the constructor function', () => {
+    expect(typeof drawLineChart === 'function').toBeTruthy();
   });
 });

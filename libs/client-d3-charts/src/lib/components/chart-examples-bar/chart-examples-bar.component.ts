@@ -19,7 +19,7 @@ export class AppChartExamplesBarComponent {
   private get chartData() {
     return [
       { title: 'one', value: 1 },
-      { title: 'two', value: 2 },
+      { title: 'two lines wrap', value: 2 },
       { title: 'three', value: 3 },
       { title: 'four', value: 4 },
       { title: 'five', value: 5 },

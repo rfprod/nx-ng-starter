@@ -1,7 +1,7 @@
-import { defaultForceDirectedChartConfig } from './force-directed-chart.util';
+import { defaultForceDirectedChartConfig, drawForceDirectedChart } from './force-directed-chart.util';
 
 describe('force-directed-chart.util', () => {
-  it('defaultForceDirectedChartConfig should match object', () => {
+  it('should export the configuration object', () => {
     expect(defaultForceDirectedChartConfig).toMatchObject({
       chartTitle: expect.any(String),
       width: expect.any(Number),
@@ -29,5 +29,9 @@ describe('force-directed-chart.util', () => {
       nodeStrokeColor: expect.any(String),
       nodeStrokeWidth: expect.any(Number),
     });
+  });
+
+  it('should export the constructor function', () => {
+    expect(typeof drawForceDirectedChart === 'function').toBeTruthy();
   });
 });

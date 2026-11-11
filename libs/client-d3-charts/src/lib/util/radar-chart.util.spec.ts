@@ -1,7 +1,7 @@
-import { defaultRadarChartConfig } from './radar-chart.util';
+import { defaultRadarChartConfig, drawRadarChart } from './radar-chart.util';
 
 describe('radar-chart.util', () => {
-  it('defaultRadarChartConfig should match object', () => {
+  it('should export the configuration object', () => {
     expect(defaultRadarChartConfig).toMatchObject({
       chartTitle: expect.any(String),
       width: expect.any(Number),
@@ -25,5 +25,9 @@ describe('radar-chart.util', () => {
       transitionDuration: expect.any(Number),
       color: expect.any(Function),
     });
+  });
+
+  it('should export the constructor function', () => {
+    expect(typeof drawRadarChart === 'function').toBeTruthy();
   });
 });

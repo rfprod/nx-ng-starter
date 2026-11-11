@@ -1,7 +1,7 @@
-import { defaultGaugeChartConfig } from './gauge-chart.util';
+import { defaultGaugeChartConfig, drawGaugeChart } from './gauge-chart.util';
 
 describe('gauge-chart.util', () => {
-  it('defaultGaugeChartConfig should match object', () => {
+  it('should export the configuration object', () => {
     expect(defaultGaugeChartConfig).toMatchObject({
       chartTitle: expect.any(String),
       width: expect.any(Number),
@@ -22,5 +22,9 @@ describe('gauge-chart.util', () => {
       defaultColor: 'lightgray',
       value: expect.any(Number),
     });
+  });
+
+  it('should export the constructor function', () => {
+    expect(typeof drawGaugeChart === 'function').toBeTruthy();
   });
 });

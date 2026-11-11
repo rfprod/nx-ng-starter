@@ -1,4 +1,4 @@
-import { execFile, type ExecFileException } from 'child_process';
+import { type ExecException, execFile } from 'child_process';
 import * as fs from 'fs';
 import { FsTree } from 'nx/src/generators/tree';
 
@@ -77,7 +77,7 @@ const writeAverageStats = () => {
     const command = 'yarn';
     const args = ['prettier', readmePath, '--write'];
 
-    execFile(command, args, {}, (err: ExecFileException | null) => {
+    execFile(command, args, {}, (err: ExecException | null) => {
       if (err !== null) {
         logger.printError(err);
       }

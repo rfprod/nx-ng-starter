@@ -1,7 +1,7 @@
-import { defaultBarChartConfig } from './bar-chart.util';
+import { defaultBarChartConfig, drawBarChart } from './bar-chart.util';
 
 describe('bar-chart.util', () => {
-  it('defaultBarChartConfig should match object', () => {
+  it('should export the configuration object', () => {
     expect(defaultBarChartConfig).toMatchObject({
       chartTitle: expect.any(String),
       width: expect.any(Number),
@@ -21,5 +21,9 @@ describe('bar-chart.util', () => {
       labelTextWrapWidth: expect.any(Number),
       color: expect.any(Function),
     });
+  });
+
+  it('should export the constructor function', () => {
+    expect(typeof drawBarChart === 'function').toBeTruthy();
   });
 });
