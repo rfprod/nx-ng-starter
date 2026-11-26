@@ -10,7 +10,6 @@ export default defineConfig(({ mode }) => ({
     outDir: '../../dist/libs/backend-logger',
     emptyOutDir: true,
     reportCompressedSize: true,
-    commonjsOptions: { transformMixedEsModules: true },
   },
   define: {
     ['import.meta.vitest']: mode !== 'production',

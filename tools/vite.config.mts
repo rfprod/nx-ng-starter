@@ -12,6 +12,5 @@ export default defineConfig({
     outDir: '../dist/tools',
     emptyOutDir: true,
     reportCompressedSize: true,
-    commonjsOptions: { transformMixedEsModules: true },
   },
 });

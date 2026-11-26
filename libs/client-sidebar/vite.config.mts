@@ -12,7 +12,6 @@ export default defineConfig(({ mode }) => ({
     outDir: '../../dist/libs/client-sidebar',
     emptyOutDir: true,
     reportCompressedSize: true,
-    commonjsOptions: { transformMixedEsModules: true },
   },
   define: {
     ['import.meta.vitest']: mode !== 'production',

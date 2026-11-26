@@ -10,6 +10,5 @@ export default defineConfig({
     outDir: '../../dist/tools/workspace-plugin',
     emptyOutDir: true,
     reportCompressedSize: true,
-    commonjsOptions: { transformMixedEsModules: true },
   },
 });
