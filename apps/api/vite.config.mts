@@ -12,7 +12,6 @@ export default defineConfig(({ mode }) => ({
     outDir: '../../dist/apps/api',
     emptyOutDir: true,
     reportCompressedSize: true,
-    commonjsOptions: { transformMixedEsModules: true },
   },
   define: {
     ['import.meta.vitest']: mode !== 'production',
